@@ -1,13 +1,18 @@
 #include "WinApp.h"
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+LRESULT WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
+{
 
-LRESULT WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparm, LPARAM lparam) {
-	//メッセージで分岐
+	if (ImGui_ImplWin32_WndProcHandler(hwnd, msg, wparam, lparam)) {
+		return 1;
+	}
+
 	switch (msg) {
-	case WM_DESTROY://ウィンドウが破壊された
-		PostQuitMessage(0);//OSに対して、アプリの終了を伝える
+	case WM_DESTROY:
+		PostQuitMessage(0);
 		return 0;
 	}
-	return DefWindowProc(hwnd, msg, wparm, lparam);//標準の処理を行う
+	return DefWindowProc(hwnd, msg, wparam, lparam);
 }
 
 

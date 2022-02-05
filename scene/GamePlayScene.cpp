@@ -45,6 +45,18 @@ void GamePlayScene::Update() {
 }
 
 void GamePlayScene::Draw() {
+	ImGui::Begin("test");
+	if (ImGui::TreeNode("Debug"))
+	{
+		if (ImGui::TreeNode("Field"))
+		{
+			//ImGui::SliderFloat("Position.x", &s, 50, -50);
+			ImGui::Unindent();
+			ImGui::TreePop();
+		}
+		ImGui::TreePop();
+	}
+	ImGui::End();
 	Sprite::PreDraw();
 	//”wŒi—p
 	sprite->Draw();

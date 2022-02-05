@@ -6,7 +6,7 @@
 #include<wrl.h>
 #include <d3dx12.h>
 #include<cstdlib>
-
+#include <imgui.h>
 #include "WinApp.h"
 
 //DirectX汎用
@@ -15,6 +15,7 @@ private:
 	// Microsoft::WRL::を省略
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 public:
+	void Finalize();
 	//初期化
 	void Initialize(WinApp* winApp);
 
@@ -44,6 +45,10 @@ public:
 	//フェンス生成
 	bool CreateFence();
 
+	//Imgui初期化
+	bool InitImgui();
+
+
 	ID3D12Device* GetDev() { return dev.Get(); }
 
 	ID3D12GraphicsCommandList* GetCmdList() { return cmdList.Get(); }
@@ -62,6 +67,6 @@ private:
 	ComPtr<ID3D12DescriptorHeap> dsvHeap;
 	ComPtr<ID3D12Fence> fence;
 	UINT64 fenceVal = 0;
-
+	ComPtr<ID3D12DescriptorHeap> imguiHeap;
 	WinApp* winApp = nullptr;
 };
