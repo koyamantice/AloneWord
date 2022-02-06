@@ -156,6 +156,7 @@
     <ClCompile Include="base\AbstractSceneFactory.cpp" />
     <ClCompile Include="base\Audio.cpp" />
     <ClCompile Include="base\DirectXCommon.cpp" />
+    <ClCompile Include="base\Easing.cpp" />
     <ClCompile Include="base\Framework.cpp" />
     <ClCompile Include="base\Input.cpp" />
     <ClCompile Include="base\SceneFactory.cpp" />
@@ -166,7 +167,6 @@
     <ClCompile Include="collision\CollisionInfo.cpp" />
     <ClCompile Include="collision\CollisionPrimitive.cpp" />
     <ClCompile Include="collision\CollisionTypes.cpp" />
-    <ClCompile Include="Easing.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
@@ -194,6 +194,7 @@
     <ClInclude Include="base\Audio.h" />
     <ClInclude Include="base\BaseScene.h" />
     <ClInclude Include="base\DirectXCommon.h" />
+    <ClInclude Include="base\Easing.h" />
     <ClInclude Include="base\Framework.h" />
     <ClInclude Include="base\Input.h" />
     <ClInclude Include="base\SceneManager.h" />
@@ -203,7 +204,6 @@
     <ClInclude Include="collision\CollisionInfo.h" />
     <ClInclude Include="collision\CollisionPrimitive.h" />
     <ClInclude Include="collision\CollisionTypes.h" />
-    <ClInclude Include="Easing.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
     <ClInclude Include="imgui\imgui_impl_dx12.h" />

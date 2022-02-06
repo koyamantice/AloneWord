@@ -27,6 +27,9 @@
     <Filter Include="Imgui">
       <UniqueIdentifier>{2d019f57-036d-490a-8e12-95f334e4156a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="2d">
+      <UniqueIdentifier>{bab2051c-eb5b-4269-838e-189bb91bca0a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scene\GamePlayScene.cpp">
@@ -65,9 +68,6 @@
     <ClCompile Include="main.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="2d\Sprite.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="base\WinApp.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -98,9 +98,6 @@
     <ClCompile Include="3d\Object3d.cpp">
       <Filter>3d</Filter>
     </ClCompile>
-    <ClCompile Include="Easing.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="imgui\imgui.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
@@ -118,6 +115,12 @@
     </ClCompile>
     <ClCompile Include="imgui\imgui_widgets.cpp">
       <Filter>Imgui</Filter>
+    </ClCompile>
+    <ClCompile Include="2d\Sprite.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
+    <ClCompile Include="base\Easing.cpp">
+      <Filter>base</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -146,9 +149,6 @@
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="base\Input.h">
-      <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="2d\Sprite.h">
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="base\WinApp.h">
@@ -190,9 +190,6 @@
     <ClInclude Include="scene\TitleScene.h">
       <Filter>main</Filter>
     </ClInclude>
-    <ClInclude Include="Easing.h">
-      <Filter>base</Filter>
-    </ClInclude>
     <ClInclude Include="imgui\imconfig.h">
       <Filter>Imgui</Filter>
     </ClInclude>
@@ -216,6 +213,12 @@
     </ClInclude>
     <ClInclude Include="imgui\imstb_truetype.h">
       <Filter>Imgui</Filter>
+    </ClInclude>
+    <ClInclude Include="2d\Sprite.h">
+      <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="base\Easing.h">
+      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
