@@ -34,7 +34,7 @@ private:
 	Model* modelPin = nullptr;
 	Object3d *objPin;
 	Sprite* sprite = { nullptr };
-
-
+	Model* modelSkydome = nullptr;
+	Object3d* objSkydome = nullptr;
 };
 

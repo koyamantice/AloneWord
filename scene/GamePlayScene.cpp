@@ -13,7 +13,8 @@ void GamePlayScene::Initialize() {
 	//”wŒiƒXƒvƒ‰ƒCƒg¶¬
 	sprite = Sprite::Create(2, { 0.0f,0.0f });
 	//ƒXƒvƒ‰ƒCƒg¶¬
-
+	objSkydome = Object3d::Create();
+	modelSkydome = Model::CreateFromOBJ("skydome");
 	// ƒ‚ƒfƒ‹“Ç‚Ýž‚Ý
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
 	srand(NULL);
@@ -42,6 +43,7 @@ void GamePlayScene::Update() {
 	}
 	DebugText::GetInstance()->Print("SPACE to TITLE!!",200, 100,1.0f);
 	DebugText::GetInstance()->Print("Z or C to Sound!!", 200, 115, 1.0f);
+	objSkydome->Update();
 }
 
 void GamePlayScene::Draw() {
@@ -59,12 +61,12 @@ void GamePlayScene::Draw() {
 	ImGui::End();
 	Sprite::PreDraw();
 	//”wŒi—p
-	sprite->Draw();
+	//sprite->Draw();
 
 
 	Object3d::PreDraw();
 	//”wŒi—p
-
+	objSkydome->Draw();
 
 
 	//‘O–Ê—p
