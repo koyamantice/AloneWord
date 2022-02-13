@@ -6,6 +6,11 @@
 
 void GamePlayScene::Initialize() {
 	//オブジェクト初期化
+	modelPin=Model::CreateFromOBJ("chr_knight");
+	objPin=Object3d::Create();
+	objPin->Initialize();
+	objPin->SetModel(modelPin);
+	objPin->SetPosition({0,0,0});
 	// テクスチャ読み込み
 	Sprite::LoadTexture(1, L"Resources/2d/title.png");
 	Sprite::LoadTexture(2, L"Resources/2d/gameplay.png");
@@ -22,10 +27,12 @@ void GamePlayScene::Initialize() {
 
 void GamePlayScene::Finalize() {
 	//３ｄのモデルのデリート
+	delete objPin;
 }
 
 void GamePlayScene::Update() {
 	Input* input = Input::GetInstance();
+	objPin->Update();
 	if (input->TriggerKey(DIK_Z)) {
 		Audio::GetInstance()->StopWave(0);
 		Audio::GetInstance()->StopWave(1);
@@ -47,18 +54,18 @@ void GamePlayScene::Update() {
 }
 
 void GamePlayScene::Draw() {
-	ImGui::Begin("test");
-	if (ImGui::TreeNode("Debug"))
-	{
-		if (ImGui::TreeNode("Field"))
-		{
-			//ImGui::SliderFloat("Position.x", &s, 50, -50);
-			ImGui::Unindent();
-			ImGui::TreePop();
-		}
-		ImGui::TreePop();
-	}
-	ImGui::End();
+	//ImGui::Begin("test");
+	//if (ImGui::TreeNode("Debug"))
+	//{
+	//	if (ImGui::TreeNode("Field"))
+	//	{
+	//		//ImGui::SliderFloat("Position.x", &s, 50, -50);
+	//		ImGui::Unindent();
+	//		ImGui::TreePop();
+	//	}
+	//	ImGui::TreePop();
+	//}
+	//ImGui::End();
 	Sprite::PreDraw();
 	//背景用
 	//sprite->Draw();
@@ -66,7 +73,11 @@ void GamePlayScene::Draw() {
 
 	Object3d::PreDraw();
 	//背景用
+<<<<<<< HEAD
 	objSkydome->Draw();
+=======
+	objPin->Draw();
+>>>>>>> master
 
 
 	//前面用
