@@ -48,7 +48,8 @@ void Framework::Initialize() {
 	debugText = DebugText::GetInstance();
 	debugText->Initialize(debugTextTexNumber);
 
-
+	// ライト静的初期化
+	LightGroup::StaticInitialize(dxCommon->GetDev());
 
 	Object3d::StaticInitialize(dxCommon->GetDev(), dxCommon->GetCmdList(), WinApp::window_width, WinApp::window_height);
 	// マウスカーソルの非表示

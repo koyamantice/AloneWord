@@ -30,6 +30,12 @@
     <Filter Include="2d">
       <UniqueIdentifier>{bab2051c-eb5b-4269-838e-189bb91bca0a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="camera">
+      <UniqueIdentifier>{e37c76d4-4a25-4498-810c-c6be1c8fef4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="light">
+      <UniqueIdentifier>{0bcf11f6-1c89-4d12-abb2-e56cabe202a7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scene\GamePlayScene.cpp">
@@ -121,6 +127,21 @@
     </ClCompile>
     <ClCompile Include="base\Easing.cpp">
       <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="camera\Camera.cpp">
+      <Filter>camera</Filter>
+    </ClCompile>
+    <ClCompile Include="camera\DebugCamera.cpp">
+      <Filter>camera</Filter>
+    </ClCompile>
+    <ClCompile Include="light\LightGroup.cpp">
+      <Filter>light</Filter>
+    </ClCompile>
+    <ClCompile Include="light\PointLight.cpp">
+      <Filter>light</Filter>
+    </ClCompile>
+    <ClCompile Include="light\SpotLight.cpp">
+      <Filter>light</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -219,6 +240,24 @@
     </ClInclude>
     <ClInclude Include="base\Easing.h">
       <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="camera\DebugCamera.h">
+      <Filter>camera</Filter>
+    </ClInclude>
+    <ClInclude Include="camera\Camera.h">
+      <Filter>camera</Filter>
+    </ClInclude>
+    <ClInclude Include="light\DirectionalLight.h">
+      <Filter>light</Filter>
+    </ClInclude>
+    <ClInclude Include="light\LightGroup.h">
+      <Filter>light</Filter>
+    </ClInclude>
+    <ClInclude Include="light\PointLight.h">
+      <Filter>light</Filter>
+    </ClInclude>
+    <ClInclude Include="light\SpotLight.h">
+      <Filter>light</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

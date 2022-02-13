@@ -121,7 +121,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)DirectXTex;$(SolutionDir)imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DirectXTex;$(SolutionDir)imgui;$(ProjectDir)camera;$(ProjectDir)light;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -162,6 +162,8 @@
     <ClCompile Include="base\SceneFactory.cpp" />
     <ClCompile Include="base\SceneManager.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
+    <ClCompile Include="camera\Camera.cpp" />
+    <ClCompile Include="camera\DebugCamera.cpp" />
     <ClCompile Include="collision\BaseCollider.cpp" />
     <ClCompile Include="collision\Collision.cpp" />
     <ClCompile Include="collision\CollisionInfo.cpp" />
@@ -173,6 +175,9 @@
     <ClCompile Include="imgui\imgui_impl_dx12.cpp" />
     <ClCompile Include="imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="imgui\imgui_widgets.cpp" />
+    <ClCompile Include="light\LightGroup.cpp" />
+    <ClCompile Include="light\PointLight.cpp" />
+    <ClCompile Include="light\SpotLight.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="scene\GamePlayScene.cpp" />
     <ClCompile Include="scene\TisGame.cpp" />
@@ -199,6 +204,8 @@
     <ClInclude Include="base\Input.h" />
     <ClInclude Include="base\SceneManager.h" />
     <ClInclude Include="base\WinApp.h" />
+    <ClInclude Include="camera\Camera.h" />
+    <ClInclude Include="camera\DebugCamera.h" />
     <ClInclude Include="collision\BaseCollider.h" />
     <ClInclude Include="collision\Collision.h" />
     <ClInclude Include="collision\CollisionInfo.h" />
@@ -212,6 +219,10 @@
     <ClInclude Include="imgui\imstb_rectpack.h" />
     <ClInclude Include="imgui\imstb_textedit.h" />
     <ClInclude Include="imgui\imstb_truetype.h" />
+    <ClInclude Include="light\DirectionalLight.h" />
+    <ClInclude Include="light\LightGroup.h" />
+    <ClInclude Include="light\PointLight.h" />
+    <ClInclude Include="light\SpotLight.h" />
     <ClInclude Include="SceneFactory.h" />
     <ClInclude Include="scene\GamePlayScene.h" />
     <ClInclude Include="scene\TisGame.h" />

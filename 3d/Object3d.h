@@ -8,7 +8,8 @@
 #include <string>
 #include "Model.h"
 #include"CollisionInfo.h"
-
+#include "Camera.h"
+#include "LightGroup.h"
 class BaseCollider;
 
 /// <summary>
@@ -39,7 +40,9 @@ public: // サブクラス
 	// 定数バッファ用データ構造体B0
 	struct ConstBufferDataB0
 	{
-		XMMATRIX mat;	// ３Ｄ変換行列
+		XMMATRIX viewproj;    // ビュープロジェクション行列
+		XMMATRIX world; // ワールド行列
+		XMFLOAT3 cameraPos; // カメラ座標（ワールド座標）
 	};
 
 private: // 定数
@@ -53,7 +56,7 @@ public: // 静的メンバ関数
 	/// <param name="window_width">画面幅</param>
 	/// <param name="window_height">画面高さ</param>
 	/// <returns>成否</returns>
-	static bool StaticInitialize(ID3D12Device* device, ID3D12GraphicsCommandList*cmdList, int window_width, int window_height);
+	static bool StaticInitialize(ID3D12Device* device, ID3D12GraphicsCommandList*cmdList, int window_width, int window_height, Camera* camera = nullptr);
 
 	/// <summary>
 	/// グラフィックパイプラインの生成
@@ -76,6 +79,22 @@ public: // 静的メンバ関数
 	/// </summary>
 	/// <returns></returns>
 	static Object3d* Create();
+
+	/// <summary>
+	/// カメラセット
+	/// </summary>
+	/// <returns></returns>
+	static void SetCamera(Camera* camera) {
+		Object3d::camera = camera;
+	}
+
+	/// <summary>
+	///ライトセット
+	/// </summary>
+	/// <returns></returns>
+	static void SetLightGroup(LightGroup* lightGroup) {
+		Object3d::lightGroup = lightGroup;
+	}
 
 	/// <summary>
 	/// 視点座標の取得
@@ -134,6 +153,11 @@ private: // 静的メンバ変数
 	static XMMATRIX matBillboard;
 	// Y軸回りビルボード行列
 	static XMMATRIX matBillboardY;
+	// カメラ
+	static Camera* camera;
+	// ライト
+	static LightGroup* lightGroup;
+
 
 private:// 静的メンバ関数
 

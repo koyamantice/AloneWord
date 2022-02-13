@@ -3,7 +3,8 @@
 #include "BaseScene.h"
 #include "Sprite.h"
 #include "Object3d.h"
-
+#include "DebugCamera.h"
+#include "LightGroup.h"
 #include<memory>
 
 /// <summary>
@@ -33,8 +34,26 @@ public:
 private:
 	Model* modelPin = nullptr;
 	Object3d *objPin;
-	Sprite* sprite = { nullptr };
 	Model* modelSkydome = nullptr;
-	Object3d* objSkydome = nullptr;
+	Object3d* objSkydome;
+	Model* modelGround = nullptr;
+	Object3d* objGround;
+	Sprite* sprite = { nullptr };
+	DebugCamera* camera = { nullptr };
+	LightGroup* lightGroup = nullptr;
+	float ambientColor0[3] = { 1,1,1 };
+	// 光線方向初期値
+	float lightDir0[3] = { 0,0,1 };
+	float lightColor0[3] = { 1,0,0 };
+
+	float lightDir1[3] = { 0,1,0 };
+	float lightColor1[3] = { 0,1,0 };
+
+	float lightDir2[3] = { 1,0,0 };
+	float lightColor2[3] = { 0,0,1 };
+
+	float pointLightPos[3] = { 0,0,0 };
+	float pointLightColor[3] = { 1,1,1 };
+	float pointLightAtten[3] = { 0.3f,0.1f,0.1f };
 };
 
