@@ -148,9 +148,6 @@
     <ClInclude Include="base\Framework.h">
       <Filter>scene</Filter>
     </ClInclude>
-    <ClInclude Include="AbstractSceneFactory.h">
-      <Filter>scene</Filter>
-    </ClInclude>
     <ClInclude Include="base\BaseScene.h">
       <Filter>scene</Filter>
     </ClInclude>
@@ -258,6 +255,9 @@
     </ClInclude>
     <ClInclude Include="light\SpotLight.h">
       <Filter>light</Filter>
+    </ClInclude>
+    <ClInclude Include="base\AbstractSceneFactory.h">
+      <Filter>scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
