@@ -11,11 +11,11 @@ public:
 /// <summary>
 /// çXêV
 /// </summary>
-	void Update();
+	void Update(DirectXCommon* dxCommon);
 	/// <summary>
 	/// ï`âÊ
 	/// </summary>
-	void Draw();
+	void Draw(DirectXCommon* dxCommon);
 
 
 public:

@@ -3,8 +3,8 @@
 #include "input.h"
 #include "DebugText.h"
 #include "TitleScene.h"
-
-void GamePlayScene::Initialize() {
+#include "FbxLoader.h"
+void GamePlayScene::Initialize(DirectXCommon* dxCommon) {
 	// カメラ生成
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 
@@ -46,6 +46,19 @@ void GamePlayScene::Initialize() {
 	// カメラ注視点をセット
 	camera->SetTarget({ 0, 1, 0 });
 	camera->SetEye({ 0, 3.0f, -20.0f });
+	// モデル名を指定してファイル読み込み
+	model1 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
+
+	// デバイスをセット
+	FBXObject3d::SetDevice(dxCommon->GetDev());
+	// カメラをセット
+	FBXObject3d::SetCamera(camera);
+	// グラフィックスパイプライン生成
+	FBXObject3d::CreateGraphicsPipeline();
+
+	object1 = new FBXObject3d;
+	object1->Initialize();
+	object1->SetModel(model1);
 }
 
 void GamePlayScene::Finalize() {
@@ -53,7 +66,7 @@ void GamePlayScene::Finalize() {
 	delete objPin;
 }
 
-void GamePlayScene::Update() {
+void GamePlayScene::Update(DirectXCommon* dxCommon) {
 	Input* input = Input::GetInstance();
 	objPin->Update();
 	objSkydome->Update();
@@ -75,11 +88,16 @@ void GamePlayScene::Update() {
 		Audio::GetInstance()->StopWave(1);
 		SceneManager::GetInstance()->ChangeScene("TITLE");
 	}
+
+	if (input->PushKey(DIK_0)) {
+		object1->PlayAnimation();
+	}
+	object1->Update();
 	DebugText::GetInstance()->Print("SPACE to TITLE!!",200, 100,1.0f);
 	DebugText::GetInstance()->Print("Z or C to Sound!!", 200, 115, 1.0f);
 }
 
-void GamePlayScene::Draw() {
+void GamePlayScene::Draw(DirectXCommon* dxCommon) {
 	//ImGui::Begin("test");
 	//if (ImGui::TreeNode("Debug"))
 	//{
@@ -98,6 +116,7 @@ void GamePlayScene::Draw() {
 
 
 	Object3d::PreDraw();
+	object1->Draw(dxCommon->GetCmdList());
 	//背景用
 	objSkydome->Draw();
 	objPin->Draw();

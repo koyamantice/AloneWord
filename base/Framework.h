@@ -23,7 +23,7 @@ public:
 	/// <summary>
 /// 初期化
 /// </summary>
-	virtual void Initialize();
+	virtual void Initialize(DirectXCommon* dxCommon);
 	/// <summary>
 /// 終了
 /// </summary>
@@ -31,18 +31,18 @@ public:
 	/// <summary>
 	/// 更新
 	/// </summary>
-	virtual void Update();
+	virtual void Update(DirectXCommon* dxCommon);
 
 	/// <summary>
 /// 描画
 /// </summary>
-	virtual void Draw();//=0でこのクラスは継承のみ
+	virtual void Draw(DirectXCommon* dxCommon);//=0でこのクラスは継承のみ
 
 	bool IsEndRequst() { return endResquest_; }
 protected:
 	bool endResquest_ = false;
 	WinApp* winApp = nullptr;
-	DirectXCommon* dxCommon = nullptr;
+	DirectXCommon* dxcommon = nullptr;
 
 	Input* input = nullptr;
 	Audio* audio = nullptr;

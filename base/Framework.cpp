@@ -1,12 +1,12 @@
 #include "Framework.h"
-
+#include "FbxLoader.h"
 void Framework::Run() {
 	//初期化
-	Initialize();
+	Initialize(dxcommon);
 	while (true)//ゲームループ
 	{
 		//毎フレーム更新
-		Update();
+		Update(dxcommon);
 
 		//終了リクエストが来たら抜ける
 		if (IsEndRequst()) {
@@ -14,18 +14,18 @@ void Framework::Run() {
 		}
 
 		//描画
-		Draw();
+		Draw(dxcommon);
 	}
 	//ゲームの終了
 	Finalize();
 
 }
 
-void Framework::Initialize() {
+void Framework::Initialize(DirectXCommon* dxCommon) {
 	winApp = new WinApp();
 	winApp->Initialize();
-	dxCommon = new DirectXCommon();
-	dxCommon->Initialize(winApp);
+	dxcommon = new DirectXCommon();
+	dxcommon->Initialize(winApp);
 	// 入力の初期化
 	input = Input::GetInstance();
 	input->Initialize(winApp);
@@ -36,7 +36,7 @@ void Framework::Initialize() {
 	
 	//スプライト関係
 	// スプライト静的初期化
-	Sprite::StaticInitialize(dxCommon->GetDev(), dxCommon->GetCmdList(),WinApp::window_width, WinApp::window_height);
+	Sprite::StaticInitialize(dxcommon->GetDev(), dxcommon->GetCmdList(),WinApp::window_width, WinApp::window_height);
 
 	const int debugTextTexNumber = 0;
 	// デバッグテキスト用テクスチャ読み込み
@@ -49,36 +49,37 @@ void Framework::Initialize() {
 	debugText->Initialize(debugTextTexNumber);
 
 	// ライト静的初期化
-	LightGroup::StaticInitialize(dxCommon->GetDev());
+	LightGroup::StaticInitialize(dxcommon->GetDev());
 
-	Object3d::StaticInitialize(dxCommon->GetDev(), dxCommon->GetCmdList(), WinApp::window_width, WinApp::window_height);
+	Object3d::StaticInitialize(dxcommon->GetDev(), dxcommon->GetCmdList(), WinApp::window_width, WinApp::window_height);
 	// マウスカーソルの非表示
 	ShowCursor(TRUE);
 	//シーンマネージャー
-
+	// FBX関連静的初期化
+	FbxLoader::GetInstance()->Initialize(dxcommon->GetDev());
 }
 
 void Framework::Finalize() {
 	delete sceneFactory_;
-	delete dxCommon;
+	//delete dxCommon;
 	winApp->Finalize();
 	delete winApp;
 
 }
 
-void Framework::Update() {
+void Framework::Update(DirectXCommon* dxCommon) {
 	input->Update(winApp);
 	if (winApp->ProcessMessage() || input->TriggerKey(DIK_ESCAPE)) {
 		endResquest_ = true;
 		return;
 	}
-	SceneManager::GetInstance()->Update();
+	SceneManager::GetInstance()->Update(dxCommon);
 }
 
-void Framework::Draw() {
+void Framework::Draw(DirectXCommon* dxCommon) {
 	dxCommon->PreDraw();
 
-	SceneManager::GetInstance()->Draw();
+	SceneManager::GetInstance()->Draw(dxCommon);
 
 	debugText->DrawAll();
 	dxCommon->PostDraw();
