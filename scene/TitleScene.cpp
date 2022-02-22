@@ -4,7 +4,7 @@
 #include "input.h"
 #include "DebugText.h"
 
-void TitleScene::Initialize() {
+void TitleScene::Initialize(DirectXCommon* dxCommon) {
 	// テクスチャ読み込み
 	Sprite::LoadTexture(1, L"Resources/2d/title.png");
 
@@ -20,7 +20,7 @@ void TitleScene::Finalize() {
 	delete sprite;
 }
 
-void TitleScene::Update() {
+void TitleScene::Update(DirectXCommon* dxCommon) {
 	Input* input = Input::GetInstance();
 	if (input->PushKey(DIK_RETURN)) {
 		SceneManager::GetInstance()->ChangeScene("GAMEPLAY");
@@ -28,7 +28,7 @@ void TitleScene::Update() {
 	DebugText::GetInstance()->Print("ENTER to GAMEPLAY!!", 200, 100, 1.0f);
 }
 
-void TitleScene::Draw() {
+void TitleScene::Draw(DirectXCommon* dxCommon) {
 	sprite->PreDraw();
 	//背景用
 	sprite->Draw();

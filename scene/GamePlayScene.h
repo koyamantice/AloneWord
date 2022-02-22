@@ -5,6 +5,7 @@
 #include "Object3d.h"
 #include "DebugCamera.h"
 #include "LightGroup.h"
+#include "FBXObject3d.h"
 #include<memory>
 
 /// <summary>
@@ -16,7 +17,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	void Initialize() override;
+	void Initialize(DirectXCommon* dxCommon) override;
 	/// <summary>
 	/// 終了
 	/// </summary>
@@ -25,11 +26,11 @@ public:
 	/// <summary>
 	/// 毎フレーム更新
 	/// </summary>
-	void Update() override;
+	void Update(DirectXCommon* dxCommon) override;
 	/// <summary>
 	/// 描画
 	/// </summary>
-	void Draw() override;
+	void Draw(DirectXCommon* dxCommon) override;
 
 private:
 	Model* modelPin = nullptr;
@@ -38,6 +39,8 @@ private:
 	Object3d* objSkydome;
 	Model* modelGround = nullptr;
 	Object3d* objGround;
+	FBXModel* model1 = nullptr;
+	FBXObject3d* object1 = nullptr;
 	Sprite* sprite = { nullptr };
 	DebugCamera* camera = { nullptr };
 	LightGroup* lightGroup = nullptr;

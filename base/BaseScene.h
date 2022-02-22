@@ -1,7 +1,7 @@
 #pragma once
 
 class SceneManager;
-
+#include "DirectXCommon.h"
 /// <summary>
 /// シーン規定
 /// </summary>
@@ -12,7 +12,7 @@ public:
 	/// <summary>
 	/// 初期化
 	/// </summary>
-	virtual void Initialize() =0;
+	virtual void Initialize(DirectXCommon* dxCommon) =0;
 	/// <summary>
 	/// 終了
 	/// </summary>
@@ -20,11 +20,11 @@ public:
 	/// <summary>
 	/// 毎フレーム更新
 	/// </summary>
-	virtual void Update()=0;
+	virtual void Update(DirectXCommon* dxCommon)=0;
 	/// <summary>
 	/// 描画
 	/// </summary>
-	virtual void Draw()=0;
+	virtual void Draw(DirectXCommon* dxCommon)=0;
 
 };
 

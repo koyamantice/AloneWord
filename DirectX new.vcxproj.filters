@@ -143,6 +143,15 @@
     <ClCompile Include="light\SpotLight.cpp">
       <Filter>light</Filter>
     </ClCompile>
+    <ClCompile Include="3d\FbxLoader.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="3d\FBXModel.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
+    <ClCompile Include="3d\FBXObject3d.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\Framework.h">
@@ -259,6 +268,15 @@
     <ClInclude Include="base\AbstractSceneFactory.h">
       <Filter>scene</Filter>
     </ClInclude>
+    <ClInclude Include="3d\FbxLoader.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="3d\FBXModel.h">
+      <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="3d\FBXObject3d.h">
+      <Filter>3d</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\shaders\Basic.hlsli">
@@ -275,6 +293,9 @@
     </None>
     <None Include="imgui\imgui.vcxproj.filters">
       <Filter>Imgui</Filter>
+    </None>
+    <None Include="Resources\shaders\FBX.hlsli">
+      <Filter>シェーダーファイル</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -294,6 +315,12 @@
       <Filter>シェーダーファイル</Filter>
     </FxCompile>
     <FxCompile Include="Resources\shaders\OBJVertexShader.hlsl">
+      <Filter>シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\FBXPS.hlsl">
+      <Filter>シェーダーファイル</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\shaders\FBXVS.hlsl">
       <Filter>シェーダーファイル</Filter>
     </FxCompile>
   </ItemGroup>

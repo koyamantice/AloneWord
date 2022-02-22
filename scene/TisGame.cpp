@@ -1,9 +1,9 @@
 ﻿#include "TisGame.h"
 #include "SceneFactory.h"
 
-void TisGame::Initialize() {
+void TisGame::Initialize(DirectXCommon* dxCommon) {
 	//基底クラスの初期化
-	Framework::Initialize();
+	Framework::Initialize(dxCommon);
 	//マネージャーセット
 	sceneFactory_ = new SceneFactory();
 	SceneManager::GetInstance()->SetSceneFactory(sceneFactory_);
@@ -16,15 +16,15 @@ void TisGame::Finalize() {
 	Framework::Finalize();
 }
 
-void TisGame::Update() {
+void TisGame::Update(DirectXCommon* dxCommon) {
 	//基底クラスの更新
-	Framework::Update();
+	Framework::Update(dxCommon);
 	//DirectX毎フレーム処理 ここから
 
 }
 
-void TisGame::Draw() {
+void TisGame::Draw(DirectXCommon* dxCommon) {
 	//基底クラスの更新
-	Framework::Draw();
+	Framework::Draw(dxCommon);
 
 }
