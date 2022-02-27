@@ -73,23 +73,23 @@ void GamePlayScene::Update(DirectXCommon* dxCommon) {
 	objGround->Update();
 	lightGroup->Update();
 	camera->Update();
-	if (input->TriggerKey(DIK_Z)) {
+	if (input->TriggerKey(DIK_Z) || input->TriggerButton(input->Button_B)) {
 		Audio::GetInstance()->StopWave(0);
 		Audio::GetInstance()->StopWave(1);
 		Audio::GetInstance()->LoopWave(0,0.7f);
 	}
-	if (input->TriggerKey(DIK_C)) {
+	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
 		Audio::GetInstance()->StopWave(0);
 		Audio::GetInstance()->StopWave(1);
 		Audio::GetInstance()->LoopWave(1,0.7f);
 	}
-	if (input->TriggerKey(DIK_SPACE)) {
+	if (input->TriggerKey(DIK_SPACE) || input->TriggerButton(input->Button_A)) {
 		Audio::GetInstance()->StopWave(0);
 		Audio::GetInstance()->StopWave(1);
 		SceneManager::GetInstance()->ChangeScene("TITLE");
 	}
 
-	if (input->PushKey(DIK_0)) {
+	if (input->PushKey(DIK_0) || input->TriggerButton(input->Button_Y)) {
 		object1->PlayAnimation();
 	}
 	object1->Update();
