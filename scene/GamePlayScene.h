@@ -6,6 +6,7 @@
 #include "DebugCamera.h"
 #include "LightGroup.h"
 #include "FBXObject3d.h"
+#include "Texture.h"
 #include<memory>
 
 /// <summary>
@@ -41,6 +42,7 @@ private:
 	Object3d* objGround;
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;
+	Texture* titleTexture = nullptr;
 	Sprite* sprite = { nullptr };
 	DebugCamera* camera = { nullptr };
 	LightGroup* lightGroup = nullptr;

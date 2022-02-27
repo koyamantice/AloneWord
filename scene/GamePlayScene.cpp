@@ -31,7 +31,12 @@ void GamePlayScene::Initialize(DirectXCommon* dxCommon) {
 	// テクスチャ読み込み
 	Sprite::LoadTexture(1, L"Resources/2d/title.png");
 	Sprite::LoadTexture(2, L"Resources/2d/gameplay.png");
-
+	//普通のテクスチャ(板ポリ)
+	Texture::LoadTexture(0, L"Resources/2d/title.png");
+	titleTexture = Texture::Create(0, { 0,0,0 }, { 12,12,12 }, { 1,1,1,1 });
+	titleTexture->TextureCreate();
+	titleTexture->SetPosition({ 5.0f,10.0f,-10.0f });
+	titleTexture->SetScale({ 0.5,0.5,0.5 });
 	//背景スプライト生成
 	sprite = Sprite::Create(2, { 0.0f,0.0f });
 	
@@ -73,6 +78,7 @@ void GamePlayScene::Update(DirectXCommon* dxCommon) {
 	objGround->Update();
 	lightGroup->Update();
 	camera->Update();
+	titleTexture->Update(camera->GetViewMatrix(), camera->GetViewProjectionMatrix());
 	if (input->TriggerKey(DIK_Z) || input->TriggerButton(input->Button_B)) {
 		Audio::GetInstance()->StopWave(0);
 		Audio::GetInstance()->StopWave(1);
@@ -95,6 +101,7 @@ void GamePlayScene::Update(DirectXCommon* dxCommon) {
 	object1->Update();
 	DebugText::GetInstance()->Print("SPACE to TITLE!!",200, 100,1.0f);
 	DebugText::GetInstance()->Print("Z or C to Sound!!", 200, 115, 1.0f);
+	
 }
 
 void GamePlayScene::Draw(DirectXCommon* dxCommon) {
@@ -110,6 +117,7 @@ void GamePlayScene::Draw(DirectXCommon* dxCommon) {
 	//	ImGui::TreePop();
 	//}
 	//ImGui::End();
+	
 	Sprite::PreDraw();
 	//背景用
 	//sprite->Draw();
@@ -121,7 +129,9 @@ void GamePlayScene::Draw(DirectXCommon* dxCommon) {
 	objSkydome->Draw();
 	objPin->Draw();
 	objGround->Draw();
-	//前面用
+	Texture::PreDraw(dxCommon->GetCmdList());
+	titleTexture->Draw();
+	Texture::PostDraw();
 
 }
 
