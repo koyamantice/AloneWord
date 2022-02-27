@@ -11,6 +11,32 @@
 /// </summary>
 class Input {
 public:
+	//ゲームパッド（ボタン）
+	enum ButtonKind
+	{
+		Button_A,
+		Button_B,
+		Button_X,
+		Button_Y,
+		Button_LB,
+		Button_RB,
+		Select,
+		Start,
+		Button_LS,
+		Button_RS,
+		Cross_Up,
+		Cross_Down,
+		Cross_Right,
+		Cross_Left,
+		ButtonMax
+	};
+
+	//スティック
+	enum StickKind
+	{
+		Up, Down, Right, Left
+	};
+
 	struct MouseMove {
 		LONG    lX;
 		LONG    lY;
@@ -76,6 +102,14 @@ public: // メンバ関数
 	/// <returns>トリガーか</returns>
 	bool TriggerMouseMiddle();
 
+	//ゲームパッド
+	bool TiltStick(int stick);
+	bool TriggerStick(int stick);
+	bool PushButton(int Button);
+	bool TriggerButton(int Button);
+	bool PushCrossKey(int CrossKey);
+	bool TriggerCrossKey(int CrossKey);
+
 	/// <summary>
 	/// マウス移動量を取得
 	/// </summary>
@@ -91,5 +125,12 @@ private: // メンバ変数
 	DIMOUSESTATE2 mouseState = {};
 	DIMOUSESTATE2 mouseStatePre = {};
 	POINT p;
+	//ゲームパッドデバイス
+	ComPtr<IDirectInputDevice8> devGamePad;
+	DIJOYSTATE gamePadState = {};
+	DIJOYSTATE oldGamePadState = {};
+	bool is_push[32] = {};
+	//スティックの無反応範囲
+	LONG unresponsive_range = 200;
 };
 
