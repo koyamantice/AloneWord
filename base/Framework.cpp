@@ -50,7 +50,8 @@ void Framework::Initialize(DirectXCommon* dxCommon) {
 
 	// ライト静的初期化
 	LightGroup::StaticInitialize(dxcommon->GetDev());
-
+	//テクスチャ初期化
+	Texture::StaticInitialize(dxcommon->GetDev(), WinApp::window_width, WinApp::window_height);
 	Object3d::StaticInitialize(dxcommon->GetDev(), dxcommon->GetCmdList(), WinApp::window_width, WinApp::window_height);
 	// マウスカーソルの非表示
 	ShowCursor(TRUE);

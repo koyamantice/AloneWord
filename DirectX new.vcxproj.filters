@@ -152,6 +152,9 @@
     <ClCompile Include="3d\FBXObject3d.cpp">
       <Filter>3d</Filter>
     </ClCompile>
+    <ClCompile Include="2d\Texture.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\Framework.h">
@@ -276,6 +279,9 @@
     </ClInclude>
     <ClInclude Include="3d\FBXObject3d.h">
       <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="2d\Texture.h">
+      <Filter>2d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
