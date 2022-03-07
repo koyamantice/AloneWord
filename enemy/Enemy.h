@@ -14,6 +14,7 @@ public:
 	void Update(Player* player);
 	void Draw();
 	bool collidePlayer(Player* player);
+	bool enemycollide();
 private:
 	// DirectX::‚ğÈ—ª
 	using XMFLOAT2 = DirectX::XMFLOAT2;

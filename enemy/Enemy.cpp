@@ -75,6 +75,7 @@ bool Enemy::collidePlayer(Player* player) {
 	if (collision->CheckSphere2Sphere(collider, player->collider) == true && IsAlive == 1) {
 		IsAlive = 0;
 		scale = 0.0f;
+		this->pos = { 0,0,0 };
 		return true;
 	} else {
 		return false;

@@ -108,10 +108,21 @@ void GamePlayScene::Update(DirectXCommon* dxCommon) {
 	if (input->PushKey(DIK_0) || input->TriggerButton(input->Button_Y)) {
 		object1->PlayAnimation();
 	}
+
 	object1->Update();
 	DebugText::GetInstance()->Print("SPACE to TITLE!!",200, 100,1.0f);
 	DebugText::GetInstance()->Print("Z or C to Sound!!", 200, 115, 1.0f);
-	
+	if (sizeof(enemy) > 2) {//配列のサイズ確認
+		for (int colA = 0; colA < EnemyMax; colA++) {
+			for (int colB = 1; colB < EnemyMax; colB++) {
+				if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB
+					&& enemy[colA]->GetisAlive() == 1 && enemy[colB]->GetisAlive() == 1) {//当たり判定と自機同士の当たり判定の削除
+					DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
+					break;
+				}
+			}
+		}
+	}
 }
 
 void GamePlayScene::Draw(DirectXCommon* dxCommon) {
@@ -148,4 +159,3 @@ void GamePlayScene::Draw(DirectXCommon* dxCommon) {
 	Texture::PostDraw();
 
 }
-
