@@ -10,6 +10,8 @@ void GamePlayScene::Initialize(DirectXCommon* dxCommon) {
 
 	// 3Dオブジェクトにカメラをセット
 	Object3d::SetCamera(camera);
+	player = new Player();
+	player->Initialize();
 	//オブジェクト初期化
 	modelPin=Model::CreateFromOBJ("chr_knight");
 	objPin=Object3d::Create();
@@ -78,6 +80,7 @@ void GamePlayScene::Update(DirectXCommon* dxCommon) {
 	objGround->Update();
 	lightGroup->Update();
 	camera->Update();
+	player->Update();
 	titleTexture->Update(camera->GetViewMatrix(), camera->GetViewProjectionMatrix());
 	if (input->TriggerKey(DIK_Z) || input->TriggerButton(input->Button_B)) {
 		Audio::GetInstance()->StopWave(0);
@@ -89,11 +92,11 @@ void GamePlayScene::Update(DirectXCommon* dxCommon) {
 		Audio::GetInstance()->StopWave(1);
 		Audio::GetInstance()->LoopWave(1,0.7f);
 	}
-	if (input->TriggerKey(DIK_SPACE) || input->TriggerButton(input->Button_A)) {
-		Audio::GetInstance()->StopWave(0);
-		Audio::GetInstance()->StopWave(1);
-		SceneManager::GetInstance()->ChangeScene("TITLE");
-	}
+	//if (input->TriggerKey(DIK_SPACE) || input->TriggerButton(input->Button_A)) {
+	//	Audio::GetInstance()->StopWave(0);
+	//	Audio::GetInstance()->StopWave(1);
+	//	SceneManager::GetInstance()->ChangeScene("TITLE");
+	//}
 
 	if (input->PushKey(DIK_0) || input->TriggerButton(input->Button_Y)) {
 		object1->PlayAnimation();
@@ -124,13 +127,14 @@ void GamePlayScene::Draw(DirectXCommon* dxCommon) {
 
 
 	Object3d::PreDraw();
-	object1->Draw(dxCommon->GetCmdList());
+	//object1->Draw(dxCommon->GetCmdList());
 	//背景用
 	objSkydome->Draw();
-	objPin->Draw();
-	objGround->Draw();
+	//objPin->Draw();
+	//objGround->Draw();
+	player->Draw();
 	Texture::PreDraw(dxCommon->GetCmdList());
-	titleTexture->Draw();
+	//titleTexture->Draw();
 	Texture::PostDraw();
 
 }

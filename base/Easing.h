@@ -1,6 +1,6 @@
 #pragma once
 
-enum class type {
+enum  type {
 	   In=0,
 	   Out,
 	   InOut

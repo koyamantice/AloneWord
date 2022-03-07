@@ -7,12 +7,22 @@
 #include "LightGroup.h"
 #include "FBXObject3d.h"
 #include "Texture.h"
+#include <DirectXMath.h>
 #include<memory>
+#include "Player.h"
 
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>
 class GamePlayScene : public BaseScene{
+private:
+	// DirectX::を省略
+	using XMFLOAT2 = DirectX::XMFLOAT2;
+	using XMFLOAT3 = DirectX::XMFLOAT3;
+	using XMFLOAT4 = DirectX::XMFLOAT4;
+	using XMVECTOR = DirectX::XMVECTOR;
+	using XMMATRIX = DirectX::XMMATRIX;
+
 public:
 
 	/// <summary>
@@ -47,6 +57,10 @@ private:
 	DebugCamera* camera = { nullptr };
 	LightGroup* lightGroup = nullptr;
 	float ambientColor0[3] = { 1,1,1 };
+
+	Player* player = nullptr;
+
+
 	// 光線方向初期値
 	float lightDir0[3] = { 0,0,1 };
 	float lightColor0[3] = { 1,0,0 };

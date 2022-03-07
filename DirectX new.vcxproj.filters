@@ -155,6 +155,9 @@
     <ClCompile Include="2d\Texture.cpp">
       <Filter>2d</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\Framework.h">
@@ -282,6 +285,9 @@
     </ClInclude>
     <ClInclude Include="2d\Texture.h">
       <Filter>2d</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

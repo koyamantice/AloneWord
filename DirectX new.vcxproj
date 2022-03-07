@@ -92,7 +92,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)DirectXteX</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DirectXteX;$(SolutionDir)char</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -107,7 +107,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>false</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)DirectXteX</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)DirectXteX;$(SolutionDir)char</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -187,6 +187,7 @@
     <ClCompile Include="light\PointLight.cpp" />
     <ClCompile Include="light\SpotLight.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="scene\GamePlayScene.cpp" />
     <ClCompile Include="scene\TisGame.cpp" />
     <ClCompile Include="scene\TitleScene.cpp" />
@@ -235,6 +236,7 @@
     <ClInclude Include="light\LightGroup.h" />
     <ClInclude Include="light\PointLight.h" />
     <ClInclude Include="light\SpotLight.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="SceneFactory.h" />
     <ClInclude Include="scene\GamePlayScene.h" />
     <ClInclude Include="scene\TisGame.h" />
