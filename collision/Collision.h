@@ -6,6 +6,8 @@
 /// </summary>
 class Collision {
 public:
+	//‹…‚Æ‹…
+	bool SphereCollision(const float& X1, const float& Y1, const float& Z1, const float& R1, const float& X2, const float& Y2, const float& Z2, const float& R2);
 	/// <summary>
 	/// ‹…‚Æ•½–Ê‚Ì“–‚½‚è”»’è
 	/// </summary>

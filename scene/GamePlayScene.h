@@ -10,10 +10,11 @@
 #include <DirectXMath.h>
 #include<memory>
 #include "Player.h"
-
+#include "Enemy.h"
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>
+const int EnemyMax = 3;
 class GamePlayScene : public BaseScene{
 private:
 	// DirectX::を省略
@@ -59,7 +60,7 @@ private:
 	float ambientColor0[3] = { 1,1,1 };
 
 	Player* player = nullptr;
-
+	Enemy* enemy[EnemyMax] = { nullptr };
 
 	// 光線方向初期値
 	float lightDir0[3] = { 0,0,1 };
