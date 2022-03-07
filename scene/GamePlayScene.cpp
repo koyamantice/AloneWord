@@ -89,11 +89,11 @@ void GamePlayScene::Update(DirectXCommon* dxCommon) {
 		enemy[i]->Update(player);
 	}
 	titleTexture->Update(camera->GetViewMatrix(), camera->GetViewProjectionMatrix());
-	if (input->TriggerKey(DIK_Z) || input->TriggerButton(input->Button_B)) {
-		Audio::GetInstance()->StopWave(0);
-		Audio::GetInstance()->StopWave(1);
-		Audio::GetInstance()->LoopWave(0,0.7f);
-	}
+	//if (input->TriggerKey(DIK_Z) || input->TriggerButton(input->Button_B)) {
+	//	Audio::GetInstance()->StopWave(0);
+	//	Audio::GetInstance()->StopWave(1);
+	//	Audio::GetInstance()->LoopWave(0,0.7f);
+	//}
 	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
 		Audio::GetInstance()->StopWave(0);
 		Audio::GetInstance()->StopWave(1);
