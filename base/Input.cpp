@@ -175,6 +175,19 @@ bool Input::TriggerKey(BYTE keyNumber) {
 	return false;
 }
 
+bool Input::ReleaseKey(BYTE keyNumber) {
+	// 異常な引数を検出
+	assert(0 <= keyNumber && keyNumber <= 256);
+
+	// 前回が1で、今回が0ならリリース
+	if (keyPre[keyNumber] && !key[keyNumber]) {
+		return true;
+	}
+
+	// トリガーでない
+	return false;
+}
+
 bool Input::PushMouseLeft() {
 	// 0でなければ押している
 	if (mouseState.rgbButtons[0]) {

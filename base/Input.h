@@ -77,6 +77,12 @@ public: // メンバ関数
 	/// <param name="keyNumber">キー番号( DIK_0 等)</param>
 	/// <returns>トリガーか</returns>
 	bool TriggerKey(BYTE keyNumber);
+	/// <summary>
+	/// キーのリリースをチェック
+	/// </summary>
+	/// <param name="keyNumber">キー番号( DIK_0 等)</param>
+	/// <returns>リリースか</returns>
+	bool ReleaseKey(BYTE keyNumber);
 
 	/// <summary>
 	/// キーの左ボタン押下をチェック

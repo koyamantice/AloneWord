@@ -2,6 +2,7 @@
 #include "Input.h"
 #include"Collision.h"
 #include"Easing.h"
+#include "DebugText.h"
 #include<sstream>
 #include<iomanip>
 using namespace DirectX;
@@ -52,12 +53,14 @@ void Player::Update() {
 	shadowObj->Update();
 	collider.center = XMVectorSet(pos.x, pos.y, pos.z, 1);
 	if (input->PushKey(DIK_UP) || input->PushKey(DIK_DOWN)) {
-		if (!undoPos) {
+		if (!undoPos && !Dash) {
 			if (input->PushKey(DIK_UP)) {
 				speed += 2.0f;
+				oldEW = 1;
 			}
 			if (input->PushKey(DIK_DOWN)) {
 				speed -= 2.0f;
+				oldEW = 2;
 			}
 			//プレイヤー
 			radius = speed * PI / 180.0f;
@@ -67,6 +70,46 @@ void Player::Update() {
 			pos.y = circleZ;
 			object3d->SetPosition(pos);
 		}
+	}
+	if (!Dash) {
+		if (chage >= 0.5f) {
+			DebugText::GetInstance()->Print("OK", 0, 110, 5.0f);
+			if (input->ReleaseKey(DIK_Z)) {
+				if (chage < 1.0f) {
+					chage = 0.5f;
+				}
+				Dashframe = 0.0f;
+				if (oldEW != 2) {
+					lastspeed = speed + (90.0f * chage);
+				} else {
+					lastspeed = speed - (90.0f * chage);
+				}
+				Dash = true;
+			}
+		}
+		if (input->PushKey(DIK_Z)) {
+			chage += 0.0166f;
+			if (chage >= 1.0f) {
+				DebugText::GetInstance()->Print("MAX", 0, 50, 5.0f);
+				chage = 1.0f;
+			}
+		} else {
+			chage = 0;
+		}
+	} else {
+		if (Dashframe <= 1.0f) {
+			Dashframe += 0.04f;
+		} else {
+			Dashframe = 1.0f;
+			Dash = false;
+		}
+		speed = Ease(InOut, Sine, Dashframe, speed, lastspeed);
+		radius = speed * PI / 180.0f;
+		circleX = cosf(radius) * scale;
+		circleZ = sinf(radius) * scale;
+		pos.x = circleX;
+		pos.y = circleZ;
+		object3d->SetPosition(pos);
 	}
 	if (input->TriggerKey(DIK_SPACE)) {
 		if (!shadowFlag) {
@@ -89,7 +132,7 @@ void Player::Update() {
 		} else {
 			posX *= 0.999f;
 		}
-		Gauge->SetSize({ posX,64});
+		Gauge->SetSize({ posX,64 });
 		if (posX <= 2) {
 			if (!undoPos) {
 				frame = 0;
@@ -106,15 +149,15 @@ void Player::Update() {
 			Gauge->SetSize({ posX,64 });
 
 		}
-		if (posX<1) {
+		if (posX < 1) {
 			posX = 1;
 		}
 	}
 	//Gauge関連
-	if (CheckCool&&!needCool) {
-		Gauge->SetColor({255,0,0,255});
+	if (CheckCool && !needCool) {
+		Gauge->SetColor({ 255,0,0,255 });
 		coolCount++;
-		if (coolCount>90) {
+		if (coolCount > 90) {
 			CheckCool = false;
 			needCool = false;
 			coolCount = 0;
@@ -169,5 +212,4 @@ void Player::Draw() {
 		shadowObj->Draw();
 	}
 }
-
 

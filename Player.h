@@ -5,7 +5,6 @@
 #include <Input.h>
 #include"CollisionPrimitive.h"
 #include "Sprite.h"
-
 class Player {
 public:
 	Player();
@@ -13,7 +12,6 @@ public:
 	void Initialize();
 	void Update();
 	void Draw();
-	
 private:
 	// DirectX::Çè»ó™
 	using XMFLOAT2 = DirectX::XMFLOAT2;
@@ -44,7 +42,17 @@ private:
 	Model* model;
 	XMFLOAT3 pos = { 0,0,0 };
 	XMFLOAT3 shadowpos = { 0,0,0 };
-	Sprite *Gauge=nullptr;
+	Sprite* Gauge = nullptr;
+
+	char oldEW = 0;
+	float chage = 0;
+	bool Dash = false;
+	float Dashframe = 0.0f;
+	float lastradius = 0.0f;
+	float lastspeed = 0.0f;
+	float lastscale = 10.0f;// LaneNumÇ∆àÍèèÇ…ïœÇ¶ÇÈÇ±Ç∆
+	float LastPos_x = 0;
+	float LastPos_y = 0;
 	//ç¿ïWÇñﬂÇ∑
 	bool undoPos = false;
 
@@ -64,7 +72,7 @@ private:
 	bool  needCool = false;
 	float posX = 256;
 
-	XMFLOAT3 angle = { 0,0,0};
+	XMFLOAT3 angle = { 0,0,0 };
 	bool shadowFlag = false;
 	float shadowRadius = 0.0f;
 	float shadowSpeed = 0.0f;
@@ -73,6 +81,7 @@ private:
 	float shadowCircleZ = 0.0f;
 public:
 	Sphere collider;
+
 };
 
 
