@@ -4,16 +4,16 @@
 #include <DirectXMath.h>
 #include <Input.h>
 #include"CollisionPrimitive.h"
-#include "Sprite.h"
-
-class Player {
+#include "Player.h"
+#include "Collision.h"
+class Enemy {
 public:
-	Player();
+	Enemy();
 
 	void Initialize();
-	void Update();
+	void Update(Player* player);
 	void Draw();
-	
+	bool collidePlayer(Player* player);
 private:
 	// DirectX::を省略
 	using XMFLOAT2 = DirectX::XMFLOAT2;
@@ -22,57 +22,39 @@ private:
 	using XMVECTOR = DirectX::XMVECTOR;
 	using XMMATRIX = DirectX::XMMATRIX;
 public:
-	/// <summary>
 /// 座標の取得
-/// </summary>
-/// <returns>座標</returns>
 	const XMFLOAT3& GetPosition() { return  object3d->GetPosition(); }
 
 	const XMFLOAT3& GetRotation() { return object3d->GetRotation(); }
 
-	/// <summary>
+	const int& GetisAlive() { return IsAlive; }
 	/// 座標の設定
-	/// </summary>
-	/// <param name="position">座標</param>
 	void SetPosition(XMFLOAT3 position) { object3d->SetPosition(position); }
 
 	void SetRotation(XMFLOAT3 rotation) { object3d->SetRotation(rotation); }
 
+	//bool Collision(XMFLOAT3 position, float radius);
+
+	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
 private:
-	Object3d* shadowObj;
 	Object3d* object3d;
 	Model* model;
-	XMFLOAT3 pos = { 0,0,0 };
-	XMFLOAT3 shadowpos = { 0,0,0 };
-	Sprite *Gauge=nullptr;
-	//座標を戻す
-	bool undoPos = false;
-
+	XMFLOAT3 pos = {0,0,0};
+	
 	float rad = 0.4f;
 	const float PI = 3.14f;
 
 	float radius = 0.0f;
 	float speed = 0.0f;
-	float scale = 10.0f;// LaneNumと一緒に変えること
+	float scale = 0.0f;// LaneNumと一緒に変えること
 	float circleX = 0.0f;
 	float circleZ = 0.0f;
+	int IsAlive = 0;
+	int IsTimer = 100;
+	int IsMove = 0;
 
-	//残像関連
-	float frame = 0.0f;
-	bool CheckCool = false;
-	int coolCount = 0;
-	bool  needCool = false;
-	float posX = 256;
-
-	XMFLOAT3 angle = { 0,0,0};
-	bool shadowFlag = false;
-	float shadowRadius = 0.0f;
-	float shadowSpeed = 0.0f;
-	float shadowScale = 10.0f;// LaneNumと一緒に変えること
-	float shadowCircleX = 0.0f;
-	float shadowCircleZ = 0.0f;
 public:
 	Sphere collider;
+	Collision* collision = nullptr;
 };
-
 

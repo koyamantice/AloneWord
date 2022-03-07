@@ -12,6 +12,10 @@ void GamePlayScene::Initialize(DirectXCommon* dxCommon) {
 	Object3d::SetCamera(camera);
 	player = new Player();
 	player->Initialize();
+	for (int i = 0; i < EnemyMax; i++) {
+		enemy[i] = new Enemy();
+		enemy[i]->Initialize();
+	}
 	//オブジェクト初期化
 	modelPin=Model::CreateFromOBJ("chr_knight");
 	objPin=Object3d::Create();
@@ -81,6 +85,9 @@ void GamePlayScene::Update(DirectXCommon* dxCommon) {
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
+	for (int i = 0; i < EnemyMax; i++) {
+		enemy[i]->Update(player);
+	}
 	titleTexture->Update(camera->GetViewMatrix(), camera->GetViewProjectionMatrix());
 	if (input->TriggerKey(DIK_Z) || input->TriggerButton(input->Button_B)) {
 		Audio::GetInstance()->StopWave(0);
@@ -133,6 +140,9 @@ void GamePlayScene::Draw(DirectXCommon* dxCommon) {
 	//objPin->Draw();
 	//objGround->Draw();
 	player->Draw();
+	for (int i = 0; i < EnemyMax; i++) {
+		enemy[i]->Draw();
+	}
 	Texture::PreDraw(dxCommon->GetCmdList());
 	//titleTexture->Draw();
 	Texture::PostDraw();

@@ -36,6 +36,9 @@
     <Filter Include="light">
       <UniqueIdentifier>{0bcf11f6-1c89-4d12-abb2-e56cabe202a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="enemy">
+      <UniqueIdentifier>{6c41b431-af74-4d62-a1b3-4f60e87dfa34}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scene\GamePlayScene.cpp">
@@ -157,6 +160,9 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>player</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy\Enemy.cpp">
+      <Filter>enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -288,6 +294,9 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy\Enemy.h">
+      <Filter>enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
