@@ -38,11 +38,11 @@ void GamePlayScene::Initialize(DirectXCommon* dxCommon) {
 	Sprite::LoadTexture(1, L"Resources/2d/title.png");
 	Sprite::LoadTexture(2, L"Resources/2d/gameplay.png");
 	//普通のテクスチャ(板ポリ)
-	Texture::LoadTexture(0, L"Resources/2d/title.png");
+	/*Texture::LoadTexture(0, L"Resources/2d/title.png");
 	titleTexture = Texture::Create(0, { 0,0,0 }, { 12,12,12 }, { 1,1,1,1 });
 	titleTexture->TextureCreate();
 	titleTexture->SetPosition({ 5.0f,10.0f,-10.0f });
-	titleTexture->SetScale({ 0.5,0.5,0.5 });
+	titleTexture->SetScale({ 0.5,0.5,0.5 });*/
 	//背景スプライト生成
 	sprite = Sprite::Create(2, { 0.0f,0.0f });
 	
@@ -55,8 +55,8 @@ void GamePlayScene::Initialize(DirectXCommon* dxCommon) {
 	Object3d::SetLightGroup(lightGroup);
 
 	// カメラ注視点をセット
-	camera->SetTarget({ 0, 1, 0 });
-	camera->SetEye({ 0, 3.0f, -20.0f });
+	camera->SetTarget(player->GetPosition());
+	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10});
 	// モデル名を指定してファイル読み込み
 	model1 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 
@@ -85,15 +85,10 @@ void GamePlayScene::Update(DirectXCommon* dxCommon) {
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
-	for (int i = 0; i < EnemyMax; i++) {
+	/*for (int i = 0; i < EnemyMax; i++) {
 		enemy[i]->Update(player);
 	}
-	titleTexture->Update(camera->GetViewMatrix(), camera->GetViewProjectionMatrix());
-	//if (input->TriggerKey(DIK_Z) || input->TriggerButton(input->Button_B)) {
-	//	Audio::GetInstance()->StopWave(0);
-	//	Audio::GetInstance()->StopWave(1);
-	//	Audio::GetInstance()->LoopWave(0,0.7f);
-	//}
+	*/
 	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
 		Audio::GetInstance()->StopWave(0);
 		Audio::GetInstance()->StopWave(1);
@@ -112,17 +107,9 @@ void GamePlayScene::Update(DirectXCommon* dxCommon) {
 	object1->Update();
 	DebugText::GetInstance()->Print("SPACE to TITLE!!",200, 100,1.0f);
 	DebugText::GetInstance()->Print("Z or C to Sound!!", 200, 115, 1.0f);
-	if (sizeof(enemy) > 2) {//配列のサイズ確認
-		for (int colA = 0; colA < EnemyMax; colA++) {
-			for (int colB = 1; colB < EnemyMax; colB++) {
-				if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB
-					&& enemy[colA]->GetisAlive() == 1 && enemy[colB]->GetisAlive() == 1) {//当たり判定と自機同士の当たり判定の削除
-					DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
-					break;
-				}
-			}
-		}
-	}
+	
+	camera->SetTarget(player->GetPosition());
+	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
 }
 
 void GamePlayScene::Draw(DirectXCommon* dxCommon) {
@@ -149,13 +136,12 @@ void GamePlayScene::Draw(DirectXCommon* dxCommon) {
 	//背景用
 	objSkydome->Draw();
 	//objPin->Draw();
-	//objGround->Draw();
+	objGround->Draw();
 	player->Draw();
 	for (int i = 0; i < EnemyMax; i++) {
 		enemy[i]->Draw();
 	}
 	Texture::PreDraw(dxCommon->GetCmdList());
-	//titleTexture->Draw();
 	Texture::PostDraw();
 
 }

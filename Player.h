@@ -53,6 +53,7 @@ private:
 	float lastscale = 10.0f;// LaneNum‚Æˆê‚É•Ï‚¦‚é‚±‚Æ
 	float LastPos_x = 0;
 	float LastPos_y = 0;
+	float PlayerSpeed = 0.3f;
 	//À•W‚ğ–ß‚·
 	bool undoPos = false;
 
