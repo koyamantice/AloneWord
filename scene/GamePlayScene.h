@@ -11,6 +11,7 @@
 #include<memory>
 #include "Player.h"
 #include "Enemy.h"
+#include "Easing.h"
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>

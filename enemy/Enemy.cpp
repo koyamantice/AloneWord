@@ -7,7 +7,9 @@ using namespace DirectX;
 
 Enemy::Enemy() {
 	model = Model::CreateFromOBJ("chr_sword");
+	bossmodel = Model::CreateFromOBJ("chr_sword");
 	object3d = new Object3d();
+	bossobj = new Object3d();
 }
 
 void Enemy::Initialize() {
@@ -16,49 +18,50 @@ void Enemy::Initialize() {
 	radius = speed * PI / 180.0f;
 	circleX = cosf(radius) * scale;
 	circleZ = sinf(radius) * scale;
-	pos.x = circleX;
-	pos.y = circleZ;
+	pos.x = circleX + bosspos.x;
+	pos.y = circleZ + bosspos.z;
 	IsAlive = 0;
 	IsTimer = 100;
 	object3d = Object3d::Create();
 	object3d->SetModel(model);
 	object3d->SetPosition(pos);
-	object3d->SetScale({ 0.5,0.5,0.5 });
+	bossobj = Object3d::Create();
+	bossobj->SetModel(bossmodel);
+	bossobj->SetPosition(bosspos);
+	bossobj->SetScale({ 3.5,3.5,3.5 });
 	collider.radius=rad;
 }
 
 void Enemy::Update(Player* player) {
-	XMFLOAT3 pos = this->object3d->GetPosition();
 	object3d->Update();
+	bossobj->Update();
 	collider.center = XMVectorSet(pos.x,pos.y,pos.z,1);
 
 	if (IsAlive == 0) {
 		IsTimer--;
-		if (IsTimer == 0) {
-			IsTimer = 100;
-			IsAlive = 1;
-			speed = (float)(rand() % 360);
-			scale = 0;
-			IsMove = rand() % 2;
-		}
-	} else {
-		if (scale != 10.0f) {
-			scale += 0.5f;
-		} else {
-			if (IsMove == 1) {
-				speed += 0.5f;
-			} else if (IsMove == 0) {
-				speed -= 0.5f;
-			}
-		}
+	}
+
+	if (IsTimer == 0) {
+		IsAlive = 1;
+		IsTimer = 100;
+		speed = (float)(rand() % 360);
+		scale = (float)(rand() % 10 + 10);
+
+		radius = speed * PI / 180.0f;
+		circleX = cosf(radius) * scale;
+		circleZ = sinf(radius) * scale;
+		pos.x = circleX + bosspos.x;
+		pos.z = circleZ + bosspos.z;
 	}
 	//ƒvƒŒƒCƒ„[
 	radius = speed * PI / 180.0f;
 	circleX = cosf(radius) * scale;
 	circleZ = sinf(radius) * scale;
-	pos.x = circleX;
-	pos.y = circleZ;
+	pos.x = circleX + bosspos.x;
+	pos.y = circleZ + bosspos.z;
+	pos = { 0.0f,0.0f,0.0f };
 	object3d->SetPosition(pos);
+	bossobj->SetPosition(bosspos);
 	collidePlayer(player);
 }
 
@@ -67,6 +70,8 @@ void Enemy::Draw() {
 	if (IsAlive == 1) {
 		object3d->Draw();
 	}
+
+	bossobj->Draw();
 }
 
 bool Enemy::collidePlayer(Player* player) {

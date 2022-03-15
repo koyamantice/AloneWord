@@ -39,9 +39,11 @@ public:
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
 private:
 	Object3d* object3d;
+	Object3d* bossobj;
 	Model* model;
+	Model* bossmodel;
 	XMFLOAT3 pos = {0,0,0};
-	
+	XMFLOAT3 bosspos = { 0,0,0 };
 	float rad = 0.4f;
 	const float PI = 3.14f;
 
