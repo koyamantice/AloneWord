@@ -61,40 +61,40 @@ void Player::Update() {
 	//
 	//}
 
-	if (AttackFlag == false && ArmMoveNumber <= 1 && AttackMoveNumber == 0) {
-		if (input->LeftTiltStick(input->Right)) {
+	if (ArmMoveNumber <= 0) {
+		if (input->LeftTiltStick(input->Right) && AttackFlag == false && AttackMoveNumber == 0) {
 			pos.x += PlayerSpeed;
 			rot.y = 90;
 			ArmSpeed = 0;
 		}
 
-		if (input->LeftTiltStick(input->Left)) {
+		if (input->LeftTiltStick(input->Left) && AttackFlag == false && AttackMoveNumber == 0) {
 			pos.x -= PlayerSpeed;
 			rot.y = 270;
 			ArmSpeed = 180;
 		}
 
-		if (input->LeftTiltStick(input->Up)) {
+		if (input->LeftTiltStick(input->Up) && AttackFlag == false && AttackMoveNumber == 0) {
 			pos.z += PlayerSpeed;
 			rot.y = 0;
 			ArmSpeed = 90;
 		}
 
-		if (input->LeftTiltStick(input->Down)) {
+		if (input->LeftTiltStick(input->Down) && AttackFlag == false && AttackMoveNumber == 0) {
 			pos.z -= PlayerSpeed;
 			rot.y = 180;
 			ArmSpeed = 270;
 		}
 
 
-		if (input->PushButton(input->Button_RB) && ArmWeight <= 6.0f) {
+		if (input->PushButton(input->Button_RB) && ArmWeight <= 6.0f && AttackFlag == false && AttackMoveNumber == 0) {
 			ArmMoveNumber = 1;
 			initscale = Armscale;
 			frame = 0;
 		}
 
 		//UŒ‚
-		if (input->TriggerButton(input->Button_A) && AttackFlag == false) {
+		if (input->TriggerButton(input->Button_A) && AttackFlag == false && ArmWeight != 0.0f) {
 			AttackFlag = true;
 			AttackMoveNumber = 1;
 			initscale = Armscale;
@@ -174,6 +174,7 @@ void Player::Update() {
 }
 
 void Player::Draw() {
+
 	Sprite::PreDraw();
 	//”wŒi—p
 	SpritePlayerHP->Draw();
