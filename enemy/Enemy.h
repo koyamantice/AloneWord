@@ -6,6 +6,7 @@
 #include"CollisionPrimitive.h"
 #include "Player.h"
 #include "Collision.h"
+#include "Texture.h"
 
 class BossEnemy;
 class Enemy {
@@ -44,6 +45,8 @@ public:
 private:
 	Object3d* object3d;
 	Model* model;
+	Texture* texture;
+
 	XMFLOAT3 pos = {0,0,0};
 	float rad = 0.4f;
 	const float PI = 3.14f;

@@ -7,7 +7,7 @@
 void GamePlayScene::Initialize(DirectXCommon* dxCommon) {
 	// カメラ生成
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
-
+	Texture::SetCamera(camera);
 	// 3Dオブジェクトにカメラをセット
 	Object3d::SetCamera(camera);
 	player = new Player();
@@ -20,26 +20,11 @@ void GamePlayScene::Initialize(DirectXCommon* dxCommon) {
 		enemy[i]->Initialize();
 	}
 	//オブジェクト初期化
-	modelPin=Model::CreateFromOBJ("chr_knight");
-	objPin=Object3d::Create();
-	objPin->Initialize();
-	objPin->SetModel(modelPin);
-	objPin->SetPosition({0,0,0});
-	//オブジェクト初期化
-	modelSkydome = Model::CreateFromOBJ("skydome");
-	objSkydome = Object3d::Create();
-	objSkydome->Initialize();
-	objSkydome->SetModel(modelSkydome);
-	objSkydome->SetPosition({ 0,0,0 });
-	//オブジェクト初期化
 	modelGround = Model::CreateFromOBJ("ground");
 	objGround = Object3d::Create();
 	objGround->Initialize();
 	objGround->SetModel(modelGround);
-	objGround->SetPosition({ 0,0,0 });
-	// テクスチャ読み込み
-	Sprite::LoadTexture(1, L"Resources/2d/title.png");
-	Sprite::LoadTexture(2, L"Resources/2d/gameplay.png");
+	objGround->SetPosition({ 0,-1,0 });
 	//普通のテクスチャ(板ポリ)
 	/*Texture::LoadTexture(0, L"Resources/2d/title.png");
 	titleTexture = Texture::Create(0, { 0,0,0 }, { 12,12,12 }, { 1,1,1,1 });
@@ -47,7 +32,6 @@ void GamePlayScene::Initialize(DirectXCommon* dxCommon) {
 	titleTexture->SetPosition({ 5.0f,10.0f,-10.0f });
 	titleTexture->SetScale({ 0.5,0.5,0.5 });*/
 	//背景スプライト生成
-	sprite = Sprite::Create(2, { 0.0f,0.0f });
 	
 	// モデル読み込み
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
@@ -77,13 +61,10 @@ void GamePlayScene::Initialize(DirectXCommon* dxCommon) {
 
 void GamePlayScene::Finalize() {
 	//３ｄのモデルのデリート
-	delete objPin;
 }
 
 void GamePlayScene::Update(DirectXCommon* dxCommon) {
 	Input* input = Input::GetInstance();
-	objPin->Update();
-	objSkydome->Update();
 	objGround->Update();
 	lightGroup->Update();
 	camera->Update();
@@ -138,8 +119,6 @@ void GamePlayScene::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw();
 	//object1->Draw(dxCommon->GetCmdList());
 	//背景用
-	objSkydome->Draw();
-	//objPin->Draw();
 	objGround->Draw();
 	player->Draw();
 	for (int i = 0; i < EnemyMax; i++) {
@@ -147,7 +126,6 @@ void GamePlayScene::Draw(DirectXCommon* dxCommon) {
 	}
 
 	bossenemy->Draw();
-	Texture::PreDraw(dxCommon->GetCmdList());
-	Texture::PostDraw();
+	Texture::PreDraw();
 
 }

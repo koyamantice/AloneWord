@@ -20,7 +20,12 @@ void Enemy::Initialize() {
 	object3d = Object3d::Create();
 	object3d->SetModel(model);
 	object3d->SetPosition(pos);
-
+	Texture::LoadTexture(0, L"Resources/2d/enemy.png");
+	texture = Texture::Create(0, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	texture->TextureCreate();
+	texture->SetPosition(pos);
+	texture->SetRotation({ 90,0,0 });
+	texture->SetScale({ 0.2f,0.2f,0.2f });
 	collider.radius=rad;
 }
 
@@ -29,6 +34,8 @@ void Enemy::Update(Player* player,BossEnemy* bossenemy) {
 	collider.center = XMVectorSet(pos.x,pos.y,pos.z,1);
 	XMFLOAT3 bosspos = bossenemy->GetPosition();
 	XMFLOAT3 playerpos = player->GetPosition();
+	texture->Update();
+	texture->SetPosition(pos);
 
 	if (IsAlive == 0) {
 		IsTimer--;
@@ -66,8 +73,9 @@ void Enemy::Draw() {
 	if (IsAlive == 1) {
 		object3d->Draw();
 	}
+	Texture::PreDraw();
 
-	//bossobj->Draw();
+	texture->Draw();
 }
 
 bool Enemy::collideArm(Player* player) {

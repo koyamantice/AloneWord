@@ -44,7 +44,7 @@ void WinApp::Initialize() {
 		w.hInstance,//呼び出しアプリケーションハンドル
 		nullptr);//オプション
 
-	SetWinCenter();//ウィンドウを真ん中に持ってくる
+	//SetWinCenter();//ウィンドウを真ん中に持ってくる
 	ShowWindow(hwnd, SW_SHOW);
 }
 

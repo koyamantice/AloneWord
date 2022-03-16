@@ -47,16 +47,10 @@ public:
 	void Draw(DirectXCommon* dxCommon) override;
 
 private:
-	Model* modelPin = nullptr;
-	Object3d *objPin;
-	Model* modelSkydome = nullptr;
-	Object3d* objSkydome;
 	Model* modelGround = nullptr;
 	Object3d* objGround;
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;
-	Texture* titleTexture = nullptr;
-	Sprite* sprite = { nullptr };
 	DebugCamera* camera = { nullptr };
 	LightGroup* lightGroup = nullptr;
 	float ambientColor0[3] = { 1,1,1 };

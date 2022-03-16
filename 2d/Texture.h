@@ -5,6 +5,7 @@
 #include <d3d12.h>
 #include <DirectXMath.h>
 #include <d3dx12.h>
+#include "Camera.h"
 
 class Texture
 {
@@ -42,13 +43,13 @@ private: // 定数
 	static const int indexCount = 3 * 2;
 public: // 静的メンバ関数
 	/// 静的初期化
-	static bool StaticInitialize(ID3D12Device* device, int window_width, int window_height);
+	static bool StaticInitialize(ID3D12Device* device, ID3D12GraphicsCommandList* cmdList, int window_width, int window_height, Camera* camera=nullptr);
 
 	/// テクスチャ読み込み
 	static bool LoadTexture(UINT texnumber, const wchar_t* filename);
 
 	/// 描画前処理
-	static void PreDraw(ID3D12GraphicsCommandList* cmdList);
+	static void PreDraw();
 
 	/// 描画後処理
 	static void PostDraw();
@@ -59,6 +60,13 @@ public: // 静的メンバ関数
 
 	/// 視点座標の設定
 	static void SetEye(XMFLOAT3 eye);
+	/// <summary>
+/// カメラセット
+/// </summary>
+/// <returns></returns>
+	static void SetCamera(Camera* camera) {
+		Texture::camera = camera;
+	}
 
 	/// 注視点座標の取得
 	static const XMFLOAT3& GetTarget() { return target; }
@@ -106,6 +114,12 @@ private: // 静的メンバ変数
 	static XMFLOAT3 target;
 	// 上方向ベクトル
 	static XMFLOAT3 up;
+	// ビルボード行列
+	static XMMATRIX matBillboard;
+	// Y軸回りビルボード行列
+	static XMMATRIX matBillboardY;
+	// カメラ
+	static Camera* camera;
 	// 頂点バッファビュー
 	static D3D12_VERTEX_BUFFER_VIEW vbView;
 	// インデックスバッファビュー
@@ -139,7 +153,7 @@ public: // メンバ関数
 	Texture(UINT texNumber, XMFLOAT3 position, XMFLOAT3 size, XMFLOAT4 color);
 	bool Initialize();
 	/// 毎フレーム処理
-	void Update(XMMATRIX matview, XMMATRIX matprojection);
+	void Update();
 
 	/// 描画
 	void Draw();
@@ -165,7 +179,9 @@ private: // メンバ変数
 	XMFLOAT3 position = { 0,0,0 };
 	// ローカルワールド変換行列
 	XMMATRIX matWorld;
-	
+	// ビルボード
+	bool isBillboard = false;
+
 };
 
 
