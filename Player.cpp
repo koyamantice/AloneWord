@@ -21,14 +21,14 @@ Player::Player() {
 	Armmodel = Model::CreateFromOBJ("Particle");
 	object3d = new Object3d();
 	Armobj = new Object3d();
-	Sprite::LoadTexture(3, L"Resources/2d/gage.png");
+	Sprite::LoadTexture(3, L"Resources/2d/PlayerHP.png");
 
 }
 
 void Player::Initialize() {
-	Sprite::LoadTexture(3, L"Resources/2d/gage.png");
+	Sprite::LoadTexture(3, L"Resources/2d/PlayerHP.png");
 	//”wŒiƒXƒvƒ‰ƒCƒg¶¬
-	Gauge = Sprite::Create(3, { 0.0f,0.0f });
+	SpritePlayerHP = Sprite::Create(3, { 0.0f,0.0f });
 
 	object3d = Object3d::Create();
 	object3d->SetModel(model);
@@ -61,7 +61,7 @@ void Player::Update() {
 	//
 	//}
 
-	if (AttackFlag == false && ArmMoveNumber == 0 && AttackMoveNumber == 0) {
+	if (AttackFlag == false && ArmMoveNumber <= 1 && AttackMoveNumber == 0) {
 		if (input->LeftTiltStick(input->Right)) {
 			pos.x += PlayerSpeed;
 			rot.y = 90;
@@ -94,7 +94,7 @@ void Player::Update() {
 		}
 
 		//UŒ‚
-		if (input->TriggerButton(input->Button_A)) {
+		if (input->TriggerButton(input->Button_A) && AttackFlag == false) {
 			AttackFlag = true;
 			AttackMoveNumber = 1;
 			initscale = Armscale;
@@ -176,7 +176,8 @@ void Player::Update() {
 void Player::Draw() {
 	Sprite::PreDraw();
 	//”wŒi—p
-	Gauge->Draw();
+	SpritePlayerHP->Draw();
+	SpritePlayerHP->SetSize({ (float)(HP * 30),20 });
 
 	Object3d::PreDraw();
 	object3d->Draw();

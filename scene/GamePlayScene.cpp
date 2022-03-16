@@ -12,6 +12,9 @@ void GamePlayScene::Initialize(DirectXCommon* dxCommon) {
 	Object3d::SetCamera(camera);
 	player = new Player();
 	player->Initialize();
+
+	bossenemy = new BossEnemy();
+	bossenemy->Initialize();
 	for (int i = 0; i < EnemyMax; i++) {
 		enemy[i] = new Enemy();
 		enemy[i]->Initialize();
@@ -48,7 +51,7 @@ void GamePlayScene::Initialize(DirectXCommon* dxCommon) {
 	
 	// モデル読み込み
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
-	srand(NULL);
+	//srand(NULL);
 	// ライト生成
 	lightGroup = LightGroup::Create();
 	// 3Dオブエクトにライトをセット
@@ -85,10 +88,11 @@ void GamePlayScene::Update(DirectXCommon* dxCommon) {
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
-	/*for (int i = 0; i < EnemyMax; i++) {
-		enemy[i]->Update(player);
+	bossenemy->Update(player);
+	for (int i = 0; i < EnemyMax; i++) {
+		enemy[i]->Update(player,bossenemy);
 	}
-	*/
+	
 	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
 		Audio::GetInstance()->StopWave(0);
 		Audio::GetInstance()->StopWave(1);
@@ -141,6 +145,8 @@ void GamePlayScene::Draw(DirectXCommon* dxCommon) {
 	for (int i = 0; i < EnemyMax; i++) {
 		enemy[i]->Draw();
 	}
+
+	bossenemy->Draw();
 	Texture::PreDraw(dxCommon->GetCmdList());
 	Texture::PostDraw();
 

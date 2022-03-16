@@ -170,6 +170,7 @@
     <ClCompile Include="base\SceneFactory.cpp" />
     <ClCompile Include="base\SceneManager.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
+    <ClCompile Include="BossEnemy.cpp" />
     <ClCompile Include="camera\Camera.cpp" />
     <ClCompile Include="camera\DebugCamera.cpp" />
     <ClCompile Include="collision\BaseCollider.cpp" />
@@ -218,6 +219,7 @@
     <ClInclude Include="base\Input.h" />
     <ClInclude Include="base\SceneManager.h" />
     <ClInclude Include="base\WinApp.h" />
+    <ClInclude Include="BossEnemy.h" />
     <ClInclude Include="camera\Camera.h" />
     <ClInclude Include="camera\DebugCamera.h" />
     <ClInclude Include="collision\BaseCollider.h" />

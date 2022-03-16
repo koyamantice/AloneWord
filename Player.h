@@ -28,6 +28,14 @@ public:
 
 	const XMFLOAT3& GetRotation() { return object3d->GetRotation(); }
 
+	const XMFLOAT3& GetArmPosition() { return Armpos; }
+
+	const int& GetHp() { return HP; }
+
+	const int& GetArmMoveNumber() { return ArmMoveNumber; }
+
+	const bool& GetAttackFlag() { return AttackFlag; }
+
 	/// <summary>
 	/// 座標の設定
 	/// </summary>
@@ -36,14 +44,21 @@ public:
 
 	void SetRotation(XMFLOAT3 rotation) { object3d->SetRotation(rotation); }
 
+	void SetArmPosition(XMFLOAT3 Armpos) { this->Armpos = Armpos; }
+
+	void SetHp(int hp) { this->HP = hp; }
+
+	void SetArmMoveNumber(int ArmMoveNumber) { this->ArmMoveNumber = ArmMoveNumber; }
+
+	void SetAttackFlag(bool AttackFlag) { this->AttackFlag = AttackFlag; }
 private:
 	Object3d* Armobj;
 	Object3d* object3d;
 	Model* model;
 	Model* Armmodel;
-	XMFLOAT3 pos = { 0,0,0 };
+	XMFLOAT3 pos = { 0,0,-10 };
 	XMFLOAT3 Armpos = { 0,0,0 };
-	Sprite* Gauge = nullptr;
+	Sprite* SpritePlayerHP = nullptr;
 
 	float PlayerSpeed = 0.3f;
 	//座標を戻す
@@ -76,7 +91,8 @@ private:
 	float frameMax2 = 80.0f;
 	float frame3 = 0.0f;
 	float frameMax3 = 80.0f;
-	//残像関連
+	//HP
+	int HP = 10;
 
 	XMFLOAT3 angle = { 0,0,0 };
 public:
