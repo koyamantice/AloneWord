@@ -1,4 +1,4 @@
-ï»¿#pragma once
+#pragma once
 
 #include "BaseScene.h"
 #include "Sprite.h"
@@ -14,12 +14,12 @@
 #include "BossEnemy.h"
 #include "Easing.h"
 /// <summary>
-/// ã‚²ãƒ¼ãƒ ãƒ—ãƒ¬ã‚¤ã‚·ãƒ¼ãƒ³
+/// ƒQ[ƒ€ƒvƒŒƒCƒV[ƒ“
 /// </summary>
 const int EnemyMax = 13;
-class GamePlayScene : public BaseScene{
+class StartMap : public BaseScene {
 private:
-	// DirectX::ã‚’çœç•¥
+	// DirectX::‚ğÈ—ª
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
@@ -29,20 +29,20 @@ private:
 public:
 
 	/// <summary>
-	/// åˆæœŸåŒ–
+	/// ‰Šú‰»
 	/// </summary>
 	void Initialize(DirectXCommon* dxCommon) override;
 	/// <summary>
-	/// çµ‚äº†
+	/// I—¹
 	/// </summary>
 	void Finalize() override;
 
 	/// <summary>
-	/// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ æ›´æ–°
+	/// –ˆƒtƒŒ[ƒ€XV
 	/// </summary>
 	void Update(DirectXCommon* dxCommon) override;
 	/// <summary>
-	/// æç”»
+	/// •`‰æ
 	/// </summary>
 	void Draw(DirectXCommon* dxCommon) override;
 
@@ -58,7 +58,7 @@ private:
 	Player* player = nullptr;
 	Enemy* enemy[EnemyMax] = { nullptr };
 	BossEnemy* bossenemy = nullptr;
-	// å…‰ç·šæ–¹å‘åˆæœŸå€¤
+	// Œõü•ûŒü‰Šú’l
 	float lightDir0[3] = { 0,0,1 };
 	float lightColor0[3] = { 1,0,0 };
 

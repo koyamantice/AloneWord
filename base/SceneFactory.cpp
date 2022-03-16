@@ -1,6 +1,7 @@
 #include "SceneFactory.h"
-#include "GamePlayScene.h"
 #include "TitleScene.h"
+#include "StartMap.h"
+#include "BossScene.h"
 
 
 BaseScene* SceneFactory::CreateScene(const std::string& sceneName) {
@@ -9,9 +10,11 @@ BaseScene* SceneFactory::CreateScene(const std::string& sceneName) {
 	if (sceneName=="TITLE") {
 		newScene=new TitleScene();
 	}
-	else if(sceneName == "GAMEPLAY"){
-		newScene = new GamePlayScene();
-
+	else if (sceneName == "STARTMAP") {
+		newScene = new StartMap();
+	}
+	else if(sceneName == "BOSS"){
+		newScene = new BossScene();
 	}
 	return newScene;
 }

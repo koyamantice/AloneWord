@@ -4,7 +4,7 @@
 #include "Framework.h"
 #include <vector>
 
-class GamePlayScene;
+class BossScene;
 class TitleScene;
 
 class TisGame:public Framework {

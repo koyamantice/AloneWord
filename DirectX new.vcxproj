@@ -190,7 +190,8 @@
     <ClCompile Include="light\SpotLight.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="scene\GamePlayScene.cpp" />
+    <ClCompile Include="scene\BossScene.cpp" />
+    <ClCompile Include="scene\StartMap.cpp" />
     <ClCompile Include="scene\TisGame.cpp" />
     <ClCompile Include="scene\TitleScene.cpp" />
   </ItemGroup>
@@ -242,7 +243,8 @@
     <ClInclude Include="light\SpotLight.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="SceneFactory.h" />
-    <ClInclude Include="scene\GamePlayScene.h" />
+    <ClInclude Include="scene\BossScene.h" />
+    <ClInclude Include="scene\StartMap.h" />
     <ClInclude Include="scene\TisGame.h" />
     <ClInclude Include="scene\TitleScene.h" />
   </ItemGroup>

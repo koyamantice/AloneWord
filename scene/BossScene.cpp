@@ -1,10 +1,10 @@
-#include "GamePlayScene.h"
+#include "BossScene.h"
 #include "Audio.h"
 #include "input.h"
 #include "DebugText.h"
 #include "TitleScene.h"
 #include "FbxLoader.h"
-void GamePlayScene::Initialize(DirectXCommon* dxCommon) {
+void BossScene::Initialize(DirectXCommon* dxCommon) {
 	// ƒJƒƒ‰¶¬
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
@@ -15,7 +15,7 @@ void GamePlayScene::Initialize(DirectXCommon* dxCommon) {
 
 	bossenemy = new BossEnemy();
 	bossenemy->Initialize();
-	for (int i = 0; i < EnemyMax; i++) {
+	for (int i = 0; i < EnemyMa; i++) {
 		enemy[i] = new Enemy();
 		enemy[i]->Initialize();
 	}
@@ -59,18 +59,18 @@ void GamePlayScene::Initialize(DirectXCommon* dxCommon) {
 	object1->SetModel(model1);
 }
 
-void GamePlayScene::Finalize() {
+void BossScene::Finalize() {
 	//‚R‚„‚Ìƒ‚ƒfƒ‹‚ÌƒfƒŠ[ƒg
 }
 
-void GamePlayScene::Update(DirectXCommon* dxCommon) {
+void BossScene::Update(DirectXCommon* dxCommon) {
 	Input* input = Input::GetInstance();
 	objGround->Update();
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
 	bossenemy->Update(player);
-	for (int i = 0; i < EnemyMax; i++) {
+	for (int i = 0; i < EnemyMa; i++) {
 		enemy[i]->Update(player,bossenemy);
 	}
 	
@@ -97,7 +97,7 @@ void GamePlayScene::Update(DirectXCommon* dxCommon) {
 	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
 }
 
-void GamePlayScene::Draw(DirectXCommon* dxCommon) {
+void BossScene::Draw(DirectXCommon* dxCommon) {
 	//ImGui::Begin("test");
 	//if (ImGui::TreeNode("Debug"))
 	//{
@@ -121,7 +121,7 @@ void GamePlayScene::Draw(DirectXCommon* dxCommon) {
 	//”wŒi—p
 	objGround->Draw();
 	player->Draw();
-	for (int i = 0; i < EnemyMax; i++) {
+	for (int i = 0; i < EnemyMa; i++) {
 		enemy[i]->Draw();
 	}
 

@@ -94,7 +94,7 @@ void Player::Update() {
 		}
 
 		//UŒ‚
-		if (input->TriggerButton(input->Button_A) && AttackFlag == false && ArmWeight != 0.0f) {
+		if (input->TriggerButton(input->Button_A) && AttackFlag == false && ArmWeight != 0.0f && AttackMoveNumber == 0) {
 			AttackFlag = true;
 			AttackMoveNumber = 1;
 			initscale = Armscale;

@@ -23,7 +23,7 @@ void TitleScene::Finalize() {
 void TitleScene::Update(DirectXCommon* dxCommon) {
 	Input* input = Input::GetInstance();
 	if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
-		SceneManager::GetInstance()->ChangeScene("GAMEPLAY");
+		SceneManager::GetInstance()->ChangeScene("STARTMAP");
 	}
 	DebugText::GetInstance()->Print("ENTER to GAMEPLAY!!", 200, 100, 1.0f);
 }

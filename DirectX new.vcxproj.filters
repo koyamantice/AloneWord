@@ -41,9 +41,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="scene\GamePlayScene.cpp">
-      <Filter>main</Filter>
-    </ClCompile>
     <ClCompile Include="scene\TisGame.cpp">
       <Filter>main</Filter>
     </ClCompile>
@@ -167,6 +164,12 @@
     <ClCompile Include="BossEnemy.cpp">
       <Filter>enemy</Filter>
     </ClCompile>
+    <ClCompile Include="scene\BossScene.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\StartMap.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\Framework.h">
@@ -222,9 +225,6 @@
     </ClInclude>
     <ClInclude Include="3d\Object3d.h">
       <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\GamePlayScene.h">
-      <Filter>main</Filter>
     </ClInclude>
     <ClInclude Include="scene\TisGame.h">
       <Filter>main</Filter>
@@ -303,6 +303,12 @@
     </ClInclude>
     <ClInclude Include="BossEnemy.h">
       <Filter>enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\BossScene.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\StartMap.h">
+      <Filter>main</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
