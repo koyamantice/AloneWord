@@ -243,7 +243,7 @@ Input::MousePoint Input::GetPoint() {
 	return tmp;
 }
 
-bool Input::TiltStick(int stick)
+bool Input::LeftTiltStick(int stick)
 {
 	//ç∂
 	if (gamePadState.lX < -unresponsive_range && stick == Left)
@@ -269,7 +269,7 @@ bool Input::TiltStick(int stick)
 	return false;
 }
 
-bool Input::TriggerStick(int stick)
+bool Input::LeftTriggerStick(int stick)
 {
 	//ç∂
 	if (gamePadState.lX < -unresponsive_range && !(oldGamePadState.lX < -unresponsive_range) && stick == Left)

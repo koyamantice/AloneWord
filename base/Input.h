@@ -109,8 +109,8 @@ public: // メンバ関数
 	bool TriggerMouseMiddle();
 
 	//ゲームパッド
-	bool TiltStick(int stick);
-	bool TriggerStick(int stick);
+	bool LeftTiltStick(int stick);
+	bool LeftTriggerStick(int stick);
 	bool PushButton(int Button);
 	bool TriggerButton(int Button);
 	bool PushCrossKey(int CrossKey);
@@ -137,6 +137,6 @@ private: // メンバ変数
 	DIJOYSTATE oldGamePadState = {};
 	bool is_push[32] = {};
 	//スティックの無反応範囲
-	LONG unresponsive_range = 200;
+	LONG unresponsive_range = 650;
 };
 

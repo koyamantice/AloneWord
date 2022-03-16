@@ -28,6 +28,16 @@ public:
 
 	const XMFLOAT3& GetRotation() { return object3d->GetRotation(); }
 
+	const XMFLOAT3& GetArmPosition() { return Armpos; }
+
+	const int& GetHp() { return HP; }
+
+	const int& GetArmMoveNumber() { return ArmMoveNumber; }
+
+	const bool& GetAttackFlag() { return AttackFlag; }
+
+	const float& GetArmWeight() { return ArmWeight; }
+
 	/// <summary>
 	/// 座標の設定
 	/// </summary>
@@ -36,49 +46,60 @@ public:
 
 	void SetRotation(XMFLOAT3 rotation) { object3d->SetRotation(rotation); }
 
+	void SetArmPosition(XMFLOAT3 Armpos) { this->Armpos = Armpos; }
+
+	void SetHp(int hp) { this->HP = hp; }
+
+	void SetArmMoveNumber(int ArmMoveNumber) { this->ArmMoveNumber = ArmMoveNumber; }
+
+	void SetAttackFlag(bool AttackFlag) { this->AttackFlag = AttackFlag; }
+
+	void SetArmWeight(float ArmWeight) { this->ArmWeight = ArmWeight; }
 private:
-	Object3d* shadowObj;
+	Object3d* Armobj;
 	Object3d* object3d;
 	Model* model;
-	XMFLOAT3 pos = { 0,0,0 };
-	XMFLOAT3 shadowpos = { 0,0,0 };
-	Sprite* Gauge = nullptr;
+	Model* Armmodel;
+	XMFLOAT3 pos = { 0,0,-10 };
+	XMFLOAT3 Armpos = { 0,0,0 };
+	Sprite* SpritePlayerHP = nullptr;
 
-	char oldEW = 0;
-	float chage = 0;
-	bool Dash = false;
-	float Dashframe = 0.0f;
-	float lastradius = 0.0f;
-	float lastspeed = 0.0f;
-	float lastscale = 10.0f;// LaneNumと一緒に変えること
-	float LastPos_x = 0;
-	float LastPos_y = 0;
+	float PlayerSpeed = 0.3f;
 	//座標を戻す
 	bool undoPos = false;
 
 	float rad = 0.4f;
 	const float PI = 3.14f;
-
+	//腕の変数
 	float radius = 0.0f;
 	float speed = 0.0f;
-	float scale = 10.0f;// LaneNumと一緒に変えること
+	float scale = 10.0f;
+	float initscale = 0.0f;
+	float initspeed = 0.0f;
+	float initrotation = 0.0f;
 	float circleX = 0.0f;
 	float circleZ = 0.0f;
-
-	//残像関連
+	float Armradius = 0.0f;
+	float ArmSpeed = 90.0f;
+	float Armscale = 1.0f;
+	float ArmCircleX = 0.0f;
+	float ArmCircleZ = 0.0f;
+	float ArmWeight = 0.0f;
+	//いろいろなフラグ
+	int ArmMoveNumber = 0;
+	bool AttackFlag = false;
+	int AttackMoveNumber = 0;
+	//イージングのためのやつ
 	float frame = 0.0f;
-	bool CheckCool = false;
-	int coolCount = 0;
-	bool  needCool = false;
-	float posX = 256;
+	float frameMax = 27.0f;
+	float frame2 = 0.0f;
+	float frameMax2 = 80.0f;
+	float frame3 = 0.0f;
+	float frameMax3 = 80.0f;
+	//HP
+	int HP = 10;
 
 	XMFLOAT3 angle = { 0,0,0 };
-	bool shadowFlag = false;
-	float shadowRadius = 0.0f;
-	float shadowSpeed = 0.0f;
-	float shadowScale = 10.0f;// LaneNumと一緒に変えること
-	float shadowCircleX = 0.0f;
-	float shadowCircleZ = 0.0f;
 public:
 	Sphere collider;
 
