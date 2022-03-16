@@ -6,7 +6,8 @@
 #include"CollisionPrimitive.h"
 #include "Player.h"
 #include "Collision.h"
-#include "BossEnemy.h"
+
+class BossEnemy;
 class Enemy {
 public:
 	Enemy();

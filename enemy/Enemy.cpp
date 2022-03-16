@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "Input.h"
 #include"Collision.h"
+#include "BossEnemy.h"
 #include<sstream>
 #include<iomanip>
 using namespace DirectX;
@@ -72,11 +73,13 @@ void Enemy::Draw() {
 bool Enemy::collideArm(Player* player) {
 	XMFLOAT3 playerpos = player->GetPosition();
 	XMFLOAT3 Armpos = player->GetArmPosition();
+	float armweight = player->GetArmWeight();
 	int armMove = player->GetArmMoveNumber();
 	if (collision->SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true && IsAlive == 1
 		&&armMove >= 1 && EnemyCatch == false) {
 		EnemyCatch = true;
-		EnemyWeight += 1.0f;
+		armweight += 1.0f;
+		player->SetArmWeight(armweight);
 	}
 
 	if (EnemyCatch == true) {
@@ -105,12 +108,14 @@ bool Enemy::collideAttackArm(Player* player) {
 	XMFLOAT3 Armpos = player->GetArmPosition();
 	bool attackflag = player->GetAttackFlag();
 	int playerhp = player->GetHp();
+	float armweight = player->GetArmWeight();
 	if (collision->SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true && IsAlive == 1
 		&& EnemyCatch == false && attackflag == true) {
 		IsAlive = 0;
 		player->SetAttackFlag(false);
-		if (EnemyWeight != 0.0f) {
-			EnemyWeight = 0.0f;
+		if (armweight != 0.0f) {
+			armweight = 0.0f;
+			player->SetArmWeight(armweight);
 		}
 
 		if (EnemyCatch == true) {

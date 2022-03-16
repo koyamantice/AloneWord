@@ -29,7 +29,7 @@ void Player::Initialize() {
 	Sprite::LoadTexture(3, L"Resources/2d/PlayerHP.png");
 	//”wŒiƒXƒvƒ‰ƒCƒg¶¬
 	SpritePlayerHP = Sprite::Create(3, { 0.0f,0.0f });
-
+	SpritePlayerHP->SetPosition({ 0.0f,520.0f });
 	object3d = Object3d::Create();
 	object3d->SetModel(model);
 	object3d->SetPosition(pos);
@@ -87,7 +87,7 @@ void Player::Update() {
 		}
 
 
-		if (input->PushButton(input->Button_RB)) {
+		if (input->PushButton(input->Button_RB) && ArmWeight <= 6.0f) {
 			ArmMoveNumber = 1;
 			initscale = Armscale;
 			frame = 0;

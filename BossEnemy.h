@@ -6,6 +6,9 @@
 #include"CollisionPrimitive.h"
 #include "Player.h"
 #include "Collision.h"
+#include "Sprite.h"
+
+class Enemy;
 class BossEnemy {
 public:
 	BossEnemy();
@@ -14,7 +17,7 @@ public:
 	void Update(Player* player);
 	void Draw();
 	bool collidePlayer(Player* player);
-	bool BossEnemycollide();
+	bool  collideAttackArm(Player* player);
 private:
 	// DirectX::Çè»ó™
 	using XMFLOAT2 = DirectX::XMFLOAT2;
@@ -41,18 +44,15 @@ private:
 	Object3d* object3d;
 	Model* model;
 	XMFLOAT3 pos = { 0,0,0 };
+	Sprite* SpriteBossHP = false;
 	float rad = 0.4f;
 	const float PI = 3.14f;
 
-	float radius = 0.0f;
-	float speed = 0.0f;
-	float scale = 0.0f;// LaneNumÇ∆àÍèèÇ…ïœÇ¶ÇÈÇ±Ç∆
-	float circleX = 0.0f;
-	float circleZ = 0.0f;
 	int IsAlive = 0;
 	int IsTimer = 100;
 	int IsMove = 0;
-
+	int BossHP = 50;
+	bool BossHit = false;
 public:
 	Sphere collider;
 	Collision* collision = nullptr;

@@ -3,15 +3,20 @@
 #include"Collision.h"
 #include<sstream>
 #include<iomanip>
+#include "Enemy.h"
 using namespace DirectX;
 
 BossEnemy::BossEnemy() {
 	model = Model::CreateFromOBJ("chr_sword");
 	object3d = new Object3d();
+	Sprite::LoadTexture(4, L"Resources/2d/PlayerHP.png");
 }
 
 void BossEnemy::Initialize() {
-
+	Sprite::LoadTexture(4, L"Resources/2d/PlayerHP.png");
+	SpriteBossHP = Sprite::Create(4, { 0.0f,0.0f });
+	
+	SpriteBossHP->SetColor({ 0.0f,1.0f,0.0,1.0 });
 	//プレイヤー
 	//radius = speed * PI / 180.0f;
 	//circleX = cosf(radius) * scale;
@@ -28,45 +33,63 @@ void BossEnemy::Initialize() {
 }
 
 void BossEnemy::Update(Player* player) {
-	object3d->Update();
+	
 	collider.center = XMVectorSet(pos.x, pos.y, pos.z, 1);
 
-	//if (IsAlive == 0) {
-	//	IsTimer--;
-	//}
-
-	//if (IsTimer == 0) {
-	//	IsAlive = 1;
-	//	IsTimer = 100;
-	//	speed = (float)(rand() % 360);
-	//	scale = (float)(rand() % 10 + 10);
-
-	//	radius = speed * PI / 180.0f;
-	//	circleX = cosf(radius) * scale;
-	//	circleZ = sinf(radius) * scale;
-	//	pos.x = circleX + bosspos.x;
-	//	pos.z = circleZ + bosspos.z;
-	//}
-	////プレイヤー
-	//radius = speed * PI / 180.0f;
-	//circleX = cosf(radius) * scale;
-	//circleZ = sinf(radius) * scale;
-	//pos.x = circleX + bosspos.x;
-	//pos.y = circleZ + bosspos.z;
 	pos = { 0.0f,0.0f,0.0f };
+	//collidePlayer(player);
+	collideAttackArm(player);
 	object3d->SetPosition(pos);
+	object3d->Update();
 	//bossobj->SetPosition(bosspos);
 	//collidePlayer(player);
 }
 
 void BossEnemy::Draw() {
 	Object3d::PreDraw();
-	if (IsAlive == 1) {
-		
-	}
+
 	object3d->Draw();
+
+	Sprite::PreDraw();
+	SpriteBossHP->Draw();
+	SpriteBossHP->SetSize({ (float)(BossHP * 20),20 });
+
 	//bossobj->Draw();
 }
+
+bool BossEnemy::collidePlayer(Player* player) {
+	XMFLOAT3 playerpos = player->GetPosition();
+	int playerhp = player->GetHp();
+	if (collision->SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true) {
+		player->SetHp(playerhp - 1);
+		return true;
+	} else {
+		return false;
+	}
+}
+
+bool BossEnemy::collideAttackArm(Player* player) {
+	XMFLOAT3 Armpos = player->GetArmPosition();
+	bool attackflag = player->GetAttackFlag();
+	int playerhp = player->GetHp();
+	float weight = player->GetArmWeight();
+
+	if (collision->SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true && attackflag == true && BossHit == false) {
+		BossHit = true;
+		player->SetAttackFlag(false);
+		
+		if (BossHit == true) {
+			BossHP -= (weight * 2);
+			weight = 0.0f;
+			player->SetArmWeight(weight);
+			BossHit = false;
+		}
+		return true;
+	} else {
+		return false;
+	}
+}
+
 
 //bool BossEnemy::collidePlayer(Player* player) {
 //	XMFLOAT3 pos = player->GetPosition();
