@@ -36,6 +36,8 @@ public:
 
 	const bool& GetAttackFlag() { return AttackFlag; }
 
+	const float& GetArmWeight() { return ArmWeight; }
+
 	/// <summary>
 	/// ç¿ïWÇÃê›íË
 	/// </summary>
@@ -51,6 +53,8 @@ public:
 	void SetArmMoveNumber(int ArmMoveNumber) { this->ArmMoveNumber = ArmMoveNumber; }
 
 	void SetAttackFlag(bool AttackFlag) { this->AttackFlag = AttackFlag; }
+
+	void SetArmWeight(float ArmWeight) { this->ArmWeight = ArmWeight; }
 private:
 	Object3d* Armobj;
 	Object3d* object3d;
@@ -80,6 +84,7 @@ private:
 	float Armscale = 1.0f;
 	float ArmCircleX = 0.0f;
 	float ArmCircleZ = 0.0f;
+	float ArmWeight = 0.0f;
 	//Ç¢ÇÎÇ¢ÇÎÇ»ÉtÉâÉO
 	int ArmMoveNumber = 0;
 	bool AttackFlag = false;
