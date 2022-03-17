@@ -25,6 +25,13 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	objGround->Initialize();
 	objGround->SetModel(modelGround);
 	objGround->SetPosition({ 0,-1,0 });
+
+	//テスト
+	modelSara = Model::CreateFromOBJ("sara");
+	objSara = Object3d::Create();
+	objSara->Initialize();
+	objSara->SetModel(modelSara);
+	objSara->SetPosition({ 2,2,0 });
 	//普通のテクスチャ(板ポリ)
 	/*Texture::LoadTexture(0, L"Resources/2d/title.png");
 	titleTexture = Texture::Create(0, { 0,0,0 }, { 12,12,12 }, { 1,1,1,1 });
@@ -66,6 +73,7 @@ void StartMap::Finalize() {
 void StartMap::Update(DirectXCommon* dxCommon) {
 	Input* input = Input::GetInstance();
 	objGround->Update();
+	objSara->Update();//ここ
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
@@ -121,6 +129,7 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	//object1->Draw(dxCommon->GetCmdList());
 	//背景用
 	objGround->Draw();
+	objSara->Draw();
 	player->Draw();
 	for (int i = 0; i < EnemyMax; i++) {
 		enemy[i]->Draw();
