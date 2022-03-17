@@ -83,7 +83,7 @@ bool Enemy::collideArm(Player* player) {
 	XMFLOAT3 Armpos = player->GetArmPosition();
 	float armweight = player->GetArmWeight();
 	int armMove = player->GetArmMoveNumber();
-	if (collision->SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true && IsAlive == 1
+	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true && IsAlive == 1
 		&&armMove >= 1 && EnemyCatch == false) {
 		EnemyCatch = true;
 		armweight += 1.0f;
@@ -102,7 +102,7 @@ bool Enemy::collidePlayer(Player* player) {
 	XMFLOAT3 playerpos = player->GetPosition();
 	XMFLOAT3 Armpos = player->GetArmPosition();
 	int playerhp = player->GetHp();
-	if (collision->SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true && IsAlive == 1
+	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true && IsAlive == 1
 		&& EnemyCatch == false) {
 		IsAlive = 0;
 		player->SetHp(playerhp - 1);
@@ -117,7 +117,7 @@ bool Enemy::collideAttackArm(Player* player) {
 	bool attackflag = player->GetAttackFlag();
 	int playerhp = player->GetHp();
 	float armweight = player->GetArmWeight();
-	if (collision->SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true && IsAlive == 1
+	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true && IsAlive == 1
 		&& EnemyCatch == false && attackflag == true) {
 		IsAlive = 0;
 		player->SetAttackFlag(false);

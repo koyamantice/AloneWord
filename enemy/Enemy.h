@@ -5,7 +5,6 @@
 #include <Input.h>
 #include"CollisionPrimitive.h"
 #include "Player.h"
-#include "Collision.h"
 #include "Texture.h"
 
 class BossEnemy;
@@ -67,6 +66,5 @@ private:
 	bool EnemyCatch = false;
 public:
 	Sphere collider;
-	Collision* collision = nullptr;
 };
 
