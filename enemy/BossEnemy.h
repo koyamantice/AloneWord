@@ -5,7 +5,6 @@
 #include <Input.h>
 #include"CollisionPrimitive.h"
 #include "Player.h"
-#include "Collision.h"
 #include "Sprite.h"
 
 class Enemy;
@@ -43,6 +42,7 @@ public:
 private:
 	Object3d* object3d;
 	Model* model;
+	XMFLOAT2 HPPos = {0,0};
 	XMFLOAT3 pos = { 0,0,0 };
 	Sprite* SpriteBossHP = false;
 	float rad = 0.4f;
@@ -55,6 +55,5 @@ private:
 	bool BossHit = false;
 public:
 	Sphere collider;
-	Collision* collision = nullptr;
 };
 

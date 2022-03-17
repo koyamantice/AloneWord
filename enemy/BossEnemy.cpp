@@ -4,6 +4,7 @@
 #include<sstream>
 #include<iomanip>
 #include "Enemy.h"
+#include <Easing.h>
 using namespace DirectX;
 
 BossEnemy::BossEnemy() {
@@ -15,7 +16,6 @@ BossEnemy::BossEnemy() {
 void BossEnemy::Initialize() {
 	Sprite::LoadTexture(4, L"Resources/2d/PlayerHP.png");
 	SpriteBossHP = Sprite::Create(4, { 0.0f,0.0f });
-	
 	SpriteBossHP->SetColor({ 0.0f,1.0f,0.0,1.0 });
 	//ƒvƒŒƒCƒ„[
 	//radius = speed * PI / 180.0f;
@@ -35,6 +35,13 @@ void BossEnemy::Initialize() {
 void BossEnemy::Update(Player* player) {
 	
 	collider.center = XMVectorSet(pos.x, pos.y, pos.z, 1);
+	XMFLOAT2 AfterPos;
+	AfterPos = { (float)(BossHP * 20),20 };
+	HPPos = {
+	Ease(In,Quint,0.7f,SpriteBossHP->GetSize().x,AfterPos.x),
+	Ease(In,Quint,0.7f,SpriteBossHP->GetSize().y,AfterPos.y),
+	};
+	SpriteBossHP->SetSize(HPPos);
 
 	pos = { 0.0f,0.0f,0.0f };
 	//collidePlayer(player);
@@ -52,7 +59,6 @@ void BossEnemy::Draw() {
 
 	Sprite::PreDraw();
 	SpriteBossHP->Draw();
-	SpriteBossHP->SetSize({ (float)(BossHP * 20),20 });
 
 	//bossobj->Draw();
 }
@@ -60,7 +66,7 @@ void BossEnemy::Draw() {
 bool BossEnemy::collidePlayer(Player* player) {
 	XMFLOAT3 playerpos = player->GetPosition();
 	int playerhp = player->GetHp();
-	if (collision->SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true) {
+	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true) {
 		player->SetHp(playerhp - 1);
 		return true;
 	} else {
@@ -74,7 +80,7 @@ bool BossEnemy::collideAttackArm(Player* player) {
 	int playerhp = player->GetHp();
 	float weight = player->GetArmWeight();
 
-	if (collision->SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true && attackflag == true && BossHit == false) {
+	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true && attackflag == true && BossHit == false) {
 		BossHit = true;
 		player->SetAttackFlag(false);
 		
