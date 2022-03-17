@@ -14,7 +14,6 @@ BossEnemy::BossEnemy() {
 }
 
 void BossEnemy::Initialize() {
-	Sprite::LoadTexture(4, L"Resources/2d/PlayerHP.png");
 	SpriteBossHP = Sprite::Create(4, { 0.0f,0.0f });
 	SpriteBossHP->SetColor({ 0.0f,1.0f,0.0,1.0 });
 	//ƒvƒŒƒCƒ„[
@@ -66,7 +65,7 @@ void BossEnemy::Draw() {
 bool BossEnemy::collidePlayer(Player* player) {
 	XMFLOAT3 playerpos = player->GetPosition();
 	int playerhp = player->GetHp();
-	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true) {
+	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f)) {
 		player->SetHp(playerhp - 1);
 		return true;
 	} else {
@@ -79,18 +78,21 @@ bool BossEnemy::collideAttackArm(Player* player) {
 	bool attackflag = player->GetAttackFlag();
 	int playerhp = player->GetHp();
 	float weight = player->GetArmWeight();
+	if (attackflag&& !BossHit) {
+		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
+			BossHit = true;
+			player->SetAttackFlag(false);
 
-	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true && attackflag == true && BossHit == false) {
-		BossHit = true;
-		player->SetAttackFlag(false);
-		
-		if (BossHit == true) {
-			BossHP -= (weight * 2);
-			weight = 0.0f;
-			player->SetArmWeight(weight);
-			BossHit = false;
+			if (BossHit == true) {
+				BossHP -= (weight * 2);
+				weight = 0.0f;
+				player->SetArmWeight(weight);
+				BossHit = false;
+			}
+			return true;
+		} else {
+			return false;
 		}
-		return true;
 	} else {
 		return false;
 	}

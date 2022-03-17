@@ -48,7 +48,7 @@ void Enemy::Update(Player* player,BossEnemy* bossenemy) {
 		//pos.z = circleZ + bosspos.z;
 		IsTimer = 100;
 	}
-	//スポーン位置
+	////スポーン位置
 	radius = speed * PI / 180.0f;
 	circleX = cosf(radius) * scale;
 	circleZ = sinf(radius) * scale;
@@ -58,6 +58,7 @@ void Enemy::Update(Player* player,BossEnemy* bossenemy) {
 	collideArm(player);
 	collidePlayer(player);
 	collideAttackArm(player);
+	Follow(player);
 	object3d->SetPosition(pos);
 	texture->SetPosition(pos);
 	object3d->Update();
@@ -81,12 +82,15 @@ bool Enemy::collideArm(Player* player) {
 	XMFLOAT3 Armpos = player->GetArmPosition();
 	float armweight = player->GetArmWeight();
 	int armMove = player->GetArmMoveNumber();
-	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true && IsAlive == 1
-		&&armMove >= 1 && EnemyCatch == false) {
-		EnemyCatch = true;
-		armweight += 1.0f;
-		player->SetArmWeight(armweight);
+	if (IsAlive&& armMove >= 1 && !EnemyCatch) {
+		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
+			EnemyCatch = true;
+			armweight += 1.0f;
+			player->SetArmWeight(armweight);
+		}
 	}
+
+
 
 	if (EnemyCatch == true) {
 		pos = Armpos;
@@ -136,8 +140,16 @@ bool Enemy::collideAttackArm(Player* player) {
 }
 
 void Enemy::Follow(Player* player) {
+	XMFLOAT3 playerpos = player->GetPosition();
+	//pos.x = (playerpos.x - pos.x);
+	//pos.z = (playerpos.z - pos.z);
+	//double posR = sqrt(pow(pos.x, 2)+ pow(pos.z, 2));
+	//double Check = pos.x / posR;
+	//double Check2 =pos.z / posR;
 
+	//pos.x -= Check * 0.05;
+	//pos.z -= Check2 *0.05;
 
-
+	object3d->SetPosition(pos);
 }
 

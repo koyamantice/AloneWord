@@ -53,6 +53,7 @@ private:
 	Texture* texture;
 
 	XMFLOAT3 pos = {0,0,0};
+	XMFLOAT3 rot = { 0,0,0 };
 	float rad = 0.4f;
 	const float PI = 3.14f;
 
@@ -62,7 +63,7 @@ private:
 	float circleX = 0.0f;
 	float circleZ = 0.0f;
 	float EnemyWeight = 0.0f;
-	int IsAlive = 0;
+	bool IsAlive = 0;
 	int IsTimer = 100;
 	int IsMove = 0;
 	bool EnemyCatch = false;
