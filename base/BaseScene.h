@@ -2,11 +2,30 @@
 
 class SceneManager;
 #include "DirectXCommon.h"
+#include "DebugCamera.h"
+#include "LightGroup.h"
+#include<memory>
+#include "Sprite.h"
+#include "FBXObject3d.h"
+#include "Object3d.h"
+#include "Texture.h"
+#include <DirectXMath.h>
+#include<memory>
+
 /// <summary>
 /// ÉVÅ[ÉìãKíË
 /// </summary>
 class BaseScene {
+protected:
+	// DirectX::Çè»ó™
+	using XMFLOAT2 = DirectX::XMFLOAT2;
+	using XMFLOAT3 = DirectX::XMFLOAT3;
+	using XMFLOAT4 = DirectX::XMFLOAT4;
+	using XMVECTOR = DirectX::XMVECTOR;
+	using XMMATRIX = DirectX::XMMATRIX;
+
 public:
+
 	virtual ~BaseScene()=default;
 
 	/// <summary>

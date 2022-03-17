@@ -1,18 +1,8 @@
 ﻿#pragma once
-
 #include "BaseScene.h"
-#include "Sprite.h"
-#include "Object3d.h"
-#include "DebugCamera.h"
-#include "LightGroup.h"
-#include "FBXObject3d.h"
-#include "Texture.h"
-#include <DirectXMath.h>
-#include<memory>
 #include "Player.h"
 #include "Enemy.h"
 #include "BossEnemy.h"
-#include "Easing.h"
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>

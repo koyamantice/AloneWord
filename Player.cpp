@@ -15,7 +15,7 @@ float easeOutBack(float x) {
 }
 
 float easeInOut(float x) {
-	return x < 0.5 ? 2 * x * x : 1 - pow(-2 * x + 2, 2) / 2;
+	return x < 0.5 ? 2 * x * x : 1 - powf(-2 * x + 2, 2) / 2;
 }
 Player::Player() {
 	model = Model::CreateFromOBJ("chr_knight");

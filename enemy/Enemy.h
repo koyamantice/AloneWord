@@ -45,6 +45,8 @@ public:
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
 
 	void SetEnemyCatch(bool EnemyCatch) {this-> EnemyCatch = EnemyCatch; }
+
+	void Follow(Player*player);
 private:
 	Object3d* object3d;
 	Model* model;
