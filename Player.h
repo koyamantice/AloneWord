@@ -64,6 +64,7 @@ private:
 	Object3d* object3d;
 	Model* model;
 	Model* Armmodel;
+	XMFLOAT2 PlayerHP;
 	XMFLOAT3 pos = { 0,0,-10 };
 	XMFLOAT3 Armpos = { 0,0,0 };
 	Sprite* SpritePlayerHP = nullptr;

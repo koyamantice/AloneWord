@@ -52,7 +52,15 @@ void Player::Initialize() {
 
 void Player::Update() {
 	Input* input = Input::GetInstance();
-	
+	XMFLOAT2 AfterPos;
+	AfterPos = { (float)(HP * 30),20 };
+	PlayerHP = {
+	Ease(In,Quint,0.7f,SpritePlayerHP->GetSize().x,AfterPos.x),
+	Ease(In,Quint,0.7f,SpritePlayerHP->GetSize().y,AfterPos.y),
+	};
+	SpritePlayerHP->SetSize(PlayerHP);
+
+
 	XMFLOAT3 rot = this->object3d->GetRotation();
 	object3d->Update();
 	Armobj->Update();
@@ -178,7 +186,6 @@ void Player::Draw() {
 	Sprite::PreDraw();
 	//”wŒi—p
 	SpritePlayerHP->Draw();
-	SpritePlayerHP->SetSize({ (float)(HP * 30),20 });
 
 	Object3d::PreDraw();
 	object3d->Draw();
