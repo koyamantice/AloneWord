@@ -61,6 +61,12 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 
 void StartMap::Finalize() {
 	//３ｄのモデルのデリート
+	delete objGround;
+	delete player;
+	for(int i = 0; i < EnemyMax; i++) {
+		delete enemy[i];
+	}
+	delete bossenemy;
 }
 
 void StartMap::Update(DirectXCommon* dxCommon) {
@@ -72,6 +78,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	bossenemy->Update(player);
 	for (int i = 0; i < EnemyMax; i++) {
 		enemy[i]->Update(player, bossenemy);
+		player->ResetWeight(enemy[i]);
 	}
 
 	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
@@ -79,21 +86,17 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		Audio::GetInstance()->StopWave(1);
 		Audio::GetInstance()->LoopWave(1, 0.7f);
 	}
-	//if (input->TriggerKey(DIK_SPACE) || input->TriggerButton(input->Button_A)) {
-	//	Audio::GetInstance()->StopWave(0);
-	//	Audio::GetInstance()->StopWave(1);
-	//	SceneManager::GetInstance()->ChangeScene("TITLE");
-	//}
+	if (input->TriggerKey(DIK_SPACE)) {
+		int a = 0;
+		a += 1;
+	}
 
 	if (input->PushKey(DIK_0) || input->TriggerButton(input->Button_Y)) {
 		object1->PlayAnimation();
-		SceneManager::GetInstance()->ChangeScene("BOSS");
+		//SceneManager::GetInstance()->ChangeScene("BOSS");
 	}
 
 	object1->Update();
-	DebugText::GetInstance()->Print("SPACE to TITLE!!", 200, 100, 1.0f);
-	DebugText::GetInstance()->Print("Z or C to Sound!!", 200, 115, 1.0f);
-
 	camera->SetTarget(player->GetPosition());
 	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
 }

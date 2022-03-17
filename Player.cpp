@@ -5,6 +5,7 @@
 #include "DebugText.h"
 #include<sstream>
 #include<iomanip>
+#include"Enemy.h"
 using namespace DirectX;
 float easeInSine(float x) {
 	return x * x * x;
@@ -116,7 +117,6 @@ void Player::Update() {
 			initscale = Armscale;
 		}
 	}
-
 	else if (ArmMoveNumber == 2) {
 		Armscale = initscale - 3.0f * easeOutBack(frame / frameMax);
 		if (frame != frameMax) {
@@ -137,7 +137,7 @@ void Player::Update() {
 			AttackFlag = false;
 			frameMax2 = 80.0f;
 		}
-	}
+	} 
 
 	if (AttackMoveNumber == 1) {
 		Armscale = initscale + 3.0f * easeInOut(frame3 / frameMax3);
@@ -183,6 +183,15 @@ void Player::Draw() {
 	Object3d::PreDraw();
 	object3d->Draw();
 	Armobj->Draw();
+}
+
+void Player::ResetWeight(Enemy *enemy) {
+	if (ArmWeight==0.0f) {
+		if (enemy->GetEnemyCatch()) {
+			enemy->SetEnemyCatch(false);
+			enemy->SetIsAlive(0);
+		}
+	}
 }
 
 

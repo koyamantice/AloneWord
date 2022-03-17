@@ -5,6 +5,8 @@
 #include <Input.h>
 #include"CollisionPrimitive.h"
 #include "Sprite.h"
+
+class Enemy;
 class Player {
 public:
 	Player();
@@ -55,6 +57,8 @@ public:
 	void SetAttackFlag(bool AttackFlag) { this->AttackFlag = AttackFlag; }
 
 	void SetArmWeight(float ArmWeight) { this->ArmWeight = ArmWeight; }
+
+	void ResetWeight(Enemy* enemy);
 private:
 	Object3d* Armobj;
 	Object3d* object3d;

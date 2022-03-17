@@ -34,6 +34,8 @@ public:
 	const XMFLOAT3& GetRotation() { return object3d->GetRotation(); }
 
 	const int& GetisAlive() { return IsAlive; }
+	const bool& GetEnemyCatch() { return EnemyCatch; }
+
 	/// À•W‚ÌÝ’è
 	void SetPosition(XMFLOAT3 position) { object3d->SetPosition(position); }
 
@@ -42,6 +44,8 @@ public:
 	//bool Collision(XMFLOAT3 position, float radius);
 
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
+
+	void SetEnemyCatch(bool EnemyCatch) {this-> EnemyCatch = EnemyCatch; }
 private:
 	Object3d* object3d;
 	Model* model;

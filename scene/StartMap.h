@@ -16,7 +16,7 @@
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>
-const int EnemyMax = 13;
+const int EnemyMax = 10;
 class StartMap : public BaseScene {
 private:
 	// DirectX::を省略

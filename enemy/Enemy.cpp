@@ -9,18 +9,18 @@ using namespace DirectX;
 Enemy::Enemy() {
 	model = Model::CreateFromOBJ("chr_sword");
 	object3d = new Object3d();
+	Texture::LoadTexture(0, L"Resources/2d/enemy.png");
+
 }
 
 void Enemy::Initialize() {
 
 	//プレイヤー
-	
-	IsAlive = 0;
+	IsAlive = false;
 	IsTimer = 100;
 	object3d = Object3d::Create();
 	object3d->SetModel(model);
 	object3d->SetPosition(pos);
-	Texture::LoadTexture(0, L"Resources/2d/enemy.png");
 	texture = Texture::Create(0, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	texture->SetPosition(pos);
@@ -29,29 +29,25 @@ void Enemy::Initialize() {
 	collider.radius=rad;
 }
 
-void Enemy::Update(Player* player,BossEnemy* bossenemy) {
-	
+void Enemy::Update(Player* player,BossEnemy* bossenemy) {	
 	collider.center = XMVectorSet(pos.x,pos.y,pos.z,1);
 	XMFLOAT3 bosspos = bossenemy->GetPosition();
-	XMFLOAT3 playerpos = player->GetPosition();
-	texture->Update();
-	texture->SetPosition(pos);
+	//XMFLOAT3 playerpos = player->GetPosition();
 
-	if (IsAlive == 0) {
+	if (!IsAlive) {
 		IsTimer--;
-	}
-
-	if (IsTimer == 0) {
-		IsAlive = 1;
-		IsTimer = 100;
 		speed = (float)(rand() % 360);
 		scale = (float)(rand() % 10 + 10);
+	}
 
+	if (IsTimer <= 0) {
+		IsAlive = true;
 		//radius = speed * PI / 180.0f;
 		//circleX = cosf(radius) * scale;
 		//circleZ = sinf(radius) * scale;
 		//pos.x = circleX + bosspos.x;
 		//pos.z = circleZ + bosspos.z;
+		IsTimer = 100;
 	}
 	//プレイヤー
 	radius = speed * PI / 180.0f;
@@ -65,17 +61,21 @@ void Enemy::Update(Player* player,BossEnemy* bossenemy) {
 	collidePlayer(player);
 	collideAttackArm(player);
 	object3d->SetPosition(pos);
+	texture->SetPosition(pos);
 	object3d->Update();
+	texture->Update();
 }
 
 void Enemy::Draw() {
-	Object3d::PreDraw();
-	if (IsAlive == 1) {
+	if (IsAlive) {
+		Object3d::PreDraw();
 		object3d->Draw();
 	}
-	Texture::PreDraw();
+	if (IsAlive&& !EnemyCatch) {
+		Texture::PreDraw();
+		texture->Draw();
 
-	texture->Draw();
+	}
 }
 
 bool Enemy::collideArm(Player* player) {
