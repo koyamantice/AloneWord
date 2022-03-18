@@ -57,9 +57,8 @@ void Player::Update() {
 	Ease(In,Quint,0.7f,SpritePlayerHP->GetSize().y,AfterPos.y),
 	};
 	SpritePlayerHP->SetSize(PlayerHP);
-
-
 	XMFLOAT3 rot = this->object3d->GetRotation();
+	rot.y = Ease(In, Quad, 0.85f,rot.y, AfterRot);
 	object3d->Update();
 	Armobj->Update();
 	StickrotX = input->GetPosX();
@@ -74,7 +73,7 @@ void Player::Update() {
 			if (input->LeftTiltStick(input->Right) && AttackFlag == false && AttackMoveNumber == 0) {
 				if (pos.x <= 25.0f) {
 					pos.x += PlayerSpeed;
-						rot.y = 90;
+					AfterRot = 90;
 					ArmSpeed = 0;
 				}
 			}
@@ -82,7 +81,7 @@ void Player::Update() {
 			if (input->LeftTiltStick(input->Left) && AttackFlag == false && AttackMoveNumber == 0) {
 				if (pos.x >= -25.0f) {
 					pos.x -= PlayerSpeed;
-						rot.y = 270;
+					AfterRot = 270;
 						ArmSpeed = 180;
 				}
 			}
@@ -90,7 +89,7 @@ void Player::Update() {
 			if (input->LeftTiltStick(input->Up) && AttackFlag == false && AttackMoveNumber == 0) {
 				if(pos.z <= 20.0f) {
 				pos.z += PlayerSpeed;
-				rot.y = 0;
+				AfterRot = 0;
 				ArmSpeed = 90;
 			}
 			}
@@ -98,7 +97,7 @@ void Player::Update() {
 			if (input->LeftTiltStick(input->Down) && AttackFlag == false && AttackMoveNumber == 0) {
 				if (pos.z >= -20) {
 					pos.z -= PlayerSpeed;
-					rot.y = 180;
+					AfterRot = 180;
 					ArmSpeed = 270;
 				}
 			}
@@ -190,34 +189,34 @@ void Player::Update() {
 	//ÉvÉåÉCÉÑÅ[ÇÃå¸Ç´ê›íË
 	if (StickrotY <= -650) {
 		if (StickrotX <= 650 && StickrotX >= -650) {
-			rot.y = 180;
+			AfterRot = 180;
 			ArmSpeed = 90;
 		} else if (StickrotX > 650) {
-			rot.y = 225;
+			AfterRot = 225;
 			ArmSpeed = 45;
 		} else if (StickrotX < -650) {
-			rot.y = 135;
+			AfterRot = 135;
 			ArmSpeed = 135;
 		}
 	} else if (StickrotY >= 650) {
 		if (StickrotX <= 650 && StickrotX >= -650) {
-			rot.y = 0;
+			AfterRot = 0;
 			ArmSpeed = 270;
 		} else if (StickrotX > 650) {
-			rot.y = 315;
+			AfterRot = 315;
 			ArmSpeed = 315;
 		} else if (StickrotX < -650) {
-			rot.y = 45;
+			AfterRot = 45;
 			ArmSpeed = 225;
 		}
 	} else {
 		if (StickrotX <= -650) {
-			rot.y = 90;
+			AfterRot = 90;
 			ArmSpeed = 180;
 		}
 
 		if (StickrotX >= 650) {
-			rot.y = 270;
+			AfterRot = 270;
 			ArmSpeed = 0;
 		}
 	}

@@ -72,7 +72,7 @@ private:
 	float PlayerSpeed = 0.3f;
 	//À•W‚ğ–ß‚·
 	bool undoPos = false;
-
+	float AfterRot = 0.0f;
 	float rad = 0.4f;
 	const float PI = 3.14f;
 	//˜r‚Ì•Ï”
