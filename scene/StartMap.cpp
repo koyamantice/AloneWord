@@ -140,11 +140,6 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw();
 	//object1->Draw(dxCommon->GetCmdList());
 	//îwåióp
-<<<<<<< HEAD
-	objGround->Draw();
-	objSara->Draw();
-=======
->>>>>>> 05539ec3b55e426c636f83c9cceefc0a3889fe96
 	player->Draw();
 	for (int i = 0; i < EnemyMax; i++) {
 		enemy[i]->Draw();

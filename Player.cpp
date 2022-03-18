@@ -197,17 +197,9 @@ void Player::Update() {
 }
 
 void Player::Draw() {
-<<<<<<< HEAD
-	ImGui::Begin("test");
-	if (ImGui::TreeNode("Debug"))
-	{
-		if (ImGui::TreeNode("Player"))
-		{
-=======
 		ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug"))     {
 		if (ImGui::TreeNode("Player"))         {
->>>>>>> 05539ec3b55e426c636f83c9cceefc0a3889fe96
 			ImGui::SliderFloat("Position.x", &pos.x, 50, -50);
 			ImGui::SliderFloat("Position.z", &pos.z, 50, -50);
 			ImGui::Unindent();
@@ -216,11 +208,6 @@ void Player::Draw() {
 		ImGui::TreePop();
 	}
 	ImGui::End();
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 05539ec3b55e426c636f83c9cceefc0a3889fe96
 	Sprite::PreDraw();
 	//”wŒi—p
 	SpritePlayerHP->Draw();
