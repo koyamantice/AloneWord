@@ -27,7 +27,6 @@ Player::Player() {
 }
 
 void Player::Initialize() {
-	Sprite::LoadTexture(3, L"Resources/2d/PlayerHP.png");
 	//”wŒiƒXƒvƒ‰ƒCƒg¶¬
 	SpritePlayerHP = Sprite::Create(3, { 0.0f,0.0f });
 	SpritePlayerHP->SetPosition({ 0.0f,520.0f });
@@ -44,7 +43,6 @@ void Player::Initialize() {
 	Armpos.x = ArmCircleX + pos.x;
 	Armpos.z = ArmCircleZ + pos.z;
 	Armobj->SetPosition(Armpos);
-
 	Armobj->SetScale({ 1,1,1 });
 
 	collider.radius = rad;
@@ -148,19 +146,29 @@ void Player::Update() {
 	} 
 
 	if (AttackMoveNumber == 1) {
-		Armscale = initscale + 3.0f * easeInOut(frame3 / frameMax3);
-		if (frame3 <= frameMax3) {
-			frame3 = frame3 + 1;
+		if (ArmWeight>0) {
+			Armscale = initscale + 3.0f * easeInOut(frame3 / frameMax3);
+			if (frame3 <= frameMax3) {
+				frame3 = frame3 + 1;
+			} else {
+				AttackMoveNumber = 2;
+				initscale = Armscale;
+				scaleVel = 3.0f;
+				frame3 = 0;
+				frameMax3 = 20.0f;
+			}
 		} else {
 			AttackMoveNumber = 2;
+			scaleVel = Armscale - initscale;
 			initscale = Armscale;
 			frame3 = 0;
 			frameMax3 = 20.0f;
 		}
+
 	}
 
 	else if (AttackMoveNumber == 2) {
-		Armscale = initscale - 3.0f * easeInOut(frame3 / frameMax3);
+		Armscale = initscale - scaleVel * easeInOut(frame3 / frameMax3);
 		if (frame3 <= frameMax3) {
 			frame3 = frame3 + 1;
 		} else {

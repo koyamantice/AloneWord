@@ -15,10 +15,14 @@ public:
 	void Initialize();
 	void Update(Player* player,BossEnemy* bossenemy);
 	void Draw();
+private:
 	bool collideArm(Player* player);
 	bool collidePlayer(Player* player);
 	bool collideAttackArm(Player* player);
-	bool enemycollide();
+	bool LockOn(Player*player);
+	void Follow(Player* player);
+	void Move();
+
 private:
 	// DirectX::‚ðÈ—ª
 	using XMFLOAT2 = DirectX::XMFLOAT2;
@@ -46,12 +50,13 @@ public:
 
 	void SetEnemyCatch(bool EnemyCatch) {this-> EnemyCatch = EnemyCatch; }
 
-	void Follow(Player*player);
 private:
 	Object3d* object3d;
 	Model* model;
 	Texture* texture;
-
+	XMFLOAT3 playerpos{};
+	XMFLOAT3 StartPos{};
+	XMFLOAT3 EndPos{};
 	XMFLOAT3 pos = {0,0,0};
 	XMFLOAT3 rot = { 0,0,0 };
 	float rad = 0.4f;
@@ -65,8 +70,12 @@ private:
 	float EnemyWeight = 0.0f;
 	bool IsAlive = 0;
 	int IsTimer = 100;
-	int IsMove = 0;
 	bool EnemyCatch = false;
+	bool isMove = false;
+	float frame=0;
+	int moveCount = 30;
+	int dir = 0;
+	bool zmove = false;
 public:
 	Sphere collider;
 };

@@ -80,6 +80,7 @@ private:
 	float speed = 0.0f;
 	float scale = 10.0f;
 	float initscale = 0.0f;
+	float scaleVel = 3.0f;
 	float initspeed = 0.0f;
 	float initrotation = 0.0f;
 	float circleX = 0.0f;

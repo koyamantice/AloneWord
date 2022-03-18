@@ -10,7 +10,6 @@ const int EnemyMax = 10;
 class StartMap : public BaseScene {
 
 public:
-
 	/// <summary>
 	/// ‰Šú‰»
 	/// </summary>

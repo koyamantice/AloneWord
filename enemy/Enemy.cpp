@@ -4,6 +4,7 @@
 #include "BossEnemy.h"
 #include<sstream>
 #include<iomanip>
+#include <Easing.h>
 using namespace DirectX;
 
 Enemy::Enemy() {
@@ -26,13 +27,13 @@ void Enemy::Initialize() {
 	texture->SetPosition(pos);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.2f,0.2f,0.2f });
-	collider.radius=rad;
+	collider.radius = rad;
 }
 
-void Enemy::Update(Player* player,BossEnemy* bossenemy) {	
-	collider.center = XMVectorSet(pos.x,pos.y,pos.z,1);
+void Enemy::Update(Player* player, BossEnemy* bossenemy) {
+	collider.center = XMVectorSet(pos.x, pos.y, pos.z, 1);
 	XMFLOAT3 bosspos = bossenemy->GetPosition();
-
+	playerpos = player->GetPosition();
 	if (!IsAlive) {
 		IsTimer--;
 		speed = (float)(rand() % 360);
@@ -41,24 +42,29 @@ void Enemy::Update(Player* player,BossEnemy* bossenemy) {
 
 	if (IsTimer <= 0) {
 		IsAlive = true;
-		//radius = speed * PI / 180.0f;
-		//circleX = cosf(radius) * scale;
-		//circleZ = sinf(radius) * scale;
-		//pos.x = circleX + bosspos.x;
-		//pos.z = circleZ + bosspos.z;
+		radius = speed * PI / 180.0f;
+		circleX = cosf(radius) * scale;
+		circleZ = sinf(radius) * scale;
+		pos.x = circleX + bosspos.x;
+		pos.z = circleZ + bosspos.z;
 		IsTimer = 100;
 	}
 	////スポーン位置
-	radius = speed * PI / 180.0f;
-	circleX = cosf(radius) * scale;
-	circleZ = sinf(radius) * scale;
-	pos.x = circleX + bosspos.x;
-	pos.z = circleZ + bosspos.z;
-	//bossobj->SetPosition(bosspos);
+	//radius = speed * PI / 180.0f;
+	//circleX = cosf(radius) * scale;
+	//circleZ = sinf(radius) * scale;
+	//pos.x = circleX + bosspos.x;
+	//pos.z = circleZ + bosspos.z;
 	collideArm(player);
 	collidePlayer(player);
 	collideAttackArm(player);
-	Follow(player);
+	if (IsAlive && !EnemyCatch) {
+		if (LockOn(player)) {
+			Follow(player);
+		} else {
+			Move();
+		}
+	}
 	object3d->SetPosition(pos);
 	texture->SetPosition(pos);
 	object3d->Update();
@@ -70,7 +76,7 @@ void Enemy::Draw() {
 		Object3d::PreDraw();
 		object3d->Draw();
 	}
-	if (IsAlive&& !EnemyCatch) {
+	if (IsAlive && !EnemyCatch) {
 		Texture::PreDraw();
 		texture->Draw();
 
@@ -78,20 +84,16 @@ void Enemy::Draw() {
 }
 
 bool Enemy::collideArm(Player* player) {
-	XMFLOAT3 playerpos = player->GetPosition();
 	XMFLOAT3 Armpos = player->GetArmPosition();
 	float armweight = player->GetArmWeight();
 	int armMove = player->GetArmMoveNumber();
-	if (IsAlive&& armMove >= 1 && !EnemyCatch) {
+	if (IsAlive && armMove >= 1 && !EnemyCatch) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
 			EnemyCatch = true;
 			armweight += 1.0f;
 			player->SetArmWeight(armweight);
 		}
 	}
-
-
-
 	if (EnemyCatch == true) {
 		pos = Armpos;
 		return true;
@@ -101,7 +103,6 @@ bool Enemy::collideArm(Player* player) {
 }
 
 bool Enemy::collidePlayer(Player* player) {
-	XMFLOAT3 playerpos = player->GetPosition();
 	XMFLOAT3 Armpos = player->GetArmPosition();
 	int playerhp = player->GetHp();
 	if (IsAlive && !EnemyCatch) {
@@ -139,17 +140,65 @@ bool Enemy::collideAttackArm(Player* player) {
 	}
 }
 
+bool Enemy::LockOn(Player* player) {
+		if (Collision::CircleCollision(playerpos.x, playerpos.z, 5.0,
+			pos.x, pos.z, 3.0)) {
+			return true;
+		} else {
+			return false;
+		}
+}
+
 void Enemy::Follow(Player* player) {
-	XMFLOAT3 playerpos = player->GetPosition();
-	//pos.x = (playerpos.x - pos.x);
-	//pos.z = (playerpos.z - pos.z);
-	//double posR = sqrt(pow(pos.x, 2)+ pow(pos.z, 2));
-	//double Check = pos.x / posR;
-	//double Check2 =pos.z / posR;
+	XMFLOAT3 position{};
+	position.x = (playerpos.x - pos.x);
+	position.z = (playerpos.z - pos.z);
+	double posR = sqrt(pow(pos.x, 2) + pow(pos.z, 2));
+	double Check = position.x / posR;
+	double Check2 = position.z / posR;
 
-	//pos.x -= Check * 0.05;
-	//pos.z -= Check2 *0.05;
+	pos.x += Check * 0.05f;
+	pos.z += Check2 * 0.05f;
 
-	object3d->SetPosition(pos);
+}
+
+void Enemy::Move() {
+	if (moveCount == 0&&!isMove) {
+		StartPos = pos;
+		if (dir % 4 == 0) {
+			EndPos.x = StartPos.x + 2.5f;
+		} else if (dir % 4 == 1) {
+			EndPos.x = StartPos.x - 2.5f;
+		} else if (dir % 4 == 2) {
+			EndPos.z = StartPos.z - 2.5f;
+			zmove = true;
+		} else{
+			EndPos.z = StartPos.z + 2.5f;
+			zmove=true;
+		}
+		frame = 0;
+		isMove = true;
+	} else {
+		moveCount--;
+		dir= (rand() % 40);
+	}
+	if (isMove) {
+		if (frame<=1.0f) {
+			frame += 0.01f;
+		} else {
+			frame = 1.0f;
+			moveCount = (rand() % 60) +30;
+			dir=0;
+			isMove = false;
+		}
+		if (zmove) {
+			pos.z = Ease(In, Quad, frame, pos.z, EndPos.z);
+		} else {
+			pos.x = Ease(In, Quad, frame, pos.x, EndPos.x);
+		}
+
+		object3d->SetPosition(pos);
+
+	}
 }
 
