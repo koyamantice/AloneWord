@@ -58,7 +58,9 @@ void Player::Update() {
 	};
 	SpritePlayerHP->SetSize(PlayerHP);
 	XMFLOAT3 rot = this->object3d->GetRotation();
-	rot.y = Ease(In, Quad, 0.85f,rot.y, AfterRot);
+	//if (!AttackFlag) {
+		rot.y = Ease(In, Quad, 0.9f, rot.y, AfterRot);
+	//}
 	object3d->Update();
 	Armobj->Update();
 	StickrotX = input->GetPosX();
@@ -181,7 +183,7 @@ void Player::Update() {
 	//çUåÇ
 	if (AttackFlag == true) {
 		ArmSpeed = initspeed + 360.0f * easeInOut(frame2 / frameMax2);
-		rot.y = initrotation - 360.0f * easeInOut(frame2 / frameMax2);
+		AfterRot = initrotation - 360.0f * easeInOut(frame2 / frameMax2);
 		if (frame2 <= frameMax2) {
 			frame2 = frame2 + 1;
 		} else {
