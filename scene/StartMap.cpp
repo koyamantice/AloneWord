@@ -1,6 +1,5 @@
 #include "StartMap.h"
 #include "Audio.h"
-#include "input.h"
 #include "DebugText.h"
 #include "TitleScene.h"
 #include "FbxLoader.h"
@@ -80,7 +79,6 @@ void StartMap::Finalize() {
 }
 
 void StartMap::Update(DirectXCommon* dxCommon) {
-	Input* input = Input::GetInstance();
 	objGround->Update();
 	objSara->Update();//‚±‚±
 	lightGroup->Update();
@@ -126,11 +124,6 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	//	ImGui::TreePop();
 	//}
 	//ImGui::End();
-	Object3d::PreDraw();
-	objGround->Draw();
-
-	Texture::PreDraw();
-	limit->Draw();
 
 	Sprite::PreDraw();
 	//”wŒi—p
@@ -140,10 +133,12 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw();
 	//object1->Draw(dxCommon->GetCmdList());
 	//”wŒi—p
+	objGround->Draw();
 	player->Draw();
 	for (int i = 0; i < EnemyMax; i++) {
 		enemy[i]->Draw();
 	}
 
 	bossenemy->Draw();
+	Texture::PreDraw();
 }

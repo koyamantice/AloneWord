@@ -41,6 +41,8 @@ void Enemy::Update(Player* player, BossEnemy* bossenemy) {
 
 	if (IsTimer <= 0) {
 		IsAlive = true;
+		isMove = false;
+		frame = 0;
 		radius = speed * PI / 180.0f;
 		circleX = cosf(radius) * scale;
 		circleZ = sinf(radius) * scale;
