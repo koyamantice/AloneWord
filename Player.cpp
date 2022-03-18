@@ -62,6 +62,8 @@ void Player::Update() {
 	XMFLOAT3 rot = this->object3d->GetRotation();
 	object3d->Update();
 	Armobj->Update();
+	StickrotX = input->GetPosX();
+	StickrotY = input->GetPosY();
 	/*collider.center = XMVectorSet(pos.x, pos.y, pos.z, 1);*/
 	//if ((input->LeftTiltStick(input->Right)) || (input->LeftTiltStick(input->Left)) ||
 	//	(input->LeftTiltStick(input->Down)) || (input->LeftTiltStick(input->Up))) {
@@ -182,6 +184,41 @@ void Player::Update() {
 			AttackMoveNumber = 0;
 			Armscale = 1.0f;
 			frameMax3 = 80.0f;
+		}
+	}
+
+	//ÉvÉåÉCÉÑÅ[ÇÃå¸Ç´ê›íË
+	if (StickrotY <= -650) {
+		if (StickrotX <= 650 && StickrotX >= -650) {
+			rot.y = 180;
+			ArmSpeed = 90;
+		} else if (StickrotX > 650) {
+			rot.y = 225;
+			ArmSpeed = 45;
+		} else if (StickrotX < -650) {
+			rot.y = 135;
+			ArmSpeed = 135;
+		}
+	} else if (StickrotY >= 650) {
+		if (StickrotX <= 650 && StickrotX >= -650) {
+			rot.y = 0;
+			ArmSpeed = 270;
+		} else if (StickrotX > 650) {
+			rot.y = 315;
+			ArmSpeed = 315;
+		} else if (StickrotX < -650) {
+			rot.y = 45;
+			ArmSpeed = 225;
+		}
+	} else {
+		if (StickrotX <= -650) {
+			rot.y = 90;
+			ArmSpeed = 180;
+		}
+
+		if (StickrotX >= 650) {
+			rot.y = 270;
+			ArmSpeed = 0;
 		}
 	}
 
