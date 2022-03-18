@@ -16,6 +16,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 
 	bossenemy = new BossEnemy();
 	bossenemy->Initialize();
+
 	for (int i = 0; i < EnemyMa; i++) {
 		enemy[i] = new Enemy();
 		enemy[i]->Initialize();
@@ -26,6 +27,13 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objGround->Initialize();
 	objGround->SetModel(modelGround);
 	objGround->SetPosition({ 0,-1,0 });
+
+	modelFork = Model::CreateFromOBJ("Fork");
+	objFork = Object3d::Create();
+	objFork->Initialize();
+	objFork->SetModel(modelFork);
+	objFork->SetRotation({ 0,90.0f,0 });
+	objFork->SetPosition({ 5.0f,0,-10.0f });
 	//•’Ê‚ÌƒeƒNƒXƒ`ƒƒ(”Âƒ|ƒŠ)
 	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,1 });
 	limit->TextureCreate();
@@ -66,6 +74,7 @@ void BossScene::Finalize() {
 
 void BossScene::Update(DirectXCommon* dxCommon) {
 	objGround->Update();
+	objFork->Update();
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
@@ -113,16 +122,15 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 //ImGui::End();
 	Object3d::PreDraw();
 	objGround->Draw();
-
 	Texture::PreDraw();
 	limit->Draw();
 
 	//Sprite::PreDraw();
 	//”wŒi—p
 	//sprite->Draw();
-
-
 	Object3d::PreDraw();
+	objFork->Draw();
+
 	//object1->Draw(dxCommon->GetCmdList());
 	//”wŒi—p
 	player->Draw();
@@ -131,6 +139,4 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	}
 
 	bossenemy->Draw();
-
-
 }
