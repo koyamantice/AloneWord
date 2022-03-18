@@ -104,7 +104,8 @@ private:
 	float frameMax3 = 80.0f;
 	//HP
 	int HP = 10;
-
+	float StickrotX = 0;
+	float StickrotY = 0;
 	XMFLOAT3 angle = { 0,0,0 };
 public:
 	Sphere collider;
