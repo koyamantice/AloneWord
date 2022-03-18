@@ -14,7 +14,20 @@ bool Collision::SphereCollision(const float& X1, const float& Y1, const float& Z
 	} else {
 		return false;
 	}
+}
 
+bool Collision::CircleCollision(const float& X1, const float& Y1, const float& R1, const float& X2, const float& Y2, const float& R2) {
+	float a = X1 - X2;
+	float b = Y1 - Y2;
+	//2‚Â‚Ì‹——£‚ğŒvZ
+	float distance = sqrtf(a * a + b * b);
+	//”¼Œa‚Ì‡Œv‚ğŒvZ
+	int radius = R1 + R2;
+	if (distance <= radius) {
+		return true;
+	} else {
+		return false;
+	}
 	return true;
 }
 

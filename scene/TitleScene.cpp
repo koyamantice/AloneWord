@@ -25,7 +25,7 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 	if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
 		SceneManager::GetInstance()->ChangeScene("STARTMAP");
 	}
-	DebugText::GetInstance()->Print("ENTER to GAMEPLAY!!", 200, 100, 1.0f);
+	DebugText::GetInstance()->Print("Button_A to STARTMAP!!", 200, 100, 1.0f);
 }
 
 void TitleScene::Draw(DirectXCommon* dxCommon) {

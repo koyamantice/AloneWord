@@ -5,6 +5,8 @@
 #include <Input.h>
 #include"CollisionPrimitive.h"
 #include "Sprite.h"
+
+class Enemy;
 class Player {
 public:
 	Player();
@@ -55,11 +57,14 @@ public:
 	void SetAttackFlag(bool AttackFlag) { this->AttackFlag = AttackFlag; }
 
 	void SetArmWeight(float ArmWeight) { this->ArmWeight = ArmWeight; }
+
+	void ResetWeight(Enemy* enemy);
 private:
 	Object3d* Armobj;
 	Object3d* object3d;
 	Model* model;
 	Model* Armmodel;
+	XMFLOAT2 PlayerHP;
 	XMFLOAT3 pos = { 0,0,-10 };
 	XMFLOAT3 Armpos = { 0,0,0 };
 	Sprite* SpritePlayerHP = nullptr;
@@ -75,6 +80,7 @@ private:
 	float speed = 0.0f;
 	float scale = 10.0f;
 	float initscale = 0.0f;
+	float scaleVel = 3.0f;
 	float initspeed = 0.0f;
 	float initrotation = 0.0f;
 	float circleX = 0.0f;

@@ -3,7 +3,7 @@
 #include <Windows.h>
 #include <wrl.h>
 #include "WinApp.h"
-
+#define DIRECTINPUT_VERSION 0x0800
 #include <dinput.h>
 
 /// <summary>

@@ -1,33 +1,15 @@
 #pragma once
-
 #include "BaseScene.h"
-#include "Sprite.h"
-#include "Object3d.h"
-#include "DebugCamera.h"
-#include "LightGroup.h"
-#include "FBXObject3d.h"
-#include "Texture.h"
-#include <DirectXMath.h>
-#include<memory>
 #include "Player.h"
 #include "Enemy.h"
 #include "BossEnemy.h"
-#include "Easing.h"
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>
-const int EnemyMax = 13;
+const int EnemyMax = 10;
 class StartMap : public BaseScene {
-private:
-	// DirectX::を省略
-	using XMFLOAT2 = DirectX::XMFLOAT2;
-	using XMFLOAT3 = DirectX::XMFLOAT3;
-	using XMFLOAT4 = DirectX::XMFLOAT4;
-	using XMVECTOR = DirectX::XMVECTOR;
-	using XMMATRIX = DirectX::XMMATRIX;
 
 public:
-
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -55,6 +37,9 @@ private:
 	FBXObject3d* object1 = nullptr;
 	DebugCamera* camera = { nullptr };
 	LightGroup* lightGroup = nullptr;
+	Texture* limit = nullptr;
+
+
 	float ambientColor0[3] = { 1,1,1 };
 
 	Player* player = nullptr;

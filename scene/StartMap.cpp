@@ -5,6 +5,8 @@
 #include "TitleScene.h"
 #include "FbxLoader.h"
 void StartMap::Initialize(DirectXCommon* dxCommon) {
+	Texture::LoadTexture(0, L"Resources/2d/enemy.png");
+	Texture::LoadTexture(1, L"Resources/2d/limit.png");
 	// カメラ生成
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
@@ -33,11 +35,11 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	objSara->SetModel(modelSara);
 	objSara->SetPosition({ 2,2,0 });
 	//普通のテクスチャ(板ポリ)
-	/*Texture::LoadTexture(0, L"Resources/2d/title.png");
-	titleTexture = Texture::Create(0, { 0,0,0 }, { 12,12,12 }, { 1,1,1,1 });
-	titleTexture->TextureCreate();
-	titleTexture->SetPosition({ 5.0f,10.0f,-10.0f });
-	titleTexture->SetScale({ 0.5,0.5,0.5 });*/
+	limit =Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,1 });
+	limit->TextureCreate();
+	limit->SetPosition({ 0.0f,0.01f,0.0f });
+	limit->SetRotation({ 90.0f,0, 0});
+	limit->SetScale({ 6,5,5 });
 	//背景スプライト生成
 
 	// モデル読み込み
@@ -68,6 +70,13 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 
 void StartMap::Finalize() {
 	//３ｄのモデルのデリート
+	delete objGround;
+	delete player;
+	for(int i = 0; i < EnemyMax; i++) {
+		delete enemy[i];
+	}
+	delete bossenemy;
+
 }
 
 void StartMap::Update(DirectXCommon* dxCommon) {
@@ -78,8 +87,10 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	camera->Update();
 	player->Update();
 	bossenemy->Update(player);
+	limit->Update();
 	for (int i = 0; i < EnemyMax; i++) {
 		enemy[i]->Update(player, bossenemy);
+		player->ResetWeight(enemy[i]);
 	}
 
 	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
@@ -87,21 +98,17 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		Audio::GetInstance()->StopWave(1);
 		Audio::GetInstance()->LoopWave(1, 0.7f);
 	}
-	//if (input->TriggerKey(DIK_SPACE) || input->TriggerButton(input->Button_A)) {
-	//	Audio::GetInstance()->StopWave(0);
-	//	Audio::GetInstance()->StopWave(1);
-	//	SceneManager::GetInstance()->ChangeScene("TITLE");
-	//}
+	if (input->TriggerKey(DIK_SPACE)) {
+		int a = 0;
+		a += 1;
+	}
 
 	if (input->PushKey(DIK_0) || input->TriggerButton(input->Button_Y)) {
 		object1->PlayAnimation();
-		SceneManager::GetInstance()->ChangeScene("BOSS");
+		//SceneManager::GetInstance()->ChangeScene("BOSS");
 	}
 
 	object1->Update();
-	DebugText::GetInstance()->Print("SPACE to TITLE!!", 200, 100, 1.0f);
-	DebugText::GetInstance()->Print("Z or C to Sound!!", 200, 115, 1.0f);
-
 	camera->SetTarget(player->GetPosition());
 	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
 }
@@ -119,6 +126,11 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	//	ImGui::TreePop();
 	//}
 	//ImGui::End();
+	Object3d::PreDraw();
+	objGround->Draw();
+
+	Texture::PreDraw();
+	limit->Draw();
 
 	Sprite::PreDraw();
 	//背景用
@@ -128,14 +140,15 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw();
 	//object1->Draw(dxCommon->GetCmdList());
 	//背景用
+<<<<<<< HEAD
 	objGround->Draw();
 	objSara->Draw();
+=======
+>>>>>>> 05539ec3b55e426c636f83c9cceefc0a3889fe96
 	player->Draw();
 	for (int i = 0; i < EnemyMax; i++) {
 		enemy[i]->Draw();
 	}
 
 	bossenemy->Draw();
-	Texture::PreDraw();
-
 }

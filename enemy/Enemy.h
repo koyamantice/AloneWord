@@ -5,7 +5,6 @@
 #include <Input.h>
 #include"CollisionPrimitive.h"
 #include "Player.h"
-#include "Collision.h"
 #include "Texture.h"
 
 class BossEnemy;
@@ -16,10 +15,14 @@ public:
 	void Initialize();
 	void Update(Player* player,BossEnemy* bossenemy);
 	void Draw();
+private:
 	bool collideArm(Player* player);
 	bool collidePlayer(Player* player);
 	bool collideAttackArm(Player* player);
-	bool enemycollide();
+	bool LockOn(Player*player);
+	void Follow(Player* player);
+	void Move();
+
 private:
 	// DirectX::‚ðÈ—ª
 	using XMFLOAT2 = DirectX::XMFLOAT2;
@@ -34,6 +37,8 @@ public:
 	const XMFLOAT3& GetRotation() { return object3d->GetRotation(); }
 
 	const int& GetisAlive() { return IsAlive; }
+	const bool& GetEnemyCatch() { return EnemyCatch; }
+
 	/// À•W‚ÌÝ’è
 	void SetPosition(XMFLOAT3 position) { object3d->SetPosition(position); }
 
@@ -42,12 +47,18 @@ public:
 	//bool Collision(XMFLOAT3 position, float radius);
 
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
+
+	void SetEnemyCatch(bool EnemyCatch) {this-> EnemyCatch = EnemyCatch; }
+
 private:
 	Object3d* object3d;
 	Model* model;
 	Texture* texture;
-
+	XMFLOAT3 playerpos{};
+	XMFLOAT3 StartPos{};
+	XMFLOAT3 EndPos{};
 	XMFLOAT3 pos = {0,0,0};
+	XMFLOAT3 rot = { 0,0,0 };
 	float rad = 0.4f;
 	const float PI = 3.14f;
 
@@ -57,12 +68,15 @@ private:
 	float circleX = 0.0f;
 	float circleZ = 0.0f;
 	float EnemyWeight = 0.0f;
-	int IsAlive = 0;
+	bool IsAlive = 0;
 	int IsTimer = 100;
-	int IsMove = 0;
 	bool EnemyCatch = false;
+	bool isMove = false;
+	float frame=0;
+	int moveCount = 30;
+	int dir = 0;
+	bool zmove = false;
 public:
 	Sphere collider;
-	Collision* collision = nullptr;
 };
 

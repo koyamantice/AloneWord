@@ -1,7 +1,5 @@
 #pragma once
 #include "SceneManager.h"
-#include "Sprite.h"
-#include "Object3d.h"
 /// <summary>
 /// タイトルシーン
 /// </summary>

@@ -5,6 +5,7 @@
 #include "DebugText.h"
 #include<sstream>
 #include<iomanip>
+#include"Enemy.h"
 using namespace DirectX;
 float easeInSine(float x) {
 	return x * x * x;
@@ -14,7 +15,7 @@ float easeOutBack(float x) {
 }
 
 float easeInOut(float x) {
-	return x < 0.5 ? 2 * x * x : 1 - pow(-2 * x + 2, 2) / 2;
+	return x < 0.5 ? 2 * x * x : 1 - powf(-2 * x + 2, 2) / 2;
 }
 Player::Player() {
 	model = Model::CreateFromOBJ("chr_knight");
@@ -26,7 +27,6 @@ Player::Player() {
 }
 
 void Player::Initialize() {
-	Sprite::LoadTexture(3, L"Resources/2d/PlayerHP.png");
 	//”wŒiƒXƒvƒ‰ƒCƒg¶¬
 	SpritePlayerHP = Sprite::Create(3, { 0.0f,0.0f });
 	SpritePlayerHP->SetPosition({ 0.0f,520.0f });
@@ -43,7 +43,6 @@ void Player::Initialize() {
 	Armpos.x = ArmCircleX + pos.x;
 	Armpos.z = ArmCircleZ + pos.z;
 	Armobj->SetPosition(Armpos);
-
 	Armobj->SetScale({ 1,1,1 });
 
 	collider.radius = rad;
@@ -51,7 +50,15 @@ void Player::Initialize() {
 
 void Player::Update() {
 	Input* input = Input::GetInstance();
-	
+	XMFLOAT2 AfterPos;
+	AfterPos = { (float)(HP * 30),20 };
+	PlayerHP = {
+	Ease(In,Quint,0.7f,SpritePlayerHP->GetSize().x,AfterPos.x),
+	Ease(In,Quint,0.7f,SpritePlayerHP->GetSize().y,AfterPos.y),
+	};
+	SpritePlayerHP->SetSize(PlayerHP);
+
+
 	XMFLOAT3 rot = this->object3d->GetRotation();
 	object3d->Update();
 	Armobj->Update();
@@ -62,30 +69,37 @@ void Player::Update() {
 	//}
 
 	if (ArmMoveNumber <= 0) {
-		if (input->LeftTiltStick(input->Right) && AttackFlag == false && AttackMoveNumber == 0) {
-			pos.x += PlayerSpeed;
-			rot.y = 90;
-			ArmSpeed = 0;
-		}
+			if (input->LeftTiltStick(input->Right) && AttackFlag == false && AttackMoveNumber == 0) {
+				if (pos.x <= 25.0f) {
+					pos.x += PlayerSpeed;
+						rot.y = 90;
+					ArmSpeed = 0;
+				}
+			}
 
-		if (input->LeftTiltStick(input->Left) && AttackFlag == false && AttackMoveNumber == 0) {
-			pos.x -= PlayerSpeed;
-			rot.y = 270;
-			ArmSpeed = 180;
-		}
+			if (input->LeftTiltStick(input->Left) && AttackFlag == false && AttackMoveNumber == 0) {
+				if (pos.x >= -25.0f) {
+					pos.x -= PlayerSpeed;
+						rot.y = 270;
+						ArmSpeed = 180;
+				}
+			}
 
-		if (input->LeftTiltStick(input->Up) && AttackFlag == false && AttackMoveNumber == 0) {
-			pos.z += PlayerSpeed;
-			rot.y = 0;
-			ArmSpeed = 90;
-		}
+			if (input->LeftTiltStick(input->Up) && AttackFlag == false && AttackMoveNumber == 0) {
+				if(pos.z <= 20.0f) {
+				pos.z += PlayerSpeed;
+				rot.y = 0;
+				ArmSpeed = 90;
+			}
+			}
 
-		if (input->LeftTiltStick(input->Down) && AttackFlag == false && AttackMoveNumber == 0) {
-			pos.z -= PlayerSpeed;
-			rot.y = 180;
-			ArmSpeed = 270;
-		}
-
+			if (input->LeftTiltStick(input->Down) && AttackFlag == false && AttackMoveNumber == 0) {
+				if (pos.z >= -20) {
+					pos.z -= PlayerSpeed;
+					rot.y = 180;
+					ArmSpeed = 270;
+				}
+			}
 
 		if (input->PushButton(input->Button_RB) && ArmWeight <= 6.0f && AttackFlag == false && AttackMoveNumber == 0) {
 			ArmMoveNumber = 1;
@@ -116,7 +130,6 @@ void Player::Update() {
 			initscale = Armscale;
 		}
 	}
-
 	else if (ArmMoveNumber == 2) {
 		Armscale = initscale - 3.0f * easeOutBack(frame / frameMax);
 		if (frame != frameMax) {
@@ -137,22 +150,32 @@ void Player::Update() {
 			AttackFlag = false;
 			frameMax2 = 80.0f;
 		}
-	}
+	} 
 
 	if (AttackMoveNumber == 1) {
-		Armscale = initscale + 3.0f * easeInOut(frame3 / frameMax3);
-		if (frame3 <= frameMax3) {
-			frame3 = frame3 + 1;
+		if (ArmWeight>0) {
+			Armscale = initscale + 3.0f * easeInOut(frame3 / frameMax3);
+			if (frame3 <= frameMax3) {
+				frame3 = frame3 + 1;
+			} else {
+				AttackMoveNumber = 2;
+				initscale = Armscale;
+				scaleVel = 3.0f;
+				frame3 = 0;
+				frameMax3 = 20.0f;
+			}
 		} else {
 			AttackMoveNumber = 2;
+			scaleVel = Armscale - initscale;
 			initscale = Armscale;
 			frame3 = 0;
 			frameMax3 = 20.0f;
 		}
+
 	}
 
 	else if (AttackMoveNumber == 2) {
-		Armscale = initscale - 3.0f * easeInOut(frame3 / frameMax3);
+		Armscale = initscale - scaleVel * easeInOut(frame3 / frameMax3);
 		if (frame3 <= frameMax3) {
 			frame3 = frame3 + 1;
 		} else {
@@ -174,11 +197,17 @@ void Player::Update() {
 }
 
 void Player::Draw() {
+<<<<<<< HEAD
 	ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug"))
 	{
 		if (ImGui::TreeNode("Player"))
 		{
+=======
+		ImGui::Begin("test");
+	if (ImGui::TreeNode("Debug"))     {
+		if (ImGui::TreeNode("Player"))         {
+>>>>>>> 05539ec3b55e426c636f83c9cceefc0a3889fe96
 			ImGui::SliderFloat("Position.x", &pos.x, 50, -50);
 			ImGui::SliderFloat("Position.z", &pos.z, 50, -50);
 			ImGui::Unindent();
@@ -187,16 +216,27 @@ void Player::Draw() {
 		ImGui::TreePop();
 	}
 	ImGui::End();
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 05539ec3b55e426c636f83c9cceefc0a3889fe96
 	Sprite::PreDraw();
 	//”wŒi—p
 	SpritePlayerHP->Draw();
-	SpritePlayerHP->SetSize({ (float)(HP * 30),20 });
 
 	Object3d::PreDraw();
 	object3d->Draw();
 	Armobj->Draw();
+}
+
+void Player::ResetWeight(Enemy *enemy) {
+	if (ArmWeight==0.0f) {
+		if (enemy->GetEnemyCatch()) {
+			enemy->SetEnemyCatch(false);
+			enemy->SetIsAlive(0);
+		}
+	}
 }
 
 

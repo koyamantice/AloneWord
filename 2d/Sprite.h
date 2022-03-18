@@ -130,10 +130,16 @@ public: // メンバ関数
 	void SetSize(XMFLOAT2 size);
 
 	/// <summary>
+	/// サイズの設定
+	/// </summary>
+	/// <param name="size">サイズ</param>
+	const XMFLOAT2& GetSize() { return size; }
+
+	/// <summary>
 	/// カラーの設定
 	/// </summary>
 	/// <param name="size">カラー</param>
-	void Sprite::SetColor(XMFLOAT4 color);
+	void SetColor(XMFLOAT4 color);
 
 	/// <summary>
 	/// アンカーポイントの設定

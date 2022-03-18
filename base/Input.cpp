@@ -1,6 +1,5 @@
 #include "Input.h"
 #include <cassert>
-
 #pragma comment(lib, "dinput8.lib")
 
 Input* Input::GetInstance() {
@@ -229,7 +228,7 @@ bool Input::TriggerMouseMiddle() {
 }
 
 Input::MouseMove Input::GetMouseMove() {
-	MouseMove tmp;
+	MouseMove tmp{};
 	tmp.lX = mouseState.lX;
 	tmp.lY = mouseState.lY;
 	tmp.lZ = mouseState.lZ;
@@ -237,7 +236,7 @@ Input::MouseMove Input::GetMouseMove() {
 }
 
 Input::MousePoint Input::GetPoint() {
-	MousePoint tmp;
+	MousePoint tmp{};
 	tmp.lX = p.x;
 	tmp.lY = p.y;
 	return tmp;

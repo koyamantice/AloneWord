@@ -170,7 +170,6 @@
     <ClCompile Include="base\SceneFactory.cpp" />
     <ClCompile Include="base\SceneManager.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
-    <ClCompile Include="BossEnemy.cpp" />
     <ClCompile Include="camera\Camera.cpp" />
     <ClCompile Include="camera\DebugCamera.cpp" />
     <ClCompile Include="collision\BaseCollider.cpp" />
@@ -178,6 +177,7 @@
     <ClCompile Include="collision\CollisionInfo.cpp" />
     <ClCompile Include="collision\CollisionPrimitive.cpp" />
     <ClCompile Include="collision\CollisionTypes.cpp" />
+    <ClCompile Include="enemy\BossEnemy.cpp" />
     <ClCompile Include="enemy\Enemy.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
@@ -211,6 +211,7 @@
     <ClInclude Include="3d\Mesh.h" />
     <ClInclude Include="3d\Model.h" />
     <ClInclude Include="3d\Object3d.h" />
+    <ClInclude Include="BaseEnemy.h" />
     <ClInclude Include="base\AbstractSceneFactory.h" />
     <ClInclude Include="base\Audio.h" />
     <ClInclude Include="base\BaseScene.h" />
@@ -220,7 +221,6 @@
     <ClInclude Include="base\Input.h" />
     <ClInclude Include="base\SceneManager.h" />
     <ClInclude Include="base\WinApp.h" />
-    <ClInclude Include="BossEnemy.h" />
     <ClInclude Include="camera\Camera.h" />
     <ClInclude Include="camera\DebugCamera.h" />
     <ClInclude Include="collision\BaseCollider.h" />
@@ -228,6 +228,7 @@
     <ClInclude Include="collision\CollisionInfo.h" />
     <ClInclude Include="collision\CollisionPrimitive.h" />
     <ClInclude Include="collision\CollisionTypes.h" />
+    <ClInclude Include="enemy\BossEnemy.h" />
     <ClInclude Include="enemy\Enemy.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />

@@ -5,7 +5,6 @@
 #include <Input.h>
 #include"CollisionPrimitive.h"
 #include "Player.h"
-#include "Collision.h"
 #include "Sprite.h"
 
 class Enemy;
@@ -16,8 +15,10 @@ public:
 	void Initialize();
 	void Update(Player* player);
 	void Draw();
+private:
 	bool collidePlayer(Player* player);
-	bool  collideAttackArm(Player* player);
+	bool collideAttackArm(Player* player);
+	void Fork();
 private:
 	// DirectX::Çè»ó™
 	using XMFLOAT2 = DirectX::XMFLOAT2;
@@ -43,6 +44,7 @@ public:
 private:
 	Object3d* object3d;
 	Model* model;
+	XMFLOAT2 HPPos = {0,0};
 	XMFLOAT3 pos = { 0,0,0 };
 	Sprite* SpriteBossHP = false;
 	float rad = 0.4f;
@@ -53,8 +55,11 @@ private:
 	int IsMove = 0;
 	int BossHP = 50;
 	bool BossHit = false;
+
+	int AttackCount = 0;
+	int action=0;
+	bool active=false;
 public:
 	Sphere collider;
-	Collision* collision = nullptr;
 };
 
