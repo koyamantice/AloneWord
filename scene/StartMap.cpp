@@ -5,6 +5,8 @@
 #include "TitleScene.h"
 #include "FbxLoader.h"
 void StartMap::Initialize(DirectXCommon* dxCommon) {
+	Texture::LoadTexture(0, L"Resources/2d/enemy.png");
+	Texture::LoadTexture(1, L"Resources/2d/limit.png");
 	// ƒJƒƒ‰¶¬
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
@@ -26,11 +28,11 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	objGround->SetModel(modelGround);
 	objGround->SetPosition({ 0,-1,0 });
 	//•’Ê‚ÌƒeƒNƒXƒ`ƒƒ(”Âƒ|ƒŠ)
-	/*Texture::LoadTexture(0, L"Resources/2d/title.png");
-	titleTexture = Texture::Create(0, { 0,0,0 }, { 12,12,12 }, { 1,1,1,1 });
-	titleTexture->TextureCreate();
-	titleTexture->SetPosition({ 5.0f,10.0f,-10.0f });
-	titleTexture->SetScale({ 0.5,0.5,0.5 });*/
+	limit =Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,1 });
+	limit->TextureCreate();
+	limit->SetPosition({ 0.0f,0.01f,0.0f });
+	limit->SetRotation({ 90.0f,0, 0});
+	limit->SetScale({ 6,5,5 });
 	//”wŒiƒXƒvƒ‰ƒCƒg¶¬
 
 	// ƒ‚ƒfƒ‹“Ç‚Ýž‚Ý
@@ -67,6 +69,7 @@ void StartMap::Finalize() {
 		delete enemy[i];
 	}
 	delete bossenemy;
+
 }
 
 void StartMap::Update(DirectXCommon* dxCommon) {
@@ -76,6 +79,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	camera->Update();
 	player->Update();
 	bossenemy->Update(player);
+	limit->Update();
 	for (int i = 0; i < EnemyMax; i++) {
 		enemy[i]->Update(player, bossenemy);
 		player->ResetWeight(enemy[i]);
@@ -114,6 +118,11 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	//	ImGui::TreePop();
 	//}
 	//ImGui::End();
+	Object3d::PreDraw();
+	objGround->Draw();
+
+	Texture::PreDraw();
+	limit->Draw();
 
 	Sprite::PreDraw();
 	//”wŒi—p
@@ -123,13 +132,10 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw();
 	//object1->Draw(dxCommon->GetCmdList());
 	//”wŒi—p
-	objGround->Draw();
 	player->Draw();
 	for (int i = 0; i < EnemyMax; i++) {
 		enemy[i]->Draw();
 	}
 
 	bossenemy->Draw();
-	Texture::PreDraw();
-
 }

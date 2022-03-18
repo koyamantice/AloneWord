@@ -10,7 +10,6 @@ using namespace DirectX;
 Enemy::Enemy() {
 	model = Model::CreateFromOBJ("chr_sword");
 	object3d = new Object3d();
-	Texture::LoadTexture(0, L"Resources/2d/enemy.png");
 
 }
 

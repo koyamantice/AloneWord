@@ -35,6 +35,9 @@ private:
 	FBXObject3d* object1 = nullptr;
 	DebugCamera* camera = { nullptr };
 	LightGroup* lightGroup = nullptr;
+	Texture* limit = nullptr;
+
+
 	float ambientColor0[3] = { 1,1,1 };
 
 	Player* player = nullptr;

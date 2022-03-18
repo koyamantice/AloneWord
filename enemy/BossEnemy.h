@@ -15,8 +15,10 @@ public:
 	void Initialize();
 	void Update(Player* player);
 	void Draw();
+private:
 	bool collidePlayer(Player* player);
-	bool  collideAttackArm(Player* player);
+	bool collideAttackArm(Player* player);
+	void Fork();
 private:
 	// DirectX::Çè»ó™
 	using XMFLOAT2 = DirectX::XMFLOAT2;
@@ -53,6 +55,10 @@ private:
 	int IsMove = 0;
 	int BossHP = 50;
 	bool BossHit = false;
+
+	int AttackCount = 0;
+	int action=0;
+	bool active=false;
 public:
 	Sphere collider;
 };

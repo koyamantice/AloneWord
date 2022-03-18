@@ -69,30 +69,37 @@ void Player::Update() {
 	//}
 
 	if (ArmMoveNumber <= 0) {
-		if (input->LeftTiltStick(input->Right) && AttackFlag == false && AttackMoveNumber == 0) {
-			pos.x += PlayerSpeed;
-			rot.y = 90;
-			ArmSpeed = 0;
-		}
+			if (input->LeftTiltStick(input->Right) && AttackFlag == false && AttackMoveNumber == 0) {
+				if (pos.x <= 25.0f) {
+					pos.x += PlayerSpeed;
+						rot.y = 90;
+					ArmSpeed = 0;
+				}
+			}
 
-		if (input->LeftTiltStick(input->Left) && AttackFlag == false && AttackMoveNumber == 0) {
-			pos.x -= PlayerSpeed;
-			rot.y = 270;
-			ArmSpeed = 180;
-		}
+			if (input->LeftTiltStick(input->Left) && AttackFlag == false && AttackMoveNumber == 0) {
+				if (pos.x >= -25.0f) {
+					pos.x -= PlayerSpeed;
+						rot.y = 270;
+						ArmSpeed = 180;
+				}
+			}
 
-		if (input->LeftTiltStick(input->Up) && AttackFlag == false && AttackMoveNumber == 0) {
-			pos.z += PlayerSpeed;
-			rot.y = 0;
-			ArmSpeed = 90;
-		}
+			if (input->LeftTiltStick(input->Up) && AttackFlag == false && AttackMoveNumber == 0) {
+				if(pos.z <= 20.0f) {
+				pos.z += PlayerSpeed;
+				rot.y = 0;
+				ArmSpeed = 90;
+			}
+			}
 
-		if (input->LeftTiltStick(input->Down) && AttackFlag == false && AttackMoveNumber == 0) {
-			pos.z -= PlayerSpeed;
-			rot.y = 180;
-			ArmSpeed = 270;
-		}
-
+			if (input->LeftTiltStick(input->Down) && AttackFlag == false && AttackMoveNumber == 0) {
+				if (pos.z >= -20) {
+					pos.z -= PlayerSpeed;
+					rot.y = 180;
+					ArmSpeed = 270;
+				}
+			}
 
 		if (input->PushButton(input->Button_RB) && ArmWeight <= 6.0f && AttackFlag == false && AttackMoveNumber == 0) {
 			ArmMoveNumber = 1;
@@ -190,7 +197,17 @@ void Player::Update() {
 }
 
 void Player::Draw() {
-
+		ImGui::Begin("test");
+	if (ImGui::TreeNode("Debug"))     {
+		if (ImGui::TreeNode("Player"))         {
+			ImGui::SliderFloat("Position.x", &pos.x, 50, -50);
+			ImGui::SliderFloat("Position.z", &pos.z, 50, -50);
+			ImGui::Unindent();
+			ImGui::TreePop();
+		}
+		ImGui::TreePop();
+	}
+	ImGui::End();
 	Sprite::PreDraw();
 	//”wŒi—p
 	SpritePlayerHP->Draw();

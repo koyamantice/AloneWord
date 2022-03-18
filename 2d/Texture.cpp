@@ -156,7 +156,7 @@ bool Texture::InitializeDescriptorHeap()
 	D3D12_DESCRIPTOR_HEAP_DESC descHeapDesc = {};
 	descHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	descHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;//シェーダから見えるように
-	descHeapDesc.NumDescriptors = 1; // シェーダーリソースビュー1つ
+	descHeapDesc.NumDescriptors = srvCount; // シェーダーリソースビュー1つ
 	result = device->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&descHeap));//生成
 	if (FAILED(result)) {
 		assert(0);

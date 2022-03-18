@@ -16,39 +16,34 @@ BossEnemy::BossEnemy() {
 void BossEnemy::Initialize() {
 	SpriteBossHP = Sprite::Create(4, { 0.0f,0.0f });
 	SpriteBossHP->SetColor({ 0.0f,1.0f,0.0,1.0 });
-	//ƒvƒŒƒCƒ„[
-	//radius = speed * PI / 180.0f;
-	//circleX = cosf(radius) * scale;
-	//circleZ = sinf(radius) * scale;
-	//pos.x = circleX + bosspos.x;
-	//pos.y = circleZ + bosspos.z;
 	IsAlive = 0;
 	IsTimer = 100;
 	object3d = Object3d::Create();
 	object3d->SetModel(model);
+	pos = { 0.0f,0.0f,0.0f };
 	object3d->SetPosition(pos);
 	object3d->SetScale({ 3.0f,3.0f,3.0f });
 	collider.radius = rad;
 }
 
 void BossEnemy::Update(Player* player) {
-	
 	collider.center = XMVectorSet(pos.x, pos.y, pos.z, 1);
-	XMFLOAT2 AfterPos;
-	AfterPos = { (float)(BossHP * 20),20 };
-	HPPos = {
-	Ease(In,Quint,0.7f,SpriteBossHP->GetSize().x,AfterPos.x),
-	Ease(In,Quint,0.7f,SpriteBossHP->GetSize().y,AfterPos.y),
-	};
-	SpriteBossHP->SetSize(HPPos);
+	{//HPˆ—
+		XMFLOAT2 AfterPos;
+		AfterPos = { (float)(BossHP * 20),20 };
+		HPPos = {
+		Ease(In,Quint,0.7f,SpriteBossHP->GetSize().x,AfterPos.x),
+		Ease(In,Quint,0.7f,SpriteBossHP->GetSize().y,AfterPos.y),
+		};
+		SpriteBossHP->SetSize(HPPos);
+	}
+	//Fork();
 
-	pos = { 0.0f,0.0f,0.0f };
-	//collidePlayer(player);
+
+
 	collideAttackArm(player);
 	object3d->SetPosition(pos);
 	object3d->Update();
-	//bossobj->SetPosition(bosspos);
-	//collidePlayer(player);
 }
 
 void BossEnemy::Draw() {
@@ -98,6 +93,28 @@ bool BossEnemy::collideAttackArm(Player* player) {
 	}
 }
 
+void BossEnemy::Fork() {
+	if (AttackCount>30&&!active) {
+		action = action % 2;
+		active = true;
+	} else {
+		AttackCount++;
+		action = (rand() % 20);
+	}
+	if (active) {
+
+
+
+
+
+
+
+	}
+
+
+
+
+}
 
 //bool BossEnemy::collidePlayer(Player* player) {
 //	XMFLOAT3 pos = player->GetPosition();
