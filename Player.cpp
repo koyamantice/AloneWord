@@ -82,7 +82,7 @@ void Player::Update() {
 				if (pos.x >= -25.0f) {
 					pos.x -= PlayerSpeed;
 					AfterRot = 270;
-						ArmSpeed = 180;
+					ArmSpeed = 180;
 				}
 			}
 
@@ -117,6 +117,43 @@ void Player::Update() {
 			initrotation = rot.y;
 			frame2 = 0;
 			frame3 = 0;
+		}
+
+		if (AttackFlag == false && AttackMoveNumber == 0) {
+			//プレイヤーの向き設定
+			if (StickrotY <= -650) {
+				if (StickrotX <= 650 && StickrotX >= -650) {
+					AfterRot = 180;
+					ArmSpeed = 90;
+				} else if (StickrotX > 650) {
+					AfterRot = 225;
+					ArmSpeed = 45;
+				} else if (StickrotX < -650) {
+					AfterRot = 135;
+					ArmSpeed = 135;
+				}
+			} else if (StickrotY >= 650) {
+				if (StickrotX <= 650 && StickrotX >= -650) {
+					AfterRot = 0;
+					ArmSpeed = 270;
+				} else if (StickrotX > 650) {
+					AfterRot = 315;
+					ArmSpeed = 315;
+				} else if (StickrotX < -650) {
+					AfterRot = 45;
+					ArmSpeed = 225;
+				}
+			} else {
+				if (StickrotX <= -650) {
+					AfterRot = 90;
+					ArmSpeed = 180;
+				}
+
+				if (StickrotX >= 650) {
+					AfterRot = 270;
+					ArmSpeed = 0;
+				}
+			}
 		}
 	}
 
@@ -183,41 +220,6 @@ void Player::Update() {
 			AttackMoveNumber = 0;
 			Armscale = 1.0f;
 			frameMax3 = 80.0f;
-		}
-	}
-
-	//プレイヤーの向き設定
-	if (StickrotY <= -650) {
-		if (StickrotX <= 650 && StickrotX >= -650) {
-			AfterRot = 180;
-			ArmSpeed = 90;
-		} else if (StickrotX > 650) {
-			AfterRot = 225;
-			ArmSpeed = 45;
-		} else if (StickrotX < -650) {
-			AfterRot = 135;
-			ArmSpeed = 135;
-		}
-	} else if (StickrotY >= 650) {
-		if (StickrotX <= 650 && StickrotX >= -650) {
-			AfterRot = 0;
-			ArmSpeed = 270;
-		} else if (StickrotX > 650) {
-			AfterRot = 315;
-			ArmSpeed = 315;
-		} else if (StickrotX < -650) {
-			AfterRot = 45;
-			ArmSpeed = 225;
-		}
-	} else {
-		if (StickrotX <= -650) {
-			AfterRot = 90;
-			ArmSpeed = 180;
-		}
-
-		if (StickrotX >= 650) {
-			AfterRot = 270;
-			ArmSpeed = 0;
 		}
 	}
 
