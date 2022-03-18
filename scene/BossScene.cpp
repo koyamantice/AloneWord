@@ -1,10 +1,11 @@
 #include "BossScene.h"
 #include "Audio.h"
-#include "input.h"
 #include "DebugText.h"
 #include "TitleScene.h"
 #include "FbxLoader.h"
 void BossScene::Initialize(DirectXCommon* dxCommon) {
+	Texture::LoadTexture(0, L"Resources/2d/enemy.png");
+	Texture::LoadTexture(1, L"Resources/2d/limit.png");
 	// カメラ生成
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
@@ -26,13 +27,13 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objGround->SetModel(modelGround);
 	objGround->SetPosition({ 0,-1,0 });
 	//普通のテクスチャ(板ポリ)
-	/*Texture::LoadTexture(0, L"Resources/2d/title.png");
-	titleTexture = Texture::Create(0, { 0,0,0 }, { 12,12,12 }, { 1,1,1,1 });
-	titleTexture->TextureCreate();
-	titleTexture->SetPosition({ 5.0f,10.0f,-10.0f });
-	titleTexture->SetScale({ 0.5,0.5,0.5 });*/
+	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,1 });
+	limit->TextureCreate();
+	limit->SetPosition({ 0.0f,0.01f,0.0f });
+	limit->SetRotation({ 90.0f,0, 0 });
+	limit->SetScale({ 6,5,5 });
 	//背景スプライト生成
-	
+
 	// モデル読み込み
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
 	//srand(NULL);
@@ -43,7 +44,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 
 	// カメラ注視点をセット
 	camera->SetTarget(player->GetPosition());
-	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10});
+	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
 	// モデル名を指定してファイル読み込み
 	model1 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 
@@ -64,14 +65,15 @@ void BossScene::Finalize() {
 }
 
 void BossScene::Update(DirectXCommon* dxCommon) {
-	Input* input = Input::GetInstance();
 	objGround->Update();
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
 	bossenemy->Update(player);
+	limit->Update();
 	for (int i = 0; i < EnemyMa; i++) {
 		enemy[i]->Update(player,bossenemy);
+		player->ResetWeight(enemy[i]);
 	}
 	
 	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
@@ -79,39 +81,43 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		Audio::GetInstance()->StopWave(1);
 		Audio::GetInstance()->LoopWave(1,0.7f);
 	}
-	//if (input->TriggerKey(DIK_SPACE) || input->TriggerButton(input->Button_A)) {
-	//	Audio::GetInstance()->StopWave(0);
-	//	Audio::GetInstance()->StopWave(1);
-	//	SceneManager::GetInstance()->ChangeScene("TITLE");
-	//}
+	if (input->TriggerKey(DIK_SPACE)) {
+		int a = 0;
+		a += 1;
+	}
 
 	if (input->PushKey(DIK_0) || input->TriggerButton(input->Button_Y)) {
 		object1->PlayAnimation();
+		//SceneManager::GetInstance()->ChangeScene("BOSS");
 	}
 
 	object1->Update();
-	DebugText::GetInstance()->Print("SPACE to TITLE!!",200, 100,1.0f);
-	DebugText::GetInstance()->Print("Z or C to Sound!!", 200, 115, 1.0f);
-	
 	camera->SetTarget(player->GetPosition());
 	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
+	DebugText::GetInstance()->Print("PUSH to RB!!",200, 100,1.0f);
+	DebugText::GetInstance()->Print("PUSH to A!!", 200, 115, 1.0f);
 }
 
 void BossScene::Draw(DirectXCommon* dxCommon) {
 	//ImGui::Begin("test");
-	//if (ImGui::TreeNode("Debug"))
-	//{
-	//	if (ImGui::TreeNode("Field"))
-	//	{
-	//		//ImGui::SliderFloat("Position.x", &s, 50, -50);
-	//		ImGui::Unindent();
-	//		ImGui::TreePop();
-	//	}
-	//	ImGui::TreePop();
-	//}
-	//ImGui::End();
-	
-	Sprite::PreDraw();
+//if (ImGui::TreeNode("Debug"))
+//{
+//	if (ImGui::TreeNode("Field"))
+//	{
+//		//ImGui::SliderFloat("Position.x", &s, 50, -50);
+//		ImGui::Unindent();
+//		ImGui::TreePop();
+//	}
+//	ImGui::TreePop();
+//}
+//ImGui::End();
+	Object3d::PreDraw();
+	objGround->Draw();
+
+	Texture::PreDraw();
+	limit->Draw();
+
+	//Sprite::PreDraw();
 	//背景用
 	//sprite->Draw();
 
@@ -119,13 +125,12 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw();
 	//object1->Draw(dxCommon->GetCmdList());
 	//背景用
-	objGround->Draw();
 	player->Draw();
 	for (int i = 0; i < EnemyMa; i++) {
 		enemy[i]->Draw();
 	}
 
 	bossenemy->Draw();
-	Texture::PreDraw();
+
 
 }
