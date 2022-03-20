@@ -13,11 +13,11 @@ public:
 	BossEnemy();
 
 	void Initialize();
-	void Update(Player* player);
+	void Update();
 	void Draw();
 private:
-	bool collidePlayer(Player* player);
-	bool collideAttackArm(Player* player);
+	bool collidePlayer();
+	bool collideAttackArm();
 	void Fork();
 private:
 	// DirectX::‚ðÈ—ª
@@ -38,7 +38,7 @@ public:
 
 	void SetRotation(XMFLOAT3 rotation) { object3d->SetRotation(rotation); }
 
-	//bool Collision(XMFLOAT3 position, float radius);
+	void SetPlayer(Player*player) { this->player=player; }
 
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
 private:
@@ -59,6 +59,12 @@ private:
 	int AttackCount = 0;
 	int action=0;
 	bool active=false;
+
+
+	int pat = 0;
+	float frame = 0;
+	Player* player;
+
 public:
 	Sphere collider;
 };

@@ -76,7 +76,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
-	bossenemy->Update(player);
+	bossenemy->Update();
 	limit->Update();
 	for (int i = 0; i < EnemyMax; i++) {
 		enemy[i]->Update(player, bossenemy);
