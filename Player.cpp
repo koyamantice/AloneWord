@@ -153,7 +153,7 @@ void Player::Update() {
 						TargetSpeed = 135;
 					}
 				}
-			} else if (StickrotY >= 1000) {
+			} else if (StickrotY >= 650) {
 				if (StickrotX <= 650 && StickrotX >= -650) {
 					AfterRot = 0;
 					if (ArmWeight == 0.0f) {
