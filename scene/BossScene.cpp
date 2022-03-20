@@ -15,6 +15,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	player->Initialize();
 
 	bossenemy = new BossEnemy();
+	bossenemy->SetPlayer(player);
 	bossenemy->Initialize();
 	for (int i = 0; i < EnemyMa; i++) {
 		enemy[i] = new Enemy();
@@ -69,7 +70,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
-	bossenemy->Update(player);
+	bossenemy->Update();
 	limit->Update();
 	for (int i = 0; i < EnemyMa; i++) {
 		enemy[i]->Update(player,bossenemy);
