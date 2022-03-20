@@ -20,25 +20,26 @@ private:
 	bool collideAttackArm();
 	void Fork();
 private:
-	// DirectX::‚ðÈ—ª
+	// DirectX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMVECTOR = DirectX::XMVECTOR;
 	using XMMATRIX = DirectX::XMMATRIX;
 public:
-	/// À•W‚ÌŽæ“¾
+	/// åº§æ¨™ã®å–å¾—
 	const XMFLOAT3& GetPosition() { return  object3d->GetPosition(); }
 
 	const XMFLOAT3& GetRotation() { return object3d->GetRotation(); }
 
 	const int& GetisAlive() { return IsAlive; }
-	/// À•W‚ÌÝ’è
+	/// åº§æ¨™ã®è¨­å®š
 	void SetPosition(XMFLOAT3 position) { object3d->SetPosition(position); }
 
 	void SetRotation(XMFLOAT3 rotation) { object3d->SetRotation(rotation); }
 
-	void SetPlayer(Player* player) { this->player = player; }
+	void SetPlayer(Player*player) { this->player=player; }
+
 
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
 private:
@@ -57,8 +58,10 @@ private:
 	bool BossHit = false;
 
 	int AttackCount = 0;
+
 	int action = 0;
 	bool active = false;
+
 
 
 	int pat = 0;

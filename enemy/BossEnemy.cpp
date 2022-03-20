@@ -29,7 +29,7 @@ void BossEnemy::Initialize() {
 
 void BossEnemy::Update() {
 	collider.center = XMVectorSet(pos.x, pos.y, pos.z, 1);
-	{//HPˆ—
+	{//HPÂË†â€”Â
 		XMFLOAT2 AfterPos;
 		AfterPos = { (float)(BossHP * 20),20 };
 		HPPos = {
@@ -142,7 +142,7 @@ void BossEnemy::Fork() {
 			}
 			pos = {
 	Ease(InOut,SoftBack,frame,pos.x,AfterPos.x),
-	0,
+	0
 	Ease(InOut,SoftBack,frame,pos.z,AfterPos.z),
 			};
 			object3d->SetPosition(pos);
