@@ -14,6 +14,7 @@ BossEnemy::BossEnemy() {
 }
 
 void BossEnemy::Initialize() {
+	assert(player);
 	SpriteBossHP = Sprite::Create(4, { 0.0f,0.0f });
 	SpriteBossHP->SetColor({ 0.0f,1.0f,0.0,1.0 });
 	IsAlive = 0;
@@ -26,7 +27,7 @@ void BossEnemy::Initialize() {
 	collider.radius = rad;
 }
 
-void BossEnemy::Update(Player* player) {
+void BossEnemy::Update() {
 	collider.center = XMVectorSet(pos.x, pos.y, pos.z, 1);
 	{//HPˆ—
 		XMFLOAT2 AfterPos;
@@ -37,11 +38,11 @@ void BossEnemy::Update(Player* player) {
 		};
 		SpriteBossHP->SetSize(HPPos);
 	}
-	//Fork();
+	Fork();
 
 
 
-	collideAttackArm(player);
+	collideAttackArm();
 	object3d->SetPosition(pos);
 	object3d->Update();
 }
@@ -57,7 +58,7 @@ void BossEnemy::Draw() {
 	//bossobj->Draw();
 }
 
-bool BossEnemy::collidePlayer(Player* player) {
+bool BossEnemy::collidePlayer() {
 	XMFLOAT3 playerpos = player->GetPosition();
 	int playerhp = player->GetHp();
 	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f)) {
@@ -68,12 +69,12 @@ bool BossEnemy::collidePlayer(Player* player) {
 	}
 }
 
-bool BossEnemy::collideAttackArm(Player* player) {
+bool BossEnemy::collideAttackArm() {
 	XMFLOAT3 Armpos = player->GetArmPosition();
 	bool attackflag = player->GetAttackFlag();
 	int playerhp = player->GetHp();
 	float weight = player->GetArmWeight();
-	if (attackflag&& !BossHit) {
+	if (attackflag && !BossHit) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
 			BossHit = true;
 			player->SetAttackFlag(false);
@@ -94,21 +95,75 @@ bool BossEnemy::collideAttackArm(Player* player) {
 }
 
 void BossEnemy::Fork() {
-	if (AttackCount>30&&!active) {
-		action = action % 2;
-		active = true;
+	XMFLOAT3 AfterPos{};
+	if (AttackCount > 40) {
+		if (!active) {
+			action = 0;
+			frame = 0;
+			pat = 1;
+			active = true;
+		}
 	} else {
-		AttackCount++;
-		action = (rand() % 20);
+		if (!active) {
+			//pat = 0;
+			AttackCount++;
+			action++;
+		}
 	}
 	if (active) {
+		if ((action % 2) == 0) {
+			if (frame < 1.0f) {
+				frame += 0.005f;
+			} else {
+				frame = 0;
+				pat++;
+			}
+			if (pat == 1) {
+				AfterPos.x = 25.0f;
+				AfterPos.z = -20.0f;
 
+			} else if (pat == 2) {
+				AfterPos.x = 25.0f;
+				AfterPos.z = 20.0f;
 
+			} else if (pat == 3) {
+				AfterPos.x = -25.0f;
+				AfterPos.z = -20.0f;
+			} else if (pat == 4) {
+				AfterPos.x = -25.0f;
+				AfterPos.z = 20.0f;
+			} else if (pat == 5) {
+				AfterPos.x = 0.0f;
+				AfterPos.z = 0.0f;
+			} else {
+				pat = 0;
+				active = false;
+				frame = 0;
+			}
+			pos = {
+	Ease(InOut,SoftBack,frame,pos.x,AfterPos.x),
+	0,
+	Ease(InOut,SoftBack,frame,pos.z,AfterPos.z),
+			};
+			object3d->SetPosition(pos);
 
+		} else if ((action % 2) == 1) {
+			if (frame < 1.0f) {
+				frame += 0.01f;
+			} else {
+				frame = 0;
+				pat = 0;
+				active = false;
+				AfterPos.y = 0.0f;
+			}
+			AfterPos.y = 3.0f;
+			pos = {
+			0,
+			Ease(In,Cubic,frame,pos.y,AfterPos.y),
+			0 };
+			object3d->SetPosition(pos);
 
-
-
-
+		}
 	}
 
 

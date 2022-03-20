@@ -184,7 +184,7 @@ void Enemy::Move() {
 		moveCount--;
 		dir= (rand() % 40);
 	}
-	if (isMove) {
+	if (isMove && hit == false) {
 		if (frame<=1.0f) {
 			frame += 0.01f;
 		} else {
