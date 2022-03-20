@@ -158,9 +158,10 @@ void Enemy::Follow(Player* player) {
 	double Check = position.x / posR;
 	double Check2 = position.z / posR;
 
-	pos.x += Check * 0.05f;
-	pos.z += Check2 * 0.05f;
-
+	if (hit == false) {
+		pos.x += Check * 0.08f;
+		pos.z += Check2 * 0.08f;
+	}
 }
 
 void Enemy::Move() {
@@ -183,7 +184,7 @@ void Enemy::Move() {
 		moveCount--;
 		dir= (rand() % 40);
 	}
-	if (isMove) {
+	if (isMove && hit == false) {
 		if (frame<=1.0f) {
 			frame += 0.01f;
 		} else {
@@ -202,4 +203,3 @@ void Enemy::Move() {
 
 	}
 }
-

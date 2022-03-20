@@ -17,7 +17,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	bossenemy = new BossEnemy();
 	bossenemy->SetPlayer(player);
 	bossenemy->Initialize();
-	for (int i = 0; i < EnemyMa; i++) {
+	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i] = new Enemy();
 		enemy[i]->Initialize();
 	}
@@ -72,7 +72,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	player->Update();
 	bossenemy->Update();
 	limit->Update();
-	for (int i = 0; i < EnemyMa; i++) {
+	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Update(player,bossenemy);
 		player->ResetWeight(enemy[i]);
 	}
@@ -91,7 +91,20 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		object1->PlayAnimation();
 		//SceneManager::GetInstance()->ChangeScene("BOSS");
 	}
-
+	if (sizeof(enemy) > 2) {//配列のサイズ確認
+		for (int colA = 0; colA < BossEnemyMax; colA++) {
+			for (int colB = 1; colB < BossEnemyMax; colB++) {
+				if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB) {//当たり判定と自機同士の当たり判定の削除
+					DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
+					enemy[colA]->SetHit(true);
+					enemy[colB]->SetHit(false);
+					break;
+				} else {
+					enemy[colA]->SetHit(false);
+				}
+			}
+		}
+	}
 	object1->Update();
 	camera->SetTarget(player->GetPosition());
 	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
@@ -127,7 +140,7 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	//object1->Draw(dxCommon->GetCmdList());
 	//背景用
 	player->Draw();
-	for (int i = 0; i < EnemyMa; i++) {
+	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Draw();
 	}
 

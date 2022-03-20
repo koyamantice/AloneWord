@@ -1,10 +1,11 @@
 ﻿#pragma once
 #include "BaseScene.h"
 #include "BossEnemy.h"
+#include "Collision.h"
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>
-const int EnemyMa = 8;
+const int BossEnemyMax = 8;
 class BossScene : public BaseScene{
 public:
 	/// <summary>
@@ -33,7 +34,7 @@ private:
 	DebugCamera* camera = { nullptr };
 	Texture* limit = nullptr;
 	Player* player = nullptr;
-	Enemy* enemy[EnemyMa] = { nullptr };
+	Enemy* enemy[BossEnemyMax] = { nullptr };
 	BossEnemy* bossenemy = nullptr;
 };
 
