@@ -127,8 +127,8 @@ void Player::Update() {
 
 		if (AttackFlag == false && AttackMoveNumber == 0 && ArmMoveNumber == 0) {
 			//ÉvÉåÉCÉÑÅ[ÇÃå¸Ç´ê›íË
-			if (StickrotY <= -950) {
-				if (StickrotX <= 950 && StickrotX >= -950) {
+			if (StickrotY <= -650) {
+				if (StickrotX <= 650 && StickrotX >= -650) {
 					AfterRot = 180;
 					if (ArmWeight == 0.0f) {
 						ArmSpeed = 90;
@@ -136,7 +136,7 @@ void Player::Update() {
 						ArmSpeed = 315;
 						TargetSpeed = 90;
 					}
-				} else if (StickrotX > 950) {
+				} else if (StickrotX > 650) {
 					AfterRot = 225;
 					if (ArmWeight == 0.0f) {
 						ArmSpeed = 45;
@@ -144,7 +144,7 @@ void Player::Update() {
 						ArmSpeed = 275;
 						TargetSpeed = 45;
 					}
-				} else if (StickrotX < -950) {
+				} else if (StickrotX < -650) {
 					AfterRot = 135;
 					if (ArmWeight == 0.0f) {
 						ArmSpeed = 135;
@@ -154,7 +154,7 @@ void Player::Update() {
 					}
 				}
 			} else if (StickrotY >= 1000) {
-				if (StickrotX <= 950 && StickrotX >= -950) {
+				if (StickrotX <= 650 && StickrotX >= -650) {
 					AfterRot = 0;
 					if (ArmWeight == 0.0f) {
 						ArmSpeed = 270;
@@ -162,7 +162,7 @@ void Player::Update() {
 						ArmSpeed = 135;
 						TargetSpeed = 270;
 					}
-				} else if (StickrotX > 950) {
+				} else if (StickrotX > 650) {
 					AfterRot = 315;
 					if (ArmWeight == 0.0f) {
 						ArmSpeed = 315;
@@ -170,7 +170,7 @@ void Player::Update() {
 						ArmSpeed = 180;
 						TargetSpeed = 315;
 					}
-				} else if (StickrotX < -950) {
+				} else if (StickrotX < -650) {
 					AfterRot = 45;
 					if (ArmWeight == 0.0f) {
 						ArmSpeed = 225;
@@ -180,7 +180,7 @@ void Player::Update() {
 					}
 				}
 			} else {
-				if (StickrotX <= -950) {
+				if (StickrotX <= -650) {
 					AfterRot = 90;
 					if (ArmWeight == 0.0f) {
 						ArmSpeed = 180;
@@ -190,7 +190,7 @@ void Player::Update() {
 					}
 				}
 
-				if (StickrotX >= 950) {
+				if (StickrotX >= 650) {
 					AfterRot = 270;
 					if (ArmWeight == 0.0f) {
 						ArmSpeed = 0;

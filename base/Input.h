@@ -140,7 +140,7 @@ private: // メンバ変数
 	DIJOYSTATE oldGamePadState = {};
 	bool is_push[32] = {};
 	//スティックの無反応範囲
-	LONG unresponsive_range = 950;
+	LONG unresponsive_range = 650;
 	float posX = 0;
 	float posY = 0;
 };
