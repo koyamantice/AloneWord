@@ -142,7 +142,7 @@ void BossEnemy::Fork() {
 			}
 			pos = {
 	Ease(InOut,SoftBack,frame,pos.x,AfterPos.x),
-	0
+	0,
 	Ease(InOut,SoftBack,frame,pos.z,AfterPos.z),
 			};
 			object3d->SetPosition(pos);
