@@ -72,42 +72,46 @@ void Player::Update() {
 	//}
 
 	if (ArmMoveNumber <= 0) {
-			if (input->LeftTiltStick(input->Right) && AttackFlag == false && AttackMoveNumber == 0) {
-				if (pos.x <= 25.0f) {
-					pos.x += PlayerSpeed;
-					AfterRot = 90;
-				}
+		if (input->LeftTiltStick(input->Right) && AttackFlag == false && AttackMoveNumber == 0) {
+			if (pos.x <= 25.0f) {
+				pos.x += PlayerSpeed;
+				AfterRot = 90;
 			}
+		}
 
-			if (input->LeftTiltStick(input->Left) && AttackFlag == false && AttackMoveNumber == 0) {
-				if (pos.x >= -25.0f) {
-					pos.x -= PlayerSpeed;
-					AfterRot = 270;
-				}
+		if (input->LeftTiltStick(input->Left) && AttackFlag == false && AttackMoveNumber == 0) {
+			if (pos.x >= -25.0f) {
+				pos.x -= PlayerSpeed;
+				AfterRot = 270;
 			}
+		}
 
-			if (input->LeftTiltStick(input->Up) && AttackFlag == false && AttackMoveNumber == 0) {
-				if (pos.z <= 20.0f) {
-					pos.z += PlayerSpeed;
-					AfterRot = 0;
-					/*if (ArmWeight != 0.0f && ArmSpeed >= 90 && ArmSpeed <= 275) {
+		if (input->LeftTiltStick(input->Up) && AttackFlag == false && AttackMoveNumber == 0) {
+			if (pos.z <= 20.0f) {
+				pos.z += PlayerSpeed;
+				AfterRot = 0;
+				/*	if (ArmSpeed >= 90 && ArmSpeed <= 315 && ArmWeight != 0.0f) {
 						ArmSpeed += 3.0f;
 					}*/
-				}
 			}
+		}
 
-			if (input->LeftTiltStick(input->Down) && AttackFlag == false && AttackMoveNumber == 0) {
-				if (pos.z >= -20) {
-					pos.z -= PlayerSpeed;
-					AfterRot = 180;
-				}
+		if (input->LeftTiltStick(input->Down) && AttackFlag == false && AttackMoveNumber == 0) {
+			if (pos.z >= -20) {
+				pos.z -= PlayerSpeed;
+				AfterRot = 180;
 			}
-
+		}
+		//˜r‚ðL‚Î‚·
 		if (input->PushButton(input->Button_RB) && ArmWeight <= 6.0f && AttackFlag == false && AttackMoveNumber == 0) {
 			ArmMoveNumber = 1;
+			if (ArmWeight != 0.0f) {
+				ArmSpeed = TargetSpeed;
+			}
+			Armscale = 0.0f;
 			initscale = Armscale;
 			frame = 0;
-			Armscale += Armscale + ArmWeight;
+			
 		}
 
 		//UŒ‚
@@ -121,85 +125,87 @@ void Player::Update() {
 			frame3 = 0;
 		}
 
-		if (AttackFlag == false && AttackMoveNumber == 0) {
+		if (AttackFlag == false && AttackMoveNumber == 0 && ArmMoveNumber == 0) {
 			//ƒvƒŒƒCƒ„[‚ÌŒü‚«Ý’è
-			if (ArmWeight == 0.0f) {
-				if (StickrotY <= -950) {
-					if (StickrotX <= 950 && StickrotX >= -950) {
-						AfterRot = 180;
+			if (StickrotY <= -950) {
+				if (StickrotX <= 950 && StickrotX >= -950) {
+					AfterRot = 180;
+					if (ArmWeight == 0.0f) {
 						ArmSpeed = 90;
-					} else if (StickrotX > 950) {
-						AfterRot = 225;
+					} else {
+						ArmSpeed = 315;
+						TargetSpeed = 90;
+					}
+				} else if (StickrotX > 950) {
+					AfterRot = 225;
+					if (ArmWeight == 0.0f) {
 						ArmSpeed = 45;
-					} else if (StickrotX < -950) {
-						AfterRot = 135;
-						ArmSpeed = 135;
-					}
-				} else if (StickrotY >= 950) {
-					if (StickrotX <= 950 && StickrotX >= -950) {
-						AfterRot = 0;
-						ArmSpeed = 270;
-					} else if (StickrotX > 950) {
-						AfterRot = 315;
-						ArmSpeed = 315;
-					} else if (StickrotX < -950) {
-						AfterRot = 45;
-						ArmSpeed = 225;
-					}
-				} else {
-					if (StickrotX <= -950) {
-						AfterRot = 90;
-						ArmSpeed = 180;
-					}
-
-					if (StickrotX >= 950) {
-						AfterRot = 270;
-						ArmSpeed = 0;
-					}
-				}
-			}/* else {
-				if (StickrotY <= -950) {
-					if (StickrotX <= 950 && StickrotX >= -950) {
-						AfterRot = 180;
-						ArmSpeed = 315;
-					} else if (StickrotX > 950) {
-						AfterRot = 225;
+					} else {
 						ArmSpeed = 275;
-					} else if (StickrotX < -950) {
-						AfterRot = 135;
+						TargetSpeed = 45;
+					}
+				} else if (StickrotX < -950) {
+					AfterRot = 135;
+					if (ArmWeight == 0.0f) {
 						ArmSpeed = 135;
-					}
-				} else if (StickrotY >= 950) {
-					if (StickrotX <= 950 && StickrotX >= -950) {
-						AfterRot = 0;
-						ArmSpeed = 135;
-					} else if (StickrotX > 950) {
-						AfterRot = 315;
-						ArmSpeed = 180;
-					} else if (StickrotX < -950) {
-						AfterRot = 45;
-						ArmSpeed = 90;
-					}
-				} else {
-					if (StickrotX <= -950) {
-						AfterRot = 90;
-						ArmSpeed = 45;
-					}
-
-					if (StickrotX >= 950) {
-						AfterRot = 270;
-						ArmSpeed = 225;
+					} else {
+						ArmSpeed = 0;
+						TargetSpeed = 135;
 					}
 				}
-			}*/
+			} else if (StickrotY >= 1000) {
+				if (StickrotX <= 950 && StickrotX >= -950) {
+					AfterRot = 0;
+					if (ArmWeight == 0.0f) {
+						ArmSpeed = 270;
+					} else {
+						ArmSpeed = 135;
+						TargetSpeed = 270;
+					}
+				} else if (StickrotX > 950) {
+					AfterRot = 315;
+					if (ArmWeight == 0.0f) {
+						ArmSpeed = 315;
+					} else {
+						ArmSpeed = 180;
+						TargetSpeed = 315;
+					}
+				} else if (StickrotX < -950) {
+					AfterRot = 45;
+					if (ArmWeight == 0.0f) {
+						ArmSpeed = 225;
+					} else {
+						ArmSpeed = 90;
+						TargetSpeed = 225;
+					}
+				}
+			} else {
+				if (StickrotX <= -950) {
+					AfterRot = 90;
+					if (ArmWeight == 0.0f) {
+						ArmSpeed = 180;
+					} else {
+						ArmSpeed = 45;
+						TargetSpeed = 180;
+					}
+				}
+
+				if (StickrotX >= 950) {
+					AfterRot = 270;
+					if (ArmWeight == 0.0f) {
+						ArmSpeed = 0;
+					} else {
+						ArmSpeed = 225;
+						TargetSpeed = 0;
+					}
+				}
+			}
 		}
 	}
 
-
-
 	//˜r‚ðL‚Î‚·
 	if (ArmMoveNumber == 1) {
-		Armscale = initscale + 3.0f * easeOutBack(frame / frameMax);
+		Armscale = initscale + 5.0f * easeOutBack(frame / frameMax);
 		if (frame != frameMax) {
 			frame = frame + 1;
 		} else {
@@ -209,12 +215,13 @@ void Player::Update() {
 		}
 	}
 	else if (ArmMoveNumber == 2) {
-		Armscale = initscale - 3.0f * easeOutBack(frame / frameMax);
+		Armscale = initscale - (5.0f - (ArmWeight - 0.5)) * easeOutBack(frame / frameMax);
 		if (frame != frameMax) {
 			frame = frame + 1;
 		} else {
 			ArmMoveNumber = 0;
 			initscale = Armscale;
+			//Armscale += ArmWeight;
 		}
 	}
 
@@ -232,13 +239,13 @@ void Player::Update() {
 
 	if (AttackMoveNumber == 1) {
 		if (ArmWeight>0) {
-			Armscale = initscale + 3.0f * easeInOut(frame3 / frameMax3);
+			Armscale = initscale + 5.0f * easeInOut(frame3 / frameMax3);
 			if (frame3 <= frameMax3) {
 				frame3 = frame3 + 1;
 			} else {
 				AttackMoveNumber = 2;
 				initscale = Armscale;
-				scaleVel = 3.0f;
+				scaleVel = 5.0f;
 				frame3 = 0;
 				frameMax3 = 20.0f;
 			}
@@ -249,7 +256,6 @@ void Player::Update() {
 			frame3 = 0;
 			frameMax3 = 20.0f;
 		}
-
 	}
 
 	else if (AttackMoveNumber == 2) {
@@ -258,8 +264,11 @@ void Player::Update() {
 			frame3 = frame3 + 1;
 		} else {
 			AttackMoveNumber = 0;
-			Armscale = 1.0f;
+			//Armscale = 1.0f;
 			frameMax3 = 80.0f;
+		/*	if (ArmWeight != 0.0f && Armscale != ArmWeight - 0.5) {
+				Armscale = ArmWeight - 0.5f;
+			}*/
 		}
 	}
 
@@ -281,6 +290,9 @@ void Player::Draw() {
 			ImGui::SliderFloat("Position.x", &pos.x, 50, -50);
 			ImGui::SliderFloat("Position.z", &pos.z, 50, -50);
 			ImGui::SliderFloat("ArmSpeed", &ArmSpeed, 50, -50);
+			ImGui::SliderFloat("Armscale", &Armscale, 50, -50);
+			ImGui::SliderFloat("scaleVel", &scaleVel, 50, -50);
+			ImGui::SliderFloat("Armweight", &ArmWeight, 50, -50);
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}
@@ -293,7 +305,9 @@ void Player::Draw() {
 
 	Object3d::PreDraw();
 	object3d->Draw();
-	Armobj->Draw();
+	if (Armscale >= 0.2f) {
+		Armobj->Draw();
+	}
 }
 
 void Player::ResetWeight(Enemy *enemy) {

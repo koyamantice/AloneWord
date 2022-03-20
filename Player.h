@@ -40,6 +40,8 @@ public:
 
 	const float& GetArmWeight() { return ArmWeight; }
 
+	const float& GetArmScale() { return Armscale; }
+
 	/// <summary>
 	/// ç¿ïWÇÃê›íË
 	/// </summary>
@@ -57,6 +59,8 @@ public:
 	void SetAttackFlag(bool AttackFlag) { this->AttackFlag = AttackFlag; }
 
 	void SetArmWeight(float ArmWeight) { this->ArmWeight = ArmWeight; }
+
+	void SetArmScale(float Armscale) { this->Armscale = Armscale; }
 
 	void ResetWeight(Enemy* enemy);
 private:
@@ -87,10 +91,11 @@ private:
 	float circleZ = 0.0f;
 	float Armradius = 0.0f;
 	float ArmSpeed = 90.0f;
-	float Armscale = 1.0f;
+	float Armscale = 0.0f;
 	float ArmCircleX = 0.0f;
 	float ArmCircleZ = 0.0f;
 	float ArmWeight = 0.0f;
+	float TargetSpeed = 0.0f;
 	//Ç¢ÇÎÇ¢ÇÎÇ»ÉtÉâÉO
 	int ArmMoveNumber = 0;
 	bool AttackFlag = false;

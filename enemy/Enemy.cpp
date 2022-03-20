@@ -21,6 +21,7 @@ void Enemy::Initialize() {
 	object3d = Object3d::Create();
 	object3d->SetModel(model);
 	object3d->SetPosition(pos);
+	//object3d->SetScale({ 0.5f,0.5f,0.5f });
 	texture = Texture::Create(0, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	texture->SetPosition(pos);
@@ -193,12 +194,13 @@ void Enemy::Move() {
 			dir=0;
 			isMove = false;
 		}
-		if (zmove) {
-			pos.z = Ease(In, Quad, frame, pos.z, EndPos.z);
-		} else {
-			pos.x = Ease(In, Quad, frame, pos.x, EndPos.x);
+		if (hit == false) {
+			if (zmove) {
+				pos.z = Ease(In, Quad, frame, pos.z, EndPos.z);
+			} else {
+				pos.x = Ease(In, Quad, frame, pos.x, EndPos.x);
+			}
 		}
-
 		object3d->SetPosition(pos);
 
 	}
