@@ -153,7 +153,7 @@ void Player::Update() {
 						TargetSpeed = 135;
 					}
 				}
-			} else if (StickrotY >= 950) {
+			} else if (StickrotY >= 1000) {
 				if (StickrotX <= 950 && StickrotX >= -950) {
 					AfterRot = 0;
 					if (ArmWeight == 0.0f) {
@@ -205,7 +205,7 @@ void Player::Update() {
 
 	//˜r‚ðL‚Î‚·
 	if (ArmMoveNumber == 1) {
-		Armscale = initscale + 4.0f * easeOutBack(frame / frameMax);
+		Armscale = initscale + 5.0f * easeOutBack(frame / frameMax);
 		if (frame != frameMax) {
 			frame = frame + 1;
 		} else {
@@ -215,7 +215,7 @@ void Player::Update() {
 		}
 	}
 	else if (ArmMoveNumber == 2) {
-		Armscale = initscale - (4.0f - (ArmWeight / 2)) * easeOutBack(frame / frameMax);
+		Armscale = initscale - (5.0f - (ArmWeight - 0.5)) * easeOutBack(frame / frameMax);
 		if (frame != frameMax) {
 			frame = frame + 1;
 		} else {
@@ -239,13 +239,13 @@ void Player::Update() {
 
 	if (AttackMoveNumber == 1) {
 		if (ArmWeight>0) {
-			Armscale = initscale + 3.0f * easeInOut(frame3 / frameMax3);
+			Armscale = initscale + 5.0f * easeInOut(frame3 / frameMax3);
 			if (frame3 <= frameMax3) {
 				frame3 = frame3 + 1;
 			} else {
 				AttackMoveNumber = 2;
 				initscale = Armscale;
-				scaleVel = 3.0f;
+				scaleVel = 5.0f;
 				frame3 = 0;
 				frameMax3 = 20.0f;
 			}
@@ -264,8 +264,11 @@ void Player::Update() {
 			frame3 = frame3 + 1;
 		} else {
 			AttackMoveNumber = 0;
-			Armscale = 1.0f;
+			//Armscale = 1.0f;
 			frameMax3 = 80.0f;
+		/*	if (ArmWeight != 0.0f && Armscale != ArmWeight - 0.5) {
+				Armscale = ArmWeight - 0.5f;
+			}*/
 		}
 	}
 
@@ -288,6 +291,7 @@ void Player::Draw() {
 			ImGui::SliderFloat("Position.z", &pos.z, 50, -50);
 			ImGui::SliderFloat("ArmSpeed", &ArmSpeed, 50, -50);
 			ImGui::SliderFloat("Armscale", &Armscale, 50, -50);
+			ImGui::SliderFloat("scaleVel", &scaleVel, 50, -50);
 			ImGui::SliderFloat("Armweight", &ArmWeight, 50, -50);
 			ImGui::Unindent();
 			ImGui::TreePop();
