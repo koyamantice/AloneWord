@@ -90,7 +90,7 @@ void Player::Update() {
 				if (pos.z <= 20.0f) {
 					pos.z += PlayerSpeed;
 					AfterRot = 0;
-					/*if (ArmWeight != 0.0f && ArmSpeed >= 90 && ArmSpeed <= 275) {
+				/*	if (ArmSpeed >= 90 && ArmSpeed <= 315 && ArmWeight != 0.0f) {
 						ArmSpeed += 3.0f;
 					}*/
 				}
@@ -123,41 +123,77 @@ void Player::Update() {
 
 		if (AttackFlag == false && AttackMoveNumber == 0) {
 			//ÉvÉåÉCÉÑÅ[ÇÃå¸Ç´ê›íË
-			if (ArmWeight == 0.0f) {
 				if (StickrotY <= -950) {
 					if (StickrotX <= 950 && StickrotX >= -950) {
 						AfterRot = 180;
-						ArmSpeed = 90;
+						if (ArmWeight == 0.0f) {
+							ArmSpeed = 90;
+						} else {
+							ArmSpeed = 315;
+						}
 					} else if (StickrotX > 950) {
 						AfterRot = 225;
-						ArmSpeed = 45;
+						if (ArmWeight == 0.0f) {
+							ArmSpeed = 45;
+						}
+						else {
+							ArmSpeed = 275;
+						}
 					} else if (StickrotX < -950) {
 						AfterRot = 135;
-						ArmSpeed = 135;
+						if (ArmWeight == 0.0f) {
+							ArmSpeed = 135;
+						}
+						else {
+							ArmSpeed = 0;
+						}
 					}
 				} else if (StickrotY >= 950) {
 					if (StickrotX <= 950 && StickrotX >= -950) {
 						AfterRot = 0;
-						ArmSpeed = 270;
+						if (ArmWeight == 0.0f) {
+							ArmSpeed = 270;
+						} else {
+							ArmSpeed = 135;
+						}
 					} else if (StickrotX > 950) {
 						AfterRot = 315;
-						ArmSpeed = 315;
+						if (ArmWeight == 0.0f) {
+							ArmSpeed = 315;
+						} else {
+							ArmSpeed = 180;
+						}
 					} else if (StickrotX < -950) {
 						AfterRot = 45;
-						ArmSpeed = 225;
+						if (ArmWeight == 0.0f) {
+							ArmSpeed = 225;
+						}
+						else {
+							ArmSpeed = 90;
+						}
 					}
 				} else {
 					if (StickrotX <= -950) {
 						AfterRot = 90;
-						ArmSpeed = 180;
+						if (ArmWeight == 0.0f) {
+							ArmSpeed = 180;
+						}
+						else {
+							ArmSpeed = 45;
+						}
 					}
 
 					if (StickrotX >= 950) {
 						AfterRot = 270;
-						ArmSpeed = 0;
+						if (ArmWeight == 0.0f) {
+							ArmSpeed = 0;
+						}
+						else {
+							ArmSpeed = 225;
+						}
 					}
 				}
-			}/* else {
+			/*else {
 				if (StickrotY <= -950) {
 					if (StickrotX <= 950 && StickrotX >= -950) {
 						AfterRot = 180;
@@ -195,8 +231,6 @@ void Player::Update() {
 		}
 	}
 
-
-
 	//òrÇêLÇŒÇ∑
 	if (ArmMoveNumber == 1) {
 		Armscale = initscale + 3.0f * easeOutBack(frame / frameMax);
@@ -215,6 +249,7 @@ void Player::Update() {
 		} else {
 			ArmMoveNumber = 0;
 			initscale = Armscale;
+			//Armscale += ArmWeight;
 		}
 	}
 
@@ -249,7 +284,6 @@ void Player::Update() {
 			frame3 = 0;
 			frameMax3 = 20.0f;
 		}
-
 	}
 
 	else if (AttackMoveNumber == 2) {
@@ -281,6 +315,8 @@ void Player::Draw() {
 			ImGui::SliderFloat("Position.x", &pos.x, 50, -50);
 			ImGui::SliderFloat("Position.z", &pos.z, 50, -50);
 			ImGui::SliderFloat("ArmSpeed", &ArmSpeed, 50, -50);
+			ImGui::SliderFloat("Armscale", &Armscale, 50, -50);
+			ImGui::SliderFloat("Armweight", &ArmWeight, 50, -50);
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}

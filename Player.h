@@ -40,6 +40,8 @@ public:
 
 	const float& GetArmWeight() { return ArmWeight; }
 
+	const float& GetArmScale() { return Armscale; }
+
 	/// <summary>
 	/// À•W‚Ìİ’è
 	/// </summary>
@@ -57,6 +59,8 @@ public:
 	void SetAttackFlag(bool AttackFlag) { this->AttackFlag = AttackFlag; }
 
 	void SetArmWeight(float ArmWeight) { this->ArmWeight = ArmWeight; }
+
+	void SetArmScale(float Armscale) { this->Armscale = Armscale; }
 
 	void ResetWeight(Enemy* enemy);
 private:
