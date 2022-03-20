@@ -158,9 +158,10 @@ void Enemy::Follow(Player* player) {
 	double Check = position.x / posR;
 	double Check2 = position.z / posR;
 
-	pos.x += Check * 0.05f;
-	pos.z += Check2 * 0.05f;
-
+	if (hit == false) {
+		pos.x += Check * 0.08f;
+		pos.z += Check2 * 0.08f;
+	}
 }
 
 void Enemy::Move() {

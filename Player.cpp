@@ -76,7 +76,6 @@ void Player::Update() {
 				if (pos.x <= 25.0f) {
 					pos.x += PlayerSpeed;
 					AfterRot = 90;
-					ArmSpeed = 0;
 				}
 			}
 
@@ -84,23 +83,23 @@ void Player::Update() {
 				if (pos.x >= -25.0f) {
 					pos.x -= PlayerSpeed;
 					AfterRot = 270;
-					ArmSpeed = 180;
 				}
 			}
 
 			if (input->LeftTiltStick(input->Up) && AttackFlag == false && AttackMoveNumber == 0) {
-				if(pos.z <= 20.0f) {
-				pos.z += PlayerSpeed;
-				AfterRot = 0;
-				ArmSpeed = 90;
-			}
+				if (pos.z <= 20.0f) {
+					pos.z += PlayerSpeed;
+					AfterRot = 0;
+					/*if (ArmWeight != 0.0f && ArmSpeed >= 90 && ArmSpeed <= 275) {
+						ArmSpeed += 3.0f;
+					}*/
+				}
 			}
 
 			if (input->LeftTiltStick(input->Down) && AttackFlag == false && AttackMoveNumber == 0) {
 				if (pos.z >= -20) {
 					pos.z -= PlayerSpeed;
 					AfterRot = 180;
-					ArmSpeed = 270;
 				}
 			}
 
@@ -108,6 +107,7 @@ void Player::Update() {
 			ArmMoveNumber = 1;
 			initscale = Armscale;
 			frame = 0;
+			Armscale += Armscale + ArmWeight;
 		}
 
 		//çUåÇ
@@ -123,41 +123,79 @@ void Player::Update() {
 
 		if (AttackFlag == false && AttackMoveNumber == 0) {
 			//ÉvÉåÉCÉÑÅ[ÇÃå¸Ç´ê›íË
-			if (StickrotY <= -650) {
-				if (StickrotX <= 650 && StickrotX >= -650) {
-					AfterRot = 180;
-					ArmSpeed = 90;
-				} else if (StickrotX > 650) {
-					AfterRot = 225;
-					ArmSpeed = 45;
-				} else if (StickrotX < -650) {
-					AfterRot = 135;
-					ArmSpeed = 135;
-				}
-			} else if (StickrotY >= 650) {
-				if (StickrotX <= 650 && StickrotX >= -650) {
-					AfterRot = 0;
-					ArmSpeed = 270;
-				} else if (StickrotX > 650) {
-					AfterRot = 315;
-					ArmSpeed = 315;
-				} else if (StickrotX < -650) {
-					AfterRot = 45;
-					ArmSpeed = 225;
-				}
-			} else {
-				if (StickrotX <= -650) {
-					AfterRot = 90;
-					ArmSpeed = 180;
-				}
+			if (ArmWeight == 0.0f) {
+				if (StickrotY <= -950) {
+					if (StickrotX <= 950 && StickrotX >= -950) {
+						AfterRot = 180;
+						ArmSpeed = 90;
+					} else if (StickrotX > 950) {
+						AfterRot = 225;
+						ArmSpeed = 45;
+					} else if (StickrotX < -950) {
+						AfterRot = 135;
+						ArmSpeed = 135;
+					}
+				} else if (StickrotY >= 950) {
+					if (StickrotX <= 950 && StickrotX >= -950) {
+						AfterRot = 0;
+						ArmSpeed = 270;
+					} else if (StickrotX > 950) {
+						AfterRot = 315;
+						ArmSpeed = 315;
+					} else if (StickrotX < -950) {
+						AfterRot = 45;
+						ArmSpeed = 225;
+					}
+				} else {
+					if (StickrotX <= -950) {
+						AfterRot = 90;
+						ArmSpeed = 180;
+					}
 
-				if (StickrotX >= 650) {
-					AfterRot = 270;
-					ArmSpeed = 0;
+					if (StickrotX >= 950) {
+						AfterRot = 270;
+						ArmSpeed = 0;
+					}
 				}
-			}
+			}/* else {
+				if (StickrotY <= -950) {
+					if (StickrotX <= 950 && StickrotX >= -950) {
+						AfterRot = 180;
+						ArmSpeed = 315;
+					} else if (StickrotX > 950) {
+						AfterRot = 225;
+						ArmSpeed = 275;
+					} else if (StickrotX < -950) {
+						AfterRot = 135;
+						ArmSpeed = 135;
+					}
+				} else if (StickrotY >= 950) {
+					if (StickrotX <= 950 && StickrotX >= -950) {
+						AfterRot = 0;
+						ArmSpeed = 135;
+					} else if (StickrotX > 950) {
+						AfterRot = 315;
+						ArmSpeed = 180;
+					} else if (StickrotX < -950) {
+						AfterRot = 45;
+						ArmSpeed = 90;
+					}
+				} else {
+					if (StickrotX <= -950) {
+						AfterRot = 90;
+						ArmSpeed = 45;
+					}
+
+					if (StickrotX >= 950) {
+						AfterRot = 270;
+						ArmSpeed = 225;
+					}
+				}
+			}*/
 		}
 	}
+
+
 
 	//òrÇêLÇŒÇ∑
 	if (ArmMoveNumber == 1) {
@@ -242,6 +280,7 @@ void Player::Draw() {
 		if (ImGui::TreeNode("Player"))         {
 			ImGui::SliderFloat("Position.x", &pos.x, 50, -50);
 			ImGui::SliderFloat("Position.z", &pos.z, 50, -50);
+			ImGui::SliderFloat("ArmSpeed", &ArmSpeed, 50, -50);
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}

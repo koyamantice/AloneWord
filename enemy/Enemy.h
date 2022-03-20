@@ -38,6 +38,7 @@ public:
 
 	const int& GetisAlive() { return IsAlive; }
 	const bool& GetEnemyCatch() { return EnemyCatch; }
+	const bool& GetHit() { return hit; }
 
 	/// À•W‚ÌÝ’è
 	void SetPosition(XMFLOAT3 position) { object3d->SetPosition(position); }
@@ -49,6 +50,8 @@ public:
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
 
 	void SetEnemyCatch(bool EnemyCatch) {this-> EnemyCatch = EnemyCatch; }
+
+	void SetHit(bool hit) { this->hit = hit; }
 
 private:
 	Object3d* object3d;
@@ -72,6 +75,7 @@ private:
 	int IsTimer = 100;
 	bool EnemyCatch = false;
 	bool isMove = false;
+	bool hit = false;
 	float frame=0;
 	int moveCount = 30;
 	int dir = 0;
