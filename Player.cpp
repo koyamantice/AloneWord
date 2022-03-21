@@ -19,7 +19,7 @@ float easeInOut(float x) {
 }
 Player::Player() {
 	model = Model::CreateFromOBJ("Motti");
-	Armmodel = Model::CreateFromOBJ("Particle");
+	Armmodel = Model::CreateFromOBJ("Arm");
 	object3d = new Object3d();
 	Armobj = new Object3d();
 	Sprite::LoadTexture(3, L"Resources/2d/PlayerHP.png");
@@ -43,7 +43,7 @@ void Player::Initialize() {
 	Armpos.x = ArmCircleX + pos.x;
 	Armpos.z = ArmCircleZ + pos.z;
 	Armobj->SetPosition(Armpos);
-	Armobj->SetScale({ 1,1,1 });
+	Armobj->SetScale({ 1.4f,1.4f,1.4f });
 
 	collider.radius = rad;
 }
