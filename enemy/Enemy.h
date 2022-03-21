@@ -34,7 +34,7 @@ public:
 	void SetHit(bool hit) { this->hit = hit; }
 
 private:
-	Texture* texture;
+	Texture* texture = nullptr;
 	XMFLOAT3 playerpos{};
 	XMFLOAT3 StartPos{};
 	XMFLOAT3 EndPos{};

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include"Object3d.h"
 #include"Model.h"
 #include <DirectXMath.h>
@@ -15,7 +15,7 @@ public:
 	void Update();
 	void Draw();
 private:
-	// DirectX::‚ğÈ—ª
+	// DirectX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
@@ -23,9 +23,9 @@ private:
 	using XMMATRIX = DirectX::XMMATRIX;
 public:
 	/// <summary>
-/// À•W‚Ìæ“¾
+/// åº§æ¨™ã®å–å¾—
 /// </summary>
-/// <returns>À•W</returns>
+/// <returns>åº§æ¨™</returns>
 	const XMFLOAT3& GetPosition() { return  object3d->GetPosition(); }
 
 	const XMFLOAT3& GetRotation() { return object3d->GetRotation(); }
@@ -43,9 +43,9 @@ public:
 	const float& GetArmScale() { return Armscale; }
 
 	/// <summary>
-	/// À•W‚Ìİ’è
+	/// åº§æ¨™ã®è¨­å®š
 	/// </summary>
-	/// <param name="position">À•W</param>
+	/// <param name="position">åº§æ¨™</param>
 	void SetPosition(XMFLOAT3 position) { object3d->SetPosition(position); }
 
 	void SetRotation(XMFLOAT3 rotation) { object3d->SetRotation(rotation); }
@@ -68,18 +68,18 @@ private:
 	Object3d* object3d;
 	Model* model;
 	Model* Armmodel;
-	XMFLOAT2 PlayerHP;
+	XMFLOAT2 PlayerHP{};
 	XMFLOAT3 pos = { 0,0,-10 };
 	XMFLOAT3 Armpos = { 0,0,0 };
 	Sprite* SpritePlayerHP = nullptr;
 
 	float PlayerSpeed = 0.3f;
-	//À•W‚ğ–ß‚·
+	//åº§æ¨™ã‚’æˆ»ã™
 	bool undoPos = false;
 	float AfterRot = 0.0f;
 	float rad = 0.4f;
 	const float PI = 3.14f;
-	//˜r‚Ì•Ï”
+	//è…•ã®å¤‰æ•°
 	float radius = 0.0f;
 	float speed = 0.0f;
 	float scale = 10.0f;
@@ -96,11 +96,11 @@ private:
 	float ArmCircleZ = 0.0f;
 	float ArmWeight = 0.0f;
 	float TargetSpeed = 0.0f;
-	//‚¢‚ë‚¢‚ë‚Èƒtƒ‰ƒO
+	//ã„ã‚ã„ã‚ãªãƒ•ãƒ©ã‚°
 	int ArmMoveNumber = 0;
 	bool AttackFlag = false;
 	int AttackMoveNumber = 0;
-	//ƒC[ƒWƒ“ƒO‚Ì‚½‚ß‚Ì‚â‚Â
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã®ãŸã‚ã®ã‚„ã¤
 	float frame = 0.0f;
 	float frameMax = 27.0f;
 	float frame2 = 0.0f;

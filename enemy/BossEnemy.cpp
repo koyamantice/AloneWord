@@ -1,4 +1,4 @@
-#include "BossEnemy.h"
+﻿#include "BossEnemy.h"
 #include "Input.h"
 #include"Collision.h"
 #include<sstream>
@@ -106,7 +106,7 @@ bool BossEnemy::collideAttackArm() {
 			player->SetAttackFlag(false);
 
 			if (BossHit == true) {
-				BossHP -= (weight * 2);
+				BossHP -= ((int)weight * 2);
 				weight = 0.0f;
 				player->SetArmWeight(weight);
 				BossHit = false;

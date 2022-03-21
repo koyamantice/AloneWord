@@ -157,8 +157,8 @@ void Enemy::Follow() {
 	double Check = position.x / posR;
 	double Check2 = position.z / posR;
 
-	pos.x += Check * 0.095f;
-	pos.z += Check2 * 0.095f;
+	pos.x += (float)Check * 0.095f;
+	pos.z += (float)Check2 * 0.095f;
 }
 
 void Enemy::Move() {
