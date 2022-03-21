@@ -105,17 +105,13 @@ void Player::Update() {
 		//腕を伸ばす
 		if (input->PushButton(input->Button_RB) && ArmWeight <= 6.0f && AttackFlag == false && AttackMoveNumber == 0) {
 			ArmMoveNumber = 1;
-			if (ArmWeight != 0.0f) {
-				ArmSpeed = TargetSpeed;
-			}
-			Armscale = 0.0f;
 			initscale = Armscale;
 			frame = 0;
 			
 		}
 
 		//攻撃
-		if (input->TriggerButton(input->Button_A) && AttackFlag == false && ArmWeight != 0.0f && AttackMoveNumber == 0) {
+		if (input->TriggerButton(input->Button_A) && AttackFlag == false && ArmWeight != 0.0f && AttackMoveNumber == 0 && ArmMoveNumber == 0) {
 			AttackFlag = true;
 			AttackMoveNumber = 1;
 			initscale = Armscale;
@@ -130,74 +126,34 @@ void Player::Update() {
 			if (StickrotY <= -650) {
 				if (StickrotX <= 650 && StickrotX >= -650) {
 					AfterRot = 180;
-					if (ArmWeight == 0.0f) {
-						ArmSpeed = 90;
-					} else {
-						ArmSpeed = 315;
-						TargetSpeed = 90;
-					}
+					ArmSpeed = 90;
 				} else if (StickrotX > 650) {
 					AfterRot = 225;
-					if (ArmWeight == 0.0f) {
-						ArmSpeed = 45;
-					} else {
-						ArmSpeed = 275;
-						TargetSpeed = 45;
-					}
+					ArmSpeed = 45;
 				} else if (StickrotX < -650) {
 					AfterRot = 135;
-					if (ArmWeight == 0.0f) {
-						ArmSpeed = 135;
-					} else {
-						ArmSpeed = 0;
-						TargetSpeed = 135;
-					}
+					ArmSpeed = 135;
 				}
 			} else if (StickrotY >= 650) {
 				if (StickrotX <= 650 && StickrotX >= -650) {
 					AfterRot = 0;
-					if (ArmWeight == 0.0f) {
-						ArmSpeed = 270;
-					} else {
-						ArmSpeed = 135;
-						TargetSpeed = 270;
-					}
+					ArmSpeed = 270;
 				} else if (StickrotX > 650) {
 					AfterRot = 315;
-					if (ArmWeight == 0.0f) {
-						ArmSpeed = 315;
-					} else {
-						ArmSpeed = 180;
-						TargetSpeed = 315;
-					}
+					ArmSpeed = 315;
 				} else if (StickrotX < -650) {
 					AfterRot = 45;
-					if (ArmWeight == 0.0f) {
-						ArmSpeed = 225;
-					} else {
-						ArmSpeed = 90;
-						TargetSpeed = 225;
-					}
+					ArmSpeed = 225;
 				}
 			} else {
 				if (StickrotX <= -650) {
 					AfterRot = 90;
-					if (ArmWeight == 0.0f) {
-						ArmSpeed = 180;
-					} else {
-						ArmSpeed = 45;
-						TargetSpeed = 180;
-					}
+					ArmSpeed = 180;
 				}
 
 				if (StickrotX >= 650) {
 					AfterRot = 270;
-					if (ArmWeight == 0.0f) {
-						ArmSpeed = 0;
-					} else {
-						ArmSpeed = 225;
-						TargetSpeed = 0;
-					}
+					ArmSpeed = 0;
 				}
 			}
 		}
@@ -205,7 +161,7 @@ void Player::Update() {
 
 	//腕を伸ばす
 	if (ArmMoveNumber == 1) {
-		Armscale = initscale + 5.0f * easeOutBack(frame / frameMax);
+		Armscale = initscale + 3.0f * easeOutBack(frame / frameMax);
 		if (frame != frameMax) {
 			frame = frame + 1;
 		} else {
@@ -215,7 +171,7 @@ void Player::Update() {
 		}
 	}
 	else if (ArmMoveNumber == 2) {
-		Armscale = initscale - (5.0f - (ArmWeight - 0.5f)) * easeOutBack(frame / frameMax);
+		Armscale = initscale - 3.0f * easeOutBack(frame / frameMax);
 		if (frame != frameMax) {
 			frame = frame + 1;
 		} else {
@@ -239,13 +195,13 @@ void Player::Update() {
 
 	if (AttackMoveNumber == 1) {
 		if (ArmWeight>0) {
-			Armscale = initscale + 5.0f * easeInOut(frame3 / frameMax3);
+			Armscale = initscale + 3.0f * easeInOut(frame3 / frameMax3);
 			if (frame3 <= frameMax3) {
 				frame3 = frame3 + 1;
 			} else {
 				AttackMoveNumber = 2;
 				initscale = Armscale;
-				scaleVel = 5.0f;
+				scaleVel = 3.0f;
 				frame3 = 0;
 				frameMax3 = 20.0f;
 			}
@@ -305,9 +261,7 @@ void Player::Draw() {
 
 	Object3d::PreDraw();
 	object3d->Draw();
-	if (Armscale >= 0.2f) {
-		Armobj->Draw();
-	}
+	Armobj->Draw();
 }
 
 void Player::ResetWeight(Enemy *enemy) {

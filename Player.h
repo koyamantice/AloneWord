@@ -91,7 +91,7 @@ private:
 	float circleZ = 0.0f;
 	float Armradius = 0.0f;
 	float ArmSpeed = 90.0f;
-	float Armscale = 0.0f;
+	float Armscale = 1.0f;
 	float ArmCircleX = 0.0f;
 	float ArmCircleZ = 0.0f;
 	float ArmWeight = 0.0f;
