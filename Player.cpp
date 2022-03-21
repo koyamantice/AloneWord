@@ -19,7 +19,7 @@ float easeInOut(float x) {
 }
 Player::Player() {
 	model = Model::CreateFromOBJ("Motti");
-	Armmodel = Model::CreateFromOBJ("Particle");
+	Armmodel = Model::CreateFromOBJ("Arm");
 	object3d = new Object3d();
 	Armobj = new Object3d();
 	Sprite::LoadTexture(3, L"Resources/2d/PlayerHP.png");
@@ -43,8 +43,7 @@ void Player::Initialize() {
 	Armpos.x = ArmCircleX + pos.x;
 	Armpos.z = ArmCircleZ + pos.z;
 	Armobj->SetPosition(Armpos);
-	Armobj->SetScale({ 1,1,1 });
-
+	Armobj->SetScale({ 1.4f,1.4f,1.4f });
 	collider.radius = rad;
 }
 
@@ -65,12 +64,7 @@ void Player::Update() {
 	Armobj->Update();
 	StickrotX = input->GetPosX();
 	StickrotY = input->GetPosY();
-	/*collider.center = XMVectorSet(pos.x, pos.y, pos.z, 1);*/
-	//if ((input->LeftTiltStick(input->Right)) || (input->LeftTiltStick(input->Left)) ||
-	//	(input->LeftTiltStick(input->Down)) || (input->LeftTiltStick(input->Up))) {
-	//
-	//}
-
+	
 	if (ArmMoveNumber <= 0) {
 		if (input->LeftTiltStick(input->Right) && AttackFlag == false && AttackMoveNumber == 0) {
 			if (pos.x <= 25.0f) {
@@ -107,7 +101,6 @@ void Player::Update() {
 			ArmMoveNumber = 1;
 			initscale = Armscale;
 			frame = 0;
-			
 		}
 
 		//攻撃
@@ -125,34 +118,34 @@ void Player::Update() {
 			//プレイヤーの向き設定
 			if (StickrotY <= -650) {
 				if (StickrotX <= 650 && StickrotX >= -650) {
-					AfterRot = 180;
+					AfterRot = 270;
 					ArmSpeed = 90;
 				} else if (StickrotX > 650) {
 					AfterRot = 225;
 					ArmSpeed = 45;
 				} else if (StickrotX < -650) {
-					AfterRot = 135;
+					AfterRot = 315;
 					ArmSpeed = 135;
 				}
 			} else if (StickrotY >= 650) {
 				if (StickrotX <= 650 && StickrotX >= -650) {
-					AfterRot = 0;
+					AfterRot = 90;
 					ArmSpeed = 270;
 				} else if (StickrotX > 650) {
-					AfterRot = 315;
+					AfterRot = 45;
 					ArmSpeed = 315;
 				} else if (StickrotX < -650) {
-					AfterRot = 45;
+					AfterRot = 135;
 					ArmSpeed = 225;
 				}
 			} else {
 				if (StickrotX <= -650) {
-					AfterRot = 90;
+					AfterRot = 180;
 					ArmSpeed = 180;
 				}
 
 				if (StickrotX >= 650) {
-					AfterRot = 270;
+					AfterRot = 0;
 					ArmSpeed = 0;
 				}
 			}
@@ -240,21 +233,16 @@ void Player::Update() {
 }
 
 void Player::Draw() {
-	//	ImGui::Begin("test");
-	//if (ImGui::TreeNode("Debug"))     {
-	//	if (ImGui::TreeNode("Player"))         {
-	//		ImGui::SliderFloat("Position.x", &pos.x, 50, -50);
-	//		ImGui::SliderFloat("Position.z", &pos.z, 50, -50);
-	//		ImGui::SliderFloat("ArmSpeed", &ArmSpeed, 50, -50);
-	//		ImGui::SliderFloat("Armscale", &Armscale, 50, -50);
-	//		ImGui::SliderFloat("scaleVel", &scaleVel, 50, -50);
-	//		ImGui::SliderFloat("Armweight", &ArmWeight, 50, -50);
-	//		ImGui::Unindent();
-	//		ImGui::TreePop();
-	//	}
-	//	ImGui::TreePop();
-	//}
-	//ImGui::End();
+		ImGui::Begin("test");
+	if (ImGui::TreeNode("Debug"))     {
+		if (ImGui::TreeNode("Player"))         {
+			ImGui::SliderFloat("AfterRot", &AfterRot, 50, -50);
+			ImGui::Unindent();
+			ImGui::TreePop();
+		}
+		ImGui::TreePop();
+	}
+	ImGui::End();
 	Sprite::PreDraw();
 	//背景用
 	SpritePlayerHP->Draw();
