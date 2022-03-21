@@ -6,7 +6,7 @@
 class GameoverScene : public BaseScene {
 public:
 	/// 初期化
-	void Initiallize(DirectXCommon* dxCommon) override;
+	void Initialize(DirectXCommon* dxCommon) override;
 	/// 終了
 	void Finalize() override;
 	/// 毎フレーム更新

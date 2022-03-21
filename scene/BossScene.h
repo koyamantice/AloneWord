@@ -2,6 +2,7 @@
 #include "BaseScene.h"
 #include "BossEnemy.h"
 #include "Collision.h"
+#include "Player.h"
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>
