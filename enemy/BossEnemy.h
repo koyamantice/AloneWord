@@ -33,6 +33,8 @@ public:
 	const XMFLOAT3& GetRotation() { return object3d->GetRotation(); }
 
 	const int& GetisAlive() { return IsAlive; }
+
+	const int& GetHP() { return BossHP; }
 	/// 座標の設定
 	void SetPosition(XMFLOAT3 position) { object3d->SetPosition(position); }
 
@@ -40,8 +42,9 @@ public:
 
 	void SetPlayer(Player*player) { this->player=player; }
 
-
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
+
+	void SetHP(int BossHP) { this->BossHP = BossHP; }
 private:
 	Object3d* object3d;
 	Model* model;
@@ -61,8 +64,6 @@ private:
 
 	int action = 0;
 	bool active = false;
-
-
 
 	int pat = 0;
 	float frame = 0;

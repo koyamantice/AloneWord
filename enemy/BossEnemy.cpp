@@ -40,8 +40,6 @@ void BossEnemy::Update() {
 	}
 	Fork();
 
-
-
 	collideAttackArm();
 	object3d->SetPosition(pos);
 	object3d->Update();

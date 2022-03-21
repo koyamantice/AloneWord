@@ -170,6 +170,12 @@
     <ClCompile Include="enemy\BossEnemy.cpp">
       <Filter>enemy</Filter>
     </ClCompile>
+    <ClCompile Include="scene\ClearScene.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\GameoverScene.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\Framework.h">
@@ -312,6 +318,12 @@
     </ClInclude>
     <ClInclude Include="enemy\BossEnemy.h">
       <Filter>enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\ClearScene.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\GameoverScene.h">
+      <Filter>main</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

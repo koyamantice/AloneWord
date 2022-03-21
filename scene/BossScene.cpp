@@ -91,6 +91,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		object1->PlayAnimation();
 		//SceneManager::GetInstance()->ChangeScene("BOSS");
 	}
+	//敵同士の当たり判定
 	if (sizeof(enemy) > 2) {//配列のサイズ確認
 		for (int colA = 0; colA < BossEnemyMax; colA++) {
 			for (int colB = 1; colB < BossEnemyMax; colB++) {
@@ -104,6 +105,15 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 				}
 			}
 		}
+	}
+
+	//その他シーン移行
+	if (bossenemy->GetHP() <= 0) {
+		SceneManager::GetInstance()->ChangeScene("CLEAR");
+	}
+
+	if (player->GetHp() <= 0) {
+		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 	}
 	object1->Update();
 	camera->SetTarget(player->GetPosition());
