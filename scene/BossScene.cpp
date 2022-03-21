@@ -33,7 +33,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objFork->Initialize();
 	objFork->SetModel(modelFork);
 	objFork->SetRotation({ 0,90.0f,0 });
-	objFork->SetPosition({ 5.0f,0,-10.0f });
+	objFork->SetPosition({ -8.0f,0.0f,0.0f });
 
 	modelMotti = Model::CreateFromOBJ("Motti");
 	objMotti = Object3d::Create();
@@ -48,6 +48,14 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objArm->SetModel(modelArm);
 	objArm->SetRotation({ 0,90.0f,0 });
 	objArm->SetPosition({ -3.5f,1.0f,-1.0f });
+
+	modelEnemy = Model::CreateFromOBJ("Enemy");
+	objEnemy = Object3d::Create();
+	objEnemy->Initialize();
+	objEnemy->SetModel(modelEnemy);
+	objEnemy->SetRotation({ 0,90.0f,0 });
+	objEnemy->SetPosition({ -6.0f,0.0f,0.0f });
+
 	//普通のテクスチャ(板ポリ)
 	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,1 });
 	limit->TextureCreate();
@@ -91,6 +99,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	objFork->Update();
 	objMotti->Update();
 	objArm->Update();
+	objEnemy->Update();
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
@@ -148,6 +157,7 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	objFork->Draw();
 	objMotti->Draw();
 	objArm->Draw();
+	objEnemy->Draw();
 
 	//object1->Draw(dxCommon->GetCmdList());
 	//背景用
