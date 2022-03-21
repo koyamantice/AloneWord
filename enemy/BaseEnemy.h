@@ -31,10 +31,10 @@ protected:
 	const float PI = 3.14f;
 
 	Object3d* enemyobj = nullptr;
-	Model* model;
+	Model* model = nullptr;
 	XMFLOAT3 pos = { 0,0,0 };
 	XMFLOAT3 rot = { 0,0,0 };
-	Player* player;
+	Player* player=nullptr;
 	float frame = 0;
 
 public:

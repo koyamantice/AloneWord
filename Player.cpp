@@ -1,4 +1,4 @@
-#include "Player.h"
+ï»¿#include "Player.h"
 #include "Input.h"
 #include"Collision.h"
 #include"Easing.h"
@@ -27,7 +27,7 @@ Player::Player() {
 }
 
 void Player::Initialize() {
-	//”wŒiƒXƒvƒ‰ƒCƒg¶¬
+	//èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	SpritePlayerHP = Sprite::Create(3, { 0.0f,0.0f });
 	SpritePlayerHP->SetPosition({ 0.0f,520.0f });
 	object3d = Object3d::Create();
@@ -102,7 +102,7 @@ void Player::Update() {
 				AfterRot = 180;
 			}
 		}
-		//˜r‚ğL‚Î‚·
+		//è…•ã‚’ä¼¸ã°ã™
 		if (input->PushButton(input->Button_RB) && ArmWeight <= 6.0f && AttackFlag == false && AttackMoveNumber == 0) {
 			ArmMoveNumber = 1;
 			if (ArmWeight != 0.0f) {
@@ -114,7 +114,7 @@ void Player::Update() {
 			
 		}
 
-		//UŒ‚
+		//æ”»æ’ƒ
 		if (input->TriggerButton(input->Button_A) && AttackFlag == false && ArmWeight != 0.0f && AttackMoveNumber == 0) {
 			AttackFlag = true;
 			AttackMoveNumber = 1;
@@ -126,7 +126,7 @@ void Player::Update() {
 		}
 
 		if (AttackFlag == false && AttackMoveNumber == 0 && ArmMoveNumber == 0) {
-			//ƒvƒŒƒCƒ„[‚ÌŒü‚«İ’è
+			//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®å‘ãè¨­å®š
 			if (StickrotY <= -650) {
 				if (StickrotX <= 650 && StickrotX >= -650) {
 					AfterRot = 180;
@@ -203,7 +203,7 @@ void Player::Update() {
 		}
 	}
 
-	//˜r‚ğL‚Î‚·
+	//è…•ã‚’ä¼¸ã°ã™
 	if (ArmMoveNumber == 1) {
 		Armscale = initscale + 5.0f * easeOutBack(frame / frameMax);
 		if (frame != frameMax) {
@@ -225,7 +225,7 @@ void Player::Update() {
 		}
 	}
 
-	//UŒ‚
+	//æ”»æ’ƒ
 	if (AttackFlag == true) {
 		ArmSpeed = initspeed + 360.0f * easeInOut(frame2 / frameMax2);
 		AfterRot = initrotation - 360.0f * easeInOut(frame2 / frameMax2);
@@ -278,7 +278,7 @@ void Player::Update() {
 	Armpos.x = ArmCircleX + pos.x;
 	Armpos.z = ArmCircleZ + pos.z;
 	Armobj->SetPosition(Armpos);
-	//ˆÚ“®
+	//ç§»å‹•
 	object3d->SetPosition(pos);
 	object3d->SetRotation(rot);
 }
@@ -300,7 +300,7 @@ void Player::Draw() {
 	//}
 	//ImGui::End();
 	Sprite::PreDraw();
-	//”wŒi—p
+	//èƒŒæ™¯ç”¨
 	SpritePlayerHP->Draw();
 
 	Object3d::PreDraw();
