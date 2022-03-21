@@ -32,6 +32,12 @@ private:
 	Model* modelFork = nullptr;
 	Object3d* objFork;
 
+	Model* modelMotti = nullptr;
+	Object3d* objMotti;
+
+	Model* modelArm = nullptr;
+	Object3d* objArm;
+
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;
 	DebugCamera* camera = { nullptr };

@@ -34,6 +34,20 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objFork->SetModel(modelFork);
 	objFork->SetRotation({ 0,90.0f,0 });
 	objFork->SetPosition({ 5.0f,0,-10.0f });
+
+	modelMotti = Model::CreateFromOBJ("Motti");
+	objMotti = Object3d::Create();
+	objMotti->Initialize();
+	objMotti->SetModel(modelMotti);
+	objMotti->SetRotation({ 0,90.0f,0 });
+	objMotti->SetPosition({ -3.0f,0,0 });
+
+	modelArm = Model::CreateFromOBJ("Arm");
+	objArm = Object3d::Create();
+	objArm->Initialize();
+	objArm->SetModel(modelArm);
+	objArm->SetRotation({ 0,90.0f,0 });
+	objArm->SetPosition({ -3.5f,1.0f,-1.0f });
 	//普通のテクスチャ(板ポリ)
 	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,1 });
 	limit->TextureCreate();
@@ -75,6 +89,8 @@ void BossScene::Finalize() {
 void BossScene::Update(DirectXCommon* dxCommon) {
 	objGround->Update();
 	objFork->Update();
+	objMotti->Update();
+	objArm->Update();
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
@@ -130,6 +146,8 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	//sprite->Draw();
 	Object3d::PreDraw();
 	objFork->Draw();
+	objMotti->Draw();
+	objArm->Draw();
 
 	//object1->Draw(dxCommon->GetCmdList());
 	//背景用
