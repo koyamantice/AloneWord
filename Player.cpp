@@ -18,7 +18,7 @@ float easeInOut(float x) {
 	return x < 0.5 ? 2 * x * x : 1 - powf(-2 * x + 2, 2) / 2;
 }
 Player::Player() {
-	model = Model::CreateFromOBJ("chr_knight");
+	model = Model::CreateFromOBJ("Motti");
 	Armmodel = Model::CreateFromOBJ("Particle");
 	object3d = new Object3d();
 	Armobj = new Object3d();
@@ -33,7 +33,7 @@ void Player::Initialize() {
 	object3d = Object3d::Create();
 	object3d->SetModel(model);
 	object3d->SetPosition(pos);
-	object3d->SetScale({ 1,1,1 });
+	object3d->SetScale({ 0.7f,0.7f,0.7f });
 
 	Armobj = Object3d::Create();
 	Armobj->SetModel(Armmodel);
