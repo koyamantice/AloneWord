@@ -61,7 +61,7 @@ void BossEnemy::Update() {
 void BossEnemy::Draw() {
 	ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
-		if (ImGui::TreeNode("Player")) {
+		if (ImGui::TreeNode("Boss")) {
 			ImGui::SliderFloat("Position.x", &pos.x, 20, -20);
 			ImGui::SliderFloat("Position.y", &pos.y, 20, -20);
 			ImGui::SliderFloat("Position.z", &pos.z, 20, -20);
