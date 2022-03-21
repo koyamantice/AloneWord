@@ -44,6 +44,7 @@ void Player::Initialize() {
 	Armpos.z = ArmCircleZ + pos.z;
 	Armobj->SetPosition(Armpos);
 	Armobj->SetScale({ 1.4f,1.4f,1.4f });
+
 	collider.radius = rad;
 }
 
