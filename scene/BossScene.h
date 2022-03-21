@@ -2,11 +2,10 @@
 #include "BaseScene.h"
 #include "BossEnemy.h"
 #include "Collision.h"
-#include "Player.h"
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>
-const int BossEnemyMax = 8;
+const int BossEnemyMax = 10;
 class BossScene : public BaseScene{
 public:
 	/// <summary>

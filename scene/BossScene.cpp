@@ -19,6 +19,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	bossenemy->Initialize();
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i] = new Enemy();
+		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
 	}
 	//オブジェクト初期化
@@ -28,7 +29,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objGround->SetModel(modelGround);
 	objGround->SetPosition({ 0,-1,0 });
 	//普通のテクスチャ(板ポリ)
-	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,1 });
+	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
 	limit->TextureCreate();
 	limit->SetPosition({ 0.0f,0.01f,0.0f });
 	limit->SetRotation({ 90.0f,0, 0 });
@@ -73,7 +74,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	bossenemy->Update();
 	limit->Update();
 	for (int i = 0; i < BossEnemyMax; i++) {
-		enemy[i]->Update(player,bossenemy);
+		enemy[i]->Update();
 		player->ResetWeight(enemy[i]);
 	}
 	

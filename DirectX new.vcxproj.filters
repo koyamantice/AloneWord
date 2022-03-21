@@ -313,9 +313,6 @@
     <ClInclude Include="scene\StartMap.h">
       <Filter>main</Filter>
     </ClInclude>
-    <ClInclude Include="BaseEnemy.h">
-      <Filter>enemy</Filter>
-    </ClInclude>
     <ClInclude Include="enemy\BossEnemy.h">
       <Filter>enemy</Filter>
     </ClInclude>
@@ -324,6 +321,9 @@
     </ClInclude>
     <ClInclude Include="scene\GameoverScene.h">
       <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy\BaseEnemy.h">
+      <Filter>enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -38,6 +38,10 @@ void BossEnemy::Update() {
 		};
 		SpriteBossHP->SetSize(HPPos);
 	}
+	{
+		rot.y =Ease(In, Quint, 0.7f, rot.y, Afterrot);
+		object3d->SetRotation(rot);
+	}
 	Fork();
 
 	collideAttackArm();
@@ -110,43 +114,49 @@ void BossEnemy::Fork() {
 	}
 	if (active) {
 		if ((action % 2) == 0) {
-			if (frame < 1.0f) {
-				frame += 0.005f;
+			if (frame < 0.45f) {
+				frame += 0.002f;
 			} else {
 				frame = 0;
 				pat++;
 			}
 			if (pat == 1) {
+				Afterrot = 115;
 				AfterPos.x = 25.0f;
 				AfterPos.z = -20.0f;
 
 			} else if (pat == 2) {
+				Afterrot = 0;
 				AfterPos.x = 25.0f;
 				AfterPos.z = 20.0f;
 
 			} else if (pat == 3) {
+				Afterrot = 225;
 				AfterPos.x = -25.0f;
 				AfterPos.z = -20.0f;
 			} else if (pat == 4) {
+				Afterrot = 360;
 				AfterPos.x = -25.0f;
 				AfterPos.z = 20.0f;
 			} else if (pat == 5) {
+				Afterrot = 360+115;
 				AfterPos.x = 0.0f;
 				AfterPos.z = 0.0f;
 			} else {
+				rot.y = 360 + 115+180;
 				pat = 0;
 				active = false;
 				frame = 0;
 			}
 			pos = {
-	Ease(InOut,SoftBack,frame,pos.x,AfterPos.x),
-	0,
-	Ease(InOut,SoftBack,frame,pos.z,AfterPos.z),
+	Ease(In,Cubic,frame,pos.x,AfterPos.x),
+	0,	 
+	Ease(In,Cubic,frame,pos.z,AfterPos.z),
 			};
 			object3d->SetPosition(pos);
 
 		} else if ((action % 2) == 1) {
-			if (frame < 1.0f) {
+			if (frame < 0.4f) {
 				frame += 0.01f;
 			} else {
 				frame = 0;

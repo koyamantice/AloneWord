@@ -50,10 +50,11 @@ private:
 	Model* model;
 	XMFLOAT2 HPPos = { 0,0 };
 	XMFLOAT3 pos = { 0,0,0 };
+	XMFLOAT3 rot = { 0,0,0 };
 	Sprite* SpriteBossHP = false;
 	float rad = 0.4f;
 	const float PI = 3.14f;
-
+	float Afterrot = 0;
 	int IsAlive = 0;
 	int IsTimer = 100;
 	int IsMove = 0;

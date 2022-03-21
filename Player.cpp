@@ -53,8 +53,8 @@ void Player::Update() {
 	XMFLOAT2 AfterPos;
 	AfterPos = { (float)(HP * 30),20 };
 	PlayerHP = {
-	Ease(In,Quint,0.7f,SpritePlayerHP->GetSize().x,AfterPos.x),
-	Ease(In,Quint,0.7f,SpritePlayerHP->GetSize().y,AfterPos.y),
+	Ease(In,Quint,0.7f,(float)SpritePlayerHP->GetSize().x,(float)AfterPos.x),
+	Ease(In,Quint,0.7f,(float)SpritePlayerHP->GetSize().y,(float)AfterPos.y),
 	};
 	SpritePlayerHP->SetSize(PlayerHP);
 	XMFLOAT3 rot = this->object3d->GetRotation();
@@ -215,7 +215,7 @@ void Player::Update() {
 		}
 	}
 	else if (ArmMoveNumber == 2) {
-		Armscale = initscale - (5.0f - (ArmWeight - 0.5)) * easeOutBack(frame / frameMax);
+		Armscale = initscale - (5.0f - (ArmWeight - 0.5f)) * easeOutBack(frame / frameMax);
 		if (frame != frameMax) {
 			frame = frame + 1;
 		} else {

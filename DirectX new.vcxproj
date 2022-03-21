@@ -213,7 +213,6 @@
     <ClInclude Include="3d\Mesh.h" />
     <ClInclude Include="3d\Model.h" />
     <ClInclude Include="3d\Object3d.h" />
-    <ClInclude Include="BaseEnemy.h" />
     <ClInclude Include="base\AbstractSceneFactory.h" />
     <ClInclude Include="base\Audio.h" />
     <ClInclude Include="base\BaseScene.h" />
@@ -230,6 +229,7 @@
     <ClInclude Include="collision\CollisionInfo.h" />
     <ClInclude Include="collision\CollisionPrimitive.h" />
     <ClInclude Include="collision\CollisionTypes.h" />
+    <ClInclude Include="enemy\BaseEnemy.h" />
     <ClInclude Include="enemy\BossEnemy.h" />
     <ClInclude Include="enemy\Enemy.h" />
     <ClInclude Include="imgui\imconfig.h" />

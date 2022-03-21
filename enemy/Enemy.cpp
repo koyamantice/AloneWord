@@ -1,5 +1,4 @@
 #include "Enemy.h"
-#include "Input.h"
 #include"Collision.h"
 #include "BossEnemy.h"
 #include<sstream>
@@ -9,7 +8,7 @@ using namespace DirectX;
 
 Enemy::Enemy() {
 	model = Model::CreateFromOBJ("chr_sword");
-	object3d = new Object3d();
+	enemyobj = new Object3d();
 
 }
 
@@ -18,10 +17,10 @@ void Enemy::Initialize() {
 	//プレイヤー
 	IsAlive = false;
 	IsTimer = 100;
-	object3d = Object3d::Create();
-	object3d->SetModel(model);
-	object3d->SetPosition(pos);
-	//object3d->SetScale({ 0.5f,0.5f,0.5f });
+	enemyobj = Object3d::Create();
+	enemyobj->SetModel(model);
+	enemyobj->SetPosition(pos);
+	//enemyobj->SetScale({ 0.5f,0.5f,0.5f });
 	texture = Texture::Create(0, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	texture->SetPosition(pos);
@@ -30,9 +29,12 @@ void Enemy::Initialize() {
 	collider.radius = rad;
 }
 
-void Enemy::Update(Player* player, BossEnemy* bossenemy) {
+void Enemy::Finalize() {
+}
+
+void Enemy::Update() {
+	assert(player);
 	collider.center = XMVectorSet(pos.x, pos.y, pos.z, 1);
-	XMFLOAT3 bosspos = bossenemy->GetPosition();
 	playerpos = player->GetPosition();
 	if (!IsAlive) {
 		IsTimer--;
@@ -43,40 +45,39 @@ void Enemy::Update(Player* player, BossEnemy* bossenemy) {
 	if (IsTimer <= 0) {
 		IsAlive = true;
 		isMove = false;
+		StartPos = pos;
 		frame = 0;
 		radius = speed * PI / 180.0f;
 		circleX = cosf(radius) * scale;
 		circleZ = sinf(radius) * scale;
-		pos.x = circleX + bosspos.x;
-		pos.z = circleZ + bosspos.z;
+		pos.x = circleX + basePos.x;
+		pos.z = circleZ + basePos.z;
 		IsTimer = 100;
 	}
-	////スポーン位置
-	//radius = speed * PI / 180.0f;
-	//circleX = cosf(radius) * scale;
-	//circleZ = sinf(radius) * scale;
-	//pos.x = circleX + bosspos.x;
-	//pos.z = circleZ + bosspos.z;
-	collideArm(player);
-	collidePlayer(player);
-	collideAttackArm(player);
+	collideArm();
+	collidePlayer();
+	collideAttackArm();
 	if (IsAlive && !EnemyCatch) {
-		if (LockOn(player)) {
-			Follow(player);
+		if (LockOn()) {
+			moveCount = (rand() % 15) + 20;
+			isMove = false;
+			Follow();
 		} else {
 			Move();
 		}
 	}
-	object3d->SetPosition(pos);
+	enemyobj->SetPosition(pos);
 	texture->SetPosition(pos);
-	object3d->Update();
+	rot.y = Ease(In, Quad, 0.5f, rot.y, EndRot.y);
+	enemyobj->SetRotation(rot);
+	enemyobj->Update();
 	texture->Update();
 }
 
 void Enemy::Draw() {
 	if (IsAlive) {
 		Object3d::PreDraw();
-		object3d->Draw();
+		enemyobj->Draw();
 	}
 	if (IsAlive && !EnemyCatch) {
 		Texture::PreDraw();
@@ -85,7 +86,7 @@ void Enemy::Draw() {
 	}
 }
 
-bool Enemy::collideArm(Player* player) {
+bool Enemy::collideArm() {
 	XMFLOAT3 Armpos = player->GetArmPosition();
 	float armweight = player->GetArmWeight();
 	int armMove = player->GetArmMoveNumber();
@@ -104,13 +105,11 @@ bool Enemy::collideArm(Player* player) {
 	}
 }
 
-bool Enemy::collidePlayer(Player* player) {
-	XMFLOAT3 Armpos = player->GetArmPosition();
-	int playerhp = player->GetHp();
+bool Enemy::collidePlayer() {
 	if (IsAlive && !EnemyCatch) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true) {
 			IsAlive = 0;
-			player->SetHp(playerhp - 1);
+			player->SetHp(player->GetHp() - 1);
 			return true;
 		} else {
 			return false;
@@ -120,10 +119,9 @@ bool Enemy::collidePlayer(Player* player) {
 	}
 }
 
-bool Enemy::collideAttackArm(Player* player) {
+bool Enemy::collideAttackArm() {
 	XMFLOAT3 Armpos = player->GetArmPosition();
 	bool attackflag = player->GetAttackFlag();
-	int playerhp = player->GetHp();
 	float armweight = player->GetArmWeight();
 	if (IsAlive && !EnemyCatch && attackflag) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
@@ -142,7 +140,7 @@ bool Enemy::collideAttackArm(Player* player) {
 	}
 }
 
-bool Enemy::LockOn(Player* player) {
+bool Enemy::LockOn() {
 		if (Collision::CircleCollision(playerpos.x, playerpos.z, 5.0,
 			pos.x, pos.z, 3.0)) {
 			return true;
@@ -151,7 +149,7 @@ bool Enemy::LockOn(Player* player) {
 		}
 }
 
-void Enemy::Follow(Player* player) {
+void Enemy::Follow() {
 	XMFLOAT3 position{};
 	position.x = (playerpos.x - pos.x);
 	position.z = (playerpos.z - pos.z);
@@ -159,19 +157,19 @@ void Enemy::Follow(Player* player) {
 	double Check = position.x / posR;
 	double Check2 = position.z / posR;
 
-	if (hit == false) {
-		pos.x += Check * 0.08f;
-		pos.z += Check2 * 0.08f;
-	}
+		pos.x += Check * 0.095f;
+		pos.z += Check2 * 0.095f;
 }
 
 void Enemy::Move() {
-	if (moveCount == 0&&!isMove) {
+	if (moveCount < 0&&!isMove) {
 		StartPos = pos;
 		if (dir % 4 == 0) {
 			EndPos.x = StartPos.x + 2.5f;
+			zmove = false;
 		} else if (dir % 4 == 1) {
 			EndPos.x = StartPos.x - 2.5f;
+			zmove = false;
 		} else if (dir % 4 == 2) {
 			EndPos.z = StartPos.z - 2.5f;
 			zmove = true;
@@ -185,23 +183,40 @@ void Enemy::Move() {
 		moveCount--;
 		dir= (rand() % 40);
 	}
-	if (isMove && hit == false) {
+	if (isMove) {
 		if (frame<=1.0f) {
 			frame += 0.01f;
 		} else {
 			frame = 1.0f;
-			moveCount = (rand() % 60) +30;
+			moveCount = (rand() % 30) +30;
 			dir=0;
 			isMove = false;
 		}
-		if (hit == false) {
-			if (zmove) {
-				pos.z = Ease(In, Quad, frame, pos.z, EndPos.z);
+		if (zmove) {
+			if (pos.z<EndPos.z) {
+				EndRot.y = 0;
+			} else if (pos.z > EndPos.z) {
+				EndRot.y = 180;
 			} else {
-				pos.x = Ease(In, Quad, frame, pos.x, EndPos.x);
+				EndRot.y = rot.y;
+			}
+			pos.z = Ease(In, Quad, frame, pos.z, EndPos.z);
+		} else {
+			pos.x = Ease(In, Quad, frame, pos.x, EndPos.x);
+			if (pos.x < EndPos.x) {
+				EndRot.y = 90;
+			} else 	if (pos.x > EndPos.x) {
+				EndRot.y = 270;
+			} else {
+				EndRot.y = rot.y;
 			}
 		}
-		object3d->SetPosition(pos);
+
+
+
+
+
+		enemyobj->SetPosition(pos);
 
 	}
 }
