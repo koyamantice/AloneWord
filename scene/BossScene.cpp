@@ -6,6 +6,7 @@
 void BossScene::Initialize(DirectXCommon* dxCommon) {
 	Texture::LoadTexture(0, L"Resources/2d/enemy.png");
 	Texture::LoadTexture(1, L"Resources/2d/limit.png");
+	Texture::LoadTexture(2, L"Resources/2d/shadow.png");
 	// ƒJƒƒ‰¶¬
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
@@ -150,12 +151,13 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw();
 	//object1->Draw(dxCommon->GetCmdList());
 	//”wŒi—p
-	player->Draw();
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Draw();
 	}
 
 	bossenemy->Draw();
+	player->Draw();
+
 
 
 }

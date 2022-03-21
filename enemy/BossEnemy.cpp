@@ -3,13 +3,12 @@
 #include"Collision.h"
 #include<sstream>
 #include<iomanip>
-#include "Enemy.h"
 #include <Easing.h>
 using namespace DirectX;
 
 BossEnemy::BossEnemy() {
 	model = Model::CreateFromOBJ("chr_sword");
-	object3d = new Object3d();
+	enemyobj = new Object3d();
 	Sprite::LoadTexture(4, L"Resources/2d/PlayerHP.png");
 }
 
@@ -19,12 +18,20 @@ void BossEnemy::Initialize() {
 	SpriteBossHP->SetColor({ 0.0f,1.0f,0.0,1.0 });
 	IsAlive = 0;
 	IsTimer = 100;
-	object3d = Object3d::Create();
-	object3d->SetModel(model);
+	enemyobj = Object3d::Create();
+	enemyobj->SetModel(model);
 	pos = { 0.0f,0.0f,0.0f };
-	object3d->SetPosition(pos);
-	object3d->SetScale({ 3.0f,3.0f,3.0f });
+	enemyobj->SetPosition(pos);
+	enemyobj->SetScale({ 3.0f,3.0f,3.0f });
+	texture = Texture::Create(2, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	texture->TextureCreate();
+	texture->SetPosition(pos.x,0,pos.z);
+	texture->SetRotation({ 90,0,0 });
+	texture->SetScale({ 0.3f,0.3f,0.3f });
 	collider.radius = rad;
+}
+
+void BossEnemy::Finalize() {
 }
 
 void BossEnemy::Update() {
@@ -40,19 +47,36 @@ void BossEnemy::Update() {
 	}
 	{
 		rot.y =Ease(In, Quint, 0.7f, rot.y, Afterrot);
-		object3d->SetRotation(rot);
+		enemyobj->SetRotation(rot);
 	}
 	Fork();
 
 	collideAttackArm();
-	object3d->SetPosition(pos);
-	object3d->Update();
+	enemyobj->SetPosition(pos);
+	enemyobj->Update();
+	texture->SetPosition(pos.x, 0, pos.z);
+	texture->Update();
 }
 
 void BossEnemy::Draw() {
+	ImGui::Begin("test");
+	if (ImGui::TreeNode("Debug")) {
+		if (ImGui::TreeNode("Player")) {
+			ImGui::SliderFloat("Position.x", &pos.x, 20, -20);
+			ImGui::SliderFloat("Position.y", &pos.y, 20, -20);
+			ImGui::SliderFloat("Position.z", &pos.z, 20, -20);
+			ImGui::Unindent();
+			ImGui::TreePop();
+		}
+		ImGui::TreePop();
+	}
+	ImGui::End();
+
 	Object3d::PreDraw();
 
-	object3d->Draw();
+	enemyobj->Draw();
+	Texture::PreDraw();
+	texture->Draw();
 
 	Sprite::PreDraw();
 	SpriteBossHP->Draw();
@@ -100,7 +124,7 @@ void BossEnemy::Fork() {
 	XMFLOAT3 AfterPos{};
 	if (AttackCount > 40) {
 		if (!active) {
-			action = 0;
+			action =(rand()%2);
 			frame = 0;
 			pat = 1;
 			active = true;
@@ -145,6 +169,7 @@ void BossEnemy::Fork() {
 			} else {
 				rot.y = 360 + 115+180;
 				pat = 0;
+				AttackCount = 0;
 				active = false;
 				frame = 0;
 			}
@@ -153,23 +178,62 @@ void BossEnemy::Fork() {
 	0,	 
 	Ease(In,Cubic,frame,pos.z,AfterPos.z),
 			};
-			object3d->SetPosition(pos);
+			enemyobj->SetPosition(pos);
 
 		} else if ((action % 2) == 1) {
-			if (frame < 0.4f) {
-				frame += 0.01f;
+			if (!already&& !finish) {
+				AfterPos.y = 3.0f;
+				pos.y = Ease(In, Cubic, 0.3f, pos.y, AfterPos.y);
+				if (pos.y >= AfterPos.y - 0.05f) {
+					Standby++;
+					pos = {
+			Ease(In,Cubic,0.5f,pos.x,player->GetPosition().x),
+			Ease(In, Cubic, 0.3f, pos.y, AfterPos.y),
+			Ease(In,Cubic,0.5f,pos.z,player->GetPosition().z),
+					};
+					if (Standby>=180) {
+						already = true;
+					}
+				}
 			} else {
-				frame = 0;
-				pat = 0;
-				active = false;
 				AfterPos.y = 0.0f;
+				pos = {
+					pos.x,
+					Ease(In, Cubic, 0.6f, pos.y, AfterPos.y),
+					pos.z
+				};
+				if (pos.y <= AfterPos.y + 0.05f) {
+					already = false;
+					Standby = 0;
+					times++;
+					if (times >= 3) {
+						finish = true;
+					} else {
+						AfterPos.y = 3.0f;
+					}
+				}
 			}
-			AfterPos.y = 3.0f;
-			pos = {
-			0,
-			Ease(In,Cubic,frame,pos.y,AfterPos.y),
-			0 };
-			object3d->SetPosition(pos);
+			if (finish) {
+				AfterPos.x = 0.0f;
+				AfterPos.y = 0.0f;
+				AfterPos.z = 0.0f;
+				pos = {
+Ease(In,Cubic,0.5f,pos.x, AfterPos.x),
+Ease(In, Cubic, 0.5f, pos.y, AfterPos.y),
+Ease(In,Cubic,0.5f,pos.z, AfterPos.z),
+				};
+				if ((fabs(pos.x - AfterPos.x) <= DBL_EPSILON * fmax(1, fmax(fabs(pos.x), fabs(AfterPos.x)))) &&
+					(fabs(pos.y - AfterPos.y) <= DBL_EPSILON * fmax(1, fmax(fabs(pos.y), fabs(AfterPos.y)))) &&
+					(fabs(pos.z - AfterPos.z) <= DBL_EPSILON * fmax(1, fmax(fabs(pos.z), fabs(AfterPos.z))))) {
+					finish = false;
+					active = false;
+					action = 0;
+					AttackCount = 0;
+					times = 0;
+				}
+
+			}
+			enemyobj->SetPosition(pos);
 
 		}
 	}

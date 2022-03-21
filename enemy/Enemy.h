@@ -39,9 +39,14 @@ private:
 	XMFLOAT3 StartPos{};
 	XMFLOAT3 EndPos{};
 	XMFLOAT3 EndRot{};
-	XMFLOAT3 rot{};
+	XMFLOAT3 basePos{};
 
 	float rad = 0.4f;
+
+	float x_min=-25;
+	float x_max=25;
+	float z_min=-20;
+	float z_max=20;
 
 	float radius = 0.0f;
 	float speed = 0.0f;
@@ -57,6 +62,5 @@ private:
 	int moveCount = 30;
 	int dir = 0;
 	bool zmove = false;
-	XMFLOAT3 basePos{};
 };
 

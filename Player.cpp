@@ -284,21 +284,21 @@ void Player::Update() {
 }
 
 void Player::Draw() {
-		ImGui::Begin("test");
-	if (ImGui::TreeNode("Debug"))     {
-		if (ImGui::TreeNode("Player"))         {
-			ImGui::SliderFloat("Position.x", &pos.x, 50, -50);
-			ImGui::SliderFloat("Position.z", &pos.z, 50, -50);
-			ImGui::SliderFloat("ArmSpeed", &ArmSpeed, 50, -50);
-			ImGui::SliderFloat("Armscale", &Armscale, 50, -50);
-			ImGui::SliderFloat("scaleVel", &scaleVel, 50, -50);
-			ImGui::SliderFloat("Armweight", &ArmWeight, 50, -50);
-			ImGui::Unindent();
-			ImGui::TreePop();
-		}
-		ImGui::TreePop();
-	}
-	ImGui::End();
+	//	ImGui::Begin("test");
+	//if (ImGui::TreeNode("Debug"))     {
+	//	if (ImGui::TreeNode("Player"))         {
+	//		ImGui::SliderFloat("Position.x", &pos.x, 50, -50);
+	//		ImGui::SliderFloat("Position.z", &pos.z, 50, -50);
+	//		ImGui::SliderFloat("ArmSpeed", &ArmSpeed, 50, -50);
+	//		ImGui::SliderFloat("Armscale", &Armscale, 50, -50);
+	//		ImGui::SliderFloat("scaleVel", &scaleVel, 50, -50);
+	//		ImGui::SliderFloat("Armweight", &ArmWeight, 50, -50);
+	//		ImGui::Unindent();
+	//		ImGui::TreePop();
+	//	}
+	//	ImGui::TreePop();
+	//}
+	//ImGui::End();
 	Sprite::PreDraw();
 	//”wŒi—p
 	SpritePlayerHP->Draw();

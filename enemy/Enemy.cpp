@@ -141,12 +141,12 @@ bool Enemy::collideAttackArm() {
 }
 
 bool Enemy::LockOn() {
-		if (Collision::CircleCollision(playerpos.x, playerpos.z, 5.0,
-			pos.x, pos.z, 3.0)) {
-			return true;
-		} else {
-			return false;
-		}
+	if (Collision::CircleCollision(playerpos.x, playerpos.z, 5.0,
+		pos.x, pos.z, 3.0)) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 void Enemy::Follow() {
@@ -157,43 +157,86 @@ void Enemy::Follow() {
 	double Check = position.x / posR;
 	double Check2 = position.z / posR;
 
-		pos.x += Check * 0.095f;
-		pos.z += Check2 * 0.095f;
+	pos.x += Check * 0.095f;
+	pos.z += Check2 * 0.095f;
 }
 
 void Enemy::Move() {
-	if (moveCount < 0&&!isMove) {
+	if (pos.z>z_max) {
+		pos.z = z_max;
+	}
+	if (pos.z < z_min) {
+		pos.z = z_min;
+	}
+	if (pos.x > x_max) {
+		pos.x = x_max;
+	}			
+	if (pos.x < x_min) {
+		pos.x = x_min;
+	}
+	if (EndPos.z > z_max) {
+		EndPos.z = z_max;
+	}
+	if (EndPos.z < z_min) {
+		EndPos.z = z_min;
+	}
+	if (EndPos.x > x_max) {
+		EndPos.x = x_max;
+	}
+	if (EndPos.x < x_min) {
+		EndPos.x = x_min;
+	}
+
+
+	if (moveCount < 0 && !isMove) {
 		StartPos = pos;
 		if (dir % 4 == 0) {
-			EndPos.x = StartPos.x + 2.5f;
+			if (pos.x < x_max) {
+				EndPos.x = StartPos.x + 2.5f;
+			} else {
+				EndPos.x = StartPos.x - 2.5f;
+			}
 			zmove = false;
 		} else if (dir % 4 == 1) {
-			EndPos.x = StartPos.x - 2.5f;
+			if (pos.x > x_min) {
+				EndPos.x = StartPos.x - 2.5f;
+			} else {
+				EndPos.x = StartPos.x + 2.5f;
+			}
 			zmove = false;
 		} else if (dir % 4 == 2) {
-			EndPos.z = StartPos.z - 2.5f;
+			if (pos.z > z_min) {
+				EndPos.z = StartPos.z - 2.5f;
+			} else {
+				EndPos.z = StartPos.z + 2.5f;
+
+			}
 			zmove = true;
-		} else{
-			EndPos.z = StartPos.z + 2.5f;
-			zmove=true;
+		} else {
+			if (pos.z > z_max) {
+				EndPos.z = StartPos.z + 2.5f;
+			} else {
+				EndPos.z = StartPos.z - 2.5f;
+			}
+			zmove = true;
 		}
 		frame = 0;
 		isMove = true;
 	} else {
 		moveCount--;
-		dir= (rand() % 40);
+		dir = (rand() % 40);
 	}
 	if (isMove) {
-		if (frame<=1.0f) {
+		if (frame <= 1.0f) {
 			frame += 0.01f;
 		} else {
 			frame = 1.0f;
-			moveCount = (rand() % 30) +30;
-			dir=0;
+			moveCount = (rand() % 30) + 30;
+			dir = 0;
 			isMove = false;
 		}
 		if (zmove) {
-			if (pos.z<EndPos.z) {
+			if (pos.z < EndPos.z) {
 				EndRot.y = 0;
 			} else if (pos.z > EndPos.z) {
 				EndRot.y = 180;
@@ -211,11 +254,6 @@ void Enemy::Move() {
 				EndRot.y = rot.y;
 			}
 		}
-
-
-
-
-
 		enemyobj->SetPosition(pos);
 
 	}

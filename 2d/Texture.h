@@ -163,6 +163,12 @@ public: // ƒƒ“ƒoŠÖ”
 
 	/// À•W‚ÌÝ’è
 	void SetPosition(XMFLOAT3 position) { this->position = position; }
+	void SetPosition(float x,float y,float z) 
+	{ this->position.x =x; 
+	this->position.y = y;
+	this->position.z = z;
+	}
+
 	void SetColor(XMFLOAT4 color) { this->color = color; }
 	void SetRotation(XMFLOAT3 rotation) { this->rotation = rotation; }
 	void SetScale(XMFLOAT3 scale) { this->scale = scale; }
