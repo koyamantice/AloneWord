@@ -77,6 +77,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Update();
 		player->ResetWeight(enemy[i]);
+		player->Rebound(enemy[i]);
 	}
 	
 	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
@@ -89,10 +90,6 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		a += 1;
 	}
 
-	if (input->PushKey(DIK_0) || input->TriggerButton(input->Button_Y)) {
-		object1->PlayAnimation();
-		//SceneManager::GetInstance()->ChangeScene("BOSS");
-	}
 	//敵同士の当たり判定
 	if (sizeof(enemy) > 2) {//配列のサイズ確認
 		for (int colA = 0; colA < BossEnemyMax; colA++) {
@@ -157,7 +154,4 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 
 	bossenemy->Draw();
 	player->Draw();
-
-
-
 }

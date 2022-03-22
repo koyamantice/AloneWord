@@ -22,14 +22,11 @@ public:
 	const bool& GetEnemyCatch() { return EnemyCatch; }
 	const bool& GetHit() { return hit; }
 
-
+	void SetPlayer(Player* player) { this->player=player; }
 	//bool Collision(XMFLOAT3 position, float radius);
 	void SetPlayer(Player* player) { this->player = player; }
-
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
-
 	void SetEnemyCatch(bool EnemyCatch) {this-> EnemyCatch = EnemyCatch; }
-
 	void SetHit(bool hit) { this->hit = hit; }
 
 private:
@@ -42,17 +39,19 @@ private:
 
 	float radius = 0.0f;
 	float speed = 0.0f;
-	float scale = 0.0f;// LaneNum�ƈꏏ�ɕς��邱��
+	float scale = 0.0f;// LaneNum‚Æˆê‚É•Ï‚¦‚é‚±‚Æ
 	float circleX = 0.0f;
 	float circleZ = 0.0f;
 	float EnemyWeight = 0.0f;
 	bool IsAlive = 0;
 	int IsTimer = 100;
+	int Interval = 0;
 	bool EnemyCatch = false;
 	bool isMove = false;
 	bool hit = false;
 	int moveCount = 30;
 	int dir = 0;
 	bool zmove = false;
+	
 };
 

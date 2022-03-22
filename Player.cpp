@@ -66,46 +66,43 @@ void Player::Update() {
 	StickrotX = input->GetPosX();
 	StickrotY = input->GetPosY();
 	
-	if (ArmMoveNumber <= 0) {
-		if (input->LeftTiltStick(input->Right) && AttackFlag == false && AttackMoveNumber == 0) {
+	if (ArmMoveNumber == 0 && AttackMoveNumber == 0 && AttackFlag == false) {
+		if (input->LeftTiltStick(input->Right)) {
 			if (pos.x <= 25.0f) {
 				pos.x += PlayerSpeed;
 				AfterRot = 90;
 			}
 		}
 
-		if (input->LeftTiltStick(input->Left) && AttackFlag == false && AttackMoveNumber == 0) {
+		if (input->LeftTiltStick(input->Left)) {
 			if (pos.x >= -25.0f) {
 				pos.x -= PlayerSpeed;
 				AfterRot = 270;
 			}
 		}
 
-		if (input->LeftTiltStick(input->Up) && AttackFlag == false && AttackMoveNumber == 0) {
+		if (input->LeftTiltStick(input->Up)) {
 			if (pos.z <= 20.0f) {
 				pos.z += PlayerSpeed;
 				AfterRot = 0;
-				/*	if (ArmSpeed >= 90 && ArmSpeed <= 315 && ArmWeight != 0.0f) {
-						ArmSpeed += 3.0f;
-					}*/
 			}
 		}
 
-		if (input->LeftTiltStick(input->Down) && AttackFlag == false && AttackMoveNumber == 0) {
+		if (input->LeftTiltStick(input->Down)) {
 			if (pos.z >= -20) {
 				pos.z -= PlayerSpeed;
 				AfterRot = 180;
 			}
 		}
 		//腕を伸ばす
-		if (input->PushButton(input->Button_RB) && ArmWeight <= 6.0f && AttackFlag == false && AttackMoveNumber == 0) {
+		if (input->PushButton(input->Button_RB) && ArmWeight <= 6.0f) {
 			ArmMoveNumber = 1;
 			initscale = Armscale;
 			frame = 0;
 		}
 
 		//攻撃
-		if (input->TriggerButton(input->Button_A) && AttackFlag == false && ArmWeight != 0.0f && AttackMoveNumber == 0 && ArmMoveNumber == 0) {
+		if (input->TriggerButton(input->Button_A) && ArmWeight != 0.0f) {
 			AttackFlag = true;
 			AttackMoveNumber = 1;
 			initscale = Armscale;
@@ -113,42 +110,51 @@ void Player::Update() {
 			initrotation = rot.y;
 			frame2 = 0;
 			frame3 = 0;
+			if (ArmMoveNumber != 0) {
+				ArmMoveNumber = 0;
+			}
 		}
 
-		if (AttackFlag == false && AttackMoveNumber == 0 && ArmMoveNumber == 0) {
-			//プレイヤーの向き設定
-			if (StickrotY <= -650) {
-				if (StickrotX <= 650 && StickrotX >= -650) {
-					AfterRot = 270;
-					ArmSpeed = 90;
-				} else if (StickrotX > 650) {
-					AfterRot = 225;
-					ArmSpeed = 45;
-				} else if (StickrotX < -650) {
-					AfterRot = 315;
-					ArmSpeed = 135;
-				}
-			} else if (StickrotY >= 650) {
-				if (StickrotX <= 650 && StickrotX >= -650) {
-					AfterRot = 90;
-					ArmSpeed = 270;
-				} else if (StickrotX > 650) {
-					AfterRot = 45;
-					ArmSpeed = 315;
-				} else if (StickrotX < -650) {
-					AfterRot = 135;
-					ArmSpeed = 225;
-				}
-			} else {
-				if (StickrotX <= -650) {
-					AfterRot = 180;
-					ArmSpeed = 180;
-				}
+		//プレイヤーの向き設定
+		if (StickrotY <= -650) {
+			if (StickrotX <= 650 && StickrotX >= -650) {		//上
+				AfterRot = 270;
+				ArmSpeed = 90;
+				ArmRot.y = 270;
+			} else if (StickrotX > 650) {	//右上
+				AfterRot = 225;
+				ArmSpeed = 45;
+				ArmRot.y = 315;
+			} else if (StickrotX < -650) {	//左上
+				AfterRot = 315;
+				ArmSpeed = 135;
+				ArmRot.y = 225;
+			}
+		} else if (StickrotY >= 650) {
+			if (StickrotX <= 650 && StickrotX >= -650) {	//下
+				AfterRot = 90;
+				ArmSpeed = 270;
+				ArmRot.y = 90;
+			} else if (StickrotX > 650) {	//右下
+				AfterRot = 45;
+				ArmSpeed = 315;
+				ArmRot.y = 45;
+			} else if (StickrotX < -650) {	//左下
+				AfterRot = 135;
+				ArmSpeed = 225;
+				ArmRot.y = 135;
+			}
+		} else {
+			if (StickrotX <= -650) {	//左
+				AfterRot = 180;
+				ArmSpeed = 180;
+				ArmRot.y = 180;
+			}
 
-				if (StickrotX >= 650) {
-					AfterRot = 0;
-					ArmSpeed = 0;
-				}
+			if (StickrotX >= 650) {	//右
+				AfterRot = 0;
+				ArmSpeed = 0;
+				ArmRot.y = 0;
 			}
 		}
 	}
@@ -222,6 +228,10 @@ void Player::Update() {
 		}
 	}
 
+	if (Interval != 0) {
+		Interval--;
+	}
+
 	Armradius = ArmSpeed * PI / 180.0f;
 	ArmCircleX = cosf(Armradius) * Armscale;
 	ArmCircleZ = sinf(Armradius) * Armscale;
@@ -231,13 +241,18 @@ void Player::Update() {
 	//移動
 	object3d->SetPosition(pos);
 	object3d->SetRotation(rot);
+	Armobj->SetRotation(ArmRot);
 }
 
 void Player::Draw() {
-		ImGui::Begin("test");
-	if (ImGui::TreeNode("Debug"))     {
-		if (ImGui::TreeNode("Player"))         {
-			ImGui::SliderFloat("AfterRot", &AfterRot, 50, -50);
+	ImGui::Begin("test");
+	if (ImGui::TreeNode("Debug")) {
+		if (ImGui::TreeNode("Player")) {
+			ImGui::SliderFloat("pos.x", &pos.x, 50, -50);
+			ImGui::SliderFloat("pos.z", &pos.z, 50, -50);
+			ImGui::SliderFloat("rebound.x", &rebound.x, 50, -50);
+			ImGui::SliderFloat("rebound.z", &rebound.z, 50, -50);
+			ImGui::Text("%d", Interval);
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}
@@ -249,8 +264,10 @@ void Player::Draw() {
 	SpritePlayerHP->Draw();
 
 	Object3d::PreDraw();
-	object3d->Draw();
-	Armobj->Draw();
+	if (Interval == 0) {
+		object3d->Draw();
+		Armobj->Draw();
+	}
 }
 
 void Player::ResetWeight(Enemy *enemy) {
@@ -259,6 +276,52 @@ void Player::ResetWeight(Enemy *enemy) {
 			enemy->SetEnemyCatch(false);
 			enemy->SetIsAlive(0);
 		}
+	}
+}
+
+void Player::Rebound(Enemy* enemy) {
+	XMFLOAT3 enepos = enemy->GetPosition();
+	
+	distance.x = pos.x - enepos.x;
+	distance.z = pos.z - enepos.z;
+
+	if (DamageFlag == true) {
+		
+		if (distance.x <= 0) {
+			rebound.x = -2.0f;
+		} else {
+			rebound.x = 2.0f;
+		}
+
+		if (distance.z <= 0) {
+			rebound.z = -2.0f;
+		} else {
+			rebound.z = 2.0f;
+		}
+		DamageFlag = false;
+	}
+
+	if (rebound.x != 0.0) {
+		if (rebound.x > 0) {
+			rebound.x *= 0.8;
+		} else {
+			rebound.x *= 0.8;
+		}
+	}
+
+	if (rebound.z != 0.0) {
+		if (rebound.z > 0) {
+			rebound.z *= 0.8;
+		} else {
+			rebound.z *= 0.8;
+		}
+	}
+
+	if (pos.x <= 25.0f && pos.x >= -25.0f) {
+		pos.x += rebound.x;
+	}
+	if (pos.z <= 20.0f && pos.z >= -20.0f) {
+		pos.z += rebound.z;
 	}
 }
 
