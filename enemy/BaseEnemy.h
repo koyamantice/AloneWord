@@ -32,10 +32,18 @@ protected:
 
 	Object3d* enemyobj = nullptr;
 	Model* model = nullptr;
+	Texture* texture = nullptr;
+
 	XMFLOAT3 pos = { 0,0,0 };
 	XMFLOAT3 rot = { 0,0,0 };
 	Player* player=nullptr;
 	float frame = 0;
+	int IsAlive = 0;
+
+	float x_min = -25;
+	float x_max = 25;
+	float z_min = -20;
+	float z_max = 20;
 
 public:
 	Sphere collider;
@@ -59,5 +67,12 @@ public:
 	/// •`‰æ
 	/// </summary>
 	virtual void Draw() = 0;
+
+	virtual bool collidePlayer() = 0;
+	virtual bool collideAttackArm() = 0;
+
+protected:
+	const int& GetisAlive() { return IsAlive; }
+
 
 };
