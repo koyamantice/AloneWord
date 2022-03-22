@@ -11,28 +11,20 @@ public:
 	void Update()override;
 	void Draw() override;
 private:
-	bool collidePlayer();
-	bool collideAttackArm();
+	bool collidePlayer() override;
+	bool collideAttackArm() override;
 	void Fork();
 public:
-	const int& GetisAlive() { return IsAlive; }
-
+	void SetPlayer(Player* player) { this->player = player; }
 	const int& GetHP() { return BossHP; }
-
-	void SetPlayer(Player*player) { this->player=player; }
-
-	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
 
 	void SetHP(int BossHP) { this->BossHP = BossHP; }
 private:
 	XMFLOAT2 HPPos = { 0,0 };
-	Texture* texture;
-
 	Sprite* SpriteBossHP = false;
 	float rad = 0.4f;
 
 	float Afterrot = 0;
-	int IsAlive = 0;
 	int IsTimer = 100;
 	int IsMove = 0;
 	int BossHP = 50;
@@ -47,6 +39,5 @@ private:
 	bool finish = false;
 	int action = 0;
 	bool active = false;
-
 	int pat = 0;
 };
