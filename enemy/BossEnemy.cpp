@@ -25,7 +25,8 @@ void BossEnemy::Initialize() {
 	enemyobj->SetScale({ 1.5f,1.5f,1.5f });
 	texture = Texture::Create(2, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
-	texture->SetPosition(pos.x,0,pos.z);
+	texture->SetColor({ 1,1,1,1 });
+	texture->SetPosition(pos.x,-1,pos.z);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.3f,0.3f,0.3f });
 	collider.radius = rad;
@@ -196,7 +197,7 @@ void BossEnemy::Fork() {
 					}
 				}
 			} else {
-				AfterPos.y = 0.0f;
+				AfterPos.y = -2.0f;
 				pos = {
 					pos.x,
 					Ease(In, Cubic, 0.6f, pos.y, AfterPos.y),
