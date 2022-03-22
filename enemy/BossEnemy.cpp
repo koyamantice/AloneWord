@@ -197,7 +197,7 @@ void BossEnemy::Fork() {
 					}
 				}
 			} else {
-				AfterPos.y = -2.0f;
+				AfterPos.y = 0.0f;
 				pos = {
 					pos.x,
 					Ease(In, Cubic, 0.6f, pos.y, AfterPos.y),
