@@ -18,8 +18,8 @@ float easeInOut(float x) {
 	return x < 0.5 ? 2 * x * x : 1 - powf(-2 * x + 2, 2) / 2;
 }
 Player::Player() {
-	model = Model::CreateFromOBJ("chr_knight");
-	Armmodel = Model::CreateFromOBJ("Particle");
+	model = Model::CreateFromOBJ("Motti");
+	Armmodel = Model::CreateFromOBJ("Arm");
 	object3d = new Object3d();
 	Armobj = new Object3d();
 	Sprite::LoadTexture(3, L"Resources/2d/PlayerHP.png");
@@ -33,7 +33,7 @@ void Player::Initialize() {
 	object3d = Object3d::Create();
 	object3d->SetModel(model);
 	object3d->SetPosition(pos);
-	object3d->SetScale({ 1,1,1 });
+	object3d->SetScale({ 0.7f,0.7f,0.7f });
 
 	Armobj = Object3d::Create();
 	Armobj->SetModel(Armmodel);
@@ -43,7 +43,7 @@ void Player::Initialize() {
 	Armpos.x = ArmCircleX + pos.x;
 	Armpos.z = ArmCircleZ + pos.z;
 	Armobj->SetPosition(Armpos);
-	Armobj->SetScale({ 1,1,1 });
+	Armobj->SetScale({ 1.4f,1.4f,1.4f });
 
 	collider.radius = rad;
 }
@@ -65,12 +65,7 @@ void Player::Update() {
 	Armobj->Update();
 	StickrotX = input->GetPosX();
 	StickrotY = input->GetPosY();
-	/*collider.center = XMVectorSet(pos.x, pos.y, pos.z, 1);*/
-	//if ((input->LeftTiltStick(input->Right)) || (input->LeftTiltStick(input->Left)) ||
-	//	(input->LeftTiltStick(input->Down)) || (input->LeftTiltStick(input->Up))) {
-	//
-	//}
-
+	
 	if (ArmMoveNumber <= 0) {
 		if (input->LeftTiltStick(input->Right) && AttackFlag == false && AttackMoveNumber == 0) {
 			if (pos.x <= 25.0f) {
@@ -105,17 +100,12 @@ void Player::Update() {
 		//腕を伸ばす
 		if (input->PushButton(input->Button_RB) && ArmWeight <= 6.0f && AttackFlag == false && AttackMoveNumber == 0) {
 			ArmMoveNumber = 1;
-			if (ArmWeight != 0.0f) {
-				ArmSpeed = TargetSpeed;
-			}
-			Armscale = 0.0f;
 			initscale = Armscale;
 			frame = 0;
-			
 		}
 
 		//攻撃
-		if (input->TriggerButton(input->Button_A) && AttackFlag == false && ArmWeight != 0.0f && AttackMoveNumber == 0) {
+		if (input->TriggerButton(input->Button_A) && AttackFlag == false && ArmWeight != 0.0f && AttackMoveNumber == 0 && ArmMoveNumber == 0) {
 			AttackFlag = true;
 			AttackMoveNumber = 1;
 			initscale = Armscale;
@@ -129,75 +119,35 @@ void Player::Update() {
 			//プレイヤーの向き設定
 			if (StickrotY <= -650) {
 				if (StickrotX <= 650 && StickrotX >= -650) {
-					AfterRot = 180;
-					if (ArmWeight == 0.0f) {
-						ArmSpeed = 90;
-					} else {
-						ArmSpeed = 315;
-						TargetSpeed = 90;
-					}
+					AfterRot = 270;
+					ArmSpeed = 90;
 				} else if (StickrotX > 650) {
 					AfterRot = 225;
-					if (ArmWeight == 0.0f) {
-						ArmSpeed = 45;
-					} else {
-						ArmSpeed = 275;
-						TargetSpeed = 45;
-					}
+					ArmSpeed = 45;
 				} else if (StickrotX < -650) {
-					AfterRot = 135;
-					if (ArmWeight == 0.0f) {
-						ArmSpeed = 135;
-					} else {
-						ArmSpeed = 0;
-						TargetSpeed = 135;
-					}
+					AfterRot = 315;
+					ArmSpeed = 135;
 				}
 			} else if (StickrotY >= 650) {
 				if (StickrotX <= 650 && StickrotX >= -650) {
-					AfterRot = 0;
-					if (ArmWeight == 0.0f) {
-						ArmSpeed = 270;
-					} else {
-						ArmSpeed = 135;
-						TargetSpeed = 270;
-					}
+					AfterRot = 90;
+					ArmSpeed = 270;
 				} else if (StickrotX > 650) {
-					AfterRot = 315;
-					if (ArmWeight == 0.0f) {
-						ArmSpeed = 315;
-					} else {
-						ArmSpeed = 180;
-						TargetSpeed = 315;
-					}
-				} else if (StickrotX < -650) {
 					AfterRot = 45;
-					if (ArmWeight == 0.0f) {
-						ArmSpeed = 225;
-					} else {
-						ArmSpeed = 90;
-						TargetSpeed = 225;
-					}
+					ArmSpeed = 315;
+				} else if (StickrotX < -650) {
+					AfterRot = 135;
+					ArmSpeed = 225;
 				}
 			} else {
 				if (StickrotX <= -650) {
-					AfterRot = 90;
-					if (ArmWeight == 0.0f) {
-						ArmSpeed = 180;
-					} else {
-						ArmSpeed = 45;
-						TargetSpeed = 180;
-					}
+					AfterRot = 180;
+					ArmSpeed = 180;
 				}
 
 				if (StickrotX >= 650) {
-					AfterRot = 270;
-					if (ArmWeight == 0.0f) {
-						ArmSpeed = 0;
-					} else {
-						ArmSpeed = 225;
-						TargetSpeed = 0;
-					}
+					AfterRot = 0;
+					ArmSpeed = 0;
 				}
 			}
 		}
@@ -205,7 +155,7 @@ void Player::Update() {
 
 	//腕を伸ばす
 	if (ArmMoveNumber == 1) {
-		Armscale = initscale + 5.0f * easeOutBack(frame / frameMax);
+		Armscale = initscale + 3.0f * easeOutBack(frame / frameMax);
 		if (frame != frameMax) {
 			frame = frame + 1;
 		} else {
@@ -215,7 +165,7 @@ void Player::Update() {
 		}
 	}
 	else if (ArmMoveNumber == 2) {
-		Armscale = initscale - (5.0f - (ArmWeight - 0.5f)) * easeOutBack(frame / frameMax);
+		Armscale = initscale - 3.0f * easeOutBack(frame / frameMax);
 		if (frame != frameMax) {
 			frame = frame + 1;
 		} else {
@@ -239,13 +189,13 @@ void Player::Update() {
 
 	if (AttackMoveNumber == 1) {
 		if (ArmWeight>0) {
-			Armscale = initscale + 5.0f * easeInOut(frame3 / frameMax3);
+			Armscale = initscale + 3.0f * easeInOut(frame3 / frameMax3);
 			if (frame3 <= frameMax3) {
 				frame3 = frame3 + 1;
 			} else {
 				AttackMoveNumber = 2;
 				initscale = Armscale;
-				scaleVel = 5.0f;
+				scaleVel = 3.0f;
 				frame3 = 0;
 				frameMax3 = 20.0f;
 			}
@@ -284,30 +234,23 @@ void Player::Update() {
 }
 
 void Player::Draw() {
-	//	ImGui::Begin("test");
-	//if (ImGui::TreeNode("Debug"))     {
-	//	if (ImGui::TreeNode("Player"))         {
-	//		ImGui::SliderFloat("Position.x", &pos.x, 50, -50);
-	//		ImGui::SliderFloat("Position.z", &pos.z, 50, -50);
-	//		ImGui::SliderFloat("ArmSpeed", &ArmSpeed, 50, -50);
-	//		ImGui::SliderFloat("Armscale", &Armscale, 50, -50);
-	//		ImGui::SliderFloat("scaleVel", &scaleVel, 50, -50);
-	//		ImGui::SliderFloat("Armweight", &ArmWeight, 50, -50);
-	//		ImGui::Unindent();
-	//		ImGui::TreePop();
-	//	}
-	//	ImGui::TreePop();
-	//}
-	//ImGui::End();
+		ImGui::Begin("test");
+	if (ImGui::TreeNode("Debug"))     {
+		if (ImGui::TreeNode("Player"))         {
+			ImGui::SliderFloat("AfterRot", &AfterRot, 50, -50);
+			ImGui::Unindent();
+			ImGui::TreePop();
+		}
+		ImGui::TreePop();
+	}
+	ImGui::End();
 	Sprite::PreDraw();
 	//背景用
 	SpritePlayerHP->Draw();
 
 	Object3d::PreDraw();
 	object3d->Draw();
-	if (Armscale >= 0.2f) {
-		Armobj->Draw();
-	}
+	Armobj->Draw();
 }
 
 void Player::ResetWeight(Enemy *enemy) {

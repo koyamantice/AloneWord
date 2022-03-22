@@ -7,7 +7,7 @@
 using namespace DirectX;
 
 Enemy::Enemy() {
-	model = Model::CreateFromOBJ("chr_sword");
+	model = Model::CreateFromOBJ("Enemy");
 	enemyobj = new Object3d();
 
 }
@@ -20,7 +20,7 @@ void Enemy::Initialize() {
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
 	enemyobj->SetPosition(pos);
-	//enemyobj->SetScale({ 0.5f,0.5f,0.5f });
+	enemyobj->SetScale({ 0.7f,0.7f,0.7f });
 	texture = Texture::Create(0, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	texture->SetPosition(pos);

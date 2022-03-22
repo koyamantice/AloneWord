@@ -7,7 +7,7 @@
 using namespace DirectX;
 
 BossEnemy::BossEnemy() {
-	model = Model::CreateFromOBJ("chr_sword");
+	model = Model::CreateFromOBJ("Fork");
 	enemyobj = new Object3d();
 	Sprite::LoadTexture(4, L"Resources/2d/PlayerHP.png");
 }
@@ -22,7 +22,7 @@ void BossEnemy::Initialize() {
 	enemyobj->SetModel(model);
 	pos = { 0.0f,0.0f,0.0f };
 	enemyobj->SetPosition(pos);
-	enemyobj->SetScale({ 3.0f,3.0f,3.0f });
+	enemyobj->SetScale({ 1.5f,1.5f,1.5f });
 	texture = Texture::Create(2, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	texture->SetPosition(pos.x,0,pos.z);
@@ -61,7 +61,7 @@ void BossEnemy::Update() {
 void BossEnemy::Draw() {
 	ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
-		if (ImGui::TreeNode("Player")) {
+		if (ImGui::TreeNode("Boss")) {
 			ImGui::SliderFloat("Position.x", &pos.x, 20, -20);
 			ImGui::SliderFloat("Position.y", &pos.y, 20, -20);
 			ImGui::SliderFloat("Position.z", &pos.z, 20, -20);
