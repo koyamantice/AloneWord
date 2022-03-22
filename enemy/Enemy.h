@@ -23,14 +23,12 @@ public:
 	const bool& GetEnemyCatch() { return EnemyCatch; }
 	const bool& GetHit() { return hit; }
 	const int& Getplayerhit() { return playerhit; }
-	const XMFLOAT3& GetRebound() { return rebound; }
-
+	
 	void SetPlayer(Player* player) { this->player=player; }
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
-
 	void SetEnemyCatch(bool EnemyCatch) {this-> EnemyCatch = EnemyCatch; }
-
 	void SetHit(bool hit) { this->hit = hit; }
+	void SetPlayerHit(int playerhit) { this->playerhit = playerhit; }
 
 private:
 	Texture* texture = nullptr;
@@ -39,8 +37,6 @@ private:
 	XMFLOAT3 EndPos{};
 	XMFLOAT3 EndRot{};
 	XMFLOAT3 basePos{};
-	XMFLOAT3 distance{};
-	XMFLOAT3 rebound{};
 
 	float rad = 0.4f;
 
@@ -57,6 +53,7 @@ private:
 	float EnemyWeight = 0.0f;
 	bool IsAlive = 0;
 	int IsTimer = 100;
+	int Interval = 0;
 	bool EnemyCatch = false;
 	bool isMove = false;
 	bool hit = false;

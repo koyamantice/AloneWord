@@ -85,9 +85,6 @@ void Player::Update() {
 			if (pos.z <= 20.0f) {
 				pos.z += PlayerSpeed;
 				AfterRot = 0;
-				/*	if (ArmSpeed >= 90 && ArmSpeed <= 315 && ArmWeight != 0.0f) {
-						ArmSpeed += 3.0f;
-					}*/
 			}
 		}
 
@@ -231,6 +228,10 @@ void Player::Update() {
 		}
 	}
 
+	if (Interval != 0) {
+		Interval--;
+	}
+
 	Armradius = ArmSpeed * PI / 180.0f;
 	ArmCircleX = cosf(Armradius) * Armscale;
 	ArmCircleZ = sinf(Armradius) * Armscale;
@@ -249,6 +250,9 @@ void Player::Draw() {
 		if (ImGui::TreeNode("Player")) {
 			ImGui::SliderFloat("pos.x", &pos.x, 50, -50);
 			ImGui::SliderFloat("pos.z", &pos.z, 50, -50);
+			ImGui::SliderFloat("rebound.x", &rebound.x, 50, -50);
+			ImGui::SliderFloat("rebound.z", &rebound.z, 50, -50);
+			ImGui::Text("%d", Interval);
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}
@@ -260,8 +264,10 @@ void Player::Draw() {
 	SpritePlayerHP->Draw();
 
 	Object3d::PreDraw();
-	object3d->Draw();
-	Armobj->Draw();
+	if (Interval == 0) {
+		object3d->Draw();
+		Armobj->Draw();
+	}
 }
 
 void Player::ResetWeight(Enemy *enemy) {
@@ -274,9 +280,47 @@ void Player::ResetWeight(Enemy *enemy) {
 }
 
 void Player::Rebound(Enemy* enemy) {
-	XMFLOAT3 rebound = enemy->GetRebound();
+	XMFLOAT3 enepos = enemy->GetPosition();
+	
+	distance.x = pos.x - enepos.x;
+	distance.z = pos.z - enepos.z;
+
 	if (enemy->Getplayerhit() == true) {
+		
+		if (distance.x <= 0) {
+			rebound.x = -10.0f;
+		} else {
+			rebound.x = 10.0f;
+		}
+
+		if (distance.z <= 0) {
+			rebound.z = -10.0f;
+		} else {
+			rebound.z = 10.0f;
+		}
+		enemy->SetPlayerHit(0);
+	}
+
+	if (rebound.x != 0.0) {
+		if (rebound.x > 0) {
+			rebound.x *= 0.5;
+		} else {
+			rebound.x *= 0.5;
+		}
+	}
+
+	if (rebound.z != 0.0) {
+		if (rebound.z > 0) {
+			rebound.z *= 0.5;
+		} else {
+			rebound.z *= 0.5;
+		}
+	}
+
+	if (pos.x <= 25.0f && pos.x >= -25.0f) {
 		pos.x += rebound.x;
+	}
+	if (pos.z <= 20.0f && pos.z >= -20.0f) {
 		pos.z += rebound.z;
 	}
 }

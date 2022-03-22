@@ -36,6 +36,8 @@ public:
 
 	const int& GetHp() { return HP; }
 
+	const int& GetInterval() { return Interval; }
+
 	const int& GetArmMoveNumber() { return ArmMoveNumber; }
 
 	const bool& GetAttackFlag() { return AttackFlag; }
@@ -58,6 +60,8 @@ public:
 
 	void SetHp(int hp) { this->HP = hp; }
 
+	void SetInterval(int Interval) { this->Interval = Interval; }
+
 	void SetArmMoveNumber(int ArmMoveNumber) { this->ArmMoveNumber = ArmMoveNumber; }
 
 	void SetAttackFlag(bool AttackFlag) { this->AttackFlag = AttackFlag; }
@@ -78,6 +82,9 @@ private:
 	XMFLOAT3 pos = { 0,0,-10 };
 	XMFLOAT3 Armpos = { 0,0,0 };
 	XMFLOAT3 ArmRot = { 0,0,0 };
+	XMFLOAT3 distance{};
+	XMFLOAT3 rebound{};
+
 	Sprite* SpritePlayerHP = nullptr;
 
 	float PlayerSpeed = 0.3f;
@@ -107,6 +114,7 @@ private:
 	int ArmMoveNumber = 0;
 	bool AttackFlag = false;
 	int AttackMoveNumber = 0;
+	int Interval = 0;
 	//イージングのためのやつ
 	float frame = 0.0f;
 	float frameMax = 27.0f;
@@ -121,7 +129,6 @@ private:
 	XMFLOAT3 angle = { 0,0,0 };
 public:
 	Sphere collider;
-
 };
 
 
