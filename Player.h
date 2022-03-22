@@ -42,6 +42,8 @@ public:
 
 	const bool& GetAttackFlag() { return AttackFlag; }
 
+	const bool& GetDamageFlag() { return DamageFlag; }
+
 	const float& GetArmWeight() { return ArmWeight; }
 
 	const float& GetArmScale() { return Armscale; }
@@ -65,6 +67,8 @@ public:
 	void SetArmMoveNumber(int ArmMoveNumber) { this->ArmMoveNumber = ArmMoveNumber; }
 
 	void SetAttackFlag(bool AttackFlag) { this->AttackFlag = AttackFlag; }
+
+	void SetDamageFlag(bool DamageFlag) { this->DamageFlag = DamageFlag; }
 
 	void SetArmWeight(float ArmWeight) { this->ArmWeight = ArmWeight; }
 
@@ -113,6 +117,7 @@ private:
 	//いろいろなフラグ
 	int ArmMoveNumber = 0;
 	bool AttackFlag = false;
+	bool DamageFlag = false;
 	int AttackMoveNumber = 0;
 	int Interval = 0;
 	//イージングのためのやつ

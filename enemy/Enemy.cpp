@@ -113,8 +113,8 @@ bool Enemy::collidePlayer() {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true) {
 			IsAlive = 0;
 			player->SetHp(player->GetHp() - 1);
-			playerhit = 1;
-			Interval = 10;
+			player->SetDamageFlag(true);
+			Interval = 20;
 			return true;
 		} else {
 			return false;

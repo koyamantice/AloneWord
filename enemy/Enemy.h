@@ -22,13 +22,11 @@ public:
 	const int& GetisAlive() { return IsAlive; }
 	const bool& GetEnemyCatch() { return EnemyCatch; }
 	const bool& GetHit() { return hit; }
-	const int& Getplayerhit() { return playerhit; }
 	
 	void SetPlayer(Player* player) { this->player=player; }
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
 	void SetEnemyCatch(bool EnemyCatch) {this-> EnemyCatch = EnemyCatch; }
 	void SetHit(bool hit) { this->hit = hit; }
-	void SetPlayerHit(int playerhit) { this->playerhit = playerhit; }
 
 private:
 	Texture* texture = nullptr;
@@ -60,6 +58,6 @@ private:
 	int moveCount = 30;
 	int dir = 0;
 	bool zmove = false;
-	int playerhit = 0;
+	
 };
 

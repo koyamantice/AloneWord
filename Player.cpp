@@ -285,35 +285,35 @@ void Player::Rebound(Enemy* enemy) {
 	distance.x = pos.x - enepos.x;
 	distance.z = pos.z - enepos.z;
 
-	if (enemy->Getplayerhit() == true) {
+	if (DamageFlag == true) {
 		
 		if (distance.x <= 0) {
-			rebound.x = -10.0f;
+			rebound.x = -2.0f;
 		} else {
-			rebound.x = 10.0f;
+			rebound.x = 2.0f;
 		}
 
 		if (distance.z <= 0) {
-			rebound.z = -10.0f;
+			rebound.z = -2.0f;
 		} else {
-			rebound.z = 10.0f;
+			rebound.z = 2.0f;
 		}
-		enemy->SetPlayerHit(0);
+		DamageFlag = false;
 	}
 
 	if (rebound.x != 0.0) {
 		if (rebound.x > 0) {
-			rebound.x *= 0.5;
+			rebound.x *= 0.8;
 		} else {
-			rebound.x *= 0.5;
+			rebound.x *= 0.8;
 		}
 	}
 
 	if (rebound.z != 0.0) {
 		if (rebound.z > 0) {
-			rebound.z *= 0.5;
+			rebound.z *= 0.8;
 		} else {
-			rebound.z *= 0.5;
+			rebound.z *= 0.8;
 		}
 	}
 
