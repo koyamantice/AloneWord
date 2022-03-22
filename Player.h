@@ -32,11 +32,17 @@ public:
 
 	const XMFLOAT3& GetArmPosition() { return Armpos; }
 
+	const XMFLOAT3& GetArmRotation() { return ArmRot; }
+
 	const int& GetHp() { return HP; }
+
+	const int& GetInterval() { return Interval; }
 
 	const int& GetArmMoveNumber() { return ArmMoveNumber; }
 
 	const bool& GetAttackFlag() { return AttackFlag; }
+
+	const bool& GetDamageFlag() { return DamageFlag; }
 
 	const float& GetArmWeight() { return ArmWeight; }
 
@@ -52,17 +58,25 @@ public:
 
 	void SetArmPosition(XMFLOAT3 Armpos) { this->Armpos = Armpos; }
 
+	void SetArmRotation(XMFLOAT3 ArmRot) { this->ArmRot = ArmRot; }
+
 	void SetHp(int hp) { this->HP = hp; }
+
+	void SetInterval(int Interval) { this->Interval = Interval; }
 
 	void SetArmMoveNumber(int ArmMoveNumber) { this->ArmMoveNumber = ArmMoveNumber; }
 
 	void SetAttackFlag(bool AttackFlag) { this->AttackFlag = AttackFlag; }
+
+	void SetDamageFlag(bool DamageFlag) { this->DamageFlag = DamageFlag; }
 
 	void SetArmWeight(float ArmWeight) { this->ArmWeight = ArmWeight; }
 
 	void SetArmScale(float Armscale) { this->Armscale = Armscale; }
 
 	void ResetWeight(Enemy* enemy);
+
+	void Rebound(Enemy* enemy);
 private:
 	Object3d* Armobj;
 	Object3d* object3d;
@@ -71,6 +85,10 @@ private:
 	XMFLOAT2 PlayerHP{};
 	XMFLOAT3 pos = { 0,0,-10 };
 	XMFLOAT3 Armpos = { 0,0,0 };
+	XMFLOAT3 ArmRot = { 0,0,0 };
+	XMFLOAT3 distance{};
+	XMFLOAT3 rebound{};
+
 	Sprite* SpritePlayerHP = nullptr;
 
 	float PlayerSpeed = 0.3f;
@@ -99,7 +117,9 @@ private:
 	//いろいろなフラグ
 	int ArmMoveNumber = 0;
 	bool AttackFlag = false;
+	bool DamageFlag = false;
 	int AttackMoveNumber = 0;
+	int Interval = 0;
 	//イージングのためのやつ
 	float frame = 0.0f;
 	float frameMax = 27.0f;
@@ -114,7 +134,6 @@ private:
 	XMFLOAT3 angle = { 0,0,0 };
 public:
 	Sphere collider;
-
 };
 
 

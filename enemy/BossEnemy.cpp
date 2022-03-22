@@ -37,6 +37,7 @@ void BossEnemy::Finalize() {
 
 void BossEnemy::Update() {
 	collider.center = XMVectorSet(pos.x, pos.y, pos.z, 1);
+	Interval = player->GetInterval();
 	{//HPˆ—
 		XMFLOAT2 AfterPos;
 		AfterPos = { (float)(BossHP * 20),20 };
@@ -53,6 +54,8 @@ void BossEnemy::Update() {
 	Fork();
 
 	collideAttackArm();
+	collidePlayer();
+	player->SetInterval(Interval);
 	enemyobj->SetPosition(pos);
 	enemyobj->Update();
 	texture->SetPosition(pos.x, 0, pos.z);
@@ -60,7 +63,7 @@ void BossEnemy::Update() {
 }
 
 void BossEnemy::Draw() {
-	ImGui::Begin("test");
+	/*ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("Boss")) {
 			ImGui::SliderFloat("Position.x", &pos.x, 20, -20);
@@ -71,7 +74,7 @@ void BossEnemy::Draw() {
 		}
 		ImGui::TreePop();
 	}
-	ImGui::End();
+	ImGui::End();*/
 
 	Object3d::PreDraw();
 
@@ -88,8 +91,9 @@ void BossEnemy::Draw() {
 bool BossEnemy::collidePlayer() {
 	XMFLOAT3 playerpos = player->GetPosition();
 	int playerhp = player->GetHp();
-	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f)) {
+	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) && Interval == 0) {
 		player->SetHp(playerhp - 1);
+		Interval = 50;
 		return true;
 	} else {
 		return false;

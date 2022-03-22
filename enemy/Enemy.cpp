@@ -36,6 +36,7 @@ void Enemy::Update() {
 	assert(player);
 	collider.center = XMVectorSet(pos.x, pos.y, pos.z, 1);
 	playerpos = player->GetPosition();
+	Interval = player->GetInterval();
 	if (!IsAlive) {
 		IsTimer--;
 		speed = (float)(rand() % 360);
@@ -66,8 +67,10 @@ void Enemy::Update() {
 			Move();
 		}
 	}
+
 	enemyobj->SetPosition(pos);
 	texture->SetPosition(pos);
+	player->SetInterval(Interval);
 	rot.y = Ease(In, Quad, 0.5f, rot.y, EndRot.y);
 	enemyobj->SetRotation(rot);
 	enemyobj->Update();
@@ -82,8 +85,8 @@ void Enemy::Draw() {
 	if (IsAlive && !EnemyCatch) {
 		Texture::PreDraw();
 		texture->Draw();
-
 	}
+
 }
 
 bool Enemy::collideArm() {
@@ -106,10 +109,12 @@ bool Enemy::collideArm() {
 }
 
 bool Enemy::collidePlayer() {
-	if (IsAlive && !EnemyCatch) {
+	if (IsAlive && !EnemyCatch && Interval == 0) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true) {
 			IsAlive = 0;
 			player->SetHp(player->GetHp() - 1);
+			player->SetDamageFlag(true);
+			Interval = 20;
 			return true;
 		} else {
 			return false;
