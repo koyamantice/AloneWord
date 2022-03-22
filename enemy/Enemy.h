@@ -22,11 +22,10 @@ public:
 	const int& GetisAlive() { return IsAlive; }
 	const bool& GetEnemyCatch() { return EnemyCatch; }
 	const bool& GetHit() { return hit; }
+	const int& Getplayerhit() { return playerhit; }
+	const XMFLOAT3& GetRebound() { return rebound; }
 
 	void SetPlayer(Player* player) { this->player=player; }
-
-	//bool Collision(XMFLOAT3 position, float radius);
-
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
 
 	void SetEnemyCatch(bool EnemyCatch) {this-> EnemyCatch = EnemyCatch; }
@@ -40,6 +39,8 @@ private:
 	XMFLOAT3 EndPos{};
 	XMFLOAT3 EndRot{};
 	XMFLOAT3 basePos{};
+	XMFLOAT3 distance{};
+	XMFLOAT3 rebound{};
 
 	float rad = 0.4f;
 
@@ -62,5 +63,6 @@ private:
 	int moveCount = 30;
 	int dir = 0;
 	bool zmove = false;
+	int playerhit = 0;
 };
 

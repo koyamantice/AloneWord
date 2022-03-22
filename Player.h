@@ -32,6 +32,8 @@ public:
 
 	const XMFLOAT3& GetArmPosition() { return Armpos; }
 
+	const XMFLOAT3& GetArmRotation() { return ArmRot; }
+
 	const int& GetHp() { return HP; }
 
 	const int& GetArmMoveNumber() { return ArmMoveNumber; }
@@ -52,6 +54,8 @@ public:
 
 	void SetArmPosition(XMFLOAT3 Armpos) { this->Armpos = Armpos; }
 
+	void SetArmRotation(XMFLOAT3 ArmRot) { this->ArmRot = ArmRot; }
+
 	void SetHp(int hp) { this->HP = hp; }
 
 	void SetArmMoveNumber(int ArmMoveNumber) { this->ArmMoveNumber = ArmMoveNumber; }
@@ -63,6 +67,8 @@ public:
 	void SetArmScale(float Armscale) { this->Armscale = Armscale; }
 
 	void ResetWeight(Enemy* enemy);
+
+	void Rebound(Enemy* enemy);
 private:
 	Object3d* Armobj;
 	Object3d* object3d;
@@ -71,6 +77,7 @@ private:
 	XMFLOAT2 PlayerHP{};
 	XMFLOAT3 pos = { 0,0,-10 };
 	XMFLOAT3 Armpos = { 0,0,0 };
+	XMFLOAT3 ArmRot = { 0,0,0 };
 	Sprite* SpritePlayerHP = nullptr;
 
 	float PlayerSpeed = 0.3f;

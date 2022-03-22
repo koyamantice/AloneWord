@@ -66,8 +66,24 @@ void Enemy::Update() {
 			Move();
 		}
 	}
+
+	distance.x = playerpos.x - pos.x;
+	distance.z = playerpos.z - pos.z;
+	if (distance.x <= 0) {
+		rebound.x = -5.5f;
+	} else {
+		rebound.x = 5.5f;
+	}
+
+	if (distance.z <= 0) {
+		rebound.z = -5.5f;
+	} else {
+		rebound.z = 5.5f;
+	}
+
 	enemyobj->SetPosition(pos);
 	texture->SetPosition(pos);
+	//player->SetPosition(playerpos);
 	rot.y = Ease(In, Quad, 0.5f, rot.y, EndRot.y);
 	enemyobj->SetRotation(rot);
 	enemyobj->Update();
@@ -75,6 +91,19 @@ void Enemy::Update() {
 }
 
 void Enemy::Draw() {
+
+	ImGui::Begin("test");
+	if (ImGui::TreeNode("Debug")) {
+		if (ImGui::TreeNode("Player")) {
+			ImGui::SliderFloat("rebound.x", &rebound.x, 50, -50);
+			ImGui::SliderFloat("rebound.z", &rebound.z, 50, -50);
+			ImGui::Text("%d", playerhit);
+			ImGui::Unindent();
+			ImGui::TreePop();
+		}
+		ImGui::TreePop();
+	}
+	ImGui::End();
 	if (IsAlive) {
 		Object3d::PreDraw();
 		enemyobj->Draw();
@@ -82,8 +111,8 @@ void Enemy::Draw() {
 	if (IsAlive && !EnemyCatch) {
 		Texture::PreDraw();
 		texture->Draw();
-
 	}
+
 }
 
 bool Enemy::collideArm() {
@@ -110,11 +139,13 @@ bool Enemy::collidePlayer() {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true) {
 			IsAlive = 0;
 			player->SetHp(player->GetHp() - 1);
+			playerhit = 1;
 			return true;
 		} else {
 			return false;
 		}
 	} else {
+		playerhit = 0;
 		return false;
 	}
 }
