@@ -37,5 +37,6 @@ private:
 	int action = 0;
 	bool active = false;
 	int Interval = 0;
+	int FlashCount = 0;
 	int pat = 0;
 };

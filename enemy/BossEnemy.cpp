@@ -22,11 +22,13 @@ void BossEnemy::Initialize() {
 	enemyobj->SetModel(model);
 	pos = { 0.0f,0.0f,0.0f };
 	enemyobj->SetPosition(pos);
+	rot = { 0,90,0 };
+	enemyobj->SetRotation(rot);
 	enemyobj->SetScale({ 1.5f,1.5f,1.5f });
 	texture = Texture::Create(2, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	texture->SetColor({ 1,1,1,1 });
-	texture->SetPosition(pos.x,-1,pos.z);
+	texture->SetPosition(pos.x, -1, pos.z);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.3f,0.3f,0.3f });
 	collider.radius = rad;
@@ -38,6 +40,7 @@ void BossEnemy::Finalize() {
 void BossEnemy::Update() {
 	collider.center = XMVectorSet(pos.x, pos.y, pos.z, 1);
 	Interval = player->GetInterval();
+	FlashCount = player->GetFlashCount();
 	{//HPˆ—
 		XMFLOAT2 AfterPos;
 		AfterPos = { (float)(BossHP * 20),20 };
@@ -48,7 +51,7 @@ void BossEnemy::Update() {
 		SpriteBossHP->SetSize(HPPos);
 	}
 	{
-		rot.y =Ease(In, Quint, 0.7f, rot.y, Afterrot);
+		rot.y = Ease(In, Quint, 0.7f, rot.y, Afterrot);
 		enemyobj->SetRotation(rot);
 	}
 	Fork();
@@ -77,7 +80,6 @@ void BossEnemy::Draw() {
 	ImGui::End();*/
 
 	Object3d::PreDraw();
-
 	enemyobj->Draw();
 	Texture::PreDraw();
 	texture->Draw();
@@ -91,11 +93,12 @@ void BossEnemy::Draw() {
 bool BossEnemy::collidePlayer() {
 	XMFLOAT3 playerpos = player->GetPosition();
 	int playerhp = player->GetHp();
-	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) && Interval == 0) {
+	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) && FlashCount == 0 && Interval == 0) {
 		player->SetHp(playerhp - 1);
-		Interval = 50;
+		Interval = 20;
 		return true;
-	} else {
+	}
+	else {
 		return false;
 	}
 }
@@ -117,10 +120,12 @@ bool BossEnemy::collideAttackArm() {
 				BossHit = false;
 			}
 			return true;
-		} else {
+		}
+		else {
 			return false;
 		}
-	} else {
+	}
+	else {
 		return false;
 	}
 }
@@ -129,12 +134,13 @@ void BossEnemy::Fork() {
 	XMFLOAT3 AfterPos{};
 	if (AttackCount > 40) {
 		if (!active) {
-			action =(rand()%2);
+			action = (rand() % 2);
 			frame = 0;
 			pat = 1;
 			active = true;
 		}
-	} else {
+	}
+	else {
 		if (!active) {
 			//pat = 0;
 			AttackCount++;
@@ -145,48 +151,56 @@ void BossEnemy::Fork() {
 		if ((action % 2) == 0) {
 			if (frame < 0.45f) {
 				frame += 0.002f;
-			} else {
+			}
+			else {
 				frame = 0;
 				pat++;
 			}
 			if (pat == 1) {
-				Afterrot = 115;
+				Afterrot = 45;
 				AfterPos.x = 25.0f;
 				AfterPos.z = -20.0f;
 
-			} else if (pat == 2) {
-				Afterrot = 0;
+			}
+			else if (pat == 2) {
+				Afterrot = -90;
 				AfterPos.x = 25.0f;
 				AfterPos.z = 20.0f;
 
-			} else if (pat == 3) {
-				Afterrot = 225;
+			}
+			else if (pat == 3) {
+				Afterrot = -225;
 				AfterPos.x = -25.0f;
 				AfterPos.z = -20.0f;
-			} else if (pat == 4) {
-				Afterrot = 360;
+			}
+			else if (pat == 4) {
+				Afterrot = -90;
 				AfterPos.x = -25.0f;
 				AfterPos.z = 20.0f;
-			} else if (pat == 5) {
-				Afterrot = 360+115;
+			}
+			else if (pat == 5) {
+				Afterrot = 45;
 				AfterPos.x = 0.0f;
 				AfterPos.z = 0.0f;
-			} else {
-				rot.y = 360 + 115+180;
+			}
+			else {
+				Afterrot = 90;
 				pat = 0;
-				AttackCount = 0;
+				AttackCount = 30;
 				active = false;
 				frame = 0;
 			}
 			pos = {
 	Ease(In,Cubic,frame,pos.x,AfterPos.x),
-	0,	 
+	0,
 	Ease(In,Cubic,frame,pos.z,AfterPos.z),
 			};
 			enemyobj->SetPosition(pos);
 
-		} else if ((action % 2) == 1) {
-			if (!already&& !finish) {
+		}
+		else if ((action % 2) == 1) {
+			if (!already && !finish) {
+				Afterrot = 90;
 				AfterPos.y = 3.0f;
 				pos.y = Ease(In, Cubic, 0.3f, pos.y, AfterPos.y);
 				if (pos.y >= AfterPos.y - 0.05f) {
@@ -196,12 +210,13 @@ void BossEnemy::Fork() {
 			Ease(In, Cubic, 0.3f, pos.y, AfterPos.y),
 			Ease(In,Cubic,0.5f,pos.z,player->GetPosition().z),
 					};
-					if (Standby>=180) {
+					if (Standby >= 180) {
 						already = true;
 					}
 				}
-			} else {
-				AfterPos.y = -2.0f;
+			}
+			else {
+				AfterPos.y = 0.0f;
 				pos = {
 					pos.x,
 					Ease(In, Cubic, 0.6f, pos.y, AfterPos.y),
@@ -213,7 +228,8 @@ void BossEnemy::Fork() {
 					times++;
 					if (times >= 3) {
 						finish = true;
-					} else {
+					}
+					else {
 						AfterPos.y = 3.0f;
 					}
 				}
@@ -223,12 +239,12 @@ void BossEnemy::Fork() {
 				AfterPos.y = 0.0f;
 				AfterPos.z = 0.0f;
 				pos = {
-Ease(In,Cubic,0.5f,pos.x, AfterPos.x),
-Ease(In, Cubic, 0.5f, pos.y, AfterPos.y),
-Ease(In,Cubic,0.5f,pos.z, AfterPos.z),
+				Ease(In,Cubic,0.5f,pos.x, AfterPos.x),
+				Ease(In, Cubic, 0.5f, pos.y, AfterPos.y),
+				Ease(In,Cubic,0.5f,pos.z, AfterPos.z),
 				};
 				if ((fabs(pos.x - AfterPos.x) <= DBL_EPSILON * fmax(1, fmax(fabs(pos.x), fabs(AfterPos.x)))) &&
-					(fabs(pos.y - AfterPos.y) <= DBL_EPSILON * fmax(1, fmax(fabs(pos.y), fabs(AfterPos.y)))) &&
+					(fabs(pos.y - AfterPos.y) <= DBL_EPSILON * fmax(2, fmax(fabs(pos.y), fabs(AfterPos.y)))) &&
 					(fabs(pos.z - AfterPos.z) <= DBL_EPSILON * fmax(1, fmax(fabs(pos.z), fabs(AfterPos.z))))) {
 					finish = false;
 					active = false;
@@ -260,4 +276,3 @@ Ease(In,Cubic,0.5f,pos.z, AfterPos.z),
 //	//	return false;
 //	//}
 //}
-

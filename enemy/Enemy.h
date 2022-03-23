@@ -24,7 +24,6 @@ public:
 
 	void SetPlayer(Player* player) { this->player=player; }
 	//bool Collision(XMFLOAT3 position, float radius);
-	void SetPlayer(Player* player) { this->player = player; }
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
 	void SetEnemyCatch(bool EnemyCatch) {this-> EnemyCatch = EnemyCatch; }
 	void SetHit(bool hit) { this->hit = hit; }
@@ -46,6 +45,7 @@ private:
 	bool IsAlive = 0;
 	int IsTimer = 100;
 	int Interval = 0;
+	int FlashCount = 0;
 	bool EnemyCatch = false;
 	bool isMove = false;
 	bool hit = false;

@@ -29,6 +29,10 @@ public:
 private:
 	Model* modelGround = nullptr;
 	Object3d* objGround;
+
+	Model* modelground = nullptr;
+	Object3d* objground;
+
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;
 	DebugCamera* camera = { nullptr };

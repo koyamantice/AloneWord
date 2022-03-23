@@ -108,6 +108,7 @@ void Player::Update() {
 			initscale = Armscale;
 			initspeed = ArmSpeed;
 			initrotation = rot.y;
+			initArmRotation = ArmRot.y;
 			frame2 = 0;
 			frame3 = 0;
 			if (ArmMoveNumber != 0) {
@@ -185,6 +186,7 @@ void Player::Update() {
 	if (AttackFlag == true) {
 		ArmSpeed = initspeed + 360.0f * easeInOut(frame2 / frameMax2);
 		AfterRot = initrotation - 360.0f * easeInOut(frame2 / frameMax2);
+		ArmRot.y = initArmRotation - 360.0f * easeInOut(frame2 / frameMax2);
 		if (frame2 <= frameMax2) {
 			frame2 = frame2 + 1;
 		} else {
@@ -228,8 +230,18 @@ void Player::Update() {
 		}
 	}
 
-	if (Interval != 0) {
+	if (Interval != 0 && FlashCount <= 5) {
 		Interval--;
+	}
+
+	if (Interval == 1) {
+		FlashCount++;
+		Interval = 20;
+	}
+
+	if (FlashCount == 4) {
+		FlashCount = 0;
+		Interval = 0;
 	}
 
 	Armradius = ArmSpeed * PI / 180.0f;
@@ -253,6 +265,7 @@ void Player::Draw() {
 			ImGui::SliderFloat("rebound.x", &rebound.x, 50, -50);
 			ImGui::SliderFloat("rebound.z", &rebound.z, 50, -50);
 			ImGui::Text("%d", Interval);
+			ImGui::Text("FlashCount:%d", FlashCount);
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}
@@ -264,7 +277,7 @@ void Player::Draw() {
 	SpritePlayerHP->Draw();
 
 	Object3d::PreDraw();
-	if (Interval == 0) {
+	if (FlashCount % 2 == 0) {
 		object3d->Draw();
 		Armobj->Draw();
 	}
@@ -303,17 +316,17 @@ void Player::Rebound(Enemy* enemy) {
 
 	if (rebound.x != 0.0) {
 		if (rebound.x > 0) {
-			rebound.x *= 0.8;
+			rebound.x *= 0.4;
 		} else {
-			rebound.x *= 0.8;
+			rebound.x *= 0.4;
 		}
 	}
 
 	if (rebound.z != 0.0) {
 		if (rebound.z > 0) {
-			rebound.z *= 0.8;
+			rebound.z *= 0.4;
 		} else {
-			rebound.z *= 0.8;
+			rebound.z *= 0.4;
 		}
 	}
 

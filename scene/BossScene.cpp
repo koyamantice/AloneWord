@@ -24,11 +24,17 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 		enemy[i]->Initialize();
 	}
 	//オブジェクト初期化
-	modelGround = Model::CreateFromOBJ("ground");
+	/*modelGround = Model::CreateFromOBJ("ground");
 	objGround = Object3d::Create();
 	objGround->Initialize();
 	objGround->SetModel(modelGround);
-	objGround->SetPosition({ 0,-1,0 });
+	objGround->SetPosition({ 0,-1,0 });*/
+
+	modelground = Model::CreateFromOBJ("ground");
+	objground = Object3d::Create();
+	objground->Initialize();
+	objground->SetModel(modelground);
+	objground->SetPosition({ 0,-1,0 });
 	//普通のテクスチャ(板ポリ)
 	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
 	limit->TextureCreate();
@@ -68,7 +74,8 @@ void BossScene::Finalize() {
 }
 
 void BossScene::Update(DirectXCommon* dxCommon) {
-	objGround->Update();
+	//objGround->Update();
+	objground->Update();
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
@@ -135,7 +142,8 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 //}
 //ImGui::End();
 	Object3d::PreDraw();
-	objGround->Draw();
+	//objGround->Draw();
+	objground->Draw();
 
 	Texture::PreDraw();
 	limit->Draw();

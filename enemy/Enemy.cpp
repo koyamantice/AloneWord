@@ -37,6 +37,7 @@ void Enemy::Update() {
 	collider.center = XMVectorSet(pos.x, pos.y, pos.z, 1);
 	playerpos = player->GetPosition();
 	Interval = player->GetInterval();
+	FlashCount = player->GetFlashCount();
 	if (!IsAlive) {
 		IsTimer--;
 		speed = (float)(rand() % 360);
@@ -109,7 +110,7 @@ bool Enemy::collideArm() {
 }
 
 bool Enemy::collidePlayer() {
-	if (IsAlive && !EnemyCatch && Interval == 0) {
+	if (IsAlive && !EnemyCatch && FlashCount == 0) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true) {
 			IsAlive = 0;
 			player->SetHp(player->GetHp() - 1);

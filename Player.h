@@ -38,6 +38,8 @@ public:
 
 	const int& GetInterval() { return Interval; }
 
+	const int& GetFlashCount() { return FlashCount; }
+
 	const int& GetArmMoveNumber() { return ArmMoveNumber; }
 
 	const bool& GetAttackFlag() { return AttackFlag; }
@@ -63,6 +65,8 @@ public:
 	void SetHp(int hp) { this->HP = hp; }
 
 	void SetInterval(int Interval) { this->Interval = Interval; }
+
+	void SetFlash(int Flash) { this->FlashCount = FlashCount; }
 
 	void SetArmMoveNumber(int ArmMoveNumber) { this->ArmMoveNumber = ArmMoveNumber; }
 
@@ -105,6 +109,7 @@ private:
 	float scaleVel = 3.0f;
 	float initspeed = 0.0f;
 	float initrotation = 0.0f;
+	float initArmRotation = 0.0f;
 	float circleX = 0.0f;
 	float circleZ = 0.0f;
 	float Armradius = 0.0f;
@@ -120,6 +125,7 @@ private:
 	bool DamageFlag = false;
 	int AttackMoveNumber = 0;
 	int Interval = 0;
+	int FlashCount = 0;
 	//イージングのためのやつ
 	float frame = 0.0f;
 	float frameMax = 27.0f;
