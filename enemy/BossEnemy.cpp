@@ -214,12 +214,9 @@ void BossEnemy::Fork() {
 						already = true;
 					}
 				}
-<<<<<<< HEAD
 			}
-			else {
-=======
+		
 			} else {
->>>>>>> 431169a03ceb5a4a5284baeaca8df134e6dd3be0
 				AfterPos.y = 0.0f;
 				pos = {
 					pos.x,
@@ -263,10 +260,6 @@ void BossEnemy::Fork() {
 		}
 	}
 
-
-
-
-}
 
 //bool BossEnemy::collidePlayer(Player* player) {
 //	XMFLOAT3 pos = player->GetPosition();
