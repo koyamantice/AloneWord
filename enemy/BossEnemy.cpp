@@ -112,7 +112,15 @@ bool BossEnemy::collideAttackArm() {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
 			BossHit = true;
 			player->SetAttackFlag(false);
-
+			if (weight <= 3) {
+				Audio::GetInstance()->PlayWave("Resources/Sound/strongL1.wav", 0.4f);
+			}
+			else if (weight > 3 && weight <= 6) {
+				Audio::GetInstance()->PlayWave("Resources/Sound/strongL2.wav", 0.4f);
+			}
+			else if (weight >= 7) {
+				Audio::GetInstance()->PlayWave("Resources/Sound/strongL3.wav", 0.4f);
+			}
 			if (BossHit == true) {
 				BossHP -= ((int)weight * 2);
 				weight = 0.0f;

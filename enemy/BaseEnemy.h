@@ -6,6 +6,7 @@
 #include"Sprite.h"
 #include "Player.h"
 #include "Texture.h"
+#include "Audio.h"
 
 #define DIRECTINPUT_VERSION 0x0800
 

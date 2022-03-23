@@ -133,6 +133,15 @@ bool Enemy::collideAttackArm() {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
 			IsAlive = 0;//Ž‚½‚ê‚Ä‚Ä‚È‚¢•û
 			player->SetAttackFlag(false);
+			if (armweight <= 3) {
+				Audio::GetInstance()->PlayWave("Resources/Sound/strongL1.wav", 0.4f);
+			}
+			else if (armweight > 3 && armweight <= 6) {
+				Audio::GetInstance()->PlayWave("Resources/Sound/strongL2.wav", 0.4f);
+			}
+			else if (armweight >= 7) {
+				Audio::GetInstance()->PlayWave("Resources/Sound/strongL3.wav", 0.4f);
+			}
 			if (armweight != 0.0f) {//Ž‚Á‚Ä‚é•û
 				armweight = 0.0f;
 				player->SetArmWeight(armweight);
