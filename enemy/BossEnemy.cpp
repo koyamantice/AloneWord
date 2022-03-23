@@ -147,6 +147,7 @@ void BossEnemy::Fork() {
 			action++;
 		}
 	}
+
 	if (active) {
 		if ((action % 2) == 0) {
 			if (frame < 0.45f) {
@@ -157,36 +158,36 @@ void BossEnemy::Fork() {
 				pat++;
 			}
 			if (pat == 1) {
-				Afterrot = 45;
+				Afterrot = 115;
 				AfterPos.x = 25.0f;
 				AfterPos.z = -20.0f;
 
 			}
 			else if (pat == 2) {
-				Afterrot = -90;
+				Afterrot = 0;
 				AfterPos.x = 25.0f;
 				AfterPos.z = 20.0f;
 
 			}
 			else if (pat == 3) {
-				Afterrot = -225;
+				Afterrot = 225;
 				AfterPos.x = -25.0f;
 				AfterPos.z = -20.0f;
 			}
 			else if (pat == 4) {
-				Afterrot = -90;
+				Afterrot = 360;
 				AfterPos.x = -25.0f;
 				AfterPos.z = 20.0f;
 			}
 			else if (pat == 5) {
-				Afterrot = 45;
+				Afterrot = 360 + 115;
 				AfterPos.x = 0.0f;
 				AfterPos.z = 0.0f;
 			}
 			else {
-				Afterrot = 90;
+				rot.y = 360 + 115 + 180;
 				pat = 0;
-				AttackCount = 30;
+				AttackCount = 0;
 				active = false;
 				frame = 0;
 			}
@@ -200,7 +201,6 @@ void BossEnemy::Fork() {
 		}
 		else if ((action % 2) == 1) {
 			if (!already && !finish) {
-				Afterrot = 90;
 				AfterPos.y = 3.0f;
 				pos.y = Ease(In, Cubic, 0.3f, pos.y, AfterPos.y);
 				if (pos.y >= AfterPos.y - 0.05f) {
@@ -215,8 +215,7 @@ void BossEnemy::Fork() {
 					}
 				}
 			}
-		
-			} else {
+			else {
 				AfterPos.y = 0.0f;
 				pos = {
 					pos.x,
@@ -240,12 +239,12 @@ void BossEnemy::Fork() {
 				AfterPos.y = 0.0f;
 				AfterPos.z = 0.0f;
 				pos = {
-				Ease(In,Cubic,0.5f,pos.x, AfterPos.x),
-				Ease(In, Cubic, 0.5f, pos.y, AfterPos.y),
-				Ease(In,Cubic,0.5f,pos.z, AfterPos.z),
+Ease(In,Cubic,0.5f,pos.x, AfterPos.x),
+Ease(In, Cubic, 0.5f, pos.y, AfterPos.y),
+Ease(In,Cubic,0.5f,pos.z, AfterPos.z),
 				};
 				if ((fabs(pos.x - AfterPos.x) <= DBL_EPSILON * fmax(1, fmax(fabs(pos.x), fabs(AfterPos.x)))) &&
-					(fabs(pos.y - AfterPos.y) <= DBL_EPSILON * fmax(2, fmax(fabs(pos.y), fabs(AfterPos.y)))) &&
+					(fabs(pos.y - AfterPos.y) <= DBL_EPSILON * fmax(1, fmax(fabs(pos.y), fabs(AfterPos.y)))) &&
 					(fabs(pos.z - AfterPos.z) <= DBL_EPSILON * fmax(1, fmax(fabs(pos.z), fabs(AfterPos.z))))) {
 					finish = false;
 					active = false;
@@ -259,6 +258,7 @@ void BossEnemy::Fork() {
 
 		}
 	}
+}
 
 
 //bool BossEnemy::collidePlayer(Player* player) {
