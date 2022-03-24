@@ -38,12 +38,12 @@ private:
 
 	float radius = 0.0f;
 	float speed = 0.0f;
-	float scale = 0.0f;// LaneNum‚Æˆê‚É•Ï‚¦‚é‚±‚Æ
+	float scale = 0.0f;
 	float circleX = 0.0f;
 	float circleZ = 0.0f;
 	float EnemyWeight = 0.0f;
 	bool IsAlive = 0;
-	int IsTimer = 100;
+	int IsTimer = 200;
 	int Interval = 0;
 	int FlashCount = 0;
 	bool EnemyCatch = false;

@@ -14,9 +14,9 @@ Enemy::Enemy() {
 
 void Enemy::Initialize() {
 
-	//ƒvƒŒƒCƒ„[
+	//“G
 	IsAlive = false;
-	IsTimer = 100;
+	IsTimer = 200;
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
 	enemyobj->SetPosition(pos);
@@ -26,6 +26,11 @@ void Enemy::Initialize() {
 	texture->SetPosition(pos);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.2f,0.2f,0.2f });
+	Restexture = Texture::Create(3, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Restexture->TextureCreate();
+	Restexture->SetPosition(pos);
+	Restexture->SetRotation({ 90,0,0 });
+	Restexture->SetScale({ 0.2f,0.2f,0.2f });
 	collider.radius = rad;
 }
 
@@ -40,22 +45,26 @@ void Enemy::Update() {
 	FlashCount = player->GetFlashCount();
 	if (!IsAlive) {
 		IsTimer--;
-		speed = (float)(rand() % 360);
-		scale = (float)(rand() % 10 + 10);
+		if (IsTimer == 100) {
+			speed = (float)(rand() % 360);
+			scale = (float)(rand() % 10 + 10);
+			StartPos = pos;
+			frame = 0;
+			radius = speed * PI / 180.0f;
+			circleX = cosf(radius) * scale;
+			circleZ = sinf(radius) * scale;
+			pos.x = circleX + basePos.x;
+			pos.z = circleZ + basePos.z;
+		}
+
+		else if (IsTimer == 0) {
+			IsAlive = true;
+			isMove = false;
+
+			IsTimer = 200;
+		}
 	}
 
-	if (IsTimer <= 0) {
-		IsAlive = true;
-		isMove = false;
-		StartPos = pos;
-		frame = 0;
-		radius = speed * PI / 180.0f;
-		circleX = cosf(radius) * scale;
-		circleZ = sinf(radius) * scale;
-		pos.x = circleX + basePos.x;
-		pos.z = circleZ + basePos.z;
-		IsTimer = 100;
-	}
 	collideArm();
 	collidePlayer();
 	collideAttackArm();
@@ -71,21 +80,38 @@ void Enemy::Update() {
 
 	enemyobj->SetPosition(pos);
 	texture->SetPosition(pos);
+	Restexture->SetPosition(pos);
 	player->SetInterval(Interval);
 	rot.y = Ease(In, Quad, 0.5f, rot.y, EndRot.y);
 	enemyobj->SetRotation(rot);
 	enemyobj->Update();
 	texture->Update();
+	Restexture->Update();
 }
 
 void Enemy::Draw() {
+	ImGui::Begin("test");
+	if (ImGui::TreeNode("Debug")) {
+		if (ImGui::TreeNode("Enemy")) {
+			ImGui::SliderFloat("pos.x", &pos.x, 50, -50);
+			ImGui::SliderFloat("pos.z", &pos.z, 50, -50);
+			ImGui::SliderFloat("pos.z", &pos.z, 50, -50);
+			ImGui::Unindent();
+			ImGui::TreePop();
+		}
+		ImGui::TreePop();
+	}
+	ImGui::End();
 	if (IsAlive) {
 		Object3d::PreDraw();
 		enemyobj->Draw();
 	}
-	if (IsAlive && !EnemyCatch) {
-		Texture::PreDraw();
+	Texture::PreDraw();
+	if (IsAlive && !EnemyCatch) {	
 		texture->Draw();
+	}
+	else if (!IsAlive && IsTimer <= 100 && IsTimer != 0) {
+		Restexture->Draw();
 	}
 
 }

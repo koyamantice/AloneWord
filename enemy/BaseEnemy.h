@@ -34,7 +34,7 @@ protected:
 	Object3d* enemyobj = nullptr;
 	Model* model = nullptr;
 	Texture* texture = nullptr;
-
+	Texture* Restexture = nullptr;
 	XMFLOAT3 pos = { 0,0,0 };
 	XMFLOAT3 rot = { 0,0,0 };
 	Player* player=nullptr;
