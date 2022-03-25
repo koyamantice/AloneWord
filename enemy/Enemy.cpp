@@ -105,7 +105,7 @@ void Enemy::Update() {
 		pos.x += boundpower.x;
 		pos.y += boundpower.y;
 		pos.z += boundpower.z;
-		if (boundpower.x != 0.0f) {
+		if (boundpower.x != 0.0f && boundpower.z != 0.0f) {
 			enescale.x -= 0.008f;
 			enescale.y -= 0.008f;
 			enescale.z -= 0.008f;
@@ -117,31 +117,22 @@ void Enemy::Update() {
 			}
 		}
 	}
+
 	//演出フラグ終了
 	if (enescale.x <= 0.0f && enescale.y <= 0.0f && enescale.z <= 0.0f) {
 		add = false;
 		enescale = { 0.4f,0.4f,0.4f };
+		boundpower = { 0.0f,0.0f,0.0f };
 		pos.y = 0.0f;
 		IsAlive = false;
 	}
 
 	//敵出現完了
-	if (add == true && boundpower.y <= 0.0f && pos.y <= 0.0f) {
+	if (add == true && boundpower.y <= 0.0f && pos.y <= 0.0f && boundpower.x == 0.0f) {
+		boundpower = { 0.0f,0.0f,0.0f };
 		add = false;
 		pos.y = 0.0f;
 	}
-
-	//if (boundpower.y >= -10.0f) {
-	//	boundpower.y -= 0.2;
-	//	pos.x += boundpower.x;
-	//	pos.y += boundpower.y;
-	//	pos.z += boundpower.z;
-	//}
-
-	//if (pos.y < -5.0f) {
-	//	pos.y = 0.0f;
-	//	IsAlive = false;
-	//}
 
 	enemyobj->SetPosition(pos);
 	texture->SetPosition(pos);
