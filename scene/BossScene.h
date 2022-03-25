@@ -5,7 +5,7 @@
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>
-const int BossEnemyMax = 2;
+const int BossEnemyMax = 7;
 class BossScene : public BaseScene{
 public:
 	/// <summary>
