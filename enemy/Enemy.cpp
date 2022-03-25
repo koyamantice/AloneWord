@@ -20,7 +20,7 @@ void Enemy::Initialize() {
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
 	enemyobj->SetPosition(pos);
-	enemyobj->SetScale({ 0.7f,0.7f,0.7f });
+	enemyobj->SetScale({ 0.4f,0.4f,0.4f });
 	texture = Texture::Create(0, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	texture->SetPosition(pos);
@@ -93,9 +93,7 @@ void Enemy::Draw() {
 	ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("Enemy")) {
-			ImGui::SliderFloat("pos.x", &pos.x, 50, -50);
-			ImGui::SliderFloat("pos.z", &pos.z, 50, -50);
-			ImGui::SliderFloat("pos.z", &pos.z, 50, -50);
+			ImGui::SliderFloat("savespeed", &savespeed, 50, -50);
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}
@@ -119,16 +117,47 @@ void Enemy::Draw() {
 bool Enemy::collideArm() {
 	XMFLOAT3 Armpos = player->GetArmPosition();
 	float armweight = player->GetArmWeight();
+	float armspeed = player->GetArmSpeed();
+	float armscale = player->GetArmScale();
 	int armMove = player->GetArmMoveNumber();
 	if (IsAlive && armMove >= 1 && !EnemyCatch) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
 			EnemyCatch = true;
 			armweight += 1.0f;
+			if (armweight == 1) {
+				savespeed = 0;
+				savesacale = 1.0f;
+			}
+			else if(armweight == 2.0f){
+				savespeed = 6.5;
+				savesacale = 1.0f;
+			}
+			else if (armweight == 3.0f) {
+				savespeed = -6.5;
+				savesacale = 1.0f;
+			}
+			else if (armweight == 4.0f) {
+				savespeed = 0;
+				savesacale = 1.5f;
+			}
+			else if (armweight == 5.0f) {
+				savespeed = 0;
+				savesacale = 0.5f;
+			} 
+			/*else if (armweight == 6.0f) {
+				savespeed = -8.5;
+				savesacale = 2.0f;
+			}
+			else if (armweight == 7.0f) {
+				savespeed = 0;
+				savesacale = 2.5f;
+			}*/
 			player->SetArmWeight(armweight);
 		}
 	}
 	if (EnemyCatch == true) {
-		pos = Armpos;
+			speed = armspeed + savespeed;
+			scale = armscale + savesacale;
 		return true;
 	} else {
 		return false;
@@ -297,5 +326,18 @@ void Enemy::Move() {
 		}
 		enemyobj->SetPosition(pos);
 
+	}
+}
+
+void Enemy::SetEnemy() {
+	float armweight = player->GetArmWeight();
+	XMFLOAT3 plapos = player->GetPosition();
+	if (EnemyCatch == true) {
+		
+		radius = speed * PI / 180.0f;
+		circleX = cosf(radius) * scale;
+		circleZ = sinf(radius) * scale;
+		pos.x = circleX + plapos.x;
+		pos.z = circleZ + plapos.z;
 	}
 }

@@ -84,8 +84,13 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	limit->Update();
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Update();
+		
 		player->ResetWeight(enemy[i]);
 		player->Rebound(enemy[i]);
+	}
+
+	for (int i = 0; i < BossEnemyMax; i++) {
+		enemy[i]->SetEnemy();
 	}
 	
 	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
@@ -157,10 +162,9 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw();
 	//object1->Draw(dxCommon->GetCmdList());
 	//”wŒi—p
+	player->Draw();
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Draw();
 	}
-
 	bossenemy->Draw();
-	player->Draw();
 }

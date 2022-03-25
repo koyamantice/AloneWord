@@ -74,6 +74,4 @@ public:
 
 protected:
 	const int& GetisAlive() { return IsAlive; }
-
-
 };
