@@ -62,5 +62,6 @@ private:
 	bool zmove = false;
 	int bound = false;
 	bool add = false;
+	bool appearance = false;
 };
 
