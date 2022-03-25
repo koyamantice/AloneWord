@@ -94,15 +94,9 @@ void Player::Update() {
 				AfterRot = 180;
 			}
 		}
-		//腕を伸ばす
-		if (input->PushButton(input->Button_RB) && ArmWeight <= 6.0f) {
-			ArmMoveNumber = 1;
-			initscale = Armscale;
-			frame = 0;
-		}
-
-		//攻撃
-		if (input->TriggerButton(input->Button_A) && ArmWeight != 0.0f) {
+		
+		//攻撃右回り
+		if (input->PushButton(input->Button_RB) && ArmWeight != 0.0f) {
 			AttackFlag = true;
 			AttackMoveNumber = 1;
 			initscale = Armscale;
@@ -114,6 +108,28 @@ void Player::Update() {
 			if (ArmMoveNumber != 0) {
 				ArmMoveNumber = 0;
 			}
+		}
+
+		//左回り
+		if (input->PushButton(input->Button_LB) && ArmWeight != 0.0f) {
+			AttackFlag = true;
+			AttackMoveNumber = 3;
+			initscale = Armscale;
+			initspeed = ArmSpeed;
+			initrotation = rot.y;
+			initArmRotation = ArmRot.y;
+			frame2 = 0;
+			frame3 = 0;
+			if (ArmMoveNumber != 0) {
+				ArmMoveNumber = 0;
+			}
+		}
+
+		//攻撃
+		if (input->TriggerButton(input->Button_A) && ArmWeight <= 6.0f) {
+			ArmMoveNumber = 1;
+			initscale = Armscale;
+			frame = 0;
 		}
 
 		//プレイヤーの向き設定
@@ -184,9 +200,16 @@ void Player::Update() {
 
 	//攻撃
 	if (AttackFlag == true) {
-		ArmSpeed = initspeed + 360.0f * easeInOut(frame2 / frameMax2);
-		AfterRot = initrotation - 360.0f * easeInOut(frame2 / frameMax2);
-		ArmRot.y = initArmRotation - 360.0f * easeInOut(frame2 / frameMax2);
+		if (AttackMoveNumber == 1 || AttackMoveNumber == 2) {
+			ArmSpeed = initspeed - 360.0f * easeInOut(frame2 / frameMax2);
+			AfterRot = initrotation + 360.0f * easeInOut(frame2 / frameMax2);
+			ArmRot.y = initArmRotation + 360.0f * easeInOut(frame2 / frameMax2);
+		} else {
+			ArmSpeed = initspeed + 360.0f * easeInOut(frame2 / frameMax2);
+			AfterRot = initrotation - 360.0f * easeInOut(frame2 / frameMax2);
+			ArmRot.y = initArmRotation - 360.0f * easeInOut(frame2 / frameMax2);
+		}
+	
 		if (frame2 <= frameMax2) {
 			frame2 = frame2 + 1;
 		} else {
@@ -195,13 +218,17 @@ void Player::Update() {
 		}
 	} 
 
-	if (AttackMoveNumber == 1) {
+	if (AttackMoveNumber == 1 || AttackMoveNumber == 3) {
 		if (ArmWeight>0) {
 			Armscale = initscale + 3.0f * easeInOut(frame3 / frameMax3);
 			if (frame3 <= frameMax3) {
 				frame3 = frame3 + 1;
 			} else {
-				AttackMoveNumber = 2;
+				if (AttackMoveNumber == 1) {
+					AttackMoveNumber = 2;
+				} else if (AttackMoveNumber == 3) {
+					AttackMoveNumber = 4;
+				}
 				initscale = Armscale;
 				scaleVel = 3.0f;
 				frame3 = 0;
@@ -216,7 +243,7 @@ void Player::Update() {
 		}
 	}
 
-	else if (AttackMoveNumber == 2) {
+	else if (AttackMoveNumber == 2 || AttackMoveNumber == 4) {
 		Armscale = initscale - scaleVel * easeInOut(frame3 / frameMax3);
 		if (frame3 <= frameMax3) {
 			frame3 = frame3 + 1;

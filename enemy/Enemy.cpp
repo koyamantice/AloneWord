@@ -212,12 +212,12 @@ bool Enemy::collideArm() {
 				pos.y = 0.5f;
 			} 
 			else if (armweight == 6.0f) {
-				savespeed = -7.5;
-				savesacale = 1.0f;
+				savespeed = 5.0;
+				savesacale = 0.5f;
 			}
 			else if (armweight == 7.0f) {
-				savespeed = 7.5;
-				savesacale = 1.0f;
+				savespeed = -5.0;
+				savesacale = 0.5f;
 			}
 			player->SetArmWeight(armweight);
 		}
