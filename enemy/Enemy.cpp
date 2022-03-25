@@ -9,11 +9,9 @@ using namespace DirectX;
 Enemy::Enemy() {
 	model = Model::CreateFromOBJ("Enemy");
 	enemyobj = new Object3d();
-
 }
 
 void Enemy::Initialize() {
-
 	//“G
 	IsAlive = false;
 	IsTimer = 200;
@@ -65,9 +63,7 @@ void Enemy::Update() {
 		}
 	}
 
-	collideArm();
-	collidePlayer();
-	collideAttackArm();
+	
 	if (IsAlive && !EnemyCatch) {
 		if (LockOn()) {
 			moveCount = (rand() % 15) + 20;
@@ -83,6 +79,13 @@ void Enemy::Update() {
 		boundpower.x = (float)(rand() % 4 - 2);
 		boundpower.y = (float)(rand() % 3 + 3);
 		boundpower.z = (float)(rand() % 4 - 2);
+		if (boundpower.x == 0.0f) {
+			boundpower.x = 1.0f;
+		}
+
+		if (boundpower.z == 0.0f) {
+			boundpower.z = 1.0f;
+		}
 		boundpower.x = boundpower.x / 10;
 		boundpower.y = boundpower.y / 10;
 		boundpower.z = boundpower.z / 10;
@@ -134,6 +137,10 @@ void Enemy::Update() {
 		pos.y = 0.0f;
 	}
 
+	collideArm();
+	collidePlayer();
+	collideAttackArm();
+
 	enemyobj->SetPosition(pos);
 	texture->SetPosition(pos);
 	Restexture->SetPosition(pos);
@@ -171,7 +178,6 @@ void Enemy::Draw() {
 	else if (!IsAlive && IsTimer <= 100 && IsTimer != 0) {
 		Restexture->Draw();
 	}
-
 }
 
 bool Enemy::collideArm() {
@@ -180,7 +186,7 @@ bool Enemy::collideArm() {
 	float armspeed = player->GetArmSpeed();
 	float armscale = player->GetArmScale();
 	int armMove = player->GetArmMoveNumber();
-	if (IsAlive && armMove >= 1 && !EnemyCatch) {
+	if (IsAlive && armMove >= 1 && !EnemyCatch && add == false) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
 			EnemyCatch = true;
 			armweight += 1.0f;
