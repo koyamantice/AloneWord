@@ -21,13 +21,17 @@ private:
 
 public:
 	const bool& GetEnemyCatch() { return EnemyCatch; }
+	const XMFLOAT3& GetBoundPower() { return boundpower; }
 	const bool& GetHit() { return hit; }
+	const int& GetBound() { return bound; }
 
 	void SetPlayer(Player* player) { this->player=player; }
 	//bool Collision(XMFLOAT3 position, float radius);
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
 	void SetEnemyCatch(bool EnemyCatch) {this-> EnemyCatch = EnemyCatch; }
+	void SetBound(int bound) { this->bound = bound; }
 	void SetHit(bool hit) { this->hit = hit; }
+	void Setboundpower(XMFLOAT3 boundpower) { this->boundpower = boundpower; }
 	void SetEnemy();
 private:
 	XMFLOAT3 playerpos{};
@@ -35,6 +39,7 @@ private:
 	XMFLOAT3 EndPos{};
 	XMFLOAT3 EndRot{};
 	XMFLOAT3 basePos{};
+
 	float rad = 0.4f;
 
 	float radius = 0.0f;
@@ -55,6 +60,7 @@ private:
 	int moveCount = 30;
 	int dir = 0;
 	bool zmove = false;
-	
+	int bound = false;
+	bool add = false;
 };
 

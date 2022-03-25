@@ -20,7 +20,7 @@ void Enemy::Initialize() {
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
 	enemyobj->SetPosition(pos);
-	enemyobj->SetScale({ 0.4f,0.4f,0.4f });
+	enemyobj->SetScale(enescale);
 	texture = Texture::Create(0, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	texture->SetPosition(pos);
@@ -78,12 +78,54 @@ void Enemy::Update() {
 		}
 	}
 
+	if (bound == true) {
+		boundpower.x = (float)(rand() % 4 - 2);
+		boundpower.y = (float)(rand() % 6);
+		boundpower.z = (float)(rand() % 4 - 2);
+		boundpower.x = boundpower.x / 10;
+		boundpower.y = boundpower.y / 10;
+		boundpower.z = boundpower.z / 10;
+		bound = false;
+		add = true;
+	}
+
+	if (add == true) {
+		boundpower.y -= 0.02;
+		pos.x += boundpower.x;
+		pos.y += boundpower.y;
+		pos.z += boundpower.z;
+		enescale.x -= 0.008f;
+		enescale.y -= 0.008f;
+		enescale.z -= 0.008f;
+	}
+
+	if (enescale.x <= 0.0f && enescale.y <= 0.0f && enescale.z <= 0.0f) {
+		add = false;
+		enescale = { 0.4f,0.4f,0.4f };
+		pos.y = 0.0f;
+		//boundpower = { 0.0f,0.0f,0.0f };
+		IsAlive = false;
+	}
+
+	//if (boundpower.y >= -10.0f) {
+	//	boundpower.y -= 0.2;
+	//	pos.x += boundpower.x;
+	//	pos.y += boundpower.y;
+	//	pos.z += boundpower.z;
+	//}
+
+	//if (pos.y < -5.0f) {
+	//	pos.y = 0.0f;
+	//	IsAlive = false;
+	//}
+
 	enemyobj->SetPosition(pos);
 	texture->SetPosition(pos);
 	Restexture->SetPosition(pos);
 	player->SetInterval(Interval);
 	rot.y = Ease(In, Quad, 0.5f, rot.y, EndRot.y);
 	enemyobj->SetRotation(rot);
+	enemyobj->SetScale(enescale);
 	enemyobj->Update();
 	texture->Update();
 	Restexture->Update();
@@ -93,7 +135,14 @@ void Enemy::Draw() {
 	ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("Enemy")) {
-			ImGui::SliderFloat("savespeed", &savespeed, 50, -50);
+			ImGui::SliderFloat("bound.x", &boundpower.x, 50, -50);
+			ImGui::SliderFloat("bound.y", &boundpower.y, 50, -50);
+			ImGui::SliderFloat("bound.z", &boundpower.z, 50, -50);
+			ImGui::SliderFloat("pos.x", &pos.x, 50, -50);
+			ImGui::SliderFloat("pos.y", &pos.y, 50, -50);
+			ImGui::SliderFloat("pos.z", &pos.z, 50, -50);
+			ImGui::Text("%d", IsAlive);
+			ImGui::Text("%d", bound);
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}
@@ -105,7 +154,7 @@ void Enemy::Draw() {
 		enemyobj->Draw();
 	}
 	Texture::PreDraw();
-	if (IsAlive && !EnemyCatch) {	
+	if (IsAlive && !EnemyCatch && !add ) {	
 		texture->Draw();
 	}
 	else if (!IsAlive && IsTimer <= 100 && IsTimer != 0) {
@@ -125,33 +174,34 @@ bool Enemy::collideArm() {
 			EnemyCatch = true;
 			armweight += 1.0f;
 			if (armweight == 1) {
-				savespeed = 0;
+				savespeed = 5.0;
 				savesacale = 1.0f;
 			}
 			else if(armweight == 2.0f){
-				savespeed = 6.5;
+				savespeed =-5.0;
 				savesacale = 1.0f;
 			}
 			else if (armweight == 3.0f) {
-				savespeed = -6.5;
-				savesacale = 1.0f;
+				savespeed = 5.0;
+				savesacale = 1.5f;
 			}
 			else if (armweight == 4.0f) {
-				savespeed = 0;
+				savespeed = -5.0;
 				savesacale = 1.5f;
 			}
 			else if (armweight == 5.0f) {
 				savespeed = 0;
-				savesacale = 0.5f;
+				savesacale = 1.25f;
+				pos.y = 0.5f;
 			} 
-			/*else if (armweight == 6.0f) {
-				savespeed = -8.5;
-				savesacale = 2.0f;
+			else if (armweight == 6.0f) {
+				savespeed = -7.5;
+				savesacale = 1.0f;
 			}
 			else if (armweight == 7.0f) {
-				savespeed = 0;
-				savesacale = 2.5f;
-			}*/
+				savespeed = 7.5;
+				savesacale = 1.0f;
+			}
 			player->SetArmWeight(armweight);
 		}
 	}
@@ -165,7 +215,7 @@ bool Enemy::collideArm() {
 }
 
 bool Enemy::collidePlayer() {
-	if (IsAlive && !EnemyCatch && FlashCount == 0) {
+	if (IsAlive && !EnemyCatch && FlashCount == 0 && add == false) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true) {
 			IsAlive = 0;
 			player->SetHp(player->GetHp() - 1);

@@ -284,12 +284,17 @@ void Player::Draw() {
 }
 
 void Player::ResetWeight(Enemy *enemy) {
+	XMFLOAT3 boundpower = enemy->GetBoundPower();
+	XMFLOAT3 enepos = enemy->GetPosition();
 	if (ArmWeight==0.0f) {
 		if (enemy->GetEnemyCatch()) {
+			enemy->SetBound(true);
 			enemy->SetEnemyCatch(false);
-			enemy->SetIsAlive(0);
 		}
+
+		enemy->Setboundpower(boundpower);
 	}
+	
 }
 
 void Player::Rebound(Enemy* enemy) {
