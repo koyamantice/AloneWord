@@ -207,12 +207,12 @@ bool Enemy::collideArm() {
 				savesacale = 1.5f;
 			}
 			else if (armweight == 5.0f) {
-				savespeed = 7.0;
+				savespeed = 9.0;
 				savesacale = 1.25f;
 				pos.y = 0.5f;
 			} 
 			else if (armweight == 6.0f) {
-				savespeed = -7.0;
+				savespeed = -9.0;
 				savesacale = 1.25f;
 				pos.y = 0.5f;
 			}
