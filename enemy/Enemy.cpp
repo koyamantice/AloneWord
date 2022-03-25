@@ -59,8 +59,8 @@ void Enemy::Update() {
 
 		else if (IsTimer == 0) {
 			IsAlive = true;
+			appearance = true;
 			isMove = false;
-
 			IsTimer = 200;
 		}
 	}
@@ -78,9 +78,10 @@ void Enemy::Update() {
 		}
 	}
 
+	//倒したときの演出
 	if (bound == true) {
 		boundpower.x = (float)(rand() % 4 - 2);
-		boundpower.y = (float)(rand() % 6);
+		boundpower.y = (float)(rand() % 3 + 3);
 		boundpower.z = (float)(rand() % 4 - 2);
 		boundpower.x = boundpower.x / 10;
 		boundpower.y = boundpower.y / 10;
@@ -89,22 +90,45 @@ void Enemy::Update() {
 		add = true;
 	}
 
+	//出現する瞬間
+	if (appearance == true) {
+		boundpower.y = 0.5;
+		enescale = { 0.0f,0.0f,0.0f };
+		pos.y = -3.0f;
+		add = true;
+		appearance = false;
+	}
+
+	//更に加算
 	if (add == true) {
 		boundpower.y -= 0.02;
 		pos.x += boundpower.x;
 		pos.y += boundpower.y;
 		pos.z += boundpower.z;
-		enescale.x -= 0.008f;
-		enescale.y -= 0.008f;
-		enescale.z -= 0.008f;
+		if (boundpower.x != 0.0f) {
+			enescale.x -= 0.008f;
+			enescale.y -= 0.008f;
+			enescale.z -= 0.008f;
+		} else {
+			if (enescale.x <= 0.4) {
+				enescale.x += 0.01f;
+				enescale.y += 0.01f;
+				enescale.z += 0.01f;
+			}
+		}
 	}
-
+	//演出フラグ終了
 	if (enescale.x <= 0.0f && enescale.y <= 0.0f && enescale.z <= 0.0f) {
 		add = false;
 		enescale = { 0.4f,0.4f,0.4f };
 		pos.y = 0.0f;
-		//boundpower = { 0.0f,0.0f,0.0f };
 		IsAlive = false;
+	}
+
+	//敵出現完了
+	if (add == true && boundpower.y <= 0.0f && pos.y <= 0.0f) {
+		add = false;
+		pos.y = 0.0f;
 	}
 
 	//if (boundpower.y >= -10.0f) {
@@ -135,12 +159,8 @@ void Enemy::Draw() {
 	ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("Enemy")) {
-			ImGui::SliderFloat("bound.x", &boundpower.x, 50, -50);
 			ImGui::SliderFloat("bound.y", &boundpower.y, 50, -50);
-			ImGui::SliderFloat("bound.z", &boundpower.z, 50, -50);
-			ImGui::SliderFloat("pos.x", &pos.x, 50, -50);
 			ImGui::SliderFloat("pos.y", &pos.y, 50, -50);
-			ImGui::SliderFloat("pos.z", &pos.z, 50, -50);
 			ImGui::Text("%d", IsAlive);
 			ImGui::Text("%d", bound);
 			ImGui::Unindent();
