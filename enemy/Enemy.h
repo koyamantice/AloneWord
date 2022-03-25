@@ -17,33 +17,41 @@ private:
 	bool LockOn();
 	void Follow();
 	void Move();
+	
 
 public:
 	const bool& GetEnemyCatch() { return EnemyCatch; }
+	const XMFLOAT3& GetBoundPower() { return boundpower; }
 	const bool& GetHit() { return hit; }
+	const int& GetBound() { return bound; }
 
 	void SetPlayer(Player* player) { this->player=player; }
 	//bool Collision(XMFLOAT3 position, float radius);
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
 	void SetEnemyCatch(bool EnemyCatch) {this-> EnemyCatch = EnemyCatch; }
+	void SetBound(int bound) { this->bound = bound; }
 	void SetHit(bool hit) { this->hit = hit; }
-
+	void Setboundpower(XMFLOAT3 boundpower) { this->boundpower = boundpower; }
+	void SetEnemy();
 private:
 	XMFLOAT3 playerpos{};
 	XMFLOAT3 StartPos{};
 	XMFLOAT3 EndPos{};
 	XMFLOAT3 EndRot{};
 	XMFLOAT3 basePos{};
+
 	float rad = 0.4f;
 
 	float radius = 0.0f;
 	float speed = 0.0f;
-	float scale = 0.0f;// LaneNum‚Æˆê‚É•Ï‚¦‚é‚±‚Æ
+	float savespeed = 0.0f;
+	float scale = 0.0f;
+	float savesacale = 0.0f;
 	float circleX = 0.0f;
 	float circleZ = 0.0f;
 	float EnemyWeight = 0.0f;
 	bool IsAlive = 0;
-	int IsTimer = 100;
+	int IsTimer = 200;
 	int Interval = 0;
 	int FlashCount = 0;
 	bool EnemyCatch = false;
@@ -52,6 +60,7 @@ private:
 	int moveCount = 30;
 	int dir = 0;
 	bool zmove = false;
-	
+	int bound = false;
+	bool add = false;
 };
 

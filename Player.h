@@ -50,6 +50,8 @@ public:
 
 	const float& GetArmScale() { return Armscale; }
 
+	const float& GetArmSpeed() { return ArmSpeed; }
+
 	/// <summary>
 	/// 座標の設定
 	/// </summary>

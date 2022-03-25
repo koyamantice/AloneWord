@@ -34,9 +34,11 @@ protected:
 	Object3d* enemyobj = nullptr;
 	Model* model = nullptr;
 	Texture* texture = nullptr;
-
+	Texture* Restexture = nullptr;
 	XMFLOAT3 pos = { 0,0,0 };
 	XMFLOAT3 rot = { 0,0,0 };
+	XMFLOAT3 boundpower{};
+	XMFLOAT3 enescale{0.4f,0.4f,0.4f};
 	Player* player=nullptr;
 	float frame = 0;
 	int IsAlive = 0;
@@ -74,6 +76,4 @@ public:
 
 protected:
 	const int& GetisAlive() { return IsAlive; }
-
-
 };

@@ -14,18 +14,23 @@ Enemy::Enemy() {
 
 void Enemy::Initialize() {
 
-	//ƒvƒŒƒCƒ„[
+	//“G
 	IsAlive = false;
-	IsTimer = 100;
+	IsTimer = 200;
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
 	enemyobj->SetPosition(pos);
-	enemyobj->SetScale({ 0.7f,0.7f,0.7f });
+	enemyobj->SetScale(enescale);
 	texture = Texture::Create(0, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	texture->SetPosition(pos);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.2f,0.2f,0.2f });
+	Restexture = Texture::Create(3, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Restexture->TextureCreate();
+	Restexture->SetPosition(pos);
+	Restexture->SetRotation({ 90,0,0 });
+	Restexture->SetScale({ 0.2f,0.2f,0.2f });
 	collider.radius = rad;
 }
 
@@ -40,22 +45,26 @@ void Enemy::Update() {
 	FlashCount = player->GetFlashCount();
 	if (!IsAlive) {
 		IsTimer--;
-		speed = (float)(rand() % 360);
-		scale = (float)(rand() % 10 + 10);
+		if (IsTimer == 100) {
+			speed = (float)(rand() % 360);
+			scale = (float)(rand() % 10 + 10);
+			StartPos = pos;
+			frame = 0;
+			radius = speed * PI / 180.0f;
+			circleX = cosf(radius) * scale;
+			circleZ = sinf(radius) * scale;
+			pos.x = circleX + basePos.x;
+			pos.z = circleZ + basePos.z;
+		}
+
+		else if (IsTimer == 0) {
+			IsAlive = true;
+			isMove = false;
+
+			IsTimer = 200;
+		}
 	}
 
-	if (IsTimer <= 0) {
-		IsAlive = true;
-		isMove = false;
-		StartPos = pos;
-		frame = 0;
-		radius = speed * PI / 180.0f;
-		circleX = cosf(radius) * scale;
-		circleZ = sinf(radius) * scale;
-		pos.x = circleX + basePos.x;
-		pos.z = circleZ + basePos.z;
-		IsTimer = 100;
-	}
 	collideArm();
 	collidePlayer();
 	collideAttackArm();
@@ -69,23 +78,87 @@ void Enemy::Update() {
 		}
 	}
 
+	if (bound == true) {
+		boundpower.x = (float)(rand() % 4 - 2);
+		boundpower.y = (float)(rand() % 6);
+		boundpower.z = (float)(rand() % 4 - 2);
+		boundpower.x = boundpower.x / 10;
+		boundpower.y = boundpower.y / 10;
+		boundpower.z = boundpower.z / 10;
+		bound = false;
+		add = true;
+	}
+
+	if (add == true) {
+		boundpower.y -= 0.02;
+		pos.x += boundpower.x;
+		pos.y += boundpower.y;
+		pos.z += boundpower.z;
+		enescale.x -= 0.008f;
+		enescale.y -= 0.008f;
+		enescale.z -= 0.008f;
+	}
+
+	if (enescale.x <= 0.0f && enescale.y <= 0.0f && enescale.z <= 0.0f) {
+		add = false;
+		enescale = { 0.4f,0.4f,0.4f };
+		pos.y = 0.0f;
+		//boundpower = { 0.0f,0.0f,0.0f };
+		IsAlive = false;
+	}
+
+	//if (boundpower.y >= -10.0f) {
+	//	boundpower.y -= 0.2;
+	//	pos.x += boundpower.x;
+	//	pos.y += boundpower.y;
+	//	pos.z += boundpower.z;
+	//}
+
+	//if (pos.y < -5.0f) {
+	//	pos.y = 0.0f;
+	//	IsAlive = false;
+	//}
+
 	enemyobj->SetPosition(pos);
 	texture->SetPosition(pos);
+	Restexture->SetPosition(pos);
 	player->SetInterval(Interval);
 	rot.y = Ease(In, Quad, 0.5f, rot.y, EndRot.y);
 	enemyobj->SetRotation(rot);
+	enemyobj->SetScale(enescale);
 	enemyobj->Update();
 	texture->Update();
+	Restexture->Update();
 }
 
 void Enemy::Draw() {
+	ImGui::Begin("test");
+	if (ImGui::TreeNode("Debug")) {
+		if (ImGui::TreeNode("Enemy")) {
+			ImGui::SliderFloat("bound.x", &boundpower.x, 50, -50);
+			ImGui::SliderFloat("bound.y", &boundpower.y, 50, -50);
+			ImGui::SliderFloat("bound.z", &boundpower.z, 50, -50);
+			ImGui::SliderFloat("pos.x", &pos.x, 50, -50);
+			ImGui::SliderFloat("pos.y", &pos.y, 50, -50);
+			ImGui::SliderFloat("pos.z", &pos.z, 50, -50);
+			ImGui::Text("%d", IsAlive);
+			ImGui::Text("%d", bound);
+			ImGui::Unindent();
+			ImGui::TreePop();
+		}
+		ImGui::TreePop();
+	}
+	ImGui::End();
 	if (IsAlive) {
 		Object3d::PreDraw();
 		enemyobj->Draw();
 	}
-	if (IsAlive && !EnemyCatch) {
-		Texture::PreDraw();
+	Texture::PreDraw();
+	if (IsAlive && !EnemyCatch && !add ) {	
 		texture->Draw();
+	}
+	else if (!IsAlive && IsTimer <= 100 && IsTimer != 0) {
+		Restexture->Draw();
 	}
 
 }
@@ -93,16 +166,48 @@ void Enemy::Draw() {
 bool Enemy::collideArm() {
 	XMFLOAT3 Armpos = player->GetArmPosition();
 	float armweight = player->GetArmWeight();
+	float armspeed = player->GetArmSpeed();
+	float armscale = player->GetArmScale();
 	int armMove = player->GetArmMoveNumber();
 	if (IsAlive && armMove >= 1 && !EnemyCatch) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
 			EnemyCatch = true;
 			armweight += 1.0f;
+			if (armweight == 1) {
+				savespeed = 5.0;
+				savesacale = 1.0f;
+			}
+			else if(armweight == 2.0f){
+				savespeed =-5.0;
+				savesacale = 1.0f;
+			}
+			else if (armweight == 3.0f) {
+				savespeed = 5.0;
+				savesacale = 1.5f;
+			}
+			else if (armweight == 4.0f) {
+				savespeed = -5.0;
+				savesacale = 1.5f;
+			}
+			else if (armweight == 5.0f) {
+				savespeed = 0;
+				savesacale = 1.25f;
+				pos.y = 0.5f;
+			} 
+			else if (armweight == 6.0f) {
+				savespeed = -7.5;
+				savesacale = 1.0f;
+			}
+			else if (armweight == 7.0f) {
+				savespeed = 7.5;
+				savesacale = 1.0f;
+			}
 			player->SetArmWeight(armweight);
 		}
 	}
 	if (EnemyCatch == true) {
-		pos = Armpos;
+			speed = armspeed + savespeed;
+			scale = armscale + savesacale;
 		return true;
 	} else {
 		return false;
@@ -110,7 +215,7 @@ bool Enemy::collideArm() {
 }
 
 bool Enemy::collidePlayer() {
-	if (IsAlive && !EnemyCatch && FlashCount == 0) {
+	if (IsAlive && !EnemyCatch && FlashCount == 0 && add == false) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true) {
 			IsAlive = 0;
 			player->SetHp(player->GetHp() - 1);
@@ -271,5 +376,18 @@ void Enemy::Move() {
 		}
 		enemyobj->SetPosition(pos);
 
+	}
+}
+
+void Enemy::SetEnemy() {
+	float armweight = player->GetArmWeight();
+	XMFLOAT3 plapos = player->GetPosition();
+	if (EnemyCatch == true) {
+		
+		radius = speed * PI / 180.0f;
+		circleX = cosf(radius) * scale;
+		circleZ = sinf(radius) * scale;
+		pos.x = circleX + plapos.x;
+		pos.z = circleZ + plapos.z;
 	}
 }

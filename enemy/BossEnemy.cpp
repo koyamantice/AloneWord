@@ -27,7 +27,7 @@ void BossEnemy::Initialize() {
 	enemyobj->SetScale({ 1.5f,1.5f,1.5f });
 	texture = Texture::Create(2, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
-	texture->SetColor({ 1,1,1,1 });
+	texture->SetColor({ 1,1,1,0 });
 	texture->SetPosition(pos.x, -1, pos.z);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.3f,0.3f,0.3f });
@@ -112,6 +112,7 @@ bool BossEnemy::collideAttackArm() {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
 			BossHit = true;
 			player->SetAttackFlag(false);
+		
 			if (weight <= 3) {
 				Audio::GetInstance()->PlayWave("Resources/Sound/strongL1.wav", 0.4f);
 			}
@@ -124,6 +125,9 @@ bool BossEnemy::collideAttackArm() {
 			if (BossHit == true) {
 				BossHP -= ((int)weight * 2);
 				weight = 0.0f;
+				boundpower.x = (float)(rand() % 4 - 2);
+				boundpower.y = (float)(rand() % 6);
+				boundpower.z = (float)(rand() % 4 - 2);
 				player->SetArmWeight(weight);
 				BossHit = false;
 			}
