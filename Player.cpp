@@ -209,6 +209,8 @@ void Player::Update() {
 			AfterRot = initrotation - 360.0f * easeInOut(frame2 / frameMax2);
 			ArmRot.y = initArmRotation - 360.0f * easeInOut(frame2 / frameMax2);
 		}
+
+		SpeedSub = initspeed - ArmSpeed;
 	
 		if (frame2 <= frameMax2) {
 			frame2 = frame2 + 1;
@@ -287,12 +289,10 @@ void Player::Draw() {
 	ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("Player")) {
-			ImGui::SliderFloat("pos.x", &pos.x, 50, -50);
-			ImGui::SliderFloat("pos.z", &pos.z, 50, -50);
-			ImGui::SliderFloat("rebound.x", &rebound.x, 50, -50);
-			ImGui::SliderFloat("rebound.z", &rebound.z, 50, -50);
-			ImGui::Text("%d", Interval);
-			ImGui::Text("FlashCount:%d", FlashCount);
+			ImGui::SliderFloat("speed", &ArmSpeed, 50, -50);
+			ImGui::SliderFloat("initspeed", &initspeed, 50, -50);
+			ImGui::Text("Sub %d", SpeedSub);
+
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}

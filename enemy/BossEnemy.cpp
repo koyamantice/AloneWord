@@ -123,7 +123,7 @@ bool BossEnemy::collideAttackArm() {
 				Audio::GetInstance()->PlayWave("Resources/Sound/strongL3.wav", 0.4f);
 			}
 			if (BossHit == true) {
-				BossHP -= ((int)weight * 2);
+				BossHP -= (weight * 2);
 				weight = 0.0f;
 				boundpower.x = (float)(rand() % 4 - 2);
 				boundpower.y = (float)(rand() % 6);

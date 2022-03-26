@@ -52,6 +52,8 @@ public:
 
 	const float& GetArmSpeed() { return ArmSpeed; }
 
+	const int& GetSubSpeed() { return SpeedSub; }
+
 	/// <summary>
 	/// 座標の設定
 	/// </summary>
@@ -120,7 +122,7 @@ private:
 	float ArmCircleX = 0.0f;
 	float ArmCircleZ = 0.0f;
 	float ArmWeight = 0.0f;
-	float TargetSpeed = 0.0f;
+	unsigned int SpeedSub = 0;
 	//いろいろなフラグ
 	int ArmMoveNumber = 0;
 	bool AttackFlag = false;
