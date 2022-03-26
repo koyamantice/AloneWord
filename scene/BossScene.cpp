@@ -71,7 +71,13 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 }
 
 void BossScene::Finalize() {
+
 	//３ｄのモデルのデリート
+	for (int i = 0; i < BossEnemyMax; i++) {
+		enemy[i]->Finalize();
+	}
+	player->Finalize();
+	bossenemy->Finalize();
 }
 
 void BossScene::Update(DirectXCommon* dxCommon) {

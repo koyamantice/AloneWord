@@ -33,6 +33,9 @@ void Enemy::Initialize() {
 }
 
 void Enemy::Finalize() {
+	delete enemyobj;
+	delete texture;
+	delete Restexture;
 }
 
 void Enemy::Update() {
@@ -153,6 +156,7 @@ void Enemy::Update() {
 	Restexture->Update();
 }
 
+//•`‰æ
 void Enemy::Draw() {
 	/*ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
@@ -180,6 +184,7 @@ void Enemy::Draw() {
 	}
 }
 
+//“G‚ðƒLƒƒƒbƒ`
 bool Enemy::collideArm() {
 	XMFLOAT3 Armpos = player->GetArmPosition();
 	float armweight = player->GetArmWeight();
@@ -233,6 +238,7 @@ bool Enemy::collideArm() {
 	}
 }
 
+//ƒvƒŒƒCƒ„[‚ªƒ_ƒ[ƒW‚ðH‚ç‚¤
 bool Enemy::collidePlayer() {
 	if (IsAlive && !EnemyCatch && FlashCount == 0 && add == false) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true) {
@@ -279,6 +285,7 @@ bool Enemy::collideAttackArm() {
 	}
 }
 
+//“G‚ªƒvƒŒƒCƒ„[‚Ì‹ß‚­‚É‚¢‚é‚©
 bool Enemy::LockOn() {
 	if (Collision::CircleCollision(playerpos.x, playerpos.z, 5.0,
 		pos.x, pos.z, 3.0)) {
@@ -288,6 +295,7 @@ bool Enemy::LockOn() {
 	}
 }
 
+//“G’Ç]
 void Enemy::Follow() {
 	XMFLOAT3 position{};
 	position.x = (playerpos.x - pos.x);
@@ -300,6 +308,7 @@ void Enemy::Follow() {
 	pos.z += (float)Check2 * 0.095f;
 }
 
+//“G‚ª“®‚­
 void Enemy::Move() {
 	if (pos.z>z_max) {
 		pos.z = z_max;
@@ -398,6 +407,7 @@ void Enemy::Move() {
 	}
 }
 
+//“G‚ÌˆÊ’u‚ð˜r‚Æ“¯‚¶‚É‚·‚é
 void Enemy::SetEnemy() {
 	float armweight = player->GetArmWeight();
 	XMFLOAT3 plapos = player->GetPosition();
