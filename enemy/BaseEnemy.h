@@ -42,7 +42,8 @@ protected:
 	Player* player=nullptr;
 	float frame = 0;
 	int IsAlive = 0;
-
+	int Interval = 0;
+	int FlashCount = 0;
 	float x_min = -25;
 	float x_max = 25;
 	float z_min = -20;

@@ -48,6 +48,11 @@ void Player::Initialize() {
 	collider.radius = rad;
 }
 
+void Player::Finalize() {
+	delete object3d;
+	delete Armobj;
+}
+
 void Player::Update() {
 	Input* input = Input::GetInstance();
 	XMFLOAT2 AfterPos;
@@ -209,7 +214,18 @@ void Player::Update() {
 			AfterRot = initrotation - 360.0f * easeInOut(frame2 / frameMax2);
 			ArmRot.y = initArmRotation - 360.0f * easeInOut(frame2 / frameMax2);
 		}
-	
+
+		SpeedSub = initspeed - ArmSpeed;
+		//どれくらい大振りしたかみたいなやつ
+		if (SpeedSub <= 90) {
+			power = 0.25;
+		} else if (SpeedSub > 90 && SpeedSub <= 180) {
+			power = 0.5;
+		} else if (SpeedSub > 180 && SpeedSub <= 270) {
+			power = 0.75;
+		} else {
+			power = 1.0;
+		}
 		if (frame2 <= frameMax2) {
 			frame2 = frame2 + 1;
 		} else {
@@ -218,6 +234,7 @@ void Player::Update() {
 		}
 	} 
 
+	//攻撃時に腕を伸ばしている
 	if (AttackMoveNumber == 1 || AttackMoveNumber == 3) {
 		if (ArmWeight>0) {
 			Armscale = initscale + 3.0f * easeInOut(frame3 / frameMax3);
@@ -257,6 +274,7 @@ void Player::Update() {
 		}
 	}
 
+	//FlashCount == 4までプレイヤーがダメージを食らったあとの判定
 	if (Interval != 0 && FlashCount <= 5) {
 		Interval--;
 	}
@@ -283,16 +301,14 @@ void Player::Update() {
 	Armobj->SetRotation(ArmRot);
 }
 
+//描画
 void Player::Draw() {
 	ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("Player")) {
-			ImGui::SliderFloat("pos.x", &pos.x, 50, -50);
-			ImGui::SliderFloat("pos.z", &pos.z, 50, -50);
-			ImGui::SliderFloat("rebound.x", &rebound.x, 50, -50);
-			ImGui::SliderFloat("rebound.z", &rebound.z, 50, -50);
-			ImGui::Text("%d", Interval);
-			ImGui::Text("FlashCount:%d", FlashCount);
+			ImGui::SliderFloat("power", &power, 50, -50);
+			ImGui::Text("Sub %d", SpeedSub);
+
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}
@@ -310,6 +326,7 @@ void Player::Draw() {
 	}
 }
 
+//敵が腕から離れる
 void Player::ResetWeight(Enemy *enemy) {
 	XMFLOAT3 boundpower = enemy->GetBoundPower();
 	XMFLOAT3 enepos = enemy->GetPosition();
@@ -324,6 +341,7 @@ void Player::ResetWeight(Enemy *enemy) {
 	
 }
 
+//ダメージ食らったときにプレイヤーが飛ばされる
 void Player::Rebound(Enemy* enemy) {
 	XMFLOAT3 enepos = enemy->GetPosition();
 	

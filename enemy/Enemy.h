@@ -52,8 +52,6 @@ private:
 	float EnemyWeight = 0.0f;
 	bool IsAlive = 0;
 	int IsTimer = 200;
-	int Interval = 0;
-	int FlashCount = 0;
 	bool EnemyCatch = false;
 	bool isMove = false;
 	bool hit = false;

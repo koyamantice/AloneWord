@@ -12,6 +12,7 @@ public:
 	Player();
 
 	void Initialize();
+	void Finalize();
 	void Update();
 	void Draw();
 private:
@@ -51,6 +52,8 @@ public:
 	const float& GetArmScale() { return Armscale; }
 
 	const float& GetArmSpeed() { return ArmSpeed; }
+
+	const float& GetPower() { return power; }
 
 	/// <summary>
 	/// 座標の設定
@@ -120,7 +123,8 @@ private:
 	float ArmCircleX = 0.0f;
 	float ArmCircleZ = 0.0f;
 	float ArmWeight = 0.0f;
-	float TargetSpeed = 0.0f;
+	unsigned int SpeedSub = 0;
+	float power = 0.0f;
 	//いろいろなフラグ
 	int ArmMoveNumber = 0;
 	bool AttackFlag = false;

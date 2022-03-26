@@ -35,6 +35,8 @@ void BossEnemy::Initialize() {
 }
 
 void BossEnemy::Finalize() {
+	delete enemyobj;
+	delete texture;
 }
 
 void BossEnemy::Update() {
@@ -66,19 +68,6 @@ void BossEnemy::Update() {
 }
 
 void BossEnemy::Draw() {
-	/*ImGui::Begin("test");
-	if (ImGui::TreeNode("Debug")) {
-		if (ImGui::TreeNode("Boss")) {
-			ImGui::SliderFloat("Position.x", &pos.x, 20, -20);
-			ImGui::SliderFloat("Position.y", &pos.y, 20, -20);
-			ImGui::SliderFloat("Position.z", &pos.z, 20, -20);
-			ImGui::Unindent();
-			ImGui::TreePop();
-		}
-		ImGui::TreePop();
-	}
-	ImGui::End();*/
-
 	Object3d::PreDraw();
 	enemyobj->Draw();
 	Texture::PreDraw();
@@ -90,6 +79,7 @@ void BossEnemy::Draw() {
 	//bossobj->Draw();
 }
 
+//プレイヤーがダメージを食らう
 bool BossEnemy::collidePlayer() {
 	XMFLOAT3 playerpos = player->GetPosition();
 	int playerhp = player->GetHp();
@@ -103,16 +93,18 @@ bool BossEnemy::collidePlayer() {
 	}
 }
 
+//攻撃関数
 bool BossEnemy::collideAttackArm() {
 	XMFLOAT3 Armpos = player->GetArmPosition();
 	bool attackflag = player->GetAttackFlag();
-	int playerhp = player->GetHp();
+	float power = player->GetPower();
 	float weight = player->GetArmWeight();
 	if (attackflag && !BossHit) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
 			BossHit = true;
 			player->SetAttackFlag(false);
 		
+			//ついてる敵の数で音が変わる
 			if (weight <= 3) {
 				Audio::GetInstance()->PlayWave("Resources/Sound/strongL1.wav", 0.4f);
 			}
@@ -122,8 +114,10 @@ bool BossEnemy::collideAttackArm() {
 			else if (weight >= 7) {
 				Audio::GetInstance()->PlayWave("Resources/Sound/strongL3.wav", 0.4f);
 			}
+
+			//ボスのHPをへらす
 			if (BossHit == true) {
-				BossHP -= ((int)weight * 2);
+				BossHP -= (weight * 2) * power;
 				weight = 0.0f;
 				boundpower.x = (float)(rand() % 4 - 2);
 				boundpower.y = (float)(rand() % 6);
@@ -140,8 +134,10 @@ bool BossEnemy::collideAttackArm() {
 	else {
 		return false;
 	}
+	
 }
 
+//ボスの行動
 void BossEnemy::Fork() {
 	XMFLOAT3 AfterPos{};
 	if (AttackCount > 40) {
