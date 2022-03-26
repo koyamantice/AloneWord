@@ -35,7 +35,8 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objground = Object3d::Create();
 	objground->Initialize();
 	objground->SetModel(modelground);
-	objground->SetPosition({ 0,-1,0 });
+	objground->SetPosition({ 0,-1,10 });
+	objground->SetScale({ 22,1,10 });
 	//普通のテクスチャ(板ポリ)
 	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
 	limit->TextureCreate();
