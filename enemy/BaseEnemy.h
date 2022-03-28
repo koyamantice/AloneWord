@@ -25,6 +25,7 @@ public:
 	/// À•WE‰ñ“]‚ÌŽæ“¾
 	const XMFLOAT3& GetPosition() { return  enemyobj->GetPosition(); }
 	const XMFLOAT3& GetRotation() { return enemyobj->GetRotation(); }
+
 	/// À•WE‰ñ“]‚ÌÝ’è
 	void SetPosition(XMFLOAT3 position) { enemyobj->SetPosition(position); }
 	void SetRotation(XMFLOAT3 rotation) { enemyobj->SetRotation(rotation); }
