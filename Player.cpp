@@ -130,11 +130,15 @@ void Player::Update() {
 			}
 		}
 
-		//攻撃
+		//腕のばす
 		if (input->TriggerButton(input->Button_A) && ArmWeight <= 6.0f) {
 			ArmMoveNumber = 1;
 			initscale = Armscale;
 			frame = 0;
+			if (AttackMoveNumber != 0 || AttackFlag == true) {
+				AttackMoveNumber = 0;
+				AttackFlag = false;
+			}
 		}
 
 		//プレイヤーの向き設定

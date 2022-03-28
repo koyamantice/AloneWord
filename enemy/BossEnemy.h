@@ -35,7 +35,11 @@ private:
 	int times = 0;
 	bool finish = false;
 	int coolT = 0;
+<<<<<<< HEAD
 	int bossUp;
+=======
+
+>>>>>>> 0890b92ddea499e7a8bae296800d619a57af1aca
 
 	int action = 0;
 	bool active = false;

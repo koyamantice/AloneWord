@@ -1,12 +1,12 @@
 #pragma once
 #include "BaseScene.h"
 #include "BossEnemy.h"
-
+#include "Collision.h"
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>
-const int EnemyMax = 10;
-class StartMap : public BaseScene {
+const int StartEnemyMax = 7;
+class StartMap : public BaseScene{
 public:
 	/// <summary>
 	/// 初期化
@@ -29,14 +29,16 @@ public:
 private:
 	Model* modelGround = nullptr;
 	Object3d* objGround;
+
+	Model* modelground = nullptr;
+	Object3d* objground;
+
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;
 	DebugCamera* camera = { nullptr };
 	Texture* limit = nullptr;
-
 	Player* player = nullptr;
-	Enemy* enemy[EnemyMax] = { nullptr };
+	Enemy* enemy[StartEnemyMax] = { nullptr };
 	BossEnemy* bossenemy = nullptr;
-	int b = 0;
 };
 
