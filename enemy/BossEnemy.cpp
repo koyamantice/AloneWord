@@ -176,17 +176,23 @@ void BossEnemy::Fork() {
 				Afterrot = 45;
 				AfterPos.x = 25.0f;
 				AfterPos.z = -20.0f;
+			}
+			else if (pat == 2) {
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 			}
 			else if (pat == 2) {
 =======
 			} else if (pat == 2) {
 >>>>>>> 0890b92ddea499e7a8bae296800d619a57af1aca
+=======
+>>>>>>> 29ec887056b83f007e84b409c03c1f6cb2a68f9f
 				Afterrot = -90;
 				AfterPos.x = 25.0f;
 				AfterPos.z = 20.0f;
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 			}
 			else if (pat == 3) {
@@ -201,6 +207,9 @@ void BossEnemy::Fork() {
 			}
 			else if (pat == 5) {
 =======
+=======
+
+>>>>>>> 29ec887056b83f007e84b409c03c1f6cb2a68f9f
 			} else if (pat == 3) {
 				Afterrot = -225;
 				AfterPos.x = -25.0f;

@@ -3,26 +3,27 @@
 #include "BossEnemy.h"
 #include "Collision.h"
 /// <summary>
-/// ƒQ[ƒ€ƒvƒŒƒCƒV[ƒ“
+/// ã‚²ãƒ¼ãƒ ãƒ—ãƒ¬ã‚¤ã‚·ãƒ¼ãƒ³
 /// </summary>
 const int StartEnemyMax = 7;
-class StartMap : public BaseScene{
+class StartMap : public BaseScene {
+
 public:
 	/// <summary>
-	/// ‰Šú‰»
+	/// åˆæœŸåŒ–
 	/// </summary>
 	void Initialize(DirectXCommon* dxCommon) override;
 	/// <summary>
-	/// I—¹
+	/// çµ‚äº†
 	/// </summary>
 	void Finalize() override;
 
 	/// <summary>
-	/// –ˆƒtƒŒ[ƒ€XV
+	/// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ æ›´æ–°
 	/// </summary>
 	void Update(DirectXCommon* dxCommon) override;
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw(DirectXCommon* dxCommon) override;
 
@@ -36,9 +37,10 @@ private:
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;
 	DebugCamera* camera = { nullptr };
-	Texture* limit = nullptr;
+	//Texture* limit = nullptr;
 	Player* player = nullptr;
 	Enemy* enemy[StartEnemyMax] = { nullptr };
-	BossEnemy* bossenemy = nullptr;
+	//BossEnemy* bossenemy = nullptr;
+
 };
 
