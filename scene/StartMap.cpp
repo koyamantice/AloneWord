@@ -135,7 +135,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 	}
 	object1->Update();
-	camera->SetTarget(player->GetPosition());
+	camera->SetTarget({ player->GetPosition().x, player->GetPosition() .y, player->GetPosition().z - 2});
 	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
 	DebugText::GetInstance()->Print("PUSH to RB!!", 200, 100, 1.0f);
 	DebugText::GetInstance()->Print("PUSH to A!!", 200, 115, 1.0f);

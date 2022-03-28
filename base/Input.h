@@ -137,6 +137,7 @@ private: // メンバ変数
 	//ゲームパッドデバイス
 	DWORD g_dxNumForoce;
 	ComPtr<IDirectInputDevice8> devGamePad;
+	LPDIRECTINPUTEFFECT  g_lpDIEffect = NULL;
 	DIJOYSTATE gamePadState = {};
 	DIJOYSTATE oldGamePadState = {};
 	bool is_push[32] = {};

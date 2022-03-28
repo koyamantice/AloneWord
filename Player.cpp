@@ -307,7 +307,7 @@ void Player::Update() {
 
 //描画
 void Player::Draw() {
-	ImGui::Begin("test");
+	/*ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("Player")) {
 			ImGui::SliderFloat("power", &power, 50, -50);
@@ -318,7 +318,7 @@ void Player::Draw() {
 		}
 		ImGui::TreePop();
 	}
-	ImGui::End();
+	ImGui::End();*/
 	Sprite::PreDraw();
 	//背景用
 	SpritePlayerHP->Draw();

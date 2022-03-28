@@ -111,8 +111,14 @@ bool Input::Initialize(WinApp* winApp) {
 		eff.dwGain = DI_FFNOMINALMAX;
 		eff.dwTriggerButton = DIEB_NOTRIGGER;
 		eff.dwTriggerRepeatInterval = 0;
-		//eff.rgdwAxes = { DIJOFS_X,DIJOFS_Y };
+		eff.rgdwAxes = rgdwAxes;
+		eff.rglDirection = rglDirection;
+		eff.lpEnvelope = 0;
+		eff.cbTypeSpecificParams = sizeof(DICONSTANTFORCE);
+		eff.lpvTypeSpecificParams = &cf;
+		eff.dwStartDelay = 0;
 		
+		devGamePad->CreateEffect(GUID_ConstantForce, &eff, &g_lpDIEffect, NULL);
 		//排他制御レベルセット
 		result = devGamePad->SetCooperativeLevel(winApp->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	}
