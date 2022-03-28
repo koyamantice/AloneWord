@@ -32,7 +32,7 @@ void WinApp::Initialize() {
 
 	//ウィンドウオブジェクトの生成
 	/*HWND*/ hwnd = CreateWindow(w.lpszClassName,//クラス名
-		L"LE2B_13_コヤマカイト",//タイトルバーの文字
+		L"逆襲のモッチー",//タイトルバーの文字
 		WS_OVERLAPPED | WS_SYSMENU,//標準的なウィンドウスタイル
 		//WS_OVERLAPPEDWINDOW,//非固定なウィンドウスタイル
 		CW_USEDEFAULT,//表示X座標(OSに任せる)
