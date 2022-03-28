@@ -84,10 +84,10 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
-	bossenemy->Update(player);
+	bossenemy->Update();
 	limit->Update();
 	for (int i = 0; i < EnemyMax; i++) {
-		enemy[i]->Update(player, bossenemy);
+		enemy[i]->Update();
 		player->ResetWeight(enemy[i]);
 	}
 
@@ -106,24 +106,25 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		//SceneManager::GetInstance()->ChangeScene("BOSS");
 	}
 
+
 	object1->Update();
 	camera->SetTarget(player->GetPosition());
 	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
 }
 
 void StartMap::Draw(DirectXCommon* dxCommon) {
-	//ImGui::Begin("test");
-	//if (ImGui::TreeNode("Debug"))
-	//{
-	//	if (ImGui::TreeNode("Field"))
-	//	{
-	//		//ImGui::SliderFloat("Position.x", &s, 50, -50);
-	//		ImGui::Unindent();
-	//		ImGui::TreePop();
-	//	}
-	//	ImGui::TreePop();
-	//}
-	//ImGui::End();
+	ImGui::Begin("test");
+	if (ImGui::TreeNode("Debug"))
+	{
+		if (ImGui::TreeNode("Field"))
+		{
+			ImGui::Text("%d",b);
+			ImGui::Unindent();
+			ImGui::TreePop();
+		}
+		ImGui::TreePop();
+	}
+	ImGui::End();
 
 	Sprite::PreDraw();
 	//îwåióp

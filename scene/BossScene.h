@@ -1,10 +1,11 @@
 ﻿#pragma once
 #include "BaseScene.h"
 #include "BossEnemy.h"
+#include "Collision.h"
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>
-const int EnemyMa = 8;
+const int BossEnemyMax = 7;
 class BossScene : public BaseScene{
 public:
 	/// <summary>
@@ -29,6 +30,7 @@ private:
 	Model* modelGround = nullptr;
 	Object3d* objGround;
 
+<<<<<<< HEAD
 	Model* modelFork = nullptr;
 	Object3d* objFork;
 
@@ -40,13 +42,17 @@ private:
 
 	Model* modelEnemy = nullptr;
 	Object3d* objEnemy;
+=======
+	Model* modelground = nullptr;
+	Object3d* objground;
+>>>>>>> master
 
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;
 	DebugCamera* camera = { nullptr };
 	Texture* limit = nullptr;
 	Player* player = nullptr;
-	Enemy* enemy[EnemyMa] = { nullptr };
+	Enemy* enemy[BossEnemyMax] = { nullptr };
 	BossEnemy* bossenemy = nullptr;
 };
 

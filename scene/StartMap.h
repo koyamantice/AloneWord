@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseScene.h"
 #include "BossEnemy.h"
+
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>
@@ -38,5 +39,6 @@ private:
 	Player* player = nullptr;
 	Enemy* enemy[EnemyMax] = { nullptr };
 	BossEnemy* bossenemy = nullptr;
+	int b = 0;
 };
 

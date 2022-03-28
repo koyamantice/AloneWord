@@ -1,82 +1,65 @@
 #pragma once
-#include"Object3d.h"
-#include"Model.h"
-#include <DirectXMath.h>
-#include <Input.h>
-#include"CollisionPrimitive.h"
-#include "Player.h"
-#include "Texture.h"
+#include"BaseEnemy.h"
 
 class BossEnemy;
-class Enemy {
+class Enemy :public BaseEnemy{
 public:
 	Enemy();
 
-	void Initialize();
-	void Update(Player* player,BossEnemy* bossenemy);
-	void Draw();
+	void Initialize() override;
+	void Finalize() override;
+	void Update()override;
+	void Draw() override;
 private:
-	bool collideArm(Player* player);
-	bool collidePlayer(Player* player);
-	bool collideAttackArm(Player* player);
-	bool LockOn(Player*player);
-	void Follow(Player* player);
+	bool collidePlayer() override;
+	bool collideAttackArm() override;
+	bool collideArm();
+	bool LockOn();
+	void Follow();
 	void Move();
+	
 
-private:
-	// DirectX::Çè»ó™
-	using XMFLOAT2 = DirectX::XMFLOAT2;
-	using XMFLOAT3 = DirectX::XMFLOAT3;
-	using XMFLOAT4 = DirectX::XMFLOAT4;
-	using XMVECTOR = DirectX::XMVECTOR;
-	using XMMATRIX = DirectX::XMMATRIX;
 public:
-/// ç¿ïWÇÃéÊìæ
-	const XMFLOAT3& GetPosition() { return  object3d->GetPosition(); }
-
-	const XMFLOAT3& GetRotation() { return object3d->GetRotation(); }
-
-	const int& GetisAlive() { return IsAlive; }
 	const bool& GetEnemyCatch() { return EnemyCatch; }
+	const XMFLOAT3& GetBoundPower() { return boundpower; }
+	const bool& GetHit() { return hit; }
+	const int& GetBound() { return bound; }
 
-	/// ç¿ïWÇÃê›íË
-	void SetPosition(XMFLOAT3 position) { object3d->SetPosition(position); }
-
-	void SetRotation(XMFLOAT3 rotation) { object3d->SetRotation(rotation); }
-
+	void SetPlayer(Player* player) { this->player=player; }
 	//bool Collision(XMFLOAT3 position, float radius);
-
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
-
 	void SetEnemyCatch(bool EnemyCatch) {this-> EnemyCatch = EnemyCatch; }
-
+	void SetBound(int bound) { this->bound = bound; }
+	void SetHit(bool hit) { this->hit = hit; }
+	void Setboundpower(XMFLOAT3 boundpower) { this->boundpower = boundpower; }
+	void SetEnemy();
 private:
-	Object3d* object3d;
-	Model* model;
-	Texture* texture;
 	XMFLOAT3 playerpos{};
 	XMFLOAT3 StartPos{};
 	XMFLOAT3 EndPos{};
-	XMFLOAT3 pos = {0,0,0};
-	XMFLOAT3 rot = { 0,0,0 };
+	XMFLOAT3 EndRot{};
+	XMFLOAT3 basePos{};
+
 	float rad = 0.4f;
-	const float PI = 3.14f;
 
 	float radius = 0.0f;
 	float speed = 0.0f;
-	float scale = 0.0f;// LaneNumÇ∆àÍèèÇ…ïœÇ¶ÇÈÇ±Ç∆
+	float savespeed = 0.0f;
+	float scale = 0.0f;
+	float savesacale = 0.0f;
 	float circleX = 0.0f;
 	float circleZ = 0.0f;
 	float EnemyWeight = 0.0f;
 	bool IsAlive = 0;
-	int IsTimer = 100;
+	int IsTimer = 200;
 	bool EnemyCatch = false;
 	bool isMove = false;
-	float frame=0;
+	bool hit = false;
 	int moveCount = 30;
 	int dir = 0;
 	bool zmove = false;
-public:
-	Sphere collider;
+	int bound = false;
+	bool add = false;
+	bool appearance = false;
 };
 

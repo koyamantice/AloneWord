@@ -116,6 +116,9 @@ public: // メンバ関数
 	bool PushCrossKey(int CrossKey);
 	bool TriggerCrossKey(int CrossKey);
 
+public:
+	const float& GetPosX() { return posX; }
+	const float& GetPosY() { return posY; }
 	/// <summary>
 	/// マウス移動量を取得
 	/// </summary>
@@ -138,5 +141,7 @@ private: // メンバ変数
 	bool is_push[32] = {};
 	//スティックの無反応範囲
 	LONG unresponsive_range = 650;
+	float posX = 0;
+	float posY = 0;
 };
 

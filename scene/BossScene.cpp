@@ -6,6 +6,8 @@
 void BossScene::Initialize(DirectXCommon* dxCommon) {
 	Texture::LoadTexture(0, L"Resources/2d/enemy.png");
 	Texture::LoadTexture(1, L"Resources/2d/limit.png");
+	Texture::LoadTexture(2, L"Resources/2d/shadow.png");
+	Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
 	// カメラ生成
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
@@ -15,17 +17,24 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	player->Initialize();
 
 	bossenemy = new BossEnemy();
+	bossenemy->SetPlayer(player);
 	bossenemy->Initialize();
+<<<<<<< HEAD
 
 	for (int i = 0; i < EnemyMa; i++) {
+=======
+	for (int i = 0; i < BossEnemyMax; i++) {
+>>>>>>> master
 		enemy[i] = new Enemy();
+		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
 	}
 	//オブジェクト初期化
-	modelGround = Model::CreateFromOBJ("ground");
+	/*modelGround = Model::CreateFromOBJ("ground");
 	objGround = Object3d::Create();
 	objGround->Initialize();
 	objGround->SetModel(modelGround);
+<<<<<<< HEAD
 	objGround->SetPosition({ 0,-1,0 });
 
 	modelFork = Model::CreateFromOBJ("Fork");
@@ -56,8 +65,18 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objEnemy->SetRotation({ 0,90.0f,0 });
 	objEnemy->SetPosition({ -6.0f,0.0f,0.0f });
 
+=======
+	objGround->SetPosition({ 0,-1,0 });*/
+
+	modelground = Model::CreateFromOBJ("ground");
+	objground = Object3d::Create();
+	objground->Initialize();
+	objground->SetModel(modelground);
+	objground->SetPosition({ 0,-1,10 });
+	objground->SetScale({ 22,1,10 });
+>>>>>>> master
 	//普通のテクスチャ(板ポリ)
-	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,1 });
+	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
 	limit->TextureCreate();
 	limit->SetPosition({ 0.0f,0.01f,0.0f });
 	limit->SetRotation({ 90.0f,0, 0 });
@@ -91,23 +110,40 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 }
 
 void BossScene::Finalize() {
+
 	//３ｄのモデルのデリート
+	for (int i = 0; i < BossEnemyMax; i++) {
+		enemy[i]->Finalize();
+	}
+	player->Finalize();
+	bossenemy->Finalize();
 }
 
 void BossScene::Update(DirectXCommon* dxCommon) {
+<<<<<<< HEAD
 	objGround->Update();
 	objFork->Update();
 	objMotti->Update();
 	objArm->Update();
 	objEnemy->Update();
+=======
+	//objGround->Update();
+	objground->Update();
+>>>>>>> master
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
-	bossenemy->Update(player);
+	bossenemy->Update();
 	limit->Update();
-	for (int i = 0; i < EnemyMa; i++) {
-		enemy[i]->Update(player,bossenemy);
+	for (int i = 0; i < BossEnemyMax; i++) {
+		enemy[i]->Update();
+		
 		player->ResetWeight(enemy[i]);
+		player->Rebound(enemy[i]);
+	}
+
+	for (int i = 0; i < BossEnemyMax; i++) {
+		enemy[i]->SetEnemy();
 	}
 	
 	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
@@ -120,11 +156,30 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		a += 1;
 	}
 
-	if (input->PushKey(DIK_0) || input->TriggerButton(input->Button_Y)) {
-		object1->PlayAnimation();
-		//SceneManager::GetInstance()->ChangeScene("BOSS");
+	//敵同士の当たり判定
+	if (sizeof(enemy) > 2) {//配列のサイズ確認
+		for (int colA = 0; colA < BossEnemyMax; colA++) {
+			for (int colB = 1; colB < BossEnemyMax; colB++) {
+				if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB) {//当たり判定と自機同士の当たり判定の削除
+					DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
+					enemy[colA]->SetHit(true);
+					enemy[colB]->SetHit(false);
+					break;
+				} else {
+					enemy[colA]->SetHit(false);
+				}
+			}
+		}
 	}
 
+	//その他シーン移行
+	if (bossenemy->GetHP() <= 0) {
+		SceneManager::GetInstance()->ChangeScene("CLEAR");
+	}
+
+	if (player->GetHp() <= 0) {
+		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
+	}
 	object1->Update();
 	camera->SetTarget(player->GetPosition());
 	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
@@ -146,7 +201,13 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 //}
 //ImGui::End();
 	Object3d::PreDraw();
+<<<<<<< HEAD
 	objGround->Draw();
+=======
+	//objGround->Draw();
+	objground->Draw();
+
+>>>>>>> master
 	Texture::PreDraw();
 	limit->Draw();
 
@@ -162,9 +223,8 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	//object1->Draw(dxCommon->GetCmdList());
 	//背景用
 	player->Draw();
-	for (int i = 0; i < EnemyMa; i++) {
+	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Draw();
 	}
-
 	bossenemy->Draw();
 }

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 #include"Object3d.h"
 #include"Model.h"
 #include <DirectXMath.h>
@@ -12,10 +12,11 @@ public:
 	Player();
 
 	void Initialize();
+	void Finalize();
 	void Update();
 	void Draw();
 private:
-	// DirectX::‚ğÈ—ª
+	// DirectX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
@@ -23,59 +24,89 @@ private:
 	using XMMATRIX = DirectX::XMMATRIX;
 public:
 	/// <summary>
-/// À•W‚Ìæ“¾
+/// åº§æ¨™ã®å–å¾—
 /// </summary>
-/// <returns>À•W</returns>
+/// <returns>åº§æ¨™</returns>
 	const XMFLOAT3& GetPosition() { return  object3d->GetPosition(); }
 
 	const XMFLOAT3& GetRotation() { return object3d->GetRotation(); }
 
 	const XMFLOAT3& GetArmPosition() { return Armpos; }
 
+	const XMFLOAT3& GetArmRotation() { return ArmRot; }
+
 	const int& GetHp() { return HP; }
+
+	const int& GetInterval() { return Interval; }
+
+	const int& GetFlashCount() { return FlashCount; }
 
 	const int& GetArmMoveNumber() { return ArmMoveNumber; }
 
 	const bool& GetAttackFlag() { return AttackFlag; }
 
+	const bool& GetDamageFlag() { return DamageFlag; }
+
 	const float& GetArmWeight() { return ArmWeight; }
 
+	const float& GetArmScale() { return Armscale; }
+
+	const float& GetArmSpeed() { return ArmSpeed; }
+
+	const float& GetPower() { return power; }
+
 	/// <summary>
-	/// À•W‚Ìİ’è
+	/// åº§æ¨™ã®è¨­å®š
 	/// </summary>
-	/// <param name="position">À•W</param>
+	/// <param name="position">åº§æ¨™</param>
 	void SetPosition(XMFLOAT3 position) { object3d->SetPosition(position); }
 
 	void SetRotation(XMFLOAT3 rotation) { object3d->SetRotation(rotation); }
 
 	void SetArmPosition(XMFLOAT3 Armpos) { this->Armpos = Armpos; }
 
+	void SetArmRotation(XMFLOAT3 ArmRot) { this->ArmRot = ArmRot; }
+
 	void SetHp(int hp) { this->HP = hp; }
+
+	void SetInterval(int Interval) { this->Interval = Interval; }
+
+	void SetFlash(int Flash) { this->FlashCount = FlashCount; }
 
 	void SetArmMoveNumber(int ArmMoveNumber) { this->ArmMoveNumber = ArmMoveNumber; }
 
 	void SetAttackFlag(bool AttackFlag) { this->AttackFlag = AttackFlag; }
 
+	void SetDamageFlag(bool DamageFlag) { this->DamageFlag = DamageFlag; }
+
 	void SetArmWeight(float ArmWeight) { this->ArmWeight = ArmWeight; }
 
+	void SetArmScale(float Armscale) { this->Armscale = Armscale; }
+
 	void ResetWeight(Enemy* enemy);
+
+	void Rebound(Enemy* enemy);
 private:
 	Object3d* Armobj;
 	Object3d* object3d;
 	Model* model;
 	Model* Armmodel;
-	XMFLOAT2 PlayerHP;
+	XMFLOAT2 PlayerHP{};
 	XMFLOAT3 pos = { 0,0,-10 };
 	XMFLOAT3 Armpos = { 0,0,0 };
+	XMFLOAT3 ArmRot = { 0,0,0 };
+	XMFLOAT3 distance{};
+	XMFLOAT3 rebound{};
+
 	Sprite* SpritePlayerHP = nullptr;
 
 	float PlayerSpeed = 0.3f;
-	//À•W‚ğ–ß‚·
+	//åº§æ¨™ã‚’æˆ»ã™
 	bool undoPos = false;
-
+	float AfterRot = 0.0f;
 	float rad = 0.4f;
 	const float PI = 3.14f;
-	//˜r‚Ì•Ï”
+	//è…•ã®å¤‰æ•°
 	float radius = 0.0f;
 	float speed = 0.0f;
 	float scale = 10.0f;
@@ -83,6 +114,7 @@ private:
 	float scaleVel = 3.0f;
 	float initspeed = 0.0f;
 	float initrotation = 0.0f;
+	float initArmRotation = 0.0f;
 	float circleX = 0.0f;
 	float circleZ = 0.0f;
 	float Armradius = 0.0f;
@@ -91,11 +123,16 @@ private:
 	float ArmCircleX = 0.0f;
 	float ArmCircleZ = 0.0f;
 	float ArmWeight = 0.0f;
-	//‚¢‚ë‚¢‚ë‚Èƒtƒ‰ƒO
+	unsigned int SpeedSub = 0;
+	float power = 0.0f;
+	//ã„ã‚ã„ã‚ãªãƒ•ãƒ©ã‚°
 	int ArmMoveNumber = 0;
 	bool AttackFlag = false;
+	bool DamageFlag = false;
 	int AttackMoveNumber = 0;
-	//ƒC[ƒWƒ“ƒO‚Ì‚½‚ß‚Ì‚â‚Â
+	int Interval = 0;
+	int FlashCount = 0;
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã®ãŸã‚ã®ã‚„ã¤
 	float frame = 0.0f;
 	float frameMax = 27.0f;
 	float frame2 = 0.0f;
@@ -104,11 +141,11 @@ private:
 	float frameMax3 = 80.0f;
 	//HP
 	int HP = 10;
-
+	float StickrotX = 0;
+	float StickrotY = 0;
 	XMFLOAT3 angle = { 0,0,0 };
 public:
 	Sphere collider;
-
 };
 
 

@@ -191,6 +191,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="scene\BossScene.cpp" />
+    <ClCompile Include="scene\ClearScene.cpp" />
+    <ClCompile Include="scene\GameoverScene.cpp" />
     <ClCompile Include="scene\StartMap.cpp" />
     <ClCompile Include="scene\TisGame.cpp" />
     <ClCompile Include="scene\TitleScene.cpp" />
@@ -211,7 +213,6 @@
     <ClInclude Include="3d\Mesh.h" />
     <ClInclude Include="3d\Model.h" />
     <ClInclude Include="3d\Object3d.h" />
-    <ClInclude Include="BaseEnemy.h" />
     <ClInclude Include="base\AbstractSceneFactory.h" />
     <ClInclude Include="base\Audio.h" />
     <ClInclude Include="base\BaseScene.h" />
@@ -228,6 +229,7 @@
     <ClInclude Include="collision\CollisionInfo.h" />
     <ClInclude Include="collision\CollisionPrimitive.h" />
     <ClInclude Include="collision\CollisionTypes.h" />
+    <ClInclude Include="enemy\BaseEnemy.h" />
     <ClInclude Include="enemy\BossEnemy.h" />
     <ClInclude Include="enemy\Enemy.h" />
     <ClInclude Include="imgui\imconfig.h" />
@@ -245,6 +247,8 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="SceneFactory.h" />
     <ClInclude Include="scene\BossScene.h" />
+    <ClInclude Include="scene\ClearScene.h" />
+    <ClInclude Include="scene\GameoverScene.h" />
     <ClInclude Include="scene\StartMap.h" />
     <ClInclude Include="scene\TisGame.h" />
     <ClInclude Include="scene\TitleScene.h" />
