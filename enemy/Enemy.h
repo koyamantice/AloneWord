@@ -32,7 +32,6 @@ public:
 	void SetHit(bool hit) { this->hit = hit; }
 	void Setboundpower(XMFLOAT3 boundpower) { this->boundpower = boundpower; }
 	void SetEnemy();
-	void PosSet(Enemy* enemy[]);
 
 private:
 	XMFLOAT3 playerpos{};

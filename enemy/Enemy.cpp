@@ -11,11 +11,6 @@ Enemy::Enemy() {
 	enemyobj = new Object3d();
 }
 
-void Enemy::PosSet(Enemy* enemy[])
-{
-	enemy[0]->SetRotation({ 180.0f, 0.0f, 1.0f});
-	enemy[1]->SetRotation({ 90.0f, 1.0f, 1.0f});
-}
 void Enemy::Initialize() {
 	//敵
 	IsAlive = false;

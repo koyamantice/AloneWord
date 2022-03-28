@@ -100,7 +100,6 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	}
 	limit->Update();
 	for (int i = 0; i < BossEnemyMax; i++) {
-		enemy[i]->PosSet(enemy);
 		enemy[i]->Update();
 		player->ResetWeight(enemy[i]);
 		player->Rebound(enemy[i]);
