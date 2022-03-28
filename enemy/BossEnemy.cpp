@@ -103,7 +103,7 @@ bool BossEnemy::collideAttackArm() {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
 			BossHit = true;
 			player->SetAttackFlag(false);
-		
+
 			//ついてる敵の数で音が変わる
 			if (weight <= 3) {
 				Audio::GetInstance()->PlayWave("Resources/Sound/strongL1.wav", 0.4f);
@@ -134,7 +134,7 @@ bool BossEnemy::collideAttackArm() {
 	else {
 		return false;
 	}
-	
+
 }
 
 //ボスの行動
@@ -166,36 +166,36 @@ void BossEnemy::Fork() {
 				pat++;
 			}
 			if (pat == 1) {
-				Afterrot = 115;
+				Afterrot = 45;
 				AfterPos.x = 25.0f;
 				AfterPos.z = -20.0f;
 
 			}
 			else if (pat == 2) {
-				Afterrot = 0;
+				Afterrot = -90;
 				AfterPos.x = 25.0f;
 				AfterPos.z = 20.0f;
 
 			}
 			else if (pat == 3) {
-				Afterrot = 225;
+				Afterrot = -225;
 				AfterPos.x = -25.0f;
 				AfterPos.z = -20.0f;
 			}
 			else if (pat == 4) {
-				Afterrot = 360;
+				Afterrot = -90;
 				AfterPos.x = -25.0f;
 				AfterPos.z = 20.0f;
 			}
 			else if (pat == 5) {
-				Afterrot = 360 + 115;
+				Afterrot = 45;
 				AfterPos.x = 0.0f;
 				AfterPos.z = 0.0f;
 			}
 			else {
 				rot.y = 360 + 115 + 180;
 				pat = 0;
-				AttackCount = 0;
+				AttackCount = 30;
 				active = false;
 				frame = 0;
 			}
@@ -210,6 +210,7 @@ void BossEnemy::Fork() {
 		else if ((action % 2) == 1) {
 			if (!already && !finish) {
 				AfterPos.y = 3.0f;
+				Afterrot = 90;
 				pos.y = Ease(In, Cubic, 0.3f, pos.y, AfterPos.y);
 				if (pos.y >= AfterPos.y - 0.05f) {
 					Standby++;
@@ -243,24 +244,27 @@ void BossEnemy::Fork() {
 				}
 			}
 			if (finish) {
-				AfterPos.x = 0.0f;
-				AfterPos.y = 0.0f;
-				AfterPos.z = 0.0f;
-				pos = {
-Ease(In,Cubic,0.5f,pos.x, AfterPos.x),
-Ease(In, Cubic, 0.5f, pos.y, AfterPos.y),
-Ease(In,Cubic,0.5f,pos.z, AfterPos.z),
-				};
-				if ((fabs(pos.x - AfterPos.x) <= DBL_EPSILON * fmax(1, fmax(fabs(pos.x), fabs(AfterPos.x)))) &&
-					(fabs(pos.y - AfterPos.y) <= DBL_EPSILON * fmax(1, fmax(fabs(pos.y), fabs(AfterPos.y)))) &&
-					(fabs(pos.z - AfterPos.z) <= DBL_EPSILON * fmax(1, fmax(fabs(pos.z), fabs(AfterPos.z))))) {
-					finish = false;
-					active = false;
-					action = 0;
-					AttackCount = 0;
-					times = 0;
+				coolT++;
+				if (coolT > 180) {
+					AfterPos.x = 0.0f;
+					AfterPos.y = 0.0f;
+					AfterPos.z = 0.0f;
+					pos = {
+	Ease(In,Cubic,0.5f,pos.x, AfterPos.x),
+	Ease(In, Cubic, 0.5f, pos.y, AfterPos.y),
+	Ease(In,Cubic,0.5f,pos.z, AfterPos.z),
+					};
+					if ((fabs(pos.x - AfterPos.x) <= DBL_EPSILON * fmax(1, fmax(fabs(pos.x), fabs(AfterPos.x)))) &&
+						(fabs(pos.y - AfterPos.y) <= DBL_EPSILON * fmax(1, fmax(fabs(pos.y), fabs(AfterPos.y)))) &&
+						(fabs(pos.z - AfterPos.z) <= DBL_EPSILON * fmax(1, fmax(fabs(pos.z), fabs(AfterPos.z))))) {
+						finish = false;
+						active = false;
+						coolT = 0;
+						action = 0;
+						AttackCount = 0;
+						times = 0;
+					}
 				}
-
 			}
 			enemyobj->SetPosition(pos);
 

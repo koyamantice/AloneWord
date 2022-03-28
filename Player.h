@@ -83,6 +83,8 @@ public:
 
 	void SetArmScale(float Armscale) { this->Armscale = Armscale; }
 
+	void SetMove(float XMax, float ZMax) { this->XMax = XMax; this->ZMax = ZMax; }
+
 	void ResetWeight(Enemy* enemy);
 
 	void Rebound(Enemy* enemy);
@@ -105,6 +107,8 @@ private:
 	bool undoPos = false;
 	float AfterRot = 0.0f;
 	float rad = 0.4f;
+	float XMax = 0.0f;
+	float ZMax = 0.0f;
 	const float PI = 3.14f;
 	//腕の変数
 	float radius = 0.0f;
