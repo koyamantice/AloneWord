@@ -135,6 +135,7 @@ private: // メンバ変数
 	DIMOUSESTATE2 mouseStatePre = {};
 	POINT p;
 	//ゲームパッドデバイス
+	DWORD g_dxNumForoce;
 	ComPtr<IDirectInputDevice8> devGamePad;
 	DIJOYSTATE gamePadState = {};
 	DIJOYSTATE oldGamePadState = {};

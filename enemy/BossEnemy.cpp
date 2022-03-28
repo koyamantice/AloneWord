@@ -87,8 +87,7 @@ bool BossEnemy::collidePlayer() {
 		player->SetHp(playerhp - 1);
 		Interval = 20;
 		return true;
-	}
-	else {
+	} else {
 		return false;
 	}
 }
@@ -107,11 +106,9 @@ bool BossEnemy::collideAttackArm() {
 			//ついてる敵の数で音が変わる
 			if (weight <= 3) {
 				Audio::GetInstance()->PlayWave("Resources/Sound/strongL1.wav", 0.4f);
-			}
-			else if (weight > 3 && weight <= 6) {
+			} else if (weight > 3 && weight <= 6) {
 				Audio::GetInstance()->PlayWave("Resources/Sound/strongL2.wav", 0.4f);
-			}
-			else if (weight >= 7) {
+			} else if (weight >= 7) {
 				Audio::GetInstance()->PlayWave("Resources/Sound/strongL3.wav", 0.4f);
 			}
 
@@ -126,12 +123,10 @@ bool BossEnemy::collideAttackArm() {
 				BossHit = false;
 			}
 			return true;
-		}
-		else {
+		} else {
 			return false;
 		}
-	}
-	else {
+	} else {
 		return false;
 	}
 
@@ -147,8 +142,7 @@ void BossEnemy::Fork() {
 			pat = 1;
 			active = true;
 		}
-	}
-	else {
+	} else {
 		if (!active) {
 			//pat = 0;
 			AttackCount++;
@@ -160,8 +154,7 @@ void BossEnemy::Fork() {
 		if ((action % 2) == 0) {
 			if (frame < 0.45f) {
 				frame += 0.002f;
-			}
-			else {
+			} else {
 				frame = 0;
 				pat++;
 			}
@@ -169,30 +162,27 @@ void BossEnemy::Fork() {
 				Afterrot = 45;
 				AfterPos.x = 25.0f;
 				AfterPos.z = -20.0f;
-
 			}
 			else if (pat == 2) {
+
 				Afterrot = -90;
 				AfterPos.x = 25.0f;
 				AfterPos.z = 20.0f;
 
-			}
-			else if (pat == 3) {
+
+			} else if (pat == 3) {
 				Afterrot = -225;
 				AfterPos.x = -25.0f;
 				AfterPos.z = -20.0f;
-			}
-			else if (pat == 4) {
+			} else if (pat == 4) {
 				Afterrot = -90;
 				AfterPos.x = -25.0f;
 				AfterPos.z = 20.0f;
-			}
-			else if (pat == 5) {
+			} else if (pat == 5) {
 				Afterrot = 45;
 				AfterPos.x = 0.0f;
 				AfterPos.z = 0.0f;
-			}
-			else {
+			} else {
 				rot.y = 360 + 115 + 180;
 				pat = 0;
 				AttackCount = 30;
@@ -206,8 +196,7 @@ void BossEnemy::Fork() {
 			};
 			enemyobj->SetPosition(pos);
 
-		}
-		else if ((action % 2) == 1) {
+		} else if ((action % 2) == 1) {
 			if (!already && !finish) {
 				AfterPos.y = 3.0f;
 				Afterrot = 90;
@@ -223,8 +212,7 @@ void BossEnemy::Fork() {
 						already = true;
 					}
 				}
-			}
-			else {
+			} else {
 				AfterPos.y = 0.0f;
 				pos = {
 					pos.x,
@@ -237,8 +225,7 @@ void BossEnemy::Fork() {
 					times++;
 					if (times >= 3) {
 						finish = true;
-					}
-					else {
+					} else {
 						AfterPos.y = 3.0f;
 					}
 				}
