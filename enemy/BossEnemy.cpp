@@ -68,6 +68,20 @@ void BossEnemy::Update() {
 }
 
 void BossEnemy::Draw() {
+	ImGui::Begin("test");
+if (ImGui::TreeNode("Debug")) {
+	if (ImGui::TreeNode("Enemy")) {
+		ImGui::SliderFloat("bound.x", &pos.x, 50, -50);
+		ImGui::SliderFloat("bound.y", &pos.y, 50, -50);
+		ImGui::SliderFloat("pos.y", &pos.z, 50, -50);
+		ImGui::Text("%d", IsAlive);
+		ImGui::Unindent();
+		ImGui::TreePop();
+	}
+	ImGui::TreePop();
+}
+ImGui::End();
+
 	Object3d::PreDraw();
 	enemyobj->Draw();
 	Texture::PreDraw();
@@ -137,7 +151,7 @@ void BossEnemy::Fork() {
 	XMFLOAT3 AfterPos{};
 	if (AttackCount > 40) {
 		if (!active) {
-			action = (rand() % 2);
+			action = 1;//(rand() % 2);
 			frame = 0;
 			pat = 1;
 			active = true;
@@ -162,21 +176,24 @@ void BossEnemy::Fork() {
 				Afterrot = 45;
 				AfterPos.x = 25.0f;
 				AfterPos.z = -20.0f;
-
 			} else if (pat == 2) {
 				Afterrot = -90;
 				AfterPos.x = 25.0f;
 				AfterPos.z = 20.0f;
 
-			} else if (pat == 3) {
+			}
+			else if (pat == 3) {
 				Afterrot = -225;
 				AfterPos.x = -25.0f;
 				AfterPos.z = -20.0f;
-			} else if (pat == 4) {
+			}
+			else if (pat == 4) {
 				Afterrot = -90;
 				AfterPos.x = -25.0f;
 				AfterPos.z = 20.0f;
-			} else if (pat == 5) {
+			}
+			else if (pat == 5) {
+
 				Afterrot = 45;
 				AfterPos.x = 0.0f;
 				AfterPos.z = 0.0f;
@@ -197,14 +214,14 @@ void BossEnemy::Fork() {
 		} else if ((action % 2) == 1) {
 			if (!already && !finish) {
 				AfterPos.y = 3.0f;
-				Afterrot = 90;
+				Afterrot= 90;
 				pos.y = Ease(In, Cubic, 0.3f, pos.y, AfterPos.y);
 				if (pos.y >= AfterPos.y - 0.05f) {
 					Standby++;
 					pos = {
-			Ease(In,Cubic,0.5f,pos.x,player->GetPosition().x),
-			Ease(In, Cubic, 0.3f, pos.y, AfterPos.y),
-			Ease(In,Cubic,0.5f,pos.z,player->GetPosition().z),
+				Ease(In,Cubic,0.5f,pos.x,player->GetPosition().x),
+				Ease(In, Cubic, 0.3f, pos.y, AfterPos.y),
+				Ease(In,Cubic,0.5f,pos.z,player->GetPosition().z),
 					};
 					if (Standby >= 180) {
 						already = true;
@@ -230,25 +247,32 @@ void BossEnemy::Fork() {
 			}
 			if (finish) {
 				coolT++;
-				if (coolT > 180) {
+				if (bossUp == false && coolT > 180) {
+					//if (coolT > 480) {
+						bossUp = true;
+					//}
+				}
+				if (bossUp == true) {
+					AfterPos.y = 3.0f;
 					AfterPos.x = 0.0f;
-					AfterPos.y = 0.0f;
 					AfterPos.z = 0.0f;
 					pos = {
-	Ease(In,Cubic,0.5f,pos.x, AfterPos.x),
-	Ease(In, Cubic, 0.5f, pos.y, AfterPos.y),
-	Ease(In,Cubic,0.5f,pos.z, AfterPos.z),
+	Ease(In,Cubic,0.34f,pos.x, AfterPos.x),
+	Ease(In, Cubic, 0.34f, pos.y, AfterPos.y),
+	Ease(In,Cubic,0.34f,pos.z, AfterPos.z),
 					};
 					if ((fabs(pos.x - AfterPos.x) <= DBL_EPSILON * fmax(1, fmax(fabs(pos.x), fabs(AfterPos.x)))) &&
-						(fabs(pos.y - AfterPos.y) <= DBL_EPSILON * fmax(1, fmax(fabs(pos.y), fabs(AfterPos.y)))) &&
 						(fabs(pos.z - AfterPos.z) <= DBL_EPSILON * fmax(1, fmax(fabs(pos.z), fabs(AfterPos.z))))) {
 						finish = false;
 						active = false;
+						bossUp = false;
 						coolT = 0;
 						action = 0;
-						AttackCount = 0;
+						AttackCount = 30;
+						AfterPos.y = 0.0f;
 						times = 0;
 					}
+
 				}
 			}
 			enemyobj->SetPosition(pos);

@@ -12,7 +12,7 @@ Enemy::Enemy() {
 }
 
 void Enemy::Initialize() {
-	//“G
+	//æ•µ
 	IsAlive = false;
 	IsTimer = 200;
 	enemyobj = Object3d::Create();
@@ -77,7 +77,7 @@ void Enemy::Update() {
 		}
 	}
 
-	//“|‚µ‚½‚Æ‚«‚Ì‰‰o
+	//å€’ã—ãŸã¨ãã®æ¼”å‡º
 	if (bound == true) {
 		//enescale = { 0.4f,0.4f,0.4f };
 		boundpower.x = (float)(rand() % 4 - 2);
@@ -97,7 +97,7 @@ void Enemy::Update() {
 		add = true;
 	}
 
-	//oŒ»‚·‚éuŠÔ
+	//å‡ºç¾ã™ã‚‹ç¬é–“
 	if (appearance == true) {
 		boundpower.y = 0.5;
 		enescale = { 0.0f,0.0f,0.0f };
@@ -106,9 +106,9 @@ void Enemy::Update() {
 		appearance = false;
 	}
 
-	//X‚É‰ÁZ
+	//æ›´ã«åŠ ç®—
 	if (add == true) {
-		boundpower.y -= 0.02;
+		boundpower.y -= 0.02f;
 		pos.x += boundpower.x;
 		pos.y += boundpower.y;
 		pos.z += boundpower.z;
@@ -125,7 +125,7 @@ void Enemy::Update() {
 		}
 	}
 
-	//‰‰oƒtƒ‰ƒOI—¹
+	//æ¼”å‡ºãƒ•ãƒ©ã‚°çµ‚äº†
 	if (enescale.x <= 0.0f && enescale.y <= 0.0f && enescale.z <= 0.0f) {
 		add = false;
 		boundpower = { 0.0f,0.0f,0.0f };
@@ -133,7 +133,7 @@ void Enemy::Update() {
 		IsAlive = false;
 	}
 
-	//“GoŒ»Š®—¹
+	//æ•µå‡ºç¾å®Œäº†
 	if (add == true && boundpower.y <= 0.0f && pos.y <= 0.0f && boundpower.x == 0.0f) {
 		boundpower = { 0.0f,0.0f,0.0f };
 		add = false;
@@ -156,7 +156,7 @@ void Enemy::Update() {
 	Restexture->Update();
 }
 
-//•`‰æ
+//æç”»
 void Enemy::Draw() {
 	ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
@@ -180,7 +180,7 @@ void Enemy::Draw() {
 	}
 }
 
-//“G‚ğƒLƒƒƒbƒ`
+//æ•µã‚’ã‚­ãƒ£ãƒƒãƒ
 bool Enemy::collideArm() {
 	XMFLOAT3 Armpos = player->GetArmPosition();
 	float armweight = player->GetArmWeight();
@@ -229,7 +229,7 @@ bool Enemy::collideArm() {
 	}
 }
 
-//ƒvƒŒƒCƒ„[‚ªƒ_ƒ[ƒW‚ğH‚ç‚¤
+//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’é£Ÿã‚‰ã†
 bool Enemy::collidePlayer() {
 	if (IsAlive && !EnemyCatch && FlashCount == 0 && add == false) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true) {
@@ -252,7 +252,7 @@ bool Enemy::collideAttackArm() {
 	float armweight = player->GetArmWeight();
 	if (IsAlive && !EnemyCatch && attackflag) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
-			IsAlive = 0;//‚½‚ê‚Ä‚Ä‚È‚¢•û
+			IsAlive = 0;//æŒãŸã‚Œã¦ã¦ãªã„æ–¹
 			player->SetAttackFlag(false);
 			if (armweight <= 3) {
 				Audio::GetInstance()->PlayWave("Resources/Sound/strongL1.wav", 0.4f);
@@ -261,7 +261,7 @@ bool Enemy::collideAttackArm() {
 			} else if (armweight >= 7) {
 				Audio::GetInstance()->PlayWave("Resources/Sound/strongL3.wav", 0.4f);
 			}
-			if (armweight != 0.0f) {//‚Á‚Ä‚é•û
+			if (armweight != 0.0f) {//æŒã£ã¦ã‚‹æ–¹
 				//enescale = { 0.4f,0.4f,0.4f };
 				armweight = 0.0f;
 				player->SetArmWeight(armweight);
@@ -275,7 +275,7 @@ bool Enemy::collideAttackArm() {
 	}
 }
 
-//“G‚ªƒvƒŒƒCƒ„[‚Ì‹ß‚­‚É‚¢‚é‚©
+//æ•µãŒãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®è¿‘ãã«ã„ã‚‹ã‹
 bool Enemy::LockOn() {
 	if (Collision::CircleCollision(playerpos.x, playerpos.z, 5.0,
 		pos.x, pos.z, 3.0)) {
@@ -285,7 +285,7 @@ bool Enemy::LockOn() {
 	}
 }
 
-//“G’Ç]
+//æ•µè¿½å¾“
 void Enemy::Follow() {
 	XMFLOAT3 position{};
 	position.x = (playerpos.x - pos.x);
@@ -298,7 +298,7 @@ void Enemy::Follow() {
 	pos.z += (float)Check2 * 0.095f;
 }
 
-//“G‚ª“®‚­
+//æ•µãŒå‹•ã
 void Enemy::Move() {
 	if (pos.z > z_max) {
 		pos.z = z_max;
@@ -397,7 +397,7 @@ void Enemy::Move() {
 	}
 }
 
-//“G‚ÌˆÊ’u‚ğ˜r‚Æ“¯‚¶‚É‚·‚é
+//æ•µã®ä½ç½®ã‚’è…•ã¨åŒã˜ã«ã™ã‚‹
 void Enemy::SetEnemy() {
 	float armweight = player->GetArmWeight();
 	XMFLOAT3 plapos = player->GetPosition();

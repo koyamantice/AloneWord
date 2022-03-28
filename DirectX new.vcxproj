@@ -196,6 +196,7 @@
     <ClCompile Include="scene\StartMap.cpp" />
     <ClCompile Include="scene\TisGame.cpp" />
     <ClCompile Include="scene\TitleScene.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="DirectXTex\DirectXTex_Desktop_2019_Win10.vcxproj">
@@ -252,6 +253,7 @@
     <ClInclude Include="scene\StartMap.h" />
     <ClInclude Include="scene\TisGame.h" />
     <ClInclude Include="scene\TitleScene.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui\imgui.vcxproj" />

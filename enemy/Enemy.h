@@ -58,7 +58,7 @@ private:
 	int moveCount = 30;
 	int dir = 0;
 	bool zmove = false;
-	int bound = false;
+	bool bound = false;
 	bool add = false;
 	bool appearance = false;
 };

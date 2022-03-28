@@ -15,6 +15,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	Object3d::SetCamera(camera);
 	player = new Player();
 	player->Initialize();
+	player->SetMove(25.0f, 20.0f);
 
 	bossenemy = new BossEnemy();
 	bossenemy->SetPlayer(player);
