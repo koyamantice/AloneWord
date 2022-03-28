@@ -162,11 +162,13 @@ void BossEnemy::Fork() {
 				Afterrot = 45;
 				AfterPos.x = 25.0f;
 				AfterPos.z = -20.0f;
+			}
+			else if (pat == 2) {
 
-			} else if (pat == 2) {
 				Afterrot = -90;
 				AfterPos.x = 25.0f;
 				AfterPos.z = 20.0f;
+
 
 			} else if (pat == 3) {
 				Afterrot = -225;

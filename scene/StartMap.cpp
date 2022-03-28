@@ -8,23 +8,26 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	Texture::LoadTexture(1, L"Resources/2d/limit.png");
 	Texture::LoadTexture(2, L"Resources/2d/shadow.png");
 	Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
-	// ƒJƒƒ‰¶¬
+	// ã‚«ãƒ¡ãƒ©ç”Ÿæˆ
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
-	// 3DƒIƒuƒWƒFƒNƒg‚ÉƒJƒƒ‰‚ğƒZƒbƒg
+	// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‚«ãƒ¡ãƒ©ã‚’ã‚»ãƒƒãƒˆ
 	Object3d::SetCamera(camera);
 	player = new Player();
 	player->Initialize();
+	player->SetMove(50.0f, 50.0f);
+
 
 	bossenemy = new BossEnemy();
 	bossenemy->SetPlayer(player);
 	bossenemy->Initialize();
+
 	for (int i = 0; i < StartEnemyMax; i++) {
 		enemy[i] = new Enemy();
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
 	}
-	//ƒIƒuƒWƒFƒNƒg‰Šú‰»
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåˆæœŸåŒ–
 	/*modelGround = Model::CreateFromOBJ("ground");
 	objGround = Object3d::Create();
 	objGround->Initialize();
@@ -37,33 +40,35 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	objground->SetModel(modelground);
 	objground->SetPosition({ 0,-1,10 });
 	objground->SetScale({ 22,1,10 });
-	//•’Ê‚ÌƒeƒNƒXƒ`ƒƒ(”Âƒ|ƒŠ)
-	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
+	//æ™®é€šã®ãƒ†ã‚¯ã‚¹ãƒãƒ£(æ¿ãƒãƒª)
+
+	/*limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
 	limit->TextureCreate();
 	limit->SetPosition({ 0.0f,0.01f,0.0f });
 	limit->SetRotation({ 90.0f,0, 0 });
-	limit->SetScale({ 6,5,5 });
-	//”wŒiƒXƒvƒ‰ƒCƒg¶¬
+	limit->SetScale({ 6,5,5 });*/
 
-	// ƒ‚ƒfƒ‹“Ç‚İ‚İ
+	//èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
+
+	// ãƒ¢ãƒ‡ãƒ«èª­ã¿è¾¼ã¿
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
 	//srand(NULL);
-	// ƒ‰ƒCƒg¶¬
+	// ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	lightGroup = LightGroup::Create();
-	// 3DƒIƒuƒGƒNƒg‚Éƒ‰ƒCƒg‚ğƒZƒbƒg
+	// 3Dã‚ªãƒ–ã‚¨ã‚¯ãƒˆã«ãƒ©ã‚¤ãƒˆã‚’ã‚»ãƒƒãƒˆ
 	Object3d::SetLightGroup(lightGroup);
 
-	// ƒJƒƒ‰’‹“_‚ğƒZƒbƒg
+	// ã‚«ãƒ¡ãƒ©æ³¨è¦–ç‚¹ã‚’ã‚»ãƒƒãƒˆ
 	camera->SetTarget(player->GetPosition());
 	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
-	// ƒ‚ƒfƒ‹–¼‚ğw’è‚µ‚Äƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+	// ãƒ¢ãƒ‡ãƒ«åã‚’æŒ‡å®šã—ã¦ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 	model1 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 
-	// ƒfƒoƒCƒX‚ğƒZƒbƒg
+	// ãƒ‡ãƒã‚¤ã‚¹ã‚’ã‚»ãƒƒãƒˆ
 	FBXObject3d::SetDevice(dxCommon->GetDev());
-	// ƒJƒƒ‰‚ğƒZƒbƒg
+	// ã‚«ãƒ¡ãƒ©ã‚’ã‚»ãƒƒãƒˆ
 	FBXObject3d::SetCamera(camera);
-	// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“¶¬
+	// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	FBXObject3d::CreateGraphicsPipeline();
 
 	object1 = new FBXObject3d;
@@ -73,12 +78,14 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 
 void StartMap::Finalize() {
 
-	//‚R‚„‚Ìƒ‚ƒfƒ‹‚ÌƒfƒŠ[ƒg
+	//ï¼“ï½„ã®ãƒ¢ãƒ‡ãƒ«ã®ãƒ‡ãƒªãƒ¼ãƒˆ
 	for (int i = 0; i < StartEnemyMax; i++) {
 		enemy[i]->Finalize();
 	}
 	player->Finalize();
-	bossenemy->Finalize();
+
+	//bossenemy->Finalize();
+
 }
 
 void StartMap::Update(DirectXCommon* dxCommon) {
@@ -87,8 +94,10 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
-	bossenemy->Update();
-	limit->Update();
+
+	//bossenemy->Update();
+	//limit->Update();
+
 	for (int i = 0; i < StartEnemyMax; i++) {
 		enemy[i]->Update();
 
@@ -110,26 +119,31 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		a += 1;
 	}
 
-	//“G“¯m‚Ì“–‚½‚è”»’è
-	if (sizeof(enemy) > 2) {//”z—ñ‚ÌƒTƒCƒYŠm”F
+	//æ•µåŒå£«ã®å½“ãŸã‚Šåˆ¤å®š
+	if (sizeof(enemy) > 2) {//é…åˆ—ã®ã‚µã‚¤ã‚ºç¢ºèª
 		for (int colA = 0; colA < StartEnemyMax; colA++) {
 			for (int colB = 1; colB < StartEnemyMax; colB++) {
-				if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB) {//“–‚½‚è”»’è‚Æ©‹@“¯m‚Ì“–‚½‚è”»’è‚Ìíœ
+				if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB) {//å½“ãŸã‚Šåˆ¤å®šã¨è‡ªæ©ŸåŒå£«ã®å½“ãŸã‚Šåˆ¤å®šã®å‰Šé™¤
 					DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
 					enemy[colA]->SetHit(true);
 					enemy[colB]->SetHit(false);
 					break;
-				} else {
+
+				}
+				else {
+
 					enemy[colA]->SetHit(false);
 				}
 			}
 		}
 	}
 
-	//‚»‚Ì‘¼ƒV[ƒ“ˆÚs
-	if (bossenemy->GetHP() <= 0) {
+	//ãã®ä»–ã‚·ãƒ¼ãƒ³ç§»è¡Œ
+
+	/*if (bossenemy->GetHP() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("CLEAR");
-	}
+	}*/
+
 
 	if (player->GetHp() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
@@ -159,19 +173,22 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	objground->Draw();
 
 	Texture::PreDraw();
-	limit->Draw();
+	//limit->Draw();
+
 
 	//Sprite::PreDraw();
-	//”wŒi—p
+	//èƒŒæ™¯ç”¨
 	//sprite->Draw();
 
 
 	Object3d::PreDraw();
 	//object1->Draw(dxCommon->GetCmdList());
-	//”wŒi—p
+	//èƒŒæ™¯ç”¨
 	player->Draw();
 	for (int i = 0; i < StartEnemyMax; i++) {
 		enemy[i]->Draw();
 	}
-	bossenemy->Draw();
+
+	//bossenemy->Draw();
+
 }

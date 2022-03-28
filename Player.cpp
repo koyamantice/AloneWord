@@ -73,28 +73,28 @@ void Player::Update() {
 	
 	if (ArmMoveNumber == 0 && AttackMoveNumber == 0 && AttackFlag == false) {
 		if (input->LeftTiltStick(input->Right)) {
-			if (pos.x <= 25.0f) {
+			if (pos.x <= XMax) {
 				pos.x += PlayerSpeed;
 				AfterRot = 90;
 			}
 		}
 
 		if (input->LeftTiltStick(input->Left)) {
-			if (pos.x >= -25.0f) {
+			if (pos.x >= -XMax) {
 				pos.x -= PlayerSpeed;
 				AfterRot = 270;
 			}
 		}
 
 		if (input->LeftTiltStick(input->Up)) {
-			if (pos.z <= 20.0f) {
+			if (pos.z <= ZMax) {
 				pos.z += PlayerSpeed;
 				AfterRot = 0;
 			}
 		}
 
 		if (input->LeftTiltStick(input->Down)) {
-			if (pos.z >= -20) {
+			if (pos.z >= -ZMax) {
 				pos.z -= PlayerSpeed;
 				AfterRot = 180;
 			}
