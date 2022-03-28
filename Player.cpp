@@ -218,8 +218,8 @@ void Player::Update() {
 			AfterRot = initrotation - 360.0f * easeInOut(frame2 / frameMax2);
 			ArmRot.y = initArmRotation - 360.0f * easeInOut(frame2 / frameMax2);
 		}
-
-		SpeedSub = initspeed - ArmSpeed;
+		
+		SpeedSub =(int)( initspeed - ArmSpeed);
 		//どれくらい大振りしたかみたいなやつ
 		if (SpeedSub <= 90) {
 			power = 0.25;
@@ -370,17 +370,17 @@ void Player::Rebound(Enemy* enemy) {
 
 	if (rebound.x != 0.0) {
 		if (rebound.x > 0) {
-			rebound.x *= 0.4;
+			rebound.x *= 0.4f;
 		} else {
-			rebound.x *= 0.4;
+			rebound.x *= 0.4f;
 		}
 	}
 
 	if (rebound.z != 0.0) {
 		if (rebound.z > 0) {
-			rebound.z *= 0.4;
+			rebound.z *= 0.4f;
 		} else {
-			rebound.z *= 0.4;
+			rebound.z *= 0.4f;
 		}
 	}
 

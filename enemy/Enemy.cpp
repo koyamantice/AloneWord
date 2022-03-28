@@ -108,7 +108,7 @@ void Enemy::Update() {
 
 	//çXÇ…â¡éZ
 	if (add == true) {
-		boundpower.y -= 0.02;
+		boundpower.y -= 0.02f;
 		pos.x += boundpower.x;
 		pos.y += boundpower.y;
 		pos.z += boundpower.z;

@@ -1,4 +1,4 @@
-#include "StartMap.h"
+﻿#include "StartMap.h"
 #include "Audio.h"
 #include "DebugText.h"
 #include "TitleScene.h"
@@ -16,11 +16,6 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	player = new Player();
 	player->Initialize();
 	player->SetMove(50.0f, 50.0f);
-
-
-	bossenemy = new BossEnemy();
-	bossenemy->SetPlayer(player);
-	bossenemy->Initialize();
 
 	for (int i = 0; i < StartEnemyMax; i++) {
 		enemy[i] = new Enemy();

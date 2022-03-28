@@ -176,24 +176,11 @@ void BossEnemy::Fork() {
 				Afterrot = 45;
 				AfterPos.x = 25.0f;
 				AfterPos.z = -20.0f;
-			}
-			else if (pat == 2) {
-
-<<<<<<< HEAD
-<<<<<<< HEAD
-			}
-			else if (pat == 2) {
-=======
 			} else if (pat == 2) {
->>>>>>> 0890b92ddea499e7a8bae296800d619a57af1aca
-=======
->>>>>>> 29ec887056b83f007e84b409c03c1f6cb2a68f9f
 				Afterrot = -90;
 				AfterPos.x = 25.0f;
 				AfterPos.z = 20.0f;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 			}
 			else if (pat == 3) {
 				Afterrot = -225;
@@ -206,20 +193,7 @@ void BossEnemy::Fork() {
 				AfterPos.z = 20.0f;
 			}
 			else if (pat == 5) {
-=======
-=======
 
->>>>>>> 29ec887056b83f007e84b409c03c1f6cb2a68f9f
-			} else if (pat == 3) {
-				Afterrot = -225;
-				AfterPos.x = -25.0f;
-				AfterPos.z = -20.0f;
-			} else if (pat == 4) {
-				Afterrot = -90;
-				AfterPos.x = -25.0f;
-				AfterPos.z = 20.0f;
-			} else if (pat == 5) {
->>>>>>> 0890b92ddea499e7a8bae296800d619a57af1aca
 				Afterrot = 45;
 				AfterPos.x = 0.0f;
 				AfterPos.z = 0.0f;
@@ -240,11 +214,7 @@ void BossEnemy::Fork() {
 		} else if ((action % 2) == 1) {
 			if (!already && !finish) {
 				AfterPos.y = 3.0f;
-<<<<<<< HEAD
 				Afterrot= 90;
-=======
-				Afterrot = 90;
->>>>>>> 0890b92ddea499e7a8bae296800d619a57af1aca
 				pos.y = Ease(In, Cubic, 0.3f, pos.y, AfterPos.y);
 				if (pos.y >= AfterPos.y - 0.05f) {
 					Standby++;
@@ -277,7 +247,6 @@ void BossEnemy::Fork() {
 			}
 			if (finish) {
 				coolT++;
-<<<<<<< HEAD
 				if (bossUp == false && coolT > 180) {
 					//if (coolT > 480) {
 						bossUp = true;
@@ -305,28 +274,6 @@ void BossEnemy::Fork() {
 					}
 
 				}
-=======
-				if (coolT > 180) {
-					AfterPos.x = 0.0f;
-					AfterPos.y = 0.0f;
-					AfterPos.z = 0.0f;
-					pos = {
-	Ease(In,Cubic,0.5f,pos.x, AfterPos.x),
-	Ease(In, Cubic, 0.5f, pos.y, AfterPos.y),
-	Ease(In,Cubic,0.5f,pos.z, AfterPos.z),
-					};
-					if ((fabs(pos.x - AfterPos.x) <= DBL_EPSILON * fmax(1, fmax(fabs(pos.x), fabs(AfterPos.x)))) &&
-						(fabs(pos.y - AfterPos.y) <= DBL_EPSILON * fmax(1, fmax(fabs(pos.y), fabs(AfterPos.y)))) &&
-						(fabs(pos.z - AfterPos.z) <= DBL_EPSILON * fmax(1, fmax(fabs(pos.z), fabs(AfterPos.z))))) {
-						finish = false;
-						active = false;
-						coolT = 0;
-						action = 0;
-						AttackCount = 0;
-						times = 0;
-					}
-				}
->>>>>>> 0890b92ddea499e7a8bae296800d619a57af1aca
 			}
 			enemyobj->SetPosition(pos);
 

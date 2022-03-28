@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "BaseScene.h"
 #include "BossEnemy.h"
 #include "Collision.h"
@@ -28,9 +28,6 @@ public:
 	void Draw(DirectXCommon* dxCommon) override;
 
 private:
-	Model* modelGround = nullptr;
-	Object3d* objGround;
-
 	Model* modelground = nullptr;
 	Object3d* objground;
 
