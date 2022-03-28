@@ -97,6 +97,22 @@ bool Input::Initialize(WinApp* winApp) {
 		diprg.diph.dwObj = DIJOFS_Y;
 		devGamePad->SetProperty(DIPROP_RANGE, &diprg.diph);
 
+		//U“®ŠÖŒW
+		DICONSTANTFORCE cf;
+		DIEFFECT eff;
+		DWORD rgdwAxes[2] = { DIJOFS_X , DIJOFS_Y };
+		LONG  rglDirection[2] = { 1 , 1 };
+
+		ZeroMemory(&eff, sizeof(eff));
+		eff.dwSize = sizeof(DIEFFECT);
+		eff.dwFlags = DIEFF_CARTESIAN | DIEFF_OBJECTOFFSETS;
+		eff.dwDuration = INFINITE;
+		eff.dwSamplePeriod = 0;
+		eff.dwGain = DI_FFNOMINALMAX;
+		eff.dwTriggerButton = DIEB_NOTRIGGER;
+		eff.dwTriggerRepeatInterval = 0;
+		//eff.rgdwAxes = { DIJOFS_X,DIJOFS_Y };
+		
 		//”r‘¼§ŒäƒŒƒxƒ‹ƒZƒbƒg
 		result = devGamePad->SetCooperativeLevel(winApp->GetHwnd(), DISCL_FOREGROUND | DISCL_NONEXCLUSIVE | DISCL_NOWINKEY);
 	}
@@ -471,6 +487,7 @@ bool Input::PushCrossKey(int CrossKey)
 		}
 	}
 
+
 	return false;
 }
 
@@ -524,4 +541,5 @@ bool Input::TriggerCrossKey(int CrossKey)
 
 	return false;
 }
+
 

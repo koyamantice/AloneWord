@@ -6,6 +6,8 @@
 void StartMap::Initialize(DirectXCommon* dxCommon) {
 	Texture::LoadTexture(0, L"Resources/2d/enemy.png");
 	Texture::LoadTexture(1, L"Resources/2d/limit.png");
+	Texture::LoadTexture(2, L"Resources/2d/shadow.png");
+	Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
 	// カメラ生成
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
@@ -15,22 +17,31 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	player->Initialize();
 
 	bossenemy = new BossEnemy();
+	bossenemy->SetPlayer(player);
 	bossenemy->Initialize();
-	for (int i = 0; i < EnemyMax; i++) {
+	for (int i = 0; i < StartEnemyMax; i++) {
 		enemy[i] = new Enemy();
+		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
 	}
 	//オブジェクト初期化
-	modelGround = Model::CreateFromOBJ("ground");
+	/*modelGround = Model::CreateFromOBJ("ground");
 	objGround = Object3d::Create();
 	objGround->Initialize();
 	objGround->SetModel(modelGround);
-	objGround->SetPosition({ 0,-1,0 });
+	objGround->SetPosition({ 0,-1,0 });*/
+
+	modelground = Model::CreateFromOBJ("ground");
+	objground = Object3d::Create();
+	objground->Initialize();
+	objground->SetModel(modelground);
+	objground->SetPosition({ 0,-1,10 });
+	objground->SetScale({ 22,1,10 });
 	//普通のテクスチャ(板ポリ)
-	limit =Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,1 });
+	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
 	limit->TextureCreate();
 	limit->SetPosition({ 0.0f,0.01f,0.0f });
-	limit->SetRotation({ 90.0f,0, 0});
+	limit->SetRotation({ 90.0f,0, 0 });
 	limit->SetScale({ 6,5,5 });
 	//背景スプライト生成
 
@@ -61,26 +72,32 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 }
 
 void StartMap::Finalize() {
-	//３ｄのモデルのデリート
-	delete objGround;
-	delete player;
-	for(int i = 0; i < EnemyMax; i++) {
-		delete enemy[i];
-	}
-	delete bossenemy;
 
+	//３ｄのモデルのデリート
+	for (int i = 0; i < StartEnemyMax; i++) {
+		enemy[i]->Finalize();
+	}
+	player->Finalize();
+	bossenemy->Finalize();
 }
 
 void StartMap::Update(DirectXCommon* dxCommon) {
-	objGround->Update();
+	//objGround->Update();
+	objground->Update();
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
 	bossenemy->Update();
 	limit->Update();
-	for (int i = 0; i < EnemyMax; i++) {
+	for (int i = 0; i < StartEnemyMax; i++) {
 		enemy[i]->Update();
+
 		player->ResetWeight(enemy[i]);
+		player->Rebound(enemy[i]);
+	}
+
+	for (int i = 0; i < StartEnemyMax; i++) {
+		enemy[i]->SetEnemy();
 	}
 
 	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
@@ -93,32 +110,58 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		a += 1;
 	}
 
-	if (input->PushKey(DIK_0) || input->TriggerButton(input->Button_Y)) {
-		object1->PlayAnimation();
-		//SceneManager::GetInstance()->ChangeScene("BOSS");
+	//敵同士の当たり判定
+	if (sizeof(enemy) > 2) {//配列のサイズ確認
+		for (int colA = 0; colA < StartEnemyMax; colA++) {
+			for (int colB = 1; colB < StartEnemyMax; colB++) {
+				if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB) {//当たり判定と自機同士の当たり判定の削除
+					DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
+					enemy[colA]->SetHit(true);
+					enemy[colB]->SetHit(false);
+					break;
+				} else {
+					enemy[colA]->SetHit(false);
+				}
+			}
+		}
 	}
 
+	//その他シーン移行
+	if (bossenemy->GetHP() <= 0) {
+		SceneManager::GetInstance()->ChangeScene("CLEAR");
+	}
 
+	if (player->GetHp() <= 0) {
+		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
+	}
 	object1->Update();
 	camera->SetTarget(player->GetPosition());
 	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
+	DebugText::GetInstance()->Print("PUSH to RB!!", 200, 100, 1.0f);
+	DebugText::GetInstance()->Print("PUSH to A!!", 200, 115, 1.0f);
 }
 
 void StartMap::Draw(DirectXCommon* dxCommon) {
-	ImGui::Begin("test");
-	if (ImGui::TreeNode("Debug"))
-	{
-		if (ImGui::TreeNode("Field"))
-		{
-			ImGui::Text("%d",b);
-			ImGui::Unindent();
-			ImGui::TreePop();
-		}
-		ImGui::TreePop();
-	}
-	ImGui::End();
+	//ImGui::Begin("test");
+//if (ImGui::TreeNode("Debug"))
+//{
+//	if (ImGui::TreeNode("Field"))
+//	{
+//		//ImGui::SliderFloat("Position.x", &s, 50, -50);
+//		ImGui::Unindent();
+//		ImGui::TreePop();
+//	}
+//	ImGui::TreePop();
+//}
+//ImGui::End();
+	Object3d::PreDraw();
+	//objGround->Draw();
+	objground->Draw();
 
-	Sprite::PreDraw();
+	Texture::PreDraw();
+	limit->Draw();
+
+	//Sprite::PreDraw();
 	//背景用
 	//sprite->Draw();
 
@@ -126,12 +169,9 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw();
 	//object1->Draw(dxCommon->GetCmdList());
 	//背景用
-	objGround->Draw();
 	player->Draw();
-	for (int i = 0; i < EnemyMax; i++) {
+	for (int i = 0; i < StartEnemyMax; i++) {
 		enemy[i]->Draw();
 	}
-
 	bossenemy->Draw();
-	Texture::PreDraw();
 }
