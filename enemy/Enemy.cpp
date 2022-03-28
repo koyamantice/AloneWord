@@ -17,6 +17,7 @@ void Enemy::Initialize() {
 	IsTimer = 200;
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
+	rot={ 0,90,0 };
 	enemyobj->SetPosition(pos);
 	enemyobj->SetScale(enescale);
 	texture = Texture::Create(0, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
@@ -385,22 +386,22 @@ void Enemy::Move() {
 		}
 		if (zmove) {
 			if (pos.z < EndPos.z) {
-				EndRot.y = 0;
+				EndRot.y = 270;
 			} else if (pos.z > EndPos.z) {
-				EndRot.y = 180;
-			} else {
+				EndRot.y = 90;
+			} /*else {
 				EndRot.y = rot.y;
-			}
+			}*/
 			pos.z = Ease(In, Quad, frame, pos.z, EndPos.z);
 		} else {
-			pos.x = Ease(In, Quad, frame, pos.x, EndPos.x);
 			if (pos.x < EndPos.x) {
-				EndRot.y = 90;
+				EndRot.y = 360;
 			} else 	if (pos.x > EndPos.x) {
-				EndRot.y = 270;
-			} else {
+				EndRot.y = 180;
+			} /*else {
 				EndRot.y = rot.y;
-			}
+			}*/
+			pos.x = Ease(In, Quad, frame, pos.x, EndPos.x);
 		}
 		enemyobj->SetPosition(pos);
 
@@ -412,7 +413,6 @@ void Enemy::SetEnemy() {
 	float armweight = player->GetArmWeight();
 	XMFLOAT3 plapos = player->GetPosition();
 	if (EnemyCatch == true) {
-		
 		radius = speed * PI / 180.0f;
 		circleX = cosf(radius) * scale;
 		circleZ = sinf(radius) * scale;

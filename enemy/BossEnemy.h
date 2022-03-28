@@ -34,6 +34,9 @@ private:
 	bool already = false;
 	int times = 0;
 	bool finish = false;
+	int coolT = 0;
+	int bossUp;
+
 	int action = 0;
 	bool active = false;
 	int pat = 0;
