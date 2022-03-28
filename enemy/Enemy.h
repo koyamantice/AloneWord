@@ -17,7 +17,6 @@ private:
 	bool LockOn();
 	void Follow();
 	void Move();
-	
 
 public:
 	const bool& GetEnemyCatch() { return EnemyCatch; }
@@ -33,6 +32,8 @@ public:
 	void SetHit(bool hit) { this->hit = hit; }
 	void Setboundpower(XMFLOAT3 boundpower) { this->boundpower = boundpower; }
 	void SetEnemy();
+	void PosSet(Enemy* enemy[]);
+
 private:
 	XMFLOAT3 playerpos{};
 	XMFLOAT3 StartPos{};
@@ -50,7 +51,7 @@ private:
 	float circleX = 0.0f;
 	float circleZ = 0.0f;
 	float EnemyWeight = 0.0f;
-	bool IsAlive = 0;
+	bool IsAlive = 1;
 	int IsTimer = 200;
 	bool EnemyCatch = false;
 	bool isMove = false;

@@ -29,6 +29,7 @@ public:
 	/// À•WE‰ñ“]‚ÌÝ’è
 	void SetPosition(XMFLOAT3 position) { enemyobj->SetPosition(position); }
 	void SetRotation(XMFLOAT3 rotation) { enemyobj->SetRotation(rotation); }
+	void SetColor(XMFLOAT4 color) { enemyobj->SetColor(color); }
 protected:
 	const float PI = 3.14f;
 

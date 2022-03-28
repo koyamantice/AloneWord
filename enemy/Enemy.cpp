@@ -11,13 +11,18 @@ Enemy::Enemy() {
 	enemyobj = new Object3d();
 }
 
+void Enemy::PosSet(Enemy* enemy[])
+{
+	enemy[0]->SetRotation({ 180.0f, 0.0f, 1.0f});
+	enemy[1]->SetRotation({ 90.0f, 1.0f, 1.0f});
+}
 void Enemy::Initialize() {
 	//敵
 	IsAlive = false;
 	IsTimer = 200;
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
-	rot = { 0,90,0 };
+	//rot = { 0,90,0 };
 	enemyobj->SetPosition(pos);
 	enemyobj->SetScale(enescale);
 	texture = Texture::Create(0, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
@@ -148,7 +153,7 @@ void Enemy::Update() {
 	texture->SetPosition(pos);
 	Restexture->SetPosition(pos);
 	player->SetInterval(Interval);
-	rot.y = Ease(In, Quad, 0.5f, rot.y, EndRot.y);
+	//rot.y = Ease(In, Quad, 0.5f, rot.y, EndRot.y);
 	enemyobj->SetRotation(rot);
 	enemyobj->SetScale(enescale);
 	enemyobj->Update();
@@ -373,25 +378,25 @@ void Enemy::Move() {
 			dir = 0;
 			isMove = false;
 		}
-		if (zmove) {
-			if (pos.z < EndPos.z) {
-				EndRot.y = 270;
-			} else if (pos.z > EndPos.z) {
-				EndRot.y = 90;
-			} /*else {
-				EndRot.y = rot.y;
-			}*/
-			pos.z = Ease(In, Quad, frame, pos.z, EndPos.z);
-		} else {
-			if (pos.x < EndPos.x) {
-				EndRot.y = 360;
-			} else 	if (pos.x > EndPos.x) {
-				EndRot.y = 180;
-			} /*else {
-				EndRot.y = rot.y;
-			}*/
-			pos.x = Ease(In, Quad, frame, pos.x, EndPos.x);
-		}
+		//if (zmove) {
+		//	if (pos.z < EndPos.z) {
+		//		EndRot.y = 270;
+		//	} else if (pos.z > EndPos.z) {
+		//		EndRot.y = 90;
+		//	} /*else {
+		//		EndRot.y = rot.y;
+		//	}*/
+		//	pos.z = Ease(In, Quad, frame, pos.z, EndPos.z);
+		//} else {
+		//	if (pos.x < EndPos.x) {
+		//		EndRot.y = 360;
+		//	} else 	if (pos.x > EndPos.x) {
+		//		EndRot.y = 180;
+		//	} /*else {
+		//		EndRot.y = rot.y;
+		//	}*/
+		//	pos.x = Ease(In, Quad, frame, pos.x, EndPos.x);
+		//}
 		enemyobj->SetPosition(pos);
 
 	}

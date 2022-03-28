@@ -25,6 +25,11 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
 	}
+
+	for (int i = 0; i < ObstacleMax; i++) {
+		obstacle[i] = new Obstacle();
+		obstacle[i]->Initialize();
+	}
 	//オブジェクト初期化
 	/*modelGround = Model::CreateFromOBJ("ground");
 	objGround = Object3d::Create();
@@ -89,10 +94,14 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	camera->Update();
 	player->Update();
 	bossenemy->Update();
+	for (int i = 0; i < ObstacleMax; i++) {
+		obstacle[i]->Update();
+		obstacle[i]->PosSet(obstacle);
+	}
 	limit->Update();
 	for (int i = 0; i < BossEnemyMax; i++) {
+		enemy[i]->PosSet(enemy);
 		enemy[i]->Update();
-		
 		player->ResetWeight(enemy[i]);
 		player->Rebound(enemy[i]);
 	}
@@ -175,4 +184,7 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 		enemy[i]->Draw();
 	}
 	bossenemy->Draw();
+	for (int i = 0; i < ObstacleMax; i++) {
+		obstacle[i]->Draw();
+	}
 }

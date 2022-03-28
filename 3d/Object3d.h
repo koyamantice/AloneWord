@@ -223,6 +223,8 @@ public: // メンバ関数
 	/// <param name="position">スケール</param>
 	void SetScale(XMFLOAT3 scale) { this->scale = scale; }
 
+	void SetColor(XMFLOAT4 color) { this->color = color; }
+
 	/// <summary>
 	/// モデルのセット
 	/// </summary>

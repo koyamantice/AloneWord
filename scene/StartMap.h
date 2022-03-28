@@ -5,7 +5,7 @@
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>
-const int StartEnemyMax = 7;
+const int StartEnemyMax = 2;
 class StartMap : public BaseScene {
 
 public:

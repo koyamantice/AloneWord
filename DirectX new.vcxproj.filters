@@ -42,6 +42,9 @@
     <Filter Include="ui">
       <UniqueIdentifier>{8aa7fc1d-e066-4d5a-92a2-30997fd2e0c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="obstacle">
+      <UniqueIdentifier>{d8fabd01-da4c-4166-b793-4f27e493d3df}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scene\TisGame.cpp">
@@ -181,6 +184,9 @@
     </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>ui</Filter>
+    </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>obstacle</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -333,6 +339,9 @@
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <Filter>obstacle</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
