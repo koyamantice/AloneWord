@@ -17,6 +17,7 @@ private:
 public:
 	void SetPlayer(Player* player) { this->player = player; }
 	const float& GetHP() { return BossHP; }
+	const bool& GetHit() { return BossHit; }
 
 	void SetHP(float BossHP) { this->BossHP = BossHP; }
 private:
