@@ -158,7 +158,7 @@ void Enemy::Update() {
 
 //描画
 void Enemy::Draw() {
-	ImGui::Begin("test");
+	/*ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("Enemy")) {
 			ImGui::SliderFloat("pos.y", &enescale.y, 50, -50);
@@ -167,7 +167,7 @@ void Enemy::Draw() {
 		}
 		ImGui::TreePop();
 	}
-	ImGui::End();
+	ImGui::End();*/
 	if (IsAlive) {
 		Object3d::PreDraw();
 		enemyobj->Draw();

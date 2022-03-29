@@ -44,7 +44,10 @@ void Player::Initialize() {
 	Armpos.z = ArmCircleZ + pos.z;
 	Armobj->SetPosition(Armpos);
 	Armobj->SetScale({ 1.4f,1.4f,1.4f });
-
+	//effecttexture = Texture::Create(4, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	//effecttexture->TextureCreate();
+	////effecttexture->SetRotation({ 90,0,0 });
+	//effecttexture->SetScale({ 0.2f,0.2f,0.2f });
 	collider.radius = rad;
 }
 
@@ -70,6 +73,7 @@ void Player::Update() {
 	Armobj->Update();
 	StickrotX = input->GetPosX();
 	StickrotY = input->GetPosY();
+	//effecttexture->Update();
 	
 	if (ArmMoveNumber == 0 && AttackMoveNumber == 0 && AttackFlag == false) {
 		if (input->LeftTiltStick(input->Right)) {
@@ -270,11 +274,7 @@ void Player::Update() {
 			frame3 = frame3 + 1;
 		} else {
 			AttackMoveNumber = 0;
-			//Armscale = 1.0f;
 			frameMax3 = 80.0f;
-		/*	if (ArmWeight != 0.0f && Armscale != ArmWeight - 0.5) {
-				Armscale = ArmWeight - 0.5f;
-			}*/
 		}
 	}
 
@@ -328,6 +328,7 @@ void Player::Draw() {
 		object3d->Draw();
 		Armobj->Draw();
 	}
+	
 }
 
 //敵が腕から離れる
@@ -339,10 +340,8 @@ void Player::ResetWeight(Enemy *enemy) {
 			enemy->SetBound(true);
 			enemy->SetEnemyCatch(false);
 		}
-
 		enemy->Setboundpower(boundpower);
 	}
-	
 }
 
 //ダメージ食らったときにプレイヤーが飛ばされる
@@ -391,5 +390,3 @@ void Player::Rebound(Enemy* enemy) {
 		pos.z += rebound.z;
 	}
 }
-
-

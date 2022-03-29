@@ -42,6 +42,9 @@
     <Filter Include="ui">
       <UniqueIdentifier>{8aa7fc1d-e066-4d5a-92a2-30997fd2e0c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="effect">
+      <UniqueIdentifier>{0b73eb2b-7b21-41ae-8ade-5c9faa356fa5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scene\TisGame.cpp">
@@ -182,6 +185,9 @@
     <ClCompile Include="UI.cpp">
       <Filter>ui</Filter>
     </ClCompile>
+    <ClCompile Include="Effect.cpp">
+      <Filter>effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\Framework.h">
@@ -307,9 +313,6 @@
     <ClInclude Include="2d\Texture.h">
       <Filter>2d</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>player</Filter>
-    </ClInclude>
     <ClInclude Include="enemy\Enemy.h">
       <Filter>enemy</Filter>
     </ClInclude>
@@ -333,6 +336,12 @@
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
