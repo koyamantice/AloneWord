@@ -27,7 +27,6 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
 	}
-<<<<<<< HEAD
 
 	for (int i = 0; i < ObstacleMax; i++) {
 		obstacle[i] = new Obstacle();
@@ -39,8 +38,6 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objGround->Initialize();
 	objGround->SetModel(modelGround);
 	objGround->SetPosition({ 0,-1,0 });*/
-=======
->>>>>>> master
 
 	modelground = Model::CreateFromOBJ("ground");
 	objground = Object3d::Create();
