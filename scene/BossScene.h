@@ -6,6 +6,7 @@
 /// ゲームプレイシーン
 /// </summary>
 const int BossEnemyMax = 7;
+const int EffectMax = 2;
 class BossScene : public BaseScene{
 public:
 	/// <summary>
@@ -38,7 +39,7 @@ private:
 	DebugCamera* camera = { nullptr };
 	Texture* limit = nullptr;
 	Player* player = nullptr;
-	Effect* effect = nullptr;
+	Effect* effect[EffectMax] = { nullptr };
 	Enemy* enemy[BossEnemyMax] = { nullptr };
 	BossEnemy* bossenemy = nullptr;
 };

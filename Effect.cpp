@@ -25,20 +25,55 @@ void Effect::Initialize() {
 	effecttexture = Texture::Create(4, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	effecttexture->TextureCreate();
 	//effecttexture->SetRotation({ 90,0,0 });
-	effecttexture->SetScale({ 1.0f,1.0f,1.0f });
+	effecttexture->SetScale({ 0.4f,0.4f,0.4f });
 }
 
 void Effect::Finalize() {
 	
 }
 
-void Effect::Update() {
+void Effect::Update(BossEnemy* bossenemy) {
 	Input* input = Input::GetInstance();
+	bool effect = bossenemy->GetEffect();
+	//エフェクトの発生
+	if (effect == true) {
+		effectscale = { 0.4f,0.4f,0.4f };
+		boundpower.x = (float)(rand() % 6 - 3);
+		boundpower.y = (float)(rand() % 3 + 3);
+		boundpower.z = (float)(rand() % 6 - 3);
+		if (boundpower.x == 0.0f) {
+			boundpower.x = 1.0f;
+		}
 
-	if (effectAlive == 1) {
-		EffectMove();
+		if (boundpower.z == 0.0f) {
+			boundpower.z = 1.0f;
+		}
+		boundpower.x = boundpower.x / 10;
+		boundpower.y = boundpower.y / 10;
+		boundpower.z = boundpower.z / 10;
+		effectpos = bossenemy->GetPosition();
+		effectAlive = true;
+		if (effectAlive == false) {
+			effectAlive = true;
+		}
+		bossenemy->SetEffect(false);
+	}
+	if (effectAlive == true) {
+		boundpower.y -= 0.02f;
+		effectpos.x += boundpower.x;
+		effectpos.y += boundpower.y;
+		effectpos.z += boundpower.z;
+		effectscale.x -= 0.01;
+		effectscale.y -= 0.01;
+		effectscale.z -= 0.01;
+		effectcolor.w -= 0.01;
+		if (effectscale.x <= 0.0f) {
+			effectAlive = false;
+		}
 	}
 	effecttexture->Update();
+	effecttexture->SetPosition(effectpos);
+	effecttexture->SetScale(effectscale);
 }
 
 //描画
@@ -49,23 +84,21 @@ void Effect::Draw() {
 		if (ImGui::TreeNode("Joy"))
 		{
 			ImGui::Text("IY %d", effectAlive);
+			ImGui::SliderFloat("bound.x", &effectpos.x, 50, -50);
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}
 
 		ImGui::TreePop();
 	}
-	//ImGui::End();
-	//Texture::PreDraw();
-	//if (effectAlive == true) {
-	//	effecttexture->Draw();
-	//}
+	ImGui::End();
+	Texture::PreDraw();
+	if (effectAlive == true) {
+		effecttexture->Draw();
+	}
 }
 
 
 void Effect::EffectMove() {
-	effectcolor.w -= 0.01;
-	if (effectcolor.w <= 0.0f) {
-		effectAlive = 0;
-	}
+	
 }

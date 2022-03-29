@@ -41,8 +41,10 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	limit->SetRotation({ 90.0f,0, 0 });
 	limit->SetScale({ 6,5,5 });
 
-	effect = new Effect();
-	effect->Initialize();
+	for (int i = 0; i < EffectMax; i++) {
+		effect[i] = new Effect();
+		effect[i]->Initialize();
+	}
 	//背景スプライト生成
 
 	// モデル読み込み
@@ -89,7 +91,9 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	player->Update();
 	bossenemy->Update();
 	limit->Update();
-	effect->Update();
+	for (int i = 0; i < EffectMax; i++) {
+		effect[i]->Update(bossenemy);
+	}
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Update();
 		
@@ -174,5 +178,7 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 		enemy[i]->Draw();
 	}
 	bossenemy->Draw();
-	effect->Draw();
+	for (int i = 0; i < EffectMax; i++) {
+		effect[i]->Draw();
+	}
 }

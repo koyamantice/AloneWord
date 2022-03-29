@@ -6,6 +6,7 @@
 #include"CollisionPrimitive.h"
 #include "Sprite.h"
 #include "Texture.h"
+#include "BossEnemy.h"
 
 class Effect {
 public:
@@ -13,7 +14,7 @@ public:
 
 	void Initialize();
 	void Finalize();
-	void Update();
+	void Update(BossEnemy* bossenemy);
 	void Draw();
 private:
 	// DirectX::を省略
@@ -39,9 +40,8 @@ public:
 	//void SetPosition(XMFLOAT3 position) { object3d->SetPosition(position); }
 
 	//void SetRotation(XMFLOAT3 rotation) { object3d->SetRotation(rotation); }
-	const int& GetAlive() { return  effectAlive; }
 
-	void SetEffectAlive(int effectAlive) { this->effectAlive = effectAlive; }
+	//void SetEffectAlive(bool effectAlive) { this->effectAlive = effectAlive; }
 
 	void SetEffectPosition(XMFLOAT3 effectpos) { this->effectpos = effectpos; }
 
@@ -52,14 +52,14 @@ private:
 	Object3d* object3d;
 	Model* model;
 	Model* Armmodel;*/
-	XMFLOAT2 EffectHP{};
 	XMFLOAT3 pos = { 0,0,-10 };
-	BossEnemy* boeeenemy = nullptr;
+	
 	//エフェクト関係
 	Texture* effecttexture = nullptr;
 	XMFLOAT3 effectpos = { 0.0f,0.0f,0.0f };
 	XMFLOAT4 effectcolor = { 1.0f,1.0f,1.0f,1.0f };
-	XMFLOAT3 effectscale = { 0.0f,0.0f,0.0f };
+	XMFLOAT3 effectscale = { 0.4f,0.4f,0.4f };
+	XMFLOAT3 boundpower = { 0.0f,0.0f,0.0f };
 	int effectAlive = 0;
 public:
 	Sphere collider;

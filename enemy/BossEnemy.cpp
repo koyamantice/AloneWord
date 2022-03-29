@@ -112,7 +112,6 @@ bool BossEnemy::collideAttackArm() {
 	bool attackflag = player->GetAttackFlag();
 	float power = player->GetPower();
 	float weight = player->GetArmWeight();
-	int effectAlive = effect->GetAlive();
 	if (attackflag && !BossHit) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
 			BossHit = true;
@@ -128,8 +127,7 @@ bool BossEnemy::collideAttackArm() {
 
 			//ボスのHPをへらす
 			if (BossHit == true) {
-				effectAlive = 1;
-				effect->SetEffectAlive(effectAlive);
+				Effect = true;
 				BossHP -= (weight * 2) * power;
 				weight = 0.0f;
 				boundpower.x = (float)(rand() % 4 - 2);

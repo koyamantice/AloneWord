@@ -7,7 +7,7 @@
 #include "Player.h"
 #include "Texture.h"
 #include "Audio.h"
-#include "Effect.h"
+
 
 #define DIRECTINPUT_VERSION 0x0800
 
@@ -42,7 +42,6 @@ protected:
 	XMFLOAT3 boundpower{};
 	XMFLOAT3 enescale{0.4f,0.4f,0.4f};
 	Player* player=nullptr;
-	Effect* effect = nullptr;
 
 	float frame = 0;
 	int IsAlive = 0;
