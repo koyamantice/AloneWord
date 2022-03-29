@@ -42,8 +42,13 @@
     <Filter Include="ui">
       <UniqueIdentifier>{8aa7fc1d-e066-4d5a-92a2-30997fd2e0c2}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
     <Filter Include="obstacle">
       <UniqueIdentifier>{d8fabd01-da4c-4166-b793-4f27e493d3df}</UniqueIdentifier>
+=======
+    <Filter Include="effect">
+      <UniqueIdentifier>{0b73eb2b-7b21-41ae-8ade-5c9faa356fa5}</UniqueIdentifier>
+>>>>>>> master
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -185,8 +190,13 @@
     <ClCompile Include="UI.cpp">
       <Filter>ui</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="Obstacle.cpp">
       <Filter>obstacle</Filter>
+=======
+    <ClCompile Include="Effect.cpp">
+      <Filter>effect</Filter>
+>>>>>>> master
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -313,9 +323,6 @@
     <ClInclude Include="2d\Texture.h">
       <Filter>2d</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>player</Filter>
-    </ClInclude>
     <ClInclude Include="enemy\Enemy.h">
       <Filter>enemy</Filter>
     </ClInclude>
@@ -340,8 +347,16 @@
     <ClInclude Include="UI.h">
       <Filter>ui</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="Obstacle.h">
       <Filter>obstacle</Filter>
+=======
+    <ClInclude Include="Effect.h">
+      <Filter>effect</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>player</Filter>
+>>>>>>> master
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

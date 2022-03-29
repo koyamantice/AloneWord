@@ -8,6 +8,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	Texture::LoadTexture(1, L"Resources/2d/limit.png");
 	Texture::LoadTexture(2, L"Resources/2d/shadow.png");
 	Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
+	Texture::LoadTexture(4, L"Resources/2d/effect.png");
 	// カメラ生成
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
@@ -33,8 +34,16 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	objground = Object3d::Create();
 	objground->Initialize();
 	objground->SetModel(modelground);
-	objground->SetPosition({ 0,-1,10 });
-	objground->SetScale({ 22,1,10 });
+	objground->SetPosition({ 0,-1,0 });
+	objground->SetScale({ 50,1,80 });
+
+	modeltree = Model::CreateFromOBJ("tree");
+	objtree = Object3d::Create();
+	objtree->Initialize();
+	objtree->SetModel(modeltree);
+	objtree->SetPosition({ 0,0,-14 });
+	objtree->SetRotation({ 0,90,0 });
+	objtree->SetScale({ 1,1,1 });
 	//普通のテクスチャ(板ポリ)
 
 	/*limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
@@ -86,6 +95,7 @@ void StartMap::Finalize() {
 void StartMap::Update(DirectXCommon* dxCommon) {
 	//objGround->Update();
 	objground->Update();
+	objtree->Update();
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
@@ -166,7 +176,7 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw();
 	//objGround->Draw();
 	objground->Draw();
-
+	objtree->Draw();
 	Texture::PreDraw();
 	//limit->Draw();
 

@@ -5,6 +5,7 @@
 #include <Input.h>
 #include"CollisionPrimitive.h"
 #include "Sprite.h"
+#include "Texture.h"
 
 class Enemy;
 class Player {
@@ -83,11 +84,18 @@ public:
 
 	void SetArmScale(float Armscale) { this->Armscale = Armscale; }
 
+	//void SetEffectAlive(int effectAlive) { this->effectAlive = effectAlive; }
+
+	//void SetEffectPosition(XMFLOAT3 effectpos) { this->effectpos = effectpos; }
+
 	void SetMove(float XMax, float ZMax) { this->XMax = XMax; this->ZMax = ZMax; }
 
 	void ResetWeight(Enemy* enemy);
 
 	void Rebound(Enemy* enemy);
+
+	void EffectMove();
+
 private:
 	Object3d* Armobj;
 	Object3d* object3d;
@@ -148,8 +156,12 @@ private:
 	float StickrotX = 0;
 	float StickrotY = 0;
 	XMFLOAT3 angle = { 0,0,0 };
+	////エフェクト関係
+	//Texture* effecttexture = nullptr;
+	//XMFLOAT3 effectpos = { 0.0f,0.0f,0.0f };
+	//XMFLOAT4 effectcolor = { 1.0f,1.0f,1.0f,1.0f };
+	//XMFLOAT3 effectscale = { 0.0f,0.0f,0.0f };
+	//int effectAlive = 0;
 public:
 	Sphere collider;
 };
-
-

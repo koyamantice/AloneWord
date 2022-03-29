@@ -8,6 +8,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	Texture::LoadTexture(1, L"Resources/2d/limit.png");
 	Texture::LoadTexture(2, L"Resources/2d/shadow.png");
 	Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
+	Texture::LoadTexture(4, L"Resources/2d/effect.png");
 	// ƒJƒƒ‰¶¬
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
@@ -20,11 +21,13 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	bossenemy = new BossEnemy();
 	bossenemy->SetPlayer(player);
 	bossenemy->Initialize();
+
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i] = new Enemy();
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
 	}
+<<<<<<< HEAD
 
 	for (int i = 0; i < ObstacleMax; i++) {
 		obstacle[i] = new Obstacle();
@@ -36,6 +39,8 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objGround->Initialize();
 	objGround->SetModel(modelGround);
 	objGround->SetPosition({ 0,-1,0 });*/
+=======
+>>>>>>> master
 
 	modelground = Model::CreateFromOBJ("ground");
 	objground = Object3d::Create();
@@ -49,6 +54,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	limit->SetPosition({ 0.0f,0.01f,0.0f });
 	limit->SetRotation({ 90.0f,0, 0 });
 	limit->SetScale({ 6,5,5 });
+
 	//”wŒiƒXƒvƒ‰ƒCƒg¶¬
 
 	// ƒ‚ƒfƒ‹“Ç‚Ýž‚Ý
@@ -169,7 +175,6 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 
 	Texture::PreDraw();
 	limit->Draw();
-
 	//Sprite::PreDraw();
 	//”wŒi—p
 	//sprite->Draw();
