@@ -79,7 +79,8 @@ public: // 静的メンバ関数
 
 	/// スプライト生成
 	static Texture* Create(UINT texNumber, XMFLOAT2 position, XMFLOAT4 color = { 1, 1, 1, 1 }, XMFLOAT2 anchorpoint = { 0.0f, 0.0f }, bool isFlipX = false, bool isFlipY = false);
-
+	
+	
 private: // 静的メンバ変数
 	static const int srvCount = 213;
 	// デバイス
@@ -169,14 +170,14 @@ public: // メンバ関数
 	this->position.z = z;
 	}
 
-	void SetColor(XMFLOAT4 color) { this->color = color; }
+	void Texture::SetColor(XMFLOAT4 color);
 	void SetRotation(XMFLOAT3 rotation) { this->rotation = rotation; }
 	void SetScale(XMFLOAT3 scale) { this->scale = scale; }
 	const XMFLOAT3& GetScale() { return scale; }
 private: // メンバ変数
 	ComPtr<ID3D12Resource> constBuff; // 定数バッファ
 	// 色
-	static XMFLOAT4 color;
+	XMFLOAT4 color = { 1,1,1,1 };
 	// ローカルスケール
 	XMFLOAT3 scale = { 1,1,1 };
 	// X,Y,Z軸回りのローカル回転角

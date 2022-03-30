@@ -32,7 +32,7 @@ D3D12_VERTEX_BUFFER_VIEW Texture::vbView{};
 D3D12_INDEX_BUFFER_VIEW Texture::ibView{};
 Texture::VertexPosNormalUv Texture::vertices[vertexCount];
 unsigned short Texture::indices[indexCount];
-XMFLOAT4 Texture::color = { 1,1,1,1 };
+
 XMMATRIX Texture::matBillboard = XMMatrixIdentity();
 XMMATRIX Texture::matBillboardY = XMMatrixIdentity();
 Camera* Texture::camera = nullptr;
@@ -661,4 +661,16 @@ void Texture::Draw()
 
 	// 描画コマンド
 	cmdList->DrawIndexedInstanced(_countof(indices), 1, 0, 0, 0);
+}
+
+void Texture::SetColor(XMFLOAT4 color)
+{
+	this->color = color;
+	// 定数バッファにデータ転送
+	ConstBufferData* constMap = nullptr;
+	HRESULT result = this->constBuff->Map(0, nullptr, (void**)&constMap);
+	if (SUCCEEDED(result)) {
+		constMap->color = this->color;
+		this->constBuff->Unmap(0, nullptr);
+	}
 }
