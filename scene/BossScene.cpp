@@ -10,11 +10,11 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	Texture::LoadTexture(1, L"Resources/2d/limit.png");
 	Texture::LoadTexture(2, L"Resources/2d/shadow.png");
 	Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
-	Texture::LoadTexture(4, L"Resources/2d/effect.png");
-	// ƒJƒƒ‰¶¬
+	Texture::LoadTexture(4, L"Resources/2d/effect2.png");
+	// ã‚«ãƒ¡ãƒ©ç”Ÿæˆ
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
-	// 3DƒIƒuƒWƒFƒNƒg‚ÉƒJƒƒ‰‚ğƒZƒbƒg
+	// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‚«ãƒ¡ãƒ©ã‚’ã‚»ãƒƒãƒˆ
 	Object3d::SetCamera(camera);
 	player = new Player();
 	player->Initialize();
@@ -36,34 +36,38 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objground->SetModel(modelground);
 	objground->SetPosition({ 0,-1,10 });
 	objground->SetScale({ 22,1,10 });
-	//•’Ê‚ÌƒeƒNƒXƒ`ƒƒ(”Âƒ|ƒŠ)
+	//æ™®é€šã®ãƒ†ã‚¯ã‚¹ãƒãƒ£(æ¿ãƒãƒª)
 	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
 	limit->TextureCreate();
 	limit->SetPosition({ 0.0f,0.01f,0.0f });
 	limit->SetRotation({ 90.0f,0, 0 });
 	limit->SetScale({ 6,5,5 });
 
-	//”wŒiƒXƒvƒ‰ƒCƒg¶¬
+	for (int i = 0; i < EffectMax; i++) {
+		effect[i] = new Effect();
+		effect[i]->Initialize();
+	}
+	//èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 
-	// ƒ‚ƒfƒ‹“Ç‚İ‚İ
+	// ãƒ¢ãƒ‡ãƒ«èª­ã¿è¾¼ã¿
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
 	//srand(NULL);
-	// ƒ‰ƒCƒg¶¬
+	// ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	lightGroup = LightGroup::Create();
-	// 3DƒIƒuƒGƒNƒg‚Éƒ‰ƒCƒg‚ğƒZƒbƒg
+	// 3Dã‚ªãƒ–ã‚¨ã‚¯ãƒˆã«ãƒ©ã‚¤ãƒˆã‚’ã‚»ãƒƒãƒˆ
 	Object3d::SetLightGroup(lightGroup);
 
-	// ƒJƒƒ‰’‹“_‚ğƒZƒbƒg
+	// ã‚«ãƒ¡ãƒ©æ³¨è¦–ç‚¹ã‚’ã‚»ãƒƒãƒˆ
 	camera->SetTarget(player->GetPosition());
 	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
-	// ƒ‚ƒfƒ‹–¼‚ğw’è‚µ‚Äƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+	// ãƒ¢ãƒ‡ãƒ«åã‚’æŒ‡å®šã—ã¦ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 	model1 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 
-	// ƒfƒoƒCƒX‚ğƒZƒbƒg
+	// ãƒ‡ãƒã‚¤ã‚¹ã‚’ã‚»ãƒƒãƒˆ
 	FBXObject3d::SetDevice(dxCommon->GetDev());
-	// ƒJƒƒ‰‚ğƒZƒbƒg
+	// ã‚«ãƒ¡ãƒ©ã‚’ã‚»ãƒƒãƒˆ
 	FBXObject3d::SetCamera(camera);
-	// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“¶¬
+	// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	FBXObject3d::CreateGraphicsPipeline();
 
 	object1 = new FBXObject3d;
@@ -76,7 +80,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 
 void BossScene::Finalize() {
 
-	//‚R‚„‚Ìƒ‚ƒfƒ‹‚ÌƒfƒŠ[ƒg
+	//ï¼“ï½„ã®ãƒ¢ãƒ‡ãƒ«ã®ãƒ‡ãƒªãƒ¼ãƒˆ
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Finalize();
 	}
@@ -92,6 +96,11 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	player->Update();
 	bossenemy->Update();
 	limit->Update();
+	weight = player->GetArmWeight();
+	
+	for (int i = 0; i < EffectNum; i++) {
+		effect[i]->Update(bossenemy);
+	}
 	ui->Update();
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Update();
@@ -102,6 +111,16 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->SetEnemy();
+	}
+
+	if (player->GetArmWeight() == 1) {
+		EffectNum = 1;
+	} else if (player->GetArmWeight() >= 2 && player->GetArmWeight() < 4) {
+		EffectNum = 10;
+	} else if (player->GetArmWeight() >= 4 && player->GetArmWeight() < 6) {
+		EffectNum = 30;
+	} else {
+		EffectNum = 70;
 	}
 	
 	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
@@ -114,11 +133,11 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		a += 1;
 	}
 
-	//“G“¯m‚Ì“–‚½‚è”»’è
-	if (sizeof(enemy) > 2) {//”z—ñ‚ÌƒTƒCƒYŠm”F
+	//æ•µåŒå£«ã®å½“ãŸã‚Šåˆ¤å®š
+	if (sizeof(enemy) > 2) {//é…åˆ—ã®ã‚µã‚¤ã‚ºç¢ºèª
 		for (int colA = 0; colA < BossEnemyMax; colA++) {
 			for (int colB = 1; colB < BossEnemyMax; colB++) {
-				if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB) {//“–‚½‚è”»’è‚Æ©‹@“¯m‚Ì“–‚½‚è”»’è‚Ìíœ
+				if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB) {//å½“ãŸã‚Šåˆ¤å®šã¨è‡ªæ©ŸåŒå£«ã®å½“ãŸã‚Šåˆ¤å®šã®å‰Šé™¤
 					DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
 					enemy[colA]->SetHit(true);
 					enemy[colB]->SetHit(false);
@@ -130,7 +149,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		}
 	}
 
-	//‚»‚Ì‘¼ƒV[ƒ“ˆÚs
+	//ãã®ä»–ã‚·ãƒ¼ãƒ³ç§»è¡Œ
 	if (bossenemy->GetHP() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("CLEAR");
 	}
@@ -158,6 +177,20 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 //	ImGui::TreePop();
 //}
 //ImGui::End();
+	ImGui::Begin("test");
+	if (ImGui::TreeNode("Debug"))
+	{
+		if (ImGui::TreeNode("Joy"))
+		{
+			ImGui::Text("IY %d", EffectNum);
+			ImGui::SliderFloat("PlayerArm", &weight, 50, -50);
+			ImGui::Unindent();
+			ImGui::TreePop();
+		}
+
+		ImGui::TreePop();
+	}
+	ImGui::End();
 	Object3d::PreDraw();
 	//objGround->Draw();
 	objground->Draw();
@@ -165,18 +198,21 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	Texture::PreDraw();
 	limit->Draw();
 	//Sprite::PreDraw();
-	//”wŒi—p
+	//èƒŒæ™¯ç”¨
 	//sprite->Draw();
 
 
 	Object3d::PreDraw();
 	//object1->Draw(dxCommon->GetCmdList());
-	//”wŒi—p
+	//èƒŒæ™¯ç”¨
 	player->Draw();
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Draw();
 	}
 	bossenemy->Draw();
+	for (int i = 0; i < EffectNum; i++) {
+		effect[i]->Draw();
+	}
 
 	ui->Draw();
 }

@@ -25,6 +25,8 @@ void Enemy::Initialize() {
 	texture->SetPosition(pos);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.2f,0.2f,0.2f });
+	
+	//texture->SetColor({ 1.0f,0.0,0.0,1.0f });
 	Restexture = Texture::Create(3, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	Restexture->TextureCreate();
 	Restexture->SetPosition(pos);
@@ -152,6 +154,7 @@ void Enemy::Update() {
 	enemyobj->SetRotation(rot);
 	enemyobj->SetScale(enescale);
 	enemyobj->Update();
+	//texture->SetColor({ 1.0f,0.0,0.0,0.0 });
 	texture->Update();
 	Restexture->Update();
 }

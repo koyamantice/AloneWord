@@ -8,7 +8,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	Texture::LoadTexture(1, L"Resources/2d/limit.png");
 	Texture::LoadTexture(2, L"Resources/2d/shadow.png");
 	Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
-	Texture::LoadTexture(4, L"Resources/2d/effect.png");
+	Texture::LoadTexture(4, L"Resources/2d/effect2.png");
 	// カメラ生成
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);

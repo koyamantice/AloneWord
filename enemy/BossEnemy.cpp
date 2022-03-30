@@ -24,7 +24,7 @@ void BossEnemy::Initialize() {
 	enemyobj->SetScale({ 1.5f,1.5f,1.5f });
 	texture = Texture::Create(2, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
-	texture->SetColor({ 1,1,1,0 });
+	//texture->SetColor({ 1,1,1,1 });
 	texture->SetPosition(pos.x, -1, pos.z);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.3f,0.3f,0.3f });
@@ -56,19 +56,19 @@ void BossEnemy::Update() {
 }
 
 void BossEnemy::Draw() {
-	ImGui::Begin("test");
-if (ImGui::TreeNode("Debug")) {
-	if (ImGui::TreeNode("Enemy")) {
-		ImGui::SliderFloat("bound.x", &pos.x, 50, -50);
-		ImGui::SliderFloat("bound.y", &pos.y, 50, -50);
-		ImGui::SliderFloat("pos.y", &pos.z, 50, -50);
-		ImGui::Text("%d", IsAlive);
-		ImGui::Unindent();
-		ImGui::TreePop();
-	}
-	ImGui::TreePop();
-}
-ImGui::End();
+//	ImGui::Begin("test");
+//	if (ImGui::TreeNode("Debug")) {
+//		if (ImGui::TreeNode("Enemy")) {
+//			ImGui::SliderFloat("bound.x", &pos.x, 50, -50);
+//			ImGui::SliderFloat("bound.y", &pos.y, 50, -50);
+//			ImGui::SliderFloat("pos.y", &pos.z, 50, -50);
+//			ImGui::Text("%d", IsAlive);
+//			ImGui::Unindent();
+//			ImGui::TreePop();
+//		}
+//		ImGui::TreePop();
+//	}
+//ImGui::End();
 
 	Object3d::PreDraw();
 	enemyobj->Draw();
@@ -114,6 +114,7 @@ bool BossEnemy::collideAttackArm() {
 
 			//ボスのHPをへらす
 			if (BossHit == true) {
+				Effect = true;
 				BossHP -= (weight * 2) * power;
 				weight = 0.0f;
 				boundpower.x = (float)(rand() % 4 - 2);
