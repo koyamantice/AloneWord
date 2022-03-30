@@ -25,7 +25,12 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 	if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
 		SceneManager::GetInstance()->ChangeScene("STARTMAP");
 	}
-	DebugText::GetInstance()->Print("Button_A to STARTMAP!!", 200, 100, 1.0f);
+	if (input->PushKey(DIK_SPACE)) {
+		SceneManager::GetInstance()->ChangeScene("BOSS");
+	}
+	DebugText::GetInstance()->Print("Button_A to STARTMAP!!", 100, 100, 1.5f);
+	DebugText::GetInstance()->Print("SPACE to BOSS!!", 100, 130, 1.5f);
+
 }
 
 void TitleScene::Draw(DirectXCommon* dxCommon) {

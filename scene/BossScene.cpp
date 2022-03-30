@@ -3,6 +3,8 @@
 #include "DebugText.h"
 #include "TitleScene.h"
 #include "FbxLoader.h"
+#include"Collision.h"
+
 void BossScene::Initialize(DirectXCommon* dxCommon) {
 	Texture::LoadTexture(0, L"Resources/2d/enemy.png");
 	Texture::LoadTexture(1, L"Resources/2d/limit.png");
@@ -70,6 +72,9 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	object1 = new FBXObject3d;
 	object1->Initialize();
 	object1->SetModel(model1);
+
+	ui = new UI(player,bossenemy);
+	//ui->Initialize();
 }
 
 void BossScene::Finalize() {
@@ -90,6 +95,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	player->Update();
 	bossenemy->Update();
 	limit->Update();
+	ui->Update();
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Update();
 		
@@ -175,4 +181,6 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 		enemy[i]->Draw();
 	}
 	bossenemy->Draw();
+
+	ui->Draw();
 }

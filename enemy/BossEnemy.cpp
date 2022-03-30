@@ -9,13 +9,10 @@ using namespace DirectX;
 BossEnemy::BossEnemy() {
 	model = Model::CreateFromOBJ("Fork");
 	enemyobj = new Object3d();
-	Sprite::LoadTexture(4, L"Resources/2d/PlayerHP.png");
 }
 
 void BossEnemy::Initialize() {
 	assert(player);
-	SpriteBossHP = Sprite::Create(4, { 0.0f,0.0f });
-	SpriteBossHP->SetColor({ 0.0f,1.0f,0.0,1.0 });
 	IsAlive = 0;
 	IsTimer = 100;
 	enemyobj = Object3d::Create();
@@ -43,15 +40,6 @@ void BossEnemy::Update() {
 	collider.center = XMVectorSet(pos.x, pos.y, pos.z, 1);
 	Interval = player->GetInterval();
 	FlashCount = player->GetFlashCount();
-	{//HPˆ—
-		XMFLOAT2 AfterPos;
-		AfterPos = { (float)(BossHP * 20),20 };
-		HPPos = {
-		Ease(In,Quint,0.7f,SpriteBossHP->GetSize().x,AfterPos.x),
-		Ease(In,Quint,0.7f,SpriteBossHP->GetSize().y,AfterPos.y),
-		};
-		SpriteBossHP->SetSize(HPPos);
-	}
 	{
 		rot.y = Ease(In, Quint, 0.7f, rot.y, Afterrot);
 		enemyobj->SetRotation(rot);
@@ -88,7 +76,6 @@ ImGui::End();
 	texture->Draw();
 
 	Sprite::PreDraw();
-	SpriteBossHP->Draw();
 
 	//bossobj->Draw();
 }

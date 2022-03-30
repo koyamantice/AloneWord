@@ -22,14 +22,10 @@ Player::Player() {
 	Armmodel = Model::CreateFromOBJ("Arm");
 	object3d = new Object3d();
 	Armobj = new Object3d();
-	Sprite::LoadTexture(3, L"Resources/2d/PlayerHP.png");
 
 }
 
 void Player::Initialize() {
-	//背景スプライト生成
-	SpritePlayerHP = Sprite::Create(3, { 0.0f,0.0f });
-	SpritePlayerHP->SetPosition({ 0.0f,520.0f });
 	object3d = Object3d::Create();
 	object3d->SetModel(model);
 	object3d->SetPosition(pos);
@@ -55,13 +51,6 @@ void Player::Finalize() {
 
 void Player::Update() {
 	Input* input = Input::GetInstance();
-	XMFLOAT2 AfterPos;
-	AfterPos = { (float)(HP * 30),20 };
-	PlayerHP = {
-	Ease(In,Quint,0.7f,(float)SpritePlayerHP->GetSize().x,(float)AfterPos.x),
-	Ease(In,Quint,0.7f,(float)SpritePlayerHP->GetSize().y,(float)AfterPos.y),
-	};
-	SpritePlayerHP->SetSize(PlayerHP);
 	XMFLOAT3 rot = this->object3d->GetRotation();
 	//if (!AttackFlag) {
 		rot.y = Ease(In, Quad, 0.9f, rot.y, AfterRot);
@@ -319,9 +308,6 @@ void Player::Draw() {
 		ImGui::TreePop();
 	}
 	ImGui::End();*/
-	Sprite::PreDraw();
-	//背景用
-	SpritePlayerHP->Draw();
 
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
