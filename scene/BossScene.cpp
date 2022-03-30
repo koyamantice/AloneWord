@@ -203,21 +203,16 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 
 
 	//object1->Draw(dxCommon->GetCmdList());
-<<<<<<< HEAD
-=======
 	//背景用
->>>>>>> f4b86f4fdd0186ae1a46f87d5c94f00f5b92605f
+
 	player->Draw();
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Draw();
 	}
 	bossenemy->Draw();
-<<<<<<< HEAD
-=======
+
 	for (int i = 0; i < EffectNum; i++) {
 		effect[i]->Draw();
 	}
-
->>>>>>> f4b86f4fdd0186ae1a46f87d5c94f00f5b92605f
 	ui->Draw();
 }
