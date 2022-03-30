@@ -13,6 +13,7 @@ class SceneManager;
 #include "Player.h"
 #include "Enemy.h"
 #include "input.h"
+#include "Effect.h"
 #include<memory>
 
 /// <summary>

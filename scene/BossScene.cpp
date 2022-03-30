@@ -10,6 +10,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	Texture::LoadTexture(1, L"Resources/2d/limit.png");
 	Texture::LoadTexture(2, L"Resources/2d/shadow.png");
 	Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
+	Texture::LoadTexture(4, L"Resources/2d/effect.png");
 	// カメラ生成
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
@@ -22,17 +23,12 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	bossenemy = new BossEnemy();
 	bossenemy->SetPlayer(player);
 	bossenemy->Initialize();
+
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i] = new Enemy();
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
 	}
-	//オブジェクト初期化
-	/*modelGround = Model::CreateFromOBJ("ground");
-	objGround = Object3d::Create();
-	objGround->Initialize();
-	objGround->SetModel(modelGround);
-	objGround->SetPosition({ 0,-1,0 });*/
 
 	modelground = Model::CreateFromOBJ("ground");
 	objground = Object3d::Create();
@@ -46,6 +42,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	limit->SetPosition({ 0.0f,0.01f,0.0f });
 	limit->SetRotation({ 90.0f,0, 0 });
 	limit->SetScale({ 6,5,5 });
+
 	//背景スプライト生成
 
 	// モデル読み込み
@@ -167,7 +164,6 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 
 	Texture::PreDraw();
 	limit->Draw();
-
 	//Sprite::PreDraw();
 	//背景用
 	//sprite->Draw();
