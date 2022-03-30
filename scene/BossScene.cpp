@@ -8,7 +8,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	Texture::LoadTexture(1, L"Resources/2d/limit.png");
 	Texture::LoadTexture(2, L"Resources/2d/shadow.png");
 	Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
-	Texture::LoadTexture(4, L"Resources/2d/effect.png");
+	Texture::LoadTexture(4, L"Resources/2d/effect2.png");
 	// ƒJƒƒ‰¶¬
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
@@ -91,7 +91,9 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	player->Update();
 	bossenemy->Update();
 	limit->Update();
-	for (int i = 0; i < EffectMax; i++) {
+	weight = player->GetArmWeight();
+	
+	for (int i = 0; i < EffectNum; i++) {
 		effect[i]->Update(bossenemy);
 	}
 	for (int i = 0; i < BossEnemyMax; i++) {
@@ -103,6 +105,16 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->SetEnemy();
+	}
+
+	if (player->GetArmWeight() == 1) {
+		EffectNum = 1;
+	} else if (player->GetArmWeight() >= 2 && player->GetArmWeight() < 4) {
+		EffectNum = 10;
+	} else if (player->GetArmWeight() >= 4 && player->GetArmWeight() < 6) {
+		EffectNum = 30;
+	} else {
+		EffectNum = 70;
 	}
 	
 	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
@@ -159,6 +171,20 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 //	ImGui::TreePop();
 //}
 //ImGui::End();
+	ImGui::Begin("test");
+	if (ImGui::TreeNode("Debug"))
+	{
+		if (ImGui::TreeNode("Joy"))
+		{
+			ImGui::Text("IY %d", EffectNum);
+			ImGui::SliderFloat("PlayerArm", &weight, 50, -50);
+			ImGui::Unindent();
+			ImGui::TreePop();
+		}
+
+		ImGui::TreePop();
+	}
+	ImGui::End();
 	Object3d::PreDraw();
 	//objGround->Draw();
 	objground->Draw();
@@ -178,7 +204,7 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 		enemy[i]->Draw();
 	}
 	bossenemy->Draw();
-	for (int i = 0; i < EffectMax; i++) {
+	for (int i = 0; i < EffectNum; i++) {
 		effect[i]->Draw();
 	}
 }

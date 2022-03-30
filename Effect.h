@@ -57,11 +57,11 @@ private:
 	//エフェクト関係
 	Texture* effecttexture = nullptr;
 	XMFLOAT3 effectpos = { 0.0f,0.0f,0.0f };
-	XMFLOAT4 effectcolor = { 1.0f,1.0f,1.0f,1.0f };
+	XMFLOAT4 effectcolor = { 0.0f,0.0f,0.0f,1.0f };
 	XMFLOAT3 effectscale = { 0.4f,0.4f,0.4f };
 	XMFLOAT3 boundpower = { 0.0f,0.0f,0.0f };
 	int effectAlive = 0;
-	int effectTimer = 50;
+	int randColor = 0;
 public:
 	Sphere collider;
 };

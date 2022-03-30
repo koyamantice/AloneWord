@@ -6,7 +6,7 @@
 /// ゲームプレイシーン
 /// </summary>
 const int BossEnemyMax = 7;
-const int EffectMax = 50;
+const int EffectMax = 70;
 class BossScene : public BaseScene{
 public:
 	/// <summary>
@@ -42,5 +42,6 @@ private:
 	Effect* effect[EffectMax] = { nullptr };
 	Enemy* enemy[BossEnemyMax] = { nullptr };
 	BossEnemy* bossenemy = nullptr;
+	float weight = 0;
 };
 
