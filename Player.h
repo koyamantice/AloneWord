@@ -101,14 +101,11 @@ private:
 	Object3d* object3d;
 	Model* model;
 	Model* Armmodel;
-	XMFLOAT2 PlayerHP{};
 	XMFLOAT3 pos = { 0,0,-10 };
 	XMFLOAT3 Armpos = { 0,0,0 };
 	XMFLOAT3 ArmRot = { 0,0,0 };
 	XMFLOAT3 distance{};
 	XMFLOAT3 rebound{};
-
-	Sprite* SpritePlayerHP = nullptr;
 
 	float PlayerSpeed = 0.3f;
 	//座標を戻す

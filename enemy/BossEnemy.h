@@ -22,8 +22,6 @@ public:
 	void SetHP(float BossHP) { this->BossHP = BossHP; }
 	void SetEffect(bool Effect) { this->Effect = Effect; }
 private:
-	XMFLOAT2 HPPos = { 0,0 };
-	Sprite* SpriteBossHP = false;
 	float rad = 0.4f;
 
 	float Afterrot = 0;
