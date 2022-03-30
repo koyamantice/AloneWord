@@ -169,14 +169,11 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	//sprite->Draw();
 
 
-	Object3d::PreDraw();
 	//object1->Draw(dxCommon->GetCmdList());
-	//”wŒi—p
 	player->Draw();
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Draw();
 	}
 	bossenemy->Draw();
-
 	ui->Draw();
 }

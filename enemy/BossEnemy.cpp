@@ -135,7 +135,7 @@ bool BossEnemy::collideAttackArm() {
 //ボスの行動
 void BossEnemy::Fork() {
 	XMFLOAT3 AfterPos{};
-	if (AttackCount > 40) {
+	if (AttackCount > 50000) {
 		if (!active) {
 			action = 1;//(rand() % 2);
 			frame = 0;

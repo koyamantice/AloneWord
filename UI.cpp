@@ -30,31 +30,89 @@ void UI::Update() {
 		};
 		PlaHp->SetSize(plaPos);
 	}
-	XMFLOAT3 pla=player->GetPosition();
-	XMFLOAT3 bos=boss->GetPosition();
-
-	XMFLOAT2 pos;
-	pos.x = (pla.x - bos.x);
-	pos.y = (pla.z - bos.z);
-	double posR = sqrt(pow(pla.x, 2) + pow(bos.z, 2));
-	double Check = pos.x / posR;
-	double Check2 = pos.y / posR;
-
-	pos.x = (float)Check;
-	pos.y = (float)Check2;
-
-	Arrow->SetPosition(pos);
 
 
 
 
-
+	if (boss) {
+		SeachBoss();
+	}
 
 
 }
 
 const void UI::Draw() {
+	ImGui::Begin("test");
+	if (ImGui::TreeNode("Debug")) {
+		if (ImGui::TreeNode("UI")) {
+			ImGui::SliderFloat("power1", &Check, 50, -50);
+			ImGui::SliderFloat("power2", &Check2, 50, -50);
+			ImGui::SliderFloat("power3", &pos.x, 50, -50);
+			ImGui::SliderFloat("power4", &pos.y, 50, -50);
+			ImGui::SliderFloat("power5", &pos.z, 50, -50);
+
+			//ImGui::Text("Sub %d", SpeedSub);
+
+			ImGui::Unindent();
+			ImGui::TreePop();
+		}
+		ImGui::TreePop();
+	}
+	ImGui::End();
 	Sprite::PreDraw();
 	BossHp->Draw();
 	PlaHp->Draw();
+	if (invisible) {
+		Arrow->Draw();
+	}
+}
+
+void UI::SeachBoss() {
+
+	radius = speed * PI / 180.0f;
+	circle.x = cosf(radius) * scale;
+	circle.y = sinf(radius) * scale;
+	ArrowPos.x = circle.x + basePos.x;
+	ArrowPos.y = circle.y + basePos.y;
+	speed++;
+
+	XMFLOAT3 pla = player->GetPosition();
+	XMFLOAT3 bos = boss->GetPosition();
+
+	pos.x = (pla.x - bos.x);
+	pos.z = (pla.z - bos.z);
+	pos.y = sqrt(pow(pla.x, 2) + pow(bos.z, 2));
+	Check = pos.x / pos.y;
+	Check2 = pos.z / pos.y;
+	a = (float)Check;
+	b = (float)Check2;
+
+	if (fabs(Check)>3||fabs(Check2)>0.4f) {
+		invisible = true;
+	} else {
+		invisible = false;
+
+	}
+
+
+	//if (Check > 0) {
+	//	if (Check2 > 0) {
+	//		ArrowPos.y = 400;
+	//		ArrowPos.x = 700;
+	//	} else {
+	//		ArrowPos.y = 200;
+	//		ArrowPos.x = 700;
+	//	}
+	//} else {
+	//	if (Check2 > 0) {
+	//		ArrowPos.y = 400;
+	//		ArrowPos.x = 600;
+	//	} else {
+	//		ArrowPos.y = 200;
+	//		ArrowPos.x = 600;
+	//	}
+
+	//}
+
+	Arrow->SetPosition(ArrowPos);
 }

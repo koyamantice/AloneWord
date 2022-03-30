@@ -4,7 +4,6 @@
 #include"Enemy.h"
 #include"BossEnemy.h"
 
-
 class UI {
 public:
 	UI(Player*player,BossEnemy* boss=nullptr);
@@ -25,19 +24,25 @@ private:
 	Sprite* PlaHp= nullptr;
 	Sprite* Arrow = nullptr;
 
-
 	XMFLOAT2 bossPos{};
 	XMFLOAT2 plaPos{};
+	XMFLOAT2 ArrowPos{};
 	XMFLOAT2 AfterPos[2]{};
 
+	const float PI=3.145265f;
+	float speed = 0;
+	float radius = 0;
+	float scale = 150;
+	float a;
+		float b;
+	XMFLOAT2 basePos={1280/2,720/2};
+	XMFLOAT2 circle{};
+	XMFLOAT3 pos{};
 
-
-
-
-
-
-
-
-
+	float Check = 0;
+	float Check2 = 0;
+	bool invisible=false;
+private:
+	void SeachBoss();
 };
 
