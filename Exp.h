@@ -53,6 +53,7 @@ private:
 	XMFLOAT3 scale = { 0.4f,0.4f,0.4f };
 	XMFLOAT3 boundpower = { 0.0f,0.0f,0.0f };
 	bool ExpAlive = false;
+	bool ExpAlive2 = false;
 public:
 	Sphere collider;
 };

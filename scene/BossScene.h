@@ -44,7 +44,7 @@ private:
 	Effect* effect[EffectMax] = { nullptr };
 	Enemy* enemy[BossEnemyMax] = { nullptr };
 	BossEnemy* bossenemy = nullptr;
-	Exp* exp[ExpMax] = { nullptr };
+	Exp* exp[ExpMax][BossEnemyMax] = { nullptr };
 	float weight = 0;
 	UI* ui=nullptr;
 };

@@ -49,8 +49,10 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	}
 
 	for (int i = 0; i < ExpMax; i++) {
-		exp[i] = new Exp();
-		exp[i]->Initialize();
+		for (int j = 0; j < BossEnemyMax; j++) {
+			exp[i][j] = new Exp();
+			exp[i][j]->Initialize();
+		}
 	}
 	//背景スプライト生成
 
@@ -116,7 +118,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 
 	for (int i = 0; i < ExpMax; i++) {
 		for(int j = 0; j < BossEnemyMax;j++){
-			exp[i]->Update(player, enemy[j]);
+			exp[i][j]->Update(player, enemy[j]);
 		}
 	}
 
@@ -210,7 +212,9 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	}
 
 	for (int i = 0; i < ExpMax; i++) {
-		exp[i]->Draw();
+		for (int j = 0; j < BossEnemyMax; j++) {
+			exp[i][j]->Draw();
+		}
 	}
 	ui->Draw();
 }

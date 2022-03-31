@@ -66,6 +66,7 @@ void Enemy::Update() {
 			appearance = true;
 			isMove = false;
 			IsTimer = 200;
+			DrawExp = true;
 		}
 	}
 
@@ -163,6 +164,18 @@ void Enemy::Update() {
 
 //描画
 void Enemy::Draw() {
+
+	ImGui::Begin("test");
+	if (ImGui::TreeNode("Debug")) {
+		if (ImGui::TreeNode("Enemy")) {
+			//ImGui::SliderFloat("boundpower.y", &boundpower.y, 50, -50);
+			ImGui::Text("%d", DrawExp);
+			ImGui::Unindent();
+			ImGui::TreePop();
+		}
+		ImGui::TreePop();
+	}
+	ImGui::End();
 
 	if (IsAlive) {
 		Object3d::PreDraw();
@@ -425,7 +438,7 @@ void Enemy::DeadEnemy() {
 		enescale.y -= 0.01f;
 		enescale.z -= 0.01f;
 		if (enescale.x <= 0.0f && enescale.y <= 0.0f && enescale.z <= 0.0f) {
-			DrawExp = true;
+			
 			Exp = false;
 			IsAlive = false;
 		}
