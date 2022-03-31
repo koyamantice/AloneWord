@@ -25,12 +25,14 @@ public:
 	const bool& GetHit() { return hit; }
 	const int& GetBound() { return bound; }
 	const bool& GetIsAlive() { return IsAlive; }
+	const bool& GetDrawExp() { return DrawExp; }
 	void SetPlayer(Player* player) { this->player=player; }
 	//bool Collision(XMFLOAT3 position, float radius);
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
 	void SetEnemyCatch(bool EnemyCatch) {this-> EnemyCatch = EnemyCatch; }
 	void SetBound(int bound) { this->bound = bound; }
 	void SetHit(bool hit) { this->hit = hit; }
+	void SetDrawExp(bool DrawExp) { this->DrawExp = DrawExp; }
 	void Setboundpower(XMFLOAT3 boundpower) { this->boundpower = boundpower; }
 	void SetEnemy();
 	void DeadEnemy();
@@ -63,6 +65,7 @@ private:
 	bool bound = false;
 	bool add = false;
 	bool appearance = false;
-	int Exp = false;
+	bool Exp = false;
+	bool DrawExp = false;
 };
 

@@ -47,6 +47,11 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 		effect[i] = new Effect();
 		effect[i]->Initialize();
 	}
+
+	for (int i = 0; i < ExpMax; i++) {
+		exp[i] = new Exp();
+		exp[i]->Initialize();
+	}
 	//背景スプライト生成
 
 	// モデル読み込み
@@ -107,6 +112,12 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		enemy[i]->SetEnemy();
 		player->ResetWeight(enemy[i]);
 		player->Rebound(enemy[i]);
+	}
+
+	for (int i = 0; i < ExpMax; i++) {
+		for(int j = 0; j < BossEnemyMax;j++){
+			exp[i]->Update(player, enemy[j]);
+		}
 	}
 
 	if (player->GetArmWeight() == 1) {
@@ -196,6 +207,10 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 
 	for (int i = 0; i < EffectNum; i++) {
 		effect[i]->Draw();
+	}
+
+	for (int i = 0; i < ExpMax; i++) {
+		exp[i]->Draw();
 	}
 	ui->Draw();
 }

@@ -180,6 +180,7 @@
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="enemy\BossEnemy.cpp" />
     <ClCompile Include="enemy\Enemy.cpp" />
+    <ClCompile Include="Exp.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
     <ClCompile Include="imgui\imgui_draw.cpp" />
@@ -235,6 +236,7 @@
     <ClInclude Include="enemy\BaseEnemy.h" />
     <ClInclude Include="enemy\BossEnemy.h" />
     <ClInclude Include="enemy\Enemy.h" />
+    <ClInclude Include="Exp.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
     <ClInclude Include="imgui\imgui_impl_dx12.h" />

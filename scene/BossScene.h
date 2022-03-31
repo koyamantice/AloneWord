@@ -2,11 +2,13 @@
 #include "BaseScene.h"
 #include "BossEnemy.h"
 #include "UI.h"
+
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>
 const int BossEnemyMax = 2;
 const int EffectMax = 70;
+const int ExpMax = 5;
 class BossScene : public BaseScene{
 public:
 	/// <summary>
@@ -42,6 +44,7 @@ private:
 	Effect* effect[EffectMax] = { nullptr };
 	Enemy* enemy[BossEnemyMax] = { nullptr };
 	BossEnemy* bossenemy = nullptr;
+	Exp* exp[ExpMax] = { nullptr };
 	float weight = 0;
 	UI* ui=nullptr;
 };

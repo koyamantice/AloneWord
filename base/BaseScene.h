@@ -14,6 +14,7 @@ class SceneManager;
 #include "Enemy.h"
 #include "input.h"
 #include "Effect.h"
+#include "Exp.h"
 #include<memory>
 
 /// <summary>
