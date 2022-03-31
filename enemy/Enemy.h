@@ -24,7 +24,7 @@ public:
 	const XMFLOAT3& GetBoundPower() { return boundpower; }
 	const bool& GetHit() { return hit; }
 	const int& GetBound() { return bound; }
-
+	const bool& GetIsAlive() { return IsAlive; }
 	void SetPlayer(Player* player) { this->player=player; }
 	//bool Collision(XMFLOAT3 position, float radius);
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
@@ -33,6 +33,8 @@ public:
 	void SetHit(bool hit) { this->hit = hit; }
 	void Setboundpower(XMFLOAT3 boundpower) { this->boundpower = boundpower; }
 	void SetEnemy();
+	void DeadEnemy();
+	void RandDeadPower();
 private:
 	XMFLOAT3 playerpos{};
 	XMFLOAT3 StartPos{};
@@ -61,5 +63,6 @@ private:
 	bool bound = false;
 	bool add = false;
 	bool appearance = false;
+	int Exp = false;
 };
 

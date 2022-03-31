@@ -322,6 +322,7 @@ void Player::Draw() {
 		Armobj->Draw();
 	}
 	
+	
 }
 
 //敵が腕から離れる

@@ -40,6 +40,7 @@ protected:
 	XMFLOAT3 pos = { 0,0,0 };
 	XMFLOAT3 rot = { 0,0,0 };
 	XMFLOAT3 boundpower{};
+	XMFLOAT3 Deadbound = {};
 	XMFLOAT3 enescale{0.4f,0.4f,0.4f};
 	Player* player=nullptr;
 

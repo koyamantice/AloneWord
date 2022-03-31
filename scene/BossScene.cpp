@@ -104,13 +104,9 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	ui->Update();
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Update();
-		
+		enemy[i]->SetEnemy();
 		player->ResetWeight(enemy[i]);
 		player->Rebound(enemy[i]);
-	}
-
-	for (int i = 0; i < BossEnemyMax; i++) {
-		enemy[i]->SetEnemy();
 	}
 
 	if (player->GetArmWeight() == 1) {
@@ -177,20 +173,7 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 //	ImGui::TreePop();
 //}
 //ImGui::End();
-	ImGui::Begin("test");
-	if (ImGui::TreeNode("Debug"))
-	{
-		if (ImGui::TreeNode("Joy"))
-		{
-			ImGui::Text("IY %d", EffectNum);
-			ImGui::SliderFloat("PlayerArm", &weight, 50, -50);
-			ImGui::Unindent();
-			ImGui::TreePop();
-		}
-
-		ImGui::TreePop();
-	}
-	ImGui::End();
+	
 	Object3d::PreDraw();
 	//objGround->Draw();
 	objground->Draw();

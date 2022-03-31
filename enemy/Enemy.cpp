@@ -69,7 +69,7 @@ void Enemy::Update() {
 		}
 	}
 
-	if (IsAlive && !EnemyCatch) {
+	if (IsAlive && !EnemyCatch && !Exp) {
 		if (LockOn()) {
 			moveCount = (rand() % 15) + 20;
 			isMove = false;
@@ -145,7 +145,9 @@ void Enemy::Update() {
 	collideArm();
 	collidePlayer();
 	collideAttackArm();
-
+	if (Exp == true) {
+		DeadEnemy();
+	}
 	enemyobj->SetPosition(pos);
 	texture->SetPosition(pos);
 	Restexture->SetPosition(pos);
@@ -161,16 +163,18 @@ void Enemy::Update() {
 
 //描画
 void Enemy::Draw() {
-	/*ImGui::Begin("test");
+	ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("Enemy")) {
-			ImGui::SliderFloat("pos.y", &enescale.y, 50, -50);
+			ImGui::SliderFloat("pos.y", &pos.y, 50, -50);
+			ImGui::SliderFloat("deadpower.y", &Deadbound.y, 50, -50);
+			ImGui::Text("%d", Exp);
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}
 		ImGui::TreePop();
 	}
-	ImGui::End();*/
+	ImGui::End();
 	if (IsAlive) {
 		Object3d::PreDraw();
 		enemyobj->Draw();
@@ -190,7 +194,7 @@ bool Enemy::collideArm() {
 	float armspeed = player->GetArmSpeed();
 	float armscale = player->GetArmScale();
 	int armMove = player->GetArmMoveNumber();
-	if (IsAlive && armMove >= 1 && !EnemyCatch && add == false) {
+	if (IsAlive && armMove >= 1 && !EnemyCatch && add == false && !Exp) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
 			EnemyCatch = true;
 			armweight += 1.0f;
@@ -234,7 +238,7 @@ bool Enemy::collideArm() {
 
 //プレイヤーがダメージを食らう
 bool Enemy::collidePlayer() {
-	if (IsAlive && !EnemyCatch && FlashCount == 0 && add == false) {
+	if (IsAlive && !EnemyCatch && FlashCount == 0 && add == false && !Exp) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true) {
 			IsAlive = 0;
 			player->SetHp(player->GetHp() - 1);
@@ -249,13 +253,15 @@ bool Enemy::collidePlayer() {
 	}
 }
 
+//敵の当たり判定
 bool Enemy::collideAttackArm() {
 	XMFLOAT3 Armpos = player->GetArmPosition();
 	bool attackflag = player->GetAttackFlag();
 	float armweight = player->GetArmWeight();
-	if (IsAlive && !EnemyCatch && attackflag) {
+	if (IsAlive && !EnemyCatch && attackflag && !Exp) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
-			IsAlive = 0;//持たれててない方
+			Exp = true;
+			RandDeadPower();
 			player->SetAttackFlag(false);
 			if (armweight <= 3) {
 				Audio::GetInstance()->PlayWave("Resources/Sound/strongL1.wav", 0.4f);
@@ -405,11 +411,42 @@ void Enemy::SetEnemy() {
 	float armweight = player->GetArmWeight();
 	XMFLOAT3 plapos = player->GetPosition();
 	if (EnemyCatch == true) {
-
 		radius = speed * PI / 180.0f;
 		circleX = cosf(radius) * scale;
 		circleZ = sinf(radius) * scale;
 		pos.x = circleX + plapos.x;
 		pos.z = circleZ + plapos.z;
 	}
+}
+
+//敵が死んだときの演出
+void Enemy::DeadEnemy() {
+	Deadbound.y -= 0.02f;
+	pos.y += Deadbound.y;
+	if (pos.y > 0.0f) {
+		pos.x += Deadbound.x;
+		pos.z += Deadbound.z;
+	}
+	else{
+		pos.y = 0.0f;
+	}
+
+	if (pos.y == 0.0f) {
+		enescale.x -= 0.01f;
+		enescale.y -= 0.01f;
+		enescale.z -= 0.01f;
+		if (enescale.x <= 0.0f && enescale.y <= 0.0f && enescale.z <= 0.0f) {
+			Exp = false;
+			IsAlive = false;
+		}
+	}
+}
+
+void Enemy::RandDeadPower() {
+	Deadbound.x = (float)(rand() % 4 - 2);
+	Deadbound.y = 5;
+	Deadbound.z = (float)(rand() % 4 - 2);
+	Deadbound.x = Deadbound.x / 10;
+	Deadbound.y = Deadbound.y / 10;
+	Deadbound.z = Deadbound.z / 10;
 }
