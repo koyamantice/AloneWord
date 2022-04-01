@@ -17,8 +17,10 @@ private:
 public:
 	void SetPlayer(Player* player) { this->player = player; }
 	const float& GetHP() { return BossHP; }
-
+	const bool& GetHit() { return BossHit; }
+	const bool& GetEffect() { return Effect; }
 	void SetHP(float BossHP) { this->BossHP = BossHP; }
+	void SetEffect(bool Effect) { this->Effect = Effect; }
 private:
 	float rad = 0.4f;
 
@@ -27,6 +29,7 @@ private:
 	int IsMove = 0;
 	float BossHP = 50;
 	bool BossHit = false;
+	bool Effect = false;
 	int AttackCount = 0;
 	int Standby = 0;
 	bool already = false;

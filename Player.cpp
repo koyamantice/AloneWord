@@ -15,7 +15,14 @@ float easeOutBack(float x) {
 }
 
 float easeInOut(float x) {
-	return x < 0.5 ? 2 * x * x : 1 - powf(-2 * x + 2, 2) / 2;
+	return x < 0.5 ? 8 * x * x * x * x : 1 - pow(-2 * x + 2, 4) / 2;
+}
+float easeBack(float x) 
+{
+const float c1 = 1.70158f;
+const float c3 = c1 + 1;
+
+return c3 * x * x * x - c1 * x * x;
 }
 Player::Player() {
 	model = Model::CreateFromOBJ("Motti");
@@ -203,13 +210,13 @@ void Player::Update() {
 	//攻撃
 	if (AttackFlag == true) {
 		if (AttackMoveNumber == 1 || AttackMoveNumber == 2) {
-			ArmSpeed = initspeed - 360.0f * easeInOut(frame2 / frameMax2);
-			AfterRot = initrotation + 360.0f * easeInOut(frame2 / frameMax2);
-			ArmRot.y = initArmRotation + 360.0f * easeInOut(frame2 / frameMax2);
+			ArmSpeed = initspeed - 360.0f * easeBack(frame2 / frameMax2);
+			AfterRot = initrotation + 360.0f * easeBack(frame2 / frameMax2);
+			ArmRot.y = initArmRotation + 360.0f * easeBack(frame2 / frameMax2);
 		} else {
-			ArmSpeed = initspeed + 360.0f * easeInOut(frame2 / frameMax2);
-			AfterRot = initrotation - 360.0f * easeInOut(frame2 / frameMax2);
-			ArmRot.y = initArmRotation - 360.0f * easeInOut(frame2 / frameMax2);
+			ArmSpeed = initspeed + 360.0f * easeBack(frame2 / frameMax2);
+			AfterRot = initrotation - 360.0f * easeBack(frame2 / frameMax2);
+			ArmRot.y = initArmRotation - 360.0f * easeBack(frame2 / frameMax2);
 		}
 		
 		SpeedSub =(int)( initspeed - ArmSpeed);
