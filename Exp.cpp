@@ -37,6 +37,10 @@ void Exp::Update(Player* player,Enemy* enemy) {
 	Input* input = Input::GetInstance();
 	
 	SetExp(enemy);
+	if (LockOn(player) == true) {
+		Follow(player);
+	}
+	Collide(player);
 	object3d->Update();
 	object3d->SetPosition(pos);
 	object3d->SetScale(scale);
@@ -64,9 +68,10 @@ void Exp::SetExp(Enemy* enemy) {
 	//エフェクトの発生
 	bool SetExp = enemy->GetDrawExp();
 	//エフェクトの発生
-	if (SetExp == true && ExpAlive2 == false) {
+	if (SetExp == true && BirthExp == false) {
+		pos = enemy->GetPosition();
 		boundpower.x = (float)(rand() % 4 - 2);
-		boundpower.y = (float)(rand() % 5);
+		boundpower.y = 3;
 		boundpower.z = (float)(rand() % 4 - 2);
 		//effectcolor.w = (float)(rand() % 10);
 		if (boundpower.x == 0.0f) {
@@ -79,9 +84,8 @@ void Exp::SetExp(Enemy* enemy) {
 		boundpower.x = boundpower.x / 10;
 		boundpower.y = boundpower.y / 10;
 		boundpower.z = boundpower.z / 10;
-		pos = enemy->GetPosition();
 		ExpAlive = true;
-		ExpAlive2 = true;
+		BirthExp = true;
 	}
 	if (ExpAlive == true) {
 		boundpower.y -= 0.02f;
@@ -92,7 +96,46 @@ void Exp::SetExp(Enemy* enemy) {
 			pos.y = 0.0f;
 			boundpower = { 0.0f,0.0f,0.0f };
 			enemy->SetDrawExp(false);
-			ExpAlive2 = false;
+			BirthExp = false;
 		}
+	}
+}
+
+bool Exp::LockOn(Player* player) {
+	float distance;
+	distance = sqrtf(((pos.x - player->GetPosition().x) * (pos.x - player->GetPosition().x)) +
+		((pos.y - player->GetPosition().y) * (pos.y - player->GetPosition().y)) +
+		((pos.z - player->GetPosition().z) * (pos.z - player->GetPosition().z)));
+	if (distance <= 15) {//距離が一定数なったらプレイヤーを検知
+		return true;
+	} else {
+		return false;
+	}
+
+	return true;
+}
+
+void Exp::Follow(Player* player) {
+	XMFLOAT3 position{};
+	position.x = (player->GetPosition().x - pos.x);
+	position.z = (player->GetPosition().z - pos.z);
+	double posR = sqrt(pow(pos.x, 2) + pow(pos.z, 2));
+	double Check = position.x / posR;
+	double Check2 = position.z / posR;
+
+	pos.x += (float)Check * 0.095f;
+	pos.z += (float)Check2 * 0.095f;
+}
+
+bool Exp::Collide(Player* player) {
+	if (ExpAlive) {
+		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, player->GetPosition().x, player->GetPosition().y, player->GetPosition().z, 0.5f) == true) {
+			ExpAlive = false;
+			return true;
+		} else {
+			return false;
+		}
+	} else {
+		return false;
 	}
 }

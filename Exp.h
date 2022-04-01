@@ -44,6 +44,12 @@ public:
 
 	//void SetExpAlive(bool ExpAlive) { this->ExpAlive = ExpAlive; }
 	void SetExp(Enemy* enemy);
+
+	bool LockOn(Player* player);
+
+	void Follow(Player* player);
+
+	bool Collide(Player* player);
 private:
 	Object3d* object3d;
 	Model* model;
@@ -53,7 +59,7 @@ private:
 	XMFLOAT3 scale = { 0.4f,0.4f,0.4f };
 	XMFLOAT3 boundpower = { 0.0f,0.0f,0.0f };
 	bool ExpAlive = false;
-	bool ExpAlive2 = false;
+	bool BirthExp = false;
 public:
 	Sphere collider;
 };
