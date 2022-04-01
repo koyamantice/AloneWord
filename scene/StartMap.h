@@ -35,6 +35,7 @@ private:
 	Model* modeltree = nullptr;
 	Object3d* objtree;
 
+
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;
 	DebugCamera* camera = { nullptr };

@@ -41,13 +41,13 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	objground->SetPosition({ 0,-1,0 });
 	objground->SetScale({ 0.1f,1.0f,0.1f });
 
-	modeltree = Model::CreateFromOBJ("tree");
+	modeltree = Model::CreateFromOBJ("StartMap");
 	objtree = Object3d::Create();
 	objtree->Initialize();
 	objtree->SetModel(modeltree);
-	objtree->SetPosition({ 0,0,-14 });
+	objtree->SetPosition({ 0,-5,50 });
 	objtree->SetRotation({ 0,90,0 });
-	objtree->SetScale({ 1,1,1 });
+	objtree->SetScale({ 1.8f,1.8f,1.8f });
 	//普通のテクスチャ(板ポリ)
 
 	/*limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
@@ -180,7 +180,7 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 //ImGui::End();
 	Object3d::PreDraw();
 	//objGround->Draw();
-	objground->Draw();
+	//objground->Draw();
 	objtree->Draw();
 	Texture::PreDraw();
 	//limit->Draw();
