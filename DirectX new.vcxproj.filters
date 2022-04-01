@@ -45,6 +45,9 @@
     <Filter Include="effect">
       <UniqueIdentifier>{0b73eb2b-7b21-41ae-8ade-5c9faa356fa5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="exp">
+      <UniqueIdentifier>{ad8f34ea-8441-4de7-a0a4-8b110a6b708c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scene\TisGame.cpp">
@@ -187,6 +190,9 @@
     </ClCompile>
     <ClCompile Include="Effect.cpp">
       <Filter>effect</Filter>
+    </ClCompile>
+    <ClCompile Include="Exp.cpp">
+      <Filter>exp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -342,6 +348,9 @@
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="Exp.h">
+      <Filter>exp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

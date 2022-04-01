@@ -289,6 +289,11 @@ void Player::Update() {
 		Interval = 0;
 	}
 
+	if (Exp >= Lv * 10) {
+		Lv++;
+		Exp = 0.0f;
+	}
+
 	Armradius = ArmSpeed * PI / 180.0f;
 	ArmCircleX = cosf(Armradius) * Armscale;
 	ArmCircleZ = sinf(Armradius) * Armscale;
@@ -303,24 +308,25 @@ void Player::Update() {
 
 //描画
 void Player::Draw() {
-	/*ImGui::Begin("test");
+	ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("Player")) {
-			ImGui::SliderFloat("power", &power, 50, -50);
-			ImGui::Text("Sub %d", SpeedSub);
+			ImGui::SliderFloat("Exp", &Exp, 50, -50);
+			ImGui::Text("Lv %d", Lv);
 
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}
 		ImGui::TreePop();
 	}
-	ImGui::End();*/
+	ImGui::End();
 
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
 		object3d->Draw();
 		Armobj->Draw();
 	}
+	
 	
 }
 

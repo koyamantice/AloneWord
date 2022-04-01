@@ -11,10 +11,10 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	Texture::LoadTexture(2, L"Resources/2d/shadow.png");
 	Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
 	Texture::LoadTexture(4, L"Resources/2d/effect2.png");
-	// カメラ生�E
+	// 繧ｫ繝｡繝ｩ逕滓・
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
-	// 3DオブジェクトにカメラをセチE��
+	// 3D繧ｪ繝悶ず繧ｧ繧ｯ繝医↓繧ｫ繝｡繝ｩ繧偵そ繝・ヨ
 	Object3d::SetCamera(camera);
 	player = new Player();
 	player->Initialize();
@@ -37,11 +37,11 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objground->SetPosition({ 0,-1,2 });
 	objground->SetRotation({ 0, 90, 0 });
 	objground->SetScale({ 1.4f,1.5f,1.6f });
-	//���ʂ̃e�N�X�`��(�|��)
+	//普通のテクスチャ(板ポリ)
 	/*limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
 	objground->SetPosition({ 0,-1,10 });
 	objground->SetScale({ 22,1,10 });
-	//普通�EチE��スチャ(板ポリ)
+	//譎ｮ騾壹・繝・け繧ｹ繝√Ε(譚ｿ繝昴Μ)
 	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
 	limit->TextureCreate();
 	limit->SetPosition({ 0.0f,0.01f,0.0f });
@@ -52,27 +52,32 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 		effect[i] = new Effect();
 		effect[i]->Initialize();
 	}
-	//背景スプライト生戁E
 
-	// モチE��読み込み
+	for (int i = 0; i < ExpMax; i++) {
+		for (int j = 0; j < BossEnemyMax; j++) {
+			exp[i][j] = new Exp();
+			exp[i][j]->Initialize();
+		}
+	}
+
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
 	//srand(NULL);
-	// ライト生戁E
+	// 繝ｩ繧､繝育函謌・
 	lightGroup = LightGroup::Create();
-	// 3DオブエクトにライトをセチE��
+	// 3D繧ｪ繝悶お繧ｯ繝医↓繝ｩ繧､繝医ｒ繧ｻ繝・ヨ
 	Object3d::SetLightGroup(lightGroup);
 
-	// カメラ注視点をセチE��
+	// 繧ｫ繝｡繝ｩ豕ｨ隕也せ繧偵そ繝・ヨ
 	camera->SetTarget(player->GetPosition());
 	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
-	// モチE��名を持E��してファイル読み込み
+	// 繝｢繝・Ν蜷阪ｒ謖・ｮ壹＠縺ｦ繝輔ぃ繧､繝ｫ隱ｭ縺ｿ霎ｼ縺ｿ
 	model1 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 
-	// チE��イスをセチE��
+	// 繝・ヰ繧､繧ｹ繧偵そ繝・ヨ
 	FBXObject3d::SetDevice(dxCommon->GetDev());
-	// カメラをセチE��
+	// 繧ｫ繝｡繝ｩ繧偵そ繝・ヨ
 	FBXObject3d::SetCamera(camera);
-	// グラフィチE��スパイプライン生�E
+	// 繧ｰ繝ｩ繝輔ぅ繝・け繧ｹ繝代う繝励Λ繧､繝ｳ逕滓・
 	FBXObject3d::CreateGraphicsPipeline();
 
 	object1 = new FBXObject3d;
@@ -85,7 +90,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 
 void BossScene::Finalize() {
 
-	//�E�ａE�EモチE��のチE��ーチE
+	//・難ｽ・・繝｢繝・Ν縺ｮ繝・Μ繝ｼ繝・
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Finalize();
 	}
@@ -104,13 +109,15 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	ui->Update();
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Update();
-		
+		enemy[i]->SetEnemy();
 		player->ResetWeight(enemy[i]);
 		player->Rebound(enemy[i]);
 	}
 
-	for (int i = 0; i < BossEnemyMax; i++) {
-		enemy[i]->SetEnemy();
+	for (int i = 0; i < ExpMax; i++) {
+		for(int j = 0; j < BossEnemyMax;j++){
+			exp[i][j]->Update(player, enemy[j]);
+		}
 	}
 
 	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
@@ -123,11 +130,11 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		a += 1;
 	}
 
-	//敵同士の当たり判宁E
-	if (sizeof(enemy) > 2) {//配�Eのサイズ確誁E
+	//謨ｵ蜷悟｣ｫ縺ｮ蠖薙◆繧雁愛螳・
+	if (sizeof(enemy) > 2) {//驟榊・縺ｮ繧ｵ繧､繧ｺ遒ｺ隱・
 		for (int colA = 0; colA < BossEnemyMax; colA++) {
 			for (int colB = 1; colB < BossEnemyMax; colB++) {
-				if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB) {//当たり判定と自機同士の当たり判定�E削除
+				if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB) {//蠖薙◆繧雁愛螳壹→閾ｪ讖溷酔螢ｫ縺ｮ蠖薙◆繧雁愛螳壹・蜑企勁
 					DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
 					enemy[colA]->SetHit(true);
 					enemy[colB]->SetHit(false);
@@ -139,7 +146,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		}
 	}
 
-	//そ�E他シーン移衁E
+	//縺昴・莉悶す繝ｼ繝ｳ遘ｻ陦・
 	if (bossenemy->GetHP() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("CLEAR");
 	}
@@ -167,6 +174,7 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 //	ImGui::TreePop();
 //}
 //ImGui::End();
+
 	ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug"))
 	{
@@ -187,18 +195,27 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	Texture::PreDraw();
 	//limit->Draw();
 	//Sprite::PreDraw();
-	//背景用
+	//閭梧勹逕ｨ
 	//sprite->Draw();
 
-
 	//object1->Draw(dxCommon->GetCmdList());
-	//背景用
+	//閭梧勹逕ｨ
 
 	player->Draw();
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Draw();
 	}
 	bossenemy->Draw();
+
+	for (int i = 0; i < EffectNum; i++) {
+		effect[i]->Draw();
+	}
+
+	for (int i = 0; i < ExpMax; i++) {
+		for (int j = 0; j < BossEnemyMax; j++) {
+			exp[i][j]->Draw();
+		}
+	}
 
 	ui->Draw();
 }

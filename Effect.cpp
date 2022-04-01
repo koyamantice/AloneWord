@@ -62,10 +62,6 @@ void Effect::Update(BossEnemy* bossenemy) {
 		//effectcolor.w = effectcolor.w / 100;
 		effectpos = bossenemy->GetPosition();
 		effectAlive = true;
-		if (effectAlive == false) {
-			effectAlive = true;
-		}
-	
 	}
 	if (effectAlive == true) {
 		boundpower.y -= 0.02f;

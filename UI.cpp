@@ -35,14 +35,9 @@ void UI::Update() {
 		PlaHp->SetSize(plaPos);
 	}
 
-
-
-
 	if (boss) {
 		SeachBoss();
 	}
-
-
 }
 
 const void UI::Draw() {
