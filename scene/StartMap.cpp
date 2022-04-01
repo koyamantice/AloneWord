@@ -35,7 +35,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	objground->Initialize();
 	objground->SetModel(modelground);
 	objground->SetPosition({ 0,-1,0 });
-	objground->SetScale({ 50,1,80 });
+	objground->SetScale({ 0.1f,1.0f,0.1f });
 
 	modeltree = Model::CreateFromOBJ("tree");
 	objtree = Object3d::Create();

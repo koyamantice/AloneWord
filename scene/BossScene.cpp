@@ -34,14 +34,15 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objground = Object3d::Create();
 	objground->Initialize();
 	objground->SetModel(modelground);
-	objground->SetPosition({ 0,-1,10 });
-	objground->SetScale({ 22,1,10 });
+	objground->SetPosition({ 0,-1,2 });
+	objground->SetRotation({ 0, 90, 0 });
+	objground->SetScale({ 1.4f,1.5f,1.6f });
 	//普通のテクスチャ(板ポリ)
-	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
+	/*limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
 	limit->TextureCreate();
 	limit->SetPosition({ 0.0f,0.01f,0.0f });
 	limit->SetRotation({ 90.0f,0, 0 });
-	limit->SetScale({ 6,5,5 });
+	limit->SetScale({ 6,5,5 });*/
 
 	//背景スプライト生成
 
@@ -91,7 +92,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	camera->Update();
 	player->Update();
 	bossenemy->Update();
-	limit->Update();
+	//limit->Update();
 	ui->Update();
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Update();
@@ -163,7 +164,7 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	objground->Draw();
 
 	Texture::PreDraw();
-	limit->Draw();
+	//limit->Draw();
 	//Sprite::PreDraw();
 	//背景用
 	//sprite->Draw();
