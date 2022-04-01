@@ -7,11 +7,15 @@ UI::UI(Player* player, BossEnemy* boss) {
 	this->boss = boss;
 	Sprite::LoadTexture(3, L"Resources/2d/PlayerHP.png");
 	Sprite::LoadTexture(4, L"Resources/2d/Arrow.png");
+	Sprite::LoadTexture(5, L"Resources/2d/Life.png");
 	BossHp = Sprite::Create(3, { 0.0f,0.0f });
 	BossHp->SetColor({ 0.0f,1.0f,0.0,1.0 });
 	//背景スプライト生成
 	PlaHp = Sprite::Create(3, { 0.0f,0.0f });
-	PlaHp->SetPosition({ 0.0f,520.0f });
+	PlaHp->SetPosition({ 256.0f,520.0f });
+	//背景スプライト生成
+	Life = Sprite::Create(5, { 0.0f,0.0f });
+	Life->SetPosition({ 0.0f,520.0f });
 	Arrow = Sprite::Create(4, { 0.0f,0.0f });
 	Arrow->SetPosition({0,0});
 }
@@ -40,14 +44,12 @@ const void UI::Draw() {
 	ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("UI")) {
-			ImGui::SliderFloat("power1", &Check, 50, -50);
-			ImGui::SliderFloat("power2", &Check2, 50, -50);
-			ImGui::SliderFloat("power3", &pos.x, 50, -50);
-			ImGui::SliderFloat("power4", &pos.y, 50, -50);
-			ImGui::SliderFloat("power5", &pos.z, 50, -50);
-
+			ImGui::SliderFloat("Check", &Check, 50, -50);
+			ImGui::SliderFloat("Check2", &Check2, 50, -50);
+			ImGui::SliderFloat("pos.x", &pos.x, 50, -50);
+			ImGui::SliderFloat("pos.y", &pos.y, 50, -50);
+			ImGui::SliderFloat("pos.z", &pos.z, 50, -50);
 			//ImGui::Text("Sub %d", SpeedSub);
-
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}
@@ -57,6 +59,7 @@ const void UI::Draw() {
 	Sprite::PreDraw();
 	BossHp->Draw();
 	PlaHp->Draw();
+	Life->Draw();
 	if (invisible) {
 		Arrow->Draw();
 	}
@@ -73,21 +76,24 @@ void UI::SeachBoss() {
 
 	XMFLOAT3 pla = player->GetPosition();
 	XMFLOAT3 bos = boss->GetPosition();
+	//aX2bX = (aX - bX);
+	//aY2bY = (aY - bY);
+	//aR2bR = sqrt((aX2bX * aX2bX) + (aY2bY * aY2bY));
+	//bX += aX2bX / aR2bR * speed;
+	//bY += aY2bY / aR2bR * speed;
 
-	pos.x = (pla.x - bos.x);
-	pos.z = (pla.z - bos.z);
-	pos.y = sqrt(pow(pla.x, 2) + pow(bos.z, 2));
-	Check = pos.x / pos.y;
-	Check2 = pos.z / pos.y;
-	a = (float)Check;
-	b = (float)Check2;
+	pos.x = (bos.x+pla.x);
+	pos.z = (bos.z+pla.z);
+	pos.y = pla.x / pos.x;
+	Check =  pla.x / pos.x;
+	Check2 =  pla.z / pos.z;
 
-	if (fabs(Check)>3||fabs(Check2)>0.4f) {
-		invisible = true;
-	} else {
-		invisible = false;
+	//if (fabs(pos.x)>0.65f||fabs(pos.z)>0.65f) {
+	//	invisible = true;
+	//} else {
+	//	invisible = false;
 
-	}
+	//}
 
 
 	//if (Check > 0) {
