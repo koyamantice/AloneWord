@@ -24,6 +24,7 @@ private:
 	Sprite* PlaHp= nullptr;
 	Sprite* Life = nullptr;
 	Sprite* Arrow = nullptr;
+	Sprite* Vignette = nullptr;
 
 	XMFLOAT2 bossPos{};
 	XMFLOAT2 plaPos{};

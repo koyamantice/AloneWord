@@ -37,6 +37,7 @@ public:
 	void SetEnemy();
 	void DeadEnemy();
 	void RandDeadPower();
+	void SetBasePos(XMFLOAT3 basePos) { this->basePos = basePos; }
 private:
 	XMFLOAT3 playerpos{};
 	XMFLOAT3 StartPos{};

@@ -43,6 +43,6 @@ private:
 	Player* player = nullptr;
 	Enemy* enemy[StartEnemyMax] = { nullptr };
 	//BossEnemy* bossenemy = nullptr;
-	Spawning* spawing = nullptr;
+	Spawning* spawing[3];
 };
 

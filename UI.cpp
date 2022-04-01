@@ -8,6 +8,7 @@ UI::UI(Player* player, BossEnemy* boss) {
 	Sprite::LoadTexture(3, L"Resources/2d/PlayerHP.png");
 	Sprite::LoadTexture(4, L"Resources/2d/Arrow.png");
 	Sprite::LoadTexture(5, L"Resources/2d/Life.png");
+	Sprite::LoadTexture(6, L"Resources/2d/Vignette.png");
 	BossHp = Sprite::Create(3, { 0.0f,0.0f });
 	BossHp->SetColor({ 0.0f,1.0f,0.0,1.0 });
 	//背景スプライト生成
@@ -18,6 +19,10 @@ UI::UI(Player* player, BossEnemy* boss) {
 	Life->SetPosition({ 0.0f,520.0f });
 	Arrow = Sprite::Create(4, { 0.0f,0.0f });
 	Arrow->SetPosition({0,0});
+	Vignette
+		= Sprite::Create(6, { 0.0f,0.0f });
+	Vignette
+		->SetPosition({ 0,0 });
 }
 void UI::Update() {
 	{//HPˆ—
@@ -57,12 +62,14 @@ const void UI::Draw() {
 	}
 	ImGui::End();
 	Sprite::PreDraw();
+	Vignette->Draw();
 	BossHp->Draw();
 	PlaHp->Draw();
 	Life->Draw();
 	if (invisible) {
 		Arrow->Draw();
 	}
+
 }
 
 void UI::SeachBoss() {
