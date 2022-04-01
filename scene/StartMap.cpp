@@ -22,12 +22,19 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 		enemy[i] = new Enemy();
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
+		enemy[i]->SetLimit({100,-100,100,-100});
 	}
 	for (int i = 0; i < 3; i++) {
 		spawing[i] = new Spawning();
 		spawing[i]->Initialize();
-		spawing[i]->SetPosition({-5.0f+i*5.0f,0,0});
 	}
+	for (int i = 0; i < StartEnemyMax; i++) {
+		spawing[0]->SetEnemy(i, enemy[i]);
+	}
+	spawing[0]->SetPosition({ -15.0f,0,30 });
+	spawing[1]->SetPosition({ 0,0,0 });
+	spawing[2]->SetPosition({ 15.0f,0,30 });
+
 	//オブジェクト初期化
 	/*modelGround = Model::CreateFromOBJ("ground");
 	objGround = Object3d::Create();
@@ -104,6 +111,9 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
+	for (int i = 0; i < StartEnemyMax; i++) {
+		spawing[1]->SetEnemy(i, enemy[i]);
+	}
 	for (int i = 0; i < 3; i++) {
 		spawing[i]->Update();
 	}
@@ -111,7 +121,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	//limit->Update();
 
 	for (int i = 0; i < StartEnemyMax; i++) {
-		enemy[i]->Update();
+		//enemy[i]->Update();
 
 		player->ResetWeight(enemy[i]);
 		player->Rebound(enemy[i]);
@@ -161,8 +171,8 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 	}
 	object1->Update();
-	camera->SetTarget({ player->GetPosition().x, player->GetPosition() .y, player->GetPosition().z + 5});
-	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 15,player->GetPosition().z - 15 });
+	camera->SetTarget(player->GetPosition());
+	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
 	DebugText::GetInstance()->Print("PUSH to RB!!", 200, 100, 1.0f);
 	DebugText::GetInstance()->Print("PUSH to A!!", 200, 115, 1.0f);
 }

@@ -16,10 +16,12 @@ public:
 	void Update();
 	void Finalize();
 	void Draw();
+
+	void SetEnemy(const int& i,Enemy*enemy);
 public:
 	const XMFLOAT3& GetPosition() { return  object3d->GetPosition(); }
 	const XMFLOAT3& GetRotation() { return object3d->GetRotation(); }
-	void SetPosition(XMFLOAT3 position) { object3d->SetPosition(position); }
+	void SetPosition(XMFLOAT3 position) { this->pos = position; }
 	void SetRotation(XMFLOAT3 rotation) { object3d->SetRotation(rotation); }
 
 
@@ -28,6 +30,6 @@ private:
 	Model* model;
 	XMFLOAT3 pos = { 0,0,0 };
 
-
+	Enemy* enemy[10] = {};
 };
 

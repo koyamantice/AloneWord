@@ -2,7 +2,7 @@
 #include"BaseEnemy.h"
 
 class BossEnemy;
-class Enemy :public BaseEnemy{
+class Enemy :public BaseEnemy {
 public:
 	Enemy();
 
@@ -17,7 +17,7 @@ private:
 	bool LockOn();
 	void Follow();
 	void Move();
-	
+
 
 public:
 	const bool& GetEnemyCatch() { return EnemyCatch; }
@@ -26,14 +26,21 @@ public:
 	const int& GetBound() { return bound; }
 	const bool& GetIsAlive() { return IsAlive; }
 	const int& GetDrawExp() { return DrawExp; }
-	void SetPlayer(Player* player) { this->player=player; }
+	void SetPlayer(Player* player) { this->player = player; }
 	//bool Collision(XMFLOAT3 position, float radius);
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
-	void SetEnemyCatch(bool EnemyCatch) {this-> EnemyCatch = EnemyCatch; }
+	void SetEnemyCatch(bool EnemyCatch) { this->EnemyCatch = EnemyCatch; }
 	void SetBound(int bound) { this->bound = bound; }
 	void SetHit(bool hit) { this->hit = hit; }
 	void SetDrawExp(int DrawExp) { this->DrawExp = DrawExp; }
 	void Setboundpower(XMFLOAT3 boundpower) { this->boundpower = boundpower; }
+	void SetLimit(XMFLOAT4 limit) 	{
+		this->z_max = limit.x;
+		this->z_min = limit.y;
+		this->x_max = limit.z;
+		this->x_min = limit.w;
+	}
+
 	void SetEnemy();
 	void DeadEnemy();
 	void RandDeadPower();
