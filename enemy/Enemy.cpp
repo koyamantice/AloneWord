@@ -164,17 +164,17 @@ void Enemy::Update() {
 //描画
 void Enemy::Draw() {
 
-	ImGui::Begin("test");
-	if (ImGui::TreeNode("Debug")) {
-		if (ImGui::TreeNode("Enemy")) {
-			//ImGui::SliderFloat("boundpower.y", &boundpower.y, 50, -50);
-			ImGui::Text("%d", DrawExp);
-			ImGui::Unindent();
-			ImGui::TreePop();
-		}
-		ImGui::TreePop();
-	}
-	ImGui::End();
+	//ImGui::Begin("test");
+	//if (ImGui::TreeNode("Debug")) {
+	//	if (ImGui::TreeNode("Enemy")) {
+	//		//ImGui::SliderFloat("boundpower.y", &boundpower.y, 50, -50);
+	//		ImGui::Text("%d", DrawExp);
+	//		ImGui::Unindent();
+	//		ImGui::TreePop();
+	//	}
+	//	ImGui::TreePop();
+	//}
+	//ImGui::End();
 
 	if (IsAlive) {
 		Object3d::PreDraw();
@@ -263,7 +263,6 @@ bool Enemy::collideAttackArm() {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
 			Exp = true;
 			RandDeadPower();
-			
 			player->SetAttackFlag(false);
 			if (armweight <= 3) {
 				Audio::GetInstance()->PlayWave("Resources/Sound/strongL1.wav", 0.4f);

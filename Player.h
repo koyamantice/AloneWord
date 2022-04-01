@@ -56,6 +56,10 @@ public:
 
 	const float& GetPower() { return power; }
 
+	const int& GetLv() { return Lv; }
+
+	const float& GetExp() { return Exp; }
+
 	/// <summary>
 	/// 座標の設定
 	/// </summary>
@@ -70,6 +74,10 @@ public:
 
 	void SetHp(int hp) { this->HP = hp; }
 
+	void SetLv(int Lv) { this->Lv = Lv; }
+
+	void SetExp(float Exp) { this->Exp = Exp; }
+	
 	void SetInterval(int Interval) { this->Interval = Interval; }
 
 	void SetFlash(int Flash) { this->FlashCount = FlashCount; }
@@ -83,10 +91,6 @@ public:
 	void SetArmWeight(float ArmWeight) { this->ArmWeight = ArmWeight; }
 
 	void SetArmScale(float Armscale) { this->Armscale = Armscale; }
-
-	//void SetEffectAlive(int effectAlive) { this->effectAlive = effectAlive; }
-
-	//void SetEffectPosition(XMFLOAT3 effectpos) { this->effectpos = effectpos; }
 
 	void SetMove(float XMax, float ZMax) { this->XMax = XMax; this->ZMax = ZMax; }
 
@@ -150,6 +154,8 @@ private:
 	float frameMax3 = 80.0f;
 	//HP
 	int HP = 10;
+	int Lv = 1;
+	float Exp = 0.0f;
 	float StickrotX = 0;
 	float StickrotY = 0;
 	XMFLOAT3 angle = { 0,0,0 };

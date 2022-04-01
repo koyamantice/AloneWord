@@ -48,16 +48,16 @@ void Exp::Update(Player* player,Enemy* enemy) {
 
 //•`‰æ
 void Exp::Draw() {
-	ImGui::Begin("test");
-	if (ImGui::TreeNode("Debug")) {
-		if (ImGui::TreeNode("Exp")) {
-			ImGui::Text("%d", ExpAlive);
-			ImGui::Unindent();
-			ImGui::TreePop();
-		}
-		ImGui::TreePop();
-	}
-	ImGui::End();
+	//ImGui::Begin("test");
+	//if (ImGui::TreeNode("Debug")) {
+	//	if (ImGui::TreeNode("Exp")) {
+	//		ImGui::Text("%d", ExpAlive);
+	//		ImGui::Unindent();
+	//		ImGui::TreePop();
+	//	}
+	//	ImGui::TreePop();
+	//}
+	//ImGui::End();
 	Object3d::PreDraw();
 	if (ExpAlive == true) {
 		object3d->Draw();
@@ -128,9 +128,11 @@ void Exp::Follow(Player* player) {
 }
 
 bool Exp::Collide(Player* player) {
+	float PlaExp = player->GetExp();
 	if (ExpAlive) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, player->GetPosition().x, player->GetPosition().y, player->GetPosition().z, 0.5f) == true) {
 			ExpAlive = false;
+			player->SetExp(player->GetExp() + 1.0f);
 			return true;
 		} else {
 			return false;
