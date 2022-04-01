@@ -114,10 +114,15 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		player->Rebound(enemy[i]);
 	}
 
+
 	for (int i = 0; i < ExpMax; i++) {
 		for(int j = 0; j < BossEnemyMax;j++){
 			exp[i][j]->Update(player, enemy[j]);
 		}
+	}
+
+	for (int i = 0; i < EffectMax; i++) {
+		effect[i]->Update(bossenemy);
 	}
 
 	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
@@ -207,7 +212,7 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	}
 	bossenemy->Draw();
 
-	for (int i = 0; i < EffectNum; i++) {
+	for (int i = 0; i < EffectMax; i++) {
 		effect[i]->Draw();
 	}
 
