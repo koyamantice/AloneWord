@@ -1,0 +1,14 @@
+diff a/scene/BossScene.cpp b/scene/BossScene.cpp	(rejected hunks)
+@@ -39,6 +39,12 @@
+ 	objground->SetScale({ 1.4f,1.5f,1.6f });
+ 	//���ʂ̃e�N�X�`��(�|��)
+ 	/*limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
++=======
++	objground->SetPosition({ 0,-1,10 });
++	objground->SetScale({ 22,1,10 });
++	//普通のテクスチャ(板ポリ)
++	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
++>>>>>>> 87afadc362bebdd4edb1f0132e0338e4585dc7db
+ 	limit->TextureCreate();
+ 	limit->SetPosition({ 0.0f,0.01f,0.0f });
+ 	limit->SetRotation({ 90.0f,0, 0 });
