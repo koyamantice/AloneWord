@@ -19,10 +19,9 @@ UI::UI(Player* player, BossEnemy* boss) {
 	Life->SetPosition({ 0.0f,520.0f });
 	Arrow = Sprite::Create(4, { 0.0f,0.0f });
 	Arrow->SetPosition({0,0});
-	Vignette
-		= Sprite::Create(6, { 0.0f,0.0f });
-	Vignette
-		->SetPosition({ 0,0 });
+	Vignette= Sprite::Create(6, { 0.0f,0.0f });
+	Vignette->SetPosition({ 0,0 });
+	Vignette->SetColor({255,255,255,0.75f});
 }
 void UI::Update() {
 	{//HPˆ—
