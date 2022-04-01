@@ -22,6 +22,7 @@ private:
 
 	Sprite* BossHp=nullptr;
 	Sprite* PlaHp= nullptr;
+	Sprite* Life = nullptr;
 	Sprite* Arrow = nullptr;
 
 	XMFLOAT2 bossPos{};
@@ -33,8 +34,8 @@ private:
 	float speed = 0;
 	float radius = 0;
 	float scale = 150;
-	float a;
-		float b;
+	double a;
+	double b;
 	XMFLOAT2 basePos={1280/2,720/2};
 	XMFLOAT2 circle{};
 	XMFLOAT3 pos{};
