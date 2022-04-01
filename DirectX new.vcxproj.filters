@@ -194,6 +194,9 @@
     <ClCompile Include="Exp.cpp">
       <Filter>exp</Filter>
     </ClCompile>
+    <ClCompile Include="enemy\Spawning.cpp">
+      <Filter>enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\Framework.h">
@@ -351,6 +354,9 @@
     </ClInclude>
     <ClInclude Include="Exp.h">
       <Filter>exp</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy\Spawning.h">
+      <Filter>enemy</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

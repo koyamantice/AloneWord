@@ -2,6 +2,7 @@
 #include "BaseScene.h"
 #include "BossEnemy.h"
 #include "Collision.h"
+#include "Spawning.h"
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>
@@ -41,6 +42,6 @@ private:
 	Player* player = nullptr;
 	Enemy* enemy[StartEnemyMax] = { nullptr };
 	//BossEnemy* bossenemy = nullptr;
-
+	Spawning* spawing = nullptr;
 };
 

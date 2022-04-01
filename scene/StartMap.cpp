@@ -23,6 +23,10 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
 	}
+
+	spawing = new Spawning();
+	spawing->Initialize();
+
 	//オブジェクト初期化
 	/*modelGround = Model::CreateFromOBJ("ground");
 	objGround = Object3d::Create();
@@ -99,6 +103,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
+	spawing->Update();
 
 	//bossenemy->Update();
 	//limit->Update();
@@ -193,7 +198,7 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	for (int i = 0; i < StartEnemyMax; i++) {
 		enemy[i]->Draw();
 	}
-
+	spawing->Draw();
 	//bossenemy->Draw();
 
 }
