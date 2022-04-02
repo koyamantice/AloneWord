@@ -60,7 +60,7 @@ private:
 	XMFLOAT4 effectcolor = { 0.0f,0.0f,0.0f,1.0f };
 	XMFLOAT3 effectscale = { 0.4f,0.4f,0.4f };
 	XMFLOAT3 boundpower = { 0.0f,0.0f,0.0f };
-	int effectAlive = 0;
+	bool effectAlive = 0;
 	int randColor = 0;
 public:
 	Sphere collider;

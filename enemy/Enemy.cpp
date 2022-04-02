@@ -305,15 +305,23 @@ void Enemy::Follow() {
 	Check = position.x / posR;
 	Check2 = position.z / posR;
 	if (Check>0.2f) {
-		EndRot.y-=2;
-	} else if(Check < -0.3f){
-		EndRot.y+=2;
+		if (Check2>0.2f) {
+			EndRot.y = -45;
+
+		} else if (Check2 < -0.2f) {
+			EndRot.y = 45;
+		} else {
+			EndRot.y = 0;
+		}
+	} else if(Check < -0.2f){
+		if (Check2 > 0.2f) {
+			EndRot.y = 225;
+		} else if (Check2 < -0.2f) {
+			EndRot.y = 135;
+		} else {
+			EndRot.y = 180;
+		}
 	}
-	//if (Check2 >= 0.3f) {
-	//	EndRot.y++;
-	//} else {
-	//	EndRot.y--;
-	//}
 	pos.x += (float)Check * 0.095f;
 	pos.z += (float)Check2 * 0.095f;
 }

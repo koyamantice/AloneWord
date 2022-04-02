@@ -107,14 +107,14 @@ private:
 	Model* Armmodel;
 	XMFLOAT3 pos = { 0,0,-10 };
 	XMFLOAT3 Armpos = { 0,0,0 };
-	XMFLOAT3 ArmRot = { 0,0,0 };
+	XMFLOAT3 ArmRot = { 0,270,0 };
 	XMFLOAT3 distance{};
 	XMFLOAT3 rebound{};
 
 	float PlayerSpeed = 0.3f;
 	//座標を戻す
 	bool undoPos = false;
-	float AfterRot = 0.0f;
+	float AfterRot =270.0f;
 	float rad = 0.4f;
 	float XMax = 0.0f;
 	float ZMax = 0.0f;
