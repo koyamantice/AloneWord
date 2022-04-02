@@ -2,13 +2,13 @@
 using namespace DirectX;
 
 bool Collision::SphereCollision(const float& X1, const float& Y1, const float& Z1, const float& R1, const float& X2, const float& Y2, const float& Z2, const float& R2) {
-	int a = X1 - X2;
-	int b = Y1 - Y2;
-	int c = Z1 - Z2;
+	float a = X1 - X2;
+	float b = Y1 - Y2;
+	float c = Z1 - Z2;
 	//2‚Â‚Ì‹——£‚ğŒvZ
-	int distance = sqrtf(a * a + b * b + c * c);
+	float distance = sqrtf(a * a + b * b + c * c);
 	//”¼Œa‚Ì‡Œv‚ğŒvZ
-	int radius = R1 + R2;
+	float radius = R1 + R2;
 	if (distance <= radius) {
 		return true;
 	} else {
@@ -22,7 +22,7 @@ bool Collision::CircleCollision(const float& X1, const float& Y1, const float& R
 	//2‚Â‚Ì‹——£‚ğŒvZ
 	float distance = sqrtf(a * a + b * b);
 	//”¼Œa‚Ì‡Œv‚ğŒvZ
-	int radius = R1 + R2;
+	float radius = R1 + R2;
 	if (distance <= radius) {
 		return true;
 	} else {
@@ -51,10 +51,10 @@ bool Collision::CheckSphere2Plane(const Sphere& sphere, const Plane&
 }
 
 bool Collision::CheckSphere2Sphere(const Sphere& sphere, const Sphere& sphere2, DirectX::XMVECTOR* inter) {
-	float d = pow(sphere.center.m128_f32[0] - sphere2.center.m128_f32[0], 2)
-		+ pow(sphere.center.m128_f32[1] - sphere2.center.m128_f32[1], 2)
-		+ pow(sphere.center.m128_f32[2] - sphere2.center.m128_f32[2], 2);
-	float r1r2 = pow(sphere.radius + sphere2.radius, 2);
+	float d = powf(sphere.center.m128_f32[0] - sphere2.center.m128_f32[0], 2)
+		+ powf(sphere.center.m128_f32[1] - sphere2.center.m128_f32[1], 2)
+		+ powf(sphere.center.m128_f32[2] - sphere2.center.m128_f32[2], 2);
+	float r1r2 = powf(sphere.radius + sphere2.radius, 2);
 	if (d < r1r2) {
 		return true;
 	} else {
