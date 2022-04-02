@@ -75,5 +75,9 @@ private:
 	bool appearance = false;
 	bool Exp = false;
 	int DrawExp = false;
+	double posR;
+	double Check;
+	double Check2;
+
 };
 

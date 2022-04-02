@@ -32,7 +32,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 		spawing[0]->SetEnemy(i, enemy[i]);
 	}
 	spawing[0]->SetPosition({ -15.0f,0,30 });
-	spawing[1]->SetPosition({ 0,0,0 });
+	spawing[1]->SetPosition({ 0,0,20 });
 	spawing[2]->SetPosition({ 15.0f,0,30 });
 
 	//オブジェクト初期化
