@@ -10,7 +10,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	Texture::LoadTexture(1, L"Resources/2d/limit.png");
 	Texture::LoadTexture(2, L"Resources/2d/shadow.png");
 	Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
-	Texture::LoadTexture(4, L"Resources/2d/image1[132].jpeg");
+	Texture::LoadTexture(4, L"Resources/2d/effect2.png");
 	// 繧ｫ繝｡繝ｩ逕滓・
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
