@@ -68,10 +68,10 @@ void Effect::Update(BossEnemy* bossenemy) {
 		effectpos.x += boundpower.x;
 		effectpos.y += boundpower.y;
 		effectpos.z += boundpower.z;
-		effectscale.x -= 0.01;
-		effectscale.y -= 0.01;
-		effectscale.z -= 0.01;
-		effectcolor.w -= 0.005;
+		effectscale.x -= 0.01f;
+		effectscale.y -= 0.01f;
+		effectscale.z -= 0.01f;
+		effectcolor.w -= 0.005f;
 		if (effectscale.x <= 0.0f) {
 			effectAlive = false;
 			bossenemy->SetEffect(false);

@@ -164,17 +164,18 @@ void Enemy::Update() {
 //描画
 void Enemy::Draw() {
 
-	//ImGui::Begin("test");
-	//if (ImGui::TreeNode("Debug")) {
-	//	if (ImGui::TreeNode("Enemy")) {
-	//		//ImGui::SliderFloat("boundpower.y", &boundpower.y, 50, -50);
-	//		ImGui::Text("%d", DrawExp);
-	//		ImGui::Unindent();
-	//		ImGui::TreePop();
-	//	}
-	//	ImGui::TreePop();
-	//}
-	//ImGui::End();
+	ImGui::Begin("test");
+	if (ImGui::TreeNode("Debug")) {
+		if (ImGui::TreeNode("Enemy")) {
+			float A = (float)Check;
+			ImGui::SliderFloat("Check", &A, 50, -50);
+			//ImGui::Text("%d", DrawExp);
+			ImGui::Unindent();
+			ImGui::TreePop();
+		}
+		ImGui::TreePop();
+	}
+	ImGui::End();
 
 	if (IsAlive) {
 		Object3d::PreDraw();
@@ -300,10 +301,27 @@ void Enemy::Follow() {
 	XMFLOAT3 position{};
 	position.x = (playerpos.x - pos.x);
 	position.z = (playerpos.z - pos.z);
-	double posR = sqrt(pow(pos.x, 2) + pow(pos.z, 2));
-	double Check = position.x / posR;
-	double Check2 = position.z / posR;
+	posR = sqrt(pow(position.x, 2) + pow(position.z, 2));
+	Check = position.x / posR;
+	Check2 = position.z / posR;
+	if (Check>0.2f) {
+		if (Check2>0.2f) {
+			EndRot.y = -45;
 
+		} else if (Check2 < -0.2f) {
+			EndRot.y = 45;
+		} else {
+			EndRot.y = 0;
+		}
+	} else if(Check < -0.2f){
+		if (Check2 > 0.2f) {
+			EndRot.y = 225;
+		} else if (Check2 < -0.2f) {
+			EndRot.y = 135;
+		} else {
+			EndRot.y = 180;
+		}
+	}
 	pos.x += (float)Check * 0.095f;
 	pos.z += (float)Check2 * 0.095f;
 }

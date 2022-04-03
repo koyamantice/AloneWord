@@ -40,7 +40,8 @@ public:
 		this->x_max = limit.z;
 		this->x_min = limit.w;
 	}
-
+	bool GetRightDirection(float x, float y, float dx, float dy, float tx, float ty);
+	void RotateVector(float& dx, float& dy, float rotate);
 	void SetEnemy();
 	void DeadEnemy();
 	void RandDeadPower();
@@ -75,5 +76,9 @@ private:
 	bool appearance = false;
 	bool Exp = false;
 	int DrawExp = false;
+	double posR;
+	double Check;
+	double Check2;
+
 };
 
