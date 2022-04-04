@@ -38,6 +38,7 @@ Player::Player() {
 bool Player::Initialize() {
 	object3d = Object3d::Create();
 	object3d->SetModel(model);
+	position = { 0,0,-10 };
 	object3d->SetPosition(position);
 	object3d->SetScale({ 0.7f,0.7f,0.7f });
 
@@ -415,7 +416,9 @@ void Player::Draw() {
 	ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("Player")) {
+			ImGui::SliderFloat("pos", &position.x, 50, -50);
 			ImGui::SliderFloat("pos", &position.y, 50, -50);
+			ImGui::SliderFloat("pos", &position.z, 50, -50);
 			ImGui::Text("Lv %d", Lv);
 
 			ImGui::Unindent();
