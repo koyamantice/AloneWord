@@ -6,6 +6,9 @@
 #include<sstream>
 #include<iomanip>
 #include"Enemy.h"
+#include "SphereCollider.h"
+#include "CollisionManager.h"
+#include "CollisionAttribute.h"
 using namespace DirectX;
 float easeInSine(float x) {
 	return x * x * x;
@@ -32,7 +35,7 @@ Player::Player() {
 
 }
 
-void Player::Initialize() {
+bool Player::Initialize() {
 	object3d = Object3d::Create();
 	object3d->SetModel(model);
 	object3d->SetPosition(pos);
@@ -51,7 +54,11 @@ void Player::Initialize() {
 	//effecttexture->TextureCreate();
 	////effecttexture->SetRotation({ 90,0,0 });
 	//effecttexture->SetScale({ 0.2f,0.2f,0.2f });
-	collider.radius = rad;
+	// コライダーの追加
+	float radius = 0.6f;
+	SetCollider(new SphereCollider(XMVECTOR({ 0,radius,0,0 }), radius));
+	collider->SetAttribute(COLLISION_ATTR_ALLIES);
+	return true;
 }
 
 void Player::Finalize() {
@@ -294,6 +301,62 @@ void Player::Update() {
 		Exp = 0.0f;
 	}
 
+	// ワールド行列更新
+	UpdateWorldMatrix();
+	collider->Update();
+
+	SphereCollider* sphereCollider = dynamic_cast<SphereCollider*>(collider);
+	assert(sphereCollider);
+
+	// クエリーコールバッククラス
+	class PlayerQueryCallback : public QueryCallback
+	{
+	public:
+		PlayerQueryCallback(Sphere* sphere) : sphere(sphere) {};
+
+		// 衝突時コールバック関数
+		bool OnQueryHit(const QueryHit& info) {
+
+			const XMVECTOR up = { 0,1,0,0 };
+
+			XMVECTOR rejectDir = XMVector3Normalize(info.reject);
+			float cos = XMVector3Dot(rejectDir, up).m128_f32[0];
+
+			// 地面判定しきい値
+			const float threshold = cosf(XMConvertToRadians(30.0f));
+
+			if (-threshold < cos && cos < threshold) {
+				sphere->center += info.reject;
+				move += info.reject;
+			}
+
+			return true;
+		}
+
+		Sphere* sphere = nullptr;
+		DirectX::XMVECTOR move = {};
+	};
+
+	PlayerQueryCallback callback(sphereCollider);
+
+	// 球と地形の交差を全検索
+	CollisionManager::GetInstance()->QuerySphere(*sphereCollider, &callback, COLLISIONSHAPE_MESH);
+	// 交差による排斥分動かす
+	pos.x += callback.move.m128_f32[0];
+	pos.y += callback.move.m128_f32[1];
+	pos.z += callback.move.m128_f32[2];
+	// ワールド行列更新
+	UpdateWorldMatrix();
+	collider->Update();
+
+	// 球の上端から球の下端までのレイキャスト
+	Ray ray;
+	ray.start = sphereCollider->center;
+	ray.start.m128_f32[1] += sphereCollider->GetRadius();
+	ray.dir = { 0,-1,0,0 };
+	RaycastHit raycastHit;
+
+
 	Armradius = ArmSpeed * PI / 180.0f;
 	ArmCircleX = cosf(Armradius) * Armscale;
 	ArmCircleZ = sinf(Armradius) * Armscale;
@@ -301,6 +364,7 @@ void Player::Update() {
 	Armpos.z = ArmCircleZ + pos.z;
 	Armobj->SetPosition(Armpos);
 	//移動
+	object3d->Update();
 	object3d->SetPosition(pos);
 	object3d->SetRotation(rot);
 	Armobj->SetRotation(ArmRot);

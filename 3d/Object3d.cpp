@@ -396,9 +396,10 @@ void Object3d::UpdateViewMatrix()
 Object3d::~Object3d() {
 	static int a = 0;
       	a++;
-	if (collider) {
-		delete collider;
-	}
+		if (collider) {
+			CollisionManager::GetInstance()->RemoveCollider(collider);
+			delete collider;
+		}
 }
 
 bool Object3d::Initialize()

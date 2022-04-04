@@ -4,13 +4,18 @@
 #include "TitleScene.h"
 #include "FbxLoader.h"
 #include"Collision.h"
-
+#include "TouchableObject.h"
+#include "MeshCollider.h"
+#include "SphereCollider.h"
+#include "CollisionManager.h"
 void BossScene::Initialize(DirectXCommon* dxCommon) {
 	Texture::LoadTexture(0, L"Resources/2d/enemy.png");
 	Texture::LoadTexture(1, L"Resources/2d/limit.png");
 	Texture::LoadTexture(2, L"Resources/2d/shadow.png");
 	Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
 	Texture::LoadTexture(4, L"Resources/2d/effect2.png");
+	//インスタンス取得
+	collsionManager = CollisionManager::GetInstance();
 	// 繧ｫ繝｡繝ｩ逕滓・
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
@@ -37,6 +42,15 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objground->SetPosition({ 0,-1,2 });
 	objground->SetRotation({ 0, 90, 0 });
 	objground->SetScale({ 1.4f,1.5f,1.6f });
+	
+	//当たり判定確認用です
+	objSphere = Object3d::Create();
+	modelSphere = Model::CreateFromOBJ("sphere");
+	objSphere->SetModel(modelSphere);
+	objSphere->SetPosition({ -10, 1, 0 });
+	// コライダーの追加
+	objSphere->SetCollider(new SphereCollider);
+
 	//普通のテクスチャ(板ポリ)
 	/*limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
 	objground->SetPosition({ 0,-1,10 });
@@ -105,6 +119,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	camera->Update();
 	player->Update();
 	bossenemy->Update();
+	objSphere->Update();
 
 	ui->Update();
 	for (int i = 0; i < BossEnemyMax; i++) {
@@ -162,6 +177,8 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	object1->Update();
 	camera->SetTarget(player->GetPosition());
 	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
+	// 全ての衝突をチェック
+	collsionManager->CheckAllCollisions();
 	DebugText::GetInstance()->Print("PUSH to RB!!",200, 100,1.0f);
 	DebugText::GetInstance()->Print("PUSH to A!!", 200, 115, 1.0f);
 }
@@ -196,7 +213,7 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw();
 	//objGround->Draw();
 	objground->Draw();
-
+	objSphere->Draw();
 	Texture::PreDraw();
 	//limit->Draw();
 	//Sprite::PreDraw();

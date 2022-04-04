@@ -279,5 +279,7 @@ protected: // メンバ変数
 	Model* model = nullptr;
 	// ビルボード
 	bool isBillboard = false;
+	//コライダー
+	//BaseCollider* collider = nullptr;
 };
 

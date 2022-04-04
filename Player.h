@@ -8,13 +8,13 @@
 #include "Texture.h"
 
 class Enemy;
-class Player {
+class Player : public Object3d {
 public:
 	Player();
 
-	void Initialize();
+	bool Initialize() override;
 	void Finalize();
-	void Update();
+	void Update() override;
 	void Draw();
 private:
 	// DirectX::を省略
@@ -165,6 +165,5 @@ private:
 	//XMFLOAT4 effectcolor = { 1.0f,1.0f,1.0f,1.0f };
 	//XMFLOAT3 effectscale = { 0.0f,0.0f,0.0f };
 	//int effectAlive = 0;
-public:
-	Sphere collider;
+
 };
