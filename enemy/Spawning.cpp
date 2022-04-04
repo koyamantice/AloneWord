@@ -6,17 +6,17 @@ Spawning::Spawning() {
 	object3d = new Object3d();
 	texture = Texture::Create(5, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
-	texture->SetPosition({ pos.x,pos.y+3.0f,pos.z });
-	texture->SetRotation({ 45,0,0 });
-	texture->SetScale({ 0.2f,0.2f,0.2f });
 }
 
 void Spawning::Initialize() {
 	object3d = Object3d::Create();
 	object3d->SetModel(model);
 	object3d->SetPosition(pos);
-	texture->SetPosition({ pos.x,pos.y + 3.0f,pos.z });
 	object3d->SetScale({3,3,3});
+
+	texture->SetPosition({ pos.x,pos.y + 3.0f,pos.z });
+	texture->SetRotation({ 45,0,0 });
+	texture->SetScale({ 0.2f,(float)Hp,0.2f });
 
 }
 
@@ -34,10 +34,13 @@ void Spawning::Update() {
 	}
 	collideAttackArm();
 	texture->Update();
+	texture->SetScale({ 0.2f,(float)Hp*0.02f,0.2f });
+
 }
 
 void Spawning::Finalize() {
 	delete object3d;
+	delete texture;
 }
 
 void Spawning::Draw() {
@@ -58,7 +61,7 @@ void Spawning::collideAttackArm() {
 	float power = player->GetPower();
 	float weight = player->GetArmWeight();
 	if (attackflag) {
-		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
+		if (Collision::CircleCollision(pos.x,pos.z, 1.5f, Armpos.x, Armpos.z, 1.5f) == true) {
 			Hit = true;
 			player->SetAttackFlag(false);
 			//‚Â‚¢‚Ä‚é“G‚Ì”‚Å‰¹‚ª•Ï‚í‚é

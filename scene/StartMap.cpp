@@ -27,16 +27,13 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	}
 	for (int i = 0; i < 3; i++) {
 		spawing[i] = new Spawning();
+		spawing[i]->SetPosition({ -15.0f+i*15.0f,0,30 });
 		spawing[i]->Initialize();
 		spawing[i]->SetPlayer(player);
 	}
 	for (int i = 0; i < StartEnemyMax; i++) {
 		spawing[0]->SetEnemy(i, enemy[i]);
 	}
-	spawing[0]->SetPosition({ -15.0f,0,30 });
-	spawing[1]->SetPosition({ 0,0,20 });
-	spawing[2]->SetPosition({ 15.0f,0,30 });
-
 	//オブジェクト初期化
 	/*modelGround = Model::CreateFromOBJ("ground");
 	objGround = Object3d::Create();

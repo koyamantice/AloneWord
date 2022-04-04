@@ -147,11 +147,11 @@ private:
 	int FlashCount = 0;
 	//イージングのためのやつ
 	float frame = 0.0f;
-	float frameMax = 27.0f;
+	float frameMax = 15.0f;
 	float frame2 = 0.0f;
-	float frameMax2 = 80.0f;
+	float frameMax2 = 55.0f;
 	float frame3 = 0.0f;
-	float frameMax3 = 80.0f;
+	float frameMax3 = 60.0f;
 	//HP
 	int HP = 10;
 	int Lv = 1;
