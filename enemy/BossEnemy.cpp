@@ -85,6 +85,7 @@ bool BossEnemy::collidePlayer() {
 	XMFLOAT3 playerpos = player->GetPosition();
 	int playerhp = player->GetHp();
 	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) && FlashCount == 0 && Interval == 0) {
+		Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 		player->SetHp(playerhp - 1);
 		Interval = 20;
 		return true;
@@ -100,7 +101,7 @@ bool BossEnemy::collideAttackArm() {
 	float power = player->GetPower();
 	float weight = player->GetArmWeight();
 	if (attackflag && !BossHit) {
-		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
+		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.7f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
 			BossHit = true;
 			player->SetAttackFlag(false);
 			//ついてる敵の数で音が変わる
@@ -136,9 +137,9 @@ bool BossEnemy::collideAttackArm() {
 //ボスの行動
 void BossEnemy::Fork() {
 	XMFLOAT3 AfterPos{};
-	if (AttackCount > 50000) {
+	if (AttackCount > 180) {
 		if (!active) {
-			action = 1;//(rand() % 2);
+			action = (rand() % 2);
 			frame = 0;
 			pat = 1;
 			active = true;

@@ -164,18 +164,18 @@ void Enemy::Update() {
 //描画
 void Enemy::Draw() {
 
-	ImGui::Begin("test");
-	if (ImGui::TreeNode("Debug")) {
-		if (ImGui::TreeNode("Enemy")) {
-			float A = (float)Check;
-			ImGui::SliderFloat("Check", &A, 50, -50);
-			//ImGui::Text("%d", DrawExp);
-			ImGui::Unindent();
-			ImGui::TreePop();
-		}
-		ImGui::TreePop();
-	}
-	ImGui::End();
+	//ImGui::Begin("test");
+	//if (ImGui::TreeNode("Debug")) {
+	//	if (ImGui::TreeNode("Enemy")) {
+	//		float A = (float)Check;
+	//		ImGui::SliderFloat("Check", &A, 50, -50);
+	//		//ImGui::Text("%d", DrawExp);
+	//		ImGui::Unindent();
+	//		ImGui::TreePop();
+	//	}
+	//	ImGui::TreePop();
+	//}
+	//ImGui::End();
 
 	if (IsAlive) {
 		Object3d::PreDraw();
@@ -244,6 +244,7 @@ bool Enemy::collidePlayer() {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true) {
 			IsAlive = 0;
 			player->SetHp(player->GetHp() - 1);
+			Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 			player->SetDamageFlag(true);
 			Interval = 20;
 			return true;
