@@ -9,6 +9,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	Texture::LoadTexture(2, L"Resources/2d/shadow.png");
 	Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
 	Texture::LoadTexture(4, L"Resources/2d/effect2.png");
+	Texture::LoadTexture(5, L"Resources/2d/PlayerHP.png");
 	// カメラ生成
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
@@ -27,6 +28,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	for (int i = 0; i < 3; i++) {
 		spawing[i] = new Spawning();
 		spawing[i]->Initialize();
+		spawing[i]->SetPlayer(player);
 	}
 	for (int i = 0; i < StartEnemyMax; i++) {
 		spawing[0]->SetEnemy(i, enemy[i]);
