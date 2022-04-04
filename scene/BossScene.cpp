@@ -84,7 +84,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	object1->Initialize();
 	object1->SetModel(model1);
 
-	ui = new UI(player,bossenemy);
+	ui = new UI(player, bossenemy);
 	//ui->Initialize();
 }
 
@@ -116,7 +116,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 
 
 	for (int i = 0; i < ExpMax; i++) {
-		for(int j = 0; j < BossEnemyMax;j++){
+		for (int j = 0; j < BossEnemyMax; j++) {
 			exp[i][j]->Update(player, enemy[j]);
 		}
 	}
@@ -128,7 +128,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
 		Audio::GetInstance()->StopWave(0);
 		Audio::GetInstance()->StopWave(1);
-		Audio::GetInstance()->LoopWave(1,0.7f);
+		Audio::GetInstance()->LoopWave(1, 0.7f);
 	}
 	if (input->TriggerKey(DIK_SPACE)) {
 		int a = 0;
@@ -140,11 +140,12 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		for (int colA = 0; colA < BossEnemyMax; colA++) {
 			for (int colB = 1; colB < BossEnemyMax; colB++) {
 				if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB) {//蠖薙◆繧雁愛螳壹→閾ｪ讖溷酔螢ｫ縺ｮ蠖薙◆繧雁愛螳壹・蜑企勁
-					DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
+					//DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
 					enemy[colA]->SetHit(true);
 					enemy[colB]->SetHit(false);
 					break;
-				} else {
+				}
+				else {
 					enemy[colA]->SetHit(false);
 				}
 			}
@@ -162,25 +163,25 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	object1->Update();
 	camera->SetTarget(player->GetPosition());
 	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
-	DebugText::GetInstance()->Print("PUSH to RB!!",200, 100,1.0f);
-	DebugText::GetInstance()->Print("PUSH to A!!", 200, 115, 1.0f);
+	DebugText::GetInstance()->Print("RB and LB :Rotate", 1060, 620, 1.0f);
+	DebugText::GetInstance()->Print("A         :Hand", 1060, 650, 1.0f);
 }
 
 void BossScene::Draw(DirectXCommon* dxCommon) {
 	//ImGui::Begin("test");
-//if (ImGui::TreeNode("Debug"))
-//{
-//	if (ImGui::TreeNode("Field"))
-//	{
-//		//ImGui::SliderFloat("Position.x", &s, 50, -50);
-//		ImGui::Unindent();
-//		ImGui::TreePop();
-//	}
-//	ImGui::TreePop();
-//}
-//ImGui::End();
+	/*if (ImGui::TreeNode("Debug"))
+	{
+		if (ImGui::TreeNode("Field"))
+		{
+			ImGui::SliderFloat("Position.x", &s, 50, -50);
+			ImGui::Unindent();
+			ImGui::TreePop();
+		}
+		ImGui::TreePop();
+	}
+	ImGui::End();*/
 
-	ImGui::Begin("test");
+	/*ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug"))
 	{
 		if (ImGui::TreeNode("Joy"))
@@ -192,7 +193,7 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 
 		ImGui::TreePop();
 	}
-	ImGui::End();
+	ImGui::End();*/
 	Object3d::PreDraw();
 	//objGround->Draw();
 	objground->Draw();

@@ -18,9 +18,10 @@ void ClearScene::Initialize(DirectXCommon* dxCommon) {
 void ClearScene::Update(DirectXCommon* dxCommon) {
 	Input* input = Input::GetInstance();
 	if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_B)) {
+		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 		SceneManager::GetInstance()->ChangeScene("TITLE");
 	}
-	DebugText::GetInstance()->Print("Buttun_B or ENTER to TITLE!!", 200, 100, 1.0f);
+	//DebugText::GetInstance()->Print("Buttun_B or ENTER to TITLE!!", 200, 100, 1.0f);
 }
 
 void ClearScene::Draw(DirectXCommon* dxCommon) {
