@@ -17,7 +17,7 @@ class BaseCollider;
 /// </summary>
 class Object3d
 {
-private: // エイリアス
+protected: // エイリアス
 	// Microsoft::WRL::を省略
 	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
 	// DirectX::を省略
@@ -25,7 +25,6 @@ private: // エイリアス
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMMATRIX = DirectX::XMMATRIX;
-
 public: // サブクラス	
 
 	// パイプラインセット
@@ -201,6 +200,14 @@ public: // メンバ関数
 	/// </summary>
 	//void Draw();
 	virtual void Draw();
+	//行列の更新
+	void UpdateWorldMatrix();
+
+	/// <summary>
+	/// モデルを取得
+	/// </summary>
+	inline Model* GetModel() { return model; }
+
 	/// <summary>
 	/// 座標の取得
 	/// </summary>
