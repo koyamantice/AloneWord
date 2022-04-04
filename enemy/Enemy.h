@@ -30,7 +30,7 @@ public:
 	//bool Collision(XMFLOAT3 position, float radius);
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
 	void SetEnemyCatch(bool EnemyCatch) { this->EnemyCatch = EnemyCatch; }
-	void SetBound(int bound) { this->bound = bound; }
+	void SetBound(bool bound) { this->bound = bound; }
 	void SetHit(bool hit) { this->hit = hit; }
 	void SetDrawExp(int DrawExp) { this->DrawExp = DrawExp; }
 	void Setboundpower(XMFLOAT3 boundpower) { this->boundpower = boundpower; }
