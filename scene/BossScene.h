@@ -9,6 +9,8 @@
 const int BossEnemyMax = 10;
 const int EffectMax = 70;
 const int ExpMax = 5;
+class CollisionManager;
+class TouchableObject;
 class BossScene : public BaseScene{
 public:
 	/// <summary>
@@ -34,7 +36,9 @@ private:
 	Object3d* objGround;
 
 	Model* modelground = nullptr;
-	Object3d* objground;
+	TouchableObject* objground;
+	Model* modelSphere = nullptr;
+	Object3d* objSphere;
 
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;
@@ -47,5 +51,6 @@ private:
 	Exp* exp[ExpMax][BossEnemyMax] = { nullptr };
 	float weight = 0;
 	UI* ui=nullptr;
+	CollisionManager* collsionManager = nullptr;
 };
 

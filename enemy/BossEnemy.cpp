@@ -98,7 +98,7 @@ bool BossEnemy::collideAttackArm() {
 	float power = player->GetPower();
 	float weight = player->GetArmWeight();
 	if (attackflag && !BossHit) {
-		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.7f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
+		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.8f, Armpos.x, Armpos.y, Armpos.z, 0.8f) == true) {
 			BossHit = true;
 			player->SetAttackFlag(false);
 			//ついてる敵の数で音が変わる

@@ -86,21 +86,6 @@
     <ClCompile Include="base\WinApp.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="collision\Collision.cpp">
-      <Filter>collision</Filter>
-    </ClCompile>
-    <ClCompile Include="collision\BaseCollider.cpp">
-      <Filter>collision</Filter>
-    </ClCompile>
-    <ClCompile Include="collision\CollisionInfo.cpp">
-      <Filter>collision</Filter>
-    </ClCompile>
-    <ClCompile Include="collision\CollisionPrimitive.cpp">
-      <Filter>collision</Filter>
-    </ClCompile>
-    <ClCompile Include="collision\CollisionTypes.cpp">
-      <Filter>collision</Filter>
-    </ClCompile>
     <ClCompile Include="3d\Material.cpp">
       <Filter>3d</Filter>
     </ClCompile>
@@ -197,6 +182,33 @@
     <ClCompile Include="enemy\Spawning.cpp">
       <Filter>enemy</Filter>
     </ClCompile>
+    <ClCompile Include="collision\BaseCollider.cpp">
+      <Filter>collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collision\Collision.cpp">
+      <Filter>collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collision\CollisionInfo.cpp">
+      <Filter>collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collision\CollisionManager.cpp">
+      <Filter>collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collision\CollisionPrimitive.cpp">
+      <Filter>collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collision\CollisionTypes.cpp">
+      <Filter>collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collision\MeshCollider.cpp">
+      <Filter>collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collision\SphereCollider.cpp">
+      <Filter>collision</Filter>
+    </ClCompile>
+    <ClCompile Include="collision\TouchableObject.cpp">
+      <Filter>collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\Framework.h">
@@ -225,21 +237,6 @@
     </ClInclude>
     <ClInclude Include="base\WinApp.h">
       <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="collision\BaseCollider.h">
-      <Filter>collision</Filter>
-    </ClInclude>
-    <ClInclude Include="collision\Collision.h">
-      <Filter>collision</Filter>
-    </ClInclude>
-    <ClInclude Include="collision\CollisionInfo.h">
-      <Filter>collision</Filter>
-    </ClInclude>
-    <ClInclude Include="collision\CollisionPrimitive.h">
-      <Filter>collision</Filter>
-    </ClInclude>
-    <ClInclude Include="collision\CollisionTypes.h">
-      <Filter>collision</Filter>
     </ClInclude>
     <ClInclude Include="3d\Material.h">
       <Filter>3d</Filter>
@@ -357,6 +354,42 @@
     </ClInclude>
     <ClInclude Include="enemy\Spawning.h">
       <Filter>enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="collision\BaseCollider.h">
+      <Filter>collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collision\Collision.h">
+      <Filter>collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collision\CollisionAttribute.h">
+      <Filter>collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collision\CollisionInfo.h">
+      <Filter>collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collision\CollisionManager.h">
+      <Filter>collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collision\CollisionPrimitive.h">
+      <Filter>collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collision\CollisionTypes.h">
+      <Filter>collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collision\MeshCollider.h">
+      <Filter>collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collision\QueryCallback.h">
+      <Filter>collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collision\RaycastHit.h">
+      <Filter>collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collision\SphereCollider.h">
+      <Filter>collision</Filter>
+    </ClInclude>
+    <ClInclude Include="collision\TouchableObject.h">
+      <Filter>collision</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

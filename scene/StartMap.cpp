@@ -97,7 +97,7 @@ void StartMap::Finalize() {
 	for (int i = 0; i < StartEnemyMax; i++) {
 		enemy[i]->Finalize();
 	}
-	player->Finalize();
+	//player->Finalize();
 
 	//bossenemy->Finalize();
 
@@ -122,8 +122,8 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	for (int i = 0; i < StartEnemyMax; i++) {
 		//enemy[i]->Update();
 
-		player->ResetWeight(enemy[i]);
-		player->Rebound(enemy[i]);
+		//player->ResetWeight(enemy[i]);
+		//player->Rebound(enemy[i]);
 	}
 
 	for (int i = 0; i < StartEnemyMax; i++) {
