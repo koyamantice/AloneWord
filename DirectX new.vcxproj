@@ -173,9 +173,15 @@
     <ClCompile Include="camera\Camera.cpp" />
     <ClCompile Include="camera\DebugCamera.cpp" />
     <ClCompile Include="collision\BaseCollider.cpp" />
-    <ClCompile Include="collision\Collision.cpp" />
+    <ClCompile Include="collision\Collision.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Disabled</Optimization>
+    </ClCompile>
     <ClCompile Include="collision\CollisionInfo.cpp" />
-    <ClCompile Include="collision\CollisionManager.cpp" />
+    <ClCompile Include="collision\CollisionManager.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Disabled</Optimization>
+    </ClCompile>
     <ClCompile Include="collision\CollisionPrimitive.cpp" />
     <ClCompile Include="collision\CollisionTypes.cpp" />
     <ClCompile Include="collision\MeshCollider.cpp" />

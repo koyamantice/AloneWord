@@ -16,25 +16,30 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	Texture::LoadTexture(4, L"Resources/2d/effect2.png");
 	//インスタンス取得
 	collsionManager = CollisionManager::GetInstance();
-	// 繧ｫ繝｡繝ｩ逕滓・
+	// カメラ生成
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
-	// 3D繧ｪ繝悶ず繧ｧ繧ｯ繝医↓繧ｫ繝｡繝ｩ繧偵そ繝・ヨ
+	// 3Dオブジェクトにカメラをセット
 	Object3d::SetCamera(camera);
+	//各オブジェクトの初期化
+	//プレイヤー
 	player = new Player();
 	player->Initialize();
-	player->SetMove(25.0f, 20.0f);
+	player->SetMove(250.0f, 200.0f);
 
+	//ボス
 	bossenemy = new BossEnemy();
 	bossenemy->SetPlayer(player);
 	bossenemy->Initialize();
 
+	//敵
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i] = new Enemy();
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
 	}
 
+	//ステージマップ
 	modelground = Model::CreateFromOBJ("ground");
 	objground = TouchableObject::Create(modelground);
 	objground->SetPosition({ 0,-1,2 });
@@ -78,22 +83,22 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
 	//srand(NULL);
-	// 繝ｩ繧､繝育函謌・
+	// ライト生成
 	lightGroup = LightGroup::Create();
-	// 3D繧ｪ繝悶お繧ｯ繝医↓繝ｩ繧､繝医ｒ繧ｻ繝・ヨ
+	// 3Dオブジェクトにライトをセット
 	Object3d::SetLightGroup(lightGroup);
 
-	// 繧ｫ繝｡繝ｩ豕ｨ隕也せ繧偵そ繝・ヨ
+	// カメラ注視点をセット
 	camera->SetTarget(player->GetPosition());
 	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
-	// 繝｢繝・Ν蜷阪ｒ謖・ｮ壹＠縺ｦ繝輔ぃ繧､繝ｫ隱ｭ縺ｿ霎ｼ縺ｿ
+	// モデル名を指定してファイル読み込み
 	model1 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 
-	// 繝・ヰ繧､繧ｹ繧偵そ繝・ヨ
+	// デバイスをセット
 	FBXObject3d::SetDevice(dxCommon->GetDev());
-	// 繧ｫ繝｡繝ｩ繧偵そ繝・ヨ
+	// カメラをセット
 	FBXObject3d::SetCamera(camera);
-	// 繧ｰ繝ｩ繝輔ぅ繝・け繧ｹ繝代う繝励Λ繧､繝ｳ逕滓・
+	// グラフィックスパイプライン生成
 	FBXObject3d::CreateGraphicsPipeline();
 
 	object1 = new FBXObject3d;
@@ -106,7 +111,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 
 void BossScene::Finalize() {
 
-	//・難ｽ・・繝｢繝・Ν縺ｮ繝・Μ繝ｼ繝・
+	//３dのモデルのデリート
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Finalize();
 	}
@@ -116,6 +121,7 @@ void BossScene::Finalize() {
 
 void BossScene::Update(DirectXCommon* dxCommon) {
 	//objGround->Update();
+	//各オブジェクトの更新
 	objground->Update();
 	lightGroup->Update();
 	camera->Update();
@@ -127,8 +133,8 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Update();
 		enemy[i]->SetEnemy();
-		/*player->ResetWeight(enemy[i]);
-		player->Rebound(enemy[i]);*/
+		player->ResetWeight(enemy[i]);
+		player->Rebound(enemy[i]);
 	}
 
 
@@ -152,8 +158,8 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		a += 1;
 	}
 
-	//謨ｵ蜷悟｣ｫ縺ｮ蠖薙◆繧雁愛螳・
-	if (sizeof(enemy) > 2) {//驟榊・縺ｮ繧ｵ繧､繧ｺ遒ｺ隱・
+	//敵同士の当たり判定
+	if (sizeof(enemy) > 2) {//配列のサイズ確認
 		for (int colA = 0; colA < BossEnemyMax; colA++) {
 			for (int colB = 1; colB < BossEnemyMax; colB++) {
 				if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB) {//蠖薙◆繧雁愛螳壹→閾ｪ讖溷酔螢ｫ縺ｮ蠖薙◆繧雁愛螳壹・蜑企勁
@@ -169,7 +175,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		}
 	}
 
-	//縺昴・莉悶す繝ｼ繝ｳ遘ｻ陦・
+	//その他シーン移行
 	if (bossenemy->GetHP() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("CLEAR");
 	}
@@ -189,32 +195,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 }
 
 void BossScene::Draw(DirectXCommon* dxCommon) {
-	//ImGui::Begin("test");
-	/*if (ImGui::TreeNode("Debug"))
-	{
-		if (ImGui::TreeNode("Field"))
-		{
-			ImGui::SliderFloat("Position.x", &s, 50, -50);
-			ImGui::Unindent();
-			ImGui::TreePop();
-		}
-		ImGui::TreePop();
-	}
-	ImGui::End();*/
-
-	/*ImGui::Begin("test");
-	if (ImGui::TreeNode("Debug"))
-	{
-		if (ImGui::TreeNode("Joy"))
-		{
-			ImGui::SliderFloat("PlayerArm", &weight, 50, -50);
-			ImGui::Unindent();
-			ImGui::TreePop();
-		}
-
-		ImGui::TreePop();
-	}
-	ImGui::End();*/
+	//各オブジェクトの描画
 	Object3d::PreDraw();
 	//objGround->Draw();
 	objground->Draw();
@@ -222,11 +203,9 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	Texture::PreDraw();
 	//limit->Draw();
 	//Sprite::PreDraw();
-	//閭梧勹逕ｨ
 	//sprite->Draw();
 
 	//object1->Draw(dxCommon->GetCmdList());
-	//閭梧勹逕ｨ
 
 	player->Draw();
 	for (int i = 0; i < BossEnemyMax; i++) {
