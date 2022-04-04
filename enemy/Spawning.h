@@ -1,6 +1,8 @@
 #pragma once
 #include <DirectXMath.h>
 #include"Enemy.h"
+#include"Player.h"
+
 class Spawning {
 private:
 	// DirectX::‚ðÈ—ª
@@ -23,13 +25,17 @@ public:
 	const XMFLOAT3& GetRotation() { return object3d->GetRotation(); }
 	void SetPosition(XMFLOAT3 position) { this->pos = position; }
 	void SetRotation(XMFLOAT3 rotation) { object3d->SetRotation(rotation); }
-
+	void collideAttackArm();
+	void SetPlayer(Player* player) { this->player = player; };
 
 private:
 	Object3d* object3d;
 	Model* model;
 	XMFLOAT3 pos = { 0,0,0 };
-
+	Texture* texture=nullptr;
+	bool Hit=false;
+	int Hp = 20;
 	Enemy* enemy[10] = {};
+	Player* player = nullptr;
 };
 

@@ -413,7 +413,7 @@ void Player::Update() {
 
 //描画
 void Player::Draw() {
-	ImGui::Begin("test");
+	/*ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("Player")) {
 			ImGui::SliderFloat("pos", &position.x, 50, -50);
@@ -426,7 +426,7 @@ void Player::Draw() {
 		}
 		ImGui::TreePop();
 	}
-	ImGui::End();
+	ImGui::End();*/
 
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {

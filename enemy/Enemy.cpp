@@ -244,6 +244,7 @@ bool Enemy::collidePlayer() {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true) {
 			IsAlive = 0;
 			player->SetHp(player->GetHp() - 1);
+			Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 			player->SetDamageFlag(true);
 			Interval = 20;
 			return true;
@@ -322,8 +323,8 @@ void Enemy::Follow() {
 			EndRot.y = 180;
 		}
 	}
-	pos.x += (float)Check * 0.095f;
-	pos.z += (float)Check2 * 0.095f;
+	pos.x += (float)Check *  0.075f;
+	pos.z += (float)Check2 * 0.075f;
 }
 
 //敵が動く
