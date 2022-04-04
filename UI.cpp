@@ -62,7 +62,7 @@ const void UI::Draw() {
 	//}
 	//ImGui::End();
 	Sprite::PreDraw();
-	Vignette->Draw();
+	//Vignette->Draw();
 	BossHp->Draw();
 	PlaHp->Draw();
 	Life->Draw();

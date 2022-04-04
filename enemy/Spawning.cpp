@@ -75,7 +75,7 @@ void Spawning::collideAttackArm() {
 
 			//ƒ{ƒX‚ÌHP‚ð‚Ö‚ç‚·
 			if (Hit == true) {
-				Hp -= ((int)weight * 2) * power;
+				Hp -= ((int)weight * 2) * (int)power;
 				weight = 0.0f;
 				//boundpower.x = (float)(rand() % 4 - 2);
 				//boundpower.y = (float)(rand() % 6);
