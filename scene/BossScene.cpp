@@ -36,18 +36,19 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	}
 
 	modelground = Model::CreateFromOBJ("ground");
-	objground = Object3d::Create();
-	objground->Initialize();
-	objground->SetModel(modelground);
+	objground = TouchableObject::Create(modelground);
+	objground->SetPosition({ 0, 0, 0 });
+	objground->SetScale({ 1.4f,1.5f,1.6f });
+	/*objground->SetModel(modelground);
 	objground->SetPosition({ 0,-1,2 });
 	objground->SetRotation({ 0, 90, 0 });
 	objground->SetScale({ 1.4f,1.5f,1.6f });
-	
+	*/
 	//当たり判定確認用です
 	objSphere = Object3d::Create();
 	modelSphere = Model::CreateFromOBJ("sphere");
 	objSphere->SetModel(modelSphere);
-	objSphere->SetPosition({ -10, 1, 0 });
+	objSphere->SetPosition({ -10, 0, 0 });
 	// コライダーの追加
 	objSphere->SetCollider(new SphereCollider);
 
@@ -108,7 +109,7 @@ void BossScene::Finalize() {
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Finalize();
 	}
-	player->Finalize();
+	//player->Finalize();
 	bossenemy->Finalize();
 }
 
@@ -125,8 +126,8 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Update();
 		enemy[i]->SetEnemy();
-		player->ResetWeight(enemy[i]);
-		player->Rebound(enemy[i]);
+		/*player->ResetWeight(enemy[i]);
+		player->Rebound(enemy[i]);*/
 	}
 
 

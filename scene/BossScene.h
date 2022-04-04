@@ -36,7 +36,7 @@ private:
 	Object3d* objGround;
 
 	Model* modelground = nullptr;
-	Object3d* objground;
+	TouchableObject* objground;
 	Model* modelSphere = nullptr;
 	Object3d* objSphere;
 

@@ -13,7 +13,7 @@ public:
 	Player();
 
 	bool Initialize() override;
-	void Finalize();
+	//void Finalize();
 	void Update() override;
 	void Draw();
 private:
@@ -95,9 +95,9 @@ public:
 	void SetMove(float XMax, float ZMax) { this->XMax = XMax; this->ZMax = ZMax; }
 
 	void ResetWeight(Enemy* enemy);
-
+	
 	void Rebound(Enemy* enemy);
-
+	
 	void EffectMove();
 
 private:
@@ -159,11 +159,7 @@ private:
 	float StickrotX = 0;
 	float StickrotY = 0;
 	XMFLOAT3 angle = { 0,0,0 };
-	////エフェクト関係
-	//Texture* effecttexture = nullptr;
-	//XMFLOAT3 effectpos = { 0.0f,0.0f,0.0f };
-	//XMFLOAT4 effectcolor = { 1.0f,1.0f,1.0f,1.0f };
-	//XMFLOAT3 effectscale = { 0.0f,0.0f,0.0f };
-	//int effectAlive = 0;
-
+	bool onGround = true;
+	// 落下ベクトル
+	DirectX::XMVECTOR fallV;
 };

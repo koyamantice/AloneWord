@@ -1,20 +1,20 @@
 ﻿#include "Object3d.h"
+
 #include <d3dcompiler.h>
+#include <DirectXTex.h>
 #include <fstream>
-#include <sstream>
-#include <string>
-#include <vector>
+#include<sstream>
+#include<string>
+#include<vector>
 #include "BaseCollider.h"
 #include "CollisionManager.h"
 #pragma comment(lib, "d3dcompiler.lib")
 
+using namespace std;
 using namespace DirectX;
 using namespace Microsoft::WRL;
-using namespace std;
 
-/// <summary>
 /// 静的メンバ変数の実体
-/// </summary>
 ID3D12Device* Object3d::device = nullptr;
 ID3D12GraphicsCommandList* Object3d::cmdList = nullptr;
 Object3d::PipelineSet Object3d::pipelineSet;
@@ -27,6 +27,9 @@ XMMATRIX Object3d::matBillboard = XMMatrixIdentity();
 XMMATRIX Object3d::matBillboardY = XMMatrixIdentity();
 Camera* Object3d::camera = nullptr;
 LightGroup* Object3d::lightGroup = nullptr;
+
+
+
 bool Object3d::StaticInitialize(ID3D12Device* device, ID3D12GraphicsCommandList* cmdList, int window_width, int window_height, Camera* camera)
 {
 	// nullptrチェック
@@ -46,6 +49,103 @@ bool Object3d::StaticInitialize(ID3D12Device* device, ID3D12GraphicsCommandList*
 
 	return true;
 }
+
+
+void Object3d::PreDraw()
+{
+	// PreDrawとPostDrawがペアで呼ばれていなければエラー
+	//assert(Object3d::cmdList == nullptr);
+
+	// コマンドリストをセット
+	//Object3d::cmdList = cmdList;
+
+	//// パイプラインステートの設定
+	//cmdList->SetPipelineState(pipelinestate.Get());
+	//// ルートシグネチャの設定
+	//cmdList->SetGraphicsRootSignature(rootsignature.Get());
+	// プリミティブ形状を設定
+	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
+}
+
+void Object3d::PostDraw()
+{
+	// コマンドリストを解除
+	//Object3d::cmdList = nullptr;
+}
+
+Object3d* Object3d::Create()
+{
+	// 3Dオブジェクトのインスタンスを生成
+	Object3d* object3d = new Object3d();
+	if (object3d == nullptr) {
+		return nullptr;
+	}
+
+	// 初期化
+	if (!object3d->Initialize()) {
+		delete object3d;
+		assert(0);
+		return nullptr;
+	}
+	//float scale_val = 5;
+	//object3d->scale = { scale_val , scale_val , scale_val };
+
+	return object3d;
+}
+
+//void Object3d::SetEye(XMFLOAT3 eye)
+//{
+//	Object3d::eye = eye;
+//
+//	UpdateViewMatrix();
+//}
+//
+//void Object3d::SetTarget(XMFLOAT3 target)
+//{
+//	Object3d::target = target;
+//
+//	UpdateViewMatrix();
+//}
+//
+//void Object3d::CameraMoveVector(XMFLOAT3 move)
+//{
+//	XMFLOAT3 eye_moved = GetEye();
+//	XMFLOAT3 target_moved = GetTarget();
+//
+//	eye_moved.x += move.x;
+//	eye_moved.y += move.y;
+//	eye_moved.z += move.z;
+//
+//	target_moved.x += move.x;
+//	target_moved.y += move.y;
+//	target_moved.z += move.z;
+//
+//	SetEye(eye_moved);
+//	SetTarget(target_moved);
+//}
+//
+
+
+//void Object3d::InitializeCamera(int window_width, int window_height)
+//{
+//	// ビュー行列の生成
+//	matView = XMMatrixLookAtLH(
+//		XMLoadFloat3(&eye),
+//		XMLoadFloat3(&target),
+//		XMLoadFloat3(&up));
+//
+//	// 平行投影による射影行列の生成
+//	//constMap->mat = XMMatrixOrthographicOffCenterLH(
+//	//	0, window_width,
+//	//	window_height, 0,
+//	//	0, 1);
+//	// 透視投影による射影行列の生成
+//	matProjection = XMMatrixPerspectiveFovLH(
+//		XMConvertToRadians(60.0f),
+//		(float)window_width / window_height,
+//		0.1f, 1000.0f
+//	);
+//}
 
 void Object3d::CreateGraphicsPipeline()
 {
@@ -204,202 +304,19 @@ void Object3d::CreateGraphicsPipeline()
 	}
 }
 
-void Object3d::PreDraw()
-{
-	//// PreDrawとPostDrawがペアで呼ばれていなければエラー
-	//assert(Object3d::cmdList == nullptr);
-
-	//// コマンドリストをセット
-	//Object3d::cmdList = cmdList;
-
-	// プリミティブ形状を設定
-	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
-}
-
-void Object3d::PostDraw()
-{
-	//// コマンドリストを解除
-	//Object3d::cmdList = nullptr;
-}
-
-Object3d * Object3d::Create()
-{
-	// 3Dオブジェクトのインスタンスを生成
-	Object3d* object3d = new Object3d();
-	if (object3d == nullptr) {
-		return nullptr;
-	}
-
-	// 初期化
-	if (!object3d->Initialize()) {
-		delete object3d;
-		assert(0);
-		return nullptr;
-	}
-
-	//float scale_val = 20;
-	//object3d->scale = { scale_val,scale_val,scale_val };
-
-	return object3d;
-}
-
-void Object3d::SetEye(XMFLOAT3 eye)
-{
-	Object3d::eye = eye;
-
-	UpdateViewMatrix();
-}
-
-void Object3d::SetTarget(XMFLOAT3 target)
-{
-	Object3d::target = target;
-
-	UpdateViewMatrix();
-}
-
-void Object3d::CameraMoveVector(XMFLOAT3 move)
-{
-	XMFLOAT3 eye_moved = GetEye();
-	XMFLOAT3 target_moved = GetTarget();
-
-	eye_moved.x += move.x;
-	eye_moved.y += move.y;
-	eye_moved.z += move.z;
-
-	target_moved.x += move.x;
-	target_moved.y += move.y;
-	target_moved.z += move.z;
-
-	SetEye(eye_moved);
-	SetTarget(target_moved);
-}
-
-void Object3d::CameraMoveEyeVector(XMFLOAT3 move)
-{
-	XMFLOAT3 eye_moved = GetEye();
-
-	eye_moved.x += move.x;
-	eye_moved.y += move.y;
-	eye_moved.z += move.z;
-
-	SetEye(eye_moved);
-}
-
-void Object3d::InitializeCamera(int window_width, int window_height)
-{
-	//// ビュー行列の生成
-	//matView = XMMatrixLookAtLH(
-	//    XMLoadFloat3(&eye),
-	//    XMLoadFloat3(&target),
-	//    XMLoadFloat3(&up));
-	//ビュー行列の計算
-	UpdateViewMatrix();
-
-	// 平行投影による射影行列の生成
-	//constMap->mat = XMMatrixOrthographicOffCenterLH(
-	//	0, window_width,
-	//	window_height, 0,
-	//	0, 1);
-	// 透視投影による射影行列の生成
-	matProjection = XMMatrixPerspectiveFovLH(
-		XMConvertToRadians(60.0f),
-		(float)window_width / window_height,
-		0.1f, 1000.0f
-	);
-}
 
 void Object3d::UpdateViewMatrix()
 {
 	// ビュー行列の更新
-	//matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
-
-	// 視点座標
-	XMVECTOR eyePosition = XMLoadFloat3(&eye);
-	// 注視点座標
-	XMVECTOR targetPosition = XMLoadFloat3(&target);
-	// （仮の）上方向
-	XMVECTOR upVector = XMLoadFloat3(&up);
-
-	// カメラZ軸（視線方向）
-	XMVECTOR cameraAxisZ = XMVectorSubtract(targetPosition, eyePosition);
-	// 0ベクトルだと向きが定まらないので除外
-	assert(!XMVector3Equal(cameraAxisZ, XMVectorZero()));
-	assert(!XMVector3IsInfinite(cameraAxisZ));
-	assert(!XMVector3Equal(upVector, XMVectorZero()));
-	assert(!XMVector3IsInfinite(upVector));
-	// ベクトルを正規化
-	cameraAxisZ = XMVector3Normalize(cameraAxisZ);
-
-	// カメラのX軸（右方向）
-	XMVECTOR cameraAxisX;
-	// X軸は上方向→Z軸の外積で求まる
-	cameraAxisX = XMVector3Cross(upVector, cameraAxisZ);
-	// ベクトルを正規化
-	cameraAxisX = XMVector3Normalize(cameraAxisX);
-
-	// カメラのY軸（上方向）
-	XMVECTOR cameraAxisY;
-	// Y軸はZ軸→X軸の外積で求まる
-	cameraAxisY = XMVector3Cross(cameraAxisZ, cameraAxisX);
-
-	// ここまでで直交した3方向のベクトルが揃う
-	//（ワールド座標系でのカメラの右方向、上方向、前方向）	
-
-	// カメラ回転行列
-	XMMATRIX matCameraRot;
-	// カメラ座標系→ワールド座標系の変換行列
-	matCameraRot.r[0] = cameraAxisX;
-	matCameraRot.r[1] = cameraAxisY;
-	matCameraRot.r[2] = cameraAxisZ;
-	matCameraRot.r[3] = XMVectorSet(0, 0, 0, 1);
-	// 転置により逆行列（逆回転）を計算
-	matView = XMMatrixTranspose(matCameraRot);
-
-	// 視点座標に-1を掛けた座標
-	XMVECTOR reverseEyePosition = XMVectorNegate(eyePosition);
-	// カメラの位置からワールド原点へのベクトル（カメラ座標系）
-	XMVECTOR tX = XMVector3Dot(cameraAxisX, reverseEyePosition);	// X成分
-	XMVECTOR tY = XMVector3Dot(cameraAxisY, reverseEyePosition);	// Y成分
-	XMVECTOR tZ = XMVector3Dot(cameraAxisZ, reverseEyePosition);	// Z成分
-	// 一つのベクトルにまとめる
-	XMVECTOR translation = XMVectorSet(tX.m128_f32[0], tY.m128_f32[1], tZ.m128_f32[2], 1.0f);
-	// ビュー行列に平行移動成分を設定
-	matView.r[3] = translation;
-
-#pragma region 全方向ビルボード行列の計算
-	// ビルボード行列
-	matBillboard.r[0] = cameraAxisX;
-	matBillboard.r[1] = cameraAxisY;
-	matBillboard.r[2] = cameraAxisZ;
-	matBillboard.r[3] = XMVectorSet(0, 0, 0, 1);
-#pragma region
-
-#pragma region Y軸回りビルボード行列の計算
-	// カメラX軸、Y軸、Z軸
-	XMVECTOR ybillCameraAxisX, ybillCameraAxisY, ybillCameraAxisZ;
-
-	// X軸は共通
-	ybillCameraAxisX = cameraAxisX;
-	// Y軸はワールド座標系のY軸
-	ybillCameraAxisY = XMVector3Normalize(upVector);
-	// Z軸はX軸→Y軸の外積で求まる
-	ybillCameraAxisZ = XMVector3Cross(ybillCameraAxisX, ybillCameraAxisY);
-
-	// Y軸回りビルボード行列
-	matBillboardY.r[0] = ybillCameraAxisX;
-	matBillboardY.r[1] = ybillCameraAxisY;
-	matBillboardY.r[2] = ybillCameraAxisZ;
-	matBillboardY.r[3] = XMVectorSet(0, 0, 0, 1);
-#pragma endregion
+	matView = XMMatrixLookAtLH(XMLoadFloat3(&eye), XMLoadFloat3(&target), XMLoadFloat3(&up));
 }
 
 Object3d::~Object3d() {
-	static int a = 0;
-      	a++;
-		if (collider) {
-			CollisionManager::GetInstance()->RemoveCollider(collider);
-			delete collider;
-		}
+
+	if (collider) {
+		CollisionManager::GetInstance()->RemoveCollider(collider);
+		delete collider;
+	}
 }
 
 bool Object3d::Initialize()
@@ -408,15 +325,24 @@ bool Object3d::Initialize()
 	assert(device);
 
 	HRESULT result;
-	// 定数バッファの生成
+	//// 定数バッファの生成
+	//result = device->CreateCommittedResource(
+	//	&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD), 	// アップロード可能
+	//	D3D12_HEAP_FLAG_NONE,
+	//	&CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferData) + 0xff) & ~0xff),
+	//	D3D12_RESOURCE_STATE_GENERIC_READ,
+	//	nullptr,
+	//	IID_PPV_ARGS(&constBuff));
+
+	// 定数バッファの生成B0
 	result = device->CreateCommittedResource(
 		&CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_UPLOAD), 	// アップロード可能
 		D3D12_HEAP_FLAG_NONE,
-		&CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataB0) + 0xff)&~0xff),
+		&CD3DX12_RESOURCE_DESC::Buffer((sizeof(ConstBufferDataB0) + 0xff) & ~0xff),
 		D3D12_RESOURCE_STATE_GENERIC_READ,
 		nullptr,
 		IID_PPV_ARGS(&constBuffB0));
-
+	//クラス名の文字列を取得
 	name = typeid(*this).name();
 
 	return true;
@@ -430,7 +356,6 @@ void Object3d::Update()
 	//行列の更新
 	UpdateWorldMatrix();
 
-
 	const XMMATRIX& matViewProjection = camera->GetViewProjectionMatrix();
 	const XMFLOAT3& cameraPos = camera->GetEye();
 
@@ -441,14 +366,14 @@ void Object3d::Update()
 	constMap->world = matWorld;
 	constMap->cameraPos = cameraPos;
 	constBuffB0->Unmap(0, nullptr);
+	//当たり判定更新
 	if (collider) {
 		collider->Update();
 	}
 }
 
 void Object3d::Draw()
-{
-	// nullptrチェック
+{// nullptrチェック
 	assert(device);
 	assert(Object3d::cmdList);
 

@@ -38,7 +38,7 @@ Player::Player() {
 bool Player::Initialize() {
 	object3d = Object3d::Create();
 	object3d->SetModel(model);
-	object3d->SetPosition(pos);
+	object3d->SetPosition(position);
 	object3d->SetScale({ 0.7f,0.7f,0.7f });
 
 	Armobj = Object3d::Create();
@@ -61,10 +61,10 @@ bool Player::Initialize() {
 	return true;
 }
 
-void Player::Finalize() {
-	delete object3d;
-	delete Armobj;
-}
+//void Player::Finalize() {
+//	delete object3d;
+//	delete Armobj;
+//}
 
 void Player::Update() {
 	Input* input = Input::GetInstance();
@@ -80,29 +80,29 @@ void Player::Update() {
 	
 	if (ArmMoveNumber == 0 && AttackMoveNumber == 0 && AttackFlag == false) {
 		if (input->LeftTiltStick(input->Right)) {
-			if (pos.x <= XMax) {
-				pos.x += PlayerSpeed;
+			if (position.x <= XMax) {
+				position.x += PlayerSpeed;
 				AfterRot = 90;
 			}
 		}
 
 		if (input->LeftTiltStick(input->Left)) {
-			if (pos.x >= -XMax) {
-				pos.x -= PlayerSpeed;
+			if (position.x >= -XMax) {
+				position.x -= PlayerSpeed;
 				AfterRot = 270;
 			}
 		}
 
 		if (input->LeftTiltStick(input->Up)) {
-			if (pos.z <= ZMax) {
-				pos.z += PlayerSpeed;
+			if (position.z <= ZMax) {
+				position.z += PlayerSpeed;
 				AfterRot = 0;
 			}
 		}
 
 		if (input->LeftTiltStick(input->Down)) {
-			if (pos.z >= -ZMax) {
-				pos.z -= PlayerSpeed;
+			if (position.z >= -ZMax) {
+				position.z -= PlayerSpeed;
 				AfterRot = 180;
 			}
 		}
@@ -301,6 +301,19 @@ void Player::Update() {
 		Exp = 0.0f;
 	}
 
+	// 落下処理
+	if (!onGround) {
+		// 下向き加速度
+		const float fallAcc = -0.01f;
+		const float fallVYMin = -0.5f;
+		// 加速
+		fallV.m128_f32[1] = max(fallV.m128_f32[1] + fallAcc, fallVYMin);
+		// 移動
+		position.x += fallV.m128_f32[0];
+		position.y += fallV.m128_f32[1];
+		position.z += fallV.m128_f32[2];
+	}
+	
 	// ワールド行列更新
 	UpdateWorldMatrix();
 	collider->Update();
@@ -342,9 +355,9 @@ void Player::Update() {
 	// 球と地形の交差を全検索
 	CollisionManager::GetInstance()->QuerySphere(*sphereCollider, &callback, COLLISIONSHAPE_MESH);
 	// 交差による排斥分動かす
-	pos.x += callback.move.m128_f32[0];
-	pos.y += callback.move.m128_f32[1];
-	pos.z += callback.move.m128_f32[2];
+	position.x += callback.move.m128_f32[0];
+	position.y += callback.move.m128_f32[1];
+	position.z += callback.move.m128_f32[2];
 	// ワールド行列更新
 	UpdateWorldMatrix();
 	collider->Update();
@@ -356,16 +369,43 @@ void Player::Update() {
 	ray.dir = { 0,-1,0,0 };
 	RaycastHit raycastHit;
 
+	// 接地状態
+	if (onGround) {
+		// スムーズに坂を下る為の吸着距離
+		const float adsDistance = 0.2f;
+		// 接地を維持
+		if (CollisionManager::GetInstance()->Raycast(ray, COLLISION_ATTR_LANDSHAPE, &raycastHit, sphereCollider->GetRadius() * 2.0f + adsDistance)) {
+			onGround = true;
+			position.y -= (raycastHit.distance - sphereCollider->GetRadius() * 2.0f);
+		}
+		// 地面がないので落下
+		else {
+			onGround = false;
+			fallV = {};
+		}
+	}
+	// 落下状態
+	else if (fallV.m128_f32[1] <= 0.0f) {
+		if (CollisionManager::GetInstance()->Raycast(ray, COLLISION_ATTR_LANDSHAPE, &raycastHit, sphereCollider->GetRadius() * 2.0f)) {
+			// 着地
+			onGround = true;
+			position.y -= (raycastHit.distance - sphereCollider->GetRadius() * 2.0f);
+		}
+	}
 
+	if (position.y <= 0.0f) {
+		position.y = 0.0f;
+		onGround = true;
+	}
 	Armradius = ArmSpeed * PI / 180.0f;
 	ArmCircleX = cosf(Armradius) * Armscale;
 	ArmCircleZ = sinf(Armradius) * Armscale;
-	Armpos.x = ArmCircleX + pos.x;
-	Armpos.z = ArmCircleZ + pos.z;
+	Armpos.x = ArmCircleX + position.x;
+	Armpos.z = ArmCircleZ + position.z;
 	Armobj->SetPosition(Armpos);
 	//移動
 	object3d->Update();
-	object3d->SetPosition(pos);
+	object3d->SetPosition(position);
 	object3d->SetRotation(rot);
 	Armobj->SetRotation(ArmRot);
 }
@@ -375,7 +415,7 @@ void Player::Draw() {
 	ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("Player")) {
-			ImGui::SliderFloat("Exp", &Exp, 50, -50);
+			ImGui::SliderFloat("pos", &position.y, 50, -50);
 			ImGui::Text("Lv %d", Lv);
 
 			ImGui::Unindent();
@@ -411,8 +451,8 @@ void Player::ResetWeight(Enemy *enemy) {
 void Player::Rebound(Enemy* enemy) {
 	XMFLOAT3 enepos = enemy->GetPosition();
 	
-	distance.x = pos.x - enepos.x;
-	distance.z = pos.z - enepos.z;
+	distance.x = position.x - enepos.x;
+	distance.z = position.z - enepos.z;
 
 	if (DamageFlag == true) {
 		
@@ -446,10 +486,10 @@ void Player::Rebound(Enemy* enemy) {
 		}
 	}
 
-	if (pos.x <= 25.0f && pos.x >= -25.0f) {
-		pos.x += rebound.x;
+	if (position.x <= 25.0f && position.x >= -25.0f) {
+		position.x += rebound.x;
 	}
-	if (pos.z <= 20.0f && pos.z >= -20.0f) {
-		pos.z += rebound.z;
+	if (position.z <= 20.0f && position.z >= -20.0f) {
+		position.z += rebound.z;
 	}
 }
