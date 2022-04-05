@@ -32,11 +32,11 @@ public:
 	void Draw(DirectXCommon* dxCommon) override;
 
 private:
-	Model* modelGround = nullptr;
-	Object3d* objGround;
+	Model* modelFloor = nullptr;
+	Object3d* objFloor;
 
-	Model* modelground = nullptr;
-	TouchableObject* objground;
+	Model* modelBossMap = nullptr;
+	TouchableObject* objBossMap;
 	Model* modelSphere = nullptr;
 	Object3d* objSphere;
 
