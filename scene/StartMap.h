@@ -3,6 +3,8 @@
 #include "BossEnemy.h"
 #include "Collision.h"
 #include "Spawning.h"
+class CollisionManager;
+class TouchableObject;
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>
@@ -29,11 +31,11 @@ public:
 	void Draw(DirectXCommon* dxCommon) override;
 
 private:
-	Model* modelground = nullptr;
-	Object3d* objground;
+	Model* modelFloor = nullptr;
+	Object3d* objFloor;
 
-	Model* modeltree = nullptr;
-	Object3d* objtree;
+	Model* modelStartMap = nullptr;
+	TouchableObject* objStartMap;
 
 
 	FBXModel* model1 = nullptr;

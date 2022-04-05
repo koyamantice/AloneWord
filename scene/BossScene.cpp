@@ -39,16 +39,23 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 		enemy[i]->Initialize();
 	}
 
+	//ステージ床
+	objFloor = Object3d::Create();
+	modelFloor = Model::CreateFromOBJ("floor");
+	objFloor->SetModel(modelFloor);
+	objFloor->SetPosition({ 0, -1, 0 });
+	objFloor->SetScale({ 3.0f,1.0f,3.0f });
+
 	//ステージマップ
-	modelground = Model::CreateFromOBJ("ground");
-	objground = TouchableObject::Create(modelground);
-	objground->SetPosition({ 0,-1,2 });
-	objground->SetRotation({ 0, 90, 0 });
-	objground->SetScale({ 1.4f,1.5f,1.6f });
-	/*objground->SetModel(modelground);
-	objground->SetPosition({ 0,-1,2 });
-	objground->SetRotation({ 0, 90, 0 });
-	objground->SetScale({ 1.4f,1.5f,1.6f });
+	modelBossMap = Model::CreateFromOBJ("BossMap");
+	objBossMap = TouchableObject::Create(modelBossMap);
+	objBossMap->SetPosition({ 0,-1,2 });
+	objBossMap->SetRotation({ 0, 90, 0 });
+	objBossMap->SetScale({ 1.4f,1.5f,1.6f });
+	/*objBossMap->SetModel(modelBossMap);
+	objBossMap->SetPosition({ 0,-1,2 });
+	objBossMap->SetRotation({ 0, 90, 0 });
+	objBossMap->SetScale({ 1.4f,1.5f,1.6f });
 	*/
 	//当たり判定確認用です
 	objSphere = Object3d::Create();
@@ -60,8 +67,8 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 
 	//普通のテクスチャ(板ポリ)
 	/*limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
-	objground->SetPosition({ 0,-1,10 });
-	objground->SetScale({ 22,1,10 });
+	objBossMap->SetPosition({ 0,-1,10 });
+	objBossMap->SetScale({ 22,1,10 });
 	//譎ｮ騾壹・繝・け繧ｹ繝√Ε(譚ｿ繝昴Μ)
 	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
 	limit->TextureCreate();
@@ -111,7 +118,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 
 void BossScene::Finalize() {
 
-	//３dのモデルのデリート
+	//3dのモデルのデリート
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Finalize();
 	}
@@ -120,9 +127,10 @@ void BossScene::Finalize() {
 }
 
 void BossScene::Update(DirectXCommon* dxCommon) {
-	//objGround->Update();
+	//objBossMap->Update();
 	//各オブジェクトの更新
-	objground->Update();
+	objBossMap->Update();
+	objFloor->Update();
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
@@ -197,8 +205,9 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 void BossScene::Draw(DirectXCommon* dxCommon) {
 	//各オブジェクトの描画
 	Object3d::PreDraw();
-	//objGround->Draw();
-	objground->Draw();
+	//objBossMap->Draw();
+	objBossMap->Draw();
+	objFloor->Draw();
 	objSphere->Draw();
 	Texture::PreDraw();
 	//limit->Draw();

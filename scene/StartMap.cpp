@@ -3,6 +3,11 @@
 #include "DebugText.h"
 #include "TitleScene.h"
 #include "FbxLoader.h"
+#include"Collision.h"
+#include "TouchableObject.h"
+#include "MeshCollider.h"
+#include "SphereCollider.h"
+#include "CollisionManager.h"
 void StartMap::Initialize(DirectXCommon* dxCommon) {
 	Texture::LoadTexture(0, L"Resources/2d/enemy.png");
 	Texture::LoadTexture(1, L"Resources/2d/limit.png");
@@ -36,25 +41,24 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	}
 	//オブジェクト初期化
 	/*modelGround = Model::CreateFromOBJ("ground");
-	objGround = Object3d::Create();
-	objGround->Initialize();
-	objGround->SetModel(modelGround);
-	objGround->SetPosition({ 0,-1,0 });*/
+	objFloor = Object3d::Create();
+	objFloor->Initialize();
+	objFloor->SetModel(modelGround);
+	objFloor->SetPosition({ 0,-1,0 });*/
 
-	modelground = Model::CreateFromOBJ("ground");
-	objground = Object3d::Create();
-	objground->Initialize();
-	objground->SetModel(modelground);
-	objground->SetPosition({ 0,-1,0 });
-	objground->SetScale({ 0.1f,1.0f,0.1f });
+	//ステージ床
+	objFloor = Object3d::Create();
+	modelFloor = Model::CreateFromOBJ("floor");
+	objFloor->SetModel(modelFloor);
+	objFloor->SetPosition({ 0, -1, 0 });
+	objFloor->SetScale({ 4.0f,1.0f,5.0f });
 
-	modeltree = Model::CreateFromOBJ("StartMap");
-	objtree = Object3d::Create();
-	objtree->Initialize();
-	objtree->SetModel(modeltree);
-	objtree->SetPosition({ 0,-5,50 });
-	objtree->SetRotation({ 0,90,0 });
-	objtree->SetScale({ 1.8f,1.8f,1.8f });
+	//ステージマップ
+	modelStartMap = Model::CreateFromOBJ("StartMap");
+	objStartMap = TouchableObject::Create(modelStartMap);
+	objStartMap->SetPosition({ 0,-1,2 });
+	objStartMap->SetRotation({ 0, 90, 0 });
+	objStartMap->SetScale({ 1.4f,1.5f,1.6f });
 	//普通のテクスチャ(板ポリ)
 
 	/*limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
@@ -104,9 +108,9 @@ void StartMap::Finalize() {
 }
 
 void StartMap::Update(DirectXCommon* dxCommon) {
-	//objGround->Update();
-	objground->Update();
-	objtree->Update();
+	//objFloor->Update();
+	objFloor->Update();
+	objStartMap->Update();
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
@@ -190,9 +194,9 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 //}
 //ImGui::End();
 	Object3d::PreDraw();
-	//objGround->Draw();
-	//objground->Draw();
-	objtree->Draw();
+	objFloor->Draw();
+	//objFloor->Draw();
+	objStartMap->Draw();
 	Texture::PreDraw();
 	//limit->Draw();
 
