@@ -7,7 +7,7 @@
 /// ゲームプレイシーン
 /// </summary>
 const int BossEnemyMax = 10;
-const int EffectMax = 70;
+const int EffectMax = 2;
 const int ExpMax = 5;
 class CollisionManager;
 class TouchableObject;
