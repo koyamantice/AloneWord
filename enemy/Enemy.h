@@ -26,7 +26,6 @@ public:
 	const int& GetBound() { return bound; }
 	const bool& GetIsAlive() { return IsAlive; }
 	const int& GetDrawExp() { return DrawExp; }
-	void SetPlayer(Player* player) { this->player = player; }
 	//bool Collision(XMFLOAT3 position, float radius);
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
 	void SetEnemyCatch(bool EnemyCatch) { this->EnemyCatch = EnemyCatch; }

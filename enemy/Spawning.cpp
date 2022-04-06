@@ -34,7 +34,15 @@ void Spawning::Update() {
 	}
 	collideAttackArm();
 	texture->Update();
+	texture->SetPosition({ pos.x,pos.y + 3.0f,pos.z });
 	texture->SetScale({ 0.2f,(float)Hp*0.02f,0.2f });
+
+	if (Hp>0) {
+		isAlive = true;
+	} else {
+		isAlive = false;
+	}
+
 
 }
 
@@ -45,7 +53,9 @@ void Spawning::Finalize() {
 
 void Spawning::Draw() {
 	Object3d::PreDraw();
-	object3d->Draw();
+	if (isAlive) {
+		object3d->Draw();
+	}
 	Texture::PreDraw();
 	texture->Draw();
 
