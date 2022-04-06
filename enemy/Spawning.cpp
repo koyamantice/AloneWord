@@ -2,7 +2,7 @@
 #include "Collision.h"
 
 Spawning::Spawning() {
-	model = Model::CreateFromOBJ("chr_knight");
+	model = Model::CreateFromOBJ("EHub");
 	object3d = new Object3d();
 	texture = Texture::Create(5, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
@@ -12,7 +12,7 @@ void Spawning::Initialize() {
 	object3d = Object3d::Create();
 	object3d->SetModel(model);
 	object3d->SetPosition(pos);
-	object3d->SetScale({3,3,3});
+	object3d->SetScale({1,1,1});
 
 	texture->SetPosition({ pos.x,pos.y + 3.0f,pos.z });
 	texture->SetRotation({ 45,0,0 });
@@ -34,7 +34,15 @@ void Spawning::Update() {
 	}
 	collideAttackArm();
 	texture->Update();
+	texture->SetPosition({ pos.x,pos.y + 3.0f,pos.z });
 	texture->SetScale({ 0.2f,(float)Hp*0.02f,0.2f });
+
+	if (Hp>0) {
+		isAlive = true;
+	} else {
+		isAlive = false;
+	}
+
 
 }
 
@@ -45,7 +53,9 @@ void Spawning::Finalize() {
 
 void Spawning::Draw() {
 	Object3d::PreDraw();
-	object3d->Draw();
+	if (isAlive) {
+		object3d->Draw();
+	}
 	Texture::PreDraw();
 	texture->Draw();
 
