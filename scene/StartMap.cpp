@@ -116,6 +116,8 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	player->Update();
 	for (int i = 0; i < StartEnemyMax; i++) {
 		spawing[1]->SetEnemy(i, enemy[i]);
+		player->ResetWeight(enemy[i]);
+		player->Rebound(enemy[i]);
 	}
 	for (int i = 0; i < 3; i++) {
 		spawing[i]->Update();

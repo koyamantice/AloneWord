@@ -26,11 +26,11 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 		SceneManager::GetInstance()->ChangeScene("STARTMAP");
 	}
-	/*if (input->PushKey(DIK_SPACE) || input->TriggerButton(input->Button_X)) {
+	if (input->PushKey(DIK_SPACE) || input->TriggerButton(input->Button_X)) {
 		SceneManager::GetInstance()->ChangeScene("STARTMAP");
 	}
 	DebugText::GetInstance()->Print("Button_A to STARTMAP!!", 100, 100, 1.5f);
-	DebugText::GetInstance()->Print("SPACE to BOSS!!", 100, 130, 1.5f);*/
+	DebugText::GetInstance()->Print("SPACE to BOSS!!", 100, 130, 1.5f);
 
 }
 
