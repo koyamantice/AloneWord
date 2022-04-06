@@ -15,6 +15,7 @@ class SceneManager;
 #include "input.h"
 #include "Effect.h"
 #include "Exp.h"
+#include "Warp.h"
 #include<memory>
 
 /// <summary>

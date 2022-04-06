@@ -416,6 +416,7 @@ void Player::Update() {
 //描画
 void Player::Draw() {
 	ImGui::Begin("test");
+	if (ImGui::TreeNode("Debug")) {
 	//if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("Player")) {
 			ImGui::SliderFloat("pos", &position.x, 50, -50);
@@ -426,6 +427,8 @@ void Player::Draw() {
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}
+		ImGui::TreePop();
+	}
 		//ImGui::TreePop();
 	//}
 	ImGui::End();
