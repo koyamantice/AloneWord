@@ -3,7 +3,7 @@
 #include "BossEnemy.h"
 #include "Collision.h"
 #include "Spawning.h"
-
+#include "UI.h"
 class CollisionManager;
 class TouchableObject;
 /// <summary>
@@ -38,7 +38,7 @@ private:
 
 	Model* modelStartMap = nullptr;
 	TouchableObject* objStartMap;
-
+	UI* ui = nullptr;
 
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;

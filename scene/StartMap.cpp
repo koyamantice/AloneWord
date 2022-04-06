@@ -24,12 +24,12 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	player = new Player();
 	player->Initialize();
 	player->SetMove(50.0f, 50.0f);
-
+	ui = new UI(player);
 	for (int i = 0; i < StartEnemyMax; i++) {
 		enemy[i] = new Enemy();
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
-		enemy[i]->SetLimit({100,-100,100,-100});
+		enemy[i]->SetLimit({20,-20,20,-20});
 	}
 	for (int i = 0; i < 3; i++) {
 		spawing[i] = new Spawning();
@@ -204,6 +204,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	if (player->GetHp() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 	}
+	ui->Update();
 	object1->Update();
 	camera->SetTarget(player->GetPosition());
 	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
@@ -248,5 +249,5 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 		spawing[i]->Draw();
 	}
 	//bossenemy->Draw();
-
+	ui->Draw();
 }

@@ -35,7 +35,7 @@ private:
 	XMFLOAT3 pos = { 0,0,0 };
 	Texture* texture=nullptr;
 	bool Hit=false;
-	int Hp = 20;
+	int Hp = 10;
 	bool isAlive = true;
 	Enemy* enemy[10] = {};
 	Player* player = nullptr;
