@@ -27,6 +27,8 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	player = new Player();
 	player->Initialize();
 	player->SetMove(50.0f, 50.0f);
+	player->SetPosition({ 0.0f,0.0f,-30.0f });
+
 	ui = new UI(player);
 	for (int i = 0; i < StartEnemyMax; i++) {
 		enemy[i] = new Enemy();
@@ -195,11 +197,16 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 				}
 			}
 		}
-
+		if (player->GetPosition().z >= -22) {
+			start = true;
+		}
 
 		if (!Clear) {
-			if (player->GetPosition().z >= 30) {
-				player->SetPosition({ player->GetPosition().x,0,30 });
+			if (player->GetPosition().z >= 23.9f) {
+				player->SetPosition({ player->GetPosition().x,0,23.9f });
+			}
+			if (player->GetPosition().z <= -22&&start) {
+				player->SetPosition({ player->GetPosition().x,0,-22 });
 			}
 		}
 
