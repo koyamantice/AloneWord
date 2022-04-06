@@ -35,6 +35,7 @@ private:
 	Texture* texture=nullptr;
 	bool Hit=false;
 	int Hp = 20;
+	bool isAlive = true;
 	Enemy* enemy[10] = {};
 	Player* player = nullptr;
 };
