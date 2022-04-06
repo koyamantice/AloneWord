@@ -15,6 +15,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
 	Texture::LoadTexture(4, L"Resources/2d/effect2.png");
 	Texture::LoadTexture(5, L"Resources/2d/PlayerHP.png");
+	Texture::LoadTexture(6, L"Resources/2d/magic2.png");
 	// カメラ生成
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
@@ -64,6 +65,9 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	objStartMap->SetScale({ 1.4f,1.5f,1.6f });
 	//普通のテクスチャ(板ポリ)
 
+	warp = new Warp;
+	warp->Initialize();
+	warp->SetPosition({ 0.0f,0.0f,50.0f });
 	/*limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
 	limit->TextureCreate();
 	limit->SetPosition({ 0.0f,0.01f,0.0f });
@@ -112,7 +116,7 @@ void StartMap::Finalize() {
 	delete objFloor;
 	delete modelStartMap;
 	delete objStartMap;
-
+	warp->Finalize();
 }
 
 void StartMap::Update(DirectXCommon* dxCommon) {
@@ -122,6 +126,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
+	warp->Update(player);
 	for (int i = 0; i < StartEnemyMax; i++) {
 		spawing[1]->SetEnemy(i, enemy[i]);
 		player->ResetWeight(enemy[i]);
@@ -129,6 +134,10 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	}
 	for (int i = 0; i < 3; i++) {
 		spawing[i]->Update();
+	}
+
+	if (warp->collidePlayer(player)) {
+		SceneManager::GetInstance()->ChangeScene("BOSS");
 	}
 	//bossenemy->Update();
 	//limit->Update();
@@ -209,7 +218,7 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	objStartMap->Draw();
 	Texture::PreDraw();
 	//limit->Draw();
-
+	warp->Draw();
 
 	//Sprite::PreDraw();
 	//背景用

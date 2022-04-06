@@ -48,6 +48,9 @@
     <Filter Include="exp">
       <UniqueIdentifier>{ad8f34ea-8441-4de7-a0a4-8b110a6b708c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="warp">
+      <UniqueIdentifier>{512c8aec-a5d4-4b2e-9fb2-3f68349594ef}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scene\TisGame.cpp">
@@ -208,6 +211,9 @@
     </ClCompile>
     <ClCompile Include="collision\TouchableObject.cpp">
       <Filter>collision</Filter>
+    </ClCompile>
+    <ClCompile Include="Warp.cpp">
+      <Filter>warp</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -390,6 +396,9 @@
     </ClInclude>
     <ClInclude Include="collision\TouchableObject.h">
       <Filter>collision</Filter>
+    </ClInclude>
+    <ClInclude Include="Warp.h">
+      <Filter>warp</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

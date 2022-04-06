@@ -3,6 +3,7 @@
 #include "BossEnemy.h"
 #include "Collision.h"
 #include "Spawning.h"
+
 class CollisionManager;
 class TouchableObject;
 /// <summary>
@@ -45,6 +46,7 @@ private:
 	//Texture* limit = nullptr;
 	Player* player = nullptr;
 	Enemy* enemy[StartEnemyMax] = { nullptr };
+	Warp* warp = nullptr;
 	//BossEnemy* bossenemy = nullptr;
 	Spawning* spawing[Spawn];
 };
