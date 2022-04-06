@@ -52,6 +52,17 @@ void Spawning::Finalize() {
 }
 
 void Spawning::Draw() {
+	ImGui::Begin("test");
+if (ImGui::TreeNode("Debug")) {
+	if (ImGui::TreeNode("Spawn")) {
+		ImGui::Text("hp %d", Hp);
+
+		ImGui::Unindent();
+		ImGui::TreePop();
+	}
+	ImGui::TreePop();
+}
+	ImGui::End();
 	Object3d::PreDraw();
 	if (isAlive) {
 		object3d->Draw();
@@ -82,17 +93,17 @@ void Spawning::collideAttackArm() {
 			} else if (weight >= 7) {
 				Audio::GetInstance()->PlayWave("Resources/Sound/strongL3.wav", 0.4f);
 			}
-
-			//ボスのHPをへらす
-			if (Hit == true) {
-				Hp -= ((int)weight * 2) * (int)power;
-				weight = 0.0f;
-				//boundpower.x = (float)(rand() % 4 - 2);
-				//boundpower.y = (float)(rand() % 6);
-				//boundpower.z = (float)(rand() % 4 - 2);
-				player->SetArmWeight(weight);
-				Hit = false;
-			}
 		}
 	}
+	//ボスのHPをへらす
+	if (Hit == true) {
+		Hp -= ((int)weight * 2) * (int)power;
+		weight = 0.0f;
+		//boundpower.x = (float)(rand() % 4 - 2);
+		//boundpower.y = (float)(rand() % 6);
+		//boundpower.z = (float)(rand() % 4 - 2);
+		player->SetArmWeight(weight);
+		Hit = false;
+	}
+
 }
