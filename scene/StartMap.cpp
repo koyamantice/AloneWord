@@ -36,9 +36,14 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 		spawing[i]->SetPlayer(player);
 	}
 
-	spawing[0]->SetPosition({ -15.0f,0,15 });
-	spawing[1]->SetPosition({ 0,0,0 });
-	spawing[2]->SetPosition({ 15.0f,0,15 });
+	spawing[0]->SetPosition({ -15.0f,0.0f,15.0f });
+	spawing[0]->SetRotation({ 0,90,0 });
+
+	spawing[1]->SetPosition({ 0,0.0f,0 });
+	spawing[1]->SetRotation({ 0,90,0 });
+
+	spawing[2]->SetPosition({ 15.0f,0.0f,15.0f });
+	spawing[2]->SetRotation({ 0,90,0 });
 
 	for (int i = 0; i < StartEnemyMax; i++) {
 		spawing[0]->SetEnemy(i, enemy[i]);

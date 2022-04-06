@@ -12,7 +12,7 @@ void Spawning::Initialize() {
 	object3d = Object3d::Create();
 	object3d->SetModel(model);
 	object3d->SetPosition(pos);
-	object3d->SetScale({3,3,3});
+	object3d->SetScale({1,1,1});
 
 	texture->SetPosition({ pos.x,pos.y + 3.0f,pos.z });
 	texture->SetRotation({ 45,0,0 });
