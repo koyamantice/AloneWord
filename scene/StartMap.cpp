@@ -32,7 +32,10 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	}
 	for (int i = 0; i < 3; i++) {
 		spawing[i] = new Spawning();
-		spawing[i]->SetPosition({ -15.0f+i*15.0f,0,30 });
+		spawing[0]->SetPosition({ -15.0f,0,15 });
+		spawing[1]->SetPosition({ 0,0,0 });
+		spawing[2]->SetPosition({ 15.0f,0,15 });
+
 		spawing[i]->Initialize();
 		spawing[i]->SetPlayer(player);
 	}
@@ -96,14 +99,19 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 }
 
 void StartMap::Finalize() {
-
+	delete camera;
 	//３ｄのモデルのデリート
 	for (int i = 0; i < StartEnemyMax; i++) {
 		enemy[i]->Finalize();
 	}
-	//player->Finalize();
-
-	//bossenemy->Finalize();
+	for (int i = 0; i < Spawn;i++) {
+		spawing[i]->Finalize();
+	}
+	player->Finalize();
+	delete modelFloor;
+	delete objFloor;
+	delete modelStartMap;
+	delete objStartMap;
 
 }
 
