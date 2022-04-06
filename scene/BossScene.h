@@ -37,8 +37,8 @@ private:
 
 	Model* modelBossMap = nullptr;
 	TouchableObject* objBossMap;
-	Model* modelSphere = nullptr;
-	Object3d* objSphere;
+	/*Model* modelSphere = nullptr;
+	Object3d* objSphere;*/
 
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;

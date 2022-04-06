@@ -58,12 +58,12 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objBossMap->SetScale({ 1.4f,1.5f,1.6f });
 	*/
 	//当たり判定確認用です
-	objSphere = Object3d::Create();
-	modelSphere = Model::CreateFromOBJ("sphere");
-	objSphere->SetModel(modelSphere);
-	objSphere->SetPosition({ -10, 1, 0 });
-	// コライダーの追加
-	objSphere->SetCollider(new SphereCollider);
+	//objSphere = Object3d::Create();
+	//modelSphere = Model::CreateFromOBJ("sphere");
+	//objSphere->SetModel(modelSphere);
+	//objSphere->SetPosition({ -10, 1, 0 });
+	//// コライダーの追加
+	//objSphere->SetCollider(new SphereCollider);
 
 	//普通のテクスチャ(板ポリ)
 	/*limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
@@ -135,7 +135,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	camera->Update();
 	player->Update();
 	bossenemy->Update();
-	objSphere->Update();
+	//objSphere->Update();
 
 	ui->Update();
 	for (int i = 0; i < BossEnemyMax; i++) {
@@ -208,7 +208,7 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	//objBossMap->Draw();
 	objBossMap->Draw();
 	objFloor->Draw();
-	objSphere->Draw();
+	//objSphere->Draw();
 	Texture::PreDraw();
 	//limit->Draw();
 	//Sprite::PreDraw();
