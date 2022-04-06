@@ -24,7 +24,7 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 	Input* input = Input::GetInstance();
 	if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
-		SceneManager::GetInstance()->ChangeScene("BOSS");
+		SceneManager::GetInstance()->ChangeScene("StartMap");
 	}
 	if (input->PushKey(DIK_SPACE) || input->TriggerButton(input->Button_X)) {
 		SceneManager::GetInstance()->ChangeScene("BOSS");
