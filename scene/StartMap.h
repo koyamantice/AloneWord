@@ -9,6 +9,7 @@ class TouchableObject;
 /// ゲームプレイシーン
 /// </summary>
 const int StartEnemyMax = 10;
+const int Spawn = 3;
 class StartMap : public BaseScene {
 
 public:
@@ -45,6 +46,6 @@ private:
 	Player* player = nullptr;
 	Enemy* enemy[StartEnemyMax] = { nullptr };
 	//BossEnemy* bossenemy = nullptr;
-	Spawning* spawing[3];
+	Spawning* spawing[Spawn];
 };
 

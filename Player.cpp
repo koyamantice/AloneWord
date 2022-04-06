@@ -62,10 +62,12 @@ bool Player::Initialize() {
 	return true;
 }
 
-//void Player::Finalize() {
-//	delete object3d;
-//	delete Armobj;
-//}
+
+
+void Player::Finalize() {
+	delete object3d;
+	delete Armobj;
+}
 
 void Player::Update() {
 	Input* input = Input::GetInstance();

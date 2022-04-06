@@ -13,7 +13,7 @@ public:
 	Player();
 
 	bool Initialize() override;
-	//void Finalize();
+	void Finalize();
 	void Update() override;
 	void Draw();
 private:
