@@ -416,11 +416,8 @@ void Player::Update() {
 //描画
 void Player::Draw() {
 	ImGui::Begin("test");
-<<<<<<< HEAD
 	if (ImGui::TreeNode("Debug")) {
-=======
 	//if (ImGui::TreeNode("Debug")) {
->>>>>>> master
 		if (ImGui::TreeNode("Player")) {
 			ImGui::SliderFloat("pos", &position.x, 50, -50);
 			ImGui::SliderFloat("pos", &position.y, 50, -50);
@@ -430,13 +427,10 @@ void Player::Draw() {
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}
-<<<<<<< HEAD
 		ImGui::TreePop();
 	}
-=======
 		//ImGui::TreePop();
 	//}
->>>>>>> master
 	ImGui::End();
 
 	Object3d::PreDraw();

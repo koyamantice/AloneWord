@@ -164,33 +164,6 @@ void Enemy::Update() {
 
 //描画
 void Enemy::Draw() {
-
-<<<<<<< HEAD
-	/*ImGui::Begin("test");
-	if (ImGui::TreeNode("Debug")) {
-		if (ImGui::TreeNode("Enemy")) {
-			ImGui::SliderFloat("bound", &boundpower.x, 50, -50);
-			ImGui::Text("%d", bound);
-			ImGui::Unindent();
-			ImGui::TreePop();
-		}
-		ImGui::TreePop();
-	}
-	ImGui::End();*/
-=======
-	//ImGui::Begin("test");
-	//if (ImGui::TreeNode("Debug")) {
-	//	if (ImGui::TreeNode("Enemy")) {
-	//		ImGui::SliderFloat("bound", &boundpower.x, 50, -50);
-	//		ImGui::Text("%d", bound);
-	//		ImGui::Unindent();
-	//		ImGui::TreePop();
-	//	}
-	//	ImGui::TreePop();
-	//}
-	//ImGui::End();
->>>>>>> master
-
 	if (IsAlive) {
 		Object3d::PreDraw();
 		enemyobj->Draw();
