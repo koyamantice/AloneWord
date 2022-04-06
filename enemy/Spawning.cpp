@@ -2,7 +2,7 @@
 #include "Collision.h"
 
 Spawning::Spawning() {
-	model = Model::CreateFromOBJ("chr_knight");
+	model = Model::CreateFromOBJ("EHub");
 	object3d = new Object3d();
 	texture = Texture::Create(5, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
