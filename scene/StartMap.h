@@ -49,6 +49,8 @@ private:
 	Warp* warp = nullptr;
 	//BossEnemy* bossenemy = nullptr;
 	Spawning* spawing[Spawn];
+
+	bool start = false;
 	bool Clear = false;
 };
 
