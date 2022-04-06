@@ -55,7 +55,6 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	objFloor->Initialize();
 	objFloor->SetModel(modelGround);
 	objFloor->SetPosition({ 0,-1,0 });*/
-
 	//ステージ床
 	objFloor = Object3d::Create();
 	modelFloor = Model::CreateFromOBJ("floor");
@@ -73,7 +72,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 
 	warp = new Warp;
 	warp->Initialize();
-	warp->SetPosition({ 0.0f,0.0f,50.0f });
+	warp->SetPosition({ 0.0f,10.0f,50.0f });
 	/*limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
 	limit->TextureCreate();
 	limit->SetPosition({ 0.0f,0.01f,0.0f });
