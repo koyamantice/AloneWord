@@ -50,5 +50,6 @@ private:
 	//BossEnemy* bossenemy = nullptr;
 	Spawning* spawing[Spawn];
 	bool Clear = false;
+	CollisionManager* collsionManager = nullptr;
 };
 
