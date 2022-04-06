@@ -47,5 +47,6 @@ private:
 	Enemy* enemy[StartEnemyMax] = { nullptr };
 	//BossEnemy* bossenemy = nullptr;
 	Spawning* spawing[Spawn];
+	bool Clear = false;
 };
 

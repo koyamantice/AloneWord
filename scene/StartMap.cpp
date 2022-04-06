@@ -125,8 +125,6 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	player->Update();
 	for (int i = 0; i < StartEnemyMax; i++) {
 		spawing[1]->SetEnemy(i, enemy[i]);
-		player->ResetWeight(enemy[i]);
-		player->Rebound(enemy[i]);
 	}
 	for (int i = 0; i < 3; i++) {
 		spawing[i]->Update();
@@ -135,14 +133,9 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	//limit->Update();
 
 	for (int i = 0; i < StartEnemyMax; i++) {
-		//enemy[i]->Update();
-
-		//player->ResetWeight(enemy[i]);
-		//player->Rebound(enemy[i]);
-	}
-
-	for (int i = 0; i < StartEnemyMax; i++) {
-		enemy[i]->SetEnemy();
+		enemy[i]->Update();
+		player->ResetWeight(enemy[i]);
+		player->Rebound(enemy[i]);
 	}
 
 	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
@@ -179,7 +172,20 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	/*if (bossenemy->GetHP() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("CLEAR");
 	}*/
+		if (spawing[0]->GetIsAlive()==0) {
+			if (spawing[1]->GetIsAlive() == 0) {
+				if (spawing[2]->GetIsAlive() == 0) {
+					Clear = true;
+				}
+			}
+		}
 
+
+		if (!Clear) {
+			if (player->GetPosition().z >= 30) {
+				player->SetPosition({ player->GetPosition().x,0,30 });
+			}
+		}
 
 	if (player->GetHp() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");

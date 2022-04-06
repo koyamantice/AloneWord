@@ -64,7 +64,7 @@ public:
 	/// 座標の設定
 	/// </summary>
 	/// <param name="position">座標</param>
-	void SetPosition(XMFLOAT3 position) { object3d->SetPosition(position); }
+	void SetPosition(XMFLOAT3 position) { this->position=position; }
 
 	void SetRotation(XMFLOAT3 rotation) { object3d->SetRotation(rotation); }
 

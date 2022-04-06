@@ -415,8 +415,8 @@ void Player::Update() {
 
 //描画
 void Player::Draw() {
-	/*ImGui::Begin("test");
-	if (ImGui::TreeNode("Debug")) {
+	ImGui::Begin("test");
+	//if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("Player")) {
 			ImGui::SliderFloat("pos", &position.x, 50, -50);
 			ImGui::SliderFloat("pos", &position.y, 50, -50);
@@ -426,9 +426,9 @@ void Player::Draw() {
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}
-		ImGui::TreePop();
-	}
-	ImGui::End();*/
+		//ImGui::TreePop();
+	//}
+	ImGui::End();
 
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
