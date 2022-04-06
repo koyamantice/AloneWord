@@ -26,12 +26,7 @@ UI::UI(Player* player, BossEnemy* boss) {
 }
 void UI::Update() {
 	{//HPˆ—
-		AfterPos[0] = { (float)(boss->GetHP() * 20),30 };
-		bossPos = {
-		Ease(In,Quint,0.7f,BossHp->GetSize().x,AfterPos[0].x),
-		Ease(In,Quint,0.7f,BossHp->GetSize().y,AfterPos[0].y),
-		};
-		BossHp->SetSize(bossPos);
+
 		AfterPos[1] = { (float)(player->GetHp() * 30),20 };
 		plaPos = {
 		Ease(In,Quint,0.7f,(float)PlaHp->GetSize().x,(float)AfterPos[1].x),
@@ -41,6 +36,12 @@ void UI::Update() {
 	}
 
 	if (boss) {
+		AfterPos[0] = { (float)(boss->GetHP() * 20),30 };
+		bossPos = {
+		Ease(In,Quint,0.7f,BossHp->GetSize().x,AfterPos[0].x),
+		Ease(In,Quint,0.7f,BossHp->GetSize().y,AfterPos[0].y),
+		};
+		BossHp->SetSize(bossPos);
 		SeachBoss();
 	}
 }
@@ -63,7 +64,9 @@ const void UI::Draw() {
 	//ImGui::End();
 	Sprite::PreDraw();
 	//Vignette->Draw();
-	BossHp->Draw();
+	if (boss) {
+		BossHp->Draw();
+	}
 	PlaHp->Draw();
 	Life->Draw();
 	if (invisible) {

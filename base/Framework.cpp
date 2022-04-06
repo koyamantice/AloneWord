@@ -84,5 +84,4 @@ void Framework::Draw(DirectXCommon* dxCommon) {
 
 	debugText->DrawAll();
 	dxCommon->PostDraw();
-
 }
