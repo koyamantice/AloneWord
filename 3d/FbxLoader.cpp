@@ -9,6 +9,7 @@ using namespace DirectX;
 /// 静的メンバを変数の実体
 /// </summary>
 const std::string FbxLoader::baseDirectory = "Resources/";
+const std::string FbxLoader::nextDirectory = "3d/";
 const std::string FbxLoader::defaultTextureFileName = "2d/white1x1.png";
 
 FbxLoader* FbxLoader::GetInstance()
@@ -42,7 +43,7 @@ void FbxLoader::Finalize()
 FBXModel* FbxLoader::LoadModelFromFile(const string ModelName)
 {
     //モデルと同じ名前のファイルから読み込む
-    const string directoryPath = baseDirectory + ModelName + "/";
+    const string directoryPath = baseDirectory + nextDirectory + ModelName + "/";
     //拡張子,FBXを付与
     const string fileName = ModelName + ".fbx";
     //連結してフルパスを得る

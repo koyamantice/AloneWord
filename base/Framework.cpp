@@ -62,11 +62,8 @@ void Framework::Initialize(DirectXCommon* dxCommon) {
 
 void Framework::Finalize() {
 	delete sceneFactory_;
-	delete audio;
-	delete input;
 	winApp->Finalize();
 	delete winApp;
-	
 }
 
 void Framework::Update(DirectXCommon* dxCommon) {

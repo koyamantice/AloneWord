@@ -37,11 +37,9 @@ private:
 
 	Model* modelBossMap = nullptr;
 	TouchableObject* objBossMap;
-<<<<<<< HEAD
-=======
+
 	/*Model* modelSphere = nullptr;
 	Object3d* objSphere;*/
->>>>>>> master
 
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;

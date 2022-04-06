@@ -65,7 +65,6 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	//objSphere->SetPosition({ -10, 1, 0 });
 	//// コライダーの追加
 	//objSphere->SetCollider(new SphereCollider);
->>>>>>> master
 
 	//普通のテクスチャ(板ポリ)
 	/*limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
@@ -101,7 +100,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	camera->SetTarget(player->GetPosition());
 	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
 	// モデル名を指定してファイル読み込み
-	model1 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
+	model1 = FbxLoader::GetInstance()->LoadModelFromFile("bonetest");
 
 	// デバイスをセット
 	FBXObject3d::SetDevice(dxCommon->GetDev());
@@ -110,9 +109,10 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	// グラフィックスパイプライン生成
 	FBXObject3d::CreateGraphicsPipeline();
 
-	/*object1 = new FBXObject3d;
+	object1 = new FBXObject3d;
 	object1->Initialize();
-	object1->SetModel(model1);*/
+	object1->SetModel(model1);
+	object1->SetScale({ 3.0f,3.0f,3.0f });
 
 	ui = new UI(player, bossenemy);
 	//ui->Initialize();
@@ -139,6 +139,8 @@ void BossScene::Finalize() {
 		}
 	}
 	delete camera;
+	delete object1;
+	delete model1;
 }
 
 void BossScene::Update(DirectXCommon* dxCommon) {
@@ -205,7 +207,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	if (player->GetHp() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 	}
-	//object1->Update();
+	object1->Update();
 	camera->SetTarget(player->GetPosition());
 	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
 	// 全ての衝突をチェック
@@ -228,7 +230,7 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	//Sprite::PreDraw();
 	//sprite->Draw();
 
-	//object1->Draw(dxCommon->GetCmdList());
+	object1->Draw(dxCommon->GetCmdList());
 
 	player->Draw();
 	for (int i = 0; i < BossEnemyMax; i++) {
