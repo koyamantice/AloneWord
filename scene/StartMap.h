@@ -52,6 +52,5 @@ private:
 
 	bool start = false;
 	bool Clear = false;
-	CollisionManager* collsionManager = nullptr;
 };
 
