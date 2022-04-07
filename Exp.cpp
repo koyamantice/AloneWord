@@ -33,7 +33,7 @@ void Exp::Finalize() {
 
 }
 
-void Exp::Update(Player* player,Enemy* enemy) {
+void Exp::Update(Player* player, InterMob* enemy) {
 	Input* input = Input::GetInstance();
 	
 	SetExp(enemy);
@@ -64,7 +64,7 @@ void Exp::Draw() {
 	}
 }
 
-void Exp::SetExp(Enemy* enemy) {
+void Exp::SetExp(InterMob* enemy) {
 	//エフェクトの発生
 	bool SetExp = enemy->GetDrawExp();
 	//エフェクトの発生

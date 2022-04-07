@@ -1,6 +1,6 @@
 #pragma once
 #include <DirectXMath.h>
-#include"Enemy.h"
+#include"InterMob.h"
 class Spawning {
 private:
 	// DirectX::‚ðÈ—ª
@@ -17,7 +17,7 @@ public:
 	void Finalize();
 	void Draw();
 
-	void SetEnemy(const int& i,Enemy*enemy);
+	void SetEnemy(const int& i, InterMob*enemy);
 public:
 	const XMFLOAT3& GetPosition() { return  object3d->GetPosition(); }
 	const XMFLOAT3& GetRotation() { return object3d->GetRotation(); }
@@ -30,6 +30,6 @@ private:
 	Model* model;
 	XMFLOAT3 pos = { 0,0,0 };
 
-	Enemy* enemy[10] = {};
+	InterMob* enemy[10] = {};
 };
 

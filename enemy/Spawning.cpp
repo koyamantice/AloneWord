@@ -38,6 +38,6 @@ void Spawning::Draw() {
 	object3d->Draw();
 }
 
-void Spawning::SetEnemy(const int& i, Enemy* enemy) {
+void Spawning::SetEnemy(const int& i, InterMob* enemy) {
 	this->enemy[i] = enemy;
 }

@@ -58,7 +58,7 @@ void BossEnemy::Update() {
 void BossEnemy::Draw() {
 //	ImGui::Begin("test");
 //	if (ImGui::TreeNode("Debug")) {
-//		if (ImGui::TreeNode("Enemy")) {
+//		if (ImGui::TreeNode("Rice")) {
 //			ImGui::SliderFloat("bound.x", &pos.x, 50, -50);
 //			ImGui::SliderFloat("bound.y", &pos.y, 50, -50);
 //			ImGui::SliderFloat("pos.y", &pos.z, 50, -50);

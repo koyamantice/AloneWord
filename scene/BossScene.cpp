@@ -25,7 +25,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	bossenemy->Initialize();
 
 	for (int i = 0; i < BossEnemyMax; i++) {
-		enemy[i] = new Enemy();
+		enemy[i] = new Rice();
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
 	}
@@ -135,16 +135,18 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		a += 1;
 	}
 
-	//謨ｵ蜷悟｣ｫ縺ｮ蠖薙◆繧雁愛螳・
-	if (sizeof(enemy) > 2) {//驟榊・縺ｮ繧ｵ繧､繧ｺ遒ｺ隱・
+	//敵同士の当たり判定
+	if (sizeof(enemy) > 2) {//配列のサイズ確認
 		for (int colA = 0; colA < BossEnemyMax; colA++) {
 			for (int colB = 1; colB < BossEnemyMax; colB++) {
-				if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB) {//蠖薙◆繧雁愛螳壹→閾ｪ讖溷酔螢ｫ縺ｮ蠖薙◆繧雁愛螳壹・蜑企勁
+				if (Collision::SphereCollision2(enemy[colA]->GetPosition(), 1.0f, enemy[colB]->GetPosition(), 1.0f) == true && colA != colB) {//当たり判定と自機同士の当たり判定の削除
 					DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
 					enemy[colA]->SetHit(true);
 					enemy[colB]->SetHit(false);
 					break;
-				} else {
+
+				} 				else {
+
 					enemy[colA]->SetHit(false);
 				}
 			}

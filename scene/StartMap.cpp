@@ -19,7 +19,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	player->SetMove(50.0f, 50.0f);
 
 	for (int i = 0; i < StartEnemyMax; i++) {
-		enemy[i] = new Enemy();
+		enemy[i] = new Rice();
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
 		enemy[i]->SetLimit({100,-100,100,-100});
@@ -145,7 +145,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	if (sizeof(enemy) > 2) {//配列のサイズ確認
 		for (int colA = 0; colA < StartEnemyMax; colA++) {
 			for (int colB = 1; colB < StartEnemyMax; colB++) {
-				if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB) {//当たり判定と自機同士の当たり判定の削除
+				if (Collision::SphereCollision2(enemy[colA]->GetPosition(),1.0f, enemy[colB]->GetPosition(),1.0f) == true && colA != colB) {//当たり判定と自機同士の当たり判定の削除
 					DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
 					enemy[colA]->SetHit(true);
 					enemy[colB]->SetHit(false);

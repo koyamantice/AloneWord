@@ -6,7 +6,7 @@
 #include"CollisionPrimitive.h"
 #include "Sprite.h"
 #include "Texture.h"
-#include "Enemy.h"
+#include "InterMob.h"
 #include "Player.h"
 
 class Exp {
@@ -15,7 +15,7 @@ public:
 
 	void Initialize();
 	void Finalize();
-	void Update(Player* player,Enemy* enemy);
+	void Update(Player* player, InterMob* enemy);
 	void Draw();
 private:
 	// DirectX::‚ðÈ—ª
@@ -43,7 +43,7 @@ public:
 	void SetRotation(XMFLOAT3 rotation) { object3d->SetRotation(rotation); }
 
 	//void SetExpAlive(bool ExpAlive) { this->ExpAlive = ExpAlive; }
-	void SetExp(Enemy* enemy);
+	void SetExp(InterMob* enemy);
 
 	bool LockOn(Player* player);
 

@@ -1,6 +1,6 @@
 #pragma once
 #include"BaseEnemy.h"
-#include"Enemy.h"
+#include"Rice.h"
 
 class BossEnemy :public BaseEnemy {
 public:

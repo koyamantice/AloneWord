@@ -5,7 +5,7 @@
 #include "DebugText.h"
 #include<sstream>
 #include<iomanip>
-#include"Enemy.h"
+#include"Rice.h"
 using namespace DirectX;
 float easeInSine(float x) {
 	return x * x * x;
@@ -15,7 +15,7 @@ float easeOutBack(float x) {
 }
 
 float easeInOut(float x) {
-	return x < 0.5 ? 8 * x * x * x * x : 1 - pow(-2 * x + 2, 4) / 2;
+	return x < 0.5 ? 8 * x * x * x * x : 1 - powf(-2 * x + 2, 4) / 2;
 }
 float easeBack(float x) 
 {
@@ -331,7 +331,7 @@ void Player::Draw() {
 }
 
 //敵が腕から離れる
-void Player::ResetWeight(Enemy *enemy) {
+void Player::ResetWeight(InterMob*enemy) {
 	XMFLOAT3 boundpower = enemy->GetBoundPower();
 	XMFLOAT3 enepos = enemy->GetPosition();
 	if (ArmWeight==0.0f) {
@@ -344,7 +344,7 @@ void Player::ResetWeight(Enemy *enemy) {
 }
 
 //ダメージ食らったときにプレイヤーが飛ばされる
-void Player::Rebound(Enemy* enemy) {
+void Player::Rebound(InterMob* enemy) {
 	XMFLOAT3 enepos = enemy->GetPosition();
 	
 	distance.x = pos.x - enepos.x;

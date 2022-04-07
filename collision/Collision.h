@@ -1,13 +1,23 @@
 #pragma once
-
+#include <DirectXMath.h>
 #include"CollisionPrimitive.h"
 /// <summary>
 /// “–‚½‚è”»’èƒwƒ‹ƒp[ƒNƒ‰ƒX
 /// </summary>
 class Collision {
+private:
+	// DirectX::‚ğÈ—ª
+	using XMFLOAT2 = DirectX::XMFLOAT2;
+	using XMFLOAT3 = DirectX::XMFLOAT3;
+	using XMFLOAT4 = DirectX::XMFLOAT4;
+	using XMVECTOR = DirectX::XMVECTOR;
+	using XMMATRIX = DirectX::XMMATRIX;
+
 public:
 	//‹…‚Æ‹…
 	static bool SphereCollision(const float& X1, const float& Y1, const float& Z1, const float& R1, const float& X2, const float& Y2, const float& Z2, const float& R2);
+	static bool SphereCollision2(const XMFLOAT3& pos1, const float& R1, const XMFLOAT3& pos2, const float& R2);
+
 	//‰~‚Æ‰~
 	static bool CircleCollision(const float& X1, const float& Y1, const float& R1, const float& X2, const float& Y2,const float& R2);
 

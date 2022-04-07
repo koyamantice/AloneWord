@@ -42,7 +42,7 @@ private:
 	Texture* limit = nullptr;
 	Player* player = nullptr;
 	Effect* effect[EffectMax] = { nullptr };
-	Enemy* enemy[BossEnemyMax] = { nullptr };
+	InterMob* enemy[BossEnemyMax] = { nullptr };
 	BossEnemy* bossenemy = nullptr;
 	Exp* exp[ExpMax][BossEnemyMax] = { nullptr };
 	float weight = 0;
