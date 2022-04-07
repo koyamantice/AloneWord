@@ -10,13 +10,14 @@ UI::UI(Player* player, BossEnemy* boss) {
 	Sprite::LoadTexture(5, L"Resources/2d/Life.png");
 	Sprite::LoadTexture(6, L"Resources/2d/Vignette.png");
 	BossHp = Sprite::Create(3, { 0.0f,0.0f });
-	BossHp->SetColor({ 0.0f,1.0f,0.0,1.0 });
+	BossHp->SetPosition({ 128.0f,20.0f });
+	BossHp->SetColor({ 1.0f,0.0f,0.0,1.0 });
 	//背景スプライト生成
 	PlaHp = Sprite::Create(3, { 0.0f,0.0f });
-	PlaHp->SetPosition({ 256.0f,520.0f });
+	PlaHp->SetPosition({ 170.0f,642.0f });
 	//背景スプライト生成
 	Life = Sprite::Create(5, { 0.0f,0.0f });
-	Life->SetPosition({ 0.0f,520.0f });
+	Life->SetPosition({ 20.0f,620.0f });
 	Arrow = Sprite::Create(4, { 0.0f,0.0f });
 	Arrow->SetPosition({0,0});
 	Vignette= Sprite::Create(6, { 0.0f,0.0f });
@@ -25,12 +26,7 @@ UI::UI(Player* player, BossEnemy* boss) {
 }
 void UI::Update() {
 	{//HPˆ—
-		AfterPos[0] = { (float)(boss->GetHP() * 20),30 };
-		bossPos = {
-		Ease(In,Quint,0.7f,BossHp->GetSize().x,AfterPos[0].x),
-		Ease(In,Quint,0.7f,BossHp->GetSize().y,AfterPos[0].y),
-		};
-		BossHp->SetSize(bossPos);
+
 		AfterPos[1] = { (float)(player->GetHp() * 30),20 };
 		plaPos = {
 		Ease(In,Quint,0.7f,(float)PlaHp->GetSize().x,(float)AfterPos[1].x),
@@ -40,29 +36,37 @@ void UI::Update() {
 	}
 
 	if (boss) {
+		AfterPos[0] = { (float)(boss->GetHP() * 20),30 };
+		bossPos = {
+		Ease(In,Quint,0.7f,BossHp->GetSize().x,AfterPos[0].x),
+		Ease(In,Quint,0.7f,BossHp->GetSize().y,AfterPos[0].y),
+		};
+		BossHp->SetSize(bossPos);
 		SeachBoss();
 	}
 }
 
 const void UI::Draw() {
-	ImGui::Begin("test");
-	if (ImGui::TreeNode("Debug")) {
-		if (ImGui::TreeNode("UI")) {
-			ImGui::SliderFloat("Check", &Check, 50, -50);
-			ImGui::SliderFloat("Check2", &Check2, 50, -50);
-			ImGui::SliderFloat("pos.x", &pos.x, 50, -50);
-			ImGui::SliderFloat("pos.y", &pos.y, 50, -50);
-			ImGui::SliderFloat("pos.z", &pos.z, 50, -50);
-			//ImGui::Text("Sub %d", SpeedSub);
-			ImGui::Unindent();
-			ImGui::TreePop();
-		}
-		ImGui::TreePop();
-	}
-	ImGui::End();
+	//ImGui::Begin("test");
+	//if (ImGui::TreeNode("Debug")) {
+	//	if (ImGui::TreeNode("UI")) {
+	//		ImGui::SliderFloat("Check", &Check, 50, -50);
+	//		ImGui::SliderFloat("Check2", &Check2, 50, -50);
+	//		ImGui::SliderFloat("pos.x", &pos.x, 50, -50);
+	//		ImGui::SliderFloat("pos.y", &pos.y, 50, -50);
+	//		ImGui::SliderFloat("pos.z", &pos.z, 50, -50);
+	//		//ImGui::Text("Sub %d", SpeedSub);
+	//		ImGui::Unindent();
+	//		ImGui::TreePop();
+	//	}
+	//	ImGui::TreePop();
+	//}
+	//ImGui::End();
 	Sprite::PreDraw();
-	Vignette->Draw();
-	BossHp->Draw();
+	//Vignette->Draw();
+	if (boss) {
+		BossHp->Draw();
+	}
 	PlaHp->Draw();
 	Life->Draw();
 	if (invisible) {

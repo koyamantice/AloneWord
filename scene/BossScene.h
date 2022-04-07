@@ -7,8 +7,10 @@
 /// ゲームプレイシーン
 /// </summary>
 const int BossEnemyMax = 10;
-const int EffectMax = 70;
+const int EffectMax = 40;
 const int ExpMax = 5;
+class CollisionManager;
+class TouchableObject;
 class BossScene : public BaseScene{
 public:
 	/// <summary>
@@ -30,11 +32,13 @@ public:
 	void Draw(DirectXCommon* dxCommon) override;
 
 private:
-	Model* modelGround = nullptr;
-	Object3d* objGround;
+	Model* modelFloor = nullptr;
+	Object3d* objFloor;
 
-	Model* modelground = nullptr;
-	Object3d* objground;
+	Model* modelBossMap = nullptr;
+	TouchableObject* objBossMap;
+	/*Model* modelSphere = nullptr;
+	Object3d* objSphere;*/
 
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;
@@ -47,5 +51,6 @@ private:
 	Exp* exp[ExpMax][BossEnemyMax] = { nullptr };
 	float weight = 0;
 	UI* ui=nullptr;
+	CollisionManager* collsionManager = nullptr;
 };
 

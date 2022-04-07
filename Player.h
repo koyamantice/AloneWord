@@ -7,14 +7,19 @@
 #include "Sprite.h"
 #include "Texture.h"
 
+<<<<<<< HEAD
 class InterMob;
 class Player {
+=======
+class Enemy;
+class Player : public Object3d {
+>>>>>>> master
 public:
 	Player();
 
-	void Initialize();
+	bool Initialize() override;
 	void Finalize();
-	void Update();
+	void Update() override;
 	void Draw();
 private:
 	// DirectX::を省略
@@ -64,7 +69,7 @@ public:
 	/// 座標の設定
 	/// </summary>
 	/// <param name="position">座標</param>
-	void SetPosition(XMFLOAT3 position) { object3d->SetPosition(position); }
+	void SetPosition(XMFLOAT3 position) { this->position=position; }
 
 	void SetRotation(XMFLOAT3 rotation) { object3d->SetRotation(rotation); }
 
@@ -94,10 +99,17 @@ public:
 
 	void SetMove(float XMax, float ZMax) { this->XMax = XMax; this->ZMax = ZMax; }
 
+<<<<<<< HEAD
 	void ResetWeight(InterMob* enemy);
 
 	void Rebound(InterMob* enemy);
 
+=======
+	void ResetWeight(Enemy* enemy);
+	
+	void Rebound(Enemy* enemy);
+	
+>>>>>>> master
 	void EffectMove();
 
 private:
@@ -147,11 +159,11 @@ private:
 	int FlashCount = 0;
 	//イージングのためのやつ
 	float frame = 0.0f;
-	float frameMax = 27.0f;
+	float frameMax = 15.0f;
 	float frame2 = 0.0f;
-	float frameMax2 = 80.0f;
+	float frameMax2 = 55.0f;
 	float frame3 = 0.0f;
-	float frameMax3 = 80.0f;
+	float frameMax3 = 60.0f;
 	//HP
 	int HP = 10;
 	int Lv = 1;
@@ -159,12 +171,7 @@ private:
 	float StickrotX = 0;
 	float StickrotY = 0;
 	XMFLOAT3 angle = { 0,0,0 };
-	////エフェクト関係
-	//Texture* effecttexture = nullptr;
-	//XMFLOAT3 effectpos = { 0.0f,0.0f,0.0f };
-	//XMFLOAT4 effectcolor = { 1.0f,1.0f,1.0f,1.0f };
-	//XMFLOAT3 effectscale = { 0.0f,0.0f,0.0f };
-	//int effectAlive = 0;
-public:
-	Sphere collider;
+	bool onGround = true;
+	// 落下ベクトル
+	DirectX::XMVECTOR fallV;
 };

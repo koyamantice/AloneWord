@@ -78,12 +78,12 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(ProjectDir)scene\;$(ProjectDir)2d\;$(ProjectDir)base\;$(ProjectDir)3d\;$(ProjectDir);$(ProjectDir)collision;$(ProjectDir)lib\fbx_sdk\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)light;$(ProjectDir)scene\;$(ProjectDir)2d\;$(ProjectDir)base\;$(ProjectDir)camera\;$(ProjectDir)3d\;$(ProjectDir);$(ProjectDir)collision;$(ProjectDir)lib\fbx_sdk\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)lib\fbx_sdk\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)scene\;$(ProjectDir)2d\;$(ProjectDir)base\;$(ProjectDir)3d\;$(ProjectDir);$(ProjectDir)collision;$(ProjectDir)lib\fbx_sdk\include;$(IncludePath)</IncludePath>
+    <IncludePath>$(ProjectDir)light;$(ProjectDir)scene\;$(ProjectDir)2d\;$(ProjectDir)base\;$(ProjectDir)camera\;$(ProjectDir)3d\;$(ProjectDir);$(ProjectDir)collision;$(ProjectDir)lib\fbx_sdk\include;$(IncludePath)</IncludePath>
     <LibraryPath>$(ProjectDir)lib\fbx_sdk\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -173,10 +173,20 @@
     <ClCompile Include="camera\Camera.cpp" />
     <ClCompile Include="camera\DebugCamera.cpp" />
     <ClCompile Include="collision\BaseCollider.cpp" />
-    <ClCompile Include="collision\Collision.cpp" />
+    <ClCompile Include="collision\Collision.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Disabled</Optimization>
+    </ClCompile>
     <ClCompile Include="collision\CollisionInfo.cpp" />
+    <ClCompile Include="collision\CollisionManager.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Disabled</Optimization>
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Disabled</Optimization>
+    </ClCompile>
     <ClCompile Include="collision\CollisionPrimitive.cpp" />
     <ClCompile Include="collision\CollisionTypes.cpp" />
+    <ClCompile Include="collision\MeshCollider.cpp" />
+    <ClCompile Include="collision\SphereCollider.cpp" />
+    <ClCompile Include="collision\TouchableObject.cpp" />
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="enemy\BossEnemy.cpp" />
     <ClCompile Include="enemy\Rice.cpp" />
@@ -201,6 +211,7 @@
     <ClCompile Include="scene\TisGame.cpp" />
     <ClCompile Include="scene\TitleScene.cpp" />
     <ClCompile Include="UI.cpp" />
+    <ClCompile Include="Warp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="DirectXTex\DirectXTex_Desktop_2019_Win10.vcxproj">
@@ -231,9 +242,16 @@
     <ClInclude Include="camera\DebugCamera.h" />
     <ClInclude Include="collision\BaseCollider.h" />
     <ClInclude Include="collision\Collision.h" />
+    <ClInclude Include="collision\CollisionAttribute.h" />
     <ClInclude Include="collision\CollisionInfo.h" />
+    <ClInclude Include="collision\CollisionManager.h" />
     <ClInclude Include="collision\CollisionPrimitive.h" />
     <ClInclude Include="collision\CollisionTypes.h" />
+    <ClInclude Include="collision\MeshCollider.h" />
+    <ClInclude Include="collision\QueryCallback.h" />
+    <ClInclude Include="collision\RaycastHit.h" />
+    <ClInclude Include="collision\SphereCollider.h" />
+    <ClInclude Include="collision\TouchableObject.h" />
     <ClInclude Include="Effect.h" />
     <ClInclude Include="enemy\BaseEnemy.h" />
     <ClInclude Include="enemy\BossEnemy.h" />
@@ -262,6 +280,7 @@
     <ClInclude Include="scene\TisGame.h" />
     <ClInclude Include="scene\TitleScene.h" />
     <ClInclude Include="UI.h" />
+    <ClInclude Include="Warp.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui\imgui.vcxproj" />

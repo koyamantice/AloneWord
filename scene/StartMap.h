@@ -3,10 +3,14 @@
 #include "BossEnemy.h"
 #include "Collision.h"
 #include "Spawning.h"
+#include "UI.h"
+class CollisionManager;
+class TouchableObject;
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>
 const int StartEnemyMax = 10;
+const int Spawn = 3;
 class StartMap : public BaseScene {
 
 public:
@@ -29,20 +33,28 @@ public:
 	void Draw(DirectXCommon* dxCommon) override;
 
 private:
-	Model* modelground = nullptr;
-	Object3d* objground;
+	Model* modelFloor = nullptr;
+	Object3d* objFloor;
 
-	Model* modeltree = nullptr;
-	Object3d* objtree;
-
+	Model* modelStartMap = nullptr;
+	TouchableObject* objStartMap;
+	UI* ui = nullptr;
 
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;
 	DebugCamera* camera = { nullptr };
 	//Texture* limit = nullptr;
 	Player* player = nullptr;
+<<<<<<< HEAD
 	InterMob* enemy[StartEnemyMax] = { nullptr };
+=======
+	Enemy* enemy[StartEnemyMax] = { nullptr };
+	Warp* warp = nullptr;
+>>>>>>> master
 	//BossEnemy* bossenemy = nullptr;
-	Spawning* spawing[3];
+	Spawning* spawing[Spawn];
+
+	bool start = false;
+	bool Clear = false;
 };
 

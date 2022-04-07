@@ -22,23 +22,21 @@ public:
 	void SetHP(float BossHP) { this->BossHP = BossHP; }
 	void SetEffect(bool Effect) { this->Effect = Effect; }
 private:
-	float rad = 0.4f;
-
-	float Afterrot = 0;
-	int IsTimer = 100;
-	int IsMove = 0;
+	float Afterrot = 90;//初期向き
+	//
 	float BossHP = 50;
 	bool BossHit = false;
 	bool Effect = false;
+	//
 	int AttackCount = 0;
-	int Standby = 0;
 	bool already = false;
-	int times = 0;
-	bool finish = false;
-	int coolT = 0;
-	bool bossUp;
+	//
+	bool active = false;//行動開始
+	int action = 0;//攻撃の種類
+	int pat = 0;//パターン
+	int aiming = 0;//敵追従
+	int coolT = 0;//クールタイム
+	int AttackC = 0;//何回攻撃したか
+	bool finish = false;//フィニッシュ
 
-	int action = 0;
-	bool active = false;
-	int pat = 0;
 };

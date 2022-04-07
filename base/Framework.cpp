@@ -1,22 +1,22 @@
-#include "Framework.h"
+ï»¿#include "Framework.h"
 #include "FbxLoader.h"
 void Framework::Run() {
-	//‰Šú‰»
+	//åˆæœŸåŒ–
 	Initialize(dxcommon);
-	while (true)//ƒQ[ƒ€ƒ‹[ƒv
+	while (true)//ã‚²ãƒ¼ãƒ ãƒ«ãƒ¼ãƒ—
 	{
-		//–ˆƒtƒŒ[ƒ€XV
+		//æ¯Žãƒ•ãƒ¬ãƒ¼ãƒ æ›´æ–°
 		Update(dxcommon);
 
-		//I—¹ƒŠƒNƒGƒXƒg‚ª—ˆ‚½‚ç”²‚¯‚é
+		//çµ‚äº†ãƒªã‚¯ã‚¨ã‚¹ãƒˆãŒæ¥ãŸã‚‰æŠœã‘ã‚‹
 		if (IsEndRequst()) {
 			break;
 		}
 
-		//•`‰æ
+		//æç”»
 		Draw(dxcommon);
 	}
-	//ƒQ[ƒ€‚ÌI—¹
+	//ã‚²ãƒ¼ãƒ ã®çµ‚äº†
 	Finalize();
 
 }
@@ -26,7 +26,7 @@ void Framework::Initialize(DirectXCommon* dxCommon) {
 	winApp->Initialize();
 	dxcommon = new DirectXCommon();
 	dxcommon->Initialize(winApp);
-	// “ü—Í‚Ì‰Šú‰»
+	// å…¥åŠ›ã®åˆæœŸåŒ–
 	input = Input::GetInstance();
 	input->Initialize(winApp);
 
@@ -34,29 +34,29 @@ void Framework::Initialize(DirectXCommon* dxCommon) {
 	audio->Initialize();	
 	
 	
-	//ƒXƒvƒ‰ƒCƒgŠÖŒW
-	// ƒXƒvƒ‰ƒCƒgÃ“I‰Šú‰»
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆé–¢ä¿‚
+	// ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆé™çš„åˆæœŸåŒ–
 	Sprite::StaticInitialize(dxcommon->GetDev(), dxcommon->GetCmdList(),WinApp::window_width, WinApp::window_height);
 
 	const int debugTextTexNumber = 0;
-	// ƒfƒoƒbƒOƒeƒLƒXƒg—pƒeƒNƒXƒ`ƒƒ“Ç‚Ýž‚Ý
+	// ãƒ‡ãƒãƒƒã‚°ãƒ†ã‚­ã‚¹ãƒˆç”¨ãƒ†ã‚¯ã‚¹ãƒãƒ£èª­ã¿è¾¼ã¿
 	if (!Sprite::LoadTexture(debugTextTexNumber, L"Resources/2d/debugfont.png")) {
 		assert(0);
 		return;
 	}
-	// ƒfƒoƒbƒOƒeƒLƒXƒg‰Šú‰»
+	// ãƒ‡ãƒãƒƒã‚°ãƒ†ã‚­ã‚¹ãƒˆåˆæœŸåŒ–
 	debugText = DebugText::GetInstance();
 	debugText->Initialize(debugTextTexNumber);
 
-	// ƒ‰ƒCƒgÃ“I‰Šú‰»
+	// ãƒ©ã‚¤ãƒˆé™çš„åˆæœŸåŒ–
 	LightGroup::StaticInitialize(dxcommon->GetDev());
-	//ƒeƒNƒXƒ`ƒƒ‰Šú‰»
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£åˆæœŸåŒ–
 	Texture::StaticInitialize(dxcommon->GetDev(), dxcommon->GetCmdList(), WinApp::window_width, WinApp::window_height);
 	Object3d::StaticInitialize(dxcommon->GetDev(), dxcommon->GetCmdList(), WinApp::window_width, WinApp::window_height);
-	// ƒ}ƒEƒXƒJ[ƒ\ƒ‹‚Ì”ñ•\Ž¦
+	// ãƒžã‚¦ã‚¹ã‚«ãƒ¼ã‚½ãƒ«ã®éžè¡¨ç¤º
 	ShowCursor(TRUE);
-	//ƒV[ƒ“ƒ}ƒl[ƒWƒƒ[
-	// FBXŠÖ˜AÃ“I‰Šú‰»
+	//ã‚·ãƒ¼ãƒ³ãƒžãƒãƒ¼ã‚¸ãƒ£ãƒ¼
+	// FBXé–¢é€£é™çš„åˆæœŸåŒ–
 	FbxLoader::GetInstance()->Initialize(dxcommon->GetDev());
 }
 
@@ -84,5 +84,4 @@ void Framework::Draw(DirectXCommon* dxCommon) {
 
 	debugText->DrawAll();
 	dxCommon->PostDraw();
-
 }

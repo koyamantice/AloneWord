@@ -141,6 +141,7 @@ void Rice::Update() {
 			pos.y = 0.0f;
 		}
 
+<<<<<<< HEAD:enemy/Rice.cpp
 		collideArm();
 		collidePlayer();
 		collideAttackArm();
@@ -158,10 +159,19 @@ void Rice::Update() {
 		//texture->SetColor({ 1.0f,0.0,0.0,0.0 });
 		texture->Update();
 		Restexture->Update();
+=======
+	collideArm();
+	collidePlayer();
+	collideAttackArm();
+	SetEnemy();
+	if (Exp == true) {
+		DeadEnemy();
+>>>>>>> master:enemy/Enemy.cpp
 	}
 }
 
 //描画
+<<<<<<< HEAD:enemy/Rice.cpp
 void Rice::Draw() {
 
 	ImGui::Begin("test");
@@ -177,6 +187,9 @@ void Rice::Draw() {
 	}
 	ImGui::End();
 
+=======
+void Enemy::Draw() {
+>>>>>>> master:enemy/Enemy.cpp
 	if (IsAlive) {
 		Object3d::PreDraw();
 		enemyobj->Draw();
@@ -244,6 +257,7 @@ bool Rice::collidePlayer() {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true) {
 			IsAlive = 0;
 			player->SetHp(player->GetHp() - 1);
+			Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 			player->SetDamageFlag(true);
 			Interval = 20;
 			return true;
@@ -322,8 +336,8 @@ void Rice::Follow() {
 			EndRot.y = 180;
 		}
 	}
-	pos.x += (float)Check * 0.095f;
-	pos.z += (float)Check2 * 0.095f;
+	pos.x += (float)Check *  0.075f;
+	pos.z += (float)Check2 * 0.075f;
 }
 
 //敵が動く

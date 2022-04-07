@@ -23,6 +23,7 @@ protected:
 	using XMVECTOR = DirectX::XMVECTOR;
 	using XMMATRIX = DirectX::XMMATRIX;
 public:
+	void SetPlayer(Player* player) { this->player = player; }
 	/// À•WE‰ñ“]‚ÌŽæ“¾
 	const XMFLOAT3& GetPosition() { return  enemyobj->GetPosition(); }
 	const XMFLOAT3& GetRotation() { return enemyobj->GetRotation(); }
