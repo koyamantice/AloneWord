@@ -1,7 +1,7 @@
 #pragma once
 #include"Sprite.h"
 #include"Player.h"
-#include"Enemy.h"
+#include"Rice.h"
 #include"BossEnemy.h"
 
 class UI {

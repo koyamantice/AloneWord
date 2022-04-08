@@ -28,7 +28,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 
 	ui = new UI(player);
 	for (int i = 0; i < StartEnemyMax; i++) {
-		enemy[i] = new Enemy();
+		enemy[i] = new Rice();
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
 		enemy[i]->SetLimit({20,-20,20,-20});

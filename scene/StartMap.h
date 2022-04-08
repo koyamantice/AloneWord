@@ -45,7 +45,7 @@ private:
 	DebugCamera* camera = { nullptr };
 	//Texture* limit = nullptr;
 	Player* player = nullptr;
-	Enemy* enemy[StartEnemyMax] = { nullptr };
+	Rice* enemy[StartEnemyMax] = { nullptr };
 	Warp* warp = nullptr;
 	//BossEnemy* bossenemy = nullptr;
 	Spawning* spawing[Spawn];

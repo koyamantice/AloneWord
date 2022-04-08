@@ -1,6 +1,6 @@
 #pragma once
 #include <DirectXMath.h>
-#include"Enemy.h"
+#include"Rice.h"
 #include"Player.h"
 
 class Spawning {
@@ -19,7 +19,7 @@ public:
 	void Finalize();
 	void Draw();
 
-	void SetEnemy(const int& i,Enemy*enemy);
+	void SetEnemy(const int& i,Rice*enemy);
 public:
 	const XMFLOAT3& GetPosition() { return  object3d->GetPosition(); }
 	const XMFLOAT3& GetRotation() { return object3d->GetRotation(); }
@@ -37,7 +37,7 @@ private:
 	bool Hit=false;
 	int Hp = 10;
 	bool isAlive = true;
-	Enemy* enemy[10] = {};
+	Rice* enemy[10] = {};
 	Player* player = nullptr;
 };
 

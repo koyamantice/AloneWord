@@ -51,6 +51,12 @@
     <Filter Include="warp">
       <UniqueIdentifier>{512c8aec-a5d4-4b2e-9fb2-3f68349594ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="enemy\ザコ敵">
+      <UniqueIdentifier>{8f07fb5e-744a-46fb-856f-a45486fb1276}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="enemy\ボス">
+      <UniqueIdentifier>{0e5c0e97-dfd3-45f2-a872-0e6bfcd79e04}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scene\TisGame.cpp">
@@ -155,17 +161,11 @@
     <ClCompile Include="Player.cpp">
       <Filter>player</Filter>
     </ClCompile>
-    <ClCompile Include="enemy\Enemy.cpp">
-      <Filter>enemy</Filter>
-    </ClCompile>
     <ClCompile Include="scene\BossScene.cpp">
       <Filter>main</Filter>
     </ClCompile>
     <ClCompile Include="scene\StartMap.cpp">
       <Filter>main</Filter>
-    </ClCompile>
-    <ClCompile Include="enemy\BossEnemy.cpp">
-      <Filter>enemy</Filter>
     </ClCompile>
     <ClCompile Include="scene\ClearScene.cpp">
       <Filter>main</Filter>
@@ -214,6 +214,18 @@
     </ClCompile>
     <ClCompile Include="Warp.cpp">
       <Filter>warp</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy\InterEnemy.cpp">
+      <Filter>enemy\ザコ敵</Filter>
+    </ClCompile>
+    <ClCompile Include="InterBoss.cpp">
+      <Filter>enemy\ボス</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy\BossEnemy.cpp">
+      <Filter>enemy\ボス</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy\Rice.cpp">
+      <Filter>enemy\ザコ敵</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -325,26 +337,17 @@
     <ClInclude Include="2d\Texture.h">
       <Filter>2d</Filter>
     </ClInclude>
-    <ClInclude Include="enemy\Enemy.h">
-      <Filter>enemy</Filter>
-    </ClInclude>
     <ClInclude Include="scene\BossScene.h">
       <Filter>main</Filter>
     </ClInclude>
     <ClInclude Include="scene\StartMap.h">
       <Filter>main</Filter>
     </ClInclude>
-    <ClInclude Include="enemy\BossEnemy.h">
-      <Filter>enemy</Filter>
-    </ClInclude>
     <ClInclude Include="scene\ClearScene.h">
       <Filter>main</Filter>
     </ClInclude>
     <ClInclude Include="scene\GameoverScene.h">
       <Filter>main</Filter>
-    </ClInclude>
-    <ClInclude Include="enemy\BaseEnemy.h">
-      <Filter>enemy</Filter>
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>ui</Filter>
@@ -399,6 +402,18 @@
     </ClInclude>
     <ClInclude Include="Warp.h">
       <Filter>warp</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy\InterEnemy.h">
+      <Filter>enemy\ザコ敵</Filter>
+    </ClInclude>
+    <ClInclude Include="InterBoss.h">
+      <Filter>enemy\ボス</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy\BossEnemy.h">
+      <Filter>enemy\ボス</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy\Rice.h">
+      <Filter>enemy\ザコ敵</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
