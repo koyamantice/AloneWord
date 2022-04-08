@@ -5,7 +5,7 @@
 #include "DebugText.h"
 #include<sstream>
 #include<iomanip>
-#include"Enemy.h"
+#include"Rice.h"
 #include "SphereCollider.h"
 #include "CollisionManager.h"
 #include "CollisionAttribute.h"
@@ -446,7 +446,7 @@ void Player::Draw() {
 }
 
 //敵が腕から離れる
-void Player::ResetWeight(Enemy *enemy) {
+void Player::ResetWeight(InterEnemy*enemy) {
 	XMFLOAT3 boundpower = enemy->GetBoundPower();
 	XMFLOAT3 enepos = enemy->GetPosition();
 	if (ArmWeight==0.0f) {
@@ -459,7 +459,7 @@ void Player::ResetWeight(Enemy *enemy) {
 }
 
 //ダメージ食らったときにプレイヤーが飛ばされる
-void Player::Rebound(Enemy* enemy) {
+void Player::Rebound(InterEnemy* enemy) {
 	XMFLOAT3 enepos = enemy->GetPosition();
 	
 	distance.x = position.x - enepos.x;

@@ -34,7 +34,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 
 	//敵
 	for (int i = 0; i < BossEnemyMax; i++) {
-		enemy[i] = new Enemy();
+		enemy[i] = new Rice();
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
 	}

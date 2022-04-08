@@ -7,7 +7,7 @@
 #include "Sprite.h"
 #include "Texture.h"
 
-class Enemy;
+class InterEnemy;
 class Player : public Object3d {
 public:
 	Player();
@@ -94,9 +94,9 @@ public:
 
 	void SetMove(float XMax, float ZMax) { this->XMax = XMax; this->ZMax = ZMax; }
 
-	void ResetWeight(Enemy* enemy);
-	
-	void Rebound(Enemy* enemy);
+	void ResetWeight(InterEnemy* enemy);
+
+	void Rebound(InterEnemy* enemy);
 	
 	void EffectMove();
 

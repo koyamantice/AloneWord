@@ -1,8 +1,8 @@
 #pragma once
-#include"BaseEnemy.h"
-#include"Enemy.h"
+#include"InterEnemy.h"
+#include"Rice.h"
 
-class BossEnemy :public BaseEnemy {
+class BossEnemy :public InterEnemy {
 public:
 	BossEnemy();
 

@@ -188,8 +188,9 @@
     <ClCompile Include="collision\SphereCollider.cpp" />
     <ClCompile Include="collision\TouchableObject.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="enemy\InterEnemy.cpp" />
     <ClCompile Include="enemy\BossEnemy.cpp" />
-    <ClCompile Include="enemy\Enemy.cpp" />
+    <ClCompile Include="enemy\Rice.cpp" />
     <ClCompile Include="enemy\Spawning.cpp" />
     <ClCompile Include="Exp.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
@@ -198,6 +199,7 @@
     <ClCompile Include="imgui\imgui_impl_dx12.cpp" />
     <ClCompile Include="imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="imgui\imgui_widgets.cpp" />
+    <ClCompile Include="InterBoss.cpp" />
     <ClCompile Include="light\LightGroup.cpp" />
     <ClCompile Include="light\PointLight.cpp" />
     <ClCompile Include="light\SpotLight.cpp" />
@@ -253,9 +255,9 @@
     <ClInclude Include="collision\SphereCollider.h" />
     <ClInclude Include="collision\TouchableObject.h" />
     <ClInclude Include="Effect.h" />
-    <ClInclude Include="enemy\BaseEnemy.h" />
+    <ClInclude Include="enemy\InterEnemy.h" />
     <ClInclude Include="enemy\BossEnemy.h" />
-    <ClInclude Include="enemy\Enemy.h" />
+    <ClInclude Include="enemy\Rice.h" />
     <ClInclude Include="enemy\Spawning.h" />
     <ClInclude Include="Exp.h" />
     <ClInclude Include="imgui\imconfig.h" />
@@ -266,6 +268,7 @@
     <ClInclude Include="imgui\imstb_rectpack.h" />
     <ClInclude Include="imgui\imstb_textedit.h" />
     <ClInclude Include="imgui\imstb_truetype.h" />
+    <ClInclude Include="InterBoss.h" />
     <ClInclude Include="light\DirectionalLight.h" />
     <ClInclude Include="light\LightGroup.h" />
     <ClInclude Include="light\PointLight.h" />

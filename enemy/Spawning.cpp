@@ -72,7 +72,7 @@ if (ImGui::TreeNode("Debug")) {
 
 }
 
-void Spawning::SetEnemy(const int& i, Enemy* enemy) {
+void Spawning::SetEnemy(const int& i, Rice* enemy) {
 	this->enemy[i] = enemy;
 }
 //UŒ‚ŠÖ”
