@@ -116,6 +116,10 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 
 	ui = new UI(player, bossenemy);
 	//ui->Initialize();
+		// パーティクルマネージャ生成
+	//particleMan = ParticleManager::GetInstance();
+	//particleMan->SetCamera(camera);
+
 }
 
 void BossScene::Finalize() {
@@ -141,6 +145,7 @@ void BossScene::Finalize() {
 	delete camera;
 	delete object1;
 	delete model1;
+
 }
 
 void BossScene::Update(DirectXCommon* dxCommon) {
@@ -154,6 +159,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	bossenemy->Update();
 	objSphere->Update();
 	ui->Update();
+	//particleMan->Update();
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Update();
 		enemy[i]->SetEnemy();
@@ -248,6 +254,7 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 			exp[i][j]->Draw();
 		}
 	}
-
+	// パーティクルの描画
+	//particleMan->Draw(dxCommon->GetCmdList());
 	ui->Draw();
 }

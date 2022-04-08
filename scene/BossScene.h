@@ -50,6 +50,7 @@ private:
 	Enemy* enemy[BossEnemyMax] = { nullptr };
 	BossEnemy* bossenemy = nullptr;
 	Exp* exp[ExpMax][BossEnemyMax] = { nullptr };
+	//ParticleManager* particleMan = nullptr;
 	float weight = 0;
 	UI* ui=nullptr;
 	CollisionManager* collsionManager = nullptr;

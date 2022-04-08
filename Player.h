@@ -100,6 +100,8 @@ public:
 	
 	void EffectMove();
 
+	void ParticleBirth();
+
 private:
 	Object3d* Armobj;
 	Object3d* object3d;

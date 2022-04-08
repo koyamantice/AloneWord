@@ -9,6 +9,7 @@
 #include "SphereCollider.h"
 #include "CollisionManager.h"
 #include "CollisionAttribute.h"
+#include "ParticleManager.h"
 using namespace DirectX;
 float easeInSine(float x) {
 	return x * x * x;
@@ -502,4 +503,19 @@ void Player::Rebound(Enemy* enemy) {
 	if (position.z <= 20.0f && position.z >= -20.0f) {
 		position.z += rebound.z;
 	}
+}
+
+void Player::ParticleBirth()
+{
+
+	//for (int i = 0; i < 1; ++i) {
+
+	//	const float rnd_vel = 0.1f;
+	//	XMFLOAT3 vel{};
+	//	vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+	//	vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+	//	vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+
+	//	ParticleManager::GetInstance()->Add(10, { pos.x,pos.y + 5,pos.z }, vel, XMFLOAT3(), 0.0f, 1.0f);
+	//}
 }

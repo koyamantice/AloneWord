@@ -47,6 +47,7 @@ private:
 	Player* player = nullptr;
 	Enemy* enemy[StartEnemyMax] = { nullptr };
 	Warp* warp = nullptr;
+	//ParticleManager* particleMan = nullptr;
 	//BossEnemy* bossenemy = nullptr;
 	Spawning* spawing[Spawn];
 

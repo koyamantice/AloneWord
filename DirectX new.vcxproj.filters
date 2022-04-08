@@ -51,6 +51,9 @@
     <Filter Include="warp">
       <UniqueIdentifier>{512c8aec-a5d4-4b2e-9fb2-3f68349594ef}</UniqueIdentifier>
     </Filter>
+    <Filter Include="particleManager">
+      <UniqueIdentifier>{d8a26415-854c-4442-a908-53b14c682af1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scene\TisGame.cpp">
@@ -214,6 +217,9 @@
     </ClCompile>
     <ClCompile Include="Warp.cpp">
       <Filter>warp</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleManager.cpp">
+      <Filter>particleManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -399,6 +405,9 @@
     </ClInclude>
     <ClInclude Include="Warp.h">
       <Filter>warp</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleManager.h">
+      <Filter>particleManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
