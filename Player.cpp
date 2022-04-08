@@ -66,6 +66,8 @@ bool Player::Initialize() {
 
 void Player::Finalize() {
 	delete object3d;
+	delete model;
+	delete Armmodel;
 	delete Armobj;
 }
 

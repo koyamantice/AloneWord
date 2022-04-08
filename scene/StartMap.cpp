@@ -206,7 +206,6 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 				player->SetPosition({ player->GetPosition().x,0,-22 });
 			}
 		}
-
 	if (player->GetHp() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 	}

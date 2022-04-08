@@ -58,12 +58,13 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objBossMap->SetScale({ 1.4f,1.5f,1.6f });
 	*/
 	//当たり判定確認用です
-	//objSphere = Object3d::Create();
-	//modelSphere = Model::CreateFromOBJ("sphere");
-	//objSphere->SetModel(modelSphere);
-	//objSphere->SetPosition({ -10, 1, 0 });
-	//// コライダーの追加
-	//objSphere->SetCollider(new SphereCollider);
+
+	objSphere = Object3d::Create();
+	modelSphere = Model::CreateFromOBJ("sphere");
+	objSphere->SetModel(modelSphere);
+	objSphere->SetPosition({ -10, 1, 0 });
+	// コライダーの追加
+	objSphere->SetCollider(new SphereCollider);
 
 	//普通のテクスチャ(板ポリ)
 	/*limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
@@ -99,7 +100,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	camera->SetTarget(player->GetPosition());
 	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
 	// モデル名を指定してファイル読み込み
-	model1 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
+	model1 = FbxLoader::GetInstance()->LoadModelFromFile("bonetest");
 
 	// デバイスをセット
 	FBXObject3d::SetDevice(dxCommon->GetDev());
@@ -111,6 +112,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	object1 = new FBXObject3d;
 	object1->Initialize();
 	object1->SetModel(model1);
+	object1->SetScale({ 3.0f,3.0f,3.0f });
 
 	ui = new UI(player, bossenemy);
 	//ui->Initialize();
@@ -122,8 +124,23 @@ void BossScene::Finalize() {
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Finalize();
 	}
-	//player->Finalize();
+	player->Finalize();
 	bossenemy->Finalize();
+	delete objBossMap;
+	delete objFloor;
+	delete modelBossMap;
+	delete modelFloor;
+	for (int i = 0; i < EffectMax; i++) {
+		effect[i]->Finalize();
+	}
+	for (int i = 0; i < ExpMax; i++) {
+		for (int j = 0; j < BossEnemyMax; j++) {
+			exp[i][j]->Finalize();
+		}
+	}
+	delete camera;
+	delete object1;
+	delete model1;
 }
 
 void BossScene::Update(DirectXCommon* dxCommon) {
@@ -135,8 +152,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	camera->Update();
 	player->Update();
 	bossenemy->Update();
-	//objSphere->Update();
-
+	objSphere->Update();
 	ui->Update();
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Update();
@@ -195,7 +211,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	camera->SetTarget(player->GetPosition());
 	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
 	// 全ての衝突をチェック
-	collsionManager->CheckAllCollisions();
+	//collsionManager->CheckAllCollisions();
 	DebugText::GetInstance()->Print("PUSH to RB!!",200, 100,1.0f);
 	DebugText::GetInstance()->Print("PUSH to A!!", 200, 115, 1.0f);
 	DebugText::GetInstance()->Print("RB and LB :Rotate", 1060, 620, 1.0f);
@@ -206,15 +222,16 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	//各オブジェクトの描画
 	Object3d::PreDraw();
 	//objBossMap->Draw();
+	objSphere->Draw();
 	objBossMap->Draw();
 	objFloor->Draw();
-	//objSphere->Draw();
+
 	Texture::PreDraw();
 	//limit->Draw();
 	//Sprite::PreDraw();
 	//sprite->Draw();
 
-	//object1->Draw(dxCommon->GetCmdList());
+	object1->Draw(dxCommon->GetCmdList());
 
 	player->Draw();
 	for (int i = 0; i < BossEnemyMax; i++) {

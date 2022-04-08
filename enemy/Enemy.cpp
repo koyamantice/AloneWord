@@ -38,6 +38,7 @@ void Enemy::Initialize() {
 void Enemy::Finalize() {
 	delete enemyobj;
 	delete texture;
+	delete model;
 	delete Restexture;
 }
 

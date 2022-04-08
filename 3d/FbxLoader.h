@@ -89,6 +89,7 @@ private:
 public:	//定数
 	//モデル格納ルートパス
 	static const string baseDirectory;
+	static const string nextDirectory;
 	//テクスチャがない場合の標準テクスチャファイル名
 	static const string defaultTextureFileName;
 };
