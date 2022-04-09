@@ -64,7 +64,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objSphere->SetModel(modelSphere);
 	objSphere->SetPosition({ -10, 1, 0 });
 	// コライダーの追加
-	objSphere->SetCollider(new SphereCollider);
+	//objSphere->SetCollider(new SphereCollider);
 
 	//普通のテクスチャ(板ポリ)
 	/*limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
@@ -152,7 +152,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	camera->Update();
 	player->Update();
 	bossenemy->Update();
-	objSphere->Update();
+	//objSphere->Update();
 	ui->Update();
 	for (int i = 0; i < BossEnemyMax; i++) {
 		enemy[i]->Update();
@@ -207,7 +207,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	if (player->GetHp() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 	}
-	object1->Update();
+	//object1->Update();
 	camera->SetTarget(player->GetPosition());
 	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
 	// 全ての衝突をチェック
@@ -222,7 +222,7 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	//各オブジェクトの描画
 	Object3d::PreDraw();
 	//objBossMap->Draw();
-	objSphere->Draw();
+	//objSphere->Draw();
 	objBossMap->Draw();
 	objFloor->Draw();
 
@@ -231,7 +231,7 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	//Sprite::PreDraw();
 	//sprite->Draw();
 
-	object1->Draw(dxCommon->GetCmdList());
+	//object1->Draw(dxCommon->GetCmdList());
 
 	player->Draw();
 	for (int i = 0; i < BossEnemyMax; i++) {
