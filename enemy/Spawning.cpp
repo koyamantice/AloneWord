@@ -27,8 +27,10 @@ void Spawning::Update() {
 		if (enemy[0]==nullptr) {
 		} else {
 			for (int i = 0; i < 10; i++) {
-				enemy[i]->SetBasePos(pos);
-				enemy[i]->Update();
+				if (enemy[i]->GetIsAlive() == 0) {
+					enemy[i]->SetBasePos(pos);
+					enemy[i]->Update();
+				}
 			}
 		}
 	}

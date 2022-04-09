@@ -10,6 +10,7 @@
 #include "SceneManager.h"
 #include "AbstractSceneFactory.h"
 #include "Texture.h"
+
 /// <summary>
 /// フレームワーク
 /// </summary>

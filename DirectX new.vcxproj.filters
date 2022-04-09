@@ -57,6 +57,12 @@
     <Filter Include="enemy\ボス">
       <UniqueIdentifier>{0e5c0e97-dfd3-45f2-a872-0e6bfcd79e04}</UniqueIdentifier>
     </Filter>
+    <Filter Include="particleManager">
+      <UniqueIdentifier>{4ca0ca21-7117-4c48-875c-104cc384db35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FPSManager">
+      <UniqueIdentifier>{24f55054-a858-4bc4-a303-f3bab37122cf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="scene\TisGame.cpp">
@@ -226,6 +232,12 @@
     </ClCompile>
     <ClCompile Include="enemy\Rice.cpp">
       <Filter>enemy\ザコ敵</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleManager.cpp">
+      <Filter>particleManager</Filter>
+    </ClCompile>
+    <ClCompile Include="FPSManager\FPSManager.cpp">
+      <Filter>FPSManager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -414,6 +426,12 @@
     </ClInclude>
     <ClInclude Include="enemy\Rice.h">
       <Filter>enemy\ザコ敵</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleManager.h">
+      <Filter>particleManager</Filter>
+    </ClInclude>
+    <ClInclude Include="FPSManager\FPSManager.h">
+      <Filter>FPSManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

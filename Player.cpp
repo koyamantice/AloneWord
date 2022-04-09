@@ -7,9 +7,11 @@
 #include<iomanip>
 #include"Rice.h"
 #include "SphereCollider.h"
+#include "ParticleManager.h"
 #include "CollisionManager.h"
 #include "CollisionAttribute.h"
 using namespace DirectX;
+Input* input = Input::GetInstance();
 float easeInSine(float x) {
 	return x * x * x;
 }
@@ -72,7 +74,7 @@ void Player::Finalize() {
 }
 
 void Player::Update() {
-	Input* input = Input::GetInstance();
+	
 	XMFLOAT3 rot = this->object3d->GetRotation();
 	//if (!AttackFlag) {
 		rot.y = Ease(In, Quad, 0.9f, rot.y, AfterRot);
@@ -413,6 +415,8 @@ void Player::Update() {
 	object3d->SetPosition(position);
 	object3d->SetRotation(rot);
 	Armobj->SetRotation(ArmRot);
+	//パーティクル発生
+	BirthParticle();
 }
 
 //描画
@@ -501,5 +505,21 @@ void Player::Rebound(InterEnemy* enemy) {
 	}
 	if (position.z <= 20.0f && position.z >= -20.0f) {
 		position.z += rebound.z;
+	}
+}
+
+void Player::BirthParticle() {
+	
+	if(input->LeftTiltStick(input->Right) || input->LeftTiltStick(input->Left) || input->LeftTiltStick(input->Up) || input->LeftTiltStick(input->Down)){
+		for (int i = 0; i < 1; ++i) {
+
+			const float rnd_vel = 0.1f;
+			XMFLOAT3 vel{};
+			vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+
+			ParticleManager::GetInstance()->Add(10, { position.x,position.y,position.z }, vel, XMFLOAT3(), 1.0f, 0.0f);
+		}
 	}
 }

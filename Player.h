@@ -94,11 +94,17 @@ public:
 
 	void SetMove(float XMax, float ZMax) { this->XMax = XMax; this->ZMax = ZMax; }
 
+	//腕の重みリセット
 	void ResetWeight(InterEnemy* enemy);
 
+	//ダメージ食らったとき
 	void Rebound(InterEnemy* enemy);
 	
+	//エフェクト
 	void EffectMove();
+	
+	//足元にパーティクル
+	void BirthParticle();
 
 private:
 	Object3d* Armobj;
