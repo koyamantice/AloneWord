@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\IKENGINE\ParticleManager\ParticleManager.cpp" />
     <ClCompile Include="2d\DebugText.cpp" />
     <ClCompile Include="2d\Sprite.cpp" />
     <ClCompile Include="2d\Texture.cpp" />
@@ -220,6 +221,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\IKENGINE\ParticleManager\ParticleManager.h" />
     <ClInclude Include="2d\DebugText.h" />
     <ClInclude Include="2d\Sprite.h" />
     <ClInclude Include="2d\Texture.h" />
