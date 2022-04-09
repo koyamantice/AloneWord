@@ -17,6 +17,7 @@ class SceneManager;
 #include "Exp.h"
 #include "Warp.h"
 #include "ParticleManager.h"
+#include "FPSManager.h"
 #include<memory>
 
 /// <summary>

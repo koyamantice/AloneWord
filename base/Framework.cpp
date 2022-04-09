@@ -1,6 +1,8 @@
 ﻿#include "Framework.h"
 #include "FbxLoader.h"
+#include "FPSManager.h"
 void Framework::Run() {
+	
 	//初期化
 	Initialize(dxcommon);
 	while (true)//ゲームループ
@@ -60,6 +62,7 @@ void Framework::Initialize(DirectXCommon* dxCommon) {
 	FbxLoader::GetInstance()->Initialize(dxcommon->GetDev());
 	// パーティクルマネージャ初期化
 	ParticleManager::GetInstance()->Initialize(dxcommon->GetDev());
+
 }
 
 void Framework::Finalize() {
@@ -70,6 +73,7 @@ void Framework::Finalize() {
 
 void Framework::Update(DirectXCommon* dxCommon) {
 	input->Update(winApp);
+	
 	if (winApp->ProcessMessage() || input->TriggerKey(DIK_ESCAPE)) {
 		endResquest_ = true;
 		return;
