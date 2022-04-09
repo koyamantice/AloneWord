@@ -154,7 +154,6 @@ void Player::Update() {
 				AttackFlag = false;
 			}
 		}
-
 		//プレイヤーの向き設定
 		if (StickrotY <= -650) {
 			if (StickrotX <= 650 && StickrotX >= -650) {		//上
@@ -162,11 +161,11 @@ void Player::Update() {
 				ArmSpeed = 90;
 				ArmRot.y = 270;
 			} else if (StickrotX > 650) {	//右上
-				AfterRot = 225;
+				AfterRot = 315;
 				ArmSpeed = 45;
 				ArmRot.y = 315;
 			} else if (StickrotX < -650) {	//左上
-				AfterRot = 315;
+				AfterRot = 225;
 				ArmSpeed = 135;
 				ArmRot.y = 225;
 			}
@@ -426,10 +425,7 @@ void Player::Draw() {
 	//if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("Player")) {
 			ImGui::SliderFloat("pos", &position.x, 50, -50);
-			ImGui::SliderFloat("pos", &position.y, 50, -50);
-			ImGui::SliderFloat("pos", &position.z, 50, -50);
-			ImGui::Text("Lv %d", Lv);
-
+			
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}
