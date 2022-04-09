@@ -154,7 +154,6 @@ void Player::Update() {
 				AttackFlag = false;
 			}
 		}
-
 		//プレイヤーの向き設定
 		if (StickrotY <= -650) {
 			if (StickrotX <= 650 && StickrotX >= -650) {		//上
