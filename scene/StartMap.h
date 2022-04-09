@@ -49,7 +49,7 @@ private:
 	Warp* warp = nullptr;
 	//BossEnemy* bossenemy = nullptr;
 	Spawning* spawing[Spawn];
-
+	ParticleManager* particleMan = nullptr;
 	bool start = false;
 	bool Clear = false;
 };

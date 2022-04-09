@@ -230,7 +230,7 @@
     <ClCompile Include="enemy\Rice.cpp">
       <Filter>enemy\ザコ敵</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\IKENGINE\ParticleManager\ParticleManager.cpp">
+    <ClCompile Include="ParticleManager.cpp">
       <Filter>particleManager</Filter>
     </ClCompile>
   </ItemGroup>
@@ -421,7 +421,7 @@
     <ClInclude Include="enemy\Rice.h">
       <Filter>enemy\ザコ敵</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\IKENGINE\ParticleManager\ParticleManager.h">
+    <ClInclude Include="ParticleManager.h">
       <Filter>particleManager</Filter>
     </ClInclude>
   </ItemGroup>

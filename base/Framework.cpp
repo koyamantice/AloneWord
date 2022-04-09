@@ -58,6 +58,8 @@ void Framework::Initialize(DirectXCommon* dxCommon) {
 	//シーンマネージャー
 	// FBX関連静的初期化
 	FbxLoader::GetInstance()->Initialize(dxcommon->GetDev());
+	// パーティクルマネージャ初期化
+	ParticleManager::GetInstance()->Initialize(dxcommon->GetDev());
 }
 
 void Framework::Finalize() {

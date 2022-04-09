@@ -103,6 +103,9 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	FBXObject3d::SetCamera(camera);
 	// グラフィックスパイプライン生成
 	FBXObject3d::CreateGraphicsPipeline();
+	// パーティクルマネージャ生成
+	particleMan = ParticleManager::GetInstance();
+	particleMan->SetCamera(camera);
 
 	object1 = new FBXObject3d;
 	object1->Initialize();
@@ -133,6 +136,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
+	particleMan->Update();
 	warp->Update(player);
 	for (int i = 0; i < StartEnemyMax; i++) {
 		spawing[1]->SetEnemy(i, enemy[i]);
@@ -175,7 +179,6 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 
 				}
 				else {
-
 					enemy[colA]->SetHit(false);
 				}
 			}
@@ -255,4 +258,6 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	}
 	//bossenemy->Draw();
 	ui->Draw();
+	// パーティクルの描画
+	particleMan->Draw(dxCommon->GetCmdList());
 }
