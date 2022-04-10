@@ -97,8 +97,8 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	Object3d::SetLightGroup(lightGroup);
 
 	// カメラ注視点をセット
-	camera->SetTarget(player->GetPosition());
-	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
+	camera->SetTarget(player->GetTargetPosition());
+	camera->SetEye({ player->GetTargetPosition().x,player->GetTargetPosition().y + 10,player->GetTargetPosition().z - 10 });
 	// モデル名を指定してファイル読み込み
 	model1 = FbxLoader::GetInstance()->LoadModelFromFile("bonetest");
 
@@ -208,8 +208,9 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 	}
 	//object1->Update();
-	camera->SetTarget(player->GetPosition());
-	camera->SetEye({ player->GetPosition().x,player->GetPosition().y + 10,player->GetPosition().z - 10 });
+		// カメラ注視点をセット
+	camera->SetTarget(player->GetTargetPosition());
+	camera->SetEye({ player->GetTargetPosition().x,player->GetTargetPosition().y + 10,player->GetTargetPosition().z - 10 });
 	// 全ての衝突をチェック
 	//collsionManager->CheckAllCollisions();
 	DebugText::GetInstance()->Print("PUSH to RB!!",200, 100,1.0f);
