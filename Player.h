@@ -30,6 +30,8 @@ public:
 /// <returns>座標</returns>
 	const XMFLOAT3& GetPosition() { return  object3d->GetPosition(); }
 
+	const XMFLOAT3& GetTargetPosition() { return  targetpos; }
+
 	const XMFLOAT3& GetRotation() { return object3d->GetRotation(); }
 
 	const XMFLOAT3& GetArmPosition() { return Armpos; }
@@ -112,6 +114,7 @@ private:
 	Model* model;
 	Model* Armmodel;
 	XMFLOAT3 pos = { 0,0,-10 };
+	XMFLOAT3 targetpos = { 0,0,-10 };
 	XMFLOAT3 Armpos = { 0,0,0 };
 	XMFLOAT3 ArmRot = { 0,270,0 };
 	XMFLOAT3 distance{};
