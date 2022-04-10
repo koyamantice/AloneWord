@@ -61,6 +61,9 @@ bool Player::Initialize() {
 	float radius = 0.6f;
 	SetCollider(new SphereCollider(XMVECTOR({ 0,radius,0,0 }), radius));
 	collider->SetAttribute(COLLISION_ATTR_ALLIES);
+
+	//カメラのためのポジション(初期化)
+	targetpos = position;
 	return true;
 }
 
@@ -85,7 +88,8 @@ void Player::Update() {
 	StickrotY = input->GetPosY();
 	//effecttexture->Update();
 	
-	if (ArmMoveNumber == 0 && AttackMoveNumber == 0 && AttackFlag == false) {
+	if (ArmMoveNumber == 0 && AttackMoveNumber == 0 && AttackFlag == false
+		&& targetpos.x == position.x && targetpos.z == position.z) {
 		if (input->LeftTiltStick(input->Right)) {
 			if (position.x <= XMax) {
 				position.x += PlayerSpeed;
@@ -416,23 +420,39 @@ void Player::Update() {
 	Armobj->SetRotation(ArmRot);
 	//パーティクル発生
 	BirthParticle();
+	//カメラのためのポジション(更新)
+	if (FlashCount != 2 && Interval == 0) {
+		targetpos = position;
+	}
+	else if(FlashCount == 2) {
+		if (targetpos.x != position.x || targetpos.z != position.z) {
+			angleX = (position.x - targetpos.x);
+			angleZ = (position.z - targetpos.z);
+			angleR = sqrt(pow((position.x - targetpos.x), 2) + pow((position.z - targetpos.z), 2));
+			if (angleR >= 2.00) {
+				targetpos.x += (angleX / angleR) * 0.5;
+				targetpos.x += (angleZ / angleR) * 0.5;
+			}
+			else {
+				targetpos = position;
+			}
+		}
+	}
 }
 
 //描画
 void Player::Draw() {
 	ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
-	//if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("Player")) {
 			ImGui::SliderFloat("pos", &position.x, 50, -50);
-			
+			ImGui::SliderFloat("targetpos", &targetpos.x, 50, -50);
+			ImGui::SliderFloat("rebound.x", &rebound.x, 50, -50);
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}
 		ImGui::TreePop();
 	}
-		//ImGui::TreePop();
-	//}
 	ImGui::End();
 
 	Object3d::PreDraw();
@@ -467,32 +487,42 @@ void Player::Rebound(InterEnemy* enemy) {
 	if (DamageFlag == true) {
 		
 		if (distance.x <= 0) {
-			rebound.x = -2.0f;
+			rebound.x = -0.2f;
 		} else {
-			rebound.x = 2.0f;
+			rebound.x = 0.2f;
 		}
 
 		if (distance.z <= 0) {
-			rebound.z = -2.0f;
+			rebound.z = -0.2f;
 		} else {
-			rebound.z = 2.0f;
+			rebound.z = 0.2f;
 		}
 		DamageFlag = false;
 	}
 
-	if (rebound.x != 0.0) {
-		if (rebound.x > 0) {
-			rebound.x *= 0.4f;
-		} else {
-			rebound.x *= 0.4f;
+	if (rebound.x >= 0.0) {
+		rebound.x -= 0.005f;
+		if (rebound.x <= 0.0f) {
+			rebound.x = 0.0f;
+		}
+	}
+	else {
+		rebound.x += 0.005f;
+		if (rebound.x >= 0.0f) {
+			rebound.x = 0.0f;
 		}
 	}
 
-	if (rebound.z != 0.0) {
-		if (rebound.z > 0) {
-			rebound.z *= 0.4f;
-		} else {
-			rebound.z *= 0.4f;
+	if (rebound.z >= 0.0) {
+		rebound.z -= 0.045f;
+		if (rebound.z <= 0.0f) {
+			rebound.z = 0.0f;
+		}
+	}
+	else {
+		rebound.z += 0.045f;
+		if (rebound.z >= 0.0f) {
+			rebound.z = 0.0f;
 		}
 	}
 

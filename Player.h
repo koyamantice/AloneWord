@@ -30,6 +30,8 @@ public:
 /// <returns>座標</returns>
 	const XMFLOAT3& GetPosition() { return  object3d->GetPosition(); }
 
+	const XMFLOAT3& GetTargetPosition() { return  targetpos; }
+
 	const XMFLOAT3& GetRotation() { return object3d->GetRotation(); }
 
 	const XMFLOAT3& GetArmPosition() { return Armpos; }
@@ -158,7 +160,7 @@ private:
 	float frameMax2 = 55.0f;
 	float frame3 = 0.0f;
 	float frameMax3 = 60.0f;
-	//HP
+	//ステータス的なやつ
 	int HP = 10;
 	int Lv = 1;
 	float Exp = 0.0f;
@@ -168,4 +170,9 @@ private:
 	bool onGround = true;
 	// 落下ベクトル
 	DirectX::XMVECTOR fallV;
+	//カメラのためのやつ
+	double angleR;
+	float angleX;
+	float angleZ;
+	XMFLOAT3 targetpos = { 0,0,-10 };
 };

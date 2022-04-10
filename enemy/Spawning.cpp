@@ -54,17 +54,17 @@ void Spawning::Finalize() {
 }
 
 void Spawning::Draw() {
-	ImGui::Begin("test");
-if (ImGui::TreeNode("Debug")) {
-	if (ImGui::TreeNode("Spawn")) {
-		ImGui::Text("hp %d", Hp);
-
-		ImGui::Unindent();
-		ImGui::TreePop();
-	}
-	ImGui::TreePop();
-}
-	ImGui::End();
+//	ImGui::Begin("test");
+//if (ImGui::TreeNode("Debug")) {
+//	if (ImGui::TreeNode("Spawn")) {
+//		ImGui::Text("hp %d", Hp);
+//
+//		ImGui::Unindent();
+//		ImGui::TreePop();
+//	}
+//	ImGui::TreePop();
+//}
+	//ImGui::End();
 	Object3d::PreDraw();
 	if (isAlive) {
 		object3d->Draw();
