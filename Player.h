@@ -114,7 +114,6 @@ private:
 	Model* model;
 	Model* Armmodel;
 	XMFLOAT3 pos = { 0,0,-10 };
-	XMFLOAT3 targetpos = { 0,0,-10 };
 	XMFLOAT3 Armpos = { 0,0,0 };
 	XMFLOAT3 ArmRot = { 0,270,0 };
 	XMFLOAT3 distance{};
@@ -161,7 +160,7 @@ private:
 	float frameMax2 = 55.0f;
 	float frame3 = 0.0f;
 	float frameMax3 = 60.0f;
-	//HP
+	//ステータス的なやつ
 	int HP = 10;
 	int Lv = 1;
 	float Exp = 0.0f;
@@ -171,4 +170,9 @@ private:
 	bool onGround = true;
 	// 落下ベクトル
 	DirectX::XMVECTOR fallV;
+	//カメラのためのやつ
+	double angleR;
+	float angleX;
+	float angleZ;
+	XMFLOAT3 targetpos = { 0,0,-10 };
 };

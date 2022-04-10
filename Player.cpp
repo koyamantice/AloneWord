@@ -88,7 +88,8 @@ void Player::Update() {
 	StickrotY = input->GetPosY();
 	//effecttexture->Update();
 	
-	if (ArmMoveNumber == 0 && AttackMoveNumber == 0 && AttackFlag == false) {
+	if (ArmMoveNumber == 0 && AttackMoveNumber == 0 && AttackFlag == false
+		&& targetpos.x == position.x && targetpos.z == position.z) {
 		if (input->LeftTiltStick(input->Right)) {
 			if (position.x <= XMax) {
 				position.x += PlayerSpeed;
@@ -419,9 +420,23 @@ void Player::Update() {
 	Armobj->SetRotation(ArmRot);
 	//パーティクル発生
 	BirthParticle();
-	//カメラのためのポジション(初期化)
-	if (rebound.x == 0.0f && rebound.z == 0.0f) {
+	//カメラのためのポジション(更新)
+	if (FlashCount != 2 && Interval == 0) {
 		targetpos = position;
+	}
+	else if(FlashCount == 2) {
+		if (targetpos.x != position.x || targetpos.z != position.z) {
+			angleX = (position.x - targetpos.x);
+			angleZ = (position.z - targetpos.z);
+			angleR = sqrt(pow((position.x - targetpos.x), 2) + pow((position.z - targetpos.z), 2));
+			if (angleR >= 2.00) {
+				targetpos.x += (angleX / angleR) * 0.5;
+				targetpos.x += (angleZ / angleR) * 0.5;
+			}
+			else {
+				targetpos = position;
+			}
+		}
 	}
 }
 
