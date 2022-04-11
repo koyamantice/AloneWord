@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ï»¿//#pragma once
 //
 //#include <Windows.h>
@@ -172,3 +173,179 @@
 //	ParticleManager& operator=(const ParticleManager&) = delete;
 //};
 //
+=======
+#pragma once
+
+#include <Windows.h>
+#include <wrl.h>
+#include <d3d12.h>
+#include <DirectXMath.h>
+#include <d3dx12.h>
+#include <forward_list>
+
+#include "Camera.h"
+
+/// <summary>
+/// ƒp[ƒeƒBƒNƒ‹ƒ}ƒl[ƒWƒƒ
+/// </summary>
+class ParticleManager
+{
+private: // ƒGƒCƒŠƒAƒX
+	// Microsoft::WRL::‚ğÈ—ª
+	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+	// DirectX::‚ğÈ—ª
+	using XMFLOAT2 = DirectX::XMFLOAT2;
+	using XMFLOAT3 = DirectX::XMFLOAT3;
+	using XMFLOAT4 = DirectX::XMFLOAT4;
+	using XMMATRIX = DirectX::XMMATRIX;
+
+public: // ƒTƒuƒNƒ‰ƒX
+	// ’¸“_ƒf[ƒ^\‘¢‘Ì
+	struct VertexPos
+	{
+		XMFLOAT3 pos; // xyzÀ•W
+		float scale; // ƒXƒP[ƒ‹
+	};
+
+	// ’è”ƒoƒbƒtƒ@—pƒf[ƒ^\‘¢‘Ì
+	struct ConstBufferData
+	{
+		XMMATRIX mat;	// ƒrƒ…[ƒvƒƒWƒFƒNƒVƒ‡ƒ“s—ñ
+		XMMATRIX matBillboard;	// ƒrƒ‹ƒ{[ƒhs—ñ
+	};
+
+	// ƒp[ƒeƒBƒNƒ‹1—±
+	class Particle
+	{
+		// Microsoft::WRL::‚ğÈ—ª
+		template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
+		// DirectX::‚ğÈ—ª
+		using XMFLOAT2 = DirectX::XMFLOAT2;
+		using XMFLOAT3 = DirectX::XMFLOAT3;
+		using XMFLOAT4 = DirectX::XMFLOAT4;
+		using XMMATRIX = DirectX::XMMATRIX;
+
+	public:
+		// À•W
+		XMFLOAT3 position = {};
+		// ‘¬“x
+		XMFLOAT3 velocity = {};
+		// ‰Á‘¬“x
+		XMFLOAT3 accel = {};
+		// F
+		XMFLOAT3 color = {};
+		// ƒXƒP[ƒ‹
+		float scale = 1.0f;
+		// ‰ñ“]
+		float rotation = 0.0f;
+		// ‰Šú’l
+		XMFLOAT3 s_color = {};
+		float s_scale = 1.0f;
+		float s_rotation = 0.0f;
+		// ÅI’l
+		XMFLOAT3 e_color = {};
+		float e_scale = 0.0f;
+		float e_rotation = 0.0f;
+		// Œ»İƒtƒŒ[ƒ€
+		int frame = 0;
+		// I—¹ƒtƒŒ[ƒ€
+		int num_frame = 0;
+	};
+
+private: // ’è”
+	static const int vertexCount = 65536;		// ’¸“_”
+
+public:// Ã“Iƒƒ“ƒoŠÖ”
+	static ParticleManager* GetInstance();
+
+public: // ƒƒ“ƒoŠÖ”	
+	/// <summary>
+	/// ‰Šú‰»
+	/// </summary>
+	/// <returns></returns>
+	void Initialize(ID3D12Device* device);
+	/// <summary>
+	/// –ˆƒtƒŒ[ƒ€ˆ—
+	/// </summary>
+	void Update();
+
+	/// <summary>
+	/// •`‰æ
+	/// </summary>
+	void Draw(ID3D12GraphicsCommandList* cmdList);
+
+	/// <summary>
+	/// ƒJƒƒ‰‚ÌƒZƒbƒg
+	/// </summary>
+	/// <param name="camera">ƒJƒƒ‰</param>
+	inline void SetCamera(Camera* camera) { this->camera = camera; }
+
+	/// <summary>
+	/// ƒp[ƒeƒBƒNƒ‹‚Ì’Ç‰Á
+	/// </summary>
+	/// <param name="life">¶‘¶ŠÔ</param>
+	/// <param name="position">‰ŠúÀ•W</param>
+	/// <param name="velocity">‘¬“x</param>
+	/// <param name="accel">‰Á‘¬“x</param>
+	/// <param name="start_scale">ŠJnƒXƒP[ƒ‹</param>
+	/// <param name="end_scale">I—¹ƒXƒP[ƒ‹</param>
+	void Add(int life, XMFLOAT3 position, XMFLOAT3 velocity, XMFLOAT3 accel, float start_scale, float end_scale);
+
+	/// <summary>
+	/// ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ì‰Šú‰»
+	/// </summary>
+	/// <returns></returns>
+	void InitializeDescriptorHeap();
+
+	/// <summary>
+	/// ƒOƒ‰ƒtƒBƒbƒNƒpƒCƒvƒ‰ƒCƒ“¶¬
+	/// </summary>
+	/// <returns>¬”Û</returns>
+	void InitializeGraphicsPipeline();
+
+	/// <summary>
+	/// ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İ
+	/// </summary>
+	/// <returns>¬”Û</returns>
+	void LoadTexture();
+
+	/// <summary>
+	/// ƒ‚ƒfƒ‹ì¬
+	/// </summary>
+	void CreateModel();
+
+private: // ƒƒ“ƒo•Ï”
+	// ƒfƒoƒCƒX
+	ID3D12Device* device = nullptr;
+	// ƒfƒXƒNƒŠƒvƒ^ƒTƒCƒY
+	UINT descriptorHandleIncrementSize = 0u;
+	// ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ
+	ComPtr<ID3D12RootSignature> rootsignature;
+	// ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒgƒIƒuƒWƒFƒNƒg
+	ComPtr<ID3D12PipelineState> pipelinestate;
+	// ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv
+	ComPtr<ID3D12DescriptorHeap> descHeap;
+	// ’¸“_ƒoƒbƒtƒ@
+	ComPtr<ID3D12Resource> vertBuff;
+	// ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@
+	ComPtr<ID3D12Resource> texbuff;
+	// ƒVƒF[ƒ_ƒŠƒ\[ƒXƒrƒ…[‚Ìƒnƒ“ƒhƒ‹(CPU)
+	CD3DX12_CPU_DESCRIPTOR_HANDLE cpuDescHandleSRV;
+	// ƒVƒF[ƒ_ƒŠƒ\[ƒXƒrƒ…[‚Ìƒnƒ“ƒhƒ‹(CPU)
+	CD3DX12_GPU_DESCRIPTOR_HANDLE gpuDescHandleSRV;
+	// ’¸“_ƒoƒbƒtƒ@ƒrƒ…[
+	D3D12_VERTEX_BUFFER_VIEW vbView;
+	// ’è”ƒoƒbƒtƒ@
+	ComPtr<ID3D12Resource> constBuff;
+	// ƒp[ƒeƒBƒNƒ‹”z—ñ
+	std::forward_list<Particle> particles;
+	// ƒJƒƒ‰
+	Camera* camera = nullptr;
+private:
+	ParticleManager() = default;
+	ParticleManager(const ParticleManager&) = delete;
+	~ParticleManager() = default;
+	ParticleManager& operator=(const ParticleManager&) = delete;
+};
+
+>>>>>>> master

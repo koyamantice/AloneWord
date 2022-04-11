@@ -7,10 +7,12 @@
 #include<iomanip>
 #include"Rice.h"
 #include "SphereCollider.h"
+#include "ParticleManager.h"
 #include "CollisionManager.h"
 #include "CollisionAttribute.h"
 #include "ParticleManager.h"
 using namespace DirectX;
+Input* input = Input::GetInstance();
 float easeInSine(float x) {
 	return x * x * x;
 }
@@ -60,6 +62,9 @@ bool Player::Initialize() {
 	float radius = 0.6f;
 	SetCollider(new SphereCollider(XMVECTOR({ 0,radius,0,0 }), radius));
 	collider->SetAttribute(COLLISION_ATTR_ALLIES);
+
+	//カメラのためのポジション(初期化)
+	targetpos = position;
 	return true;
 }
 
@@ -73,7 +78,7 @@ void Player::Finalize() {
 }
 
 void Player::Update() {
-	Input* input = Input::GetInstance();
+	
 	XMFLOAT3 rot = this->object3d->GetRotation();
 	//if (!AttackFlag) {
 		rot.y = Ease(In, Quad, 0.9f, rot.y, AfterRot);
@@ -84,7 +89,8 @@ void Player::Update() {
 	StickrotY = input->GetPosY();
 	//effecttexture->Update();
 	
-	if (ArmMoveNumber == 0 && AttackMoveNumber == 0 && AttackFlag == false) {
+	if (ArmMoveNumber == 0 && AttackMoveNumber == 0 && AttackFlag == false
+		&& Interval <= 80) {
 		if (input->LeftTiltStick(input->Right)) {
 			if (position.x <= XMax) {
 				position.x += PlayerSpeed;
@@ -153,7 +159,6 @@ void Player::Update() {
 				AttackFlag = false;
 			}
 		}
-
 		//プレイヤーの向き設定
 		if (StickrotY <= -650) {
 			if (StickrotX <= 650 && StickrotX >= -650) {		//上
@@ -161,11 +166,11 @@ void Player::Update() {
 				ArmSpeed = 90;
 				ArmRot.y = 270;
 			} else if (StickrotX > 650) {	//右上
-				AfterRot = 225;
+				AfterRot = 315;
 				ArmSpeed = 45;
 				ArmRot.y = 315;
 			} else if (StickrotX < -650) {	//左上
-				AfterRot = 315;
+				AfterRot = 225;
 				ArmSpeed = 135;
 				ArmRot.y = 225;
 			}
@@ -292,9 +297,8 @@ void Player::Update() {
 		Interval--;
 	}
 
-	if (Interval == 1) {
+	if (Interval != 100 && Interval != 0 && Interval % 20 == 0) {
 		FlashCount++;
-		Interval = 20;
 	}
 
 	if (FlashCount == 4) {
@@ -414,26 +418,43 @@ void Player::Update() {
 	object3d->SetPosition(position);
 	object3d->SetRotation(rot);
 	Armobj->SetRotation(ArmRot);
+	//パーティクル発生
+	BirthParticle();
+	//カメラのためのポジション(更新)
+	if (Interval == 0) {
+		targetpos = position;
+	}
+	else if(Interval != 0 && Interval <= 99) {
+		if (targetpos.x != position.x || targetpos.z != position.z) {
+			angleX = (position.x - targetpos.x);
+			angleZ = (position.z - targetpos.z);
+			angleR = sqrt(pow((position.x - targetpos.x), 2) + pow((position.z - targetpos.z), 2));
+			if (angleR >= 1.00) {
+				targetpos.x += (angleX / angleR) * 0.25;
+				targetpos.x += (angleZ / angleR) * 0.25;
+			}
+			else {
+				targetpos = position;
+			}
+		}
+	}
 }
 
 //描画
 void Player::Draw() {
 	ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
-	//if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("Player")) {
-			ImGui::SliderFloat("pos", &position.x, 50, -50);
-			ImGui::SliderFloat("pos", &position.y, 50, -50);
-			ImGui::SliderFloat("pos", &position.z, 50, -50);
-			ImGui::Text("Lv %d", Lv);
-
+			ImGui::SliderFloat("power", &power, 50, -50);
+		/*	ImGui::SliderFloat("position.z", &position.z, 50, -50);
+			ImGui::SliderFloat("pos.z", &targetpos.z, 50, -50);*/
+			ImGui::Text("Interval::%d", Interval);
+			ImGui::Text("FlashCount::%d", FlashCount);
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}
 		ImGui::TreePop();
 	}
-		//ImGui::TreePop();
-	//}
 	ImGui::End();
 
 	Object3d::PreDraw();
@@ -468,32 +489,42 @@ void Player::Rebound(InterEnemy* enemy) {
 	if (DamageFlag == true) {
 		
 		if (distance.x <= 0) {
-			rebound.x = -2.0f;
+			rebound.x = -0.2f;
 		} else {
-			rebound.x = 2.0f;
+			rebound.x = 0.2f;
 		}
 
 		if (distance.z <= 0) {
-			rebound.z = -2.0f;
+			rebound.z = -0.2f;
 		} else {
-			rebound.z = 2.0f;
+			rebound.z = 0.2f;
 		}
 		DamageFlag = false;
 	}
 
-	if (rebound.x != 0.0) {
-		if (rebound.x > 0) {
-			rebound.x *= 0.4f;
-		} else {
-			rebound.x *= 0.4f;
+	if (rebound.x >= 0.0) {
+		rebound.x -= 0.005f;
+		if (rebound.x <= 0.0f) {
+			rebound.x = 0.0f;
+		}
+	}
+	else {
+		rebound.x += 0.005f;
+		if (rebound.x >= 0.0f) {
+			rebound.x = 0.0f;
 		}
 	}
 
-	if (rebound.z != 0.0) {
-		if (rebound.z > 0) {
-			rebound.z *= 0.4f;
-		} else {
-			rebound.z *= 0.4f;
+	if (rebound.z >= 0.0) {
+		rebound.z -= 0.045f;
+		if (rebound.z <= 0.0f) {
+			rebound.z = 0.0f;
+		}
+	}
+	else {
+		rebound.z += 0.045f;
+		if (rebound.z >= 0.0f) {
+			rebound.z = 0.0f;
 		}
 	}
 
@@ -505,6 +536,7 @@ void Player::Rebound(InterEnemy* enemy) {
 	}
 }
 
+<<<<<<< HEAD
 void Player::ParticleBirth()
 {
 
@@ -519,3 +551,20 @@ void Player::ParticleBirth()
 	//	ParticleManager::GetInstance()->Add(10, { pos.x,pos.y + 5,pos.z }, vel, XMFLOAT3(), 0.0f, 1.0f);
 	//}
 }
+=======
+void Player::BirthParticle() {
+	
+	if(input->LeftTiltStick(input->Right) || input->LeftTiltStick(input->Left) || input->LeftTiltStick(input->Up) || input->LeftTiltStick(input->Down)){
+		for (int i = 0; i < 1; ++i) {
+
+			const float rnd_vel = 0.1f;
+			XMFLOAT3 vel{};
+			vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+
+			ParticleManager::GetInstance()->Add(10, { position.x,position.y,position.z }, vel, XMFLOAT3(), 1.0f, 0.0f);
+		}
+	}
+}
+>>>>>>> master

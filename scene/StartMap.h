@@ -33,6 +33,7 @@ public:
 	void Draw(DirectXCommon* dxCommon) override;
 
 private:
+	XMFLOAT3 cameraPos = { 0.0f,0.0f,0.0f };
 	Model* modelFloor = nullptr;
 	Object3d* objFloor;
 
@@ -50,7 +51,7 @@ private:
 	//ParticleManager* particleMan = nullptr;
 	//BossEnemy* bossenemy = nullptr;
 	Spawning* spawing[Spawn];
-
+	ParticleManager* particleMan = nullptr;
 	bool start = false;
 	bool Clear = false;
 };
