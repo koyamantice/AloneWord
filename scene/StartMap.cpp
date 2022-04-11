@@ -105,10 +105,12 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	Object3d::SetLightGroup(lightGroup);
 
 	//カメラポジション
-	cameraPos = player->GetTargetPosition();
+	cameraPos.x = player->GetTargetPosition().x;
+	cameraPos.y = player->GetTargetPosition().y + 10;
+	cameraPos.z = player->GetTargetPosition().z - 10;
 	// カメラ注視点をセット
 	camera->SetTarget(player->GetTargetPosition());
-	camera->SetEye({ cameraPos.x,cameraPos.y + 10,cameraPos.z - 10 });
+	camera->SetEye(cameraPos);
 	// モデル名を指定してファイル読み込み
 	model1 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 
@@ -261,9 +263,11 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	}
 	ui->Update();
 	object1->Update();
-	cameraPos = player->GetTargetPosition();
+	cameraPos.x = player->GetTargetPosition().x;
+	cameraPos.y = player->GetTargetPosition().y + 10;
+	cameraPos.z = player->GetTargetPosition().z - 10;
 	camera->SetTarget(player->GetTargetPosition());
-	camera->SetEye({ cameraPos.x,cameraPos.y + 10,cameraPos.z - 10 });
+	camera->SetEye(cameraPos);
 	/*if (cameraPos.z <= -20.0f) {
 
 	}*/
