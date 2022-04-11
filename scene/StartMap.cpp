@@ -31,7 +31,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 		enemy[i] = new Rice();
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
-		enemy[i]->SetLimit({20,-20,20,-20});
+		enemy[i]->SetLimit({ 20,-20,20,-20 });
 	}
 	for (int i = 0; i < 3; i++) {
 		spawing[i] = new Spawning();
@@ -70,8 +70,21 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	objStartMap->SetPosition({ 0,-1,2 });
 	objStartMap->SetRotation({ 0, 90, 0 });
 	objStartMap->SetScale({ 1.4f,1.5f,1.6f });
-	//普通のテクスチャ(板ポリ)
+	//バリケード
+	for (int i = 0; i < BlockMax; i++) {
+		objBlock[i] = Object3d::Create();
+		modelBlock[i] = Model::CreateFromOBJ("Fork");
+		objBlock[i]->SetModel(modelBlock[i]);
+		BlockRotation[i] = { 0.0f,90.0f,0.0f };
+		objBlock[i]->SetRotation(BlockRotation[i]);
+	}
+	//バリケード的なやつの各場所設定
+	objBlock[0]->SetPosition({ -5.5f,0.0f,-25.0f });
+	objBlock[1]->SetPosition({ 3.5f,0.0f,-25.0f });
+	objBlock[2]->SetPosition({ -5.5f,0.0f, 25.0f });
+	objBlock[3]->SetPosition({ 3.5f,0.0f, 25.0f });
 
+	//普通のテクスチャ(板ポリ)
 	warp = new Warp;
 	warp->Initialize();
 	warp->SetPosition({ 0.0f,10.0f,50.0f });
@@ -120,8 +133,13 @@ void StartMap::Finalize() {
 	for (int i = 0; i < StartEnemyMax; i++) {
 		enemy[i]->Finalize();
 	}
-	for (int i = 0; i < Spawn;i++) {
+	for (int i = 0; i < Spawn; i++) {
 		spawing[i]->Finalize();
+	}
+
+	for (int i = 0; i < BlockMax; i++) {
+		delete objBlock[i];
+		delete modelBlock[i];
 	}
 	player->Finalize();
 	delete modelFloor;
@@ -140,6 +158,10 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	player->Update();
 	particleMan->Update();
 	warp->Update(player);
+	for (int i = 0; i < BlockMax; i++) {
+		objBlock[i]->SetRotation(BlockRotation[i]);
+		objBlock[i]->Update();
+	}
 	for (int i = 0; i < StartEnemyMax; i++) {
 		spawing[1]->SetEnemy(i, enemy[i]);
 	}
@@ -192,25 +214,48 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	/*if (bossenemy->GetHP() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("CLEAR");
 	}*/
-		if (spawing[0]->GetIsAlive()==0) {
-			if (spawing[1]->GetIsAlive() == 0) {
-				if (spawing[2]->GetIsAlive() == 0) {
-					Clear = true;
-				}
+	if (spawing[0]->GetIsAlive() == 0) {
+		if (spawing[1]->GetIsAlive() == 0) {
+			if (spawing[2]->GetIsAlive() == 0) {
+				Clear = true;
 			}
 		}
-		if (player->GetPosition().z >= -22) {
-			start = true;
+	}
+	if (player->GetPosition().z >= -22) {
+		start = true;
+	}
+
+	if (!Clear) {
+		if (player->GetPosition().z >= 23.9f) {
+			player->SetPosition({ player->GetPosition().x,0,23.9f });
+		}
+		if (player->GetPosition().z <= -22 && start) {
+			player->SetPosition({ player->GetPosition().x,0,-22 });
+		}
+		if (start == true) {
+			if (BlockRotation[0].x <= 45.0f) {
+				BlockRotation[0].x++;
+				BlockRotation[2].x++;
+			}
+
+			if (BlockRotation[1].x >= -45.0f) {
+				BlockRotation[1].x--;
+				BlockRotation[3].x--;
+			}
+		}
+	}
+	else {
+		if (BlockRotation[0].x >= 0.0f) {
+			BlockRotation[0].x--;
+			BlockRotation[2].x--;
 		}
 
-		if (!Clear) {
-			if (player->GetPosition().z >= 23.9f) {
-				player->SetPosition({ player->GetPosition().x,0,23.9f });
-			}
-			if (player->GetPosition().z <= -22&&start) {
-				player->SetPosition({ player->GetPosition().x,0,-22 });
-			}
+		if (BlockRotation[1].x <= 0.0f) {
+			BlockRotation[1].x++;
+			BlockRotation[3].x++;
 		}
+	}
+
 	if (player->GetHp() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 	}
@@ -243,6 +288,9 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	objFloor->Draw();
 	//objFloor->Draw();
 	objStartMap->Draw();
+	for (int i = 0; i < BlockMax; i++) {
+		objBlock[i]->Draw();
+	}
 	Texture::PreDraw();
 	//limit->Draw();
 	warp->Draw();
@@ -250,6 +298,7 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	//Sprite::PreDraw();
 	//背景用
 	//sprite->Draw();
+
 
 	Object3d::PreDraw();
 	//object1->Draw(dxCommon->GetCmdList());
