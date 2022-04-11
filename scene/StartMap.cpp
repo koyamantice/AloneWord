@@ -251,7 +251,6 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	//背景用
 	//sprite->Draw();
 
-
 	Object3d::PreDraw();
 	//object1->Draw(dxCommon->GetCmdList());
 	//背景用
