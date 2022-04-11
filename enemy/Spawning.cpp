@@ -54,17 +54,17 @@ void Spawning::Finalize() {
 }
 
 void Spawning::Draw() {
-//	ImGui::Begin("test");
-//if (ImGui::TreeNode("Debug")) {
-//	if (ImGui::TreeNode("Spawn")) {
-//		ImGui::Text("hp %d", Hp);
-//
-//		ImGui::Unindent();
-//		ImGui::TreePop();
-//	}
-//	ImGui::TreePop();
-//}
-	//ImGui::End();
+	ImGui::Begin("test");
+if (ImGui::TreeNode("Debug")) {
+	if (ImGui::TreeNode("Spawn")) {
+		ImGui::Text("hp %d", Hp);
+
+		ImGui::Unindent();
+		ImGui::TreePop();
+	}
+	ImGui::TreePop();
+}
+	ImGui::End();
 	Object3d::PreDraw();
 	if (isAlive) {
 		object3d->Draw();
@@ -99,7 +99,7 @@ void Spawning::collideAttackArm() {
 	}
 	//ƒ{ƒX‚ÌHP‚ð‚Ö‚ç‚·
 	if (Hit == true) {
-		Hp -= ((int)weight * 2) * (int)power;
+		Hp -= (weight * 2) * power;
 		weight = 0.0f;
 		//boundpower.x = (float)(rand() % 4 - 2);
 		//boundpower.y = (float)(rand() % 6);

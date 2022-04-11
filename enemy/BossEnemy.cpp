@@ -84,7 +84,7 @@ bool BossEnemy::collidePlayer() {
 	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) && FlashCount == 0 && Interval == 0) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 		player->SetHp(playerhp - 1);
-		Interval = 20;
+		Interval = 100;
 		return true;
 	} else {
 		return false;

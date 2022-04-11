@@ -89,7 +89,7 @@ void Player::Update() {
 	//effecttexture->Update();
 	
 	if (ArmMoveNumber == 0 && AttackMoveNumber == 0 && AttackFlag == false
-		&& targetpos.x == position.x && targetpos.z == position.z) {
+		&& Interval <= 80) {
 		if (input->LeftTiltStick(input->Right)) {
 			if (position.x <= XMax) {
 				position.x += PlayerSpeed;
@@ -296,9 +296,8 @@ void Player::Update() {
 		Interval--;
 	}
 
-	if (Interval == 1) {
+	if (Interval != 100 && Interval != 0 && Interval % 20 == 0) {
 		FlashCount++;
-		Interval = 20;
 	}
 
 	if (FlashCount == 4) {
@@ -421,17 +420,17 @@ void Player::Update() {
 	//パーティクル発生
 	BirthParticle();
 	//カメラのためのポジション(更新)
-	if (FlashCount != 2 && Interval == 0) {
+	if (Interval == 0) {
 		targetpos = position;
 	}
-	else if(FlashCount == 2) {
+	else if(Interval != 0 && Interval <= 99) {
 		if (targetpos.x != position.x || targetpos.z != position.z) {
 			angleX = (position.x - targetpos.x);
 			angleZ = (position.z - targetpos.z);
 			angleR = sqrt(pow((position.x - targetpos.x), 2) + pow((position.z - targetpos.z), 2));
-			if (angleR >= 2.00) {
-				targetpos.x += (angleX / angleR) * 0.5;
-				targetpos.x += (angleZ / angleR) * 0.5;
+			if (angleR >= 1.00) {
+				targetpos.x += (angleX / angleR) * 0.25;
+				targetpos.x += (angleZ / angleR) * 0.25;
 			}
 			else {
 				targetpos = position;
@@ -445,9 +444,11 @@ void Player::Draw() {
 	ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("Player")) {
-			ImGui::SliderFloat("pos", &position.x, 50, -50);
-			ImGui::SliderFloat("targetpos", &targetpos.x, 50, -50);
-			ImGui::SliderFloat("rebound.x", &rebound.x, 50, -50);
+			ImGui::SliderFloat("power", &power, 50, -50);
+		/*	ImGui::SliderFloat("position.z", &position.z, 50, -50);
+			ImGui::SliderFloat("pos.z", &targetpos.z, 50, -50);*/
+			ImGui::Text("Interval::%d", Interval);
+			ImGui::Text("FlashCount::%d", FlashCount);
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}
