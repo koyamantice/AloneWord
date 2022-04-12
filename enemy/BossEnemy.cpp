@@ -53,19 +53,19 @@ void BossEnemy::Update() {
 }
 
 void BossEnemy::Draw() {
-	ImGui::Begin("test");
-	//	if (ImGui::TreeNode("Debug")) {
-	if (ImGui::TreeNode("Rice")) {
-		ImGui::SliderFloat("pos.x", &pos.x, 50, -50);
-		ImGui::SliderFloat("pos.y", &pos.y, 50, -50);
-		ImGui::SliderFloat("pos.z", &pos.z, 50, -50);
-		ImGui::Text("%d", pat);
-		ImGui::Unindent();
-		ImGui::TreePop();
-	}
-	//ImGui::TreePop();
-//}
-	ImGui::End();
+//	ImGui::Begin("test");
+//	//	if (ImGui::TreeNode("Debug")) {
+//	if (ImGui::TreeNode("Rice")) {
+//		ImGui::SliderFloat("pos.x", &pos.x, 50, -50);
+//		ImGui::SliderFloat("pos.y", &pos.y, 50, -50);
+//		ImGui::SliderFloat("pos.z", &pos.z, 50, -50);
+//		ImGui::Text("%d", pat);
+//		ImGui::Unindent();
+//		ImGui::TreePop();
+//	}
+//	//ImGui::TreePop();
+////}
+//	ImGui::End();
 
 	Object3d::PreDraw();
 	enemyobj->Draw();

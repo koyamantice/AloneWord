@@ -10,7 +10,7 @@ UI::UI(Player* player, BossEnemy* boss) {
 	Sprite::LoadTexture(5, L"Resources/2d/Life.png");
 	Sprite::LoadTexture(6, L"Resources/2d/Vignette.png");
 	BossHp = Sprite::Create(3, { 0.0f,0.0f });
-	BossHp->SetPosition({ 128.0f,20.0f });
+	BossHp->SetPosition({ 260.0f,20.0f });
 	BossHp->SetColor({ 1.0f,0.0f,0.0,1.0 });
 	//背景スプライト生成
 	PlaHp = Sprite::Create(3, { 0.0f,0.0f });

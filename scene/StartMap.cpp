@@ -39,13 +39,13 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 		spawing[i]->SetPlayer(player);
 	}
 
-	spawing[0]->SetPosition({ -15.0f,0.0f,15.0f });
+	spawing[0]->SetPosition({ -20.0f,0.0f,-4.0f });
 	spawing[0]->SetRotation({ 0,90,0 });
 
-	spawing[1]->SetPosition({ 0,0.0f,0 });
+	spawing[1]->SetPosition({ 0,0.0f,8.0f });
 	spawing[1]->SetRotation({ 0,90,0 });
 
-	spawing[2]->SetPosition({ 15.0f,0.0f,15.0f });
+	spawing[2]->SetPosition({ 20.0f,0.0f,-4.0f });
 	spawing[2]->SetRotation({ 0,90,0 });
 
 	for (int i = 0; i < StartEnemyMax; i++) {
@@ -196,7 +196,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		for (int colA = 0; colA < StartEnemyMax; colA++) {
 			for (int colB = 1; colB < StartEnemyMax; colB++) {
 				if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB) {//当たり判定と自機同士の当たり判定の削除
-					DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
+					//DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
 					enemy[colA]->SetHit(true);
 					enemy[colB]->SetHit(false);
 					break;
@@ -267,8 +267,8 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	/*if (cameraPos.z <= -20.0f) {
 
 	}*/
-	DebugText::GetInstance()->Print("PUSH to RB!!", 200, 100, 1.0f);
-	DebugText::GetInstance()->Print("PUSH to A!!", 200, 115, 1.0f);
+	DebugText::GetInstance()->Print("PUSH to RB!!", 1040, 620, 2.0f);
+	DebugText::GetInstance()->Print("PUSH to A!!", 1040, 660, 2.0f);
 }
 
 void StartMap::Draw(DirectXCommon* dxCommon) {
