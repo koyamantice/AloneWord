@@ -11,6 +11,7 @@ class TouchableObject;
 /// </summary>
 const int StartEnemyMax = 10;
 const int Spawn = 3;
+const int BlockMax = 4;
 class StartMap : public BaseScene {
 
 public:
@@ -40,6 +41,11 @@ private:
 	Model* modelStartMap = nullptr;
 	TouchableObject* objStartMap;
 	UI* ui = nullptr;
+
+	//バリケード(仮)
+	Model* modelBlock[BlockMax] = { nullptr };
+	Object3d* objBlock[BlockMax];
+	XMFLOAT3 BlockRotation[BlockMax];
 
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;
