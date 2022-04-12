@@ -32,6 +32,8 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
 		enemy[i]->SetLimit({ 20,-20,20,-20 });
+		enemy[i]->Update();
+
 	}
 	for (int i = 0; i < 3; i++) {
 		spawing[i] = new Spawning();
@@ -48,8 +50,14 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	spawing[2]->SetPosition({ 15.0f,0.0f,15.0f });
 	spawing[2]->SetRotation({ 0,90,0 });
 
-	for (int i = 0; i < StartEnemyMax; i++) {
+	for (int i = 0; i < 5; i++) {
 		spawing[0]->SetEnemy(i, enemy[i]);
+	}
+	for (int i = 0; i < 5; i++) {
+		spawing[1]->SetEnemy(i, enemy[i+5]);
+	}
+	for (int i = 0; i < 5; i++) {
+		spawing[2]->SetEnemy(i, enemy[i + 10]);
 	}
 	//オブジェクト初期化
 	/*modelGround = Model::CreateFromOBJ("ground");
@@ -158,12 +166,20 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	player->Update();
 	particleMan->Update();
 	warp->Update(player);
+	limit->Update();
+
 	for (int i = 0; i < BlockMax; i++) {
 		objBlock[i]->SetRotation(BlockRotation[i]);
 		objBlock[i]->Update();
 	}
-	for (int i = 0; i < StartEnemyMax; i++) {
-		spawing[1]->SetEnemy(i, enemy[i]);
+	for (int i = 0; i < 5; i++) {
+		spawing[0]->SetEnemy(i, enemy[i]);
+	}
+	for (int i = 0; i < 5; i++) {
+		spawing[1]->SetEnemy(i, enemy[i + 5]);
+	}
+	for (int i = 0; i < 5; i++) {
+		spawing[2]->SetEnemy(i, enemy[i + 10]);
 	}
 	for (int i = 0; i < 3; i++) {
 		spawing[i]->Update();
@@ -172,20 +188,12 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	if (warp->collidePlayer(player)) {
 		SceneManager::GetInstance()->ChangeScene("BOSS");
 	}
-	//bossenemy->Update();
-	limit->Update();
-
 	for (int i = 0; i < StartEnemyMax; i++) {
-		enemy[i]->Update();
+		//enemy[i]->Update();
 		player->ResetWeight(enemy[i]);
 		player->Rebound(enemy[i]);
 	}
 
-	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
-		Audio::GetInstance()->StopWave(0);
-		Audio::GetInstance()->StopWave(1);
-		Audio::GetInstance()->LoopWave(1, 0.7f);
-	}
 	if (input->TriggerKey(DIK_SPACE)) {
 		int a = 0;
 		a += 1;

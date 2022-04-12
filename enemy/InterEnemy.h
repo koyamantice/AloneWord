@@ -57,7 +57,7 @@ public:
 	void DeadEnemy();
 	void RandDeadPower();
 	void SetBasePos(XMFLOAT3 basePos) { this->basePos = basePos; }
-
+	void SetStop(bool stop);
 protected:
 	const float PI = 3.14f;
 
@@ -80,7 +80,7 @@ protected:
 	XMFLOAT3 basePos{};
 
 	float rad = 0.4f;
-
+	bool isStop = false;
 	float radius = 0.0f;
 	float speed = 0.0f;
 	float savespeed = 0.0f;

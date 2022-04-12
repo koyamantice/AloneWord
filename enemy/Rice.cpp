@@ -49,19 +49,20 @@ void Rice::Update() {
 	Interval = player->GetInterval();
 	FlashCount = player->GetFlashCount();
 	if (!IsAlive) {
-		IsTimer--;
-		if (IsTimer == 100) {
-			speed = (float)(rand() % 360);
-			scale = (float)(rand() % 10 + 10);
-			StartPos = pos;
-			frame = 0;
-			radius = speed * PI / 180.0f;
-			circleX = cosf(radius) * scale;
-			circleZ = sinf(radius) * scale;
-			pos.x = circleX + basePos.x;
-			pos.z = circleZ + basePos.z;
+		if (!isStop) {
+			IsTimer--;
+			if (IsTimer == 100) {
+				speed = (float)(rand() % 360);
+				scale = (float)(rand() % 10 + 10);
+				StartPos = pos;
+				frame = 0;
+				radius = speed * PI / 180.0f;
+				circleX = cosf(radius) * scale;
+				circleZ = sinf(radius) * scale;
+				pos.x = circleX + basePos.x;
+				pos.z = circleZ + basePos.z;
+			}
 		}
-
 		else if (IsTimer == 0) {
 			IsAlive = true;
 			appearance = true;
@@ -165,6 +166,15 @@ void Rice::Update() {
 
 //描画
 void Rice::Draw() {
+	ImGui::Begin("test");
+if (ImGui::TreeNode("Debug")) {
+		ImGui::Text("isStop::%d", isStop);
+		ImGui::Text("ISaLIVE::%d", IsAlive);
+		ImGui::Unindent();
+		ImGui::TreePop();
+	ImGui::TreePop();
+}
+ImGui::End();
 	if (IsAlive) {
 		Object3d::PreDraw();
 		enemyobj->Draw();

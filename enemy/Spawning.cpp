@@ -22,21 +22,9 @@ void Spawning::Initialize() {
 void Spawning::Update() {
 	object3d->Update();
 	object3d->SetPosition(pos);
-	if (sizeof(enemy)>0) {
-		if (enemy[0]==nullptr) {
-		} else {
-			for (int i = 0; i < 10; i++) {
-				if (enemy[i]->GetIsAlive() == 0) {
-					enemy[i]->SetBasePos(pos);
-					//enemy[i]->Update();
-				}
-			}
-		}
-	}
-	collideAttackArm();
 	texture->Update();
 	texture->SetPosition({ pos.x,pos.y + 5.0f,pos.z });
-	texture->SetScale({ (float)Hp * 0.05f,0.1f,0.2f });
+	texture->SetScale({ (float)Hp * 0.05f,0.1f,0.1f });
 
 	if (Hp>0) {
 		isAlive = true;
@@ -44,8 +32,21 @@ void Spawning::Update() {
 		isAlive = false;
 	}
 	if (isAlive) {
+		if (sizeof(enemy) > 0) {
+			if (enemy[0] != nullptr) {
+				for (int i = 0; i < EnemyMax; i++) {
+					enemy[i]->SetBasePos(pos);
+					enemy[i]->Update();
+				}
+			}
+		}
+		collideAttackArm();
 		if (Collision::CircleCollision(pos.x, pos.z, 2.0f, player->GetPosition().x, player->GetPosition().z, 1.5f)) {
 			player->BackPos();
+		}
+	} else {
+		for (int i = 0; i < EnemyMax; i++) {
+			enemy[i]->SetStop(true);
 		}
 	}
 
@@ -77,7 +78,7 @@ if (ImGui::TreeNode("Debug")) {
 
 }
 
-void Spawning::SetEnemy(const int& i, Rice* enemy) {
+void Spawning::SetEnemy(const int& i, InterEnemy* enemy) {
 	this->enemy[i] = enemy;
 }
 //UŒ‚ŠÖ”
