@@ -35,7 +35,7 @@ private:
 	XMFLOAT3 pos = { 0,0,0 };
 	Texture* texture=nullptr;
 	bool Hit=false;
-	float Hp = 12.0f;
+	float Hp = 8.0f;
 	bool isAlive = true;
 	Rice* enemy[10] = {};
 	Player* player = nullptr;
