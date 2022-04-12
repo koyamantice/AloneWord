@@ -75,11 +75,11 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	warp = new Warp;
 	warp->Initialize();
 	warp->SetPosition({ 0.0f,10.0f,50.0f });
-	/*limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
+	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
 	limit->TextureCreate();
 	limit->SetPosition({ 0.0f,0.01f,0.0f });
 	limit->SetRotation({ 90.0f,0, 0 });
-	limit->SetScale({ 6,5,5 });*/
+	limit->SetScale({ 5.5f, 5.5f,  5.5f});
 
 	//背景スプライト生成
 
@@ -151,7 +151,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		SceneManager::GetInstance()->ChangeScene("BOSS");
 	}
 	//bossenemy->Update();
-	//limit->Update();
+	limit->Update();
 
 	for (int i = 0; i < StartEnemyMax; i++) {
 		enemy[i]->Update();
@@ -244,7 +244,9 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	//objFloor->Draw();
 	objStartMap->Draw();
 	Texture::PreDraw();
-	//limit->Draw();
+	if (start&&!Clear) {
+		limit->Draw();
+	}
 	warp->Draw();
 
 	//Sprite::PreDraw();

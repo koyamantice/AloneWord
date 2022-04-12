@@ -14,10 +14,9 @@ void Spawning::Initialize() {
 	object3d->SetPosition(pos);
 	object3d->SetScale({1,1,1});
 
-	texture->SetPosition({ pos.x,pos.y + 3.0f,pos.z });
+	texture->SetPosition({ pos.x,pos.y + 4.5f,pos.z });
 	texture->SetRotation({ 0,0,0 });
 	texture->SetScale({ (float)Hp*0.05f,0.2f,0.2f });
-
 }
 
 void Spawning::Update() {
@@ -29,22 +28,26 @@ void Spawning::Update() {
 			for (int i = 0; i < 10; i++) {
 				if (enemy[i]->GetIsAlive() == 0) {
 					enemy[i]->SetBasePos(pos);
-					enemy[i]->Update();
+					//enemy[i]->Update();
 				}
 			}
 		}
 	}
 	collideAttackArm();
 	texture->Update();
-	texture->SetPosition({ pos.x,pos.y + 3.0f,pos.z });
-	texture->SetScale({ (float)Hp * 0.05f,0.2f,0.2f });
+	texture->SetPosition({ pos.x,pos.y + 5.0f,pos.z });
+	texture->SetScale({ (float)Hp * 0.05f,0.1f,0.2f });
 
 	if (Hp>0) {
 		isAlive = true;
 	} else {
 		isAlive = false;
 	}
-
+	if (isAlive) {
+		if (Collision::CircleCollision(pos.x, pos.z, 2.0f, player->GetPosition().x, player->GetPosition().z, 1.5f)) {
+			player->BackPos();
+		}
+	}
 
 }
 

@@ -107,13 +107,14 @@ public:
 	
 	//足元にパーティクル
 	void BirthParticle();
-
+	void BackPos();
 private:
 	Object3d* Armobj;
 	Object3d* object3d;
 	Model* model;
 	Model* Armmodel;
 	XMFLOAT3 pos = { 0,0,-10 };
+	XMFLOAT3 oldPos{};
 	XMFLOAT3 Armpos = { 0,0,0 };
 	XMFLOAT3 ArmRot = { 0,270,0 };
 	XMFLOAT3 distance{};
@@ -175,4 +176,5 @@ private:
 	float angleX;
 	float angleZ;
 	XMFLOAT3 targetpos = { 0,0,-10 };
+	
 };
