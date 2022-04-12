@@ -10,7 +10,7 @@
 #include "CollisionManager.h"
 void StartMap::Initialize(DirectXCommon* dxCommon) {
 	Texture::LoadTexture(0, L"Resources/2d/enemy.png");
-	Texture::LoadTexture(1, L"Resources/2d/limit.png");
+	//Texture::LoadTexture(1, L"Resources/2d/limit.png");
 	Texture::LoadTexture(2, L"Resources/2d/shadow.png");
 	Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
 	Texture::LoadTexture(4, L"Resources/2d/effect2.png");
@@ -31,7 +31,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 		enemy[i] = new Rice();
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
-		enemy[i]->SetLimit({ 20,-20,20,-20 });
+		//enemy[i]->SetLimit({ 20,-20,20,-20 });
 	}
 	for (int i = 0; i < 3; i++) {
 		spawing[i] = new Spawning();
@@ -88,11 +88,11 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	warp = new Warp;
 	warp->Initialize();
 	warp->SetPosition({ 0.0f,10.0f,50.0f });
-	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
-	limit->TextureCreate();
-	limit->SetPosition({ 0.0f,0.01f,0.0f });
-	limit->SetRotation({ 90.0f,0, 0 });
-	limit->SetScale({ 5.5f, 5.5f,  5.5f});
+	/*limit = texture::create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
+	limit->texturecreate();
+	limit->setposition({ 0.0f,0.01f,0.0f });
+	limit->setrotation({ 90.0f,0, 0 });
+	limit->setscale({ 5.5f, 5.5f,  5.5f});*/
 
 	//背景スプライト生成
 
@@ -173,7 +173,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		SceneManager::GetInstance()->ChangeScene("BOSS");
 	}
 	//bossenemy->Update();
-	limit->Update();
+	//limit->Update();
 
 	for (int i = 0; i < StartEnemyMax; i++) {
 		enemy[i]->Update();
@@ -293,7 +293,7 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	}
 	Texture::PreDraw();
 	if (start&&!Clear) {
-		limit->Draw();
+		//limit->Draw();
 	}
 	warp->Draw();
 
