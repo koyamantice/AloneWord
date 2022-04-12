@@ -37,7 +37,6 @@ void Spawning::Update() {
 	texture->Update();
 	texture->SetPosition({ pos.x,pos.y + 5.0f,pos.z });
 	texture->SetScale({ (float)Hp * 0.05f,0.05f,0.0f });
-
 	if (Hp>0) {
 		isAlive = true;
 	} else {
