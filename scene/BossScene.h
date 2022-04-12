@@ -53,5 +53,6 @@ private:
 	float weight = 0;
 	UI* ui=nullptr;
 	CollisionManager* collsionManager = nullptr;
+	ParticleManager* particleMan = nullptr;
 };
 
