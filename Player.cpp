@@ -5,6 +5,7 @@
 #include "DebugText.h"
 #include<sstream>
 #include<iomanip>
+#include "stdlib.h"
 #include"Rice.h"
 #include "SphereCollider.h"
 #include "ParticleManager.h"
@@ -237,15 +238,35 @@ void Player::Update() {
 		}
 		
 		SpeedSub =(int)( initspeed - ArmSpeed);
-		//どれくらい大振りしたかみたいなやつ
-		if (SpeedSub <= 90) {
-			power = 0.25;
-		} else if (SpeedSub > 90 && SpeedSub <= 180) {
-			power = 0.5;
-		} else if (SpeedSub > 180 && SpeedSub <= 270) {
-			power = 0.75;
-		} else {
-			power = 1.0;
+		if (AttackMoveNumber == 1 || AttackMoveNumber == 2) {
+			//どれくらい大振りしたかみたいなやつ
+			if (SpeedSub <= 90) {
+				power = 0.25;
+			}
+			else if (SpeedSub > 90 && SpeedSub <= 180) {
+				power = 0.5;
+			}
+			else if (SpeedSub > 180 && SpeedSub <= 270) {
+				power = 0.75;
+			}
+			else {
+				power = 1.0;
+			}
+		}
+		else {
+			//どれくらい大振りしたかみたいなやつ
+			if (SpeedSub >= -90) {
+				power = 0.25;
+			}
+			else if (SpeedSub < -90 && SpeedSub >= -180) {
+				power = 0.5;
+			}
+			else if (SpeedSub < -180 && SpeedSub >= -270) {
+				power = 0.75;
+			}
+			else {
+				power = 1.0;
+			}
 		}
 		if (frame2 <= frameMax2) {
 			frame2 = frame2 + 1;
@@ -441,6 +462,7 @@ void Player::Update() {
 
 //描画
 void Player::Draw() {
+<<<<<<< HEAD
 	//ImGui::Begin("test");
 	//if (ImGui::TreeNode("Debug")) {
 	//	if (ImGui::TreeNode("Player")) {
@@ -455,6 +477,19 @@ void Player::Draw() {
 	//	ImGui::TreePop();
 	//}
 	//ImGui::End();
+=======
+	/*ImGui::Begin("test");
+	if (ImGui::TreeNode("Debug")) {
+		if (ImGui::TreeNode("Player")) {
+			ImGui::SliderFloat("power", &power, 50, -50);
+			ImGui::Text("SpeedSub::%d", SpeedSub);
+			ImGui::Unindent();
+			ImGui::TreePop();
+		}
+		ImGui::TreePop();
+	}
+	ImGui::End();*/
+>>>>>>> 4a3bbbdfa1b150b79e6d6cbcb4ac4e809c75b7af
 
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {

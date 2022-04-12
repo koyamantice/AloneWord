@@ -195,7 +195,7 @@ bool Rice::collideArm() {
 	float armscale = player->GetArmScale();
 	int armMove = player->GetArmMoveNumber();
 	if (IsAlive && armMove >= 1 && !EnemyCatch && add == false && !Exp) {
-		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
+		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.8f, Armpos.x, Armpos.y, Armpos.z, 0.8f) == true) {
 			EnemyCatch = true;
 			armweight += 1.0f;
 			if (armweight == 1) {

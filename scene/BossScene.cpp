@@ -108,6 +108,10 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	FBXObject3d::SetCamera(camera);
 	// グラフィックスパイプライン生成
 	FBXObject3d::CreateGraphicsPipeline();
+	// パーティクルマネージャ生成
+	particleMan = ParticleManager::GetInstance();
+	particleMan->SetCamera(camera);
+
 
 	object1 = new FBXObject3d;
 	object1->Initialize();
@@ -152,6 +156,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	camera->Update();
 	player->Update();
 	bossenemy->Update();
+	particleMan->Update();
 	//objSphere->Update();
 	ui->Update();
 	for (int i = 0; i < BossEnemyMax; i++) {
@@ -213,10 +218,12 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	camera->SetEye({ player->GetTargetPosition().x,player->GetTargetPosition().y + 10,player->GetTargetPosition().z - 10 });
 	// 全ての衝突をチェック
 	//collsionManager->CheckAllCollisions();
-	DebugText::GetInstance()->Print("PUSH to RB!!",200, 100,1.0f);
-	DebugText::GetInstance()->Print("PUSH to A!!", 200, 115, 1.0f);
-	DebugText::GetInstance()->Print("RB and LB :Rotate", 1060, 620, 1.0f);
-	DebugText::GetInstance()->Print("A         :Hand", 1060, 650, 1.0f);
+	/*DebugText::GetInstance()->Print("PUSH to RB!!",200, 100,1.0f);
+	DebugText::GetInstance()->Print("PUSH to A!!", 200, 115, 1.0f);*/
+	DebugText::GetInstance()->Print("RB or LB :Rotate", 900, 620, 2.0f);
+	DebugText::GetInstance()->Print("A         :Hand", 900, 650, 2.0f);
+	//DebugText::GetInstance()->Print("PUSH to RB!!", 1040, 620, 2.0f);
+	//DebugText::GetInstance()->Print("PUSH to A!!", 1040, 660, 2.0f);
 }
 
 void BossScene::Draw(DirectXCommon* dxCommon) {
@@ -251,4 +258,6 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	}
 
 	ui->Draw();
+	// パーティクルの描画
+	particleMan->Draw(dxCommon->GetCmdList());
 }

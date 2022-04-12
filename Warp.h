@@ -51,7 +51,7 @@ private:
 	Model* Armmodel;*/
 	//エフェクト関係
 	Texture* Warptexture = nullptr;
-	XMFLOAT3 pos = { 0.0f,0.0f,20.0f };
+	XMFLOAT3 pos = { -1.0f,0.0f,36.0f };
 	
 public:
 	Sphere collider;
