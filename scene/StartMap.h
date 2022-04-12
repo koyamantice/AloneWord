@@ -50,7 +50,7 @@ private:
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;
 	DebugCamera* camera = { nullptr };
-	//Texture* limit = nullptr;
+	Texture* limit = nullptr;
 	Player* player = nullptr;
 	Rice* enemy[StartEnemyMax] = { nullptr };
 	Warp* warp = nullptr;

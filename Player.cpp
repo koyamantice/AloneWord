@@ -77,7 +77,7 @@ void Player::Finalize() {
 }
 
 void Player::Update() {
-	
+	oldPos = position;
 	XMFLOAT3 rot = this->object3d->GetRotation();
 	//if (!AttackFlag) {
 		rot.y = Ease(In, Quad, 0.9f, rot.y, AfterRot);
@@ -429,8 +429,8 @@ void Player::Update() {
 			angleZ = (position.z - targetpos.z);
 			angleR = sqrt(pow((position.x - targetpos.x), 2) + pow((position.z - targetpos.z), 2));
 			if (angleR >= 1.00) {
-				targetpos.x += (angleX / angleR) * 0.25;
-				targetpos.x += (angleZ / angleR) * 0.25;
+				targetpos.x += (angleX / angleR) * 0.25f;
+				targetpos.x += (angleZ / angleR) * 0.25f;
 			}
 			else {
 				targetpos = position;
@@ -445,8 +445,8 @@ void Player::Draw() {
 	if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("Player")) {
 			ImGui::SliderFloat("power", &power, 50, -50);
-		/*	ImGui::SliderFloat("position.z", &position.z, 50, -50);
-			ImGui::SliderFloat("pos.z", &targetpos.z, 50, -50);*/
+			ImGui::SliderFloat("position.z", &position.x, 50, -50);
+			ImGui::SliderFloat("pos.z", &oldPos.x, 50, -50);
 			ImGui::Text("Interval::%d", Interval);
 			ImGui::Text("FlashCount::%d", FlashCount);
 			ImGui::Unindent();
@@ -549,4 +549,8 @@ void Player::BirthParticle() {
 			ParticleManager::GetInstance()->Add(10, { position.x,position.y,position.z }, vel, XMFLOAT3(), 1.0f, 0.0f);
 		}
 	}
+
+}
+void Player::BackPos() {
+	position = oldPos;
 }
