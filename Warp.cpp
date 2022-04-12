@@ -40,7 +40,7 @@ void Warp::Update(Player*player) {
 
 //•`‰æ
 void Warp::Draw() {
-	ImGui::Begin("test");
+	/*ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("Warp")) {
 			ImGui::SliderFloat("pos", &pos.x, 50, -50);
@@ -51,7 +51,7 @@ void Warp::Draw() {
 		}
 		ImGui::TreePop();
 	}
-	ImGui::End();
+	ImGui::End();*/
 
 	Texture::PreDraw();
 	Warptexture->Draw();
