@@ -49,20 +49,19 @@ void Rice::Update() {
 	Interval = player->GetInterval();
 	FlashCount = player->GetFlashCount();
 	if (!IsAlive) {
-		if (!isStop) {
-			IsTimer--;
-			if (IsTimer == 100) {
-				speed = (float)(rand() % 360);
-				scale = (float)(rand() % 10 + 10);
-				StartPos = pos;
-				frame = 0;
-				radius = speed * PI / 180.0f;
-				circleX = cosf(radius) * scale;
-				circleZ = sinf(radius) * scale;
-				pos.x = circleX + basePos.x;
-				pos.z = circleZ + basePos.z;
-			}
+		IsTimer--;
+		if (IsTimer == 100) {
+			speed = (float)(rand() % 360);
+			scale = (float)(rand() % 10 + 10);
+			StartPos = pos;
+			frame = 0;
+			radius = speed * PI / 180.0f;
+			circleX = cosf(radius) * scale;
+			circleZ = sinf(radius) * scale;
+			pos.x = circleX + basePos.x;
+			pos.z = circleZ + basePos.z;
 		}
+
 		else if (IsTimer == 0) {
 			IsAlive = true;
 			appearance = true;
@@ -166,15 +165,6 @@ void Rice::Update() {
 
 //描画
 void Rice::Draw() {
-	ImGui::Begin("test");
-if (ImGui::TreeNode("Debug")) {
-		ImGui::Text("isStop::%d", isStop);
-		ImGui::Text("ISaLIVE::%d", IsAlive);
-		ImGui::Unindent();
-		ImGui::TreePop();
-	ImGui::TreePop();
-}
-ImGui::End();
 	if (IsAlive) {
 		Object3d::PreDraw();
 		enemyobj->Draw();
@@ -195,7 +185,7 @@ bool Rice::collideArm() {
 	float armscale = player->GetArmScale();
 	int armMove = player->GetArmMoveNumber();
 	if (IsAlive && armMove >= 1 && !EnemyCatch && add == false && !Exp) {
-		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, Armpos.x, Armpos.y, Armpos.z, 0.5f) == true) {
+		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.8f, Armpos.x, Armpos.y, Armpos.z, 0.8f) == true) {
 			EnemyCatch = true;
 			armweight += 1.0f;
 			if (armweight == 1) {

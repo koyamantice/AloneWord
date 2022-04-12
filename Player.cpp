@@ -5,6 +5,7 @@
 #include "DebugText.h"
 #include<sstream>
 #include<iomanip>
+#include "stdlib.h"
 #include"Rice.h"
 #include "SphereCollider.h"
 #include "ParticleManager.h"
@@ -237,15 +238,35 @@ void Player::Update() {
 		}
 		
 		SpeedSub =(int)( initspeed - ArmSpeed);
-		//どれくらい大振りしたかみたいなやつ
-		if (SpeedSub <= 90) {
-			power = 0.25;
-		} else if (SpeedSub > 90 && SpeedSub <= 180) {
-			power = 0.5;
-		} else if (SpeedSub > 180 && SpeedSub <= 270) {
-			power = 0.75;
-		} else {
-			power = 1.0;
+		if (AttackMoveNumber == 1 || AttackMoveNumber == 2) {
+			//どれくらい大振りしたかみたいなやつ
+			if (SpeedSub <= 90) {
+				power = 0.25;
+			}
+			else if (SpeedSub > 90 && SpeedSub <= 180) {
+				power = 0.5;
+			}
+			else if (SpeedSub > 180 && SpeedSub <= 270) {
+				power = 0.75;
+			}
+			else {
+				power = 1.0;
+			}
+		}
+		else {
+			//どれくらい大振りしたかみたいなやつ
+			if (SpeedSub >= -90) {
+				power = 0.25;
+			}
+			else if (SpeedSub < -90 && SpeedSub >= -180) {
+				power = 0.5;
+			}
+			else if (SpeedSub < -180 && SpeedSub >= -270) {
+				power = 0.75;
+			}
+			else {
+				power = 1.0;
+			}
 		}
 		if (frame2 <= frameMax2) {
 			frame2 = frame2 + 1;
@@ -455,7 +476,6 @@ void Player::Draw() {
 	//	ImGui::TreePop();
 	//}
 	//ImGui::End();
-
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
 		object3d->Draw();

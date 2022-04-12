@@ -10,7 +10,7 @@
 #include "CollisionManager.h"
 void StartMap::Initialize(DirectXCommon* dxCommon) {
 	Texture::LoadTexture(0, L"Resources/2d/enemy.png");
-	Texture::LoadTexture(1, L"Resources/2d/limit.png");
+	//Texture::LoadTexture(1, L"Resources/2d/limit.png");
 	Texture::LoadTexture(2, L"Resources/2d/shadow.png");
 	Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
 	Texture::LoadTexture(4, L"Resources/2d/effect2.png");
@@ -33,7 +33,6 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 		enemy[i]->Initialize();
 		enemy[i]->SetLimit({ 20,-20,20,-20 });
 		enemy[i]->Update();
-
 	}
 	for (int i = 0; i < 3; i++) {
 		spawing[i] = new Spawning();
@@ -41,23 +40,17 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 		spawing[i]->SetPlayer(player);
 	}
 
-	spawing[0]->SetPosition({ -15.0f,0.0f,15.0f });
+	spawing[0]->SetPosition({ -20.0f,0.0f,-4.0f });
 	spawing[0]->SetRotation({ 0,90,0 });
 
-	spawing[1]->SetPosition({ 0,0.0f,0 });
+	spawing[1]->SetPosition({ 0,0.0f,8.0f });
 	spawing[1]->SetRotation({ 0,90,0 });
 
-	spawing[2]->SetPosition({ 15.0f,0.0f,15.0f });
+	spawing[2]->SetPosition({ 20.0f,0.0f,-4.0f });
 	spawing[2]->SetRotation({ 0,90,0 });
 
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < StartEnemyMax; i++) {
 		spawing[0]->SetEnemy(i, enemy[i]);
-	}
-	for (int i = 0; i < 5; i++) {
-		spawing[1]->SetEnemy(i, enemy[i+5]);
-	}
-	for (int i = 0; i < 5; i++) {
-		spawing[2]->SetEnemy(i, enemy[i + 10]);
 	}
 	//オブジェクト初期化
 	/*modelGround = Model::CreateFromOBJ("ground");
@@ -96,11 +89,11 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	warp = new Warp;
 	warp->Initialize();
 	warp->SetPosition({ 0.0f,10.0f,50.0f });
-	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
-	limit->TextureCreate();
-	limit->SetPosition({ 0.0f,0.01f,0.0f });
-	limit->SetRotation({ 90.0f,0, 0 });
-	limit->SetScale({ 5.5f, 5.5f,  5.5f});
+	/*limit = texture::create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
+	limit->texturecreate();
+	limit->setposition({ 0.0f,0.01f,0.0f });
+	limit->setrotation({ 90.0f,0, 0 });
+	limit->setscale({ 5.5f, 5.5f,  5.5f});*/
 
 	//背景スプライト生成
 
@@ -113,10 +106,12 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	Object3d::SetLightGroup(lightGroup);
 
 	//カメラポジション
-	cameraPos = player->GetTargetPosition();
+	cameraPos.x = player->GetTargetPosition().x;
+	cameraPos.y = player->GetTargetPosition().y + 10;
+	cameraPos.z = player->GetTargetPosition().z - 10;
 	// カメラ注視点をセット
 	camera->SetTarget(player->GetTargetPosition());
-	camera->SetEye({ cameraPos.x,cameraPos.y + 10,cameraPos.z - 10 });
+	camera->SetEye(cameraPos);
 	// モデル名を指定してファイル読み込み
 	model1 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 
@@ -166,20 +161,12 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	player->Update();
 	particleMan->Update();
 	warp->Update(player);
-	limit->Update();
-
 	for (int i = 0; i < BlockMax; i++) {
 		objBlock[i]->SetRotation(BlockRotation[i]);
 		objBlock[i]->Update();
 	}
-	for (int i = 0; i < 5; i++) {
-		spawing[0]->SetEnemy(i, enemy[i]);
-	}
-	for (int i = 0; i < 5; i++) {
-		spawing[1]->SetEnemy(i, enemy[i + 5]);
-	}
-	for (int i = 0; i < 5; i++) {
-		spawing[2]->SetEnemy(i, enemy[i + 10]);
+	for (int i = 0; i < StartEnemyMax; i++) {
+		spawing[1]->SetEnemy(i, enemy[i]);
 	}
 	for (int i = 0; i < 3; i++) {
 		spawing[i]->Update();
@@ -189,11 +176,16 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		SceneManager::GetInstance()->ChangeScene("BOSS");
 	}
 	for (int i = 0; i < StartEnemyMax; i++) {
-		//enemy[i]->Update();
+		enemy[i]->Update();
 		player->ResetWeight(enemy[i]);
 		player->Rebound(enemy[i]);
 	}
 
+	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
+		Audio::GetInstance()->StopWave(0);
+		Audio::GetInstance()->StopWave(1);
+		Audio::GetInstance()->LoopWave(1, 0.7f);
+	}
 	if (input->TriggerKey(DIK_SPACE)) {
 		int a = 0;
 		a += 1;
@@ -204,7 +196,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		for (int colA = 0; colA < StartEnemyMax; colA++) {
 			for (int colB = 1; colB < StartEnemyMax; colB++) {
 				if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB) {//当たり判定と自機同士の当たり判定の削除
-					DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
+					//DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
 					enemy[colA]->SetHit(true);
 					enemy[colB]->SetHit(false);
 					break;
@@ -242,25 +234,25 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		}
 		if (start == true) {
 			if (BlockRotation[0].x <= 45.0f) {
-				BlockRotation[0].x++;
-				BlockRotation[2].x++;
+				BlockRotation[0].x += 1.5f;
+				BlockRotation[2].x += 1.5f;
 			}
 
 			if (BlockRotation[1].x >= -45.0f) {
-				BlockRotation[1].x--;
-				BlockRotation[3].x--;
+				BlockRotation[1].x -= 1.5f;
+				BlockRotation[3].x -= 1.5f;
 			}
 		}
 	}
 	else {
 		if (BlockRotation[0].x >= 0.0f) {
-			BlockRotation[0].x--;
-			BlockRotation[2].x--;
+			BlockRotation[0].x -= 1.5f;
+			BlockRotation[2].x -= 1.5f;
 		}
 
 		if (BlockRotation[1].x <= 0.0f) {
-			BlockRotation[1].x++;
-			BlockRotation[3].x++;
+			BlockRotation[1].x += 1.5f;
+			BlockRotation[3].x += 1.5f;
 		}
 	}
 
@@ -269,14 +261,18 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	}
 	ui->Update();
 	object1->Update();
-	cameraPos = player->GetTargetPosition();
+	cameraPos.x = player->GetTargetPosition().x;
+	cameraPos.y = player->GetTargetPosition().y + 10;
+	cameraPos.z = player->GetTargetPosition().z - 10;
 	camera->SetTarget(player->GetTargetPosition());
-	camera->SetEye({ cameraPos.x,cameraPos.y + 10,cameraPos.z - 10 });
+	camera->SetEye(cameraPos);
 	/*if (cameraPos.z <= -20.0f) {
 
 	}*/
-	DebugText::GetInstance()->Print("PUSH to RB!!", 200, 100, 1.0f);
-	DebugText::GetInstance()->Print("PUSH to A!!", 200, 115, 1.0f);
+	/*DebugText::GetInstance()->Print("PUSH to RB!!", 1040, 620, 2.0f);
+	DebugText::GetInstance()->Print("PUSH to A!!", 1040, 660, 2.0f);*/
+	DebugText::GetInstance()->Print("RB or LB :Rotate", 900, 620, 2.0f);
+	DebugText::GetInstance()->Print("A         :Hand", 900, 650, 2.0f);
 }
 
 void StartMap::Draw(DirectXCommon* dxCommon) {
@@ -301,7 +297,7 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	}
 	Texture::PreDraw();
 	if (start&&!Clear) {
-		limit->Draw();
+		//limit->Draw();
 	}
 	warp->Draw();
 

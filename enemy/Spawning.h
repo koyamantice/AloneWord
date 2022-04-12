@@ -1,8 +1,8 @@
 #pragma once
 #include <DirectXMath.h>
-#include"InterEnemy.h"
+#include"Rice.h"
 #include"Player.h"
-const int EnemyMax = 5;
+
 class Spawning {
 private:
 	// DirectX::‚ðÈ—ª
@@ -19,7 +19,7 @@ public:
 	void Finalize();
 	void Draw();
 
-	void SetEnemy(const int& i, InterEnemy*enemy);
+	void SetEnemy(const int& i,Rice*enemy);
 public:
 	const XMFLOAT3& GetPosition() { return  object3d->GetPosition(); }
 	const XMFLOAT3& GetRotation() { return object3d->GetRotation(); }
@@ -35,9 +35,9 @@ private:
 	XMFLOAT3 pos = { 0,0,0 };
 	Texture* texture=nullptr;
 	bool Hit=false;
-	float Hp = 4.0f;
+	float Hp = 8.0f;
 	bool isAlive = true;
-	InterEnemy* enemy[EnemyMax] = {};
+	Rice* enemy[10] = {};
 	Player* player = nullptr;
 };
 

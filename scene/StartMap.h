@@ -9,7 +9,7 @@ class TouchableObject;
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>
-const int StartEnemyMax = 15;
+const int StartEnemyMax = 10;
 const int Spawn = 3;
 const int BlockMax = 4;
 class StartMap : public BaseScene {
@@ -52,7 +52,7 @@ private:
 	DebugCamera* camera = { nullptr };
 	Texture* limit = nullptr;
 	Player* player = nullptr;
-	InterEnemy* enemy[StartEnemyMax] = { nullptr };
+	Rice* enemy[StartEnemyMax] = { nullptr };
 	Warp* warp = nullptr;
 	//BossEnemy* bossenemy = nullptr;
 	Spawning* spawing[Spawn];

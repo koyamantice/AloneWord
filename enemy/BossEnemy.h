@@ -24,7 +24,7 @@ public:
 private:
 	float Afterrot = 90;//‰ŠúŒü‚«
 	//
-	float BossHP = 50;
+	float BossHP = 40;
 	bool BossHit = false;
 	bool Effect = false;
 	//

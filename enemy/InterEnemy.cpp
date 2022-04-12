@@ -52,7 +52,3 @@ void InterEnemy::RandDeadPower() {
 	Deadbound.y = Deadbound.y / 10;
 	Deadbound.z = Deadbound.z / 10;
 }
-
-void InterEnemy::SetStop(bool stop) {
-	isStop = stop;
-}
