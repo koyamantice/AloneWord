@@ -462,7 +462,6 @@ void Player::Update() {
 
 //描画
 void Player::Draw() {
-<<<<<<< HEAD
 	//ImGui::Begin("test");
 	//if (ImGui::TreeNode("Debug")) {
 	//	if (ImGui::TreeNode("Player")) {
@@ -477,19 +476,6 @@ void Player::Draw() {
 	//	ImGui::TreePop();
 	//}
 	//ImGui::End();
-=======
-	/*ImGui::Begin("test");
-	if (ImGui::TreeNode("Debug")) {
-		if (ImGui::TreeNode("Player")) {
-			ImGui::SliderFloat("power", &power, 50, -50);
-			ImGui::Text("SpeedSub::%d", SpeedSub);
-			ImGui::Unindent();
-			ImGui::TreePop();
-		}
-		ImGui::TreePop();
-	}
-	ImGui::End();*/
->>>>>>> 4a3bbbdfa1b150b79e6d6cbcb4ac4e809c75b7af
 
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {

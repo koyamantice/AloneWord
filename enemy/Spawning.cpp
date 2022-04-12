@@ -24,11 +24,7 @@ void Spawning::Update() {
 	object3d->SetPosition(pos);
 	texture->Update();
 	texture->SetPosition({ pos.x,pos.y + 5.0f,pos.z });
-<<<<<<< HEAD
-	texture->SetScale({ (float)Hp * 0.05f,0.1f,0.1f });
-=======
 	texture->SetScale({ (float)Hp * 0.05f,0.05f,0.0f });
->>>>>>> 4a3bbbdfa1b150b79e6d6cbcb4ac4e809c75b7af
 
 	if (Hp>0) {
 		isAlive = true;
@@ -49,9 +45,9 @@ void Spawning::Update() {
 			player->BackPos();
 		}
 	} else {
-		for (int i = 0; i < EnemyMax; i++) {
-			enemy[i]->SetStop(true);
-		}
+		//for (int i = 0; i < EnemyMax; i++) {
+			//enemy[i]->SetStop(true);
+		//}
 	}
 
 }

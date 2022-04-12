@@ -31,13 +31,8 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 		enemy[i] = new Rice();
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
-<<<<<<< HEAD
 		enemy[i]->SetLimit({ 20,-20,20,-20 });
 		enemy[i]->Update();
-
-=======
-		//enemy[i]->SetLimit({ 20,-20,20,-20 });
->>>>>>> 4a3bbbdfa1b150b79e6d6cbcb4ac4e809c75b7af
 	}
 	for (int i = 0; i < 3; i++) {
 		spawing[i] = new Spawning();
@@ -172,8 +167,6 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	player->Update();
 	particleMan->Update();
 	warp->Update(player);
-	limit->Update();
-
 	for (int i = 0; i < BlockMax; i++) {
 		objBlock[i]->SetRotation(BlockRotation[i]);
 		objBlock[i]->Update();
@@ -194,12 +187,6 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	if (warp->collidePlayer(player)) {
 		SceneManager::GetInstance()->ChangeScene("BOSS");
 	}
-<<<<<<< HEAD
-=======
-	//bossenemy->Update();
-	//limit->Update();
-
->>>>>>> 4a3bbbdfa1b150b79e6d6cbcb4ac4e809c75b7af
 	for (int i = 0; i < StartEnemyMax; i++) {
 		//enemy[i]->Update();
 		player->ResetWeight(enemy[i]);
@@ -291,7 +278,9 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	}*/
 	/*DebugText::GetInstance()->Print("PUSH to RB!!", 1040, 620, 2.0f);
 	DebugText::GetInstance()->Print("PUSH to A!!", 1040, 660, 2.0f);*/
-	DebugText::GetInstance()->Print("RB or LB :Rotate", 900, 620, 2.0f);
+	if (player->GetArmWeight()>0) {
+		DebugText::GetInstance()->Print("RB or LB :Rotate", 900, 620, 2.0f);
+	}
 	DebugText::GetInstance()->Print("A         :Hand", 900, 650, 2.0f);
 }
 

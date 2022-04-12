@@ -166,15 +166,15 @@ void Rice::Update() {
 
 //描画
 void Rice::Draw() {
-	ImGui::Begin("test");
-if (ImGui::TreeNode("Debug")) {
-		ImGui::Text("isStop::%d", isStop);
-		ImGui::Text("ISaLIVE::%d", IsAlive);
-		ImGui::Unindent();
-		ImGui::TreePop();
-	ImGui::TreePop();
-}
-ImGui::End();
+//	ImGui::Begin("test");
+//if (ImGui::TreeNode("Debug")) {
+//		ImGui::Text("isStop::%d", isStop);
+//		ImGui::Text("ISaLIVE::%d", IsAlive);
+//		ImGui::Unindent();
+//		ImGui::TreePop();
+//	ImGui::TreePop();
+//}
+//ImGui::End();
 	if (IsAlive) {
 		Object3d::PreDraw();
 		enemyobj->Draw();
