@@ -236,25 +236,25 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		}
 		if (start == true) {
 			if (BlockRotation[0].x <= 45.0f) {
-				BlockRotation[0].x++;
-				BlockRotation[2].x++;
+				BlockRotation[0].x += 1.5f;
+				BlockRotation[2].x += 1.5f;
 			}
 
 			if (BlockRotation[1].x >= -45.0f) {
-				BlockRotation[1].x--;
-				BlockRotation[3].x--;
+				BlockRotation[1].x -= 1.5f;
+				BlockRotation[3].x -= 1.5f;
 			}
 		}
 	}
 	else {
 		if (BlockRotation[0].x >= 0.0f) {
-			BlockRotation[0].x--;
-			BlockRotation[2].x--;
+			BlockRotation[0].x -= 1.5f;
+			BlockRotation[2].x -= 1.5f;
 		}
 
 		if (BlockRotation[1].x <= 0.0f) {
-			BlockRotation[1].x++;
-			BlockRotation[3].x++;
+			BlockRotation[1].x += 1.5f;
+			BlockRotation[3].x += 1.5f;
 		}
 	}
 

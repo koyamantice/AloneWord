@@ -108,6 +108,10 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	FBXObject3d::SetCamera(camera);
 	// グラフィックスパイプライン生成
 	FBXObject3d::CreateGraphicsPipeline();
+	// パーティクルマネージャ生成
+	particleMan = ParticleManager::GetInstance();
+	particleMan->SetCamera(camera);
+
 
 	object1 = new FBXObject3d;
 	object1->Initialize();
@@ -152,6 +156,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	camera->Update();
 	player->Update();
 	bossenemy->Update();
+	particleMan->Update();
 	//objSphere->Update();
 	ui->Update();
 	for (int i = 0; i < BossEnemyMax; i++) {
@@ -251,4 +256,6 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	}
 
 	ui->Draw();
+	// パーティクルの描画
+	particleMan->Draw(dxCommon->GetCmdList());
 }
