@@ -136,7 +136,7 @@ void BossEnemy::Fork() {
 	XMFLOAT3 AfterPos{};
 	if (AttackCount > 180) {
 		if (!active) {
-			action = 1;//(rand() % 2);
+			action = (rand() % 2);
 			frame = 0;
 			pat = 1;
 			active = true;
