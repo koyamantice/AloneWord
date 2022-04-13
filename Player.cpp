@@ -237,42 +237,42 @@ void Player::Update() {
 			ArmRot.y = initArmRotation - 360.0f * easeBack(frame2 / frameMax2);
 		}
 		
-		SpeedSub =(int)( initspeed - ArmSpeed);
+		SpeedSub =(int)(initspeed - ArmSpeed);
 		if (AttackMoveNumber == 1 || AttackMoveNumber == 2) {
 			//どれくらい大振りしたかみたいなやつ
 			if (SpeedSub <= 90) {
-				power = 0.25;
+				power = 0.25f;
 			}
 			else if (SpeedSub > 90 && SpeedSub <= 180) {
-				power = 0.5;
+				power = 0.5f;
 			}
 			else if (SpeedSub > 180 && SpeedSub <= 270) {
-				power = 0.75;
+				power = 0.75f;
 			}
 			else {
-				power = 1.0;
+				power = 1.0f;
 			}
 		}
 		else {
 			//どれくらい大振りしたかみたいなやつ
 			if (SpeedSub >= -90) {
-				power = 0.25;
+				power = 0.25f;
 			}
 			else if (SpeedSub < -90 && SpeedSub >= -180) {
-				power = 0.5;
+				power = 0.5f;
 			}
 			else if (SpeedSub < -180 && SpeedSub >= -270) {
-				power = 0.75;
+				power = 0.75f;
 			}
 			else {
-				power = 1.0;
+				power = 1.0f;
 			}
 		}
-		if (frame2 <= frameMax2) {
+		if (frame2 < frameMax2) {
 			frame2 = frame2 + 1;
 		} else {
 			AttackFlag = false;
-			frameMax2 = 80.0f;
+			frameMax2 = 40.0f;
 		}
 	} 
 
@@ -280,7 +280,7 @@ void Player::Update() {
 	if (AttackMoveNumber == 1 || AttackMoveNumber == 3) {
 		if (ArmWeight>0) {
 			Armscale = initscale + 3.0f * easeInOut(frame3 / frameMax3);
-			if (frame3 <= frameMax3) {
+			if (frame3 < frameMax3) {
 				frame3 = frame3 + 1;
 			} else {
 				if (AttackMoveNumber == 1) {
@@ -291,24 +291,24 @@ void Player::Update() {
 				initscale = Armscale;
 				scaleVel = 3.0f;
 				frame3 = 0;
-				frameMax3 = 20.0f;
+				frameMax3 = frameMax2;
 			}
 		} else {
 			AttackMoveNumber = 2;
 			scaleVel = Armscale - initscale;
 			initscale = Armscale;
 			frame3 = 0;
-			frameMax3 = 20.0f;
+			frameMax3 = frameMax2/20;
 		}
 	}
 
 	else if (AttackMoveNumber == 2 || AttackMoveNumber == 4) {
 		Armscale = initscale - scaleVel * easeInOut(frame3 / frameMax3);
-		if (frame3 <= frameMax3) {
+		if (frame3 < frameMax3) {
 			frame3 = frame3 + 1;
 		} else {
 			AttackMoveNumber = 0;
-			frameMax3 = 80.0f;
+			frameMax3 = frameMax2;
 		}
 	}
 
@@ -462,20 +462,24 @@ void Player::Update() {
 
 //描画
 void Player::Draw() {
-	//ImGui::Begin("test");
-	//if (ImGui::TreeNode("Debug")) {
-	//	if (ImGui::TreeNode("Player")) {
-	//		ImGui::SliderFloat("power", &power, 50, -50);
-	//		ImGui::SliderFloat("position.z", &position.x, 50, -50);
-	//		ImGui::SliderFloat("pos.z", &oldPos.x, 50, -50);
-	//		ImGui::Text("Interval::%d", Interval);
-	//		ImGui::Text("FlashCount::%d", FlashCount);
-	//		ImGui::Unindent();
-	//		ImGui::TreePop();
-	//	}
-	//	ImGui::TreePop();
-	//}
-	//ImGui::End();
+	ImGui::Begin("test");
+	if (ImGui::TreeNode("Debug")) {
+		if (ImGui::TreeNode("Player")) {
+			ImGui::SliderFloat("frame2", &frame2, 60, 0);
+			ImGui::SliderFloat("frame3", &frame3, 60, 0);
+			ImGui::SliderFloat("frame2", &frameMax2, 60, 0);
+			ImGui::SliderFloat("frame3", &frameMax3, 60, 0);
+
+			//ImGui::SliderFloat("position.z", &position.x, 50, -50);
+			//ImGui::SliderFloat("pos.z", &oldPos.x, 50, -50);
+			//ImGui::Text("Interval::%d", Interval);
+			//ImGui::Text("FlashCount::%d", FlashCount);
+			ImGui::Unindent();
+			ImGui::TreePop();
+		}
+		ImGui::TreePop();
+	}
+	ImGui::End();
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
 		object3d->Draw();

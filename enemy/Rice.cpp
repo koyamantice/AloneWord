@@ -27,7 +27,7 @@ void Rice::Initialize() {
 	texture->SetScale({ 0.2f,0.2f,0.2f });
 	
 	//texture->SetColor({ 1.0f,0.0,0.0,1.0f });
-	Restexture = Texture::Create(3, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Restexture = Texture::Create(6, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	Restexture->TextureCreate();
 	Restexture->SetPosition(pos);
 	Restexture->SetRotation({ 90,0,0 });

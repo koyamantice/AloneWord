@@ -22,7 +22,7 @@ Warp::Warp() {
 }
 
 void Warp::Initialize() {
-	Warptexture = Texture::Create(6, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Warptexture = Texture::Create(5, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	Warptexture->TextureCreate();
 	Warptexture->SetRotation({ 90.0f, 0.0f, 0.0f });
 	Warptexture->SetScale({ 0.3f,0.3f,0.3f });

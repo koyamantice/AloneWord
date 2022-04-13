@@ -9,13 +9,13 @@
 #include "SphereCollider.h"
 #include "CollisionManager.h"
 void StartMap::Initialize(DirectXCommon* dxCommon) {
-	Texture::LoadTexture(0, L"Resources/2d/enemy.png");
-	//Texture::LoadTexture(1, L"Resources/2d/limit.png");
-	Texture::LoadTexture(2, L"Resources/2d/shadow.png");
-	Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
-	Texture::LoadTexture(4, L"Resources/2d/effect2.png");
-	Texture::LoadTexture(5, L"Resources/2d/PlayerHP.png");
-	Texture::LoadTexture(6, L"Resources/2d/magic2.png");
+	//Texture::LoadTexture(0, L"Resources/2d/enemy.png");
+	////Texture::LoadTexture(1, L"Resources/2d/limit.png");
+	//Texture::LoadTexture(2, L"Resources/2d/shadow.png");
+	//Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
+	//Texture::LoadTexture(4, L"Resources/2d/effect2.png");
+	//Texture::LoadTexture(5, L"Resources/2d/PlayerHP.png");
+	//Texture::LoadTexture(6, L"Resources/2d/magic2.png");
 	// カメラ生成
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
@@ -234,25 +234,25 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		}
 		if (start == true) {
 			if (BlockRotation[0].x <= 45.0f) {
-				BlockRotation[0].x += 1.5f;
-				BlockRotation[2].x += 1.5f;
+				BlockRotation[0].x += 4.5f;
+				BlockRotation[2].x += 4.5f;
 			}
 
 			if (BlockRotation[1].x >= -45.0f) {
-				BlockRotation[1].x -= 1.5f;
-				BlockRotation[3].x -= 1.5f;
+				BlockRotation[1].x -= 4.5f;
+				BlockRotation[3].x -= 4.5f;
 			}
 		}
 	}
 	else {
 		if (BlockRotation[0].x >= 0.0f) {
-			BlockRotation[0].x -= 1.5f;
-			BlockRotation[2].x -= 1.5f;
+			BlockRotation[0].x -= 4.5f;
+			BlockRotation[2].x -= 4.5f;
 		}
 
 		if (BlockRotation[1].x <= 0.0f) {
-			BlockRotation[1].x += 1.5f;
-			BlockRotation[3].x += 1.5f;
+			BlockRotation[1].x += 4.5f;
+			BlockRotation[3].x += 4.5f;
 		}
 	}
 

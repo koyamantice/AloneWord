@@ -9,11 +9,11 @@
 #include "SphereCollider.h"
 #include "CollisionManager.h"
 void BossScene::Initialize(DirectXCommon* dxCommon) {
-	Texture::LoadTexture(0, L"Resources/2d/enemy.png");
-	Texture::LoadTexture(1, L"Resources/2d/limit.png");
-	Texture::LoadTexture(2, L"Resources/2d/shadow.png");
-	Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
-	Texture::LoadTexture(4, L"Resources/2d/effect2.png");
+	//Texture::LoadTexture(0, L"Resources/2d/enemy.png");
+	//Texture::LoadTexture(1, L"Resources/2d/limit.png");
+	//Texture::LoadTexture(2, L"Resources/2d/shadow.png");
+	//Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
+	//Texture::LoadTexture(4, L"Resources/2d/effect2.png");
 	//インスタンス取得
 	collsionManager = CollisionManager::GetInstance();
 	// カメラ生成

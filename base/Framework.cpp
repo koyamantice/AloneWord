@@ -66,6 +66,13 @@ void Framework::Initialize(DirectXCommon* dxCommon) {
 	FbxLoader::GetInstance()->Initialize(dxcommon->GetDev());
 	// パーティクルマネージャ初期化
 	ParticleManager::GetInstance()->Initialize(dxcommon->GetDev());
+	Texture::LoadTexture(0, L"Resources/2d/enemy.png");
+	Texture::LoadTexture(1, L"Resources/2d/shadow.png");
+	Texture::LoadTexture(2, L"Resources/2d/Resporn.png");
+	Texture::LoadTexture(3, L"Resources/2d/effect2.png");
+	Texture::LoadTexture(4, L"Resources/2d/PlayerHP.png");
+	Texture::LoadTexture(5, L"Resources/2d/magic2.png");
+	Texture::LoadTexture(6, L"Resources/2d/Resporn.png");
 
 }
 

@@ -158,9 +158,9 @@ private:
 	float frame = 0.0f;
 	float frameMax = 15.0f;
 	float frame2 = 0.0f;
-	float frameMax2 = 55.0f;
+	float frameMax2 = 40.0f;
 	float frame3 = 0.0f;
-	float frameMax3 = 60.0f;
+	float frameMax3 = 40.0f;
 	//ステータス的なやつ
 	int HP = 10;
 	int Lv = 1;
