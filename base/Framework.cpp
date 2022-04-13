@@ -7,16 +7,19 @@ void Framework::Run() {
 	Initialize(dxcommon);
 	while (true)//ゲームループ
 	{
-		//毎フレーム更新
-		Update(dxcommon);
+		if (FPSManager::GetInstance()->Run()) {
 
-		//終了リクエストが来たら抜ける
-		if (IsEndRequst()) {
-			break;
+			//毎フレーム更新
+			Update(dxcommon);
+
+			//終了リクエストが来たら抜ける
+			if (IsEndRequst()) {
+				break;
+			}
+
+			//描画
+			Draw(dxcommon);
 		}
-
-		//描画
-		Draw(dxcommon);
 	}
 	//ゲームの終了
 	Finalize();
@@ -35,7 +38,8 @@ void Framework::Initialize(DirectXCommon* dxCommon) {
 	audio = Audio::GetInstance();
 	audio->Initialize();	
 	
-	
+	fps = FPSManager::GetInstance();
+	fps->Init();
 	//スプライト関係
 	// スプライト静的初期化
 	Sprite::StaticInitialize(dxcommon->GetDev(), dxcommon->GetCmdList(),WinApp::window_width, WinApp::window_height);

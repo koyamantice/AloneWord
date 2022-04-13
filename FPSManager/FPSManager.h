@@ -10,18 +10,23 @@
 class FPSManager
 {
 public:
-	const float MIN_FREAM_TIME = 1.0f / 60;
-	float frametime = 0;
+	static const int FRAME_RATE = 60;
+	const float MIN_FREAM_TIME = 1.0f / FRAME_RATE;
+	float frameTime = 0;
 	LARGE_INTEGER timeStart;
 	LARGE_INTEGER timeEnd;
 	LARGE_INTEGER timeFreq;
 
 	float fps = 0;
+	static FPSManager* GetInstance() {
+		static FPSManager instance;
+		return &instance;
+	}
 
 	//èâä˙âª
-	HRESULT init();
+	void Init();
 
 	//FPSí≤êÆ
-	void Run();
+	bool Run();
 
 };
