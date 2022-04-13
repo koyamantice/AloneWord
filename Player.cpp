@@ -236,38 +236,19 @@ void Player::Update() {
 			AfterRot = initrotation - 360.0f * easeBack(frame2 / frameMax2);
 			ArmRot.y = initArmRotation - 360.0f * easeBack(frame2 / frameMax2);
 		}
-		
-		SpeedSub =(int)(initspeed - ArmSpeed);
-		if (AttackMoveNumber == 1 || AttackMoveNumber == 2) {
-			//どれくらい大振りしたかみたいなやつ
-			if (SpeedSub <= 90) {
-				power = 0.25f;
-			}
-			else if (SpeedSub > 90 && SpeedSub <= 180) {
-				power = 0.5f;
-			}
-			else if (SpeedSub > 180 && SpeedSub <= 270) {
-				power = 0.75f;
-			}
-			else {
-				power = 1.0f;
-			}
+		if (frame2 <= 10.0f) {
+			power = 0.25f;
+		}
+		else if (frame2 > 10.0f && frame2 <= 20.0f) {
+			power = 0.5f;
+		}
+		else if (frame2 > 20.0f && frame2 <= 30.0f) {
+			power = 0.75f;
 		}
 		else {
-			//どれくらい大振りしたかみたいなやつ
-			if (SpeedSub >= -90) {
-				power = 0.25f;
-			}
-			else if (SpeedSub < -90 && SpeedSub >= -180) {
-				power = 0.5f;
-			}
-			else if (SpeedSub < -180 && SpeedSub >= -270) {
-				power = 0.75f;
-			}
-			else {
-				power = 1.0f;
-			}
+			power = 1.0f;
 		}
+
 		if (frame2 < frameMax2) {
 			frame2 = frame2 + 1;
 		} else {
