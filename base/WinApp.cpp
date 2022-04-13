@@ -1,5 +1,7 @@
 #include "WinApp.h"
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
+const bool WinApp::FULL_SCREEN = true;
+
 LRESULT WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
 
@@ -17,7 +19,7 @@ LRESULT WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 
 
 void WinApp::Initialize() {
-
+	fullScreen = FULL_SCREEN;
 	w.cbSize = sizeof(WNDCLASSEX);
 	w.lpfnWndProc = (WNDPROC)WindowProc;//ウィンドウプロシージャを設定
 	w.lpszClassName = L"DirectXGame";//ウィンドウクラス名
@@ -26,9 +28,33 @@ void WinApp::Initialize() {
 
 	//ウィンドウクラスをOSに登録
 	RegisterClassEx(&w);
-	//ウィンドウサイズ{X座標 Y座標　横幅　縦幅}
-	RECT wrc = { 0,0,window_width,window_height };
-	AdjustWindowRect(&wrc, WS_OVERLAPPEDWINDOW, false);//自動でサイズ補正
+	if (fullScreen) {
+		// Get the settings of the primary display
+		DEVMODE devMode = {};
+		devMode.dmSize = sizeof(DEVMODE);
+		EnumDisplaySettings(nullptr, ENUM_CURRENT_SETTINGS, &devMode);
+
+		//ウィンドウサイズ{ X座標　Y座標　横幅　縦幅 }
+		windowRect = {
+			devMode.dmPosition.x,
+			devMode.dmPosition.y,
+			devMode.dmPosition.x + static_cast<LONG>(devMode.dmPelsWidth),
+			devMode.dmPosition.y + static_cast<LONG>(devMode.dmPelsHeight)
+		};
+
+		winSize_X = windowRect.right - windowRect.left;
+		winSize_Y = windowRect.bottom - windowRect.top;
+
+		windowRate_WIDTH = (float)winSize_X / window_width;
+		windowRate_HEIGHT = (float)winSize_Y / window_height;
+	} else {
+		winSize_X = window_width;
+		winSize_Y = window_height;
+
+		//ウィンドウサイズ{ X座標　Y座標　横幅　縦幅 }
+		windowRect = { 0,0,window_width,window_height };
+		AdjustWindowRect(&windowRect, WS_OVERLAPPEDWINDOW, false);	//自動でサイズ補正
+	}
 
 	//ウィンドウオブジェクトの生成
 	/*HWND*/ hwnd = CreateWindow(w.lpszClassName,//クラス名
@@ -37,15 +63,32 @@ void WinApp::Initialize() {
 		//WS_OVERLAPPEDWINDOW,//非固定なウィンドウスタイル
 		CW_USEDEFAULT,//表示X座標(OSに任せる)
 		CW_USEDEFAULT,//表示Y座標(OSに任せる)
-		(wrc.right - wrc.left),//ウィンドウ横幅
-		(wrc.bottom - wrc.top),//ウィンドウ縦幅
+		winSize_X,//ウィンドウ横幅
+		winSize_Y,//ウィンドウ縦幅
 		nullptr,//親ウィンドウハンドル
 		nullptr,//メニューハンドル
 		w.hInstance,//呼び出しアプリケーションハンドル
 		nullptr);//オプション
 
 	//SetWinCenter();//ウィンドウを真ん中に持ってくる
-	ShowWindow(hwnd, SW_SHOW);
+	if (fullScreen) {
+		SetWindowLong(hwnd, GWL_STYLE, WS_OVERLAPPEDWINDOW & ~(WS_CAPTION | WS_MAXIMIZEBOX | WS_MINIMIZEBOX /*| WS_SYSMENU*/ | WS_THICKFRAME));
+
+		SetWindowPos(
+			hwnd,
+			HWND_TOPMOST,
+			windowRect.left,
+			windowRect.top,
+			windowRect.right,
+			windowRect.bottom,
+			SWP_FRAMECHANGED | SWP_NOACTIVATE);
+
+		//ウィンドウ表示
+		ShowWindow(hwnd, SW_MAXIMIZE);
+	} else {
+		//ウィンドウ表示
+		ShowWindow(hwnd, SW_SHOW);
+	}
 }
 
 void WinApp::Update() {

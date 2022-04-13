@@ -5,6 +5,14 @@ class WinApp {
 private:
 	WNDCLASSEX w{};
 	HWND hwnd = nullptr;
+	static const bool FULL_SCREEN;
+	bool fullScreen;
+	RECT windowRect;
+	int winSize_X;
+	int winSize_Y;
+	float windowRate_WIDTH;
+	float windowRate_HEIGHT;
+
 public:
 	static const int window_width = 1280;//â°ïù
 	static const int window_height = 720;//ècïù
