@@ -1,6 +1,6 @@
 ﻿#include "Framework.h"
 #include "FbxLoader.h"
-#include "FPSManager.h"
+//#include "FPSManager.h"
 void Framework::Run() {
 	
 	//初期化

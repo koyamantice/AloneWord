@@ -177,7 +177,7 @@ void BossEnemy::Fork() {
 				AfterPos.x = 0.0f;
 				AfterPos.z = 0.0f;
 			} else {
-				rot.y = 360 + 115 + 180;
+				rot.y = 360 + 90;
 				pat = 0;
 				AttackCount = 30;
 				Effect = true;
