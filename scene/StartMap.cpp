@@ -221,6 +221,13 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 			}
 		}
 	}
+	if (input->TriggerKey(DIK_C)) {
+		Clear = true;
+	}
+
+
+
+
 	if (player->GetPosition().z >= -22) {
 		start = true;
 	}

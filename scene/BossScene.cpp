@@ -15,7 +15,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	//Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
 	//Texture::LoadTexture(4, L"Resources/2d/effect2.png");
 	//インスタンス取得
-	collsionManager = CollisionManager::GetInstance();
+	//collsionManager = CollisionManager::GetInstance();
 	// カメラ生成
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
