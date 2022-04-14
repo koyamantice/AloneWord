@@ -1,11 +1,16 @@
 #include "Spawning.h"
 #include "Collision.h"
+#include "Rice.h"
 
 Spawning::Spawning() {
 	model = Model::CreateFromOBJ("EHub");
 	object3d = new Object3d();
 	texture = Texture::Create(4, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
+	for (int i = 0; i < EneMax; i++) {
+	enemy[i] = new Rice();
+}
+
 }
 
 void Spawning::Initialize() {
@@ -17,35 +22,33 @@ void Spawning::Initialize() {
 	texture->SetPosition({ pos.x,pos.y + 4.5f,pos.z });
 	texture->SetRotation({ 0,0,0 });
 	texture->SetScale({ (float)Hp*0.05f,0.2f,0.2f });
+	for (int i = 0; i < EneMax; i++) {
+		enemy[i]->SetPlayer(player);
+		enemy[i]->Initialize();
+		enemy[i]->SetLimit({ 20,-20,20,-20 });
+		enemy[i]->Update();
+	}
 }
 
 void Spawning::Update() {
-	object3d->Update();
-	object3d->SetPosition(pos);
-	if (sizeof(enemy)>0) {
-		if (enemy[0]==nullptr) {
-		} else {
-			for (int i = 0; i < 10; i++) {
-				if (enemy[i]->GetIsAlive() == 0) {
-					enemy[i]->SetBasePos(pos);
-					//enemy[i]->Update();
-				}
+	if (Hp > 0) { isAlive = true; } else { isAlive = false; }
+	for (int i = 0; i < EneMax; i++) {
+			enemy[i]->SetBasePos(pos);
+			enemy[i]->Respawn(360/EneMax*i);
+			if (isAlive|| enemy[i]->GetIsAlive()==true) {
+				enemy[i]->Update();
 			}
-		}
-	}
-	collideAttackArm();
-	texture->Update();
-	texture->SetPosition({ pos.x,pos.y + 5.0f,pos.z });
-	texture->SetScale({ (float)Hp * 0.05f,0.05f,0.0f });
-	if (Hp>0) {
-		isAlive = true;
-	} else {
-		isAlive = false;
 	}
 	if (isAlive) {
+		object3d->Update();
+		object3d->SetPosition(pos);
 		if (Collision::CircleCollision(pos.x, pos.z, 2.0f, player->GetPosition().x, player->GetPosition().z, 1.5f)) {
 			player->BackPos();
 		}
+		collideAttackArm();
+		texture->Update();
+		texture->SetPosition({ pos.x,pos.y + 5.0f,pos.z });
+		texture->SetScale({ (float)Hp * 0.05f,0.05f,0.0f });
 	}
 
 }
@@ -53,6 +56,10 @@ void Spawning::Update() {
 void Spawning::Finalize() {
 	delete object3d;
 	delete texture;
+	for (int i = 0; i < EneMax; i++) {
+		enemy[i]->Finalize();
+	}
+
 }
 
 void Spawning::Draw() {
@@ -67,18 +74,17 @@ if (ImGui::TreeNode("Debug")) {
 	ImGui::TreePop();
 }
 	ImGui::End();*/
-	Object3d::PreDraw();
 	if (isAlive) {
+		Object3d::PreDraw();
 		object3d->Draw();
+		Texture::PreDraw();
+		texture->Draw();
 	}
-	Texture::PreDraw();
-	texture->Draw();
-
+	for (int i = 0; i < EneMax; i++) {
+		enemy[i]->Draw();
+	}
 }
 
-void Spawning::SetEnemy(const int& i, Rice* enemy) {
-	this->enemy[i] = enemy;
-}
 //UŒ‚ŠÖ”
 void Spawning::collideAttackArm() {
 	XMFLOAT3 Armpos = player->GetArmPosition();

@@ -471,7 +471,7 @@ void Player::Draw() {
 }
 
 //敵が腕から離れる
-void Player::ResetWeight(InterEnemy*enemy) {
+void Player::ResetWeight(InterEnemy* enemy) {
 	XMFLOAT3 boundpower = enemy->GetBoundPower();
 	XMFLOAT3 enepos = enemy->GetPosition();
 	if (ArmWeight==0.0f) {

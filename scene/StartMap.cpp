@@ -27,17 +27,10 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	player->SetPosition({ 0.0f,0.0f,-30.0f });
 
 	ui = new UI(player);
-	for (int i = 0; i < StartEnemyMax; i++) {
-		enemy[i] = new Rice();
-		enemy[i]->SetPlayer(player);
-		enemy[i]->Initialize();
-		enemy[i]->SetLimit({ 20,-20,20,-20 });
-		enemy[i]->Update();
-	}
 	for (int i = 0; i < 3; i++) {
 		spawing[i] = new Spawning();
-		spawing[i]->Initialize();
 		spawing[i]->SetPlayer(player);
+		spawing[i]->Initialize();
 	}
 
 	spawing[0]->SetPosition({ -20.0f,0.0f,-4.0f });
@@ -49,9 +42,6 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	spawing[2]->SetPosition({ 20.0f,0.0f,-4.0f });
 	spawing[2]->SetRotation({ 0,90,0 });
 
-	for (int i = 0; i < StartEnemyMax; i++) {
-		spawing[0]->SetEnemy(i, enemy[i]);
-	}
 	//オブジェクト初期化
 	/*modelGround = Model::CreateFromOBJ("ground");
 	objFloor = Object3d::Create();
@@ -133,9 +123,9 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 void StartMap::Finalize() {
 	delete camera;
 	//３ｄのモデルのデリート
-	for (int i = 0; i < StartEnemyMax; i++) {
-		enemy[i]->Finalize();
-	}
+	//for (int i = 0; i < StartEnemyMax; i++) {
+	//	enemy[i]->Finalize();
+	//}
 	for (int i = 0; i < Spawn; i++) {
 		spawing[i]->Finalize();
 	}
@@ -165,9 +155,6 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		objBlock[i]->SetRotation(BlockRotation[i]);
 		objBlock[i]->Update();
 	}
-	for (int i = 0; i < StartEnemyMax; i++) {
-		spawing[1]->SetEnemy(i, enemy[i]);
-	}
 	for (int i = 0; i < 3; i++) {
 		spawing[i]->Update();
 	}
@@ -175,10 +162,11 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	if (warp->collidePlayer(player)) {
 		SceneManager::GetInstance()->ChangeScene("BOSS");
 	}
-	for (int i = 0; i < StartEnemyMax; i++) {
-		enemy[i]->Update();
-		player->ResetWeight(enemy[i]);
-		player->Rebound(enemy[i]);
+	for (int i = 0; i < 3; i++) {
+		for (int j = 0; j < 5; j++) {
+			player->ResetWeight(spawing[i]->GetEnemy(j));
+			player->Rebound(spawing[i]->GetEnemy(j));
+		}
 	}
 
 	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
@@ -191,23 +179,23 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		a += 1;
 	}
 
-	//敵同士の当たり判定
-	if (sizeof(enemy) > 2) {//配列のサイズ確認
-		for (int colA = 0; colA < StartEnemyMax; colA++) {
-			for (int colB = 1; colB < StartEnemyMax; colB++) {
-				if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB) {//当たり判定と自機同士の当たり判定の削除
-					//DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
-					enemy[colA]->SetHit(true);
-					enemy[colB]->SetHit(false);
-					break;
+	////敵同士の当たり判定
+	//if (sizeof(enemy) > 2) {//配列のサイズ確認
+	//	for (int colA = 0; colA < StartEnemyMax; colA++) {
+	//		for (int colB = 1; colB < StartEnemyMax; colB++) {
+	//			if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB) {//当たり判定と自機同士の当たり判定の削除
+	//				//DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
+	//				enemy[colA]->SetHit(true);
+	//				enemy[colB]->SetHit(false);
+	//				break;
 
-				}
-				else {
-					enemy[colA]->SetHit(false);
-				}
-			}
-		}
-	}
+	//			}
+	//			else {
+	//				enemy[colA]->SetHit(false);
+	//			}
+	//		}
+	//	}
+	//}
 
 	//その他シーン移行
 
@@ -319,9 +307,9 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	//object1->Draw(dxCommon->GetCmdList());
 	//背景用
 	player->Draw();
-	for (int i = 0; i < StartEnemyMax; i++) {
-		enemy[i]->Draw();
-	}
+	//for (int i = 0; i < StartEnemyMax; i++) {
+	//	enemy[i]->Draw();
+	//}
 	for (int i = 0; i < 3; i++) {
 		spawing[i]->Draw();
 	}

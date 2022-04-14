@@ -240,7 +240,7 @@
       <Filter>FPSManager</Filter>
     </ClCompile>
     <ClCompile Include="Onomato.cpp">
-      <Filter>main</Filter>
+      <Filter>effect</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -437,7 +437,7 @@
       <Filter>FPSManager</Filter>
     </ClInclude>
     <ClInclude Include="Onomato.h">
-      <Filter>player</Filter>
+      <Filter>effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

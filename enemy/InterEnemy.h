@@ -57,6 +57,8 @@ public:
 	void DeadEnemy();
 	void RandDeadPower();
 	void SetBasePos(XMFLOAT3 basePos) { this->basePos = basePos; }
+	void Respawn(float speed);
+	void Reborn();
 
 protected:
 	const float PI = 3.14f;
@@ -114,6 +116,7 @@ protected:
 	float z_min = -20;
 	float z_max = 20;
 	bool pause = false;
+	bool respawn = false;
 public:
 	Sphere collider;
 

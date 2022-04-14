@@ -52,3 +52,39 @@ void InterEnemy::RandDeadPower() {
 	Deadbound.y = Deadbound.y / 10;
 	Deadbound.z = Deadbound.z / 10;
 }
+
+void InterEnemy::Respawn(float speed) {
+	if (speed!=0.0f) {
+		respawn = true;
+	}
+	this->speed = speed;
+}
+
+void InterEnemy::Reborn() {
+	if (!IsAlive) {
+		IsTimer--;
+		if (IsTimer == 100) {
+			if (!respawn) {
+				speed = (float)(rand() % 360);
+				scale = (float)(rand() % 10 + 10);
+			} else {
+				scale = 10.0f;
+			}
+			StartPos = pos;
+			frame = 0;
+			radius = speed * PI / 180.0f;
+			circleX = cosf(radius) * scale;
+			circleZ = sinf(radius) * scale;
+			pos.x = circleX + basePos.x;
+			pos.z = circleZ + basePos.z;
+		}
+
+		else if (IsTimer == 0) {
+			IsAlive = true;
+			appearance = true;
+			isMove = false;
+			IsTimer = 200;
+		}
+	}
+
+}
