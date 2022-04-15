@@ -207,22 +207,20 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 
 	Ray ray;
 	ray.start = { player->GetPosition().x,player->GetPosition().y + 3,player->GetPosition().z,1 };
-	ray.dir = { 0,0.8,-1,0 };
+	ray.dir = { 0,0.28,-1,0 };
 	RaycastHit raycastHit;
 
-	if (collisionManager->Raycast(ray, &raycastHit)) {
-		if (player->GetPosition().z - cameraPos.z >= 3.0f) {
-			cameraPos.z += 0.1f;
-		}
+	if (!collisionManager->Raycast(ray, &raycastHit)) {
+		cameraPos.z = player->GetTargetPosition().z - 10;
 	}
-	else {
-		if (player->GetPosition().z - cameraPos.z < 10.0f) {
-			cameraPos.z -= 0.1f;
-		}
-		else {
-			cameraPos.z = player->GetTargetPosition().z - 10;
-		}
-	}
+	//else {
+	//	if (player->GetPosition().z - cameraPos.z < 10.0f) {
+	//		cameraPos.z -= 0.1f;
+	//	}
+	//	else {
+	//		
+	//	}
+	//}
 	if (spawing[0]->GetIsAlive() == 0) {
 		if (spawing[1]->GetIsAlive() == 0) {
 			if (spawing[2]->GetIsAlive() == 0) {
@@ -294,18 +292,18 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 }
 
 void StartMap::Draw(DirectXCommon* dxCommon) {
-	//ImGui::Begin("test");
-//if (ImGui::TreeNode("Debug"))
-//{
-//	if (ImGui::TreeNode("Field"))
-//	{
-//		//ImGui::SliderFloat("Position.x", &s, 50, -50);
-//		ImGui::Unindent();
-//		ImGui::TreePop();
-//	}
-//	ImGui::TreePop();
-//}
-//ImGui::End();
+	ImGui::Begin("test");
+	if (ImGui::TreeNode("Debug"))
+	{
+		if (ImGui::TreeNode("Field"))
+		{
+			ImGui::SliderFloat("cameraPos.z", &cameraPos.z, 50, -50);
+			ImGui::Unindent();
+			ImGui::TreePop();
+		}
+		ImGui::TreePop();
+	}
+	ImGui::End();
 	Object3d::PreDraw();
 	objFloor->Draw();
 	//objFloor->Draw();

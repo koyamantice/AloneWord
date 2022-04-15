@@ -15,7 +15,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	//Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
 	//Texture::LoadTexture(4, L"Resources/2d/effect2.png");
 	//インスタンス取得
-	//collsionManager = CollisionManager::GetInstance();
+	collisionManager = CollisionManager::GetInstance();
 	// カメラ生成
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
@@ -95,10 +95,13 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	lightGroup = LightGroup::Create();
 	// 3Dオブジェクトにライトをセット
 	Object3d::SetLightGroup(lightGroup);
-
+	//カメラポジション
+	cameraPos.x = player->GetTargetPosition().x;
+	cameraPos.y = player->GetTargetPosition().y + 10;
+	cameraPos.z = player->GetTargetPosition().z - 10;
 	// カメラ注視点をセット
 	camera->SetTarget(player->GetTargetPosition());
-	camera->SetEye({ player->GetTargetPosition().x,player->GetTargetPosition().y + 10,player->GetTargetPosition().z - 10 });
+	camera->SetEye(cameraPos);
 	// モデル名を指定してファイル読み込み
 	model1 = FbxLoader::GetInstance()->LoadModelFromFile("bonetest");
 
@@ -204,6 +207,22 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		}
 	}
 
+	Ray ray;
+	ray.start = { player->GetPosition().x,player->GetPosition().y + 3,player->GetPosition().z,1 };
+	ray.dir = { 0,0.025,-1,0 };
+	RaycastHit raycastHit;
+
+	if (!collisionManager->Raycast(ray, &raycastHit)) {
+		cameraPos.z = player->GetTargetPosition().z - 10;
+	}
+	//else {
+	//	if (player->GetPosition().z - cameraPos.z < 10.0f) {
+	//		cameraPos.z -= 0.1f;
+	//	}
+	//	else {
+	//		
+	//	}
+	//}
 	//その他シーン移行
 	if (bossenemy->GetHP() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("CLEAR");
@@ -213,9 +232,11 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 	}
 	//object1->Update();
-		// カメラ注視点をセット
+	cameraPos.x = player->GetTargetPosition().x;
+	cameraPos.y = player->GetTargetPosition().y + 10;
+
 	camera->SetTarget(player->GetTargetPosition());
-	camera->SetEye({ player->GetTargetPosition().x,player->GetTargetPosition().y + 10,player->GetTargetPosition().z - 10 });
+	camera->SetEye(cameraPos);
 	// 全ての衝突をチェック
 	//collsionManager->CheckAllCollisions();
 	/*DebugText::GetInstance()->Print("PUSH to RB!!",200, 100,1.0f);
