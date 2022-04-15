@@ -16,6 +16,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	//Texture::LoadTexture(4, L"Resources/2d/effect2.png");
 	//Texture::LoadTexture(5, L"Resources/2d/PlayerHP.png");
 	//Texture::LoadTexture(6, L"Resources/2d/magic2.png");
+	collisionManager = CollisionManager::GetInstance();
 	// カメラ生成
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
@@ -202,6 +203,26 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	/*if (bossenemy->GetHP() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("CLEAR");
 	}*/
+
+
+	Ray ray;
+	ray.start = { player->GetPosition().x,player->GetPosition().y + 3,player->GetPosition().z,1 };
+	ray.dir = { 0,0.8,-1,0 };
+	RaycastHit raycastHit;
+
+	if (collisionManager->Raycast(ray, &raycastHit)) {
+		if (player->GetPosition().z - cameraPos.z >= 3.0f) {
+			cameraPos.z += 0.1f;
+		}
+	}
+	else {
+		if (player->GetPosition().z - cameraPos.z < 10.0f) {
+			cameraPos.z -= 0.1f;
+		}
+		else {
+			cameraPos.z = player->GetTargetPosition().z - 10;
+		}
+	}
 	if (spawing[0]->GetIsAlive() == 0) {
 		if (spawing[1]->GetIsAlive() == 0) {
 			if (spawing[2]->GetIsAlive() == 0) {
@@ -258,7 +279,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	object1->Update();
 	cameraPos.x = player->GetTargetPosition().x;
 	cameraPos.y = player->GetTargetPosition().y + 10;
-	cameraPos.z = player->GetTargetPosition().z - 10;
+
 	camera->SetTarget(player->GetTargetPosition());
 	camera->SetEye(cameraPos);
 	/*if (cameraPos.z <= -20.0f) {
@@ -266,7 +287,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	}*/
 	/*DebugText::GetInstance()->Print("PUSH to RB!!", 1040, 620, 2.0f);
 	DebugText::GetInstance()->Print("PUSH to A!!", 1040, 660, 2.0f);*/
-	if (player->GetArmWeight()>0) {
+	if (player->GetArmWeight() > 0) {
 		DebugText::GetInstance()->Print("RB or LB :Rotate", 900, 620, 2.0f);
 	}
 	DebugText::GetInstance()->Print("A         :Hand", 900, 650, 2.0f);
@@ -293,7 +314,7 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 		objBlock[i]->Draw();
 	}
 	Texture::PreDraw();
-	if (start&&!Clear) {
+	if (start && !Clear) {
 		//limit->Draw();
 	}
 	warp->Draw();
