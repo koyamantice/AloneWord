@@ -32,6 +32,7 @@ public:
 	void Draw(DirectXCommon* dxCommon) override;
 
 private:
+	XMFLOAT3 cameraPos = { 0.0f,0.0f,0.0f };
 	Model* modelFloor = nullptr;
 	Object3d* objFloor;
 
@@ -52,7 +53,7 @@ private:
 	Exp* exp[ExpMax][BossEnemyMax] = { nullptr };
 	float weight = 0;
 	UI* ui=nullptr;
-	CollisionManager* collsionManager = nullptr;
+	CollisionManager* collisionManager = nullptr;
 	ParticleManager* particleMan = nullptr;
 };
 

@@ -41,7 +41,7 @@ Player::Player() {
 bool Player::Initialize() {
 	object3d = Object3d::Create();
 	object3d->SetModel(model);
-	position = { 0,0,-10 };
+	position = { 0,0,0 };
 	object3d->SetPosition(position);
 	object3d->SetScale({ 0.7f,0.7f,0.7f });
 
@@ -446,12 +446,7 @@ void Player::Draw() {
 	ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("Player")) {
-			ImGui::SliderFloat("frame2", &frame2, 60, 0);
-			ImGui::SliderFloat("frame3", &frame3, 60, 0);
-			ImGui::SliderFloat("frame2", &frameMax2, 60, 0);
-			ImGui::SliderFloat("frame3", &frameMax3, 60, 0);
-
-			//ImGui::SliderFloat("position.z", &position.x, 50, -50);
+			ImGui::SliderFloat("position.z", &position.z, 50, -50);
 			//ImGui::SliderFloat("pos.z", &oldPos.x, 50, -50);
 			//ImGui::Text("Interval::%d", Interval);
 			//ImGui::Text("FlashCount::%d", FlashCount);
