@@ -196,6 +196,22 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	//		}
 	//	}
 	//}
+	for (int i = 0; i < 3; i++) {
+		for (int colA = 0; colA < 5; colA++) {
+			for (int colB = 1; colB < 5; colB++) {
+				if (spawing[i]->GetEnemy(colA)->GetIsAlive()) {
+					if (Collision::CheckSphere2Sphere(spawing[i]->GetEnemy(colA)->collider, spawing[i]->GetEnemy(colB)->collider) == true && colA != colB) {//当たり判定と自機同士の当たり判定の削除
+						spawing[i]->GetEnemy(colA)->SetHit(true);
+						spawing[i]->GetEnemy(colB)->SetHit(false);
+						break;
+
+					} else {
+						spawing[i]->GetEnemy(colA)->SetHit(false);
+					}
+				}
+			}
+		}
+	}
 
 	//その他シーン移行
 

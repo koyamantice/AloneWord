@@ -43,6 +43,7 @@ public:
 	void SetEnemyCatch(bool EnemyCatch) { this->EnemyCatch = EnemyCatch; }
 	void SetBound(bool bound) { this->bound = bound; }
 	void SetHit(bool hit) { this->hit = hit; }
+	void Back();
 	void SetDrawExp(int DrawExp) { this->DrawExp = DrawExp; }
 	void Setboundpower(XMFLOAT3 boundpower) { this->boundpower = boundpower; }
 	void SetLimit(XMFLOAT4 limit) {
@@ -68,6 +69,7 @@ protected:
 	Texture* texture = nullptr;
 	Texture* Restexture = nullptr;
 	XMFLOAT3 pos = { 0,0,0 };
+	XMFLOAT3 oldpos = { 0,0,0 };
 	XMFLOAT3 rot = { 0,0,0 };
 	XMFLOAT3 boundpower{};
 	XMFLOAT3 Deadbound = {};

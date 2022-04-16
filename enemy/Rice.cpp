@@ -25,7 +25,8 @@ void Rice::Initialize() {
 	texture->SetPosition(pos);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.2f,0.2f,0.2f });
-	
+	oldpos = pos;
+
 	//texture->SetColor({ 1.0f,0.0,0.0,1.0f });
 	Restexture = Texture::Create(6, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	Restexture->TextureCreate();
@@ -48,7 +49,9 @@ void Rice::Update() {
 	playerpos = player->GetPosition();
 	Interval = player->GetInterval();
 	FlashCount = player->GetFlashCount();
+	oldpos = pos;
 	Reborn();
+	Back();
 	if (IsAlive && !EnemyCatch && !Exp) {
 		if (LockOn()) {
 			moveCount = (rand() % 15) + 20;

@@ -34,7 +34,7 @@ void Spawning::Update() {
 	if (Hp > 0) { isAlive = true; } else { isAlive = false; }
 	for (int i = 0; i < EneMax; i++) {
 			enemy[i]->SetBasePos(pos);
-			enemy[i]->Respawn(360/EneMax*i);
+			enemy[i]->Respawn(360.0f/EneMax*i);
 			if (isAlive|| enemy[i]->GetIsAlive()==true) {
 				enemy[i]->Update();
 			}

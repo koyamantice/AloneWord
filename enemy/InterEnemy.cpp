@@ -8,6 +8,12 @@ void InterEnemy::Pause(const int& Timer) {
 		pause = true;
 	}
 }
+void InterEnemy::Back() {
+	if (hit) {
+		pos = oldpos;
+		hit = false;
+	}
+}
 //“G‚ÌˆÊ’u‚ð˜r‚Æ“¯‚¶‚É‚·‚é
 void InterEnemy::SetEnemy() {
 	float armweight = player->GetArmWeight();
