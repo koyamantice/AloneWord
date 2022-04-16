@@ -7,7 +7,7 @@
 using namespace DirectX;
 
 Rice::Rice() {
-	model = Model::CreateFromOBJ("Enemy");
+	model = ModelManager::GetIns()->GetModel(ModelManager::Enemy);
 	enemyobj = new Object3d();
 }
 

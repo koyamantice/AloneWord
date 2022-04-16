@@ -7,7 +7,7 @@
 using namespace DirectX;
 
 BossEnemy::BossEnemy() {
-	model = Model::CreateFromOBJ("Fork");
+	model = ModelManager::GetIns()->GetModel(ModelManager::EHub);
 	enemyobj = new Object3d();
 }
 

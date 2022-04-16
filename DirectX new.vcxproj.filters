@@ -242,6 +242,9 @@
     <ClCompile Include="Onomato.cpp">
       <Filter>effect</Filter>
     </ClCompile>
+    <ClCompile Include="ModelManager.cpp">
+      <Filter>3d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\Framework.h">
@@ -438,6 +441,9 @@
     </ClInclude>
     <ClInclude Include="Onomato.h">
       <Filter>effect</Filter>
+    </ClInclude>
+    <ClInclude Include="ModelManager.h">
+      <Filter>3d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

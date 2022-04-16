@@ -11,6 +11,7 @@
 #include "ParticleManager.h"
 #include "CollisionManager.h"
 #include "CollisionAttribute.h"
+#include <ModelManager.h>
 using namespace DirectX;
 Input* input = Input::GetInstance();
 float easeInSine(float x) {
@@ -31,8 +32,8 @@ const float c3 = c1 + 1;
 return c3 * x * x * x - c1 * x * x;
 }
 Player::Player() {
-	model = Model::CreateFromOBJ("Motti");
-	Armmodel = Model::CreateFromOBJ("Arm");
+	model = ModelManager::GetIns()->GetModel(ModelManager::Player);
+	Armmodel= ModelManager::GetIns()->GetModel(ModelManager::Arm);
 	object3d = new Object3d();
 	Armobj = new Object3d();
 

@@ -1,6 +1,7 @@
 #pragma once
 #include"InterEnemy.h"
 #include"Rice.h"
+#include"ModelManager.h"
 
 class BossEnemy :public InterEnemy {
 public:

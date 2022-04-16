@@ -73,7 +73,7 @@ void Framework::Initialize(DirectXCommon* dxCommon) {
 	Texture::LoadTexture(4, L"Resources/2d/PlayerHP.png");
 	Texture::LoadTexture(5, L"Resources/2d/magic2.png");
 	Texture::LoadTexture(6, L"Resources/2d/Resporn.png");
-
+	ModelManager::GetIns()->Initialize();
 }
 
 void Framework::Finalize() {

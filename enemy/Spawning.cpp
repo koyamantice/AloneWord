@@ -1,9 +1,10 @@
 #include "Spawning.h"
 #include "Collision.h"
 #include "Rice.h"
+#include <ModelManager.h>
 
 Spawning::Spawning() {
-	model = Model::CreateFromOBJ("EHub");
+	model = ModelManager::GetIns()->GetModel(ModelManager::EHub);
 	object3d = new Object3d();
 	texture = Texture::Create(4, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();

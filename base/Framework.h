@@ -11,6 +11,7 @@
 #include "AbstractSceneFactory.h"
 #include "Texture.h"
 #include"FPSManager.h"
+#include"ModelManager.h"
 
 /// <summary>
 /// フレームワーク
