@@ -14,9 +14,6 @@ void ModelManager::Initialize() {
 	LoadModel(EHub, "EHub");
 	LoadModel(Enemy, "Enemy");
 	LoadModel(Fork, "Fork");
-
-
-
 }
 
 void ModelManager::LoadModel(const ModelName modelName, std::string fileName) {

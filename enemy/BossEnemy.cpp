@@ -1,5 +1,4 @@
 ﻿#include "BossEnemy.h"
-#include "Input.h"
 #include"Collision.h"
 #include<sstream>
 #include<iomanip>
@@ -7,7 +6,7 @@
 using namespace DirectX;
 
 BossEnemy::BossEnemy() {
-	model = ModelManager::GetIns()->GetModel(ModelManager::EHub);
+	model = ModelManager::GetIns()->GetModel(ModelManager::Fork);
 	enemyobj = new Object3d();
 }
 
@@ -30,7 +29,7 @@ void BossEnemy::Initialize() {
 }
 
 void BossEnemy::Finalize() {
-	delete enemyobj;
+	//delete enemyobj;
 	delete texture;
 }
 

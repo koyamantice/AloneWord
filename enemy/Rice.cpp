@@ -39,7 +39,7 @@ void Rice::Initialize() {
 void Rice::Finalize() {
 	delete enemyobj;
 	delete texture;
-	delete model;
+	//delete model;
 	delete Restexture;
 }
 
