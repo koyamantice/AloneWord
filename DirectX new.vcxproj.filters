@@ -245,6 +245,9 @@
     <ClCompile Include="ModelManager.cpp">
       <Filter>3d</Filter>
     </ClCompile>
+    <ClCompile Include="base\XorShift.cpp">
+      <Filter>base</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\Framework.h">
@@ -444,6 +447,9 @@
     </ClInclude>
     <ClInclude Include="ModelManager.h">
       <Filter>3d</Filter>
+    </ClInclude>
+    <ClInclude Include="base\XorShift.h">
+      <Filter>base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

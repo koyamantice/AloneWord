@@ -61,6 +61,9 @@ void Framework::Initialize(DirectXCommon* dxCommon) {
 	Object3d::StaticInitialize(dxcommon->GetDev(), dxcommon->GetCmdList(), WinApp::window_width, WinApp::window_height);
 	// マウスカーソルの非表示
 	ShowCursor(TRUE);
+	//XorShiftの初期化
+	xorShift = XorShift::GetInstance();
+	XorShift::GetInstance()->initrand((unsigned int)time(NULL));
 	//シーンマネージャー
 	// FBX関連静的初期化
 	FbxLoader::GetInstance()->Initialize(dxcommon->GetDev());
@@ -84,7 +87,8 @@ void Framework::Finalize() {
 
 void Framework::Update(DirectXCommon* dxCommon) {
 	input->Update(winApp);
-	
+	XorShift::GetInstance()->initrand((unsigned int)time(NULL));
+	XorShift::GetInstance()->init_xor128((unsigned long)time(NULL));
 	if (winApp->ProcessMessage() || input->TriggerKey(DIK_ESCAPE)) {
 		endResquest_ = true;
 		return;

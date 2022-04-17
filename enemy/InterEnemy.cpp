@@ -1,5 +1,6 @@
 #include "InterEnemy.h"
 #include "Collision.h"
+#include <XorShift.h>
 
 void InterEnemy::Pause(const int& Timer) {
 	int wait = 0;
@@ -65,9 +66,9 @@ void InterEnemy::DeadEnemy() {
 }
 
 void InterEnemy::RandDeadPower() {
-	Deadbound.x = (float)(rand() % 4 - 2);
+	Deadbound.x = (float)((int)XorShift::GetInstance()->xor128() % 4 - 2);
 	Deadbound.y = 5;
-	Deadbound.z = (float)(rand() % 4 - 2);
+	Deadbound.z = (float)((int)XorShift::GetInstance()->xor128() % 4 - 2);
 	Deadbound.x = Deadbound.x / 10;
 	Deadbound.y = Deadbound.y / 10;
 	Deadbound.z = Deadbound.z / 10;
@@ -85,8 +86,8 @@ void InterEnemy::Reborn() {
 		IsTimer--;
 		if (IsTimer == 100) {
 			if (!respawn) {
-				speed = (float)(rand() % 360);
-				scale = (float)(rand() % 10 + 10);
+				speed = (float)((int)(XorShift::GetInstance()->xor128())% 360);
+				scale = (float)((int)(XorShift::GetInstance()->xor128())% 10 + 10);
 			} else {
 				scale = 10.0f;
 			}

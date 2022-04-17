@@ -8,6 +8,7 @@
 #include "MeshCollider.h"
 #include "SphereCollider.h"
 #include "CollisionManager.h"
+#include <XorShift.h>
 void StartMap::Initialize(DirectXCommon* dxCommon) {
 	//Texture::LoadTexture(0, L"Resources/2d/enemy.png");
 	////Texture::LoadTexture(1, L"Resources/2d/limit.png");
@@ -323,6 +324,8 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	{
 		if (ImGui::TreeNode("Field"))
 		{
+			float a = (float)XorShift::GetInstance()->xor128();
+			ImGui::SliderFloat("a", &a, 100, 0);
 			ImGui::SliderFloat("b", &distanceZ, 50, -50);
 			ImGui::Unindent();
 			ImGui::TreePop();

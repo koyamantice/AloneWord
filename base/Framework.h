@@ -12,6 +12,7 @@
 #include "Texture.h"
 #include"FPSManager.h"
 #include"ModelManager.h"
+#include "XorShift.h"
 
 /// <summary>
 /// フレームワーク
@@ -50,7 +51,7 @@ protected:
 	Input* input = nullptr;
 	Audio* audio = nullptr;
 	FPSManager* fps = nullptr;
-
+	XorShift* xorShift=nullptr;
 	DebugText* debugText = nullptr;
 	AbstractSceneFactory* sceneFactory_ = nullptr;
 };
