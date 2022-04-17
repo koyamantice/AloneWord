@@ -1,7 +1,6 @@
 ﻿#include "UI.h"
 #include <Easing.h>
 
-
 UI::UI(Player* player, BossEnemy* boss) {
 	this->player = player;
 	this->boss = boss;
@@ -47,18 +46,18 @@ void UI::Update() {
 }
 
 const void UI::Draw() {
-	ImGui::Begin("test");
+	/*ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
 		if (ImGui::TreeNode("UI")) {
-			ImGui::SliderFloat("posx", &pos.x, 50, -50);
-			ImGui::SliderFloat("posz", &pos.z, 50, -50);
+			ImGui::SliderFloat("posx", &ArrowPos.x, 50, -50);
+			ImGui::SliderFloat("posz", &ArrowPos.y, 50, -50);
 			ImGui::Text("Sub %d", invisible);
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}
 		ImGui::TreePop();
 	}
-	ImGui::End();
+	ImGui::End();*/
 	Sprite::PreDraw();
 	//Vignette->Draw();
 	if (boss) {
@@ -70,7 +69,6 @@ const void UI::Draw() {
 	if (boss && invisible) {
 		Arrow->Draw();
 	}
-
 }
 
 void UI::SeachBoss() {
@@ -98,11 +96,10 @@ void UI::SeachBoss() {
 	if (fabs(pos.x) > 15.00f || fabs(pos.z) > 15.00f) {
 		invisible = 1;
 	}
+
 	else {
 		invisible = 0;
-
 	}
-
 
 	if (Check > 0.3) {
 		if (Check2 > 0.3) {

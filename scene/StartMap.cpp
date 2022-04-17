@@ -227,16 +227,25 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	RaycastHit raycastHit;
 
 	if (!collisionManager->Raycast(ray, &raycastHit)) {
-		cameraPos.z = player->GetTargetPosition().z - 10;
+		if (distanceZ <= 10.0f) {
+			distanceZ += 0.25f;
+		}
+
+		if (distanceY >= 10.0f) {
+			distanceY -= 0.25f;
+		}
 	}
-	//else {
-	//	if (player->GetPosition().z - cameraPos.z < 10.0f) {
-	//		cameraPos.z -= 0.1f;
-	//	}
-	//	else {
-	//		
-	//	}
-	//}
+	else {
+		if (distanceZ >= 6.0f) {
+			distanceZ -= 0.4f;
+		}
+
+		if (distanceY <= 18.0f) {
+			distanceY += 0.25f;
+		}
+	}
+
+	
 	if (spawing[0]->GetIsAlive() == 0) {
 		if (spawing[1]->GetIsAlive() == 0) {
 			if (spawing[2]->GetIsAlive() == 0) {
@@ -247,9 +256,6 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	if (input->TriggerKey(DIK_C)) {
 		Clear = true;
 	}
-
-
-
 
 	if (player->GetPosition().z >= -22) {
 		start = true;
@@ -289,11 +295,15 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	if (player->GetHp() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 	}
+
+	if (input->PushKey(DIK_0)) {
+		object1->PlayAnimation();
+	}
 	ui->Update();
 	object1->Update();
 	cameraPos.x = player->GetTargetPosition().x;
-	cameraPos.y = player->GetTargetPosition().y + 10;
-
+	cameraPos.y = player->GetTargetPosition().y + distanceY;
+	cameraPos.z = player->GetPosition().z - distanceZ;
 	camera->SetTarget(player->GetTargetPosition());
 	camera->SetEye(cameraPos);
 	/*if (cameraPos.z <= -20.0f) {
@@ -313,7 +323,7 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	{
 		if (ImGui::TreeNode("Field"))
 		{
-			ImGui::SliderFloat("cameraPos.z", &cameraPos.z, 50, -50);
+			ImGui::SliderFloat("b", &distanceZ, 50, -50);
 			ImGui::Unindent();
 			ImGui::TreePop();
 		}
@@ -321,8 +331,8 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	}
 	ImGui::End();
 	Object3d::PreDraw();
-	objFloor->Draw();
 	//objFloor->Draw();
+	objFloor->Draw();
 	objStartMap->Draw();
 	for (std::size_t i = 0; i < objBlock.size(); i++) {
 		objBlock[i]->Draw();
@@ -339,7 +349,7 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 
 
 	Object3d::PreDraw();
-	//object1->Draw(dxCommon->GetCmdList());
+	object1->Draw(dxCommon->GetCmdList());
 	//背景用
 	player->Draw();
 	//for (int i = 0; i < StartEnemyMax; i++) {

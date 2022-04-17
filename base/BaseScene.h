@@ -50,7 +50,8 @@ protected:
 	float pointLightColor[3] = { 1,1,1 };
 	float pointLightAtten[3] = { 0.3f,0.1f,0.1f };
 	int EffectNum = 0;
-
+	float distanceY = 10;
+	float distanceZ = 10;
 public:
 
 	virtual ~BaseScene()=default;
