@@ -25,6 +25,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	//プレイヤー
 	player = new Player();
 	player->Initialize();
+	player->SetPosition({ 0.0f,0.0f,-10.0f });
 	player->SetMove(250.0f, 200.0f);
 
 	//ボス
@@ -33,7 +34,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	bossenemy->Initialize();
 
 	//敵
-	for (int i = 0; i < BossEnemyMax; i++) {
+	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i] = new Rice();
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
@@ -77,13 +78,13 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	limit->SetRotation({ 90.0f,0, 0 });
 	limit->SetScale({ 6,5,5 });*/
 
-	for (int i = 0; i < EffectMax; i++) {
+	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i] = new Effect();
 		effect[i]->Initialize();
 	}
 
-	for (int i = 0; i < ExpMax; i++) {
-		for (int j = 0; j < BossEnemyMax; j++) {
+	for (std::size_t i = 0; i < exp.size(); i++) {
+		for (std::size_t j = 0; j < exp[i].size(); j++) {
 			exp[i][j] = new Exp();
 			exp[i][j]->Initialize();
 		}
@@ -128,7 +129,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 void BossScene::Finalize() {
 
 	//3dのモデルのデリート
-	for (int i = 0; i < BossEnemyMax; i++) {
+	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i]->Finalize();
 	}
 	player->Finalize();
@@ -137,11 +138,11 @@ void BossScene::Finalize() {
 	delete objFloor;
 	delete modelBossMap;
 	delete modelFloor;
-	for (int i = 0; i < EffectMax; i++) {
+	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Finalize();
 	}
-	for (int i = 0; i < ExpMax; i++) {
-		for (int j = 0; j < BossEnemyMax; j++) {
+	for (std::size_t i = 0; i < exp.size(); i++) {
+		for (std::size_t j = 0; j < exp[i].size(); j++) {
 			exp[i][j]->Finalize();
 		}
 	}
@@ -162,7 +163,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	particleMan->Update();
 	//objSphere->Update();
 	ui->Update();
-	for (int i = 0; i < BossEnemyMax; i++) {
+	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i]->Update();
 		enemy[i]->SetEnemy();
 		player->ResetWeight(enemy[i]);
@@ -170,13 +171,13 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	}
 
 
-	for (int i = 0; i < ExpMax; i++) {
-		for (int j = 0; j < BossEnemyMax; j++) {
+	for (std::size_t i = 0; i < exp.size(); i++) {
+		for (std::size_t j = 0; j < exp[i].size(); j++) {
 			exp[i][j]->Update(player, enemy[j]);
 		}
 	}
 
-	for (int i = 0; i < EffectMax; i++) {
+	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Update(bossenemy);
 	}
 
@@ -263,17 +264,17 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	//object1->Draw(dxCommon->GetCmdList());
 
 	player->Draw();
-	for (int i = 0; i < BossEnemyMax; i++) {
+	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i]->Draw();
 	}
 	bossenemy->Draw();
 
-	for (int i = 0; i < EffectMax; i++) {
+	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Draw();
 	}
 
-	for (int i = 0; i < ExpMax; i++) {
-		for (int j = 0; j < BossEnemyMax; j++) {
+	for (std::size_t i = 0; i < exp.size(); i++) {
+		for (std::size_t j = 0; j < exp[i].size(); j++) {
 			exp[i][j]->Draw();
 		}
 	}

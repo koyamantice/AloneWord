@@ -215,7 +215,9 @@ bool Rice::collidePlayer() {
 			IsAlive = 0;
 			player->SetHp(player->GetHp() - 1);
 			Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
-			player->SetDamageFlag(true);
+			if (player->GetAttackFlag() == false) {
+				player->SetDamageFlag(true);
+			}
 			Interval = 100;
 			return true;
 		} else {
