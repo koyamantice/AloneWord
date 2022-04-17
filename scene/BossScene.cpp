@@ -170,7 +170,6 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		player->Rebound(enemy[i]);
 	}
 
-
 	for (std::size_t i = 0; i < exp.size(); i++) {
 		for (std::size_t j = 0; j < exp[i].size(); j++) {
 			exp[i][j]->Update(player, enemy[j]);
@@ -214,16 +213,24 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	RaycastHit raycastHit;
 
 	if (!collisionManager->Raycast(ray, &raycastHit)) {
-		cameraPos.z = player->GetTargetPosition().z - 10;
+		if (distanceZ <= 10.0f) {
+			distanceZ += 0.25f;
+		}
+
+		if (distanceY >= 10.0f) {
+			distanceY -= 0.25f;
+		}
 	}
-	//else {
-	//	if (player->GetPosition().z - cameraPos.z < 10.0f) {
-	//		cameraPos.z -= 0.1f;
-	//	}
-	//	else {
-	//		
-	//	}
-	//}
+	else {
+		if (distanceZ >= 6.0f) {
+			distanceZ -= 0.4f;
+		}
+
+		if (distanceY <= 18.0f) {
+			distanceY += 0.25f;
+		}
+	}
+
 	//その他シーン移行
 	if (bossenemy->GetHP() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("CLEAR");
@@ -234,8 +241,8 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	}
 	//object1->Update();
 	cameraPos.x = player->GetTargetPosition().x;
-	cameraPos.y = player->GetTargetPosition().y + 10;
-
+	cameraPos.y = player->GetTargetPosition().y + distanceY;
+	cameraPos.z = player->GetPosition().z - distanceZ;
 	camera->SetTarget(player->GetTargetPosition());
 	camera->SetEye(cameraPos);
 	// 全ての衝突をチェック
