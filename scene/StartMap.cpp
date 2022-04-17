@@ -28,7 +28,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	player->SetPosition({ 0.0f,0.0f,-30.0f });
 
 	ui = new UI(player);
-	for (int i = 0; i < 3; i++) {
+	for (std::size_t i = 0; i < spawing.size(); i++) {
 		spawing[i] = new Spawning();
 		spawing[i]->SetPlayer(player);
 		spawing[i]->Initialize();
@@ -63,7 +63,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	objStartMap->SetRotation({ 0, 90, 0 });
 	objStartMap->SetScale({ 1.4f,1.5f,1.6f });
 	//バリケード
-	for (int i = 0; i < BlockMax; i++) {
+	for (std::size_t i = 0; i < objBlock.size(); i++) {
 		objBlock[i] = Object3d::Create();
 		modelBlock[i] = Model::CreateFromOBJ("Fork");
 		objBlock[i]->SetModel(modelBlock[i]);
@@ -127,11 +127,11 @@ void StartMap::Finalize() {
 	//for (int i = 0; i < StartEnemyMax; i++) {
 	//	enemy[i]->Finalize();
 	//}
-	for (int i = 0; i < Spawn; i++) {
+	for (std::size_t i = 0; i < spawing.size(); i++) {
 		spawing[i]->Finalize();
 	}
 
-	for (int i = 0; i < BlockMax; i++) {
+	for (std::size_t i = 0; i < objBlock.size(); i++) {
 		delete objBlock[i];
 		delete modelBlock[i];
 	}
@@ -152,18 +152,18 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	player->Update();
 	particleMan->Update();
 	warp->Update(player);
-	for (int i = 0; i < BlockMax; i++) {
+	for (std::size_t i = 0; i < objBlock.size(); i++) {
 		objBlock[i]->SetRotation(BlockRotation[i]);
 		objBlock[i]->Update();
 	}
-	for (int i = 0; i < 3; i++) {
+	for (std::size_t i = 0; i < spawing.size(); i++) {
 		spawing[i]->Update();
 	}
 
 	if (warp->collidePlayer(player)) {
 		SceneManager::GetInstance()->ChangeScene("BOSS");
 	}
-	for (int i = 0; i < 3; i++) {
+	for (std::size_t i = 0; i < spawing.size(); i++) {
 		for (int j = 0; j < 5; j++) {
 			player->ResetWeight(spawing[i]->GetEnemy(j));
 			player->Rebound(spawing[i]->GetEnemy(j));
@@ -197,7 +197,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	//		}
 	//	}
 	//}
-	for (int i = 0; i < 3; i++) {
+	for (std::size_t i = 0; i < spawing.size(); i++) {
 		for (int colA = 0; colA < 5; colA++) {
 			for (int colB = 1; colB < 5; colB++) {
 				if (spawing[i]->GetEnemy(colA)->GetIsAlive()) {
@@ -324,7 +324,7 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	objFloor->Draw();
 	//objFloor->Draw();
 	objStartMap->Draw();
-	for (int i = 0; i < BlockMax; i++) {
+	for (std::size_t i = 0; i < objBlock.size(); i++) {
 		objBlock[i]->Draw();
 	}
 	Texture::PreDraw();
@@ -345,7 +345,7 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	//for (int i = 0; i < StartEnemyMax; i++) {
 	//	enemy[i]->Draw();
 	//}
-	for (int i = 0; i < 3; i++) {
+	for (std::size_t i = 0; i < spawing.size(); i++) {
 		spawing[i]->Draw();
 	}
 	//bossenemy->Draw();

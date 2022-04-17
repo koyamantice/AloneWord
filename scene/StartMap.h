@@ -4,6 +4,8 @@
 #include "Collision.h"
 #include "Spawning.h"
 #include "UI.h"
+#include <array>       // ヘッダファイルインクルード
+using namespace std;         //  名前空間指定
 class CollisionManager;
 class TouchableObject;
 /// <summary>
@@ -43,19 +45,19 @@ private:
 	UI* ui = nullptr;
 
 	//バリケード(仮)
-	Model* modelBlock[BlockMax] = { nullptr };
-	Object3d* objBlock[BlockMax];
-	XMFLOAT3 BlockRotation[BlockMax];
+	array<Model*,4> modelBlock;
+	array<Object3d*,4> objBlock;
+	array<XMFLOAT3,4> BlockRotation;
 
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;
 	DebugCamera* camera = { nullptr };
 	Texture* limit = nullptr;
 	Player* player = nullptr;
-	Rice* enemy[StartEnemyMax] = { nullptr };
+	array<Rice*,10> enemy;
 	Warp* warp = nullptr;
 	//BossEnemy* bossenemy = nullptr;
-	Spawning* spawing[Spawn];
+	array<Spawning*,3> spawing;
 	ParticleManager* particleMan = nullptr;
 	bool start = false;
 	bool Clear = false;

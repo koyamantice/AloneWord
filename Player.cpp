@@ -486,8 +486,8 @@ void Player::Rebound(InterEnemy* enemy) {
 	distance.x = position.x - enepos.x;
 	distance.z = position.z - enepos.z;
 
+
 	if (DamageFlag == true) {
-		
 		if (distance.x <= 0) {
 			rebound.x = -0.2f;
 		} else {

@@ -2,7 +2,8 @@
 #include "BaseScene.h"
 #include "BossEnemy.h"
 #include "UI.h"
-
+#include <array>       // ヘッダファイルインクルード
+using namespace std;         //  名前空間指定
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>
@@ -47,10 +48,10 @@ private:
 	DebugCamera* camera = { nullptr };
 	Texture* limit = nullptr;
 	Player* player = nullptr;
-	Effect* effect[EffectMax] = { nullptr };
-	InterEnemy* enemy[BossEnemyMax] = { nullptr };
+	array<Effect*,40> effect;
+	array<InterEnemy*,10> enemy;
 	BossEnemy* bossenemy = nullptr;
-	Exp* exp[ExpMax][BossEnemyMax] = { nullptr };
+	std::array<std::array<Exp*, 10>, 5> exp;
 	float weight = 0;
 	UI* ui=nullptr;
 	CollisionManager* collisionManager = nullptr;
