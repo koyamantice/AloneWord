@@ -48,7 +48,8 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objBossMap->SetPosition({ 0,-1,2 });
 	objBossMap->SetRotation({ 0, 90, 0 });
 	objBossMap->SetScale({ 1.4f,1.5f,1.6f });
-	/*objBossMap->SetModel(modelBossMap);
+	/*
+	objBossMap->SetModel(modelBossMap);
 	objBossMap->SetPosition({ 0,-1,2 });
 	objBossMap->SetRotation({ 0, 90, 0 });
 	objBossMap->SetScale({ 1.4f,1.5f,1.6f });

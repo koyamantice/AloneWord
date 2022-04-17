@@ -37,11 +37,11 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	spawing[0]->SetPosition({ -20.0f,0.0f,-4.0f });
 	spawing[0]->SetRotation({ 0,90,0 });
 
-	spawing[1]->SetPosition({ 0,0.0f,8.0f });
-	spawing[1]->SetRotation({ 0,90,0 });
+	//spawing[1]->SetPosition({ 0,0.0f,8.0f });
+	//spawing[1]->SetRotation({ 0,90,0 });
 
-	spawing[2]->SetPosition({ 20.0f,0.0f,-4.0f });
-	spawing[2]->SetRotation({ 0,90,0 });
+	//spawing[2]->SetPosition({ 20.0f,0.0f,-4.0f });
+	//spawing[2]->SetRotation({ 0,90,0 });
 
 	//オブジェクト初期化
 	/*modelGround = Model::CreateFromOBJ("ground");
@@ -164,7 +164,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		SceneManager::GetInstance()->ChangeScene("BOSS");
 	}
 	for (std::size_t i = 0; i < spawing.size(); i++) {
-		for (int j = 0; j < 5; j++) {
+		for (int j = 0; j < 1; j++) {
 			player->ResetWeight(spawing[i]->GetEnemy(j));
 			player->Rebound(spawing[i]->GetEnemy(j));
 		}
@@ -197,22 +197,22 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	//		}
 	//	}
 	//}
-	for (std::size_t i = 0; i < spawing.size(); i++) {
-		for (int colA = 0; colA < 5; colA++) {
-			for (int colB = 1; colB < 5; colB++) {
-				if (spawing[i]->GetEnemy(colA)->GetIsAlive()) {
-					if (Collision::CheckSphere2Sphere(spawing[i]->GetEnemy(colA)->collider, spawing[i]->GetEnemy(colB)->collider) == true && colA != colB) {//当たり判定と自機同士の当たり判定の削除
-						spawing[i]->GetEnemy(colA)->SetHit(true);
-						spawing[i]->GetEnemy(colB)->SetHit(false);
-						break;
+	//for (std::size_t i = 0; i < spawing.size(); i++) {
+	//	for (int colA = 0; colA < 5; colA++) {
+	//		for (int colB = 1; colB < 5; colB++) {
+	//			if (spawing[i]->GetEnemy(colA)->GetIsAlive()) {
+	//				if (Collision::CheckSphere2Sphere(spawing[i]->GetEnemy(colA)->collider, spawing[i]->GetEnemy(colB)->collider) == true && colA != colB) {//当たり判定と自機同士の当たり判定の削除
+	//					spawing[i]->GetEnemy(colA)->SetHit(true);
+	//					spawing[i]->GetEnemy(colB)->SetHit(false);
+	//					break;
 
-					} else {
-						spawing[i]->GetEnemy(colA)->SetHit(false);
-					}
-				}
-			}
-		}
-	}
+	//				} else {
+	//					spawing[i]->GetEnemy(colA)->SetHit(false);
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
 
 	//その他シーン移行
 

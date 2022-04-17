@@ -45,6 +45,12 @@ void Spawning::Update() {
 		if (Collision::CircleCollision(pos.x, pos.z, 2.0f, player->GetPosition().x, player->GetPosition().z, 1.5f)) {
 			player->BackPos();
 		}
+		for (int i = 0; i < EneMax;i++) {
+			if (enemy[i]->CollidePos(pos, 2.0f)) {
+				enemy[i]->SetHit(true);
+				break;
+			}
+		}
 		collideAttackArm();
 		texture->Update();
 		texture->SetPosition({ pos.x,pos.y + 5.0f,pos.z });

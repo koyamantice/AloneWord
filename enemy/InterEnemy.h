@@ -60,7 +60,7 @@ public:
 	void SetBasePos(XMFLOAT3 basePos) { this->basePos = basePos; }
 	void Respawn(float speed);
 	void Reborn();
-
+	bool CollidePos(XMFLOAT3 pos,float radius);
 protected:
 	const float PI = 3.14f;
 
@@ -82,8 +82,6 @@ protected:
 	XMFLOAT3 EndPos{};
 	XMFLOAT3 EndRot{};
 	XMFLOAT3 basePos{};
-
-	float rad = 0.4f;
 
 	float radius = 0.0f;
 	float speed = 0.0f;

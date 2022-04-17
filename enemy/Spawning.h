@@ -2,7 +2,7 @@
 #include <DirectXMath.h>
 #include"InterEnemy.h"
 #include"Player.h"
-const int EneMax = 5;
+const int EneMax = 1;
 class Spawning {
 private:
 	// DirectX::‚ğÈ—ª

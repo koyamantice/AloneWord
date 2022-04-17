@@ -33,7 +33,6 @@ void Rice::Initialize() {
 	Restexture->SetPosition(pos);
 	Restexture->SetRotation({ 90,0,0 });
 	Restexture->SetScale({ 0.2f,0.2f,0.2f });
-	collider.radius = rad;
 }
 
 void Rice::Finalize() {
@@ -50,7 +49,6 @@ void Rice::Update() {
 	Interval = player->GetInterval();
 	FlashCount = player->GetFlashCount();
 	oldpos = pos;
-	Back();
 	if (IsAlive && !EnemyCatch && !Exp) {
 		if (LockOn()) {
 			moveCount = (rand() % 15) + 20;
@@ -131,6 +129,7 @@ void Rice::Update() {
 	if (Exp == true) {
 		DeadEnemy();
 	}
+	Back();
 	enemyobj->SetPosition(pos);
 	texture->SetPosition(pos);
 	Restexture->SetPosition(pos);
@@ -147,14 +146,14 @@ void Rice::Update() {
 //描画
 void Rice::Draw() {
 	ImGui::Begin("test");
-	ImGui::SliderFloat("position.x", &pos.x, 20, -20);
-	ImGui::SliderFloat("position.z", &pos.z, 20, -20);
-	ImGui::SliderFloat("speed", &speed, 360, 0);
-	ImGui::SliderFloat("scale", &scale, 360, 0);
-
-	//ImGui::Text("Interval::%d", Interval);
-	//ImGui::Text("FlashCount::%d", FlashCount);
-	ImGui::Unindent();
+	ImGui::SliderFloat("position.x", &pos.z, 20, -20);
+	ImGui::SliderFloat("position.z", &oldpos.z, 20, -20);
+	//ImGui::SliderFloat("speed", &speed, 360, 0);
+	//ImGui::SliderFloat("scale", &scale, 360, 0);
+	ImGui::Text("Count::%d", moveCount);
+	ImGui::Text("Move::%d", isMove);
+	ImGui::Text("Hit::%d", hit);
+	//ImGui::Unindent();
 	ImGui::End();
 	if (IsAlive) {
 		Object3d::PreDraw();
@@ -375,6 +374,11 @@ void Rice::Move() {
 		dir = (rand() % 40);
 	}
 	if (isMove) {
+		if (hit) {
+			moveCount = (rand() % 30) + 30;
+			isMove = false;
+			return;
+		}
 		if (frame <= 1.0f) {
 			frame += 0.01f;
 		} else {

@@ -1,4 +1,5 @@
 #include "InterEnemy.h"
+#include "Collision.h"
 
 void InterEnemy::Pause(const int& Timer) {
 	int wait = 0;
@@ -10,7 +11,21 @@ void InterEnemy::Pause(const int& Timer) {
 }
 void InterEnemy::Back() {
 	if (hit) {
-		pos = oldpos;
+		XMFLOAT3 setpos{};
+		if (oldpos.z>pos.z) {
+			setpos.z=oldpos.z-pos.z;
+			pos.z += setpos.z * 1.5f;
+		} else {
+			setpos.z = pos.z - oldpos.z;
+			pos.z -= setpos.z * 1.5f;
+		}
+		if (oldpos.x > pos.x) {
+			setpos.x = oldpos.x - pos.x;
+			pos.x += setpos.x * 1.5f;
+		} else {
+			setpos.x = pos.x - oldpos.x;
+			pos.x -= setpos.x * 1.5f;
+		}
 		hit = false;
 	}
 }
@@ -37,7 +52,6 @@ void InterEnemy::DeadEnemy() {
 	} else {
 		pos.y = 0.0f;
 	}
-
 	if (pos.y == 0.0f) {
 		enescale.x -= 0.01f;
 		enescale.y -= 0.01f;
@@ -94,4 +108,8 @@ void InterEnemy::Reborn() {
 		}
 	}
 
+}
+
+bool InterEnemy::CollidePos(XMFLOAT3 pos, float radius) {
+	return Collision::SphereCollision(pos.x,pos.y,pos.z,radius, this->pos.x, this->pos.y, this->pos.z, radius);
 }
