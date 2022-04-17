@@ -19,10 +19,10 @@ UI::UI(Player* player, BossEnemy* boss) {
 	Life = Sprite::Create(5, { 0.0f,0.0f });
 	Life->SetPosition({ 20.0f,620.0f });
 	Arrow = Sprite::Create(4, { 0.0f,0.0f });
-	Arrow->SetPosition({0,0});
-	Vignette= Sprite::Create(6, { 0.0f,0.0f });
+	Arrow->SetPosition({ 0,0 });
+	Vignette = Sprite::Create(6, { 0.0f,0.0f });
 	Vignette->SetPosition({ 0,0 });
-	Vignette->SetColor({255,255,255,0.75f});
+	Vignette->SetColor({ 255,255,255,0.75f });
 }
 void UI::Update() {
 	{//HPˆ—
@@ -47,21 +47,18 @@ void UI::Update() {
 }
 
 const void UI::Draw() {
-	//ImGui::Begin("test");
-	//if (ImGui::TreeNode("Debug")) {
-	//	if (ImGui::TreeNode("UI")) {
-	//		ImGui::SliderFloat("Check", &Check, 50, -50);
-	//		ImGui::SliderFloat("Check2", &Check2, 50, -50);
-	//		ImGui::SliderFloat("pos.x", &pos.x, 50, -50);
-	//		ImGui::SliderFloat("pos.y", &pos.y, 50, -50);
-	//		ImGui::SliderFloat("pos.z", &pos.z, 50, -50);
-	//		//ImGui::Text("Sub %d", SpeedSub);
-	//		ImGui::Unindent();
-	//		ImGui::TreePop();
-	//	}
-	//	ImGui::TreePop();
-	//}
-	//ImGui::End();
+	ImGui::Begin("test");
+	if (ImGui::TreeNode("Debug")) {
+		if (ImGui::TreeNode("UI")) {
+			ImGui::SliderFloat("posx", &pos.x, 50, -50);
+			ImGui::SliderFloat("posz", &pos.z, 50, -50);
+			ImGui::Text("Sub %d", invisible);
+			ImGui::Unindent();
+			ImGui::TreePop();
+		}
+		ImGui::TreePop();
+	}
+	ImGui::End();
 	Sprite::PreDraw();
 	//Vignette->Draw();
 	if (boss) {
@@ -69,7 +66,8 @@ const void UI::Draw() {
 	}
 	PlaHp->Draw();
 	Life->Draw();
-	if (invisible) {
+
+	if (boss && invisible) {
 		Arrow->Draw();
 	}
 
@@ -80,9 +78,9 @@ void UI::SeachBoss() {
 	radius = speed * PI / 180.0f;
 	circle.x = cosf(radius) * scale;
 	circle.y = sinf(radius) * scale;
-	ArrowPos.x = circle.x + basePos.x;
+	/*ArrowPos.x = circle.x + basePos.x;
 	ArrowPos.y = circle.y + basePos.y;
-	speed++;
+	speed++;*/
 
 	XMFLOAT3 pla = player->GetPosition();
 	XMFLOAT3 bos = boss->GetPosition();
@@ -91,39 +89,61 @@ void UI::SeachBoss() {
 	//aR2bR = sqrt((aX2bX * aX2bX) + (aY2bY * aY2bY));
 	//bX += aX2bX / aR2bR * speed;
 	//bY += aY2bY / aR2bR * speed;
+	pos.x = (bos.x - pla.x);
+	pos.z = (bos.z - pla.z);
+	posR = sqrt(pow(pos.x, 2) + pow(pos.z, 2));
+	Check = pos.x / posR;
+	Check2 = pos.z / posR;
 
-	pos.x = (bos.x+pla.x);
-	pos.z = (bos.z+pla.z);
-	pos.y = pla.x / pos.x;
-	Check =  pla.x / pos.x;
-	Check2 =  pla.z / pos.z;
+	if (fabs(pos.x) > 15.00f || fabs(pos.z) > 15.00f) {
+		invisible = 1;
+	}
+	else {
+		invisible = 0;
 
-	//if (fabs(pos.x)>0.65f||fabs(pos.z)>0.65f) {
-	//	invisible = true;
-	//} else {
-	//	invisible = false;
-
-	//}
+	}
 
 
-	//if (Check > 0) {
-	//	if (Check2 > 0) {
-	//		ArrowPos.y = 400;
-	//		ArrowPos.x = 700;
-	//	} else {
-	//		ArrowPos.y = 200;
-	//		ArrowPos.x = 700;
-	//	}
-	//} else {
-	//	if (Check2 > 0) {
-	//		ArrowPos.y = 400;
-	//		ArrowPos.x = 600;
-	//	} else {
-	//		ArrowPos.y = 200;
-	//		ArrowPos.x = 600;
-	//	}
-
-	//}
+	if (Check > 0.3) {
+		if (Check2 > 0.3) {
+			ArrowPos.y = 200;
+			ArrowPos.x = 700;
+		} else if(Check2 < -0.3) {
+			ArrowPos.y = 400;
+			ArrowPos.x = 700;
+		}
+		else {
+			ArrowPos.y = 300;
+			ArrowPos.x = 700;
+		}
+	} else if(Check < -0.3) {
+		if (Check2 > 0.3) {
+			ArrowPos.y = 200;
+			ArrowPos.x = 500;
+		}
+		else if (Check2 < -0.3) {
+			ArrowPos.y = 400;
+			ArrowPos.x = 500;
+		}
+		else {
+			ArrowPos.y = 300;
+			ArrowPos.x = 500;
+		}
+	}
+	else {
+		if (Check2 > 0.3) {
+			ArrowPos.y = 200;
+			ArrowPos.x = 600;
+		}
+		else if (Check2 < -0.3) {
+			ArrowPos.y = 400;
+			ArrowPos.x = 600;
+		}
+		else {
+			ArrowPos.y = 300;
+			ArrowPos.x = 600;
+		}
+	}
 
 	Arrow->SetPosition(ArrowPos);
 }

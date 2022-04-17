@@ -6,7 +6,7 @@
 
 class UI {
 public:
-	UI(Player*player,BossEnemy* boss=nullptr);
+	UI(Player* player, BossEnemy* boss = nullptr);
 	void Update();
 	const void Draw();
 private:
@@ -18,10 +18,10 @@ private:
 	using XMMATRIX = DirectX::XMMATRIX;
 private:
 	Player* player = nullptr;
-	BossEnemy* boss=nullptr;
+	BossEnemy* boss = nullptr;
 
-	Sprite* BossHp=nullptr;
-	Sprite* PlaHp= nullptr;
+	Sprite* BossHp = nullptr;
+	Sprite* PlaHp = nullptr;
 	Sprite* Life = nullptr;
 	Sprite* Arrow = nullptr;
 	Sprite* Vignette = nullptr;
@@ -31,19 +31,19 @@ private:
 	XMFLOAT2 ArrowPos{};
 	XMFLOAT2 AfterPos[2]{};
 
-	const float PI=3.145265f;
+	const float PI = 3.145265f;
 	float speed = 0;
 	float radius = 0;
 	float scale = 150;
 	double a;
 	double b;
-	XMFLOAT2 basePos={1280/2,720/2};
+	XMFLOAT2 basePos = { 1280 / 2,720 / 2 };
 	XMFLOAT2 circle{};
 	XMFLOAT3 pos{};
-
-	float Check = 0;
-	float Check2 = 0;
-	bool invisible=false;
+	double posR;
+	float Check;
+	float Check2;
+	int invisible = false;
 private:
 	void SeachBoss();
 };
