@@ -61,6 +61,7 @@ private:
 	ParticleManager* particleMan = nullptr;
 	bool start = false;
 	bool Clear = false;
+	int a = 0;
 	CollisionManager* collisionManager = nullptr;
 };
 
