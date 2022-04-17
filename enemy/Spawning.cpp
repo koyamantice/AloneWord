@@ -10,8 +10,7 @@ Spawning::Spawning() {
 	texture->TextureCreate();
 	for (int i = 0; i < EneMax; i++) {
 	enemy[i] = new Rice();
-}
-
+	}
 }
 
 void Spawning::Initialize() {

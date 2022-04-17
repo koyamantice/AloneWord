@@ -50,7 +50,6 @@ void Rice::Update() {
 	Interval = player->GetInterval();
 	FlashCount = player->GetFlashCount();
 	oldpos = pos;
-	Reborn();
 	Back();
 	if (IsAlive && !EnemyCatch && !Exp) {
 		if (LockOn()) {
@@ -61,7 +60,7 @@ void Rice::Update() {
 			Move();
 		}
 	}
-
+	Reborn();
 	//倒したときの演出
 	if (bound == true) {
 		//enescale = { 0.4f,0.4f,0.4f };
@@ -147,6 +146,16 @@ void Rice::Update() {
 
 //描画
 void Rice::Draw() {
+	ImGui::Begin("test");
+	ImGui::SliderFloat("position.x", &pos.x, 20, -20);
+	ImGui::SliderFloat("position.z", &pos.z, 20, -20);
+	ImGui::SliderFloat("speed", &speed, 360, 0);
+	ImGui::SliderFloat("scale", &scale, 360, 0);
+
+	//ImGui::Text("Interval::%d", Interval);
+	//ImGui::Text("FlashCount::%d", FlashCount);
+	ImGui::Unindent();
+	ImGui::End();
 	if (IsAlive) {
 		Object3d::PreDraw();
 		enemyobj->Draw();

@@ -83,9 +83,10 @@ void InterEnemy::Reborn() {
 			circleZ = sinf(radius) * scale;
 			pos.x = circleX + basePos.x;
 			pos.z = circleZ + basePos.z;
+			enemyobj->SetPosition(pos);
 		}
-
 		else if (IsTimer == 0) {
+			respawn = false;
 			IsAlive = true;
 			appearance = true;
 			isMove = false;
