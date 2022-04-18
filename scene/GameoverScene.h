@@ -17,4 +17,3 @@ public:
 private://ƒƒ“ƒo•Ï”
 	Sprite* sprite = { nullptr };
 };
-
