@@ -442,19 +442,7 @@ void Player::Update() {
 
 //描画
 void Player::Draw() {
-	ImGui::Begin("test");
-	if (ImGui::TreeNode("Debug")) {
-		if (ImGui::TreeNode("Player")) {
-			ImGui::SliderFloat("position.z", &position.z, 50, -50);
-			//ImGui::SliderFloat("pos.z", &oldPos.x, 50, -50);
-			//ImGui::Text("Interval::%d", Interval);
-			//ImGui::Text("FlashCount::%d", FlashCount);
-			ImGui::Unindent();
-			ImGui::TreePop();
-		}
-		ImGui::TreePop();
-	}
-	ImGui::End();
+
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
 		object3d->Draw();

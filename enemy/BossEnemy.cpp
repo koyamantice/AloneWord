@@ -52,19 +52,17 @@ void BossEnemy::Update() {
 }
 
 void BossEnemy::Draw() {
-//	ImGui::Begin("test");
-//	//	if (ImGui::TreeNode("Debug")) {
-//	if (ImGui::TreeNode("Rice")) {
-//		ImGui::SliderFloat("pos.x", &pos.x, 50, -50);
-//		ImGui::SliderFloat("pos.y", &pos.y, 50, -50);
-//		ImGui::SliderFloat("pos.z", &pos.z, 50, -50);
-//		ImGui::Text("%d", pat);
-//		ImGui::Unindent();
-//		ImGui::TreePop();
-//	}
-//	//ImGui::TreePop();
-////}
-//	ImGui::End();
+	ImGui::Begin("test");
+	//	if (ImGui::TreeNode("Debug")) {
+	if (ImGui::TreeNode("Rice")) {
+		ImGui::SliderFloat("pos.y", &pos.y, 50, -50);
+		ImGui::Text("%d", AttackCount);
+		ImGui::Unindent();
+		ImGui::TreePop();
+	}
+	//ImGui::TreePop();
+//}
+	ImGui::End();
 
 	Object3d::PreDraw();
 	enemyobj->Draw();
@@ -133,7 +131,7 @@ bool BossEnemy::collideAttackArm() {
 //ボスの行動
 void BossEnemy::Fork() {
 	XMFLOAT3 AfterPos{};
-	if (AttackCount > 180) {
+	if (AttackCount > 180 && pos.y <= 0.1f) {
 		if (!active) {
 			action = (rand() % 2);
 			frame = 0;
@@ -143,6 +141,30 @@ void BossEnemy::Fork() {
 	} else {
 		if (!active) {
 			AttackCount++;
+			if (State == Up) {
+				AfterPos.y = 1.0f;
+			}
+			else {
+				AfterPos.y = 0.0f;
+			}
+			if (frame <= 1.0) {
+				frame += 0.015f;
+			}
+			else {
+				frame = 0.0f;
+				if (State == Up) {
+					State = Down;
+				}
+				else {
+					State = Up;
+				}
+			}
+			pos = {
+			0,
+			Ease(In,Cubic,frame,pos.y,AfterPos.y),
+			0,
+			};
+			enemyobj->SetPosition(pos);
 		}
 	}
 

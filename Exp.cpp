@@ -3,6 +3,7 @@
 #include"Collision.h"
 #include"Easing.h"
 #include "DebugText.h"
+#include <XorShift.h>
 #include<sstream>
 #include<iomanip>
 
@@ -70,9 +71,9 @@ void Exp::SetExp(InterEnemy* enemy) {
 	//エフェクトの発生
 	if (SetExp == true && BirthExp == false) {
 		pos = enemy->GetPosition();
-		boundpower.x = (float)(rand() % 4 - 2);
+		boundpower.x = (float)((int)(XorShift::GetInstance()->xor128()) % 4 - 2);
 		boundpower.y = 3;
-		boundpower.z = (float)(rand() % 4 - 2);
+		boundpower.z = (float)((int)(XorShift::GetInstance()->xor128()) %  - 2);
 		//effectcolor.w = (float)(rand() % 10);
 		if (boundpower.x == 0.0f) {
 			boundpower.x = 1.0f;

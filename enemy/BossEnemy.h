@@ -39,5 +39,13 @@ private:
 	int coolT = 0;//クールタイム
 	int AttackC = 0;//何回攻撃したか
 	bool finish = false;//フィニッシュ
+	int State = 0;
 
+	float y = 0.0f;
+	//待機モーションのためのやつ
+	enum Motion {
+		Up,
+		Down
+	};
+	int b = 0;
 };

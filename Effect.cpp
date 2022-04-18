@@ -4,6 +4,7 @@
 #include"Easing.h"
 #include "DebugText.h"
 #include<sstream>
+#include <XorShift.h>
 #include<iomanip>
 
 using namespace DirectX;
@@ -38,9 +39,9 @@ void Effect::Update(BossEnemy* bossenemy) {
 	//エフェクトの発生
 	if (effect == true && effectAlive == false) {
 		effectscale = { 0.3f,0.3f,0.3f };
-		boundpower.x = (float)(rand() % 20 - 10);
-		boundpower.y = (float)(rand() % 10 - 5);
-		boundpower.z = (float)(rand() % 20 - 10);
+		boundpower.x = (float)((int)(XorShift::GetInstance()->xor128()) % 20 - 10);
+		boundpower.y = (float)((int)(XorShift::GetInstance()->xor128()) % 10 - 5);
+		boundpower.z = (float)((int)(XorShift::GetInstance()->xor128()) % 20 - 10);
 		effectcolor.w = 0.3f;
 		effectcolor.x = (float)(rand() % 100 + 70);
 		effectcolor.y = (float)(rand() % 100 + 70);
