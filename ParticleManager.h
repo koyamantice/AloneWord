@@ -74,6 +74,7 @@ public: // サブクラス
 		int frame = 0;
 		// 終了フレーム
 		int num_frame = 0;
+
 	};
 
 private: // 定数
