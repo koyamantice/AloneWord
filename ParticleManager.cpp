@@ -98,7 +98,14 @@ void ParticleManager::Update()
 		it->position = it->position + it->velocity;
 
 		// カラーの線形補間
-		it->color = it->s_color + (it->e_color - it->s_color) / f;
+		it->color.x = (it->e_color.x - it->s_color.x) / f;
+		it->color.x += it->s_color.x;
+		it->color.y = (it->e_color.y - it->s_color.y) / f;
+		it->color.y += it->s_color.y;
+		it->color.z = (it->e_color.z - it->s_color.z) / f;
+		it->color.z += it->s_color.z;
+		it->color.w = (it->e_color.w - it->s_color.w) / f;
+		it->color.w += it->s_color.w;
 
 		// スケールの線形補間
 		it->scale = it->s_scale + (it->e_scale - it->s_scale) / f;
@@ -116,11 +123,12 @@ void ParticleManager::Update()
 		for (std::forward_list<Particle>::iterator it = particles.begin();
 			it != particles.end();
 			it++) {
-			// 座標
+			//座標
 			vertMap->pos = it->position;
-			// スケール
+			//スケール
 			vertMap->scale = it->scale;
-			// 次の頂点へ
+			vertMap->color = it->color;
+			//次の頂点へ
 			vertMap++;
 			if (++vertCount >= vertexCount) {
 				break;
@@ -295,6 +303,12 @@ void ParticleManager::InitializeGraphicsPipeline()
 			D3D12_APPEND_ALIGNED_ELEMENT,
 			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
 		},
+		{ // color(1行で書いたほうが見やすい)
+			"COLOR", 0, DXGI_FORMAT_R32G32B32A32_FLOAT, 0,
+			D3D12_APPEND_ALIGNED_ELEMENT,
+			D3D12_INPUT_CLASSIFICATION_PER_VERTEX_DATA, 0
+		},
+
 	};
 
 	// グラフィックスパイプラインの流れを設定
