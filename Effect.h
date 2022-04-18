@@ -7,6 +7,7 @@
 #include "Sprite.h"
 #include "Texture.h"
 #include "BossEnemy.h"
+#include "Player.h"
 
 class Effect {
 public:
@@ -47,6 +48,8 @@ public:
 
 	void EffectMove();
 
+	//void ArmEffect(Player* player);
+
 private:
 	/*Object3d* Armobj;
 	Object3d* object3d;
@@ -56,6 +59,7 @@ private:
 	
 	//エフェクト関係
 	Texture* effecttexture = nullptr;
+	//Texture* Armeffecttexture = nullptr;
 	XMFLOAT3 effectpos = { 0.0f,0.0f,0.0f };
 	XMFLOAT4 effectcolor = { 0.0f,0.0f,0.0f,1.0f };
 	XMFLOAT3 effectscale = { 0.4f,0.4f,0.4f };

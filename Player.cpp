@@ -17,6 +17,7 @@ Input* input = Input::GetInstance();
 float easeInSine(float x) {
 	return x * x * x;
 }
+
 float easeOutBack(float x) {
 	return x == 1 ? 1 : 1 - powf(2, -10 * x);
 }
@@ -68,8 +69,6 @@ bool Player::Initialize() {
 	targetpos = position;
 	return true;
 }
-
-
 
 void Player::Finalize() {
 	delete object3d;
@@ -534,6 +533,17 @@ void Player::BirthParticle() {
 			vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 
 			ParticleManager::GetInstance()->Add(10, { position.x,position.y,position.z }, vel, XMFLOAT3(), 1.0f, 0.0f);
+		}
+	}
+	else {
+		if (AttackFlag == true) {
+			const float rnd_vel = 0.1f;
+			XMFLOAT3 vel{};
+			vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+
+			ParticleManager::GetInstance()->Add(10, { Armpos.x,Armpos.y,Armpos.z }, vel, XMFLOAT3(), 1.0f, 0.0f);
 		}
 	}
 
