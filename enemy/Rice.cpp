@@ -287,9 +287,8 @@ void Rice::Follow() {
 	Check2 = position.z / posR;
 
 	rot.y = (atan2(position.x, position.z) * (180.0f / XM_PI))-90;// *(XM_PI / 180.0f);
-
-	pos.x += cos(atan2(position.x, position.z)) * 0.075f;
-	pos.z -= sin(atan2(position.x, position.z)) * 0.075f;
+	pos.x -= sin(-atan2(position.x, position.z)) * 0.2f;
+	pos.z += cos(-atan2(position.x, position.z)) * 0.2f;
 }
 
 //敵が動く
