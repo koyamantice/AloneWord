@@ -441,7 +441,13 @@ void Player::Update() {
 
 //描画
 void Player::Draw() {
+	ImGui::Begin("test");
+	ImGui::SliderFloat("StickrotX", &StickrotX, 1000, -1000);
+	ImGui::SliderFloat("StickrotY", &StickrotY, 1000, -1000);
 
+	//ImGui::Text("pause %d", &pause, 100, 0);ArmSpeed
+	ImGui::Unindent();
+	ImGui::End();
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
 		object3d->Draw();
