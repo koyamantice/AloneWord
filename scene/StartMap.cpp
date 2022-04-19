@@ -104,9 +104,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	// カメラ注視点をセット
 	camera->SetTarget(player->GetTargetPosition());
 	camera->SetEye(cameraPos);
-	// モデル名を指定してファイル読み込み
-	model1 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
-
+	
 	// デバイスをセット
 	FBXObject3d::SetDevice(dxCommon->GetDev());
 	// カメラをセット
@@ -374,9 +372,9 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 
 
 	Object3d::PreDraw();
-	object1->Draw(dxCommon->GetCmdList());
+	//object1->Draw(dxCommon->GetCmdList());
 	//背景用
-	player->Draw();
+	player->Draw(dxCommon->GetCmdList());
 	//for (int i = 0; i < StartEnemyMax; i++) {
 	//	enemy[i]->Draw();
 	//}

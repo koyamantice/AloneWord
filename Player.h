@@ -1,11 +1,14 @@
 ﻿#pragma once
 #include"Object3d.h"
 #include"Model.h"
+#include "FBXObject3d.h"
+#include "FBXModel.h"
 #include <DirectXMath.h>
 #include <Input.h>
 #include"CollisionPrimitive.h"
 #include "Sprite.h"
 #include "Texture.h"
+#include "DirectXCommon.h"
 
 class InterEnemy;
 class Player : public Object3d {
@@ -15,7 +18,7 @@ public:
 	bool Initialize() override;
 	void Finalize();
 	void Update() override;
-	void Draw();
+	void Draw(ID3D12GraphicsCommandList* cmdList);
 	void Pause(const int& Timer);
 private:
 	// DirectX::を省略
@@ -112,6 +115,8 @@ public:
 private:
 	Object3d* Armobj;
 	Object3d* object3d;
+	FBXModel* model1 = nullptr;
+	FBXObject3d* object1 = nullptr;
 	Model* model;
 	Model* Armmodel;
 	XMFLOAT3 pos = { 0,0,-10 };

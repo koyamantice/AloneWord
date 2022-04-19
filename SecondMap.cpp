@@ -185,7 +185,7 @@ void SecondMap::Update(DirectXCommon* dxCommon) {
 	}
 
 	if (warp->collidePlayer(player)) {
-		SceneManager::GetInstance()->ChangeScene("BOSS");
+		SceneManager::GetInstance()->ChangeScene("SECONDBOSS");
 	}
 	for (std::size_t i = 0; i < spawing.size(); i++) {
 		for (int j = 0; j < 1; j++) {
@@ -377,7 +377,7 @@ void SecondMap::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw();
 	object1->Draw(dxCommon->GetCmdList());
 	//”wŒi—p
-	player->Draw();
+	player->Draw(dxCommon->GetCmdList());
 	//for (int i = 0; i < StartEnemyMax; i++) {
 	//	enemy[i]->Draw();
 	//}
