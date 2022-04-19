@@ -29,8 +29,6 @@ public: // サブクラス
 	{
 		XMFLOAT3 pos; // xyz座標
 		float scale; // スケール
-		XMFLOAT4 color; // スケール
-
 	};
 
 	// 定数バッファ用データ構造体
@@ -59,17 +57,17 @@ public: // サブクラス
 		// 加速度
 		XMFLOAT3 accel = {};
 		// 色
-		XMFLOAT4 color = {};
+		XMFLOAT3 color = {};
 		// スケール
 		float scale = 1.0f;
 		// 回転
 		float rotation = 0.0f;
 		// 初期値
-		XMFLOAT4 s_color = {};
+		XMFLOAT3 s_color = {};
 		float s_scale = 1.0f;
 		float s_rotation = 0.0f;
 		// 最終値
-		XMFLOAT4 e_color = {};
+		XMFLOAT3 e_color = {};
 		float e_scale = 0.0f;
 		float e_rotation = 0.0f;
 		// 現在フレーム
