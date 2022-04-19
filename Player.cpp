@@ -82,9 +82,6 @@ void Player::Update() {
 	}
 	oldPos = position;
 	rot = this->object3d->GetRotation();
-	//if (!AttackFlag) {
-		//rot.y = Ease(In, Quad, 0.9f, rot.y, rot.y);
-	//}
 	object3d->Update();
 	Armobj->Update();
 	StickrotX = input->GetPosX();
@@ -106,35 +103,6 @@ void Player::Update() {
 			ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
 		}
 
-
-
-		if (input->LeftTiltStick(input->Right)) {
-			if (position.x <= XMax) {
-				position.x += PlayerSpeed;
-				//rot.y = 90;
-			}
-		}
-
-		//if (input->LeftTiltStick(input->Left)) {
-		//	if (position.x >= -XMax) {
-		//		position.x -= PlayerSpeed;
-		//		//rot.y = 270;
-		//	}
-		//}
-
-		//if (input->LeftTiltStick(input->Up)) {
-		//	if (position.z <= ZMax) {
-		//		position.z += PlayerSpeed;
-		//		//rot.y = 0;
-		//	}
-		//}
-
-		//if (input->LeftTiltStick(input->Down)) {
-		//	if (position.z >= -ZMax) {
-		//		position.z -= PlayerSpeed;
-		//		//rot.y = 180;
-		//	}
-		//}
 
 		//攻撃右回り
 		if (input->PushButton(input->Button_RB) && ArmWeight != 0.0f) {

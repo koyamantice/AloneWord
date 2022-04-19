@@ -167,6 +167,8 @@ void Input::Update() {
 		{
 			is_push[i] = false;
 		}
+		posX = (float)gamePadState.lX;
+		posY = (float)gamePadState.lY;
 	}
 }
 
@@ -286,9 +288,6 @@ bool Input::LeftTiltStick(int stick)
 	{
 		return true;
 	}
-
-	posX = (float)gamePadState.lX;
-	posY = (float)gamePadState.lY;
 
 	return false;
 }
