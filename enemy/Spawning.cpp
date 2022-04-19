@@ -31,6 +31,7 @@ void Spawning::Initialize() {
 }
 
 void Spawning::Update() {
+	if (pause) { return; }
 	if (Hp > 0) { isAlive = true; } else { isAlive = false; }
 	for (int i = 0; i < EneMax; i++) {
 			enemy[i]->SetBasePos(pos);
@@ -91,10 +92,15 @@ if (ImGui::TreeNode("Debug")) {
 }
 
 void Spawning::Pause(const int& Timer) {
-
-
 	for (int i = 0; i < EneMax; i++) {
 		enemy[i]->Pause(Timer);
+	}
+	wait++;
+	if (wait >= Timer) {
+		pause = false;
+		wait = 0;
+	} else {
+		pause = true;
 	}
 }
 

@@ -43,5 +43,6 @@ private:
 	Player* player = nullptr;
 	bool pause = false;
 	int stop = 0;
+	int wait = 0;
 };
 
