@@ -16,6 +16,7 @@ public:
 	void Finalize();
 	void Update() override;
 	void Draw();
+	void Pause(const int& Timer);
 private:
 	// DirectX::を省略
 	using XMFLOAT2 = DirectX::XMFLOAT2;
@@ -175,5 +176,7 @@ private:
 	float angleX;
 	float angleZ;
 	XMFLOAT3 targetpos = { 0,0,-10 };
-	
+	int wait = 0;
+
+	bool pause = false;
 };

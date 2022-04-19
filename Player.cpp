@@ -76,6 +76,9 @@ void Player::Finalize() {
 }
 
 void Player::Update() {
+	if (pause) {
+		return;
+	}
 	oldPos = position;
 	XMFLOAT3 rot = this->object3d->GetRotation();
 	//if (!AttackFlag) {
@@ -441,7 +444,11 @@ void Player::Update() {
 
 //描画
 void Player::Draw() {
-
+	ImGui::Begin("test");
+		ImGui::SliderInt("a", &wait, 100, 0);
+		ImGui::Text("pause %d", &pause, 100, 0);
+		ImGui::Unindent();
+	ImGui::End();
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
 		object3d->Draw();
@@ -449,6 +456,16 @@ void Player::Draw() {
 	}
 	
 	
+}
+
+void Player::Pause(const int& Timer) {
+		wait++;
+		if (wait >= Timer) {
+			pause = false;
+			wait = 0;
+		} else {
+			pause = true;
+		}
 }
 
 //敵が腕から離れる

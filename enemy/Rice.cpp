@@ -50,6 +50,7 @@ void Rice::Update() {
 	FlashCount = player->GetFlashCount();
 	oldpos = pos;
 	if (IsAlive && !EnemyCatch && !Exp) {
+		Back();
 		if (LockOn()) {
 			moveCount = (rand() % 15) + 20;
 			isMove = false;
@@ -129,7 +130,6 @@ void Rice::Update() {
 	if (Exp == true) {
 		DeadEnemy();
 	}
-	Back();
 	enemyobj->SetPosition(pos);
 	texture->SetPosition(pos);
 	Restexture->SetPosition(pos);

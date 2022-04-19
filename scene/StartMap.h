@@ -34,7 +34,7 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw(DirectXCommon* dxCommon) override;
-
+	void Pause(const int& Timer);
 private:
 	XMFLOAT3 cameraPos = { 0.0f,0.0f,0.0f };
 	Model* modelFloor = nullptr;
@@ -63,5 +63,8 @@ private:
 	bool Clear = false;
 	int a = 0;
 	CollisionManager* collisionManager = nullptr;
+	bool pause = false;
+	int wait = 0;
+	int set = 0;
 };
 

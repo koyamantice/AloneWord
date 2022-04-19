@@ -8,6 +8,7 @@ void InterEnemy::Pause(const int& Timer) {
 		pause = false;
 	} else {
 		pause = true;
+		wait++;
 	}
 }
 void InterEnemy::Back() {

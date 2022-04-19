@@ -145,6 +145,23 @@ void StartMap::Finalize() {
 }
 
 void StartMap::Update(DirectXCommon* dxCommon) {
+	if (pause) {
+		Pause(set);
+		return;
+	}
+	for (std::size_t i = 0; i < spawing.size(); i++) {
+		for (int j = 0; j < 1; j++) {
+			if (spawing[i]->GetEnemy(j)->collideAttackArm()){				set = 30;
+			set = 15;
+
+			pause = true;
+				break;
+			}
+		}
+	}
+
+
+
 	//objFloor->Update();
 	objFloor->Update();
 	objStartMap->Update();
@@ -156,6 +173,10 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	for (std::size_t i = 0; i < objBlock.size(); i++) {
 		objBlock[i]->SetRotation(BlockRotation[i]);
 		objBlock[i]->Update();
+	}
+	if (spawing[0]->collideAttackArm()) {
+		set = spawing[0]->GetStop();
+		pause = true;
 	}
 	for (std::size_t i = 0; i < spawing.size(); i++) {
 		spawing[i]->Update();
@@ -177,8 +198,8 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		Audio::GetInstance()->LoopWave(1, 0.7f);
 	}
 	if (input->TriggerKey(DIK_SPACE)) {
-		int a = 0;
-		a += 1;
+		set = 15;
+		pause = true;
 	}
 
 	////敵同士の当たり判定
@@ -247,13 +268,13 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	}
 
 	
-	if (spawing[0]->GetIsAlive() == 0) {
-		if (spawing[1]->GetIsAlive() == 0) {
-			if (spawing[2]->GetIsAlive() == 0) {
-				Clear = true;
-			}
-		}
-	}
+	//if (spawing[0]->GetIsAlive() == 0) {
+	//	if (spawing[1]->GetIsAlive() == 0) {
+	//		if (spawing[2]->GetIsAlive() == 0) {
+	//			Clear = true;
+	//		}
+	//	}
+	//}
 	if (input->TriggerKey(DIK_C)) {
 		Clear = true;
 	}
@@ -365,4 +386,16 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	ui->Draw();
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
+}
+
+void StartMap::Pause(const int& Timer) {
+	wait++;
+	if (wait >= Timer) {
+		pause = false;
+		wait = 0;
+	} else {
+		pause = true;
+	}
+	player->Pause(Timer);
+	spawing[0]->Pause(Timer);
 }
