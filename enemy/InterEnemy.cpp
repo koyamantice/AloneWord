@@ -81,6 +81,15 @@ void InterEnemy::Respawn(float speed) {
 	}
 	this->speed = speed;
 }
+//ìGí«è]
+void InterEnemy::Follow() {
+	XMFLOAT3 position{};
+	position.x = (playerpos.x - pos.x);
+	position.z = (playerpos.z - pos.z);
+	rot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 90;// *(XM_PI / 180.0f);
+	pos.x -= sin(-atan2(position.x, position.z)) * 0.2f;
+	pos.z += cos(-atan2(position.x, position.z)) * 0.2f;
+}
 
 void InterEnemy::Reborn() {
 	if (!IsAlive) {

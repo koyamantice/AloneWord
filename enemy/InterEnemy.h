@@ -59,6 +59,7 @@ public:
 	void RandDeadPower();
 	void SetBasePos(XMFLOAT3 basePos) { this->basePos = basePos; }
 	void Respawn(float speed);
+	void Follow();
 	void Reborn();
 	bool CollidePos(XMFLOAT3 pos,float radius);
 protected:

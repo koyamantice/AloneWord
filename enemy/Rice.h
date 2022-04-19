@@ -15,9 +15,9 @@ private:
 	bool collideAttackArm() override;
 	bool collideArm();
 	bool LockOn();
-	void Follow();
 	void Move();
-	int angle = 0;
+	float speed_y = 3.0f/20.0f;
+	const float gravity = speed_y/20.0f;
 
 };
 

@@ -93,24 +93,27 @@ void Player::Update() {
 	
 	if (ArmMoveNumber == 0 && AttackMoveNumber == 0 && AttackFlag == false
 		&& Interval <= 80) {
-		if (!(StickrotX<700 && StickrotX>-700) || !(StickrotY<700 && StickrotY>-700)) {
+		if (!(StickrotX<650 && StickrotX>-650)) {
 			rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
+			position.x += sin(atan2(StickrotX, StickrotY)) * PlayerSpeed;
 			ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 			ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
-
-		} 
-		if (!(StickrotX<700 && StickrotX>-700) || !(StickrotY<700 && StickrotY>-700)) {
+		}
+		if (!(StickrotY<650 && StickrotY>-650)) {
+			rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 			position.z -= cos(atan2(StickrotX, StickrotY)) * PlayerSpeed;
-			position.x += sin(atan2(StickrotX, StickrotY)) * PlayerSpeed;
+			ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
+			ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
 		}
 
 
-		//if (input->LeftTiltStick(input->Right)) {
-		//	if (position.x <= XMax) {
-		//		position.x += PlayerSpeed;
-		//		//rot.y = 90;
-		//	}
-		//}
+
+		if (input->LeftTiltStick(input->Right)) {
+			if (position.x <= XMax) {
+				position.x += PlayerSpeed;
+				//rot.y = 90;
+			}
+		}
 
 		//if (input->LeftTiltStick(input->Left)) {
 		//	if (position.x >= -XMax) {

@@ -62,7 +62,7 @@ public: // メンバ関数
 	/// <summary>
 	/// 毎フレーム処理
 	/// </summary>
-	void Update(WinApp* winApp);
+	void Update();
 
 	/// <summary>
 	/// キーの押下をチェック
@@ -145,5 +145,6 @@ private: // メンバ変数
 	LONG unresponsive_range = 650;
 	float posX = 0;
 	float posY = 0;
+	WinApp* winApp;
 };
 
