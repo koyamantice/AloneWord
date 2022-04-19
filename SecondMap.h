@@ -1,37 +1,35 @@
-ï»¿#pragma once
+#pragma once
 #include "BaseScene.h"
 #include "BossEnemy.h"
 #include "Collision.h"
 #include "Spawning.h"
 #include "UI.h"
-#include <array>       // ãƒ˜ãƒƒãƒ€ãƒ•ã‚¡ã‚¤ãƒ«ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
-using namespace std;         //  åå‰ç©ºé–“æŒ‡å®š
+#include <array>       // ƒwƒbƒ_ƒtƒ@ƒCƒ‹ƒCƒ“ƒNƒ‹[ƒh
+using namespace std;         //  –¼‘O‹óŠÔw’è
 class CollisionManager;
 class TouchableObject;
 /// <summary>
-/// ã‚²ãƒ¼ãƒ ãƒ—ãƒ¬ã‚¤ã‚·ãƒ¼ãƒ³
+/// ƒQ[ƒ€ƒvƒŒƒCƒV[ƒ“
 /// </summary>
-const int StartEnemyMax = 10;
-const int Spawn = 3;
-const int BlockMax = 4;
-class StartMap : public BaseScene {
+const int SecondSpawn = 3;
+class SecondMap : public BaseScene {
 
 public:
 	/// <summary>
-	/// åˆæœŸåŒ–
+	/// ‰Šú‰»
 	/// </summary>
 	void Initialize(DirectXCommon* dxCommon) override;
 	/// <summary>
-	/// çµ‚äº†
+	/// I—¹
 	/// </summary>
 	void Finalize() override;
 
 	/// <summary>
-	/// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ æ›´æ–°
+	/// –ˆƒtƒŒ[ƒ€XV
 	/// </summary>
 	void Update(DirectXCommon* dxCommon) override;
 	/// <summary>
-	/// æç”»
+	/// •`‰æ
 	/// </summary>
 	void Draw(DirectXCommon* dxCommon) override;
 	void Pause(const int& Timer);
@@ -40,24 +38,24 @@ private:
 	Model* modelFloor = nullptr;
 	Object3d* objFloor;
 
-	Model* modelStartMap = nullptr;
-	TouchableObject* objStartMap;
+	Model* modelSecondMap = nullptr;
+	TouchableObject* objSecondMap;
 	UI* ui = nullptr;
 
-	//ãƒãƒªã‚±ãƒ¼ãƒ‰(ä»®)
-	array<Model*,4> modelBlock;
-	array<Object3d*,4> objBlock;
-	array<XMFLOAT3,4> BlockRotation;
+	//ƒoƒŠƒP[ƒh(‰¼)
+	array<Model*, 4> modelBlock;
+	array<Object3d*, 4> objBlock;
+	array<XMFLOAT3, 4> BlockRotation;
 
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;
 	DebugCamera* camera = { nullptr };
 	Texture* limit = nullptr;
 	Player* player = nullptr;
-	array<Rice*,10> enemy;
+	array<Rice*, 10> enemy;
 	Warp* warp = nullptr;
 	//BossEnemy* bossenemy = nullptr;
-	array<Spawning*, Spawn> spawing;
+	array<Spawning*, SecondSpawn> spawing;
 	ParticleManager* particleMan = nullptr;
 	bool start = false;
 	bool Clear = false;

@@ -9,7 +9,7 @@ Input* Input::GetInstance() {
 
 bool Input::Initialize(WinApp* winApp) {
 	HRESULT result = S_FALSE;
-
+	this->winApp = winApp;
 	// DirectInputオブジェクトの生成	
 	result = DirectInput8Create(winApp->GetHInstance(), DIRECTINPUT_VERSION, IID_IDirectInput8, (void**)&dinput, nullptr);
 	if (FAILED(result)) {
@@ -86,11 +86,11 @@ bool Input::Initialize(WinApp* winApp) {
 		diprg.diph.dwSize = sizeof(diprg);
 		diprg.diph.dwHeaderSize = sizeof(diprg.diph);
 		diprg.diph.dwHow = DIPH_BYOFFSET;
-		diprg.diph.dwObj = DIJOFS_X;
 		diprg.lMin = -1000;
 		diprg.lMax = 1000;
 
 		// X軸の値の範囲設定
+		diprg.diph.dwObj = DIJOFS_X;
 		devGamePad->SetProperty(DIPROP_RANGE, &diprg.diph);
 
 		// Y軸の値の範囲設定
@@ -126,7 +126,7 @@ bool Input::Initialize(WinApp* winApp) {
 	return true;
 }
 
-void Input::Update(WinApp* winApp) {
+void Input::Update() {
 	HRESULT result;
 
 	{// キーボード
@@ -167,6 +167,8 @@ void Input::Update(WinApp* winApp) {
 		{
 			is_push[i] = false;
 		}
+		posX = (float)gamePadState.lX;
+		posY = (float)gamePadState.lY;
 	}
 }
 
@@ -286,9 +288,6 @@ bool Input::LeftTiltStick(int stick)
 	{
 		return true;
 	}
-
-	posX = (float)gamePadState.lX;
-	posY = (float)gamePadState.lY;
 
 	return false;
 }

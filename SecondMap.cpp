@@ -1,4 +1,4 @@
-ï»¿#include "StartMap.h"
+#include "SecondMap.h"
 #include "Audio.h"
 #include "DebugText.h"
 #include "TitleScene.h"
@@ -9,7 +9,7 @@
 #include "SphereCollider.h"
 #include "CollisionManager.h"
 #include <XorShift.h>
-void StartMap::Initialize(DirectXCommon* dxCommon) {
+void SecondMap::Initialize(DirectXCommon* dxCommon) {
 	//Texture::LoadTexture(0, L"Resources/2d/enemy.png");
 	////Texture::LoadTexture(1, L"Resources/2d/limit.png");
 	//Texture::LoadTexture(2, L"Resources/2d/shadow.png");
@@ -18,10 +18,10 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	//Texture::LoadTexture(5, L"Resources/2d/PlayerHP.png");
 	//Texture::LoadTexture(6, L"Resources/2d/magic2.png");
 	collisionManager = CollisionManager::GetInstance();
-	// ã‚«ãƒ¡ãƒ©ç”Ÿæˆ
+	// ƒJƒƒ‰¶¬
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
-	// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‚«ãƒ¡ãƒ©ã‚’ã‚»ãƒƒãƒˆ
+	// 3DƒIƒuƒWƒFƒNƒg‚ÉƒJƒƒ‰‚ğƒZƒbƒg
 	Object3d::SetCamera(camera);
 	player = new Player();
 	player->Initialize();
@@ -44,26 +44,26 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	spawing[2]->SetPosition({ 20.0f,0.0f,-4.0f });
 	spawing[2]->SetRotation({ 0,90,0 });
 
-	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåˆæœŸåŒ–
+	//ƒIƒuƒWƒFƒNƒg‰Šú‰»
 	/*modelGround = Model::CreateFromOBJ("ground");
 	objFloor = Object3d::Create();
 	objFloor->Initialize();
 	objFloor->SetModel(modelGround);
 	objFloor->SetPosition({ 0,-1,0 });*/
-	//ã‚¹ãƒ†ãƒ¼ã‚¸åºŠ
+	//ƒXƒe[ƒW°
 	objFloor = Object3d::Create();
 	modelFloor = Model::CreateFromOBJ("floor");
 	objFloor->SetModel(modelFloor);
 	objFloor->SetPosition({ 0, -1, 0 });
 	objFloor->SetScale({ 4.0f,1.0f,5.0f });
 
-	//ã‚¹ãƒ†ãƒ¼ã‚¸ãƒãƒƒãƒ—
-	modelStartMap = Model::CreateFromOBJ("StartMap");
-	objStartMap = TouchableObject::Create(modelStartMap);
-	objStartMap->SetPosition({ 0,-1,2 });
-	objStartMap->SetRotation({ 0, 90, 0 });
-	objStartMap->SetScale({ 1.4f,1.5f,1.6f });
-	//ãƒãƒªã‚±ãƒ¼ãƒ‰
+	//ƒXƒe[ƒWƒ}ƒbƒv
+	modelSecondMap = Model::CreateFromOBJ("StartMap");
+	objSecondMap = TouchableObject::Create(modelSecondMap);
+	objSecondMap->SetPosition({ 0,-1,2 });
+	objSecondMap->SetRotation({ 0, 90, 0 });
+	objSecondMap->SetScale({ 1.4f,1.5f,1.6f });
+	//ƒoƒŠƒP[ƒh
 	for (std::size_t i = 0; i < objBlock.size(); i++) {
 		objBlock[i] = Object3d::Create();
 		modelBlock[i] = Model::CreateFromOBJ("Fork");
@@ -71,13 +71,13 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 		BlockRotation[i] = { 0.0f,90.0f,0.0f };
 		objBlock[i]->SetRotation(BlockRotation[i]);
 	}
-	//ãƒãƒªã‚±ãƒ¼ãƒ‰çš„ãªã‚„ã¤ã®å„å ´æ‰€è¨­å®š
+	//ƒoƒŠƒP[ƒh“I‚È‚â‚Â‚ÌŠeêŠİ’è
 	objBlock[0]->SetPosition({ -5.5f,0.0f,-25.0f });
 	objBlock[1]->SetPosition({ 3.5f,0.0f,-25.0f });
 	objBlock[2]->SetPosition({ -5.5f,0.0f, 25.0f });
 	objBlock[3]->SetPosition({ 3.5f,0.0f, 25.0f });
 
-	//æ™®é€šã®ãƒ†ã‚¯ã‚¹ãƒãƒ£(æ¿ãƒãƒª)
+	//•’Ê‚ÌƒeƒNƒXƒ`ƒƒ(”Âƒ|ƒŠ)
 	warp = new Warp;
 	warp->Initialize();
 	warp->SetPosition({ 0.0f,10.0f,50.0f });
@@ -87,33 +87,33 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	limit->setrotation({ 90.0f,0, 0 });
 	limit->setscale({ 5.5f, 5.5f,  5.5f});*/
 
-	//èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
+	//”wŒiƒXƒvƒ‰ƒCƒg¶¬
 
-	// ãƒ¢ãƒ‡ãƒ«èª­ã¿è¾¼ã¿
+	// ƒ‚ƒfƒ‹“Ç‚İ‚İ
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
 	//srand(NULL);
-	// ãƒ©ã‚¤ãƒˆç”Ÿæˆ
+	// ƒ‰ƒCƒg¶¬
 	lightGroup = LightGroup::Create();
-	// 3Dã‚ªãƒ–ã‚¨ã‚¯ãƒˆã«ãƒ©ã‚¤ãƒˆã‚’ã‚»ãƒƒãƒˆ
+	// 3DƒIƒuƒGƒNƒg‚Éƒ‰ƒCƒg‚ğƒZƒbƒg
 	Object3d::SetLightGroup(lightGroup);
 
-	//ã‚«ãƒ¡ãƒ©ãƒã‚¸ã‚·ãƒ§ãƒ³
+	//ƒJƒƒ‰ƒ|ƒWƒVƒ‡ƒ“
 	cameraPos.x = player->GetTargetPosition().x;
 	cameraPos.y = player->GetTargetPosition().y + 10;
 	cameraPos.z = player->GetTargetPosition().z - 10;
-	// ã‚«ãƒ¡ãƒ©æ³¨è¦–ç‚¹ã‚’ã‚»ãƒƒãƒˆ
+	// ƒJƒƒ‰’‹“_‚ğƒZƒbƒg
 	camera->SetTarget(player->GetTargetPosition());
 	camera->SetEye(cameraPos);
-	// ãƒ¢ãƒ‡ãƒ«åã‚’æŒ‡å®šã—ã¦ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
+	// ƒ‚ƒfƒ‹–¼‚ğw’è‚µ‚Äƒtƒ@ƒCƒ‹“Ç‚İ‚İ
 	model1 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
 
-	// ãƒ‡ãƒã‚¤ã‚¹ã‚’ã‚»ãƒƒãƒˆ
+	// ƒfƒoƒCƒX‚ğƒZƒbƒg
 	FBXObject3d::SetDevice(dxCommon->GetDev());
-	// ã‚«ãƒ¡ãƒ©ã‚’ã‚»ãƒƒãƒˆ
+	// ƒJƒƒ‰‚ğƒZƒbƒg
 	FBXObject3d::SetCamera(camera);
-	// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
+	// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“¶¬
 	FBXObject3d::CreateGraphicsPipeline();
-	// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãƒãƒãƒ¼ã‚¸ãƒ£ç”Ÿæˆ
+	// ƒp[ƒeƒBƒNƒ‹ƒ}ƒl[ƒWƒƒ¶¬
 	particleMan = ParticleManager::GetInstance();
 	particleMan->SetCamera(camera);
 
@@ -122,9 +122,9 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	object1->SetModel(model1);
 }
 
-void StartMap::Finalize() {
+void SecondMap::Finalize() {
 	delete camera;
-	//ï¼“ï½„ã®ãƒ¢ãƒ‡ãƒ«ã®ãƒ‡ãƒªãƒ¼ãƒˆ
+	//‚R‚„‚Ìƒ‚ƒfƒ‹‚ÌƒfƒŠ[ƒg
 	//for (int i = 0; i < StartEnemyMax; i++) {
 	//	enemy[i]->Finalize();
 	//}
@@ -139,12 +139,12 @@ void StartMap::Finalize() {
 	player->Finalize();
 	delete modelFloor;
 	delete objFloor;
-	delete modelStartMap;
-	delete objStartMap;
+	delete modelSecondMap;
+	delete objSecondMap;
 	warp->Finalize();
 }
 
-void StartMap::Update(DirectXCommon* dxCommon) {
+void SecondMap::Update(DirectXCommon* dxCommon) {
 	if (pause) {
 		particleMan->Update();
 		for (std::size_t i = 0; i < spawing.size(); i++) {
@@ -155,17 +155,18 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	}
 	for (std::size_t i = 0; i < spawing.size(); i++) {
 		for (int j = 0; j < 1; j++) {
-			if (spawing[i]->GetEnemy(j)->collideAttackArm()){				set = 30;
-			set = 15;
+			if (spawing[i]->GetEnemy(j)->collideAttackArm()) {
+				set = 30;
+				set = 15;
 
-			pause = true;
+				pause = true;
 				break;
 			}
 		}
 	}
 	//objFloor->Update();
 	objFloor->Update();
-	objStartMap->Update();
+	objSecondMap->Update();
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
@@ -203,11 +204,11 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		pause = true;
 	}
 
-	////æ•µåŒå£«ã®å½“ãŸã‚Šåˆ¤å®š
-	//if (sizeof(enemy) > 2) {//é…åˆ—ã®ã‚µã‚¤ã‚ºç¢ºèª
+	////“G“¯m‚Ì“–‚½‚è”»’è
+	//if (sizeof(enemy) > 2) {//”z—ñ‚ÌƒTƒCƒYŠm”F
 	//	for (int colA = 0; colA < StartEnemyMax; colA++) {
 	//		for (int colB = 1; colB < StartEnemyMax; colB++) {
-	//			if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB) {//å½“ãŸã‚Šåˆ¤å®šã¨è‡ªæ©ŸåŒå£«ã®å½“ãŸã‚Šåˆ¤å®šã®å‰Šé™¤
+	//			if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB) {//“–‚½‚è”»’è‚Æ©‹@“¯m‚Ì“–‚½‚è”»’è‚Ìíœ
 	//				//DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
 	//				enemy[colA]->SetHit(true);
 	//				enemy[colB]->SetHit(false);
@@ -224,7 +225,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	//	for (int colA = 0; colA < 5; colA++) {
 	//		for (int colB = 1; colB < 5; colB++) {
 	//			if (spawing[i]->GetEnemy(colA)->GetIsAlive()) {
-	//				if (Collision::CheckSphere2Sphere(spawing[i]->GetEnemy(colA)->collider, spawing[i]->GetEnemy(colB)->collider) == true && colA != colB) {//å½“ãŸã‚Šåˆ¤å®šã¨è‡ªæ©ŸåŒå£«ã®å½“ãŸã‚Šåˆ¤å®šã®å‰Šé™¤
+	//				if (Collision::CheckSphere2Sphere(spawing[i]->GetEnemy(colA)->collider, spawing[i]->GetEnemy(colB)->collider) == true && colA != colB) {//“–‚½‚è”»’è‚Æ©‹@“¯m‚Ì“–‚½‚è”»’è‚Ìíœ
 	//					spawing[i]->GetEnemy(colA)->SetHit(true);
 	//					spawing[i]->GetEnemy(colB)->SetHit(false);
 	//					break;
@@ -237,7 +238,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	//	}
 	//}
 
-	//ãã®ä»–ã‚·ãƒ¼ãƒ³ç§»è¡Œ
+	//‚»‚Ì‘¼ƒV[ƒ“ˆÚs
 
 	/*if (bossenemy->GetHP() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("CLEAR");
@@ -268,7 +269,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		}
 	}
 
-	
+
 	//if (spawing[0]->GetIsAlive() == 0) {
 	//	if (spawing[1]->GetIsAlive() == 0) {
 	//		if (spawing[2]->GetIsAlive() == 0) {
@@ -340,7 +341,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	DebugText::GetInstance()->Print("A         :Hand", 900, 650, 2.0f);
 }
 
-void StartMap::Draw(DirectXCommon* dxCommon) {
+void SecondMap::Draw(DirectXCommon* dxCommon) {
 	ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug"))
 	{
@@ -358,7 +359,7 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw();
 	//objFloor->Draw();
 	objFloor->Draw();
-	objStartMap->Draw();
+	objSecondMap->Draw();
 	for (std::size_t i = 0; i < objBlock.size(); i++) {
 		objBlock[i]->Draw();
 	}
@@ -369,13 +370,13 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	warp->Draw();
 
 	//Sprite::PreDraw();
-	//èƒŒæ™¯ç”¨
+	//”wŒi—p
 	//sprite->Draw();
 
 
 	Object3d::PreDraw();
 	object1->Draw(dxCommon->GetCmdList());
-	//èƒŒæ™¯ç”¨
+	//”wŒi—p
 	player->Draw();
 	//for (int i = 0; i < StartEnemyMax; i++) {
 	//	enemy[i]->Draw();
@@ -385,16 +386,17 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	}
 	//bossenemy->Draw();
 	ui->Draw();
-	// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®æç”»
+	// ƒp[ƒeƒBƒNƒ‹‚Ì•`‰æ
 	particleMan->Draw(dxCommon->GetCmdList());
 }
 
-void StartMap::Pause(const int& Timer) {
+void SecondMap::Pause(const int& Timer) {
 	wait++;
 	if (wait >= Timer) {
 		pause = false;
 		wait = 0;
-	} else {
+	}
+	else {
 		pause = true;
 	}
 	player->Pause(Timer);

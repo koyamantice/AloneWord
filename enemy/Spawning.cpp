@@ -31,6 +31,7 @@ void Spawning::Initialize() {
 }
 
 void Spawning::Update() {
+	if (pause) { return; }
 	if (Hp > 0) { isAlive = true; } else { isAlive = false; }
 	for (int i = 0; i < EneMax; i++) {
 			enemy[i]->SetBasePos(pos);
@@ -51,7 +52,7 @@ void Spawning::Update() {
 				break;
 			}
 		}
-		collideAttackArm();
+		//collideAttackArm();
 		texture->Update();
 		texture->SetPosition({ pos.x,pos.y + 5.0f,pos.z });
 		texture->SetScale({ (float)Hp * 0.05f,0.05f,0.0f });
@@ -90,8 +91,21 @@ if (ImGui::TreeNode("Debug")) {
 	}
 }
 
+void Spawning::Pause(const int& Timer) {
+	for (int i = 0; i < EneMax; i++) {
+		enemy[i]->Pause(Timer);
+	}
+	wait++;
+	if (wait >= Timer) {
+		pause = false;
+		wait = 0;
+	} else {
+		pause = true;
+	}
+}
+
 //攻撃関数
-void Spawning::collideAttackArm() {
+bool Spawning::collideAttackArm() {
 	XMFLOAT3 Armpos = player->GetArmPosition();
 	bool attackflag = player->GetAttackFlag();
 	float power = player->GetPower();
@@ -103,22 +117,36 @@ void Spawning::collideAttackArm() {
 			//ついてる敵の数で音が変わる
 			if (weight <= 3) {
 				Audio::GetInstance()->PlayWave("Resources/Sound/strongL1.wav", 0.4f);
+			
 			} else if (weight > 3 && weight <= 6) {
 				Audio::GetInstance()->PlayWave("Resources/Sound/strongL2.wav", 0.4f);
 			} else if (weight >= 7) {
 				Audio::GetInstance()->PlayWave("Resources/Sound/strongL3.wav", 0.4f);
 			}
+			if (power == 0.25f) {
+				stop = 10;
+			} if (power == 0.5f) {
+				stop = 15;
+			}if (power == 0.75f) {
+				stop = 30;
+			}if (power == 1.0f) {
+				stop = 60;
+			}
+			//ボスのHPをへらす
+			if (Hit == true) {
+				Hp -= (weight * 2) * power;
+				weight = 0.0f;
+				//boundpower.x = (float)(rand() % 4 - 2);
+				//boundpower.y = (float)(rand() % 6);
+				//boundpower.z = (float)(rand() % 4 - 2);
+				player->SetArmWeight(weight);
+				Hit = false;
+			}
+			return true;
+		} else {
+			return false;
 		}
 	}
-	//ボスのHPをへらす
-	if (Hit == true) {
-		Hp -= (weight * 2) * power;
-		weight = 0.0f;
-		//boundpower.x = (float)(rand() % 4 - 2);
-		//boundpower.y = (float)(rand() % 6);
-		//boundpower.z = (float)(rand() % 4 - 2);
-		player->SetArmWeight(weight);
-		Hit = false;
-	}
+
 
 }

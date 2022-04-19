@@ -50,11 +50,32 @@ void Rice::Update() {
 	FlashCount = player->GetFlashCount();
 	oldpos = pos;
 	if (IsAlive && !EnemyCatch && !Exp) {
+		Back();
 		if (LockOn()) {
 			moveCount = (rand() % 15) + 20;
 			isMove = false;
-			Follow();
+			XMFLOAT3 position{};
+			position.x = (playerpos.x - pos.x);
+			position.z = (playerpos.z - pos.z);
+			rot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 90;// *(XM_PI / 180.0f);
+			//if (pos.y>!1) {
+				pos.y += speed_y;
+				speed_y -= gravity;
+			//}
+			// 地面に当たったら跳ね返るように
+			if (pos.y < 0) {
+				pos.y = 0;
+				speed_y = 0;
+				Follow();
+			}
+			enemyobj->SetPosition(pos);
 		} else {
+			speed_y = 3.0f / 20.0f;
+			if (pos.y > 0) {
+					pos.y -= speed_y;
+			} else {
+				pos.y = 0;
+			}
 			Move();
 		}
 	}
@@ -129,12 +150,11 @@ void Rice::Update() {
 	if (Exp == true) {
 		DeadEnemy();
 	}
-	Back();
 	enemyobj->SetPosition(pos);
-	texture->SetPosition(pos);
+	texture->SetPosition({ pos.x,0,pos.z });
 	Restexture->SetPosition(pos);
 	player->SetInterval(Interval);
-	rot.y = Ease(In, Quad, 0.5f, rot.y, EndRot.y);
+	//rot.y = Ease(In, Quad, 0.5f, rot.y, EndRot.y);
 	enemyobj->SetRotation(rot);
 	enemyobj->SetScale(enescale);
 	enemyobj->Update();
@@ -145,16 +165,16 @@ void Rice::Update() {
 
 //描画
 void Rice::Draw() {
-	//ImGui::Begin("test");
+	ImGui::Begin("test");
 	//ImGui::SliderFloat("position.x", &pos.z, 20, -20);
-	//ImGui::SliderFloat("position.z", &oldpos.z, 20, -20);
-	////ImGui::SliderFloat("speed", &speed, 360, 0);
+	ImGui::SliderFloat("position.y", &pos.y, 20, -20);
+	ImGui::SliderFloat("speed_y", &speed_y, 360, 0);
 	////ImGui::SliderFloat("scale", &scale, 360, 0);
 	//ImGui::Text("Count::%d", moveCount);
 	//ImGui::Text("Move::%d", isMove);
 	//ImGui::Text("Hit::%d", hit);
 	////ImGui::Unindent();
-	//ImGui::End();
+	ImGui::End();
 	if (IsAlive) {
 		Object3d::PreDraw();
 		enemyobj->Draw();
@@ -275,36 +295,6 @@ bool Rice::LockOn() {
 	} else {
 		return false;
 	}
-}
-
-//敵追従
-void Rice::Follow() {
-	XMFLOAT3 position{};
-	position.x = (playerpos.x - pos.x);
-	position.z = (playerpos.z - pos.z);
-	posR = sqrt(pow(position.x, 2) + pow(position.z, 2));
-	Check = position.x / posR;
-	Check2 = position.z / posR;
-	if (Check>0.2f) {
-		if (Check2>0.2f) {
-			EndRot.y = -45;
-
-		} else if (Check2 < -0.2f) {
-			EndRot.y = 45;
-		} else {
-			EndRot.y = 0;
-		}
-	} else if(Check < -0.2f){
-		if (Check2 > 0.2f) {
-			EndRot.y = 225;
-		} else if (Check2 < -0.2f) {
-			EndRot.y = 135;
-		} else {
-			EndRot.y = 180;
-		}
-	}
-	pos.x += (float)Check *  0.075f;
-	pos.z += (float)Check2 * 0.075f;
 }
 
 //敵が動く

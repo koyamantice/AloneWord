@@ -18,15 +18,17 @@ public:
 	void Update();
 	void Finalize();
 	void Draw();
+	void Pause(const int& Timer);
 
 public:
 	const XMFLOAT3& GetPosition() { return  object3d->GetPosition(); }
 	const XMFLOAT3& GetRotation() { return object3d->GetRotation(); }
+	const int& GetStop() { return stop; }
 	const bool& GetIsAlive() { return isAlive; }
 	void SetPosition(XMFLOAT3 position) { this->pos = position; }
 
 	void SetRotation(XMFLOAT3 rotation) { object3d->SetRotation(rotation); }
-	void collideAttackArm();
+	bool collideAttackArm();
 	void SetPlayer(Player* player) { this->player = player; };
 	InterEnemy* GetEnemy(const int& num) { return enemy[num]; }
 private:
@@ -39,5 +41,8 @@ private:
 	bool isAlive = true;
 	InterEnemy* enemy[EneMax] = {};
 	Player* player = nullptr;
+	bool pause = false;
+	int stop = 0;
+	int wait = 0;
 };
 

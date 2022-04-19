@@ -230,7 +230,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 
 	//その他シーン移行
 	if (bossenemy->GetHP() <= 0) {
-		SceneManager::GetInstance()->ChangeScene("CLEAR");
+		SceneManager::GetInstance()->ChangeScene("SECONDMAP");
 	}
 
 	if (player->GetHp() <= 0) {
