@@ -47,5 +47,4 @@ private:
 		Up,
 		Down
 	};
-	int b = 0;
 };
