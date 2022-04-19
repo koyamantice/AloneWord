@@ -17,5 +17,7 @@ private:
 	bool LockOn();
 	void Follow();
 	void Move();
+	int angle = 0;
+
 };
 

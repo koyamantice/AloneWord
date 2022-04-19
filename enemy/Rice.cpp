@@ -124,7 +124,7 @@ void Rice::Update() {
 	}
 
 	collideArm();
-	collidePlayer();
+	//collidePlayer();
 	collideAttackArm();
 	SetEnemy();
 	if (Exp == true) {
@@ -134,7 +134,7 @@ void Rice::Update() {
 	texture->SetPosition(pos);
 	Restexture->SetPosition(pos);
 	player->SetInterval(Interval);
-	rot.y = Ease(In, Quad, 0.5f, rot.y, EndRot.y);
+	//rot.y = Ease(In, Quad, 0.5f, rot.y, EndRot.y);
 	enemyobj->SetRotation(rot);
 	enemyobj->SetScale(enescale);
 	enemyobj->Update();
@@ -285,26 +285,11 @@ void Rice::Follow() {
 	posR = sqrt(pow(position.x, 2) + pow(position.z, 2));
 	Check = position.x / posR;
 	Check2 = position.z / posR;
-	if (Check>0.2f) {
-		if (Check2>0.2f) {
-			EndRot.y = -45;
 
-		} else if (Check2 < -0.2f) {
-			EndRot.y = 45;
-		} else {
-			EndRot.y = 0;
-		}
-	} else if(Check < -0.2f){
-		if (Check2 > 0.2f) {
-			EndRot.y = 225;
-		} else if (Check2 < -0.2f) {
-			EndRot.y = 135;
-		} else {
-			EndRot.y = 180;
-		}
-	}
-	pos.x += (float)Check *  0.075f;
-	pos.z += (float)Check2 * 0.075f;
+	rot.y = (atan2(position.x, position.z) * (180.0f / XM_PI))-90;// *(XM_PI / 180.0f);
+
+	pos.x += cos(atan2(position.x, position.z)) * 0.075f;
+	pos.z -= sin(atan2(position.x, position.z)) * 0.075f;
 }
 
 //敵が動く

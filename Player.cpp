@@ -80,9 +80,9 @@ void Player::Update() {
 		return;
 	}
 	oldPos = position;
-	XMFLOAT3 rot = this->object3d->GetRotation();
+	rot = this->object3d->GetRotation();
 	//if (!AttackFlag) {
-		rot.y = Ease(In, Quad, 0.9f, rot.y, AfterRot);
+		//rot.y = Ease(In, Quad, 0.9f, rot.y, AfterRot);
 	//}
 	object3d->Update();
 	Armobj->Update();
@@ -95,31 +95,36 @@ void Player::Update() {
 		if (input->LeftTiltStick(input->Right)) {
 			if (position.x <= XMax) {
 				position.x += PlayerSpeed;
-				AfterRot = 90;
+				//AfterRot = 90;
 			}
 		}
 
 		if (input->LeftTiltStick(input->Left)) {
 			if (position.x >= -XMax) {
 				position.x -= PlayerSpeed;
-				AfterRot = 270;
+				//AfterRot = 270;
 			}
 		}
 
 		if (input->LeftTiltStick(input->Up)) {
 			if (position.z <= ZMax) {
 				position.z += PlayerSpeed;
-				AfterRot = 0;
+				//AfterRot = 0;
 			}
 		}
 
 		if (input->LeftTiltStick(input->Down)) {
 			if (position.z >= -ZMax) {
 				position.z -= PlayerSpeed;
-				AfterRot = 180;
+				//AfterRot = 180;
 			}
 		}
-		
+
+		if (!(StickrotX<800&&StickrotX>-800)||!(StickrotY<800 && StickrotY>-800)) {
+			rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
+		} else {
+			rot.y = 270;
+		}
 		//攻撃右回り
 		if (input->PushButton(input->Button_RB) && ArmWeight != 0.0f) {
 			AttackFlag = true;
@@ -163,41 +168,41 @@ void Player::Update() {
 		//プレイヤーの向き設定
 		if (StickrotY <= -650) {
 			if (StickrotX <= 650 && StickrotX >= -650) {		//上
-				AfterRot = 270;
+				//AfterRot = 270;
 				ArmSpeed = 90;
 				ArmRot.y = 270;
 			} else if (StickrotX > 650) {	//右上
-				AfterRot = 315;
+			//	AfterRot = 315;
 				ArmSpeed = 45;
 				ArmRot.y = 315;
 			} else if (StickrotX < -650) {	//左上
-				AfterRot = 225;
+				//AfterRot = 225;
 				ArmSpeed = 135;
 				ArmRot.y = 225;
 			}
 		} else if (StickrotY >= 650) {
 			if (StickrotX <= 650 && StickrotX >= -650) {	//下
-				AfterRot = 90;
+				//AfterRot = 90;
 				ArmSpeed = 270;
 				ArmRot.y = 90;
 			} else if (StickrotX > 650) {	//右下
-				AfterRot = 45;
+				//AfterRot = 45;
 				ArmSpeed = 315;
 				ArmRot.y = 45;
 			} else if (StickrotX < -650) {	//左下
-				AfterRot = 135;
+				//AfterRot = 135;
 				ArmSpeed = 225;
 				ArmRot.y = 135;
 			}
 		} else {
 			if (StickrotX <= -650) {	//左
-				AfterRot = 180;
+				//AfterRot = 180;
 				ArmSpeed = 180;
 				ArmRot.y = 180;
 			}
 
 			if (StickrotX >= 650) {	//右
-				AfterRot = 0;
+				//AfterRot = 0;
 				ArmSpeed = 0;
 				ArmRot.y = 0;
 			}
@@ -445,8 +450,8 @@ void Player::Update() {
 //描画
 void Player::Draw() {
 	ImGui::Begin("test");
-		ImGui::SliderInt("a", &wait, 100, 0);
-		ImGui::Text("pause %d", &pause, 100, 0);
+		ImGui::SliderFloat("rot", &rot.y, 100, 0);
+		//ImGui::Text("pause %d", &pause, 100, 0);
 		ImGui::Unindent();
 	ImGui::End();
 	Object3d::PreDraw();
@@ -542,13 +547,11 @@ void Player::BirthParticle() {
 	
 	if(input->LeftTiltStick(input->Right) || input->LeftTiltStick(input->Left) || input->LeftTiltStick(input->Up) || input->LeftTiltStick(input->Down)){
 		for (int i = 0; i < 1; ++i) {
-
 			const float rnd_vel = 0.1f;
 			XMFLOAT3 vel{};
 			vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 			vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 			vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-
 			ParticleManager::GetInstance()->Add(10, { position.x,position.y,position.z }, vel, XMFLOAT3(), 1.0f, 0.0f);
 		}
 	}

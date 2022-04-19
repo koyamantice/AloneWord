@@ -177,6 +177,6 @@ private:
 	float angleZ;
 	XMFLOAT3 targetpos = { 0,0,-10 };
 	int wait = 0;
-
+	XMFLOAT3 rot;
 	bool pause = false;
 };
