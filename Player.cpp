@@ -12,7 +12,6 @@
 #include "CollisionManager.h"
 #include "CollisionAttribute.h"
 #include <ModelManager.h>
-#include "FbxLoader.h"
 using namespace DirectX;
 Input* input = Input::GetInstance();
 float easeInSine(float x) {
@@ -38,9 +37,6 @@ Player::Player() {
 	Armmodel= ModelManager::GetIns()->GetModel(ModelManager::Arm);
 	object3d = new Object3d();
 	Armobj = new Object3d();
-	// モデル名を指定してファイル読み込み
-	model1 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
-
 }
 
 bool Player::Initialize() {
@@ -71,10 +67,6 @@ bool Player::Initialize() {
 
 	//カメラのためのポジション(初期化)
 	targetpos = position;
-
-	object1 = new FBXObject3d;
-	object1->Initialize();
-	object1->SetModel(model1);
 	return true;
 }
 
@@ -91,7 +83,6 @@ void Player::Update() {
 	rot = this->object3d->GetRotation();
 	object3d->Update();
 	Armobj->Update();
-	object1->Update();
 	StickrotX = input->GetPosX();
 	StickrotY = input->GetPosY();
 	//effecttexture->Update();
@@ -392,7 +383,7 @@ void Player::Update() {
 }
 
 //描画
-void Player::Draw(ID3D12GraphicsCommandList* cmdList) {
+void Player::Draw() {
 	ImGui::Begin("test");
 	ImGui::SliderFloat("StickrotX", &StickrotX, 1000, -1000);
 	ImGui::SliderFloat("StickrotY", &StickrotY, 1000, -1000);
@@ -400,10 +391,9 @@ void Player::Draw(ID3D12GraphicsCommandList* cmdList) {
 	ImGui::End();
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
-		//object3d->Draw();
+		object3d->Draw();
 		Armobj->Draw();
 	}
-	object1->Draw(cmdList);
 }
 
 void Player::Pause(const int& Timer) {

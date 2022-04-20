@@ -104,7 +104,9 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	// カメラ注視点をセット
 	camera->SetTarget(player->GetTargetPosition());
 	camera->SetEye(cameraPos);
-	
+	// モデル名を指定してファイル読み込み
+	model1 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
+
 	// デバイスをセット
 	FBXObject3d::SetDevice(dxCommon->GetDev());
 	// カメラをセット
@@ -153,10 +155,11 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	}
 	for (std::size_t i = 0; i < spawing.size(); i++) {
 		for (int j = 0; j < 1; j++) {
-			if (spawing[i]->GetEnemy(j)->collideAttackArm()){				set = 30;
-			set = 15;
+			if (spawing[i]->GetEnemy(j)->collideAttackArm()) {
+				set = 30;
+				set = 15;
 
-			pause = true;
+				pause = true;
 				break;
 			}
 		}
@@ -266,7 +269,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		}
 	}
 
-	
+
 	//if (spawing[0]->GetIsAlive() == 0) {
 	//	if (spawing[1]->GetIsAlive() == 0) {
 	//		if (spawing[2]->GetIsAlive() == 0) {
@@ -372,9 +375,9 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 
 
 	Object3d::PreDraw();
-	//object1->Draw(dxCommon->GetCmdList());
+	object1->Draw(dxCommon->GetCmdList());
 	//背景用
-	player->Draw(dxCommon->GetCmdList());
+	player->Draw();
 	//for (int i = 0; i < StartEnemyMax; i++) {
 	//	enemy[i]->Draw();
 	//}
@@ -392,7 +395,8 @@ void StartMap::Pause(const int& Timer) {
 	if (wait >= Timer) {
 		pause = false;
 		wait = 0;
-	} else {
+	}
+	else {
 		pause = true;
 	}
 	player->Pause(Timer);

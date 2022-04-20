@@ -190,8 +190,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 	if (sizeof(enemy) > 2) {//配列のサイズ確認
 		for (int colA = 0; colA < SecondBossEnemyMax; colA++) {
 			for (int colB = 1; colB < SecondBossEnemyMax; colB++) {
-				if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB
-					&& enemy[colA]->GetEnemyCatch() == false) {//蠖薙◆繧雁愛螳壹→閾ｪ讖溷酔螢ｫ縺ｮ蠖薙◆繧雁愛螳壹・蜑企勁
+				if (Collision::CircleCollision(enemy[colA]->GetPosition().x, enemy[colA]->GetPosition().z, 3.0f, enemy[colB]->GetPosition().x, enemy[colB]->GetPosition().z, 3.0f) == true && colA != colB) {//蠖薙◆繧雁愛螳壹→閾ｪ讖溷酔螢ｫ縺ｮ蠖薙◆繧雁愛螳壹・蜑企勁
 					//DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
 					enemy[colA]->SetHit(true);
 					enemy[colB]->SetHit(false);
@@ -267,7 +266,7 @@ void SecondBoss::Draw(DirectXCommon* dxCommon) {
 
 	//object1->Draw(dxCommon->GetCmdList());
 
-	player->Draw(dxCommon->GetCmdList());
+	player->Draw();
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i]->Draw();
 	}

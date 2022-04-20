@@ -377,7 +377,7 @@ void SecondMap::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw();
 	object1->Draw(dxCommon->GetCmdList());
 	//”wŒi—p
-	player->Draw(dxCommon->GetCmdList());
+	player->Draw();
 	//for (int i = 0; i < StartEnemyMax; i++) {
 	//	enemy[i]->Draw();
 	//}

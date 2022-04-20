@@ -266,7 +266,7 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 
 	//object1->Draw(dxCommon->GetCmdList());
 
-	player->Draw(dxCommon->GetCmdList());
+	player->Draw();
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i]->Draw();
 	}
