@@ -180,4 +180,5 @@ private:
 	int wait = 0;
 	XMFLOAT3 rot;
 	bool pause = false;
+	int count = 0;
 };
