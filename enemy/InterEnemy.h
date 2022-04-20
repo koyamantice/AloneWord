@@ -96,11 +96,15 @@ protected:
 	bool isMove = false;
 	bool hit = false;
 	int moveCount = 30;
-	int dir = 180;
-	int dirVel = 2;
-	int dirMin = dir -90;
-	int dirMax = dir+90;
-	bool zmove = false;
+	//{
+		bool lost = false;
+		bool followed = false;
+		int count = 0;
+		int dir = 180;
+		int dirVel = 2;
+		int dirMin = dir - 90;
+		int dirMax = dir + 90;
+	//}
 	bool bound = false;
 	bool add = false;
 	bool appearance = false;

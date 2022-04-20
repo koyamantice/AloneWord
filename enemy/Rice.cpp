@@ -52,10 +52,8 @@ void Rice::Update() {
 		Back();
 		if (LockOn()) {
 			moveCount = (rand() % 15) + 20;
-			dir = rot.y;
-			dirMax = dir + 90;
-			dirMin = dir - 90;
 			isMove = false;
+			followed = true;
 			XMFLOAT3 position{};
 			position.x = (playerpos.x - pos.x);
 			position.z = (playerpos.z - pos.z);
@@ -78,7 +76,40 @@ void Rice::Update() {
 			} else {
 				pos.y = 0;
 			}
-			Move();
+			//if (followed) {
+			//	if (rot.y < -90) {
+			//		dir = rot.y + 360 + 90;
+			//		rot.y = (dir)-90;// *(XM_PI / 180.0f);
+			//	}
+			//	dir = rot.y + 90;
+			//	rot.y = (dir)-90;// *(XM_PI / 180.0f);
+			//	dirMax = dir + 30;
+			//	dirMin = dir - 30;
+			//	if (!lost) {
+			//		lost = true;
+			//	}
+			//	if (lost) {
+			//		dir += dirVel;
+			//		if (dir>dirMax) {
+			//			dir = dirMax;
+			//			dirVel *= -1;
+			//		}
+			//		if (dir < dirMin) {
+			//			dir = dirMin;
+			//			dirVel *= -1;
+			//			count ++;
+			//		}
+			//		rot.y = (dir)-90;// *(XM_PI / 180.0f);
+			//		if (count > 3) {
+			//			count = 0;
+			//			followed = false;
+			//			lost = false;
+			//		}
+			//	}
+			//}
+			//if (!followed) {
+				Move();
+			//}
 		}
 	}
 	Reborn();
@@ -169,7 +200,7 @@ void Rice::Update() {
 void Rice::Draw() {
 	ImGui::Begin("test");
 	ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
-	ImGui::SliderInt("dir", &dir, 360, -360);
+	ImGui::SliderInt("count", &count, 360, -360);
 	//ImGui::SliderFloat("speed_y", &speed_y, 360, 0);
 	////ImGui::SliderFloat("scale", &scale, 360, 0);
 	//ImGui::Text("Count::%d", moveCount);
@@ -301,70 +332,63 @@ bool Rice::LockOn() {
 
 //敵が動く
 void Rice::Move() {
-	if (pos.z > z_max) {
-		pos.z = z_max;
+	if (pos.z > z_max) {pos.z = z_max;}
+	if (pos.z < z_min) {pos.z = z_min;}
+	if (pos.x > x_max) {pos.x = x_max;}
+	if (pos.x < x_min) {pos.x = x_min;}
+	if (EndPos.z > z_max) {	EndPos.z = z_max;}
+	if (EndPos.z < z_min) {EndPos.z = z_min;}
+	if (EndPos.x > x_max) {EndPos.x = x_max;}
+	if (EndPos.x < x_min) {EndPos.x = x_min;}
+	if (rot.y < -90) {
+		dir = rot.y + 360 + 90;
+		rot.y = (dir)-90;// *(XM_PI / 180.0f);
 	}
-	if (pos.z < z_min) {
-		pos.z = z_min;
-	}
-	if (pos.x > x_max) {
-		pos.x = x_max;
-	}
-	if (pos.x < x_min) {
-		pos.x = x_min;
-	}
-	if (EndPos.z > z_max) {
-		EndPos.z = z_max;
-	}
-	if (EndPos.z < z_min) {
-		EndPos.z = z_min;
-	}
-	if (EndPos.x > x_max) {
-		EndPos.x = x_max;
-	}
-	if (EndPos.x < x_min) {
-		EndPos.x = x_min;
-	}
-
+	dir = rot.y + 90;
+	rot.y = (dir)-90;// *(XM_PI / 180.0f);
+	dirMax = dir + 30;
+	dirMin = dir - 30;
 	rot.y = (dir) - 90;// *(XM_PI / 180.0f);
 	if (moveCount < 0 && !isMove) {
 		StartPos = pos;
 		frame = 0;
 		isMove = true;
-		dir = dir;
+		moveCount = (rand() % 60) + 30;
+		dir %= 360;
 	} else {
 		moveCount--;
 		dir+=dirVel;
-		if (dir>dirMax) {
-			dir = dirMax;
-			dirVel = -1 * dirVel;
-		}
-		if (dir < dirMin) {
-			dir = dirMin;
-			dirVel = -1 * dirVel;
-		}
+		dir %= 360;
+		//if (dir>dirMax) {
+		//	dir = dirMax;
+		//	dirVel = -1 * dirVel;
+		//}
+		//if (dir < dirMin) {
+		//	dir = dirMin;
+		//	dirVel = -1 * dirVel;
+		//}
 	}
-	if (isMove) {
-		if (hit) {
-			moveCount = (rand() % 60) + 30;
-			isMove = false;
-			return;
-		}
-		if (frame <= 1.0f) {
-			frame += 0.05f;
-		} else {
-			frame = 1.0f;
-			moveCount = (rand() % 60) + 30;
-			dir = rot.y;
-			dirMax = dir + 90;
-			dirMin = dir - 90;
-			isMove = false;
-		}
-		pos.x -= sin(-dir * (XM_PI / 180.0f)) * 0.05f;
-		pos.z += cos(-dir * (XM_PI / 180.0f)) * 0.05f;
-		enemyobj->SetPosition(pos);
+	//if (isMove) {
+	//	if (hit) {
+	//		moveCount = (rand() % 60) + 30;
+	//		isMove = false;
+	//		return;
+	//	}
+	//	if (frame <= 1.0f) {
+	//		frame += 0.05f;
+	//	} else {
+	//		frame = 1.0f;
+	//		moveCount = (rand() % 60) + 30;
+	//		//dir = rot.y;
+	//		//dirMax = dir + 90;
+	//		//dirMin = dir - 90;
+	//		isMove = false;
+	//	}
+	//	pos.x -= sin(-dir * (XM_PI / 180.0f)) * 0.05f;
+	//	pos.z += cos(-dir * (XM_PI / 180.0f)) * 0.05f;
+	//	enemyobj->SetPosition(pos);
 
-	}
+	//}
 }
 
 
