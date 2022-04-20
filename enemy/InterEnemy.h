@@ -52,8 +52,6 @@ public:
 		this->x_max = limit.z;
 		this->x_min = limit.w;
 	}
-	bool GetRightDirection(float x, float y, float dx, float dy, float tx, float ty);
-	void RotateVector(float& dx, float& dy, float rotate);
 	void SetEnemy();
 	void DeadEnemy();
 	void RandDeadPower();
@@ -98,7 +96,10 @@ protected:
 	bool isMove = false;
 	bool hit = false;
 	int moveCount = 30;
-	int dir = 0;
+	int dir = 180;
+	int dirVel = 2;
+	int dirMin = dir -90;
+	int dirMax = dir+90;
 	bool zmove = false;
 	bool bound = false;
 	bool add = false;
@@ -118,9 +119,6 @@ protected:
 	float z_max = 20;
 	bool pause = false;
 	bool respawn = false;
-public:
-	Sphere collider;
-
 public:
 	virtual ~InterEnemy() = default;
 

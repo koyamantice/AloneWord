@@ -33,7 +33,7 @@ void Effect::Finalize() {
 	
 }
 
-void Effect::Update(BossEnemy* bossenemy) {
+void Effect::Update(InterBoss* bossenemy) {
 	Input* input = Input::GetInstance();
 	bool effect = bossenemy->GetEffect();
 	//エフェクトの発生

@@ -50,7 +50,7 @@ private:
 	Player* player = nullptr;
 	array<Effect*,40> effect;
 	array<InterEnemy*,10> enemy;
-	BossEnemy* bossenemy = nullptr;
+	InterBoss* bossenemy = nullptr;
 	std::array<std::array<Exp*, 10>, 5> exp;
 	float weight = 0;
 	UI* ui=nullptr;

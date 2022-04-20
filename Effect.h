@@ -15,7 +15,7 @@ public:
 
 	void Initialize();
 	void Finalize();
-	void Update(BossEnemy* bossenemy);
+	void Update(InterBoss* bossenemy);
 	void Draw();
 private:
 	// DirectX::‚ğÈ—ª
