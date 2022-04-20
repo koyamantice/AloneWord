@@ -1,7 +1,7 @@
 ﻿#include "UI.h"
 #include <Easing.h>
 
-UI::UI(Player* player, BossEnemy* boss) {
+UI::UI(Player* player, InterBoss* boss) {
 	this->player = player;
 	this->boss = boss;
 	Sprite::LoadTexture(3, L"Resources/2d/PlayerHP.png");

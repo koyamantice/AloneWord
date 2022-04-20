@@ -2,11 +2,11 @@
 #include"Sprite.h"
 #include"Player.h"
 #include"Rice.h"
-#include"BossEnemy.h"
+#include"InterBoss.h"
 
 class UI {
 public:
-	UI(Player* player, BossEnemy* boss = nullptr);
+	UI(Player* player, InterBoss* boss = nullptr);
 	void Update();
 	const void Draw();
 private:
@@ -18,7 +18,7 @@ private:
 	using XMMATRIX = DirectX::XMMATRIX;
 private:
 	Player* player = nullptr;
-	BossEnemy* boss = nullptr;
+	InterBoss* boss = nullptr;
 
 	Sprite* BossHp = nullptr;
 	Sprite* PlaHp = nullptr;

@@ -146,6 +146,8 @@ bool Spawning::collideAttackArm() {
 		} else {
 			return false;
 		}
+	} else {
+		return false;
 	}
 
 
