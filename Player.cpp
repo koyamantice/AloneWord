@@ -391,7 +391,7 @@ void Player::Draw() {
 	ImGui::End();
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
-		object3d->Draw();
+		//object3d->Draw();
 		Armobj->Draw();
 	}
 }
