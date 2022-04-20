@@ -251,6 +251,9 @@
     <ClCompile Include="SecondMap.cpp">
       <Filter>main</Filter>
     </ClCompile>
+    <ClCompile Include="SecondBoss.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\Framework.h">
@@ -455,6 +458,9 @@
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="SecondMap.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="SecondBoss.h">
       <Filter>main</Filter>
     </ClInclude>
   </ItemGroup>

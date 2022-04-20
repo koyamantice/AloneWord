@@ -118,9 +118,9 @@ void Rice::Update() {
 		pos.y += boundpower.y;
 		pos.z += boundpower.z;
 		if (boundpower.x != 0.0f && boundpower.z != 0.0f) {
-			enescale.x -= 0.01f;
-			enescale.y -= 0.01f;
-			enescale.z -= 0.01f;
+			enescale.x -= 0.02f;
+			enescale.y -= 0.02f;
+			enescale.z -= 0.02f;
 		} else {
 			if (enescale.x <= 0.7) {
 				enescale.x += 0.02f;

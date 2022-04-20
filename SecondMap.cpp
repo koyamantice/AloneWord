@@ -105,7 +105,7 @@ void SecondMap::Initialize(DirectXCommon* dxCommon) {
 	camera->SetTarget(player->GetTargetPosition());
 	camera->SetEye(cameraPos);
 	// モデル名を指定してファイル読み込み
-	model1 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
+	model1 = FbxLoader::GetInstance()->LoadModelFromFile("Motti_Move");
 
 	// デバイスをセット
 	FBXObject3d::SetDevice(dxCommon->GetDev());
@@ -120,6 +120,9 @@ void SecondMap::Initialize(DirectXCommon* dxCommon) {
 	object1 = new FBXObject3d;
 	object1->Initialize();
 	object1->SetModel(model1);
+	object1->SetScale({ 0.007f,0.007f,0.007f });
+	object1->SetRotation(player->GetRotation());
+	object1->SetPosition(player->GetPosition());
 }
 
 void SecondMap::Finalize() {
@@ -141,6 +144,8 @@ void SecondMap::Finalize() {
 	delete objFloor;
 	delete modelSecondMap;
 	delete objSecondMap;
+	delete object1;
+	delete model1;
 	warp->Finalize();
 }
 
@@ -185,7 +190,7 @@ void SecondMap::Update(DirectXCommon* dxCommon) {
 	}
 
 	if (warp->collidePlayer(player)) {
-		SceneManager::GetInstance()->ChangeScene("BOSS");
+		SceneManager::GetInstance()->ChangeScene("SECONDBOSS");
 	}
 	for (std::size_t i = 0; i < spawing.size(); i++) {
 		for (int j = 0; j < 1; j++) {
@@ -324,6 +329,8 @@ void SecondMap::Update(DirectXCommon* dxCommon) {
 		object1->PlayAnimation();
 	}
 	ui->Update();
+	object1->SetRotation(player->GetRotation());
+	object1->SetPosition(player->GetPosition());
 	object1->Update();
 	cameraPos.x = player->GetTargetPosition().x;
 	cameraPos.y = player->GetTargetPosition().y + distanceY;

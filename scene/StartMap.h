@@ -11,9 +11,7 @@ class TouchableObject;
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>
-const int StartEnemyMax = 10;
-const int Spawn = 3;
-const int BlockMax = 4;
+const int StartSpawn = 3;
 class StartMap : public BaseScene {
 
 public:
@@ -45,19 +43,19 @@ private:
 	UI* ui = nullptr;
 
 	//バリケード(仮)
-	array<Model*,4> modelBlock;
-	array<Object3d*,4> objBlock;
-	array<XMFLOAT3,4> BlockRotation;
+	array<Model*, 4> modelBlock;
+	array<Object3d*, 4> objBlock;
+	array<XMFLOAT3, 4> BlockRotation;
 
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;
 	DebugCamera* camera = { nullptr };
 	Texture* limit = nullptr;
 	Player* player = nullptr;
-	array<Rice*,10> enemy;
+	array<Rice*, 10> enemy;
 	Warp* warp = nullptr;
 	//BossEnemy* bossenemy = nullptr;
-	array<Spawning*, Spawn> spawing;
+	array<Spawning*, StartSpawn> spawing;
 	ParticleManager* particleMan = nullptr;
 	bool start = false;
 	bool Clear = false;

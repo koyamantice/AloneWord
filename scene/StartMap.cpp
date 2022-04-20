@@ -105,7 +105,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	camera->SetTarget(player->GetTargetPosition());
 	camera->SetEye(cameraPos);
 	// モデル名を指定してファイル読み込み
-	model1 = FbxLoader::GetInstance()->LoadModelFromFile("boneTest");
+	model1 = FbxLoader::GetInstance()->LoadModelFromFile("Motti_Move");
 
 	// デバイスをセット
 	FBXObject3d::SetDevice(dxCommon->GetDev());
@@ -120,6 +120,9 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	object1 = new FBXObject3d;
 	object1->Initialize();
 	object1->SetModel(model1);
+	object1->SetScale({ 0.007f,0.007f,0.007f });
+	object1->SetRotation(player->GetRotation());
+	object1->SetPosition(player->GetPosition());
 }
 
 void StartMap::Finalize() {
@@ -141,6 +144,8 @@ void StartMap::Finalize() {
 	delete objFloor;
 	delete modelStartMap;
 	delete objStartMap;
+	delete object1;
+	delete model1;
 	warp->Finalize();
 }
 
@@ -155,10 +160,11 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	}
 	for (std::size_t i = 0; i < spawing.size(); i++) {
 		for (int j = 0; j < 1; j++) {
-			if (spawing[i]->GetEnemy(j)->collideAttackArm()){				set = 30;
-			set = 15;
+			if (spawing[i]->GetEnemy(j)->collideAttackArm()) {
+				set = 30;
+				set = 15;
 
-			pause = true;
+				pause = true;
 				break;
 			}
 		}
@@ -268,7 +274,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		}
 	}
 
-	
+
 	//if (spawing[0]->GetIsAlive() == 0) {
 	//	if (spawing[1]->GetIsAlive() == 0) {
 	//		if (spawing[2]->GetIsAlive() == 0) {
@@ -323,6 +329,8 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		object1->PlayAnimation();
 	}
 	ui->Update();
+	object1->SetRotation(player->GetRotation());
+	object1->SetPosition(player->GetPosition());
 	object1->Update();
 	cameraPos.x = player->GetTargetPosition().x;
 	cameraPos.y = player->GetTargetPosition().y + distanceY;
@@ -394,7 +402,8 @@ void StartMap::Pause(const int& Timer) {
 	if (wait >= Timer) {
 		pause = false;
 		wait = 0;
-	} else {
+	}
+	else {
 		pause = true;
 	}
 	player->Pause(Timer);

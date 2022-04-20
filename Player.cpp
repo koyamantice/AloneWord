@@ -37,7 +37,6 @@ Player::Player() {
 	Armmodel= ModelManager::GetIns()->GetModel(ModelManager::Arm);
 	object3d = new Object3d();
 	Armobj = new Object3d();
-
 }
 
 bool Player::Initialize() {
@@ -102,8 +101,6 @@ void Player::Update() {
 			ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 			ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
 		}
-
-
 		//攻撃右回り
 		if (input->PushButton(input->Button_RB) && ArmWeight != 0.0f) {
 			AttackFlag = true;
@@ -388,19 +385,15 @@ void Player::Update() {
 //描画
 void Player::Draw() {
 	ImGui::Begin("test");
-		ImGui::SliderFloat("StickrotX", &StickrotX, 1000, -1000);
-		ImGui::SliderFloat("StickrotY", &StickrotY, 1000, -1000);
-
-		//ImGui::Text("pause %d", &pause, 100, 0);ArmSpeed
-		ImGui::Unindent();
+	ImGui::SliderFloat("StickrotX", &StickrotX, 1000, -1000);
+	ImGui::SliderFloat("StickrotY", &StickrotY, 1000, -1000);
+	ImGui::Unindent();
 	ImGui::End();
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
-		object3d->Draw();
+		//object3d->Draw();
 		Armobj->Draw();
 	}
-	
-	
 }
 
 void Player::Pause(const int& Timer) {

@@ -6,6 +6,7 @@
 #include"CollisionPrimitive.h"
 #include "Sprite.h"
 #include "Texture.h"
+#include "DirectXCommon.h"
 
 class InterEnemy;
 class Player : public Object3d {

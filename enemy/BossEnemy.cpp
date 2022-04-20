@@ -52,8 +52,8 @@ void BossEnemy::Spec() {
 			else {
 				AfterPos.y = 0.0f;
 			}
-			if (frame <= 1.0) {
-				frame += 0.015f;
+			if (frame <= 0.65) {
+				frame += 0.005f;
 			}
 			else {
 				frame = 0.0f;
