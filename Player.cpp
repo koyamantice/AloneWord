@@ -479,16 +479,16 @@ void Player::Rebound(InterEnemy* enemy) {
 void Player::BirthParticle() {
 	
 	if(input->LeftTiltStick(input->Right) || input->LeftTiltStick(input->Left) || input->LeftTiltStick(input->Up) || input->LeftTiltStick(input->Down)){
-		for (int i = 0; i < 1; ++i) {
+		for (int i = 0; i < 3; ++i) {
 			const float rnd_vel = 0.1f;
 			XMFLOAT3 vel{};
 			vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-			vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			vel.y = (float)rand() / RAND_MAX * rnd_vel;// -rnd_vel / 2.0f;
 			vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-			ParticleManager::GetInstance()->Add(10, { position.x,position.y,position.z }, vel, XMFLOAT3(), 1.0f, 0.0f);
+			ParticleManager::GetInstance()->Add(15, { oldPos.x+ vel.x,oldPos.y,oldPos.z+ vel.z }, vel, XMFLOAT3(), 1.0f, 0.5f);
 		}
 	}
-	else {
+	{
 		if (AttackFlag == true) {
 			const float rnd_vel = 0.1f;
 			XMFLOAT3 vel{};
