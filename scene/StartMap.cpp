@@ -159,7 +159,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		return;
 	}
 	for (std::size_t i = 0; i < spawing.size(); i++) {
-		for (int j = 0; j < 1; j++) {
+		for (int j = 0; j < spawing[i]->GetEneMax(); j++) {
 			if (spawing[i]->GetEnemy(j)->collideAttackArm()) {
 				set = 30;
 				set = 15;
@@ -181,19 +181,20 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		objBlock[i]->SetRotation(BlockRotation[i]);
 		objBlock[i]->Update();
 	}
-	if (spawing[0]->collideAttackArm()) {
-		set = spawing[0]->GetStop();
-		pause = true;
-	}
 	for (std::size_t i = 0; i < spawing.size(); i++) {
 		spawing[i]->Update();
+		if (spawing[i]->collideAttackArm()) {
+			set = spawing[i]->GetStop();
+			pause = true;
+			break;
+		}
 	}
 
 	if (warp->collidePlayer(player)) {
 		SceneManager::GetInstance()->ChangeScene("BOSS");
 	}
 	for (std::size_t i = 0; i < spawing.size(); i++) {
-		for (int j = 0; j < 1; j++) {
+		for (int j = 0; j < spawing[i]->GetEneMax(); j++) {
 			player->ResetWeight(spawing[i]->GetEnemy(j));
 			player->Rebound(spawing[i]->GetEnemy(j));
 		}

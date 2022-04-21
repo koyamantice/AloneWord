@@ -96,6 +96,7 @@ protected:
 	bool isMove = false;
 	bool hit = false;
 	int moveCount = 30;
+	int CheckCount = 0;
 	//{
 		bool lost = false;
 		bool followed = false;

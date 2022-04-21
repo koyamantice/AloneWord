@@ -2,7 +2,7 @@
 #include <DirectXMath.h>
 #include"InterEnemy.h"
 #include"Player.h"
-const int EneMax = 1;
+const int EneMax = 5;
 class Spawning {
 private:
 	// DirectX::‚ğÈ—ª
@@ -30,6 +30,7 @@ public:
 	void SetRotation(XMFLOAT3 rotation) { object3d->SetRotation(rotation); }
 	bool collideAttackArm();
 	void SetPlayer(Player* player) { this->player = player; };
+	const int& GetEneMax() { return EneMax; }
 	InterEnemy* GetEnemy(const int& num) { return enemy[num]; }
 private:
 	Object3d* object3d;

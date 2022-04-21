@@ -86,9 +86,9 @@ void InterEnemy::Follow() {
 	XMFLOAT3 position{};
 	position.x = (playerpos.x - pos.x);
 	position.z = (playerpos.z - pos.z);
-	rot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 90;// *(XM_PI / 180.0f);
-	pos.x -= sin(-atan2(position.x, position.z)) * 0.2f;
-	pos.z += cos(-atan2(position.x, position.z)) * 0.2f;
+	rot.y = (atan2f(position.x, position.z) * (180.0f / XM_PI)) - 90;// *(XM_PI / 180.0f);
+	pos.x -= sin(-atan2f(position.x, position.z)) * 0.2251f;
+	pos.z += cos(-atan2f(position.x, position.z)) * 0.2251f;
 }
 
 void InterEnemy::Reborn() {
@@ -108,6 +108,9 @@ void InterEnemy::Reborn() {
 			circleZ = sinf(radius) * scale;
 			pos.x = circleX + basePos.x;
 			pos.z = circleZ + basePos.z;
+			dir=(rand() % 360);
+			rot.y = (dir)-90;// *(XM_PI / 180.0f);
+			enemyobj->SetRotation(rot);
 			enemyobj->SetPosition(pos);
 		}
 		else if (IsTimer == 0) {
@@ -115,6 +118,7 @@ void InterEnemy::Reborn() {
 			IsAlive = true;
 			appearance = true;
 			isMove = false;
+			followed = false;
 			IsTimer = 200;
 		}
 	}
