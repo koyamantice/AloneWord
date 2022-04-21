@@ -36,7 +36,7 @@ void Spawning::Update() {
 	for (int i = 0; i < EneMax; i++) {
 			enemy[i]->SetBasePos(pos);
 			enemy[i]->Respawn(360.0f/EneMax*i);
-			if (isAlive|| enemy[i]->GetIsAlive()==true|| enemy[i]->GetIsTimer()<100) {
+			if (isAlive|| enemy[i]->GetIsAlive()==true|| enemy[i]->GetIsTimer()<=100) {
 				enemy[i]->Update();
 			}
 	}
