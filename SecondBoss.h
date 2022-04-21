@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseScene.h"
-#include "BossEnemy.h"
+#include "LeftShose.h"
+#include "RightShose.h"
 #include "UI.h"
 #include <array>       // ヘッダファイルインクルード
 using namespace std;         //  名前空間指定
@@ -48,7 +49,8 @@ private:
 	Player* player = nullptr;
 	array<Effect*, 40> effect;
 	array<InterEnemy*, 10> enemy;
-	BossEnemy* bossenemy = nullptr;
+	LeftShose* leftshose = nullptr;
+	RightShose* rightshose = nullptr;
 	std::array<std::array<Exp*, 10>, 5> exp;
 	float weight = 0;
 	UI* ui = nullptr;

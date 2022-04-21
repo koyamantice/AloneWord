@@ -1,6 +1,6 @@
 #pragma once
 #include "BaseScene.h"
-#include "BossEnemy.h"
+#include "LeftShose.h"
 #include "Collision.h"
 #include "Spawning.h"
 #include "UI.h"

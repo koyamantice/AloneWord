@@ -18,6 +18,8 @@ public:
 		EHub,
 		Enemy,
 		Fork,
+		LeftShose,
+		RightShose,
 	};
 
 public:

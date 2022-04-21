@@ -14,6 +14,8 @@ void ModelManager::Initialize() {
 	LoadModel(EHub, "EHub");
 	LoadModel(Enemy, "Enemy");
 	LoadModel(Fork, "Fork");
+	LoadModel(LeftShose, "Motti");
+	LoadModel(RightShose, "chr_knight");
 }
 
 void ModelManager::LoadModel(const ModelName modelName, std::string fileName) {

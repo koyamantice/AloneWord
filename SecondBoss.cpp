@@ -24,9 +24,13 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	player->SetMove(250.0f, 200.0f);
 
 	//ボス
-	bossenemy = new BossEnemy();
-	bossenemy->SetPlayer(player);
-	bossenemy->Initialize();
+	leftshose = new LeftShose();
+	leftshose->SetPlayer(player);
+	leftshose->Initialize();
+
+	rightshose = new RightShose();
+	rightshose->SetPlayer(player);
+	rightshose->Initialize();
 
 	//敵
 	for (std::size_t i = 0; i < enemy.size(); i++) {
@@ -120,7 +124,8 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	object1->SetRotation(player->GetRotation());
 	object1->SetPosition(player->GetPosition());
 
-	ui = new UI(player, bossenemy);
+	ui = new UI(player, leftshose);
+	ui = new UI(player, rightshose);
 	//ui->Initialize();
 }
 
@@ -131,7 +136,8 @@ void SecondBoss::Finalize() {
 		enemy[i]->Finalize();
 	}
 	player->Finalize();
-	bossenemy->Finalize();
+	leftshose->Finalize();
+	rightshose->Finalize();
 	delete objBossMap;
 	delete objFloor;
 	delete modelBossMap;
@@ -157,7 +163,8 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
-	bossenemy->Update();
+	leftshose->Update();
+	rightshose->Update();
 	particleMan->Update();
 	//objSphere->Update();
 	ui->Update();
@@ -175,7 +182,8 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 	}
 
 	for (std::size_t i = 0; i < effect.size(); i++) {
-		effect[i]->Update(bossenemy);
+		effect[i]->Update(leftshose);
+		effect[i]->Update(rightshose);
 	}
 
 	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
@@ -230,7 +238,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 	}
 
 	//その他シーン移行
-	if (bossenemy->GetHP() <= 0) {
+	if (leftshose->GetHP() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("SECONDMAP");
 	}
 
@@ -269,13 +277,14 @@ void SecondBoss::Draw(DirectXCommon* dxCommon) {
 	//Sprite::PreDraw();
 	//sprite->Draw();
 
-	object1->Draw(dxCommon->GetCmdList());
+	//object1->Draw(dxCommon->GetCmdList());
 
 	player->Draw();
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i]->Draw();
 	}
-	bossenemy->Draw();
+	leftshose->Draw();
+	rightshose->Draw();
 
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Draw();

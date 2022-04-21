@@ -86,6 +86,7 @@ protected:
 
 	Object3d* enemyobj = nullptr;
 	Model* model = nullptr;
+
 	Texture* texture = nullptr;
 	Texture* Restexture = nullptr;
 	XMFLOAT3 pos = { 0,0,0 };
@@ -94,7 +95,7 @@ protected:
 	XMFLOAT3 boundpower{};
 	XMFLOAT3 Deadbound = {};
 	XMFLOAT3 enescale{ 0.4f,0.4f,0.4f };
-
+	XMFLOAT3 shosepos;
 	Player* player = nullptr;
 	XMFLOAT3 playerpos{};
 
