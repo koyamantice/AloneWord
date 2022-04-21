@@ -407,5 +407,8 @@ void SecondMap::Pause(const int& Timer) {
 		pause = true;
 	}
 	player->Pause(Timer);
-	spawing[0]->Pause(Timer);
+	for (std::size_t i = 0; i < spawing.size(); i++) {
+		spawing[i]->Pause(Timer);
+	}
+
 }

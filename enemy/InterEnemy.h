@@ -31,7 +31,7 @@ public:
 	/// À•WE‰ñ“]‚ÌÝ’è
 	void SetPosition(XMFLOAT3 position) { enemyobj->SetPosition(position); }
 	void SetRotation(XMFLOAT3 rotation) { enemyobj->SetRotation(rotation); }
-
+	const int& GetIsTimer() { return IsTimer; };
 	const bool& GetEnemyCatch() { return EnemyCatch; }
 	const XMFLOAT3& GetBoundPower() { return boundpower; }
 	const bool& GetHit() { return hit; }
@@ -76,7 +76,7 @@ protected:
 
 	Player* player=nullptr;
 	XMFLOAT3 playerpos{};
-
+	XMFLOAT3 NextP{};
 	XMFLOAT3 StartPos{};
 	XMFLOAT3 EndPos{};
 	XMFLOAT3 EndRot{};
