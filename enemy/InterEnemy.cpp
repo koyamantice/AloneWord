@@ -87,6 +87,8 @@ void InterEnemy::Follow() {
 	position.x = (playerpos.x - pos.x);
 	position.z = (playerpos.z - pos.z);
 	rot.y = (atan2f(position.x, position.z) * (180.0f / XM_PI)) - 90;// *(XM_PI / 180.0f);
+	NextP.x -= sin(-atan2f(position.x, position.z)) * 0.2251f;
+	NextP.z += cos(-atan2f(position.x, position.z)) * 0.2251f;
 	pos.x -= sin(-atan2f(position.x, position.z)) * 0.2251f;
 	pos.z += cos(-atan2f(position.x, position.z)) * 0.2251f;
 }
@@ -126,5 +128,9 @@ void InterEnemy::Reborn() {
 }
 
 bool InterEnemy::CollidePos(XMFLOAT3 pos, float radius) {
-	return Collision::SphereCollision(pos.x,pos.y,pos.z,radius, this->pos.x, this->pos.y, this->pos.z, radius);
+	if (Collision::SphereCollision(pos.x, pos.y, pos.z, radius, NextP.x, NextP.y, NextP.z, radius)) {
+		this->pos = this->pos;
+		NextP = pos;
+		return true;
+	}
 }
