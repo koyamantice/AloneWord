@@ -487,7 +487,7 @@ void Player::BirthParticle() {
 			const float rnd_vel = 0.1f;
 			XMFLOAT3 vel{};
 			vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-			vel.y = (float)rand() / RAND_MAX * rnd_vel;// -rnd_vel / 2.0f;
+			vel.y = (float)rand() / RAND_MAX * rnd_vel -rnd_vel / 2.0f;
 			vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 			ParticleManager::GetInstance()->Add(30, { oldPos.x + vel.x,oldPos.y,oldPos.z + vel.z }, vel, XMFLOAT3(), 0.7f, 0.1f);
 		}
