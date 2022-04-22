@@ -86,9 +86,11 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	limit->setposition({ 0.0f,0.01f,0.0f });
 	limit->setrotation({ 90.0f,0, 0 });
 	limit->setscale({ 5.5f, 5.5f,  5.5f});*/
+	// テクスチャ読み込み
+	Sprite::LoadTexture(1, L"Resources/2d/concent.png");
 
 	//背景スプライト生成
-
+	concent = Sprite::Create(1, { 0.0f,0.0f });
 	// モデル読み込み
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
 	//srand(NULL);
@@ -157,13 +159,14 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		}
 		Pause(set);
 		return;
+	} else {
+		hit = false;
 	}
 	for (std::size_t i = 0; i < spawing.size(); i++) {
 		for (int j = 0; j < spawing[i]->GetEneMax(); j++) {
 			if (spawing[i]->GetEnemy(j)->collideAttackArm()) {
 				set = 30;
 				set = 15;
-
 				pause = true;
 				break;
 			}
@@ -184,6 +187,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	for (std::size_t i = 0; i < spawing.size(); i++) {
 		spawing[i]->Update();
 		if (spawing[i]->collideAttackArm()) {
+			hit = true;
 			set = spawing[i]->GetStop();
 			pause = true;
 			break;
@@ -276,13 +280,13 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	}
 
 
-	//if (spawing[0]->GetIsAlive() == 0) {
-	//	if (spawing[1]->GetIsAlive() == 0) {
-	//		if (spawing[2]->GetIsAlive() == 0) {
-	//			Clear = true;
-	//		}
-	//	}
-	//}
+	if (spawing[0]->GetIsAlive() == 0) {
+		if (spawing[1]->GetIsAlive() == 0) {
+			if (spawing[2]->GetIsAlive() == 0) {
+				Clear = true;
+			}
+		}
+	}
 	if (input->TriggerKey(DIK_C)) {
 		Clear = true;
 	}
@@ -338,9 +342,6 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	cameraPos.z = player->GetPosition().z - distanceZ;
 	camera->SetTarget(player->GetTargetPosition());
 	camera->SetEye(cameraPos);
-	/*if (cameraPos.z <= -20.0f) {
-
-	}*/
 	/*DebugText::GetInstance()->Print("PUSH to RB!!", 1040, 620, 2.0f);
 	DebugText::GetInstance()->Print("PUSH to A!!", 1040, 660, 2.0f);*/
 	if (player->GetArmWeight() > 0) {
@@ -372,16 +373,10 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 		objBlock[i]->Draw();
 	}
 	Texture::PreDraw();
-	if (start && !Clear) {
-		//limit->Draw();
-	}
+
+
+
 	warp->Draw();
-
-	//Sprite::PreDraw();
-	//背景用
-	//sprite->Draw();
-
-
 	Object3d::PreDraw();
 	object1->Draw(dxCommon->GetCmdList());
 	//背景用
@@ -394,6 +389,11 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	}
 	//bossenemy->Draw();
 	ui->Draw();
+	Sprite::PreDraw();
+	//背景用
+	if (hit) {
+		concent->Draw();
+	}
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
 }

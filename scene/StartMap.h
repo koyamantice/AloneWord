@@ -46,7 +46,7 @@ private:
 	array<Model*, 4> modelBlock;
 	array<Object3d*, 4> objBlock;
 	array<XMFLOAT3, 4> BlockRotation;
-
+	Sprite* concent = nullptr;
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;
 	DebugCamera* camera = { nullptr };
@@ -64,5 +64,6 @@ private:
 	bool pause = false;
 	int wait = 0;
 	int set = 0;
+	bool hit=false;
 };
 

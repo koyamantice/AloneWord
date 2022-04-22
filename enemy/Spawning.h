@@ -12,7 +12,7 @@ private:
 	using XMVECTOR = DirectX::XMVECTOR;
 	using XMMATRIX = DirectX::XMMATRIX;
 public:
-	Spawning();
+	Spawning(int Categoly=0);
 	
 	void Initialize();
 	void Update();

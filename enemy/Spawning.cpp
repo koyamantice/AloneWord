@@ -3,13 +3,23 @@
 #include "Rice.h"
 #include <ModelManager.h>
 
-Spawning::Spawning() {
+Spawning::Spawning(int Categoly) {
 	model = ModelManager::GetIns()->GetModel(ModelManager::EHub);
 	object3d = new Object3d();
 	texture = Texture::Create(4, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
-	for (int i = 0; i < EneMax; i++) {
-	enemy[i] = new Rice();
+	if (Categoly==0) {
+		for (int i = 0; i < EneMax; i++) {
+			enemy[i] = new Rice();
+		}
+	} else 	if (Categoly == 1) {
+		for (int i = 0; i < EneMax; i++) {
+			enemy[i] = new Rice();
+		}
+	} else 	if (Categoly == 2) {
+		for (int i = 0; i < EneMax; i++) {
+			enemy[i] = new Rice();
+		}
 	}
 }
 
