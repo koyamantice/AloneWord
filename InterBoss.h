@@ -99,6 +99,7 @@ protected:
 	Player* player = nullptr;
 	XMFLOAT3 playerpos{};
 
+	XMFLOAT3 targetpos{};
 	XMFLOAT3 StartPos{};
 	XMFLOAT3 EndPos{};
 	XMFLOAT3 EndRot{};
@@ -143,7 +144,7 @@ protected:
 	bool BossHit = false;
 	bool Effect = false;
 	//
-	int AttackCount = 0;
+	int AttackCount2 = 0;
 	bool already = false;
 	//
 	bool active = false;//行動開始
@@ -154,7 +155,7 @@ protected:
 	int AttackC = 0;//何回攻撃したか
 	bool finish = false;//フィニッシュ
 	int State = 0;
-
+	int AttackCount = 0;
 	float y = 0.0f;
 	//待機モーションのためのやつ
 	enum Motion {

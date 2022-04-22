@@ -179,16 +179,16 @@ void Rice::Update() {
 
 //描画
 void Rice::Draw() {
-	ImGui::Begin("test");
-	ImGui::SliderFloat("rot.y", &rot.y, 270, -90);
-	ImGui::SliderInt("dir", &dir, 360, -360);
-	//ImGui::SliderFloat("speed_y", &speed_y, 360, 0);
-	////ImGui::SliderFloat("scale", &scale, 360, 0);
-	//ImGui::Text("Count::%d", moveCount);
-	//ImGui::Text("Move::%d", isMove);
-	//ImGui::Text("Hit::%d", hit);
-	////ImGui::Unindent();
-	ImGui::End();
+	//ImGui::Begin("test");
+	//ImGui::SliderFloat("rot.y", &rot.y, 270, -90);
+	//ImGui::SliderInt("dir", &dir, 360, -360);
+	////ImGui::SliderFloat("speed_y", &speed_y, 360, 0);
+	//////ImGui::SliderFloat("scale", &scale, 360, 0);
+	////ImGui::Text("Count::%d", moveCount);
+	////ImGui::Text("Move::%d", isMove);
+	////ImGui::Text("Hit::%d", hit);
+	//////ImGui::Unindent();
+	//ImGui::End();
 	if (IsAlive) {
 		Object3d::PreDraw();
 		enemyobj->Draw();

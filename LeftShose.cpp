@@ -65,12 +65,7 @@ void LeftShose::Spec() {
 					State = Up;
 				}
 			}
-			pos = {
-			0,
-			Ease(In,Cubic,frame,pos.y,AfterPos.y),
-			0,
-			};
-			enemyobj->SetPosition(pos);
+			pos.y = Ease(In, Cubic, frame, pos.y, AfterPos.y);
 		}
 	}
 

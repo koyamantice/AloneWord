@@ -66,192 +66,56 @@ void RightShose::Spec() {
 					State = Up;
 				}
 			}
-			pos = {
-			0,
-			Ease(In,Cubic,frame,pos.y,AfterPos.y),
-			0,
-			};
+			pos.y = Ease(In, Cubic, frame, pos.y, AfterPos.y);
 			enemyobj->SetPosition(pos);
 		}
 	}
 
 	if (active) {
+		AttackCount2++;
 		if ((action % 2) == 0) {
-			if (frame < 0.45f) {
-				frame += 0.002f;
+			if (!Attack) {
+				if (AttackCount2 == 90) {
+					targetpos.x = player->GetPosition().x;
+					targetpos.z = player->GetPosition().z;
+				}
+				else if (AttackCount2 >= 100) {
+					Attack = true;
+				}
+				
 			}
 			else {
-				frame = 0;
-				pat++;
+				XMFLOAT3 position{};
+				position.x = (targetpos.x - pos.x);
+				position.z = (targetpos.z - pos.z);
+				rot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 90;// (XM_PI / 180.0f);
+				pos.x -= sin(-atan2(position.x, position.z)) * 0.2f;
+				pos.z += cos(-atan2(position.x, position.z)) * 0.2f;
+			
 			}
-			if (pat == 1) {
-				Afterrot = 45;
-				AfterPos.x = 25.0f;
-				AfterPos.z = -20.0f;
-			}
-			else if (pat == 2) {
-				Afterrot = -90;
-				AfterPos.x = 25.0f;
-				AfterPos.z = 20.0f;
-
-			}
-			else if (pat == 3) {
-				Afterrot = -225;
-				AfterPos.x = -25.0f;
-				AfterPos.z = -20.0f;
-			}
-			else if (pat == 4) {
-				Afterrot = -90;
-				AfterPos.x = -25.0f;
-				AfterPos.z = 20.0f;
-			}
-			else if (pat == 5) {
-				Afterrot = 45;
-				AfterPos.x = 0.0f;
-				AfterPos.z = 0.0f;
-			}
-			else {
-				Afterrot = 180;
-				pat = 0;
-				AttackCount = 30;
-				Effect = true;
-				active = false;
-				frame = 0;
-			}
-			pos = {
-	Ease(In,Cubic,frame,pos.x,AfterPos.x),
-	0,
-	Ease(In,Cubic,frame,pos.z,AfterPos.z),
-			};
 			enemyobj->SetPosition(pos);
 		}
-		else if ((action % 2) == 1) {
-
-			if (AttackC < 3) {
-				switch (pat) {
-				case 1:
-					AfterPos = {
-					pos.x,
-					3.0f,
-					pos.z
-					};
-					if (frame < 1.0f) {
-						frame += 0.01f;
-						break;
-					}
-					else {
-						frame = 0;
-						pat++;
-						break;
-					}
-				case 2:
-					AfterPos = {
-						player->GetPosition().x,
-					3.0f,
-						player->GetPosition().z
-					};
-					if (aiming < 180) {
-						frame = 0.5f;
-						aiming++;
-						break;
-					}
-					else {
-						frame = 0;
-						aiming = 0;
-						pat++;
-						break;
-					}
-				case 3:
-					AfterPos = {
-						pos.x,
-						0,
-						pos.z,
-					};
-					if (frame < 1.0f) {
-						frame += 0.08f;
-						break;
-					}
-					if (frame >= 1.0f) {
-						frame = 1.0f;
-						if (coolT < 90) {
-							coolT++;
-							break;
-						}
-						else {
-							coolT = 0;
-							frame = 0;
-							pat = 1;
-							AttackC++;
-							break;
-						}
-					}
-				default:
-					AttackC = 0;
-					pat = 1;
-					break;
+		if ((action % 2) == 1) {
+			if (!Attack) {
+				if (AttackCount2 == 90) {
+					targetpos.x = player->GetPosition().x;
+					targetpos.z = player->GetPosition().z;
 				}
+				else if (AttackCount2 >= 100) {
+					Attack = true;
+				}
+
 			}
 			else {
-				switch (pat) {
-				case 1:
-					AfterPos = {
-					pos.x,
-					3.0f,
-					pos.z
-					};
-					if (frame < 1.0f) {
-						frame += 0.01f;
-						break;
-					}
-					else {
-						frame = 0;
-						pat++;
-						break;
-					}
-				case 2:
-					AfterPos = {
-					0,
-					3.0f,
-					0
-					};
-					if (frame < 1.0f) {
-						frame += 0.01f;
-						break;
-					}
-					else {
-						frame = 0;
-						pat++;
-						break;
-					}
-				case 3:
-					AfterPos = {
-					0,
-					0,
-					0
-					};
-					if (frame < 1.0f) {
-						frame += 0.01f;
-						break;
-					}
-					else {
-						frame = 0;
-						pat = 0;
-						AttackC = 0;
-						AttackCount = 30;
-						Effect = true;
-						active = false;
-						break;
-					}
-				default:
-					break;
-				}
+				XMFLOAT3 position{};
+				position.x = (targetpos.x - pos.x);
+				position.z = (targetpos.z - pos.z);
+				rot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 90;// (XM_PI / 180.0f);
+				pos.x -= sin(-atan2(position.x, position.z)) * 0.2f;
+				pos.z += cos(-atan2(position.x, position.z)) * 0.2f;
 			}
-			pos = {
-	Ease(In,Cubic,frame,pos.x,AfterPos.x),
-	Ease(In,Cubic,frame,pos.y,AfterPos.y),
-	Ease(In,Cubic,frame,pos.z,AfterPos.z)
-			};
 			enemyobj->SetPosition(pos);
 		}
+
 	}
 }

@@ -19,24 +19,18 @@ void InterBoss::Update() {
 	collidePlayer();
 	Spec();
 	player->SetInterval(Interval);
-	enemyobj->SetPosition(pos);
+
 	enemyobj->Update();
 	texture->SetPosition(pos.x, 0, pos.z);
 	texture->Update();
 }
 
 void InterBoss::Draw() {
-	//	ImGui::Begin("test");
-	//	//	if (ImGui::TreeNode("Debug")) {
-	//	if (ImGui::TreeNode("Rice")) {
-	//		ImGui::SliderFloat("pos.y", &pos.y, 50, -50);
-	//		ImGui::Text("%d", AttackCount);
-	//		ImGui::Unindent();
-	//		ImGui::TreePop();
-	//	}
-	//	//ImGui::TreePop();
-	////}
-	//	ImGui::End();
+	ImGui::Begin("test");
+	ImGui::SliderFloat("speed_y", &targetpos.x, 25, -25);
+	ImGui::Text("AttackCount::%d", AttackCount2);
+	////ImGui::Unindent();
+	ImGui::End();
 	Object3d::PreDraw();
 	enemyobj->Draw();
 	Texture::PreDraw();
