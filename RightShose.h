@@ -26,4 +26,7 @@ private:
 		HitRight,
 		HitLeft
 	};
+	double speedX = 0.0f;
+	double speedZ = 0.0f;
+	int MoveCount = 0;
 };

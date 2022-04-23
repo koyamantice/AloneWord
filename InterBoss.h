@@ -144,7 +144,6 @@ protected:
 	bool BossHit = false;
 	bool Effect = false;
 	//
-	int AttackCount2 = 0;
 	bool already = false;
 	//
 	int hitpoint = 0;
@@ -164,7 +163,6 @@ protected:
 		Down
 	};
 	int b = 0;
-	double speedX = 0.0f;
-	double speedZ = 0.0f;
+	
 };
 
