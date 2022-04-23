@@ -27,8 +27,9 @@ void InterBoss::Update() {
 
 void InterBoss::Draw() {
 	ImGui::Begin("test");
-	ImGui::SliderFloat("speed_y", &targetpos.x, 25, -25);
-	ImGui::Text("AttackCount::%d", AttackCount2);
+	//ImGui::SliderFloat("speed_y", &speedX, 25, -25);
+	//ImGui::SliderFloat("speed_y", &speedZ, 25, -25);
+	ImGui::Text("AttackCount::%d", AttackC);
 	////ImGui::Unindent();
 	ImGui::End();
 	Object3d::PreDraw();

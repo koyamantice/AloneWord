@@ -72,48 +72,291 @@ void RightShose::Spec() {
 	}
 
 	if (active) {
-		AttackCount2++;
 		if ((action % 2) == 0) {
-			if (!Attack) {
-				if (AttackCount2 == 90) {
-					targetpos.x = player->GetPosition().x;
-					targetpos.z = player->GetPosition().z;
+			//3回突進する
+			if (AttackC < 4) {
+				MoveCount++;
+			}
+			//4回目は元の位置に戻る
+			else {
+				AfterPos = {
+				10,
+				0,
+				0
+				};
+				if (frame < 1.0f) {
+					frame += 0.01f;
 				}
-				else if (AttackCount2 >= 100) {
+				else {
+					frame = 0;
+					AttackC = 0;
+					AttackCount = 30;
+					active = false;
+				}
+
+				pos = {
+				Ease(In,Cubic,frame,pos.x,AfterPos.x),
+				0,
+				Ease(In,Cubic,frame,pos.z,AfterPos.z),
+				};
+			}
+			//プレイヤーの位置をロックオンさせる
+			if (MoveCount == 60) {
+				if (!Attack) {
+					hitpoint = HitNot;
+					Check = player->GetPosition().x - pos.x;
+					Check2 = player->GetPosition().z - pos.z;
+					posR = (pow(Check, 2) + pow(Check2, 2));
+					speedX = Check / posR * 8;
+					speedZ = Check2 / posR * 8;
 					Attack = true;
 				}
-				
 			}
-			else {
-				XMFLOAT3 position{};
-				position.x = (targetpos.x - pos.x);
-				position.z = (targetpos.z - pos.z);
-				rot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 90;// (XM_PI / 180.0f);
-				pos.x -= sin(-atan2(position.x, position.z)) * 0.2f;
-				pos.z += cos(-atan2(position.x, position.z)) * 0.2f;
-			
+
+			if (Attack) {
+				//プレイヤーにスピード加算
+				pos.x += speedX;
+				pos.z += speedZ;
+				//敵の位置が壁まで行ったら戻る
+				if (pos.x >= x_max) {
+					hitpoint = HitRight;
+					Deadbound.y = 0.5f;
+					Deadbound.x = 0.2f;
+					speedX = 0.0f;
+					speedZ = 0.0f;
+				}
+				else if (pos.x <= x_min) {
+					hitpoint = HitLeft;
+					Deadbound.y = 0.5f;
+					Deadbound.x = 0.2f;
+					speedX = 0.0f;
+					speedZ = 0.0f;
+				}
+				else if (pos.z >= z_max) {
+					hitpoint = HitUp;
+					Deadbound.y = 0.5f;
+					Deadbound.z = 0.2f;
+					speedX = 0.0f;
+					speedZ = 0.0f;
+				}
+				else if (pos.z <= z_min) {
+					hitpoint = HitDown;
+					Deadbound.y = 0.5f;
+					Deadbound.z = 0.2f;
+					speedX = 0.0f;
+					speedZ = 0.0f;
+				}
+
+				//跳ねるような感じで戻る(戻りきったら攻撃回数が加算される)
+				if (hitpoint == HitRight) {
+					Deadbound.y -= 0.02;
+					pos.y += Deadbound.y;
+					if (pos.y > 0.0f) {
+						pos.x -= Deadbound.x;
+					}
+					else {
+						pos.y = 0.0f;
+					}
+
+					if (pos.y == 0.0f) {
+						MoveCount = 0;
+						Attack = false;
+						hitpoint = HitNot;
+						AttackC++;
+					}
+				}
+				else if (hitpoint == HitLeft) {
+					Deadbound.y -= 0.02;
+					pos.y += Deadbound.y;
+					if (pos.y > 0.0f) {
+						pos.x += Deadbound.x;
+					}
+					else {
+						pos.y = 0.0f;
+					}
+
+					if (pos.y == 0.0f) {
+						MoveCount = 0;
+						Attack = false;
+						hitpoint = HitNot;
+						AttackC++;
+					}
+				}
+				else if (hitpoint == HitUp) {
+					Deadbound.y -= 0.02;
+					pos.y += Deadbound.y;
+					if (pos.y > 0.0f) {
+						pos.z -= Deadbound.z;
+					}
+					else {
+						pos.y = 0.0f;
+					}
+
+					if (pos.y == 0.0f) {
+						MoveCount = 0;
+						Attack = false;
+						hitpoint = HitNot;
+						AttackC++;
+					}
+				}
+				else if (hitpoint == HitDown) {
+					Deadbound.y -= 0.02;
+					pos.y += Deadbound.y;
+					if (pos.y > 0.0f) {
+						pos.z += Deadbound.z;
+					}
+					else {
+						pos.y = 0.0f;
+					}
+
+					if (pos.y == 0.0f) {
+						MoveCount = 0;
+						Attack = false;
+						hitpoint = HitNot;
+						AttackC++;
+					}
+				}
 			}
+
 			enemyobj->SetPosition(pos);
 		}
 		if ((action % 2) == 1) {
-			if (!Attack) {
-				if (AttackCount2 == 90) {
-					targetpos.x = player->GetPosition().x;
-					targetpos.z = player->GetPosition().z;
-				}
-				else if (AttackCount2 >= 100) {
-					Attack = true;
-				}
-
+			if (AttackC < 4) {
+				MoveCount++;
 			}
 			else {
-				XMFLOAT3 position{};
-				position.x = (targetpos.x - pos.x);
-				position.z = (targetpos.z - pos.z);
-				rot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 90;// (XM_PI / 180.0f);
-				pos.x -= sin(-atan2(position.x, position.z)) * 0.2f;
-				pos.z += cos(-atan2(position.x, position.z)) * 0.2f;
+				AfterPos = {
+				0,
+				0,
+				0
+				};
+				if (frame < 1.0f) {
+					frame += 0.01f;
+				}
+				else {
+					frame = 0;
+					AttackC = 0;
+					AttackCount = 30;
+					active = false;
+				}
+
+				pos = {
+				Ease(In,Cubic,frame,pos.x,AfterPos.x),
+				0,
+				Ease(In,Cubic,frame,pos.z,AfterPos.z),
+				};
 			}
+			if (MoveCount == 60) {
+				if (!Attack) {
+					hitpoint = HitNot;
+					Check = player->GetPosition().x - pos.x;
+					Check2 = player->GetPosition().z - pos.z;
+					posR = (pow(Check, 2) + pow(Check2, 2));
+					speedX = Check / posR * 8;
+					speedZ = Check2 / posR * 8;
+					Attack = true;
+				}
+			}
+
+			if (Attack) {
+				pos.x += speedX;
+				pos.z += speedZ;
+				if (pos.x >= x_max) {
+					hitpoint = HitRight;
+					Deadbound.y = 0.5f;
+					Deadbound.x = 0.2f;
+					speedX = 0.0f;
+					speedZ = 0.0f;
+				}
+				else if (pos.x <= x_min) {
+					hitpoint = HitLeft;
+					Deadbound.y = 0.5f;
+					Deadbound.x = 0.2f;
+					speedX = 0.0f;
+					speedZ = 0.0f;
+				}
+				else if (pos.z >= z_max) {
+					hitpoint = HitUp;
+					Deadbound.y = 0.5f;
+					Deadbound.z = 0.2f;
+					speedX = 0.0f;
+					speedZ = 0.0f;
+				}
+				else if (pos.z <= z_min) {
+					hitpoint = HitDown;
+					Deadbound.y = 0.5f;
+					Deadbound.z = 0.2f;
+					speedX = 0.0f;
+					speedZ = 0.0f;
+				}
+
+				if (hitpoint == HitRight) {
+					Deadbound.y -= 0.02;
+					pos.y += Deadbound.y;
+					if (pos.y > 0.0f) {
+						pos.x -= Deadbound.x;
+					}
+					else {
+						pos.y = 0.0f;
+					}
+
+					if (pos.y == 0.0f) {
+						MoveCount = 0;
+						Attack = false;
+						hitpoint = HitNot;
+						AttackC++;
+					}
+				}else if (hitpoint == HitLeft) {
+					Deadbound.y -= 0.02;
+					pos.y += Deadbound.y;
+					if (pos.y > 0.0f) {
+						pos.x += Deadbound.x;
+					}
+					else {
+						pos.y = 0.0f;
+					}
+
+					if (pos.y == 0.0f) {
+						MoveCount = 0;
+						Attack = false;
+						hitpoint = HitNot;
+						AttackC++;
+					}
+				}else if (hitpoint == HitUp) {
+					Deadbound.y -= 0.02;
+					pos.y += Deadbound.y;
+					if (pos.y > 0.0f) {
+						pos.z -= Deadbound.z;
+					}
+					else {
+						pos.y = 0.0f;
+					}
+
+					if (pos.y == 0.0f) {
+						MoveCount = 0;
+						Attack = false;
+						hitpoint = HitNot;
+						AttackC++;
+					}
+				}else if (hitpoint == HitDown) {
+					Deadbound.y -= 0.02;
+					pos.y += Deadbound.y;
+					if (pos.y > 0.0f) {
+						pos.z += Deadbound.z;
+					}
+					else {
+						pos.y = 0.0f;
+					}
+
+					if (pos.y == 0.0f) {
+						MoveCount = 0;
+						Attack = false;
+						hitpoint = HitNot;
+						AttackC++;
+					}
+				}
+			}
+		
 			enemyobj->SetPosition(pos);
 		}
 

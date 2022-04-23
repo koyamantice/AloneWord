@@ -18,4 +18,12 @@ private:
 	};
 
 	bool Attack = false;
+	
+	enum Hit {
+		HitNot,
+		HitUp,
+		HitDown,
+		HitRight,
+		HitLeft
+	};
 };

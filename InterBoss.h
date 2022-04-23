@@ -147,6 +147,7 @@ protected:
 	int AttackCount2 = 0;
 	bool already = false;
 	//
+	int hitpoint = 0;
 	bool active = false;//行動開始
 	int action = 0;//攻撃の種類
 	int pat = 0;//パターン
@@ -163,5 +164,7 @@ protected:
 		Down
 	};
 	int b = 0;
+	double speedX = 0.0f;
+	double speedZ = 0.0f;
 };
 
