@@ -187,6 +187,10 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		a += 1;
 	}
 
+	if (input->TriggerKey(DIK_C)) {
+		SceneManager::GetInstance()->ChangeScene("SECONDMAP");
+	}
+
 	//敵同士の当たり判定
 	if (sizeof(enemy) > 2) {//配列のサイズ確認
 		for (int colA = 0; colA < BossEnemyMax; colA++) {

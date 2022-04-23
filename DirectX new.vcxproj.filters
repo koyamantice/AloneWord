@@ -254,6 +254,12 @@
     <ClCompile Include="SecondBoss.cpp">
       <Filter>main</Filter>
     </ClCompile>
+    <ClCompile Include="LeftShose.cpp">
+      <Filter>enemy\ボス</Filter>
+    </ClCompile>
+    <ClCompile Include="RightShose.cpp">
+      <Filter>enemy\ボス</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\Framework.h">
@@ -462,6 +468,12 @@
     </ClInclude>
     <ClInclude Include="SecondBoss.h">
       <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="LeftShose.h">
+      <Filter>enemy\ボス</Filter>
+    </ClInclude>
+    <ClInclude Include="RightShose.h">
+      <Filter>enemy\ボス</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

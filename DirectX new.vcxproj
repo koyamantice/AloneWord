@@ -285,6 +285,7 @@
     <ClCompile Include="Onomato.cpp" />
     <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RightShose.cpp" />
     <ClCompile Include="scene\BossScene.cpp" />
     <ClCompile Include="scene\ClearScene.cpp" />
     <ClCompile Include="scene\GameoverScene.cpp" />
@@ -293,6 +294,7 @@
     <ClCompile Include="scene\TitleScene.cpp" />
     <ClCompile Include="SecondBoss.cpp" />
     <ClCompile Include="SecondMap.cpp" />
+    <ClCompile Include="LeftShose.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Warp.cpp" />
   </ItemGroup>
@@ -360,6 +362,7 @@
     <ClInclude Include="Onomato.h" />
     <ClInclude Include="ParticleManager.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="RightShose.h" />
     <ClInclude Include="SceneFactory.h" />
     <ClInclude Include="scene\BossScene.h" />
     <ClInclude Include="scene\ClearScene.h" />
@@ -369,6 +372,7 @@
     <ClInclude Include="scene\TitleScene.h" />
     <ClInclude Include="SecondBoss.h" />
     <ClInclude Include="SecondMap.h" />
+    <ClInclude Include="LeftShose.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Warp.h" />
   </ItemGroup>

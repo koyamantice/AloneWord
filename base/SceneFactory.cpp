@@ -24,7 +24,7 @@ BaseScene* SceneFactory::CreateScene(const std::string& sceneName) {
 		newScene = new BossScene();
 	}
 	else if (sceneName == "SECONDBOSS") {
-		newScene = new BossScene();
+		newScene = new SecondBoss();
 	}
 	else if (sceneName == "GAMEOVER") {
 		newScene = new GameoverScene();
