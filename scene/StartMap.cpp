@@ -154,9 +154,9 @@ void StartMap::Finalize() {
 void StartMap::Update(DirectXCommon* dxCommon) {
 	if (pause) {
 		particleMan->Update();
-		for (std::size_t i = 0; i < spawing.size(); i++) {
-			spawing[i]->Update();
-		}
+		//for (std::size_t i = 0; i < spawing.size(); i++) {
+		//	spawing[i]->Update();
+		//}
 		Pause(set);
 		return;
 	} else {

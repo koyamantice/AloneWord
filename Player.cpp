@@ -478,10 +478,12 @@ void Player::Rebound(InterEnemy* enemy) {
 
 void Player::BirthParticle() {
 	
-	if(input->LeftTiltStick(input->Right) || input->LeftTiltStick(input->Left) || input->LeftTiltStick(input->Up) || input->LeftTiltStick(input->Down)){
-		count++;
+	if (ArmMoveNumber == 0 && AttackMoveNumber == 0 && AttackFlag == false
+		&& Interval <= 80) {
+		if (input->LeftTiltStick(input->Right) || input->LeftTiltStick(input->Left) || input->LeftTiltStick(input->Up) || input->LeftTiltStick(input->Down)) {
+			count++;
+		}
 	}
-
 	if (count >=12) {
 		for (int i = 0; i < 6; ++i) {
 			const float rnd_vel = 0.1f;
