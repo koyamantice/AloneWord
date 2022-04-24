@@ -125,23 +125,8 @@ void LeftShose::Spec() {
 				switch (pat) {
 				case 1:
 					AfterPos = {
-					pos.x,
-					3.0f,
-					pos.z
-					};
-					if (frame < 1.0f) {
-						frame += 0.01f;
-						break;
-					}
-					else {
-						frame = 0;
-						pat++;
-						break;
-					}
-				case 2:
-					AfterPos = {
-						player->GetPosition().x,
-					3.0f,
+						player->GetPosition().x - 5,
+						pos.y,
 						player->GetPosition().z
 					};
 					if (aiming < 180) {
@@ -151,13 +136,14 @@ void LeftShose::Spec() {
 					}
 					else {
 						frame = 0;
+						targetpos.x = player->GetPosition().x;
 						aiming = 0;
 						pat++;
 						break;
 					}
-				case 3:
+				case 2:
 					AfterPos = {
-						pos.x,
+						targetpos.x,
 						0,
 						pos.z,
 					};
@@ -190,7 +176,7 @@ void LeftShose::Spec() {
 				case 1:
 					AfterPos = {
 					pos.x,
-					3.0f,
+					pos.y,
 					pos.z
 					};
 					if (frame < 1.0f) {
@@ -204,22 +190,7 @@ void LeftShose::Spec() {
 					}
 				case 2:
 					AfterPos = {
-					0,
-					3.0f,
-					0
-					};
-					if (frame < 1.0f) {
-						frame += 0.01f;
-						break;
-					}
-					else {
-						frame = 0;
-						pat++;
-						break;
-					}
-				case 3:
-					AfterPos = {
-					0,
+					-10,
 					0,
 					0
 					};
