@@ -1,7 +1,7 @@
 #pragma once
 #include "InterBoss.h"
 
-class RightShose :public InterBoss {
+class RightShose :public InterBoss{
 public:
 	RightShose();
 

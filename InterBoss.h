@@ -31,13 +31,17 @@ public:
 	void SetPosition(XMFLOAT3 position) { enemyobj->SetPosition(position); }
 	void SetRotation(XMFLOAT3 rotation) { enemyobj->SetRotation(rotation); }
 
+	//ゲッター
 	const bool& GetEnemyCatch() { return EnemyCatch; }
 	const XMFLOAT3& GetBoundPower() { return boundpower; }
 	const bool& GetHit() { return hit; }
 	const int& GetBound() { return bound; }
 	const bool& GetIsAlive() { return IsAlive; }
 	const int& GetDrawExp() { return DrawExp; }
+	const int& GetAction() { return action; }
+	const bool& GetActive() { return active; }
 	//bool Collision(XMFLOAT3 position, float radius);
+	//セッター
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
 	void SetEnemyCatch(bool EnemyCatch) { this->EnemyCatch = EnemyCatch; }
 	void SetBound(bool bound) { this->bound = bound; }
@@ -45,6 +49,7 @@ public:
 	void Back();
 	void SetDrawExp(int DrawExp) { this->DrawExp = DrawExp; }
 	void Setboundpower(XMFLOAT3 boundpower) { this->boundpower = boundpower; }
+	//関数
 	void SetEnemy();
 	void DeadEnemy();
 	void RandDeadPower();
@@ -98,7 +103,7 @@ protected:
 	XMFLOAT3 shosepos;
 	Player* player = nullptr;
 	XMFLOAT3 playerpos{};
-
+	
 	XMFLOAT3 targetpos{};
 	XMFLOAT3 StartPos{};
 	XMFLOAT3 EndPos{};

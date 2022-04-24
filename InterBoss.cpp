@@ -26,10 +26,11 @@ void InterBoss::Update() {
 }
 
 void InterBoss::Draw() {
+	XMFLOAT3 playerpos = player->GetPosition();
 	ImGui::Begin("test");
-	//ImGui::SliderFloat("speed_y", &speedX, 25, -25);
-	//ImGui::SliderFloat("speed_y", &speedZ, 25, -25);
-	ImGui::Text("AttackCount::%d", AttackC);
+	ImGui::SliderFloat("speed_y", &playerpos.x, 25, -25);
+	ImGui::SliderFloat("speed_y", &targetpos.x, 25, -25);
+	//ImGui::Text("AttackCount::%d", AttackC);
 	////ImGui::Unindent();
 	ImGui::End();
 	Object3d::PreDraw();
