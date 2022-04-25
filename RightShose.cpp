@@ -326,6 +326,11 @@ void RightShose::Spec() {
 
 void RightShose::SetAct(LeftShose* leftshose) {
 	int action = leftshose->GetAction();
-	bool active = leftshose->GetActive();
+	int AttackCount = leftshose->GetAttackCount();
+	int pat = leftshose->GetPat();
 	this->action = action;
+	this->AttackCount = AttackCount;
+	if (pat == 5) {
+		AttackC = 4;
+	}
 }

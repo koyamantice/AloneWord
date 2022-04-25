@@ -39,6 +39,8 @@ public:
 	const bool& GetIsAlive() { return IsAlive; }
 	const int& GetDrawExp() { return DrawExp; }
 	const int& GetAction() { return action; }
+	const int& GetAttackCount() { return AttackCount; }
+	const int& GetPat() { return pat; }
 	const bool& GetActive() { return active; }
 	//bool Collision(XMFLOAT3 position, float radius);
 	//セッター

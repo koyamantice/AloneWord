@@ -5,9 +5,6 @@
 #include <Easing.h>
 using namespace DirectX;
 
-
-
-
 void InterBoss::Update() {
 	Interval = player->GetInterval();
 	FlashCount = player->GetFlashCount();
