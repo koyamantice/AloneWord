@@ -34,11 +34,11 @@ private:
 	const float PI = 3.145265f;
 	float speed = 0;
 	float radius = 0;
-	float scale = 150;
+	float scale = 50;
 	double a;
 	double b;
 	XMFLOAT2 basePos = { 1280 / 2,720 / 2 };
-	XMFLOAT2 circle{};
+	XMFLOAT2 circle={640.0f,360.0f};
 	XMFLOAT3 pos{};
 	double posR;
 	float Check;

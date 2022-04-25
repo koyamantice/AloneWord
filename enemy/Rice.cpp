@@ -48,6 +48,9 @@ void Rice::Update() {
 	Interval = player->GetInterval();
 	FlashCount = player->GetFlashCount();
 	oldpos = pos;
+	if (pos.y>3.0f) {
+		pos.y = 3.0f;
+	}
 	if (IsAlive && !EnemyCatch && !Exp) {
 		Back();
 		if (LockOn()) {
@@ -317,16 +320,15 @@ void Rice::Move() {
 	if (pos.z < z_min) {pos.z = z_min;}
 	if (pos.x > x_max) {pos.x = x_max;}
 	if (pos.x < x_min) {pos.x = x_min;}
-
 	if (moveCount <= 0 && !isMove) {
 		isMove = true;
-		//moveCount = (rand() % 60) + 30;
 	} 
 	if(moveCount >0) {
 		moveCount--;
-		dir+=dirVel;
+		if (moveCount%2==1) {
+			dir += dirVel;
+		}
 		dir %= 360;
-
 	}
 	if (isMove) {
 		if (hit) {
@@ -336,16 +338,16 @@ void Rice::Move() {
 			dirVel *= -1;
 			return;
 		}
-		if (frame <= 1.0f) {
-			frame += 0.05f;
-		} else {
-			frame = 0.0f;
+		if (frame >= 1.0f) {
 			moveCount = (rand() % 60) + 30;
-			dirVel *= -1;
+			frame = 0.0f;
 			isMove = false;
+			dirVel *= -1;
+		} else {
+			frame += 0.05f;
 		}
-		pos.x -= sin(-dir * (XM_PI / 180.0f)) * 0.15f;
-		pos.z += cos(-dir * (XM_PI / 180.0f)) * 0.15f;
+		pos.x -= sin(-dir * (XM_PI / 180.0f)) * 0.13f;
+		pos.z += cos(-dir * (XM_PI / 180.0f)) * 0.13f;
 		enemyobj->SetPosition(pos);
 
 	}

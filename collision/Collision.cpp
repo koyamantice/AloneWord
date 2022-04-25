@@ -41,6 +41,23 @@ bool Collision::SphereCollision(const float& X1, const float& Y1, const float& Z
 	return true;
 }
 
+bool Collision::SphereCollision2(const XMFLOAT3& pos, const float& R1, const XMFLOAT3& pos2, const float& R2) {
+	float a = pos.x - pos2.x;
+	float b = pos.y - pos2.y;
+	float c = pos.z - pos2.z;
+	//2‚Â‚Ì‹——£‚ğŒvZ
+	float distance = sqrtf(a * a + b * b + c * c);
+	//”¼Œa‚Ì‡Œv‚ğŒvZ
+	float radius = R1 + R2;
+	if (distance <= radius) {
+		return true;
+	} else {
+		return false;
+	}
+
+	return true;
+}
+
 bool Collision::CheckSphere2Sphere(const Sphere& sphereA, const Sphere& sphereB, DirectX::XMVECTOR* inter, DirectX::XMVECTOR* reject)
 {
 	// ’†S“_‚Ì‹——£‚Ì‚Qæ <= ”¼Œa‚Ì˜a‚Ì‚Qæ@‚È‚çŒğ·

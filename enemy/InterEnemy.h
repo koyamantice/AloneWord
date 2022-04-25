@@ -52,6 +52,7 @@ public:
 		this->x_max = limit.z;
 		this->x_min = limit.w;
 	}
+	void Stop();
 	void SetEnemy();
 	void DeadEnemy();
 	void RandDeadPower();
