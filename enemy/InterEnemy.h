@@ -42,6 +42,8 @@ public:
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
 	void SetEnemyCatch(bool EnemyCatch) { this->EnemyCatch = EnemyCatch; }
 	void SetBound(bool bound) { this->bound = bound; }
+	void SetScale(float Scale) { this->scale=Scale; }
+	void SetSpeed(float speed) { this->speed = speed; }
 	void SetHit(bool hit) { this->hit = hit; }
 	void Back();
 	void SetDrawExp(int DrawExp) { this->DrawExp = DrawExp; }
@@ -123,6 +125,7 @@ protected:
 	float x_max = 25;
 	float z_min = -20;
 	float z_max = 20;
+	XMFLOAT2 vel{};
 	bool pause = false;
 	bool respawn = false;
 public:

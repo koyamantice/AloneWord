@@ -387,6 +387,8 @@ void Player::Draw() {
 	ImGui::Begin("test");
 	ImGui::SliderFloat("StickrotX", &StickrotX, 1000, -1000);
 	ImGui::SliderFloat("StickrotY", &StickrotY, 1000, -1000);
+	ImGui::SliderFloat("PlayerX", &position.x, 1000, -1000);
+	ImGui::SliderFloat("Playerz", &position.z, 1000, -1000);
 	ImGui::Unindent();
 	ImGui::End();
 	Object3d::PreDraw();
