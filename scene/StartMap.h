@@ -11,7 +11,7 @@ class TouchableObject;
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>
-const int StartSpawn = 3;
+const int StartSpawn = 1;
 class StartMap : public BaseScene {
 
 public:
@@ -66,4 +66,3 @@ private:
 	int set = 0;
 	bool hit=false;
 };
-

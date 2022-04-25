@@ -2,6 +2,7 @@
 #include "Collision.h"
 #include "Rice.h"
 #include <ModelManager.h>
+#include <DebugText.h>
 
 Spawning::Spawning(int Categoly) {
 	model = ModelManager::GetIns()->GetModel(ModelManager::EHub);
@@ -48,17 +49,15 @@ void Spawning::Update() {
 		enemy[i]->Respawn(360.0f/EneMax*i);
 		if (isAlive|| enemy[i]->GetIsAlive()==true|| enemy[i]->GetIsTimer()<=100) {
 			enemy[i]->Update();
-			if (isAlive) {
+			if (enemy[i]->GetIsAlive()) {
 				for (int colA = 0; colA < EneMax; colA++) {
 					for (int colB = 1; colB < EneMax; colB++) {
-						if (Collision::SphereCollision2(enemy[colA]->GetPosition(), 3.0f, enemy[colB]->GetPosition(), 3.0f) && colA != colB) {//“–‚½‚è”»’è‚ÆŽ©‹@“¯Žm‚Ì“–‚½‚è”»’è‚Ìíœ
-								//DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
-							enemy[colA]->SetHit(true);
-							enemy[colB]->SetHit(false);
+						if (Collision::SphereCollision2(enemy[colA]->GetPosition(), 1.3f, enemy[colB]->GetPosition(), 1.3f) && colA != colB) {//“–‚½‚è”»’è‚ÆŽ©‹@“¯Žm‚Ì“–‚½‚è”»’è‚Ìíœ
+							DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
+							enemy[colA]->Stop();
+							//enemy[colB]->Stop();
 							break;
-						} else {
-							enemy[colA]->SetHit(false);
-						}
+						} 
 					}
 				}
 			}

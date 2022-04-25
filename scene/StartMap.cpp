@@ -38,11 +38,11 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	spawing[0]->SetPosition({ -20.0f,0.0f,-4.0f });
 	spawing[0]->SetRotation({ 0,90,0 });
 
-	spawing[1]->SetPosition({ 0,0.0f,8.0f });
-	spawing[1]->SetRotation({ 0,90,0 });
+	//spawing[1]->SetPosition({ 0,0.0f,8.0f });
+	//spawing[1]->SetRotation({ 0,90,0 });
 
-	spawing[2]->SetPosition({ 20.0f,0.0f,-4.0f });
-	spawing[2]->SetRotation({ 0,90,0 });
+	//spawing[2]->SetPosition({ 20.0f,0.0f,-4.0f });
+	//spawing[2]->SetRotation({ 0,90,0 });
 
 	//オブジェクト初期化
 	/*modelGround = Model::CreateFromOBJ("ground");
@@ -186,7 +186,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	}
 	for (std::size_t i = 0; i < spawing.size(); i++) {
 		spawing[i]->Update();
-		if (spawing[i]->collideAttackArm()) {
+		if (spawing[i]->collideAttackArm()&&spawing[i]->GetIsAlive()) {
 			hit = true;
 			set = spawing[i]->GetStop();
 			pause = true;

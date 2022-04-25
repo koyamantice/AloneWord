@@ -31,6 +31,18 @@ void InterEnemy::Back() {
 		hit = false;
 	}
 }
+void InterEnemy::Stop() {
+	if (isMove) {
+		moveCount = (rand() % 60) + 30;
+		frame = 0.0f;
+		isMove = false;
+		dirVel *= -1;
+	}
+	if(followed){
+		followed = false;
+	}
+
+}
 //“G‚ÌˆÊ’u‚ð˜r‚Æ“¯‚¶‚É‚·‚é
 void InterEnemy::SetEnemy() {
 	float armweight = player->GetArmWeight();
