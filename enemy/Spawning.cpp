@@ -44,12 +44,28 @@ void Spawning::Update() {
 	if (pause) { return; }
 	if (Hp > 0) { isAlive = true; } else { isAlive = false; }
 	for (int i = 0; i < EneMax; i++) {
-			enemy[i]->SetBasePos(pos);
-			enemy[i]->Respawn(360.0f/EneMax*i);
-			if (isAlive|| enemy[i]->GetIsAlive()==true|| enemy[i]->GetIsTimer()<=100) {
-				enemy[i]->Update();
+		enemy[i]->SetBasePos(pos);
+		enemy[i]->Respawn(360.0f/EneMax*i);
+		if (isAlive|| enemy[i]->GetIsAlive()==true|| enemy[i]->GetIsTimer()<=100) {
+			enemy[i]->Update();
+			if (isAlive) {
+				for (int colA = 0; colA < EneMax; colA++) {
+					for (int colB = 1; colB < EneMax; colB++) {
+						if (Collision::SphereCollision2(enemy[colA]->GetPosition(), 3.0f, enemy[colB]->GetPosition(), 3.0f) && colA != colB) {//“–‚½‚è”»’è‚ÆŽ©‹@“¯Žm‚Ì“–‚½‚è”»’è‚Ìíœ
+								//DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
+							enemy[colA]->SetHit(true);
+							enemy[colB]->SetHit(false);
+							break;
+						} else {
+							enemy[colA]->SetHit(false);
+						}
+					}
+				}
 			}
+		}
 	}
+
+
 	if (isAlive) {
 		object3d->Update();
 		object3d->SetPosition(pos);
