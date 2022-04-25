@@ -97,7 +97,6 @@ void BossEnemy::Spec() {
 			};
 			enemyobj->SetPosition(pos);
 		} else if ((action % 2) == 1) {
-
 			if (AttackC < 3) {
 				switch (pat) {
 				case 1:
