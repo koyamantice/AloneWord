@@ -74,18 +74,18 @@ void RightShose::Spec() {
 	if (active) {
 		if ((action % 2) == 0) {
 			//3âÒìÀêiÇ∑ÇÈ
-			if (AttackC < 4) {
+			if (AttackC < 100) {
 				MoveCount++;
 			}
-			//4âÒñ⁄ÇÕå≥ÇÃà íuÇ…ñﬂÇÈ
+			//ç∂ë´Ç™ñﬂÇ¡ÇΩÇÁå≥ÇÃà íuÇ…ñﬂÇÈ
 			else {
 				AfterPos = {
 				10,
 				0,
 				0
 				};
-				if (frame < 1.0f) {
-					frame += 0.01f;
+				if (frame < 0.45f) {
+					frame += 0.002f;
 				}
 				else {
 					frame = 0;
@@ -106,6 +106,7 @@ void RightShose::Spec() {
 					hitpoint = HitNot;
 					Check = player->GetPosition().x - pos.x;
 					Check2 = player->GetPosition().z - pos.z;
+					//rot.y = (atan2f(position.x, position.z) * (180.0f / XM_PI)) - 90;
 					posR = (pow(Check, 2) + pow(Check2, 2));
 					speedX = Check / posR * 8;
 					speedZ = Check2 / posR * 8;
@@ -221,144 +222,115 @@ void RightShose::Spec() {
 			enemyobj->SetPosition(pos);
 		}
 		if ((action % 2) == 1) {
-			if (AttackC < 4) {
-				MoveCount++;
+
+			if (AttackC < 3) {
+				switch (pat) {
+				case 1:
+					AfterPos = {
+						player->GetPosition().x + 5,
+						pos.y,
+						player->GetPosition().z
+					};
+					if (aiming < 180) {
+						frame = 0.5f;
+						aiming++;
+						break;
+					}
+					else {
+						frame = 0;
+						targetpos.x = player->GetPosition().x;
+						aiming = 0;
+						pat++;
+						break;
+					}
+				case 2:
+					AfterPos = {
+						targetpos.x,
+						0,
+						pos.z,
+					};
+					if (frame < 1.0f) {
+						frame += 0.08f;
+						break;
+					}
+					if (frame >= 1.0f) {
+						frame = 1.0f;
+						if (coolT < 90) {
+							coolT++;
+							break;
+						}
+						else {
+							coolT = 0;
+							frame = 0;
+							pat = 1;
+							AttackC++;
+							break;
+						}
+					}
+				default:
+					AttackC = 0;
+					pat = 1;
+					break;
+				}
 			}
 			else {
-				AfterPos = {
-				0,
-				0,
-				0
-				};
-				if (frame < 1.0f) {
-					frame += 0.01f;
-				}
-				else {
-					frame = 0;
-					AttackC = 0;
-					AttackCount = 30;
-					active = false;
-				}
-
-				pos = {
-				Ease(In,Cubic,frame,pos.x,AfterPos.x),
-				0,
-				Ease(In,Cubic,frame,pos.z,AfterPos.z),
-				};
-			}
-			if (MoveCount == 60) {
-				if (!Attack) {
-					hitpoint = HitNot;
-					Check = player->GetPosition().x - pos.x;
-					Check2 = player->GetPosition().z - pos.z;
-					posR = (pow(Check, 2) + pow(Check2, 2));
-					speedX = Check / posR * 8;
-					speedZ = Check2 / posR * 8;
-					Attack = true;
-				}
-			}
-
-			if (Attack) {
-				pos.x += speedX;
-				pos.z += speedZ;
-				if (pos.x >= x_max) {
-					hitpoint = HitRight;
-					Deadbound.y = 0.5f;
-					Deadbound.x = 0.2f;
-					speedX = 0.0f;
-					speedZ = 0.0f;
-				}
-				else if (pos.x <= x_min) {
-					hitpoint = HitLeft;
-					Deadbound.y = 0.5f;
-					Deadbound.x = 0.2f;
-					speedX = 0.0f;
-					speedZ = 0.0f;
-				}
-				else if (pos.z >= z_max) {
-					hitpoint = HitUp;
-					Deadbound.y = 0.5f;
-					Deadbound.z = 0.2f;
-					speedX = 0.0f;
-					speedZ = 0.0f;
-				}
-				else if (pos.z <= z_min) {
-					hitpoint = HitDown;
-					Deadbound.y = 0.5f;
-					Deadbound.z = 0.2f;
-					speedX = 0.0f;
-					speedZ = 0.0f;
-				}
-
-				if (hitpoint == HitRight) {
-					Deadbound.y -= 0.02;
-					pos.y += Deadbound.y;
-					if (pos.y > 0.0f) {
-						pos.x -= Deadbound.x;
+				switch (pat) {
+				case 1:
+					AfterPos = {
+					pos.x,
+					pos.y,
+					pos.z
+					};
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						break;
 					}
 					else {
-						pos.y = 0.0f;
+						frame = 0;
+						pat++;
+						break;
 					}
-
-					if (pos.y == 0.0f) {
-						MoveCount = 0;
-						Attack = false;
-						hitpoint = HitNot;
-						AttackC++;
-					}
-				}else if (hitpoint == HitLeft) {
-					Deadbound.y -= 0.02;
-					pos.y += Deadbound.y;
-					if (pos.y > 0.0f) {
-						pos.x += Deadbound.x;
-					}
-					else {
-						pos.y = 0.0f;
-					}
-
-					if (pos.y == 0.0f) {
-						MoveCount = 0;
-						Attack = false;
-						hitpoint = HitNot;
-						AttackC++;
-					}
-				}else if (hitpoint == HitUp) {
-					Deadbound.y -= 0.02;
-					pos.y += Deadbound.y;
-					if (pos.y > 0.0f) {
-						pos.z -= Deadbound.z;
+				case 2:
+					AfterPos = {
+					10,
+					0,
+					0
+					};
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						break;
 					}
 					else {
-						pos.y = 0.0f;
+						frame = 0;
+						pat = 0;
+						AttackC = 0;
+						AttackCount = 30;
+						Effect = true;
+						active = false;
+						break;
 					}
-
-					if (pos.y == 0.0f) {
-						MoveCount = 0;
-						Attack = false;
-						hitpoint = HitNot;
-						AttackC++;
-					}
-				}else if (hitpoint == HitDown) {
-					Deadbound.y -= 0.02;
-					pos.y += Deadbound.y;
-					if (pos.y > 0.0f) {
-						pos.z += Deadbound.z;
-					}
-					else {
-						pos.y = 0.0f;
-					}
-
-					if (pos.y == 0.0f) {
-						MoveCount = 0;
-						Attack = false;
-						hitpoint = HitNot;
-						AttackC++;
-					}
+				default:
+					break;
 				}
 			}
-		
+			pos = {
+	Ease(In,Cubic,frame,pos.x,AfterPos.x),
+	Ease(In,Cubic,frame,pos.y,AfterPos.y),
+	Ease(In,Cubic,frame,pos.z,AfterPos.z)
+			};
 			enemyobj->SetPosition(pos);
 		}
 
+	}
+}
+
+void RightShose::SetAct(LeftShose* leftshose) {
+	int action = leftshose->GetAction();
+	int AttackCount = leftshose->GetAttackCount();
+	int pat = leftshose->GetPat();
+	this->action = action;
+	this->AttackCount = AttackCount;
+	if (pat == 5) {
+		AttackC = 101;
 	}
 }
