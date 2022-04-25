@@ -101,7 +101,7 @@ void LeftShose::Spec() {
 			}
 			else if (pat == 5) {
 				Afterrot = -45;
-				AfterPos.x = 0.0f;
+				AfterPos.x = -10.0f;
 				AfterPos.z = 0.0f;
 			}
 			else {

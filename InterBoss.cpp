@@ -27,8 +27,9 @@ void InterBoss::Draw() {
 	ImGui::Begin("test");
 	/*ImGui::SliderFloat("speed_y", &playerpos.x, 25, -25);
 	ImGui::SliderFloat("speed_y", &targetpos.x, 25, -25);*/
-	ImGui::Text("Active::%d", AttackCount);
+	ImGui::Text("aim::%d", aiming);
 	ImGui::Text("action::%d", action);
+	ImGui::Text("pat::%d", pat);
 	////ImGui::Unindent();
 	ImGui::End();
 	Object3d::PreDraw();

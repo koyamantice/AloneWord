@@ -74,18 +74,18 @@ void RightShose::Spec() {
 	if (active) {
 		if ((action % 2) == 0) {
 			//3‰ñ“Ëi‚·‚é
-			if (AttackC < 4) {
+			if (AttackC < 100) {
 				MoveCount++;
 			}
-			//4‰ñ–Ú‚ÍŒ³‚ÌˆÊ’u‚É–ß‚é
+			//¶‘«‚ª–ß‚Á‚½‚çŒ³‚ÌˆÊ’u‚É–ß‚é
 			else {
 				AfterPos = {
 				10,
 				0,
 				0
 				};
-				if (frame < 1.0f) {
-					frame += 0.01f;
+				if (frame < 0.45f) {
+					frame += 0.002f;
 				}
 				else {
 					frame = 0;
@@ -331,6 +331,6 @@ void RightShose::SetAct(LeftShose* leftshose) {
 	this->action = action;
 	this->AttackCount = AttackCount;
 	if (pat == 5) {
-		AttackC = 4;
+		AttackC = 101;
 	}
 }
