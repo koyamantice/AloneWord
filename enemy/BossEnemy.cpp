@@ -46,10 +46,6 @@ void BossEnemy::Spec() {
 	} else {
 		if (!active) {
 			AttackCount++;
-<<<<<<< HEAD
-=======
-			AttackCount++;
->>>>>>> master
 			angle += 2.0f;
 			angle2 = angle * (3.14 / 180);
 			pos.y = sin(angle2) * 0.5 + 0.5;
