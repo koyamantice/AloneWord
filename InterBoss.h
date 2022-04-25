@@ -164,6 +164,8 @@ protected:
 	int State = 0;
 	int AttackCount = 0;
 	float y = 0.0f;
+	float angle = 0.0f;
+	float angle2 = 0.0f;
 	//‘Ò‹@ƒ‚[ƒVƒ‡ƒ“‚Ì‚½‚ß‚Ì‚â‚Â
 	enum Motion {
 		Up,

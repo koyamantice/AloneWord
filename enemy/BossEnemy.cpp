@@ -46,29 +46,9 @@ void BossEnemy::Spec() {
 	} else {
 		if (!active) {
 			AttackCount++;
-			if (State == Up) {
-				AfterPos.y = 1.0f;
-			}
-			else {
-				AfterPos.y = 0.0f;
-			}
-			if (frame <= 0.65) {
-				frame += 0.005f;
-			}
-			else {
-				frame = 0.0f;
-				if (State == Up) {
-					State = Down;
-				}
-				else {
-					State = Up;
-				}
-			}
-			pos = {
-			0,
-			Ease(In,Cubic,frame,pos.y,AfterPos.y),
-			0,
-			};
+			angle += 2.0f;
+			angle2 = angle * (3.14 / 180);
+			pos.y = sin(angle2) * 0.5 + 0.5;
 			enemyobj->SetPosition(pos);
 		}
 	}
