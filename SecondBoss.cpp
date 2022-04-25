@@ -164,6 +164,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 	camera->Update();
 	player->Update();
 	leftshose->Update();
+	rightshose->SetAct(leftshose);
 	rightshose->Update();
 	particleMan->Update();
 	//objSphere->Update();

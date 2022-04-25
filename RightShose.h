@@ -1,5 +1,6 @@
 #pragma once
 #include "InterBoss.h"
+#include "LeftShose.h"
 
 class RightShose :public InterBoss{
 public:
@@ -8,6 +9,7 @@ public:
 	void Initialize() override;
 	void Finalize() override;
 	void Spec() override;
+	void SetAct(LeftShose* leftshose);
 private:
 
 	float y = 0.0f;

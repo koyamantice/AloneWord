@@ -292,7 +292,7 @@ void RightShose::Spec() {
 					}
 				case 2:
 					AfterPos = {
-					-10,
+					10,
 					0,
 					0
 					};
@@ -322,4 +322,10 @@ void RightShose::Spec() {
 		}
 
 	}
+}
+
+void RightShose::SetAct(LeftShose* leftshose) {
+	int action = leftshose->GetAction();
+	bool active = leftshose->GetActive();
+	this->action = action;
 }
