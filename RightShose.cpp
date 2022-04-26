@@ -86,7 +86,7 @@ void RightShose::Spec() {
 			}
 			//プレイヤーの位置をロックオンさせる
 			if (MoveCount == 60) {
-				double sb, sbx, sbz, bx, by, sx, sy;
+				double sb, sbx, sbz;
 				if (!Attack) {
 					hitpoint = HitNot;
 					sbx = player->GetPosition().x - pos.x;
