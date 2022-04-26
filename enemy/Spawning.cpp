@@ -52,13 +52,14 @@ void Spawning::Update() {
 			if (enemy[i]->GetIsAlive()) {
 				for (int colA = 0; colA < EneMax; colA++) {
 					for (int colB = 1; colB < EneMax; colB++) {
-						if (Collision::SphereCollision2(enemy[colA]->GetPosition(), 1.8f, enemy[colB]->GetPosition(), 1.8f) && colA != colB) {//“–‚½‚è”»’è‚ÆŽ©‹@“¯Žm‚Ì“–‚½‚è”»’è‚Ìíœ
+						if (Collision::SphereCollision2(enemy[colA]->GetPosition(), 2.0f, enemy[colB]->GetPosition(), 2.0f) && colA != colB) {//“–‚½‚è”»’è‚ÆŽ©‹@“¯Žm‚Ì“–‚½‚è”»’è‚Ìíœ
 							DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
 							enemy[colA]->SetHit(true);
 							enemy[colB]->SetHit(false);
 							break;
 						} else {
 							enemy[colA]->SetHit(false);
+							break;
 						}
 					}
 				}

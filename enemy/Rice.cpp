@@ -56,8 +56,10 @@ void Rice::Update() {
 			if (isMove) {
 				moveCount = (rand() % 120) + 30;
 				rot.y = (dir)-90;// *(XM_PI / 180.0f);
-				frame = 0.0f;
-				isMove = false;
+				frame = 0.5f;
+				vel.x *= -1;
+				vel.y *= -1;
+				//isMove = false;
 			}
 			if (followed) {
 				if (rot.y < -90) {
@@ -67,6 +69,8 @@ void Rice::Update() {
 					dir = rot.y + 90;
 					rot.y = (dir)-90;// *(XM_PI / 180.0f);
 				}
+				vel.x *= -1;
+				vel.y *= -1;
 				followed = false;
 			}
 		}
@@ -350,14 +354,14 @@ void Rice::Move() {
 	}
 	if (isMove) {
 		if (hit) {
-			moveCount = (rand() % 60) + 30;
+			moveCount = (rand() % 60) + 60;
 			frame = 0.0f;
 			isMove = false;
 			dirVel *= -1;
 			return;
 		}
 		if (frame >= 1.0f) {
-			moveCount = (rand() % 60) + 30;
+			moveCount = (rand() % 60) + 60;
 			frame = 0.0f;
 			isMove = false;
 			dirVel *= -1;
