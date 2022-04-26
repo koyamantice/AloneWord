@@ -9,6 +9,13 @@ Spawning::Spawning(int Categoly) {
 	object3d = new Object3d();
 	texture = Texture::Create(4, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
+	Texture::LoadTexture(10,L"Resources/2d/motiNet.png");
+	Texture::LoadTexture(20, L"Resources/2d/effect3.png");
+	net[0] = Texture::Create(10, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	net[0]->TextureCreate();
+	net[1] = Texture::Create(20, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	net[1]->TextureCreate();
+
 	if (Categoly==0) {
 		for (int i = 0; i < EneMax; i++) {
 			enemy[i] = new Rice();
@@ -33,6 +40,15 @@ void Spawning::Initialize() {
 	texture->SetPosition({ pos.x,pos.y + 4.5f,pos.z });
 	texture->SetRotation({ 0,0,0 });
 	texture->SetScale({ (float)Hp*0.05f,0.2f,0.2f });
+
+	net[0]->SetPosition({pos.x,pos.y+1.0f,pos.z});
+	net[0]->SetRotation({90,0,0});
+	net[0]->SetScale({ 0.4f,0.4f,0.0f });
+
+	net[1]->SetPosition({ pos.x,pos.y,pos.z });
+	net[1]->SetRotation({ 90,0,0 });
+	net[1]->SetScale({ 0.3f,0.3f,0.0f });
+
 	for (int i = 0; i < EneMax; i++) {
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
@@ -95,6 +111,13 @@ void Spawning::Update() {
 		texture->Update();
 		texture->SetPosition({ pos.x,pos.y + 5.0f,pos.z });
 		texture->SetScale({ (float)Hp * 0.05f,0.05f,0.0f });
+
+		net[0]->Update();
+		net[0]->SetPosition({ pos.x+0.2f,pos.y + 3.0f,pos.z-0.1f });
+		net[0]->SetRotation({ 90,0,0 });
+		net[1]->Update();
+		net[1]->SetPosition({ pos.x,pos.y+5.0f,pos.z });
+		net[1]->SetRotation({ 90,0,0 });
 	}
 }
 
@@ -124,6 +147,8 @@ if (ImGui::TreeNode("Debug")) {
 		object3d->Draw();
 		Texture::PreDraw();
 		texture->Draw();
+		net[0]->Draw();
+		net[1]->Draw();
 	}
 	for (int i = 0; i < EneMax; i++) {
 		enemy[i]->Draw();

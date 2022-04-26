@@ -12,8 +12,8 @@ private:
 	using XMVECTOR = DirectX::XMVECTOR;
 	using XMMATRIX = DirectX::XMMATRIX;
 public:
-	Spawning(int Categoly=0);
-	
+	Spawning(int Categoly = 0);
+
 	void Initialize();
 	void Update();
 	void Finalize();
@@ -36,6 +36,7 @@ private:
 	Object3d* object3d;
 	Model* model;
 	XMFLOAT3 pos = { 0,0,0 };
+	Texture* net[2] = {nullptr};
 	Texture* texture=nullptr;
 	bool Hit=false;
 	float Hp = 8.0f;
