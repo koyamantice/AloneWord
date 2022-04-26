@@ -46,7 +46,6 @@ void BossEnemy::Spec() {
 	} else {
 		if (!active) {
 			AttackCount++;
-			AttackCount++;
 			angle += 2.0f;
 			angle2 = angle * (3.14 / 180);
 			pos.y = sin(angle2) * 0.5 + 0.5;
@@ -98,7 +97,6 @@ void BossEnemy::Spec() {
 			};
 			enemyobj->SetPosition(pos);
 		} else if ((action % 2) == 1) {
-
 			if (AttackC < 3) {
 				switch (pat) {
 				case 1:
