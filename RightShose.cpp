@@ -38,7 +38,7 @@ void RightShose::Finalize() {
 void RightShose::Spec() {
 	XMFLOAT3 AfterPos{};
 	if (AttackCount > 180 && pos.y <= 0.1f) {
-		if (!active) {
+		if (!active && LeftAct) {
 			action = (rand() % 2);
 			frame = 0;
 			pat = 1;
@@ -46,7 +46,7 @@ void RightShose::Spec() {
 		}
 	}
 	else {
-		if (!active) {
+		if (!active && LeftAct) {
 			AttackCount++;
 			angle += 2.0f;
 			angle2 = angle * (3.14f / 180.0f);
@@ -69,7 +69,7 @@ void RightShose::Spec() {
 				0
 				};
 				if (frame < 0.45f) {
-					frame += 0.002f;
+					frame += 0.004f;
 				}
 				else {
 					frame = 0;
@@ -86,14 +86,15 @@ void RightShose::Spec() {
 			}
 			//プレイヤーの位置をロックオンさせる
 			if (MoveCount == 60) {
+				double sb, sbx, sbz, bx, by, sx, sy;
 				if (!Attack) {
 					hitpoint = HitNot;
-					Check = player->GetPosition().x - pos.x;
-					Check2 = player->GetPosition().z - pos.z;
+					sbx = player->GetPosition().x - pos.x;
+					sbz = player->GetPosition().z - pos.z;
 					//rot.y = (atan2f(position.x, position.z) * (180.0f / XM_PI)) - 90;
-					posR = (pow(Check, 2) + pow(Check2, 2));
-					speedX = Check / posR * 8;
-					speedZ = Check2 / posR * 8;
+					sb = sqrt(sbx * sbx + sbz * sbz);
+					speedX = sbx / sb * 0.5;
+					speedZ = sbz / sb * 0.5;
 					Attack = true;
 				}
 			}
@@ -314,7 +315,9 @@ void RightShose::SetAct(LeftShose* leftshose) {
 	int pat = leftshose->GetPat();
 	this->action = action;
 	this->AttackCount = AttackCount;
-	if (pat == 5) {
+	if (pat == 5 && pos.y == 0.0f) {
 		AttackC = 101;
 	}
+
+	LeftAct = leftshose->GetActive();
 }

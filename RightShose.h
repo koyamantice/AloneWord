@@ -31,4 +31,5 @@ private:
 	double speedX = 0.0f;
 	double speedZ = 0.0f;
 	int MoveCount = 0;
+	bool LeftAct = false;
 };
