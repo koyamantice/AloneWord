@@ -52,6 +52,24 @@ void Rice::Update() {
 		pos.y = 3.0f;
 	}
 	if (IsAlive && !EnemyCatch && !Exp) {
+		if (hit) {
+			if (isMove) {
+				moveCount = (rand() % 120) + 30;
+				rot.y = (dir)-90;// *(XM_PI / 180.0f);
+				frame = 0.0f;
+				isMove = false;
+			}
+			if (followed) {
+				if (rot.y < -90) {
+					dir = rot.y + 360 + 90;
+					rot.y = (dir)-90;// *(XM_PI / 180.0f);
+				} else {
+					dir = rot.y + 90;
+					rot.y = (dir)-90;// *(XM_PI / 180.0f);
+				}
+				followed = false;
+			}
+		}
 		Back();
 		if (LockOn()) {
 			moveCount = (rand() % 15) + 20;
@@ -346,8 +364,11 @@ void Rice::Move() {
 		} else {
 			frame += 0.05f;
 		}
-		pos.x -= sin(-dir * (XM_PI / 180.0f)) * 0.13f;
-		pos.z += cos(-dir * (XM_PI / 180.0f)) * 0.13f;
+		vel.x= sin(-dir * (XM_PI / 180.0f)) * 0.13f;
+		vel.y=cos(-dir * (XM_PI / 180.0f)) * 0.13f;
+		
+		pos.x -=vel.x;
+		pos.z +=vel.y;
 		enemyobj->SetPosition(pos);
 
 	}

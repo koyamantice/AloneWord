@@ -32,15 +32,7 @@ void InterEnemy::Back() {
 	}
 }
 void InterEnemy::Stop() {
-	if (isMove) {
-		moveCount = (rand() % 60) + 30;
-		frame = 0.0f;
-		isMove = false;
-		dirVel *= -1;
-	}
-	if(followed){
-		followed = false;
-	}
+
 
 }
 //“G‚ÌˆÊ’u‚ð˜r‚Æ“¯‚¶‚É‚·‚é
@@ -101,8 +93,10 @@ void InterEnemy::Follow() {
 	rot.y = (atan2f(position.x, position.z) * (180.0f / XM_PI)) - 90;// *(XM_PI / 180.0f);
 	//NextP.x -= sin(-atan2f(position.x, position.z)) * 0.2251f;
 	//NextP.z += cos(-atan2f(position.x, position.z)) * 0.2251f;
-	pos.x -= sin(-atan2f(position.x, position.z)) * 0.2251f;
-	pos.z += cos(-atan2f(position.x, position.z)) * 0.2251f;
+	vel.x=sin(-atan2f(position.x, position.z)) * 0.2251f;
+	vel.y=cos(-atan2f(position.x, position.z)) * 0.2251f;
+	pos.x -= vel.x;
+	pos.z += vel.y;
 }
 
 void InterEnemy::Reborn() {

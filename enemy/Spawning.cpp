@@ -36,7 +36,7 @@ void Spawning::Initialize() {
 	for (int i = 0; i < EneMax; i++) {
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
-		enemy[i]->SetLimit({ 20,-20,20,-20 });
+		enemy[i]->SetLimit({22,-22 , 30,-30 });
 		enemy[i]->Update();
 	}
 }
@@ -52,22 +52,35 @@ void Spawning::Update() {
 			if (enemy[i]->GetIsAlive()) {
 				for (int colA = 0; colA < EneMax; colA++) {
 					for (int colB = 1; colB < EneMax; colB++) {
-						if (Collision::SphereCollision2(enemy[colA]->GetPosition(), 1.3f, enemy[colB]->GetPosition(), 1.3f) && colA != colB) {//“–‚½‚è”»’è‚ÆŽ©‹@“¯Žm‚Ì“–‚½‚è”»’è‚Ìíœ
+						if (Collision::SphereCollision2(enemy[colA]->GetPosition(), 1.8f, enemy[colB]->GetPosition(), 1.8f) && colA != colB) {//“–‚½‚è”»’è‚ÆŽ©‹@“¯Žm‚Ì“–‚½‚è”»’è‚Ìíœ
 							DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
-							enemy[colA]->Stop();
-							//enemy[colB]->Stop();
+							enemy[colA]->SetHit(true);
+							enemy[colB]->SetHit(false);
 							break;
-						} 
+						} else {
+							enemy[colA]->SetHit(false);
+						}
 					}
 				}
 			}
 		}
 	}
 
-
 	if (isAlive) {
 		object3d->Update();
 		object3d->SetPosition(pos);
+		for (int i = 0; i < EneMax;i++) {
+			if (Collision::CircleCollision(pos.x,pos.z,1.8f, enemy[i]->GetPosition().x,enemy[i]->GetPosition().z, 1.8f)) {
+				if (!enemy[i]->GetIsAlive()) {
+					enemy[i]->SetScale(rand() * (XM_PI / 180.0f));
+					enemy[i]->SetSpeed(rand());
+				} else {
+
+				}
+			}
+		}
+
+
 		if (Collision::CircleCollision(pos.x, pos.z, 2.0f, player->GetPosition().x, player->GetPosition().z, 1.5f)) {
 			player->BackPos();
 		}
