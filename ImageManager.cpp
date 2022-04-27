@@ -27,5 +27,4 @@ void ImageManager::LoadTex2D() {
 	Texture::LoadTexture(magic, L"Resources/2d/magic2.png");
 	//Texture::LoadTexture(6, L"Resources/2d/Resporn.png");
 	Texture::LoadTexture(net, L"Resources/2d/motiNet.png");
-
 }
