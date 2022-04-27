@@ -6,7 +6,7 @@
 #include<sstream>
 #include <XorShift.h>
 #include<iomanip>
-
+#include"ImageManager.h"
 using namespace DirectX;
 //float easeInSine(float x) {
 //	return x * x * x;
@@ -23,7 +23,7 @@ Effect::Effect() {
 }
 
 void Effect::Initialize() {
-	effecttexture = Texture::Create(4, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	effecttexture = Texture::Create(ImageManager::effect2, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	effecttexture->TextureCreate();
 	//effecttexture->SetRotation({ 90,0,0 });
 	effecttexture->SetScale(effectscale);

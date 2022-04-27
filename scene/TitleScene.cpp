@@ -3,13 +3,11 @@
 #include "Audio.h"
 #include "input.h"
 #include "DebugText.h"
-
+#include"ImageManager.h"
 void TitleScene::Initialize(DirectXCommon* dxCommon) {
-	// テクスチャ読み込み
-	Sprite::LoadTexture(1, L"Resources/2d/title.png");
 
 	//背景スプライト生成
-	sprite = Sprite::Create(1, { 0.0f,0.0f });
+	sprite = Sprite::Create(ImageManager::TITLE, { 0.0f,0.0f });
 	//スプライト生成
 
 

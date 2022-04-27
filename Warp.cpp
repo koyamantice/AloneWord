@@ -5,7 +5,7 @@
 #include "DebugText.h"
 #include<sstream>
 #include<iomanip>
-
+#include"ImageManager.h"
 using namespace DirectX;
 //float easeInSine(float x) {
 //	return x * x * x;
@@ -22,10 +22,10 @@ Warp::Warp() {
 }
 
 void Warp::Initialize() {
-	Warptexture = Texture::Create(5, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Warptexture = Texture::Create(ImageManager::magic, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	Warptexture->TextureCreate();
 	Warptexture->SetRotation({ 90.0f, 0.0f, 0.0f });
-	Warptexture->SetScale({ 0.3f,0.3f,0.3f });
+	Warptexture->SetScale({ 0.7f,0.7f,0.7f });
 }
 
 void Warp::Finalize() {

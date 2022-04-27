@@ -44,20 +44,22 @@ void Framework::Initialize(DirectXCommon* dxCommon) {
 	// スプライト静的初期化
 	Sprite::StaticInitialize(dxcommon->GetDev(), dxcommon->GetCmdList(),WinApp::window_width, WinApp::window_height);
 
-	const int debugTextTexNumber = 0;
+	//const int debugTextTexNumber = 0;
 	// デバッグテキスト用テクスチャ読み込み
-	if (!Sprite::LoadTexture(debugTextTexNumber, L"Resources/2d/debugfont.png")) {
+	if (!Sprite::LoadTexture(ImageManager::debugText, L"Resources/2d/debugfont.png")) {
 		assert(0);
 		return;
 	}
+	ImageManager::GetIns()->Load2D();
 	// デバッグテキスト初期化
 	debugText = DebugText::GetInstance();
-	debugText->Initialize(debugTextTexNumber);
+	debugText->Initialize(ImageManager::debugText);
 
 	// ライト静的初期化
 	LightGroup::StaticInitialize(dxcommon->GetDev());
 	//テクスチャ初期化
 	Texture::StaticInitialize(dxcommon->GetDev(), dxcommon->GetCmdList(), WinApp::window_width, WinApp::window_height);
+	ImageManager::GetIns()->LoadTex2D();
 	Object3d::StaticInitialize(dxcommon->GetDev(), dxcommon->GetCmdList(), WinApp::window_width, WinApp::window_height);
 	// マウスカーソルの非表示
 	ShowCursor(TRUE);
@@ -69,13 +71,6 @@ void Framework::Initialize(DirectXCommon* dxCommon) {
 	FbxLoader::GetInstance()->Initialize(dxcommon->GetDev());
 	// パーティクルマネージャ初期化
 	ParticleManager::GetInstance()->Initialize(dxcommon->GetDev());
-	Texture::LoadTexture(0, L"Resources/2d/enemy.png");
-	Texture::LoadTexture(1, L"Resources/2d/shadow.png");
-	Texture::LoadTexture(2, L"Resources/2d/Resporn.png");
-	Texture::LoadTexture(3, L"Resources/2d/effect2.png");
-	Texture::LoadTexture(4, L"Resources/2d/PlayerHP.png");
-	Texture::LoadTexture(5, L"Resources/2d/magic2.png");
-	Texture::LoadTexture(6, L"Resources/2d/Resporn.png");
 	ModelManager::GetIns()->Initialize();
 }
 

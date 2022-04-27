@@ -5,13 +5,11 @@
 #include "SceneManager.h"
 #include "BossScene.h"
 #include "GameoverScene.h"
-
+#include"ImageManager.h"
 void GameoverScene::Initialize(DirectXCommon* dxCommon) {
-	// テクスチャ読み込み
-	Sprite::LoadTexture(1, L"Resources/2d/GAMEOVER.png");
 
 	//背景スプライト生成
-	sprite = Sprite::Create(1, { 0.0f,0.0f });
+	sprite = Sprite::Create(ImageManager::OVER, { 0.0f,0.0f });
 	//スプライト生成
 }
 

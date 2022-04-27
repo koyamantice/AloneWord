@@ -3,17 +3,15 @@
 #include "Rice.h"
 #include <ModelManager.h>
 #include <DebugText.h>
-
+#include <ImageManager.h>
 Spawning::Spawning(int Categoly) {
 	model = ModelManager::GetIns()->GetModel(ModelManager::EHub);
 	object3d = new Object3d();
-	texture = Texture::Create(4, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	texture = Texture::Create(ImageManager::playerhp, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
-	Texture::LoadTexture(10,L"Resources/2d/motiNet.png");
-	Texture::LoadTexture(20, L"Resources/2d/effect3.png");
-	net[0] = Texture::Create(10, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	net[0] = Texture::Create(ImageManager::net, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	net[0]->TextureCreate();
-	net[1] = Texture::Create(20, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	net[1] = Texture::Create(ImageManager::effect3, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	net[1]->TextureCreate();
 
 	if (Categoly==0) {

@@ -1,7 +1,6 @@
 #include "Onomato.h"
 
 void Onomato::Init() {
-	Texture::LoadTexture(punyu, L"Resources/2d/puni.png");
 }
 
 void Onomato::Run(const int& num) {

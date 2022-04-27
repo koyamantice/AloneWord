@@ -9,6 +9,7 @@
 #include "SphereCollider.h"
 #include "CollisionManager.h"
 #include <XorShift.h>
+#include "ImageManager.h"
 void StartMap::Initialize(DirectXCommon* dxCommon) {
 	//Texture::LoadTexture(0, L"Resources/2d/enemy.png");
 	////Texture::LoadTexture(1, L"Resources/2d/limit.png");
@@ -86,11 +87,8 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	limit->setposition({ 0.0f,0.01f,0.0f });
 	limit->setrotation({ 90.0f,0, 0 });
 	limit->setscale({ 5.5f, 5.5f,  5.5f});*/
-	// テクスチャ読み込み
-	Sprite::LoadTexture(1, L"Resources/2d/concent.png");
-
 	//背景スプライト生成
-	concent = Sprite::Create(1, { 0.0f,0.0f });
+	concent = Sprite::Create(ImageManager::concent, { 0.0f,0.0f });
 	// モデル読み込み
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
 	//srand(NULL);
@@ -257,7 +255,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 
 	Ray ray;
 	ray.start = { player->GetPosition().x,player->GetPosition().y + 3,player->GetPosition().z,1 };
-	ray.dir = { 0,0.28,-1,0 };
+	ray.dir = { 0.0f,0.28f,-1.0f,0.0f };
 	RaycastHit raycastHit;
 
 	if (!collisionManager->Raycast(ray, &raycastHit)) {

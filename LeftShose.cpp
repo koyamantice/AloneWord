@@ -4,6 +4,7 @@
 #include<iomanip>
 #include <Easing.h>
 using namespace DirectX;
+#include"ImageManager.h"
 
 LeftShose::LeftShose() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::LeftShose);
@@ -20,7 +21,7 @@ void LeftShose::Initialize() {
 	rot = { 0,90,0 };
 	enemyobj->SetRotation(rot);
 	enemyobj->SetScale({ 1.5f,1.5f,1.5f });
-	texture = Texture::Create(1, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	//texture->SetColor({ 1,1,1,1 });
 	texture->SetPosition(pos.x, -1, pos.z);

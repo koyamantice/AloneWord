@@ -1,31 +1,27 @@
 ﻿#include "UI.h"
 #include <Easing.h>
-
+#include <ImageManager.h>
 UI::UI(Player* player, InterBoss* boss) {
 	this->player = player;
 	this->boss = boss;
-	Sprite::LoadTexture(3, L"Resources/2d/PlayerHP.png");
-	Sprite::LoadTexture(4, L"Resources/2d/Arrow.png");
-	Sprite::LoadTexture(5, L"Resources/2d/Life.png");
-	Sprite::LoadTexture(6, L"Resources/2d/Vignette.png");
-	BossHp = Sprite::Create(3, { 0.0f,0.0f });
+
+	BossHp = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
 	BossHp->SetPosition({ 260.0f,20.0f });
 	BossHp->SetColor({ 1.0f,0.0f,0.0,1.0 });
 	//背景スプライト生成
-	PlaHp = Sprite::Create(3, { 0.0f,0.0f });
+	PlaHp = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
 	PlaHp->SetPosition({ 170.0f,642.0f });
 	//背景スプライト生成
-	Life = Sprite::Create(5, { 0.0f,0.0f });
+	Life = Sprite::Create(ImageManager::life, { 0.0f,0.0f });
 	Life->SetPosition({ 20.0f,620.0f });
-	Arrow = Sprite::Create(4, { 0.0f,0.0f });
+	Arrow = Sprite::Create(ImageManager::arrow, { 0.0f,0.0f });
 	Arrow->SetPosition({ 0,0 });
-	Vignette = Sprite::Create(6, { 0.0f,0.0f });
+	Vignette = Sprite::Create(ImageManager::vignette, { 0.0f,0.0f });
 	Vignette->SetPosition({ 0,0 });
 	Vignette->SetColor({ 255,255,255,0.75f });
 }
 void UI::Update() {
 	{//HPˆ—
-
 		AfterPos[1] = { (float)(player->GetHp() * 30),20 };
 		plaPos = {
 		Ease(In,Quint,0.7f,(float)PlaHp->GetSize().x,(float)AfterPos[1].x),

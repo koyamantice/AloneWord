@@ -4,6 +4,7 @@
 #include<sstream>
 #include<iomanip>
 #include <Easing.h>
+#include"ImageManager.h"
 using namespace DirectX;
 
 Rice::Rice() {
@@ -20,7 +21,7 @@ void Rice::Initialize() {
 	rot = { 0,90,0 };
 	enemyobj->SetPosition(pos);
 	enemyobj->SetScale(enescale);
-	texture = Texture::Create(0, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	texture = Texture::Create(ImageManager::enemy, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	texture->SetPosition(pos);
 	texture->SetRotation({ 90,0,0 });
@@ -28,7 +29,7 @@ void Rice::Initialize() {
 	oldpos = pos;
 
 	//texture->SetColor({ 1.0f,0.0,0.0,1.0f });
-	Restexture = Texture::Create(6, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Restexture = Texture::Create(ImageManager::Resporn, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	Restexture->TextureCreate();
 	Restexture->SetPosition(pos);
 	Restexture->SetRotation({ 90,0,0 });

@@ -13,6 +13,7 @@
 #include"FPSManager.h"
 #include"ModelManager.h"
 #include "XorShift.h"
+#include "ImageManager.h"
 
 /// <summary>
 /// フレームワーク
@@ -54,5 +55,6 @@ protected:
 	XorShift* xorShift=nullptr;
 	DebugText* debugText = nullptr;
 	AbstractSceneFactory* sceneFactory_ = nullptr;
+	ImageManager* imageManager = nullptr;
 };
 

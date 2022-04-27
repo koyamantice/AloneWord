@@ -260,6 +260,12 @@
     <ClCompile Include="RightShose.cpp">
       <Filter>enemy\ボス</Filter>
     </ClCompile>
+    <ClCompile Include="scene\StageSelect.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="ImageManager.cpp">
+      <Filter>2d</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\Framework.h">
@@ -474,6 +480,12 @@
     </ClInclude>
     <ClInclude Include="RightShose.h">
       <Filter>enemy\ボス</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\StageSelect.h">
+      <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="ImageManager.h">
+      <Filter>2d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

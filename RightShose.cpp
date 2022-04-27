@@ -3,6 +3,7 @@
 #include<sstream>
 #include<iomanip>
 #include <Easing.h>
+#include"ImageManager.h"
 using namespace DirectX;
 
 RightShose::RightShose() {
@@ -21,7 +22,7 @@ void RightShose::Initialize() {
 	rot = { 0,90,0 };
 	enemyobj->SetRotation(rot);
 	enemyobj->SetScale({ 1.5f,1.5f,1.5f });
-	texture = Texture::Create(1, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	//texture->SetColor({ 1,1,1,1 });
 	texture->SetPosition(pos.x, -1, pos.z);

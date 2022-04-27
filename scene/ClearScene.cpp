@@ -5,13 +5,10 @@
 #include "SceneManager.h"
 #include "BossScene.h"
 #include "ClearScene.h"
-
+#include"ImageManager.h"
 void ClearScene::Initialize(DirectXCommon* dxCommon) {
-	// テクスチャ読み込み
-	Sprite::LoadTexture(1, L"Resources/2d/GAMECLEAR.png");
-
 	//背景スプライト生成
-	sprite = Sprite::Create(1, { 0.0f,0.0f });
+	sprite = Sprite::Create(ImageManager::CLEAR, { 0.0f,0.0f });
 	//スプライト生成
 }
 
