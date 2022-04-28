@@ -15,6 +15,7 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(CLEAR, L"Resources/2d/GAMECLEAR.png");
 	Sprite::LoadTexture(OVER, L"Resources/2d/GAMEOVER.png");
 	Sprite::LoadTexture(TITLE, L"Resources/2d/title.png");
+	Sprite::LoadTexture(SELECT, L"Resources/2d/kariSelect.png");
 }
 
 void ImageManager::LoadTex2D() {
