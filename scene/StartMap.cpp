@@ -105,7 +105,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	camera->SetTarget(player->GetTargetPosition());
 	camera->SetEye(cameraPos);
 	// モデル名を指定してファイル読み込み
-	model1 = FbxLoader::GetInstance()->LoadModelFromFile("Motti_Move");
+	model1 =ModelManager::GetIns()->GetFBXModel(ModelManager::Pla);
 
 	// デバイスをセット
 	FBXObject3d::SetDevice(dxCommon->GetDev());
@@ -145,7 +145,7 @@ void StartMap::Finalize() {
 	delete modelStartMap;
 	delete objStartMap;
 	delete object1;
-	delete model1;
+	//delete model1;
 	warp->Finalize();
 }
 

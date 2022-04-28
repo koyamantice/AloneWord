@@ -18,6 +18,8 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	Life = Sprite::Create(ImageManager::life, { 0.0f,0.0f });
 	Life->SetPosition({ 20.0f,620.0f });
 	Arrow = Sprite::Create(ImageManager::arrow, { 0.0f,0.0f });
+	Arrow->SetAnchorPoint({ 0.5f,0.5f });
+	Arrow->SetIsFlipY(true);
 	Arrow->SetPosition({ 0,0 });
 	Arrow2 = Sprite::Create(ImageManager::arrow, { 0.0f,0.0f });
 	Arrow2->SetPosition({ 0,0 });
@@ -58,6 +60,8 @@ void UI::Update() {
 const void UI::Draw() {
 	ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
+		float a = radius * 180.0f/PI;
+		ImGui::SliderFloat("radius", &a, 360, -360);
 		ImGui::SliderFloat("pos.X", &circle.x, 1280, 0);
 		ImGui::SliderFloat("pos.Y", &circle.y, 720, 0);
 		//ImGui::Text("Sub %d", invisible);
@@ -90,6 +94,7 @@ void UI::SeachBoss() {
 	XMFLOAT3 bos = boss->GetPosition();
 	XMFLOAT3 position{};
 	float radius = 0;
+	XMFLOAT2 rot{};
 	position.x = (pla.x - bos.x);
 	position.z = (pla.z - bos.z);
 
@@ -102,7 +107,7 @@ void UI::SeachBoss() {
 	}else {
 		invisible = 1;
 	}
-
+	Arrow->SetRotation(radius * (180.0f / XM_PI));//-radius * PI / 180.0f);
 	Arrow->SetPosition(circle);
 }
 

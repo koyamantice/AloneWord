@@ -122,6 +122,12 @@ public: // メンバ関数
 	/// </summary>
 	/// <param name="position">座標</param>
 	void SetPosition(XMFLOAT2 position);
+	/// <summary>
+	/// 座標の設定
+	/// </summary>
+	/// <param name="position">座標</param>
+	const XMFLOAT2& GetPosition() { return this->position; };
+
 
 	/// <summary>
 	/// サイズの設定
