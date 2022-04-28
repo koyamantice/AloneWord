@@ -124,8 +124,7 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	object1->SetRotation(player->GetRotation());
 	object1->SetPosition(player->GetPosition());
 
-	ui = new UI(player, leftshose);
-	ui = new UI(player, rightshose);
+	ui = new UI(player, leftshose,rightshose);
 	//ui->Initialize();
 }
 
