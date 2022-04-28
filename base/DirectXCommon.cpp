@@ -62,8 +62,8 @@ void DirectXCommon::PreDraw() {
 	//#pragma regin グラフィックスコマンド
 	UINT bbIndex = swapchain->GetCurrentBackBufferIndex();
 	//実行
-	cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(backBuffers[bbIndex].Get(), D3D12_RESOURCE_STATE_RENDER_TARGET,
-		D3D12_RESOURCE_STATE_PRESENT));
+	cmdList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(backBuffers[bbIndex].Get(), D3D12_RESOURCE_STATE_PRESENT,
+	D3D12_RESOURCE_STATE_RENDER_TARGET));
 	//描画先指定
 	auto rtvH = CD3DX12_CPU_DESCRIPTOR_HANDLE(rtvHeaps->GetCPUDescriptorHandleForHeapStart(), bbIndex, dev->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_RTV));
 
@@ -94,6 +94,7 @@ void DirectXCommon::ClearDepthBuffer() {
 	cmdList->ClearDepthStencilView(dsvH, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 void DirectXCommon::PostDraw() {
+	HRESULT result = S_FALSE;
 	// imgui描画
 	ImGui::Render();
 	ID3D12DescriptorHeap* ppHeaps[] = { imguiHeap.Get() };
@@ -111,7 +112,19 @@ void DirectXCommon::PostDraw() {
 	cmdQueue->ExecuteCommandLists(1, cmdLists);
 
 	swapchain->Present(1, 0);
+#ifdef _DEBUG
+	if (FAILED(result)) {
+		ComPtr<ID3D12DeviceRemovedExtendedData> dred;
 
+		result = dev->QueryInterface(IID_PPV_ARGS(&dred));
+		assert(SUCCEEDED(result));
+
+		// 自動パンくず取得
+		D3D12_DRED_AUTO_BREADCRUMBS_OUTPUT autoBreadcrumbsOutput{};
+		result = dred->GetAutoBreadcrumbsOutput(&autoBreadcrumbsOutput);
+		assert(SUCCEEDED(result));
+	}
+#endif
 	cmdQueue->Signal(fence.Get(), ++fenceVal);
 	if (fence->GetCompletedValue() != fenceVal) {
 		HANDLE event = CreateEvent(nullptr, false, false, nullptr);
@@ -125,12 +138,19 @@ void DirectXCommon::PostDraw() {
 
 bool DirectXCommon::InitializeDevice() {
 	HRESULT result = S_FALSE;
+#ifdef _DEBUG
 	ComPtr<ID3D12Debug> debugController;
-	//デバッグレイヤーをオンに	
-	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))) 	{
+	//デバッグレイヤーをオンに
+	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))) {
 		debugController->EnableDebugLayer();
 	}
-
+	// DREDレポートをオンに
+	ComPtr<ID3D12DeviceRemovedExtendedDataSettings> dredSettings;
+	if (SUCCEEDED(D3D12GetDebugInterface(IID_PPV_ARGS(&dredSettings)))) {
+		dredSettings->SetAutoBreadcrumbsEnablement(D3D12_DRED_ENABLEMENT_FORCED_ON);
+		dredSettings->SetPageFaultEnablement(D3D12_DRED_ENABLEMENT_FORCED_ON);
+	}
+#endif
 	//dxgiファクトリーの生成
 	result = CreateDXGIFactory1(IID_PPV_ARGS(&dxgiFactory));
 
