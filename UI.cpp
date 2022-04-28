@@ -114,6 +114,7 @@ void UI::SeachBoss2() {
 	XMFLOAT3 bos = boss2->GetPosition();
 	XMFLOAT3 position{};
 	float radius = 0;
+	XMFLOAT2 rot{};
 	position.x = (pla.x - bos.x);
 	position.z = (pla.z - bos.z);
 
@@ -127,6 +128,6 @@ void UI::SeachBoss2() {
 	else {
 		invisible = 1;
 	}
-
+	Arrow2->SetRotation(radius * (180.0f / XM_PI));//-radius * PI / 180.0f);
 	Arrow2->SetPosition(circle2);
 }
