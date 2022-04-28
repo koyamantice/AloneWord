@@ -22,6 +22,7 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	Arrow->SetIsFlipY(true);
 	Arrow->SetPosition({ 0,0 });
 	Arrow2 = Sprite::Create(ImageManager::arrow, { 0.0f,0.0f });
+	Arrow2->SetIsFlipY(true);
 	Arrow2->SetPosition({ 0,0 });
 	Vignette = Sprite::Create(ImageManager::vignette, { 0.0f,0.0f });
 	Vignette->SetPosition({ 0,0 });
