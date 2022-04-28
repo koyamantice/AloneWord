@@ -28,3 +28,4 @@ void ModelManager::LoadFBXModel(const FBXName modelName, std::string fileName) {
 	fbxModel[modelName] = new FBXModel();
 	fbxModel[modelName] = FbxLoader::GetInstance()->LoadModelFromFile(fileName);
 }
+

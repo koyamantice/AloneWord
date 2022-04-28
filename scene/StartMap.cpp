@@ -145,7 +145,7 @@ void StartMap::Finalize() {
 	delete modelStartMap;
 	delete objStartMap;
 	delete object1;
-	delete model1;
+	//delete model1;
 	warp->Finalize();
 }
 
