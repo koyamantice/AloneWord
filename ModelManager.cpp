@@ -12,7 +12,7 @@ ModelManager* ModelManager::GetIns() {
 void ModelManager::Initialize() {
 	LoadModel(Player, "Motti");
 	LoadModel(Arm, "Arm");
-	LoadModel(EHub, "sphere");
+	LoadModel(EHub, "EHub");
 	LoadModel(Enemy, "Enemy");
 	LoadModel(Fork, "Fork");
 	LoadModel(LeftShose,"Motti");

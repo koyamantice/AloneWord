@@ -34,7 +34,7 @@ void Spawning::Initialize() {
 	object3d = TouchableObject::Create(model);
 	object3d->SetModel(model);
 	object3d->SetPosition(pos);
-	object3d->SetScale({5.9f,5.9f,5.9f});
+	object3d->SetScale({3.9f,3.9f,3.9f});
 
 	texture->SetPosition({ pos.x,pos.y + 4.5f,pos.z });
 	texture->SetRotation({ 0,0,0 });
