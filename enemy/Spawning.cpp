@@ -4,9 +4,10 @@
 #include <ModelManager.h>
 #include <DebugText.h>
 #include <ImageManager.h>
+
 Spawning::Spawning(int Categoly) {
 	model = ModelManager::GetIns()->GetModel(ModelManager::EHub);
-	object3d = new Object3d();
+	object3d = TouchableObject::Create(model);
 	texture = Texture::Create(ImageManager::playerhp, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	net[0] = Texture::Create(ImageManager::net, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
@@ -30,7 +31,7 @@ Spawning::Spawning(int Categoly) {
 }
 
 void Spawning::Initialize() {
-	object3d = Object3d::Create();
+	object3d = TouchableObject::Create(model);
 	object3d->SetModel(model);
 	object3d->SetPosition(pos);
 	object3d->SetScale({3.9f,3.9f,3.9f});
@@ -97,7 +98,7 @@ void Spawning::Update() {
 
 
 		if (Collision::CircleCollision(pos.x, pos.z, 2.0f, player->GetPosition().x, player->GetPosition().z, 1.5f)) {
-			player->BackPos();
+			//player->BackPos();
 		}
 		for (int i = 0; i < EneMax;i++) {
 			if (enemy[i]->CollidePos(pos, 2.0f)) {

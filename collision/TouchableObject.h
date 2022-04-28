@@ -21,5 +21,6 @@ public:
 	/// <param name="position">スケール</param>
 	inline void SetScale(XMFLOAT3 scale) { this->scale = scale; }
 	inline void SetRotation(XMFLOAT3 rotation) { this->rotation = rotation; }
+	inline void SetPosition(XMFLOAT3 position) { this->position = position; }
 };
 
