@@ -60,8 +60,6 @@ void UI::Update() {
 const void UI::Draw() {
 	ImGui::Begin("test");
 	if (ImGui::TreeNode("Debug")) {
-		float a = radius * 180.0f/PI;
-		ImGui::SliderFloat("radius", &a, 360, -360);
 		ImGui::SliderFloat("pos.X", &circle.x, 1280, 0);
 		ImGui::SliderFloat("pos.Y", &circle.y, 720, 0);
 		//ImGui::Text("Sub %d", invisible);
