@@ -269,6 +269,8 @@
     <ClCompile Include="enemy\Rice.cpp" />
     <ClCompile Include="enemy\Spawning.cpp" />
     <ClCompile Include="Exp.cpp" />
+    <ClCompile Include="FourthBoss.cpp" />
+    <ClCompile Include="FourthMap.cpp" />
     <ClCompile Include="FPSManager\FPSManager.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
@@ -346,6 +348,8 @@
     <ClInclude Include="enemy\Rice.h" />
     <ClInclude Include="enemy\Spawning.h" />
     <ClInclude Include="Exp.h" />
+    <ClInclude Include="FourthBoss.h" />
+    <ClInclude Include="FourthMap.h" />
     <ClInclude Include="FPSManager\FPSManager.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="imgui\imconfig.h" />
