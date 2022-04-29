@@ -22,6 +22,9 @@ BaseScene* SceneFactory::CreateScene(const std::string& sceneName) {
 	else if (sceneName == "SECONDMAP") {
 		newScene = new SecondMap();
 	}
+	else if (sceneName == "FOURTHMAP") {
+		newScene = new FourthMap();
+	}
 	else if(sceneName == "BOSS"){
 		newScene = new BossScene();
 	}
