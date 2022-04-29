@@ -2,7 +2,9 @@
 #include <DirectXMath.h>
 #include"InterEnemy.h"
 #include"Player.h"
+#include "TouchableObject.h"
 const int EneMax = 5;
+class TouchableObject;
 class Spawning {
 private:
 	// DirectX::‚ğÈ—ª
@@ -33,7 +35,7 @@ public:
 	const int& GetEneMax() { return EneMax; }
 	InterEnemy* GetEnemy(const int& num) { return enemy[num]; }
 private:
-	Object3d* object3d;
+	TouchableObject* object3d;
 	Model* model;
 	XMFLOAT3 pos = { 0,0,0 };
 	Texture* net[2] = {nullptr};

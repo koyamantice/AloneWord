@@ -4,9 +4,10 @@
 #include <ModelManager.h>
 #include <DebugText.h>
 #include <ImageManager.h>
+#include "TouchableObject.h"
 Spawning::Spawning(int Categoly) {
 	model = ModelManager::GetIns()->GetModel(ModelManager::EHub);
-	object3d = new Object3d();
+	object3d = TouchableObject::Create(model);
 	texture = Texture::Create(ImageManager::playerhp, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	net[0] = Texture::Create(ImageManager::net, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
@@ -30,7 +31,7 @@ Spawning::Spawning(int Categoly) {
 }
 
 void Spawning::Initialize() {
-	object3d = Object3d::Create();
+	object3d = TouchableObject::Create(model);
 	object3d->SetModel(model);
 	object3d->SetPosition(pos);
 	object3d->SetScale({3.9f,3.9f,3.9f});
