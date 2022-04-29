@@ -272,6 +272,7 @@
     <ClCompile Include="FourthBoss.cpp" />
     <ClCompile Include="FourthMap.cpp" />
     <ClCompile Include="FPSManager\FPSManager.cpp" />
+    <ClCompile Include="HotWater.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
@@ -299,6 +300,8 @@
     <ClCompile Include="SecondBoss.cpp" />
     <ClCompile Include="SecondMap.cpp" />
     <ClCompile Include="LeftShose.cpp" />
+    <ClCompile Include="ThirdBoss.cpp" />
+    <ClCompile Include="ThirdMap.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Warp.cpp" />
   </ItemGroup>
@@ -351,6 +354,7 @@
     <ClInclude Include="FourthBoss.h" />
     <ClInclude Include="FourthMap.h" />
     <ClInclude Include="FPSManager\FPSManager.h" />
+    <ClInclude Include="HotWater.h" />
     <ClInclude Include="ImageManager.h" />
     <ClInclude Include="imgui\imconfig.h" />
     <ClInclude Include="imgui\imgui.h" />
@@ -381,6 +385,8 @@
     <ClInclude Include="SecondBoss.h" />
     <ClInclude Include="SecondMap.h" />
     <ClInclude Include="LeftShose.h" />
+    <ClInclude Include="ThirdBoss.h" />
+    <ClInclude Include="ThirdMap.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Warp.h" />
   </ItemGroup>

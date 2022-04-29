@@ -34,8 +34,8 @@ public:
 	playerhp,//Texture::LoadTexture(4, L"Resources/2d/PlayerHP.png");
 	magic,//Texture::LoadTexture(5, L"Resources/2d/magic2.png");
 	net,//Texture::LoadTexture(6, L"Resources/2d/Resporn.png");
-	
-	
+	water,
+	hit,
 	};
 public:
 	static ImageManager* GetIns();		//Žæ“¾—p
