@@ -2,8 +2,10 @@
 #include "TitleScene.h"
 #include "StartMap.h"
 #include "SecondMap.h"
+#include "FourthMap.h"
 #include "BossScene.h"
 #include "SecondBoss.h"
+#include "FourthBoss.h"
 #include "GameoverScene.h"
 #include "ClearScene.h"
 
@@ -25,6 +27,9 @@ BaseScene* SceneFactory::CreateScene(const std::string& sceneName) {
 	}
 	else if (sceneName == "SECONDBOSS") {
 		newScene = new SecondBoss();
+	}
+	else if (sceneName == "FOURTHBOSS") {
+		newScene = new FourthBoss();
 	}
 	else if (sceneName == "GAMEOVER") {
 		newScene = new GameoverScene();
