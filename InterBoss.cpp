@@ -24,13 +24,13 @@ void InterBoss::Update() {
 
 void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
-	ImGui::Begin("test");
-	//ImGui::SliderFloat("pos.y", &pos.y, 25, -25);
-	//ImGui::SliderFloat("speed_y", &targetpos.x, 25, -25);
-	ImGui::Text("stun::%d", stun);
-	ImGui::Text("stunTimer::%d", stunTimer);
-	////ImGui::Unindent();
-	ImGui::End();
+	//ImGui::Begin("test");
+	////ImGui::SliderFloat("pos.y", &pos.y, 25, -25);
+	////ImGui::SliderFloat("speed_y", &targetpos.x, 25, -25);
+	//ImGui::Text("stun::%d", stun);
+	//ImGui::Text("stunTimer::%d", stunTimer);
+	//////ImGui::Unindent();
+	//ImGui::End();
 	Object3d::PreDraw();
 	enemyobj->Draw();
 	Texture::PreDraw();

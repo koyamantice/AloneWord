@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseScene.h"
 #include "Pastel.h"
+#include "Mill.h"
 #include "UI.h"
 #include <array>       // ヘッダファイルインクルード
 using namespace std;         //  名前空間指定
@@ -48,6 +49,7 @@ private:
 	array<Effect*, 40> effect;
 	array<InterEnemy*, 10> enemy;
 	Pastel* pastel = nullptr;
+	Mill* mill = nullptr;
 	std::array<std::array<Exp*, 10>, 5> exp;
 	float weight = 0;
 	UI* ui = nullptr;

@@ -23,11 +23,14 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	player->SetPosition({ 0.0f,0.0f,-10.0f });
 	player->SetMove(250.0f, 200.0f);
 
-	//ボス
+	//ボス(杵)
 	pastel = new Pastel();
 	pastel->SetPlayer(player);
 	pastel->Initialize();
-
+	//ボス(臼)
+	mill = new Mill();
+	mill->SetPlayer(player);
+	mill->Initialize();
 	//敵
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i] = new Rice();
@@ -132,6 +135,7 @@ void FourthBoss::Finalize() {
 	}
 	player->Finalize();
 	pastel->Finalize();
+	mill->Finalize();
 	delete objBossMap;
 	delete objFloor;
 	delete modelBossMap;
@@ -158,6 +162,9 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 	camera->Update();
 	player->Update();
 	pastel->Update();
+	pastel->GetOff(mill);
+	mill->collideAttackArm(player);
+	mill->Update();
 	particleMan->Update();
 	//objSphere->Update();
 	ui->Update();
@@ -276,6 +283,7 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 		enemy[i]->Draw();
 	}
 	pastel->Draw();
+	mill->Draw();
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Draw();
 	}
@@ -289,4 +297,12 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 	ui->Draw();
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
+	float have = mill->GetHaveEnemy();
+	int Timer = mill->GetHaveTimer();
+	ImGui::Begin("test");
+	ImGui::SliderFloat("pos.y", &have, 25, -25);
+	//ImGui::SliderFloat("speed_y", &targetpos.x, 25, -25);
+	ImGui::Text("stun::%d", Timer);
+	////ImGui::Unindent();
+	ImGui::End();
 }
