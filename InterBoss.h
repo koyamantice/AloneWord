@@ -42,6 +42,7 @@ public:
 	const int& GetAttackCount() { return AttackCount; }
 	const int& GetPat() { return pat; }
 	const bool& GetActive() { return active; }
+	const bool& GetStun() { return stun; }
 	//bool Collision(XMFLOAT3 position, float radius);
 	//セッター
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
@@ -51,6 +52,7 @@ public:
 	void Back();
 	void SetDrawExp(int DrawExp) { this->DrawExp = DrawExp; }
 	void Setboundpower(XMFLOAT3 boundpower) { this->boundpower = boundpower; }
+	void SetStun(bool stun) { this->stun = stun; }
 	//関数
 	void SetEnemy();
 	void DeadEnemy();
@@ -172,6 +174,7 @@ protected:
 		Down
 	};
 	int b = 0;
-	
+	bool stun = false;
+	int stunTimer = 0;
 };
 

@@ -10,6 +10,7 @@ public:
 	void Finalize() override;
 	void Spec() override;
 	void SetAct(LeftShose* leftshose);
+	bool HitShose(LeftShose* leftshose);
 private:
 
 	float y = 0.0f;
