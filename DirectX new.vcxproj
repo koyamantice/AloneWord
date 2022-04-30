@@ -288,6 +288,7 @@
     <ClCompile Include="ModelManager.cpp" />
     <ClCompile Include="Onomato.cpp" />
     <ClCompile Include="ParticleManager.cpp" />
+    <ClCompile Include="Pastel.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RightShose.cpp" />
     <ClCompile Include="scene\BossScene.cpp" />
@@ -372,6 +373,7 @@
     <ClInclude Include="ModelManager.h" />
     <ClInclude Include="Onomato.h" />
     <ClInclude Include="ParticleManager.h" />
+    <ClInclude Include="Pastel.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RightShose.h" />
     <ClInclude Include="SceneFactory.h" />
