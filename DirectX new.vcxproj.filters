@@ -305,6 +305,12 @@
     <ClCompile Include="HotWater.cpp">
       <Filter>stage</Filter>
     </ClCompile>
+    <ClCompile Include="Pastel.cpp">
+      <Filter>enemy\ボス</Filter>
+    </ClCompile>
+    <ClCompile Include="Mill.cpp">
+      <Filter>enemy\ボス</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="base\Framework.h">
@@ -540,6 +546,12 @@
     </ClInclude>
     <ClInclude Include="HotWater.h">
       <Filter>player</Filter>
+    </ClInclude>
+    <ClInclude Include="Pastel.h">
+      <Filter>enemy\ボス</Filter>
+    </ClInclude>
+    <ClInclude Include="Mill.h">
+      <Filter>enemy\ボス</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

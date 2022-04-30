@@ -1,7 +1,7 @@
 #pragma once
 #include "BaseScene.h"
-#include "LeftShose.h"
-#include "RightShose.h"
+#include "Pastel.h"
+#include "Mill.h"
 #include "UI.h"
 #include <array>       // ヘッダファイルインクルード
 using namespace std;         //  名前空間指定
@@ -41,7 +41,6 @@ private:
 
 	Model* modelSphere = nullptr;
 	Object3d* objSphere;
-
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;
 	DebugCamera* camera = { nullptr };
@@ -49,8 +48,8 @@ private:
 	Player* player = nullptr;
 	array<Effect*, 40> effect;
 	array<InterEnemy*, 10> enemy;
-	LeftShose* leftshose = nullptr;
-	RightShose* rightshose = nullptr;
+	Pastel* pastel = nullptr;
+	Mill* mill = nullptr;
 	std::array<std::array<Exp*, 10>, 5> exp;
 	float weight = 0;
 	UI* ui = nullptr;

@@ -23,15 +23,14 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	player->SetPosition({ 0.0f,0.0f,-10.0f });
 	player->SetMove(250.0f, 200.0f);
 
-	//ボス
-	leftshose = new LeftShose();
-	leftshose->SetPlayer(player);
-	leftshose->Initialize();
-
-	rightshose = new RightShose();
-	rightshose->SetPlayer(player);
-	rightshose->Initialize();
-
+	//ボス(杵)
+	pastel = new Pastel();
+	pastel->SetPlayer(player);
+	pastel->Initialize();
+	//ボス(臼)
+	mill = new Mill();
+	mill->SetPlayer(player);
+	mill->Initialize();
 	//敵
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i] = new Rice();
@@ -124,7 +123,7 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	object1->SetRotation(player->GetRotation());
 	object1->SetPosition(player->GetPosition());
 
-	ui = new UI(player, leftshose, rightshose);
+	ui = new UI(player, pastel);
 	//ui->Initialize();
 }
 
@@ -135,8 +134,8 @@ void FourthBoss::Finalize() {
 		enemy[i]->Finalize();
 	}
 	player->Finalize();
-	leftshose->Finalize();
-	rightshose->Finalize();
+	pastel->Finalize();
+	mill->Finalize();
 	delete objBossMap;
 	delete objFloor;
 	delete modelBossMap;
@@ -162,9 +161,10 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
-	leftshose->Update();
-	rightshose->SetAct(leftshose);
-	rightshose->Update();
+	pastel->Update();
+	pastel->GetOff(mill);
+	mill->collideAttackArm(player);
+	mill->Update();
 	particleMan->Update();
 	//objSphere->Update();
 	ui->Update();
@@ -182,8 +182,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 	}
 
 	for (std::size_t i = 0; i < effect.size(); i++) {
-		effect[i]->Update(leftshose);
-		effect[i]->Update(rightshose);
+		effect[i]->Update(pastel);
 	}
 
 	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
@@ -238,7 +237,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 	}
 
 	//その他シーン移行
-	if (leftshose->GetHP() <= 0) {
+	if (pastel->GetHP() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("FourthMAP");
 	}
 
@@ -283,9 +282,8 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i]->Draw();
 	}
-	leftshose->Draw();
-	rightshose->Draw();
-
+	pastel->Draw();
+	mill->Draw();
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Draw();
 	}
@@ -299,4 +297,12 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 	ui->Draw();
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
+	float have = mill->GetHaveEnemy();
+	int Timer = mill->GetHaveTimer();
+	ImGui::Begin("test");
+	ImGui::SliderFloat("pos.y", &have, 25, -25);
+	//ImGui::SliderFloat("speed_y", &targetpos.x, 25, -25);
+	ImGui::Text("stun::%d", Timer);
+	////ImGui::Unindent();
+	ImGui::End();
 }

@@ -285,9 +285,11 @@
     <ClCompile Include="light\PointLight.cpp" />
     <ClCompile Include="light\SpotLight.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Mill.cpp" />
     <ClCompile Include="ModelManager.cpp" />
     <ClCompile Include="Onomato.cpp" />
     <ClCompile Include="ParticleManager.cpp" />
+    <ClCompile Include="Pastel.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RightShose.cpp" />
     <ClCompile Include="scene\BossScene.cpp" />
@@ -369,9 +371,11 @@
     <ClInclude Include="light\LightGroup.h" />
     <ClInclude Include="light\PointLight.h" />
     <ClInclude Include="light\SpotLight.h" />
+    <ClInclude Include="Mill.h" />
     <ClInclude Include="ModelManager.h" />
     <ClInclude Include="Onomato.h" />
     <ClInclude Include="ParticleManager.h" />
+    <ClInclude Include="Pastel.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RightShose.h" />
     <ClInclude Include="SceneFactory.h" />
