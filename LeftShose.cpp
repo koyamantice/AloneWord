@@ -57,53 +57,64 @@ void LeftShose::Spec() {
 
 	if (active) {
 		if ((action % 2) == 0) {
-			if (frame < 0.45f) {
-				frame += 0.002f;
-			}
-			else {
-				frame = 0;
-				pat++;
-			}
-			if (pat == 1) {
-				Afterrot = 45;
-				AfterPos.x = 25.0f;
-				AfterPos.z = -20.0f;
-			}
-			else if (pat == 2) {
-				Afterrot = -90;
-				AfterPos.x = 25.0f;
-				AfterPos.z = 20.0f;
+			if (!stun) {
+				if (frame < 0.45f) {
+					frame += 0.002f;
+				}
+				else {
+					frame = 0;
+					pat++;
+				}
+				if (pat == 1) {
+					Afterrot = 45;
+					AfterPos.x = 25.0f;
+					AfterPos.z = -20.0f;
+				}
+				else if (pat == 2) {
+					Afterrot = -90;
+					AfterPos.x = 25.0f;
+					AfterPos.z = 20.0f;
 
-			}
-			else if (pat == 3) {
-				Afterrot = -180;
-				AfterPos.x = -25.0f;
-				AfterPos.z = 20.0f;
-			}
-			else if (pat == 4) {
-				Afterrot = -270;
-				AfterPos.x = -25.0f;
-				AfterPos.z = -20.0f;
-			}
-			else if (pat == 5) {
-				Afterrot = -45;
-				AfterPos.x = -10.0f;
-				AfterPos.z = 0.0f;
+				}
+				else if (pat == 3) {
+					Afterrot = -180;
+					AfterPos.x = -25.0f;
+					AfterPos.z = 20.0f;
+				}
+				else if (pat == 4) {
+					Afterrot = -270;
+					AfterPos.x = -25.0f;
+					AfterPos.z = -20.0f;
+				}
+				else if (pat == 5) {
+					Afterrot = -45;
+					AfterPos.x = -10.0f;
+					AfterPos.z = 0.0f;
+				}
+				else {
+					Afterrot = 180;
+					pat = 0;
+					AttackCount = 30;
+					Effect = true;
+					active = false;
+					frame = 0;
+				}
+				pos = {
+		Ease(In,Cubic,frame,pos.x,AfterPos.x),
+		0,
+		Ease(In,Cubic,frame,pos.z,AfterPos.z),
+				};
+				enemyobj->SetPosition(pos);
 			}
 			else {
-				Afterrot = 180;
-				pat = 0;
-				AttackCount = 30;
-				Effect = true;
-				active = false;
-				frame = 0;
+				if (stunTimer < 200) {
+					stunTimer++;
+				}
+				else {
+					stunTimer = 0;
+					stun = false;
+				}
 			}
-			pos = {
-	Ease(In,Cubic,frame,pos.x,AfterPos.x),
-	0,
-	Ease(In,Cubic,frame,pos.z,AfterPos.z),
-			};
-			enemyobj->SetPosition(pos);
 		}
 		else if ((action % 2) == 1) {
 

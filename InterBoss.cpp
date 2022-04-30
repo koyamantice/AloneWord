@@ -27,9 +27,8 @@ void InterBoss::Draw() {
 	ImGui::Begin("test");
 	//ImGui::SliderFloat("pos.y", &pos.y, 25, -25);
 	//ImGui::SliderFloat("speed_y", &targetpos.x, 25, -25);
-	ImGui::Text("aim::%d", aiming);
-	ImGui::Text("action::%d", action);
-	ImGui::Text("AttackCOunt::%d", AttackCount);
+	ImGui::Text("stun::%d", stun);
+	ImGui::Text("stunTimer::%d", stunTimer);
 	////ImGui::Unindent();
 	ImGui::End();
 	Object3d::PreDraw();

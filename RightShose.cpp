@@ -58,47 +58,59 @@ void RightShose::Spec() {
 
 	if (active) {
 		if ((action % 2) == 0) {
-			//3回突進する
-			if (AttackC < 100) {
-				MoveCount++;
+			if (!stun) {
+				//3回突進する
+				if (AttackC < 100) {
+					MoveCount++;
+				}
+				//左足が戻ったら元の位置に戻る
+				else {
+					AfterPos = {
+					10,
+					0,
+					0
+					};
+					if (frame < 0.45f) {
+						frame += 0.004f;
+					}
+					else {
+						frame = 0;
+						AttackC = 0;
+						AttackCount = 30;
+						active = false;
+					}
+
+					pos = {
+					Ease(In,Cubic,frame,pos.x,AfterPos.x),
+					0,
+					Ease(In,Cubic,frame,pos.z,AfterPos.z),
+					};
+				}
+				//プレイヤーの位置をロックオンさせる
+				if (MoveCount == 100) {
+					double sb, sbx, sbz;
+					if (!Attack) {
+						hitpoint = HitNot;
+						sbx = player->GetPosition().x - pos.x;
+						sbz = player->GetPosition().z - pos.z;
+						//rot.y = (atan2f(position.x, position.z) * (180.0f / XM_PI)) - 90;
+						sb = sqrt(sbx * sbx + sbz * sbz);
+						speedX = sbx / sb * 0.5;
+						speedZ = sbz / sb * 0.5;
+						Attack = true;
+					}
+				}
 			}
-			//左足が戻ったら元の位置に戻る
 			else {
-				AfterPos = {
-				10,
-				0,
-				0
-				};
-				if (frame < 0.45f) {
-					frame += 0.004f;
+				if (stunTimer < 200) {
+					stunTimer++;
 				}
 				else {
-					frame = 0;
-					AttackC = 0;
-					AttackCount = 30;
-					active = false;
+					stunTimer = 0;
+					stun = false;
 				}
+			}
 
-				pos = {
-				Ease(In,Cubic,frame,pos.x,AfterPos.x),
-				0,
-				Ease(In,Cubic,frame,pos.z,AfterPos.z),
-				};
-			}
-			//プレイヤーの位置をロックオンさせる
-			if (MoveCount == 60) {
-				double sb, sbx, sbz;
-				if (!Attack) {
-					hitpoint = HitNot;
-					sbx = player->GetPosition().x - pos.x;
-					sbz = player->GetPosition().z - pos.z;
-					//rot.y = (atan2f(position.x, position.z) * (180.0f / XM_PI)) - 90;
-					sb = sqrt(sbx * sbx + sbz * sbz);
-					speedX = sbx / sb * 0.5;
-					speedZ = sbz / sb * 0.5;
-					Attack = true;
-				}
-			}
 
 			if (Attack) {
 				//プレイヤーにスピード加算
@@ -204,7 +216,6 @@ void RightShose::Spec() {
 					}
 				}
 			}
-
 			enemyobj->SetPosition(pos);
 		}
 		if ((action % 2) == 1) {
@@ -306,7 +317,6 @@ void RightShose::Spec() {
 			};
 			enemyobj->SetPosition(pos);
 		}
-
 	}
 }
 
@@ -321,4 +331,26 @@ void RightShose::SetAct(LeftShose* leftshose) {
 	}
 
 	LeftAct = leftshose->GetActive();
+}
+
+bool RightShose::HitShose(LeftShose* leftshose) {
+	XMFLOAT3 leftpos = leftshose->GetPosition();
+	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 1.5f, leftpos.x, leftpos.y, leftpos.z, 1.5f) && (action % 2) == 0) {
+		this->stun = true;
+		leftshose->SetStun(true);
+		if (pos.z >= leftpos.z) {
+			hitpoint = HitUp;
+			Deadbound.y = 0.3f;
+			Deadbound.z = -0.2f;
+		}
+		else {
+			hitpoint = HitDown;
+			Deadbound.y = 0.3f;
+			Deadbound.z = 0.2f;
+		}
+		return true;
+	}
+	else {
+		return false;
+	}
 }
