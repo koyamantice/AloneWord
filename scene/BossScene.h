@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "BaseScene.h"
+#include "SceneManager.h"
 #include "BossEnemy.h"
 #include "UI.h"
 #include <array>       // ヘッダファイルインクルード

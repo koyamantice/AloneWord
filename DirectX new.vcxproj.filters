@@ -16,10 +16,6 @@
     <Filter Include="3d">
       <UniqueIdentifier>{a0e40723-7003-4adf-a842-01a37137cf85}</UniqueIdentifier>
     </Filter>
-    <Filter Include="main">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="player">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
@@ -63,14 +59,36 @@
     <Filter Include="FPSManager">
       <UniqueIdentifier>{24f55054-a858-4bc4-a303-f3bab37122cf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="stage">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="stage\杵">
+      <UniqueIdentifier>{e33d94c3-d0a5-4a7c-a636-d05f4c6215be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="stage\フォーク">
+      <UniqueIdentifier>{c3b033c1-14fb-468b-8c7c-2641d3fd7e08}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="stage\シューズ">
+      <UniqueIdentifier>{418f6227-b0f1-4965-b32e-4422d0dc6f36}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="stage\急須">
+      <UniqueIdentifier>{9aa66160-7f18-4d27-b8ee-d641b2871fd3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="stage\クリア">
+      <UniqueIdentifier>{338c5090-68e9-4f54-8a49-19ebe36f2c83}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="stage\オーバー">
+      <UniqueIdentifier>{b18a3839-5369-4880-9ee3-3082ed798933}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="stage\タイトル">
+      <UniqueIdentifier>{fed0f201-b95e-46d3-8bad-e69ba4a08912}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="stage\セレクト">
+      <UniqueIdentifier>{19073ec4-800d-48b4-9eca-932d968a954d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="scene\TisGame.cpp">
-      <Filter>main</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\TitleScene.cpp">
-      <Filter>main</Filter>
-    </ClCompile>
     <ClCompile Include="base\AbstractSceneFactory.cpp">
       <Filter>scene</Filter>
     </ClCompile>
@@ -167,18 +185,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>player</Filter>
     </ClCompile>
-    <ClCompile Include="scene\BossScene.cpp">
-      <Filter>main</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\StartMap.cpp">
-      <Filter>main</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\ClearScene.cpp">
-      <Filter>main</Filter>
-    </ClCompile>
-    <ClCompile Include="scene\GameoverScene.cpp">
-      <Filter>main</Filter>
-    </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>ui</Filter>
     </ClCompile>
@@ -248,29 +254,56 @@
     <ClCompile Include="base\XorShift.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="SecondMap.cpp">
-      <Filter>main</Filter>
-    </ClCompile>
-    <ClCompile Include="SecondBoss.cpp">
-      <Filter>main</Filter>
-    </ClCompile>
     <ClCompile Include="LeftShose.cpp">
       <Filter>enemy\ボス</Filter>
     </ClCompile>
     <ClCompile Include="RightShose.cpp">
       <Filter>enemy\ボス</Filter>
     </ClCompile>
-    <ClCompile Include="scene\StageSelect.cpp">
-      <Filter>main</Filter>
-    </ClCompile>
     <ClCompile Include="ImageManager.cpp">
       <Filter>2d</Filter>
     </ClCompile>
+    <ClCompile Include="scene\ClearScene.cpp">
+      <Filter>stage\クリア</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\BossScene.cpp">
+      <Filter>stage\フォーク</Filter>
+    </ClCompile>
     <ClCompile Include="FourthMap.cpp">
-      <Filter>main</Filter>
+      <Filter>stage\杵</Filter>
     </ClCompile>
     <ClCompile Include="FourthBoss.cpp">
-      <Filter>main</Filter>
+      <Filter>stage\杵</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\GameoverScene.cpp">
+      <Filter>stage\オーバー</Filter>
+    </ClCompile>
+    <ClCompile Include="SecondBoss.cpp">
+      <Filter>stage\シューズ</Filter>
+    </ClCompile>
+    <ClCompile Include="SecondMap.cpp">
+      <Filter>stage\シューズ</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\StartMap.cpp">
+      <Filter>stage\フォーク</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\TisGame.cpp">
+      <Filter>scene</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\TitleScene.cpp">
+      <Filter>stage\タイトル</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\StageSelect.cpp">
+      <Filter>stage\セレクト</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdMap.cpp">
+      <Filter>stage\急須</Filter>
+    </ClCompile>
+    <ClCompile Include="ThirdBoss.cpp">
+      <Filter>stage\急須</Filter>
+    </ClCompile>
+    <ClCompile Include="HotWater.cpp">
+      <Filter>stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -312,12 +345,6 @@
     </ClInclude>
     <ClInclude Include="3d\Object3d.h">
       <Filter>3d</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\TisGame.h">
-      <Filter>main</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\TitleScene.h">
-      <Filter>main</Filter>
     </ClInclude>
     <ClInclude Include="imgui\imconfig.h">
       <Filter>Imgui</Filter>
@@ -381,18 +408,6 @@
     </ClInclude>
     <ClInclude Include="2d\Texture.h">
       <Filter>2d</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\BossScene.h">
-      <Filter>main</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\StartMap.h">
-      <Filter>main</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\ClearScene.h">
-      <Filter>main</Filter>
-    </ClInclude>
-    <ClInclude Include="scene\GameoverScene.h">
-      <Filter>main</Filter>
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>ui</Filter>
@@ -475,29 +490,56 @@
     <ClInclude Include="base\XorShift.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="SecondMap.h">
-      <Filter>main</Filter>
-    </ClInclude>
-    <ClInclude Include="SecondBoss.h">
-      <Filter>main</Filter>
-    </ClInclude>
     <ClInclude Include="LeftShose.h">
       <Filter>enemy\ボス</Filter>
     </ClInclude>
     <ClInclude Include="RightShose.h">
       <Filter>enemy\ボス</Filter>
     </ClInclude>
-    <ClInclude Include="scene\StageSelect.h">
-      <Filter>player</Filter>
-    </ClInclude>
     <ClInclude Include="ImageManager.h">
       <Filter>2d</Filter>
     </ClInclude>
-    <ClInclude Include="FourthMap.h">
-      <Filter>main</Filter>
+    <ClInclude Include="scene\ClearScene.h">
+      <Filter>stage\クリア</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\BossScene.h">
+      <Filter>stage\フォーク</Filter>
     </ClInclude>
     <ClInclude Include="FourthBoss.h">
-      <Filter>main</Filter>
+      <Filter>stage\杵</Filter>
+    </ClInclude>
+    <ClInclude Include="FourthMap.h">
+      <Filter>stage\杵</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\GameoverScene.h">
+      <Filter>stage\オーバー</Filter>
+    </ClInclude>
+    <ClInclude Include="SecondBoss.h">
+      <Filter>stage\シューズ</Filter>
+    </ClInclude>
+    <ClInclude Include="SecondMap.h">
+      <Filter>stage\シューズ</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\StartMap.h">
+      <Filter>stage\フォーク</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\TisGame.h">
+      <Filter>scene</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\TitleScene.h">
+      <Filter>stage\タイトル</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\StageSelect.h">
+      <Filter>stage\セレクト</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdMap.h">
+      <Filter>stage\急須</Filter>
+    </ClInclude>
+    <ClInclude Include="ThirdBoss.h">
+      <Filter>stage\急須</Filter>
+    </ClInclude>
+    <ClInclude Include="HotWater.h">
+      <Filter>player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

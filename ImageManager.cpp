@@ -26,6 +26,8 @@ void ImageManager::LoadTex2D() {
 	Texture::LoadTexture(effect3, L"Resources/2d/effect3.png");
 	Texture::LoadTexture(playerhp, L"Resources/2d/PlayerHP.png");
 	Texture::LoadTexture(magic, L"Resources/2d/magic2.png");
-	//Texture::LoadTexture(6, L"Resources/2d/Resporn.png");
 	Texture::LoadTexture(net, L"Resources/2d/motiNet.png");
+	//Texture::LoadTexture(water, L"Resources/2d/motiNet.png");
+	//Texture::LoadTexture(hit, L"Resources/2d/hit.png");
+
 }
