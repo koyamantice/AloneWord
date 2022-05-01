@@ -303,6 +303,7 @@
     <ClCompile Include="SecondBoss.cpp" />
     <ClCompile Include="SecondMap.cpp" />
     <ClCompile Include="LeftShose.cpp" />
+    <ClCompile Include="ShockWave.cpp" />
     <ClCompile Include="ThirdBoss.cpp" />
     <ClCompile Include="ThirdMap.cpp" />
     <ClCompile Include="UI.cpp" />
@@ -324,6 +325,7 @@
     <ClInclude Include="3d\Mesh.h" />
     <ClInclude Include="3d\Model.h" />
     <ClInclude Include="3d\Object3d.h" />
+    <ClInclude Include="ShockWave.h" />
     <ClInclude Include="base\AbstractSceneFactory.h" />
     <ClInclude Include="base\Audio.h" />
     <ClInclude Include="base\BaseScene.h" />

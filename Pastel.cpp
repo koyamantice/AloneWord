@@ -61,30 +61,30 @@ void Pastel::Spec() {
 			case 1:
 				if (pat == 0) {
 					AfterPos = {
-					25.0f,
+					20.0f,
 					5.0f,
-					-20.0f
+					-15.0f
 					};
 				}
 				else if (pat == 1) {
 					AfterPos = {
-					25.0f,
+					20.0f,
 					5.0f,
-					20.0f
+					15.0f
 					};
 				}
 				else if (pat == 2) {
 					AfterPos = {
-					-25.0f,
+					-20.0f,
 					5.0f,
-					20.0f
+					15.0f
 					};
 				}
 				else if (pat == 3) {
 					AfterPos = {
-					-25.0f,
+					-20.0f,
 					5.0f,
-					-20.0f
+					-15.0f
 					};
 				}
 
