@@ -320,6 +320,9 @@ void RightShose::Spec() {
 	}
 }
 
+void RightShose::specialDraw() {
+}
+
 void RightShose::SetAct(LeftShose* leftshose) {
 	int action = leftshose->GetAction();
 	int AttackCount = leftshose->GetAttackCount();

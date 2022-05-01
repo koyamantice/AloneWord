@@ -252,7 +252,7 @@ void SecondMap::Update(DirectXCommon* dxCommon) {
 
 	Ray ray;
 	ray.start = { player->GetPosition().x,player->GetPosition().y + 3,player->GetPosition().z,1 };
-	ray.dir = { 0,0.28,-1,0 };
+	ray.dir = { 0,0.28f,-1,0 };
 	RaycastHit raycastHit;
 
 	if (!collisionManager->Raycast(ray, &raycastHit)) {

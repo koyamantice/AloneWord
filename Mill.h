@@ -9,6 +9,7 @@ public:
 	void Initialize() override;
 	void Finalize() override;
 	void Spec() override;
+	void specialDraw() override;
 	bool collideAttackArm(Player* player);
 	const float& GetHaveEnemy() { return haveEnemy; }
 	const bool& GetHaveTimer() { return haveTimer; }

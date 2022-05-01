@@ -46,6 +46,9 @@ void Mill::Spec() {
 	}
 }
 
+void Mill::specialDraw() {
+}
+
 bool Mill::collideAttackArm(Player* player) {
 	XMFLOAT3 Armpos = player->GetArmPosition();
 	bool attackflag = player->GetAttackFlag();

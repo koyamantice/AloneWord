@@ -11,6 +11,7 @@ ModelManager* ModelManager::GetIns() {
 
 void ModelManager::Initialize() {
 	LoadModel(Player, "Motti");
+	LoadModel(Demo, "chr_knight");
 	LoadModel(Arm, "Arm");
 	LoadModel(EHub, "EHub");
 	LoadModel(Enemy, "Enemy");

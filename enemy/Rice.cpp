@@ -94,10 +94,10 @@ void Rice::Update() {
 			if (followed) {
 				if (rot.y < -90) {
 					dir = rot.y + 360 + 90;
-					rot.y = (dir)-90;// *(XM_PI / 180.0f);
+					rot.y = (dir)-90.0f;// *(XM_PI / 180.0f);
 				} else {
 					dir = rot.y + 90;
-					rot.y = (dir)-90;// *(XM_PI / 180.0f);
+					rot.y = (dir)-90.0f;// *(XM_PI / 180.0f);
 				}
 				followed = false;
 			}

@@ -265,6 +265,9 @@ void Pastel::Spec() {
 	
 }
 
+void Pastel::specialDraw() {
+}
+
 void Pastel::GetOff(Mill* mill) {
 	int millTimer = mill->GetHaveTimer();
 
