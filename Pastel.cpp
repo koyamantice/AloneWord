@@ -37,204 +37,143 @@ void Pastel::Finalize() {
 //ƒ{ƒX‚Ìs“®
 void Pastel::Spec() {
 	XMFLOAT3 AfterPos{};
-	//if (AttackCount > 180 && pos.y <= 0.1f) {
-	//	if (!active) {
-	//		action = (rand() % 2);
-	//		frame = 0;
-	//		pat = 1;
-	//		active = true;
-	//	}
-	//}
-	//else {
-	//	if (!active) {
-	//		AttackCount++;
-	//		angle += 2.0f;
-	//		angle2 = angle * (3.14f / 180.0f);
-	//		//pos.y = sin(angle2) * 0.5f + 0.5f;
-	//		enemyobj->SetPosition(pos);
-	//	}
-	//}
+	if (AttackCount > 180) {
+		if (!active) {
+			pat = (rand() % 3);
+			frame = 0;
+			active = true;
+			action = 1;
+		}
+	}
+	else {
+		if (!active) {
+			AttackCount++;
+			//angle += 2.0f;
+			//angle2 = angle * (3.14f / 180.0f);
+			//pos.y = sin(angle2) * 0.5f + 0.5f;
+			//enemyobj->SetPosition(pos);
+		}
+	}
 
-	//if (active) {
-	//	if ((action % 2) == 0) {
-	//		if (frame < 0.45f) {
-	//			frame += 0.002f;
-	//		}
-	//		else {
-	//			frame = 0;
-	//			pat++;
-	//		}
-	//		if (pat == 1) {
-	//			Afterrot = 45;
-	//			AfterPos.x = 25.0f;
-	//			AfterPos.z = -20.0f;
-	//		}
-	//		else if (pat == 2) {
-	//			Afterrot = -90;
-	//			AfterPos.x = 25.0f;
-	//			AfterPos.z = 20.0f;
+	if (Off == false) {
+		if (active) {
+			switch (action) {
+			case 1:
+				if (pat == 0) {
+					AfterPos = {
+					25.0f,
+					5.0f,
+					-20.0f
+					};
+				}
+				else if (pat == 1) {
+					AfterPos = {
+					25.0f,
+					5.0f,
+					20.0f
+					};
+				}
+				else if (pat == 2) {
+					AfterPos = {
+					-25.0f,
+					5.0f,
+					20.0f
+					};
+				}
+				else if (pat == 3) {
+					AfterPos = {
+					-25.0f,
+					5.0f,
+					-20.0f
+					};
+				}
 
-	//		}
-	//		else if (pat == 3) {
-	//			Afterrot = -225;
-	//			AfterPos.x = -25.0f;
-	//			AfterPos.z = -20.0f;
-	//		}
-	//		else if (pat == 4) {
-	//			Afterrot = -90;
-	//			AfterPos.x = -25.0f;
-	//			AfterPos.z = 20.0f;
-	//		}
-	//		else if (pat == 5) {
-	//			Afterrot = 45;
-	//			AfterPos.x = 0.0f;
-	//			AfterPos.z = 0.0f;
-	//		}
-	//		else {
-	//			Afterrot = 180;
-	//			pat = 0;
-	//			AttackCount = 30;
-	//			Effect = true;
-	//			active = false;
-	//			frame = 0;
-	//		}
-	//		pos = {
-	//Ease(In,Cubic,frame,pos.x,AfterPos.x),
-	//0,
-	//Ease(In,Cubic,frame,pos.z,AfterPos.z),
-	//		};
-	//		enemyobj->SetPosition(pos);
-	//	}
-	//	else if ((action % 2) == 1) {
-	//		if (AttackC < 3) {
-	//			switch (pat) {
-	//			case 1:
-	//				AfterPos = {
-	//				pos.x,
-	//				3.0f,
-	//				pos.z
-	//				};
-	//				if (frame < 1.0f) {
-	//					frame += 0.01f;
-	//					break;
-	//				}
-	//				else {
-	//					frame = 0;
-	//					pat++;
-	//					break;
-	//				}
-	//			case 2:
-	//				AfterPos = {
-	//					player->GetPosition().x,
-	//				3.0f,
-	//					player->GetPosition().z
-	//				};
-	//				if (aiming < 180) {
-	//					frame = 0.5f;
-	//					aiming++;
-	//					break;
-	//				}
-	//				else {
-	//					frame = 0;
-	//					aiming = 0;
-	//					pat++;
-	//					break;
-	//				}
-	//			case 3:
-	//				AfterPos = {
-	//					pos.x,
-	//					0,
-	//					pos.z,
-	//				};
-	//				if (frame < 1.0f) {
-	//					frame += 0.08f;
-	//					break;
-	//				}
-	//				if (frame >= 1.0f) {
-	//					frame = 1.0f;
-	//					if (coolT < 90) {
-	//						coolT++;
-	//						break;
-	//					}
-	//					else {
-	//						coolT = 0;
-	//						frame = 0;
-	//						pat = 1;
-	//						AttackC++;
-	//						break;
-	//					}
-	//				}
-	//			default:
-	//				AttackC = 0;
-	//				pat = 1;
-	//				break;
-	//			}
-	//		}
-	//		else {
-	//			switch (pat) {
-	//			case 1:
-	//				AfterPos = {
-	//				pos.x,
-	//				3.0f,
-	//				pos.z
-	//				};
-	//				if (frame < 1.0f) {
-	//					frame += 0.01f;
-	//					break;
-	//				}
-	//				else {
-	//					frame = 0;
-	//					pat++;
-	//					break;
-	//				}
-	//			case 2:
-	//				AfterPos = {
-	//				0,
-	//				3.0f,
-	//				0
-	//				};
-	//				if (frame < 1.0f) {
-	//					frame += 0.01f;
-	//					break;
-	//				}
-	//				else {
-	//					frame = 0;
-	//					pat++;
-	//					break;
-	//				}
-	//			case 3:
-	//				AfterPos = {
-	//				0,
-	//				0,
-	//				0
-	//				};
-	//				if (frame < 1.0f) {
-	//					frame += 0.01f;
-	//					break;
-	//				}
-	//				else {
-	//					frame = 0;
-	//					pat = 0;
-	//					AttackC = 0;
-	//					AttackCount = 30;
-	//					Effect = true;
-	//					active = false;
-	//					break;
-	//				}
-	//			default:
-	//				break;
-	//			}
-	//		}
-	//		pos = {
-	//Ease(In,Cubic,frame,pos.x,AfterPos.x),
-	//Ease(In,Cubic,frame,pos.y,AfterPos.y),
-	//Ease(In,Cubic,frame,pos.z,AfterPos.z)
-	//		};
-	//		enemyobj->SetPosition(pos);
-	//	}
-	//}
-
-	if (Off == true) {
+				if (frame < 1.0f) {
+					frame += 0.01f;
+					break;
+				}
+				else {
+					frame = 0;
+					action++;
+					break;
+				}
+			case 2:
+				if (aiming < 50) {
+					aiming++;
+					break;
+				}
+				else {
+					frame = 0;
+					aiming = 0;
+					action++;
+					break;
+				}
+			case 3:
+				AfterPos = {
+					pos.x,
+					0,
+					pos.z,
+				};
+				if (frame < 1.0f) {
+					frame += 0.08f;
+					break;
+				}
+				if (frame >= 1.0f) {
+					frame = 1.0f;
+					if (coolT < 50) {
+						coolT++;
+						break;
+					}
+					else {
+						coolT = 0;
+						frame = 0;
+						action++;
+						break;
+					}
+				}
+			case 4:
+				AfterPos = {
+					pos.x,
+					5.0f,
+					pos.z,
+				};
+				if (frame < 1.0f) {
+					frame += 0.01f;
+					break;
+				}
+				else {
+					frame = 0;
+					action++;
+					break;
+				}
+			case 5:
+					AfterPos = {
+						0.0f,
+						5.0f,
+						5.0f,
+					};
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						break;
+					}
+					else {
+						frame = 0;
+						action = 0;
+						active = false;
+						AttackCount = 0;
+						break;
+					}
+			}
+		}
+		pos = {
+Ease(In,Cubic,frame,pos.x,AfterPos.x),
+Ease(In,Cubic,frame,pos.y,AfterPos.y),
+Ease(In,Cubic,frame,pos.z,AfterPos.z)
+		};
+		enemyobj->SetPosition(pos);
+	}
+	
+	if (Off == true && !action) {
 		AfterPos.y = 1.0f;
 		AfterPos.z = 5.0f;
 		if (frame < 0.45f && pos.y != 1.0f) {
@@ -243,25 +182,14 @@ void Pastel::Spec() {
 		else {
 			frame = 0.0f;
 		}
-
+		pos = {
+Ease(In,Cubic,frame,pos.x,AfterPos.x),
+Ease(In,Cubic,frame,pos.y,AfterPos.y),
+Ease(In,Cubic,frame,pos.z,AfterPos.z)
+		};
+		enemyobj->SetPosition(pos);
 	}
-	else {
-		AfterPos.y = 5.0f;
-
-		if (frame < 0.45f && pos.y != 5.0f) {
-			frame += 0.002f;
-		}
-		else {
-			frame = 0.0f;
-		}
-	}
-
-	pos = {
-		Ease(In,Cubic,frame,pos.x,AfterPos.x),
-		Ease(In,Cubic,frame,pos.y,AfterPos.y),
-		Ease(In,Cubic,frame,pos.z,AfterPos.z)
-	};
-	enemyobj->SetPosition(pos);
+	
 	
 }
 
@@ -269,7 +197,10 @@ void Pastel::GetOff(Mill* mill) {
 	int millTimer = mill->GetHaveTimer();
 
 	if (millTimer != 0) {
-		Off = true;
+		if (Off == false && !action) {
+			frame = 0.0f;
+			Off = true;
+		}
 	}
 	else {
 		Off = false;

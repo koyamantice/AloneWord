@@ -18,5 +18,6 @@ private:
 		Down
 	};
 
-	bool Off = false;
+
+	int atackpoint = 0;
 };

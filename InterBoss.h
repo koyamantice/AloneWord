@@ -173,8 +173,10 @@ protected:
 		Up,
 		Down
 	};
-	int b = 0;
+	//靴のボス
 	bool stun = false;
 	int stunTimer = 0;
+	//杵のボス
+	bool Off = false;
 };
 
