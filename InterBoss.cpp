@@ -26,9 +26,9 @@ void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
 	ImGui::Begin("test");
 	ImGui::SliderFloat("frame", &frame, 25, -25);
-	ImGui::SliderFloat("pos.y", &pos.y, 25, -25);
 	ImGui::Text("attack::%d", AttackCount);
 	ImGui::Text("Off::%d", Off);
+	ImGui::Text("active::%d", active);
 	////ImGui::Unindent();
 	ImGui::End();
 	Object3d::PreDraw();

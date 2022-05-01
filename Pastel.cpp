@@ -173,7 +173,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 		enemyobj->SetPosition(pos);
 	}
 	
-	if (Off == true && !action) {
+	if (Off == true && !active) {
 		AfterPos.y = 1.0f;
 		AfterPos.z = 5.0f;
 		if (frame < 0.45f && pos.y != 1.0f) {
@@ -197,7 +197,7 @@ void Pastel::GetOff(Mill* mill) {
 	int millTimer = mill->GetHaveTimer();
 
 	if (millTimer != 0) {
-		if (Off == false && !action) {
+		if (Off == false && !active) {
 			frame = 0.0f;
 			Off = true;
 		}
