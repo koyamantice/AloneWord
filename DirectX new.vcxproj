@@ -264,6 +264,7 @@
     <ClCompile Include="collision\SphereCollider.cpp" />
     <ClCompile Include="collision\TouchableObject.cpp" />
     <ClCompile Include="Effect.cpp" />
+    <ClCompile Include="enemy\GreenTea.cpp" />
     <ClCompile Include="enemy\InterEnemy.cpp" />
     <ClCompile Include="enemy\BossEnemy.cpp" />
     <ClCompile Include="enemy\Rice.cpp" />
@@ -348,6 +349,7 @@
     <ClInclude Include="collision\SphereCollider.h" />
     <ClInclude Include="collision\TouchableObject.h" />
     <ClInclude Include="Effect.h" />
+    <ClInclude Include="enemy\GreenTea.h" />
     <ClInclude Include="enemy\InterEnemy.h" />
     <ClInclude Include="enemy\BossEnemy.h" />
     <ClInclude Include="enemy\Rice.h" />

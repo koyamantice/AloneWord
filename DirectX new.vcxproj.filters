@@ -233,9 +233,6 @@
     <ClCompile Include="InterBoss.cpp">
       <Filter>enemy\ボス</Filter>
     </ClCompile>
-    <ClCompile Include="enemy\BossEnemy.cpp">
-      <Filter>enemy\ボス</Filter>
-    </ClCompile>
     <ClCompile Include="enemy\Rice.cpp">
       <Filter>enemy\ザコ敵</Filter>
     </ClCompile>
@@ -302,14 +299,20 @@
     <ClCompile Include="ThirdBoss.cpp">
       <Filter>stage\急須</Filter>
     </ClCompile>
-    <ClCompile Include="HotWater.cpp">
-      <Filter>stage</Filter>
-    </ClCompile>
     <ClCompile Include="Pastel.cpp">
       <Filter>enemy\ボス</Filter>
     </ClCompile>
     <ClCompile Include="Mill.cpp">
       <Filter>enemy\ボス</Filter>
+    </ClCompile>
+    <ClCompile Include="HotWater.cpp">
+      <Filter>stage\急須</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy\BossEnemy.cpp">
+      <Filter>stage\フォーク</Filter>
+    </ClCompile>
+    <ClCompile Include="enemy\GreenTea.cpp">
+      <Filter>stage\急須</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -475,9 +478,6 @@
     <ClInclude Include="InterBoss.h">
       <Filter>enemy\ボス</Filter>
     </ClInclude>
-    <ClInclude Include="enemy\BossEnemy.h">
-      <Filter>enemy\ボス</Filter>
-    </ClInclude>
     <ClInclude Include="enemy\Rice.h">
       <Filter>enemy\ザコ敵</Filter>
     </ClInclude>
@@ -544,14 +544,20 @@
     <ClInclude Include="ThirdBoss.h">
       <Filter>stage\急須</Filter>
     </ClInclude>
-    <ClInclude Include="HotWater.h">
-      <Filter>player</Filter>
-    </ClInclude>
     <ClInclude Include="Pastel.h">
       <Filter>enemy\ボス</Filter>
     </ClInclude>
     <ClInclude Include="Mill.h">
       <Filter>enemy\ボス</Filter>
+    </ClInclude>
+    <ClInclude Include="HotWater.h">
+      <Filter>stage\急須</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy\BossEnemy.h">
+      <Filter>stage\フォーク</Filter>
+    </ClInclude>
+    <ClInclude Include="enemy\GreenTea.h">
+      <Filter>stage\急須</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
