@@ -44,7 +44,6 @@ void GreenTea::Finalize() {
 //ボスの行動
 void GreenTea::Spec() {
 	hotWater->Upda();
-	hotWater->Set(pos);
 	XMFLOAT3 AfterPos{};
 	if (AttackCount > 180 && pos.y <= 0.1f) {
 		if (!active) {
@@ -71,6 +70,9 @@ void GreenTea::Spec() {
 			//}
 			if (pat == 1) {
 				radius++;
+				if ((int)radius%60==0) {
+					hotWater->Set(pos);
+				}
 				scale += 0.02f;
 				if (radius>=360) {
 					if (check) {

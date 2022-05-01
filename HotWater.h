@@ -15,6 +15,8 @@ public:
 	void Final();
 private:
 	Texture* hot=nullptr;
+	float frame = 0;
+	XMFLOAT3 sca{};
 	bool IsAlive = false;
 };
 
