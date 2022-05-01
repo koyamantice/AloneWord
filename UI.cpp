@@ -12,7 +12,7 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	BossHp2->SetPosition({ 260.0f,80.0f });
 	BossHp2->SetColor({ 1.0f,0.0f,0.0,1.0 });
 	//HPスプライト生成
-	HpGauge = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
+	HpGauge = Sprite::Create(ImageManager::hpGauge, { 0.0f,0.0f });
 	HpGauge->SetPosition({ 0.0f,642.0f });
 	Mark1 = Sprite::Create(ImageManager::energy, { 0.0f,0.0f });
 	Mark1->SetPosition({ 0.0f,642.0f });
@@ -21,7 +21,7 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	Mark2->SetPosition({ 0.0f,642.0f });
 	Mark3 = Sprite::Create(ImageManager::weak, { 0.0f,0.0f });
 	Mark3->SetPosition({ 0.0f,642.0f });
-	PlaHp = Sprite::Create(ImageManager::hpGauge, { 0.0f,0.0f });
+	PlaHp = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
 	PlaHp->SetPosition({ 0.0f,642.0f });
 	//背景スプライト生成
 	Life = Sprite::Create(ImageManager::life, { 0.0f,0.0f });
@@ -87,7 +87,7 @@ const void UI::Draw() {
 	}
 	HpGauge->Draw();
 	Mark1->Draw();
-	//PlaHp->Draw();
+	PlaHp->Draw();
 	//Life->Draw();
 
 	if (boss && invisible) {
