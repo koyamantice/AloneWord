@@ -193,6 +193,9 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 	
 }
 
+void Pastel::specialDraw() {
+}
+
 void Pastel::GetOff(Mill* mill) {
 	int millTimer = mill->GetHaveTimer();
 

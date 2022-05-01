@@ -23,6 +23,10 @@ private:
 	Sprite* BossHp = nullptr;
 	Sprite* BossHp2 = nullptr;
 	Sprite* PlaHp = nullptr;
+	Sprite* HpGauge = nullptr;
+	Sprite* Mark1= nullptr;
+	Sprite* Mark2 = nullptr;
+	Sprite* Mark3 = nullptr;
 	Sprite* Life = nullptr;
 	Sprite* Arrow = nullptr;
 	Sprite* Arrow2 = nullptr;

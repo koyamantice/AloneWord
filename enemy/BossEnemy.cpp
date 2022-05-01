@@ -219,3 +219,6 @@ void BossEnemy::Spec() {
 			}
 		}
 	}
+
+	void BossEnemy::specialDraw() {
+	}

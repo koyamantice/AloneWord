@@ -23,7 +23,11 @@ public:
 		CLEAR,
 		OVER,
 		TITLE,
-		SELECT
+		SELECT,
+		hpGauge,
+		energy,
+		pinch,
+		weak,
 	};
 	enum tex2dName {
 	enemy,//Texture::LoadTexture(0, L"Resources/2d/enemy.png");

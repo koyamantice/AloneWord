@@ -333,6 +333,7 @@
     <ClInclude Include="base\Easing.h" />
     <ClInclude Include="base\Framework.h" />
     <ClInclude Include="base\Input.h" />
+    <ClInclude Include="base\SceneFactory.h" />
     <ClInclude Include="base\SceneManager.h" />
     <ClInclude Include="base\WinApp.h" />
     <ClInclude Include="base\XorShift.h" />
@@ -382,7 +383,6 @@
     <ClInclude Include="Pastel.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="RightShose.h" />
-    <ClInclude Include="SceneFactory.h" />
     <ClInclude Include="scene\BossScene.h" />
     <ClInclude Include="scene\ClearScene.h" />
     <ClInclude Include="scene\GameoverScene.h" />

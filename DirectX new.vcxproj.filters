@@ -325,9 +325,6 @@
     <ClInclude Include="base\BaseScene.h">
       <Filter>scene</Filter>
     </ClInclude>
-    <ClInclude Include="SceneFactory.h">
-      <Filter>scene</Filter>
-    </ClInclude>
     <ClInclude Include="base\SceneManager.h">
       <Filter>scene</Filter>
     </ClInclude>
@@ -550,6 +547,7 @@
     <ClInclude Include="enemy\GreenTea.h">
       <Filter>stage\急須</Filter>
     </ClInclude>
+
     <ClInclude Include="Mill.h">
       <Filter>stage\杵</Filter>
     </ClInclude>
@@ -564,6 +562,8 @@
     </ClInclude>
     <ClInclude Include="ShockWave.h">
       <Filter>stage\杵</Filter>
+    <ClInclude Include="base\SceneFactory.h">
+      <Filter>scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

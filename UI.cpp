@@ -11,9 +11,18 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	BossHp2 = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
 	BossHp2->SetPosition({ 260.0f,80.0f });
 	BossHp2->SetColor({ 1.0f,0.0f,0.0,1.0 });
-	//背景スプライト生成
+	//HPスプライト生成
+	HpGauge = Sprite::Create(ImageManager::hpGauge, { 0.0f,0.0f });
+	HpGauge->SetPosition({ 22.0f,560.0f });
+	Mark1 = Sprite::Create(ImageManager::energy, { 0.0f,0.0f });
+	Mark1->SetPosition({ 30.0f,576.0f });
+	Mark1->SetSize({ 120.0f,120.0f });
+	Mark2 = Sprite::Create(ImageManager::pinch, { 0.0f,0.0f });
+	Mark2->SetPosition({ 0.0f,642.0f });
+	Mark3 = Sprite::Create(ImageManager::weak, { 0.0f,0.0f });
+	Mark3->SetPosition({ 0.0f,642.0f });
 	PlaHp = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
-	PlaHp->SetPosition({ 170.0f,642.0f });
+	PlaHp->SetPosition({ 163.0f,632.0f });
 	//背景スプライト生成
 	Life = Sprite::Create(ImageManager::life, { 0.0f,0.0f });
 	Life->SetPosition({ 20.0f,620.0f });
@@ -30,7 +39,7 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 }
 void UI::Update() {
 	{//HPˆ—
-		AfterPos[1] = { (float)(player->GetHp() * 30),20 };
+		AfterPos[1] = { (float)(player->GetHp() * 43),55 };
 		plaPos = {
 		Ease(In,Quint,0.7f,(float)PlaHp->GetSize().x,(float)AfterPos[1].x),
 		Ease(In,Quint,0.7f,(float)PlaHp->GetSize().y,(float)AfterPos[1].y),
@@ -76,8 +85,10 @@ const void UI::Draw() {
 	if (boss2) {
 		BossHp2->Draw();
 	}
+	HpGauge->Draw();
+	Mark1->Draw();
 	PlaHp->Draw();
-	Life->Draw();
+	//Life->Draw();
 
 	if (boss && invisible) {
 		Arrow->Draw();

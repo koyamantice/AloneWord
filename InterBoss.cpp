@@ -24,19 +24,23 @@ void InterBoss::Update() {
 
 void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
-	//ImGui::Begin("test");
-	//ImGui::SliderFloat("frame", &frame, 25, -25);
-	//ImGui::Text("attack::%d", AttackCount);
-	//ImGui::Text("Off::%d", Off);
-	//ImGui::Text("active::%d", active);
-	//////ImGui::Unindent();
-	//ImGui::End();
+
+	ImGui::Begin("test");
+	ImGui::SliderFloat("pos.x", &pos.x, 25, -25);
+	ImGui::SliderFloat("pos.z", &pos.z, 25, -25);
+	ImGui::SliderFloat("rasius", &radius, 1080, 0);
+	//ImGui::SliderFloat("speed_y", &targetpos.x, 25, -25);
+	//ImGui::Text("stun::%d", stun);
+	//ImGui::Text("stunTimer::%d", stunTimer);
+	////ImGui::Unindent();
+	ImGui::End();
 	Object3d::PreDraw();
 	enemyobj->Draw();
 	Texture::PreDraw();
 	texture->Draw();
+	specialDraw();
 }
-//ƒvƒŒƒCƒ„[‚ªƒ_ƒ[ƒW‚ğH‚ç‚¤
+//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãŒãƒ€ãƒ¡ãƒ¼ã‚¸ã‚’é£Ÿã‚‰ã†
 bool InterBoss::collidePlayer() {
 	XMFLOAT3 playerpos = player->GetPosition();
 	int playerhp = player->GetHp();
@@ -50,7 +54,7 @@ bool InterBoss::collidePlayer() {
 	}
 }
 
-//UŒ‚ŠÖ”
+//æ”»æ’ƒé–¢æ•°
 bool InterBoss::collideAttackArm() {
 	XMFLOAT3 Armpos = player->GetArmPosition();
 	bool attackflag = player->GetAttackFlag();
@@ -60,7 +64,7 @@ bool InterBoss::collideAttackArm() {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 1.0f, Armpos.x, Armpos.y, Armpos.z, 1.0f) == true) {
 			BossHit = true;
 			player->SetAttackFlag(false);
-			//‚Â‚¢‚Ä‚é“G‚Ì”‚Å‰¹‚ª•Ï‚í‚é
+			//ã¤ã„ã¦ã‚‹æ•µã®æ•°ã§éŸ³ãŒå¤‰ã‚ã‚‹
 			if (weight <= 3) {
 				Audio::GetInstance()->PlayWave("Resources/Sound/strongL1.wav", 0.4f);
 			} else if (weight > 3 && weight <= 6) {
@@ -69,7 +73,7 @@ bool InterBoss::collideAttackArm() {
 				Audio::GetInstance()->PlayWave("Resources/Sound/strongL3.wav", 0.4f);
 			}
 
-			//ƒ{ƒX‚ÌHP‚ğ‚Ö‚ç‚·
+			//ãƒœã‚¹ã®HPã‚’ã¸ã‚‰ã™
 			if (BossHit == true) {
 				Effect = true;
 				BossHP -= (weight * 2) * power;

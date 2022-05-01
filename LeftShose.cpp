@@ -49,8 +49,8 @@ void LeftShose::Spec() {
 		if (!active) {
 			AttackCount++;
 			angle += 2.0f;
-			angle2 = angle * (3.14 / 180);
-			pos.y = sin(angle2) * 0.5 + 0.5;
+			angle2 = angle * (3.14f / 180.0f);
+			pos.y = sin(angle2) * 0.5f + 0.5f;
 			enemyobj->SetPosition(pos);
 		}
 	}
@@ -216,4 +216,7 @@ void LeftShose::Spec() {
 			enemyobj->SetPosition(pos);
 		}
 	}
+}
+
+void LeftShose::specialDraw() {
 }
