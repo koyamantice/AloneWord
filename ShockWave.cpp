@@ -1,8 +1,9 @@
 #include "ShockWave.h"
 #include "ImageManager.h"
-
+#include"Collision.h"
+#include "DebugText.h"
 void ShockWave::Init() {
-	wave = Texture::Create(ImageManager::Resporn, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
+	wave = Texture::Create(ImageManager::enemy, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
 	wave->TextureCreate();
 	wave->SetPosition({ 0.0f,0.0f,0.0f });
 	wave->SetRotation({ 90.0f, 0.0f, 0.0f });
@@ -10,7 +11,15 @@ void ShockWave::Init() {
 	//limit->SetScale({ 6,5,5 }); 
 }
 
-void ShockWave::Upda(Pastel* pastel) {
+void ShockWave::Upda(Pastel* pastel,Player* player) {
+	Interval = player->GetInterval();
+	int playerhp = player->GetHp();
+	if (CollideWave(player) && !CollideSafeWave(player) && Interval == 0) {
+		player->SetHp(player->GetHp() - 1);
+		Interval = 100;
+	}
+	
+	player->SetInterval(Interval);
 	SetWave(pastel);
 	wave->Update();
 }
@@ -18,6 +27,8 @@ void ShockWave::Upda(Pastel* pastel) {
 void ShockWave::Draw() {
 	ImGui::Begin("test");
 	ImGui::SliderFloat("pos.x", &pos.x, 25, -25);
+	ImGui::SliderFloat("damege", &damegeArea, 25, -25);
+	ImGui::SliderFloat("safe", &safeArea, 25, -25);
 	ImGui::Text("expand::%d", expand);
 	////ImGui::Unindent();
 	ImGui::End();
@@ -40,16 +51,47 @@ void ShockWave::SetWave(Pastel* pastel) {
 	}
 
 	if (expand == true) {
-		scale.x += 0.01f;
-		scale.y += 0.01f;
-		scale.z += 0.01f;
+		scale.x += 0.05f;
+		scale.y += 0.05f;
+		scale.z += 0.05f;
 
-		if (scale.x >= 50.0f) {
+		damegeArea += 0.1f;
+
+		if (damegeArea >= 0.5f) {
+			safeArea += 0.1;
+		}
+		if (scale.x >= 20.0f) {
 			expand = false;
 			scale = { 0.0f,0.0f,0.0f };
+			damegeArea = 0.0f;
+			safeArea = 0.0f;
 		}
 	}
 
 	wave->SetPosition(this->pos);
 	wave->SetScale(scale);
 }
+
+bool ShockWave::CollideWave(Player* player) {
+	XMFLOAT3 playerpos = player->GetPosition();
+	
+	if (Collision::SphereCollision(pos.x, pos.y, pos.z, damegeArea, playerpos.x, playerpos.y, playerpos.z, damegeArea)) {
+		DebugText::GetInstance()->Print("damegeHit", 0, 0, 2.0f);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
+bool ShockWave::CollideSafeWave(Player* player) {
+	XMFLOAT3 playerpos = player->GetPosition();
+	if (Collision::SphereCollision(pos.x, pos.y, pos.z, safeArea, playerpos.x, playerpos.y, playerpos.z, safeArea)) {
+		DebugText::GetInstance()->Print("safeHit", 0, 10, 2.0f);
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
