@@ -54,6 +54,7 @@ public:
 		this->attribute |= attribute;
 	}
 
+
 	/// <summary>
 	/// “–‚½‚è”»’è‘®«‚ğíœ
 	/// </summary>
