@@ -251,6 +251,24 @@
     <ClCompile Include="base\XorShift.cpp">
       <Filter>base</Filter>
     </ClCompile>
+    <ClCompile Include="LeftShose.cpp">
+      <Filter>enemy\ボス</Filter>
+    </ClCompile>
+    <ClCompile Include="RightShose.cpp">
+      <Filter>enemy\ボス</Filter>
+    </ClCompile>
+    <ClCompile Include="LeftShose.cpp">
+      <Filter>enemy\ボス</Filter>
+    </ClCompile>
+    <ClCompile Include="RightShose.cpp">
+      <Filter>enemy\ボス</Filter>
+    </ClCompile>
+    <ClCompile Include="LeftShose.cpp">
+      <Filter>enemy\ボス</Filter>
+    </ClCompile>
+    <ClCompile Include="RightShose.cpp">
+      <Filter>enemy\ボス</Filter>
+    </ClCompile>
     <ClCompile Include="ImageManager.cpp">
       <Filter>2d</Filter>
     </ClCompile>
@@ -292,6 +310,12 @@
     </ClCompile>
     <ClCompile Include="ThirdBoss.cpp">
       <Filter>stage\急須</Filter>
+    </ClCompile>
+    <ClCompile Include="Pastel.cpp">
+      <Filter>enemy\ボス</Filter>
+    </ClCompile>
+    <ClCompile Include="Mill.cpp">
+      <Filter>enemy\ボス</Filter>
     </ClCompile>
     <ClCompile Include="HotWater.cpp">
       <Filter>stage\急須</Filter>
