@@ -170,7 +170,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 	mill->Update();
 	particleMan->Update();
 	//objSphere->Update();
-	shockwave->Upda(pastel,player);
+	shockwave->Upda(pastel);
 	ui->Update();
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i]->Update();
