@@ -123,6 +123,8 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	object1->SetRotation(player->GetRotation());
 	object1->SetPosition(player->GetPosition());
 
+	shockwave = new ShockWave;
+	shockwave->Init();
 	ui = new UI(player, pastel);
 	//ui->Initialize();
 }
@@ -136,6 +138,7 @@ void FourthBoss::Finalize() {
 	player->Finalize();
 	pastel->Finalize();
 	mill->Finalize();
+	shockwave->Final();
 	delete objBossMap;
 	delete objFloor;
 	delete modelBossMap;
@@ -167,6 +170,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 	mill->Update();
 	particleMan->Update();
 	//objSphere->Update();
+	shockwave->Upda(pastel);
 	ui->Update();
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i]->Update();
@@ -272,6 +276,7 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 	objFloor->Draw();
 
 	Texture::PreDraw();
+	shockwave->Draw();
 	//limit->Draw();
 	//Sprite::PreDraw();
 	//sprite->Draw();
@@ -295,14 +300,7 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 	}
 
 	ui->Draw();
+
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
-	float have = mill->GetHaveEnemy();
-	int Timer = mill->GetHaveTimer();
-	ImGui::Begin("test");
-	ImGui::SliderFloat("pos.y", &have, 25, -25);
-	//ImGui::SliderFloat("speed_y", &targetpos.x, 25, -25);
-	ImGui::Text("stun::%d", Timer);
-	////ImGui::Unindent();
-	ImGui::End();
 }
