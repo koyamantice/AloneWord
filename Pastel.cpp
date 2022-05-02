@@ -120,7 +120,7 @@ void Pastel::Spec() {
 				}
 				if (frame >= 1.0f) {
 					frame = 1.0f;
-					if (coolT < 50) {
+					if (coolT < 350) {
 						coolT++;
 						break;
 					}

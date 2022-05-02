@@ -26,9 +26,7 @@ void ShockWave::Upda(Pastel* pastel,Player* player) {
 
 void ShockWave::Draw() {
 	ImGui::Begin("test");
-	ImGui::SliderFloat("pos.x", &pos.x, 25, -25);
-	ImGui::SliderFloat("damege", &damegeArea, 25, -25);
-	ImGui::SliderFloat("safe", &safeArea, 25, -25);
+	ImGui::SliderFloat("pos.x", &scale.x, 25, -25);
 	ImGui::Text("expand::%d", expand);
 	////ImGui::Unindent();
 	ImGui::End();
@@ -55,10 +53,10 @@ void ShockWave::SetWave(Pastel* pastel) {
 		scale.y += 0.05f;
 		scale.z += 0.05f;
 
-		damegeArea += 0.1f;
+		damegeArea += 0.12f;
 
 		if (damegeArea >= 0.5f) {
-			safeArea += 0.1;
+			safeArea += 0.12;
 		}
 		if (scale.x >= 20.0f) {
 			expand = false;
