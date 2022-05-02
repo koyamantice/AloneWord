@@ -13,6 +13,7 @@ public:
 	void Draw();
 	void Set(const XMFLOAT3& pos);
 	void Final();
+	const bool& GetIsAlive() { return IsAlive; };
 private:
 	Texture* hot=nullptr;
 	float frame = 0;

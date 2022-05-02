@@ -1,4 +1,4 @@
-#include "InterBoss.h"
+﻿#include "InterBoss.h"
 #include<sstream>
 #include<iomanip>
 #include"Collision.h"
