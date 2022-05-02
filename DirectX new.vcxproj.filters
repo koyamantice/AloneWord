@@ -251,12 +251,6 @@
     <ClCompile Include="base\XorShift.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="LeftShose.cpp">
-      <Filter>enemy\ボス</Filter>
-    </ClCompile>
-    <ClCompile Include="RightShose.cpp">
-      <Filter>enemy\ボス</Filter>
-    </ClCompile>
     <ClCompile Include="ImageManager.cpp">
       <Filter>2d</Filter>
     </ClCompile>
@@ -299,12 +293,6 @@
     <ClCompile Include="ThirdBoss.cpp">
       <Filter>stage\急須</Filter>
     </ClCompile>
-    <ClCompile Include="Pastel.cpp">
-      <Filter>enemy\ボス</Filter>
-    </ClCompile>
-    <ClCompile Include="Mill.cpp">
-      <Filter>enemy\ボス</Filter>
-    </ClCompile>
     <ClCompile Include="HotWater.cpp">
       <Filter>stage\急須</Filter>
     </ClCompile>
@@ -313,6 +301,21 @@
     </ClCompile>
     <ClCompile Include="enemy\GreenTea.cpp">
       <Filter>stage\急須</Filter>
+    </ClCompile>
+    <ClCompile Include="Mill.cpp">
+      <Filter>stage\杵</Filter>
+    </ClCompile>
+    <ClCompile Include="Pastel.cpp">
+      <Filter>stage\杵</Filter>
+    </ClCompile>
+    <ClCompile Include="LeftShose.cpp">
+      <Filter>stage\シューズ</Filter>
+    </ClCompile>
+    <ClCompile Include="RightShose.cpp">
+      <Filter>stage\シューズ</Filter>
+    </ClCompile>
+    <ClCompile Include="ShockWave.cpp">
+      <Filter>stage\杵</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -493,12 +496,6 @@
     <ClInclude Include="base\XorShift.h">
       <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="LeftShose.h">
-      <Filter>enemy\ボス</Filter>
-    </ClInclude>
-    <ClInclude Include="RightShose.h">
-      <Filter>enemy\ボス</Filter>
-    </ClInclude>
     <ClInclude Include="ImageManager.h">
       <Filter>2d</Filter>
     </ClInclude>
@@ -541,12 +538,6 @@
     <ClInclude Include="ThirdBoss.h">
       <Filter>stage\急須</Filter>
     </ClInclude>
-    <ClInclude Include="Pastel.h">
-      <Filter>enemy\ボス</Filter>
-    </ClInclude>
-    <ClInclude Include="Mill.h">
-      <Filter>enemy\ボス</Filter>
-    </ClInclude>
     <ClInclude Include="HotWater.h">
       <Filter>stage\急須</Filter>
     </ClInclude>
@@ -556,6 +547,21 @@
     <ClInclude Include="enemy\GreenTea.h">
       <Filter>stage\急須</Filter>
     </ClInclude>
+
+    <ClInclude Include="Mill.h">
+      <Filter>stage\杵</Filter>
+    </ClInclude>
+    <ClInclude Include="Pastel.h">
+      <Filter>stage\杵</Filter>
+    </ClInclude>
+    <ClInclude Include="LeftShose.h">
+      <Filter>stage\シューズ</Filter>
+    </ClInclude>
+    <ClInclude Include="RightShose.h">
+      <Filter>stage\シューズ</Filter>
+    </ClInclude>
+    <ClInclude Include="ShockWave.h">
+      <Filter>stage\杵</Filter>
     <ClInclude Include="base\SceneFactory.h">
       <Filter>scene</Filter>
     </ClInclude>
