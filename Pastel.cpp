@@ -127,7 +127,21 @@ void Pastel::Spec() {
 					else {
 						coolT = 0;
 						frame = 0;
-						action++;
+						if (BossHP >= 20) {
+							action++;
+						}
+						else {
+							AttackC++;
+							if (AttackC < 2) {
+								AttackC++;
+								pat = (rand() % 3);
+								action = 1;
+							}
+							else {
+								AttackC = 0;
+								action++;
+							}
+						}
 						break;
 					}
 				}
