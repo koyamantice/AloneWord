@@ -11,8 +11,7 @@ public:
 	void Spec() override;
 	void specialDraw() override;
 	bool collideAttackArm(Player* player);
-	const float& GetHaveEnemy() { return haveEnemy; }
-	const bool& GetHaveTimer() { return haveTimer; }
+
 private:
 
 	float y = 0.0f;
@@ -21,6 +20,5 @@ private:
 		Up,
 		Down
 	};
-	float haveEnemy = 0.0f;
-	int haveTimer = 0;
+	
 };

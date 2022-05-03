@@ -62,6 +62,9 @@ public:
 	void Follow();
 	void Reborn();
 	bool CollidePos(XMFLOAT3 pos, float radius);
+	const float& GetHaveEnemy() { return haveEnemy; }
+	//const int& GetHaveTimer() { return haveTimer; }
+	const int& GetHaveTimer() { return haveTimer; }
 public:
 	const float& GetHP() { return BossHP; }
 	const bool& GetEffect() { return Effect; }
@@ -180,5 +183,7 @@ protected:
 	int stunTimer = 0;
 	//‹n‚Ìƒ{ƒX
 	bool Off = false;
+	int haveTimer = 0;
+	float haveEnemy = 0.0f;
 };
 
