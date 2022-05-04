@@ -46,7 +46,7 @@ void Pastel::Spec() {
 		}
 	}
 	else {
-		if (!active) {
+		if (!active && !Off) {
 			AttackCount++;
 			//angle += 2.0f;
 			//angle2 = angle * (3.14f / 180.0f);
@@ -189,37 +189,53 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 	
 	if (Off == true && !active) {
 		AfterPos.y = 1.0f;
-		AfterPos.z = 5.0f;
-		if (frame < 0.45f && pos.y != 1.0f) {
-			frame += 0.002f;
+		AfterPos.z = 8.0f;
+	
+		if (frame < 0.90f && pos.y != 1.0f) {
+			frame += 0.004f;
 		}
 		else {
 			frame = 0.0f;
+			angle += 2.0f;
+			angle2 = angle * (3.14f / 180.0f);
+			rot.z = sin(angle2) * 90;
+
+			if (rot.z >= 89) {
+				Count++;
+			}
 		}
+
+		//if (pos.y <= 2.0f) {
+		//
+		//}
+		//
 		pos = {
 Ease(In,Cubic,frame,pos.x,AfterPos.x),
 Ease(In,Cubic,frame,pos.y,AfterPos.y),
 Ease(In,Cubic,frame,pos.z,AfterPos.z)
 		};
 		enemyobj->SetPosition(pos);
+		enemyobj->SetRotation(rot);
 	}
-	
-	
+
 }
 
 void Pastel::specialDraw() {
 }
 
 void Pastel::GetOff(Mill* mill) {
-	int millTimer = mill->GetHaveTimer();
-
-	if (millTimer != 0) {
+	float haveEnemy = mill->GetHaveEnemy();
+	int haveTimer = mill->GetHaveTimer();
+	if (haveTimer != 0) {
 		if (Off == false && !active) {
 			frame = 0.0f;
 			Off = true;
 		}
 	}
 	else {
+		rot.z = 0.0f;
 		Off = false;
+		enemyobj->SetRotation(rot);
 	}
+
 }

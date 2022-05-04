@@ -10,6 +10,7 @@ public:
 	void Spec() override;
 	void specialDraw() override;
 	void GetOff(Mill* mill);
+
 private:
 
 	float y = 0.0f;
@@ -18,7 +19,5 @@ private:
 		Up,
 		Down
 	};
-
-
-	int atackpoint = 0;
+	int Count = 0;
 };
