@@ -28,24 +28,29 @@ void GreenTea::Initialize() {
 	texture->SetPosition(pos.x, -1, pos.z);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.3f,0.3f,0.3f });
-
-	hotWater = new HotWater;
-	hotWater->Init();
+	for (int i = 0; i< 50; i++) {
+		hotWater[i] = new HotWater;
+		hotWater[i]->Init();
+	}
 	degree = 0.0f;
 	scale = 0.0f;
 }
 
 void GreenTea::Finalize() {
-	hotWater->Final();
+	for (int i = 0; i < 50;i++) {
+		hotWater[i]->Final();
+	}
 	delete texture;
 	delete enemyobj;
-	delete hotWater;
+	//delete hotWater;
 }
 
 //ボスの行動
 void GreenTea::Spec() {
-	hotWater->Upda();
-	XMFLOAT3 AfterPos{};
+	for (int i = 0; i < 50; i++) {
+	hotWater[i]->Upda();
+	}
+	//XMFLOAT3 AfterPos{};
 	if (AttackCount > 180 && pos.y <= 0.1f) {
 		if (!active) {
 			action = 0;// (rand() % 2);
@@ -71,20 +76,28 @@ void GreenTea::Spec() {
 			//}
 			if (pat == 1) {
 				radius++;
-				if ((int)radius % 60 == 0) {
-					hotWater->Set(pos);
+				count++;
+				if (count%10==1) {
+					for (int i = 0; i < 50; i++) {
+						if (!hotWater[i]->GetIsAlive()) {
+							hotWater[i]->Set(pos);
+							break;
+						}
+					}
 				}
 				scale += 0.02f;
 				radius = (int)radius % 360;
 				if (radius == 0) {
 					if (check >= 2) {
 						pat++;
+						StartPos = pos;
+						frame = 0;
 						check = 0;
 					} else {
 						check++;
 					}
 				}
-				Afterrot = radius;
+				//Afterrot = radius;
 				degree = radius * PI / 180.0f;
 				pos.x = cosf(degree) * scale;
 				pos.z = sinf(degree) * scale;
@@ -92,13 +105,15 @@ void GreenTea::Spec() {
 				if (frame < 1.0f) {
 					frame += 0.002f;
 				} else {
-					frame = 0;
+					//frame = 0;
 					pat++;
+					radius = 0;
+					scale = 0;
 				}
 				pos = {
-			Ease(In,Cubic,frame,pos.x,0),
-			Ease(In,Cubic,frame,pos.y,0),
-			Ease(In,Cubic,frame,pos.z,0)
+			Ease(InOut,Cubic,frame,StartPos.x,0),
+			Ease(InOut,Cubic,frame,StartPos.y,0),
+			Ease(InOut,Cubic,frame,StartPos.z,0)
 				};
 				enemyobj->SetPosition(pos);
 			} else {
@@ -114,11 +129,11 @@ void GreenTea::Spec() {
 			if (AttackC < 3) {
 				switch (pat) {
 				case 1:
-					AfterPos = {
-					pos.x,
-					3.0f,
-					pos.z
-					};
+					//AfterPos = {
+					//pos.x,
+					//3.0f,
+					//pos.z
+					//};
 					if (frame < 1.0f) {
 						frame += 0.01f;
 						break;
@@ -128,11 +143,11 @@ void GreenTea::Spec() {
 						break;
 					}
 				case 2:
-					AfterPos = {
+				/*	AfterPos = {
 						player->GetPosition().x,
 					3.0f,
 						player->GetPosition().z
-					};
+					};*/
 					if (aiming < 180) {
 						frame = 0.5f;
 						aiming++;
@@ -144,11 +159,11 @@ void GreenTea::Spec() {
 						break;
 					}
 				case 3:
-					AfterPos = {
+					/*AfterPos = {
 						pos.x,
 						0,
 						pos.z,
-					};
+					};*/
 					if (frame < 1.0f) {
 						frame += 0.08f;
 						break;
@@ -174,11 +189,11 @@ void GreenTea::Spec() {
 			} else {
 				switch (pat) {
 				case 1:
-					AfterPos = {
+				/*	AfterPos = {
 					pos.x,
 					3.0f,
 					pos.z
-					};
+					};*/
 					if (frame < 1.0f) {
 						frame += 0.01f;
 						break;
@@ -188,11 +203,11 @@ void GreenTea::Spec() {
 						break;
 					}
 				case 2:
-					AfterPos = {
+				/*	AfterPos = {
 					0,
 					3.0f,
 					0
-					};
+					};*/
 					if (frame < 1.0f) {
 						frame += 0.01f;
 						break;
@@ -202,11 +217,11 @@ void GreenTea::Spec() {
 						break;
 					}
 				case 3:
-					AfterPos = {
+					/*AfterPos = {
 					0,
 					0,
 					0
-					};
+					};*/
 					if (frame < 1.0f) {
 						frame += 0.01f;
 						break;
@@ -223,16 +238,18 @@ void GreenTea::Spec() {
 					break;
 				}
 			}
-			pos = {
+		/*	pos = {
 	Ease(In,Cubic,frame,pos.x,AfterPos.x),
 	Ease(In,Cubic,frame,pos.y,AfterPos.y),
 	Ease(In,Cubic,frame,pos.z,AfterPos.z)
-			};
+			};*/
 			enemyobj->SetPosition(pos);
 		}
 	}
 }
 
 void GreenTea::specialDraw() {
-	hotWater->Draw();
+	for (int i = 0; i < 50; i++) {
+		hotWater[i]->Draw();
+	}
 }

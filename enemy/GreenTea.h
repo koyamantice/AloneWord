@@ -10,10 +10,11 @@ public:
 	void Spec() override;
 	void specialDraw() override;
 private:
-	HotWater* hotWater=nullptr;
+	HotWater* hotWater[50];
 	float degree;
 	float y = 0.0f;
 	int check = false;
+	int count =0;
 	//‘Ò‹@ƒ‚[ƒVƒ‡ƒ“‚Ì‚½‚ß‚Ì‚â‚Â
 	enum Motion {
 		Up,
