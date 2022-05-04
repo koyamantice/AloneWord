@@ -5,7 +5,6 @@
 void HotWater::Init() {
 	hot = Texture::Create(ImageManager::water, { 0,0,0 }, { 1,1,1 }, { 1,1,1,1 });
 	hot->TextureCreate();
-	hot->TextureCreate();
 	hot->SetPosition({ 0.0f,-50.0f,0.0f });
 	hot->SetRotation({ 90.0f,0, 0 });
 	hot->SetScale({ 0.3f,0.3f,0.3f });
