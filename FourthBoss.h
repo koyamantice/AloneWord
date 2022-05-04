@@ -41,7 +41,7 @@ private:
 	TouchableObject* objBossMap;
 
 	Model* modelSphere = nullptr;
-	Object3d* objSphere;
+	TouchableObject* objSphere;
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;
 	DebugCamera* camera = { nullptr };

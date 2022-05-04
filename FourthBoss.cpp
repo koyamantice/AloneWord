@@ -58,24 +58,12 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	objBossMap->SetScale({ 1.4f,1.5f,1.6f });
 	*/
 	//当たり判定確認用です
-
-	objSphere = Object3d::Create();
 	modelSphere = Model::CreateFromOBJ("sphere");
-	objSphere->SetModel(modelSphere);
-	objSphere->SetPosition({ -10, 1, 0 });
+	objSphere = TouchableObject::Create(modelSphere);
+	objSphere->SetScale({ 5.0f, 5.0f, 5.0f });
+	objSphere->SetPosition(pastel->GetPosition());
 	// コライダーの追加
 	//objSphere->SetCollider(new SphereCollider);
-
-	//普通のテクスチャ(板ポリ)
-	/*limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
-	objBossMap->SetPosition({ 0,-1,10 });
-	objBossMap->SetScale({ 22,1,10 });
-	//譎ｮ騾壹・繝・け繧ｹ繝√Ε(譚ｿ繝昴Μ)
-	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
-	limit->TextureCreate();
-	limit->SetPosition({ 0.0f,0.01f,0.0f });
-	limit->SetRotation({ 90.0f,0, 0 });
-	limit->SetScale({ 6,5,5 });*/
 
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i] = new Effect();
@@ -169,7 +157,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 	mill->collideAttackArm(player);
 	mill->Update();
 	particleMan->Update();
-	//objSphere->Update();
+	objSphere->Update();
 	shockwave->Upda(pastel,player);
 	ui->Update();
 	for (std::size_t i = 0; i < enemy.size(); i++) {

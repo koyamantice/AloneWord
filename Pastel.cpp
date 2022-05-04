@@ -132,9 +132,12 @@ void Pastel::Spec() {
 						}
 						else {
 							AttackC++;
+							oldpat = pat;
 							if (AttackC < 2) {
 								AttackC++;
-								pat = (rand() % 3);
+								if (oldpat == pat) {
+									pat = (rand() % 3);
+								}
 								action = 1;
 							}
 							else {
@@ -199,10 +202,6 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 			angle += 2.0f;
 			angle2 = angle * (3.14f / 180.0f);
 			rot.z = sin(angle2) * 90;
-
-			if (rot.z >= 89) {
-				Count++;
-			}
 		}
 
 		//if (pos.y <= 2.0f) {

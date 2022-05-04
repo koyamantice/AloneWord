@@ -19,5 +19,5 @@ private:
 		Up,
 		Down
 	};
-	int Count = 0;
+	int oldpat = 0;
 };
