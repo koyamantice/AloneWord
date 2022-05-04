@@ -20,6 +20,7 @@ public:
 		EHub,
 		Enemy,
 		Fork,
+		Water,
 		LeftShose,
 		RightShose,
 	};

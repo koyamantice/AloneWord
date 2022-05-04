@@ -16,6 +16,7 @@ void ModelManager::Initialize() {
 	LoadModel(EHub, "EHub");
 	LoadModel(Enemy, "Enemy");
 	LoadModel(Fork, "Fork");
+	LoadModel(Water,"Water");
 	LoadModel(LeftShose,"Motti");
 	LoadModel(RightShose,"chr_knight");
 	LoadFBXModel(Pla, "Motti_move");
