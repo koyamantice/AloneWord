@@ -25,7 +25,9 @@ public:
 		RightShose,
 	};
 	enum FBXName {
-		Pla
+		MottiMove,
+		//ArmHaveFB,
+		//MottiHand
 	};
 
 public:

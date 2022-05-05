@@ -11,6 +11,7 @@
 #include "ParticleManager.h"
 #include "CollisionManager.h"
 #include "CollisionAttribute.h"
+#include "FbxLoader.h"
 #include <ModelManager.h>
 using namespace DirectX;
 Input* input = Input::GetInstance();
@@ -37,6 +38,8 @@ Player::Player() {
 	Armmodel= ModelManager::GetIns()->GetModel(ModelManager::Arm);
 	object3d = new Object3d();
 	Armobj = new Object3d();
+	move_model1 = ModelManager::GetIns()->GetFBXModel(ModelManager::MottiMove);
+	move_object1 = new FBXObject3d;
 }
 
 bool Player::Initialize() {
@@ -56,6 +59,12 @@ bool Player::Initialize() {
 	Armpos.z = ArmCircleZ + pos.z;
 	Armobj->SetPosition(Armpos);
 	Armobj->SetScale({ 1.4f,1.4f,1.4f });
+
+	move_object1->Initialize();
+	move_object1->SetModel(move_model1);
+	move_object1->SetScale({ 0.007f, 0.007f, 0.007f });
+	move_object1->SetPosition(position);
+	move_object1->SetRotation(rot);
 	//effecttexture = Texture::Create(4, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	//effecttexture->TextureCreate();
 	////effecttexture->SetRotation({ 90,0,0 });
@@ -380,10 +389,13 @@ void Player::Update() {
 			}
 		}
 	}
+	move_object1->SetPosition(position);
+	move_object1->SetRotation(rot);
+	move_object1->Update();
 }
 
 //描画
-void Player::Draw() {
+void Player::Draw(DirectXCommon* dxCommon) {
 	//ImGui::Begin("test");
 	//ImGui::SliderFloat("StickrotX", &StickrotX, 1000, -1000);
 	//ImGui::SliderFloat("StickrotY", &StickrotY, 1000, -1000);
@@ -396,6 +408,7 @@ void Player::Draw() {
 		//object3d->Draw();
 		Armobj->Draw();
 	}
+	move_object1->Draw(dxCommon->GetCmdList());
 }
 
 void Player::Pause(const int& Timer) {
