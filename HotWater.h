@@ -1,5 +1,7 @@
 #pragma once
 #include "Texture.h"
+#include "Object3d.h"
+
 class HotWater {
 private: // エイリアス
 	// DirectX::を省略
@@ -15,10 +17,14 @@ public:
 	void Final();
 	const bool& GetIsAlive() { return IsAlive; };
 private:
+	Object3d* water = nullptr;
 	Texture* hot=nullptr;
 	float frame = 0;
 	bool shrink = false;
 	XMFLOAT3 sca{};
+	XMFLOAT3 vel{};
+	XMFLOAT3 pos{};
+	bool onGround=false;
 	bool IsAlive = false;
 };
 

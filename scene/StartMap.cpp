@@ -24,26 +24,6 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	Texture::SetCamera(camera);
 	// 3Dオブジェクトにカメラをセット
 	Object3d::SetCamera(camera);
-	player = new Player();
-	player->Initialize();
-	player->SetMove(50.0f, 50.0f);
-	player->SetPosition({ 0.0f,0.0f,-30.0f });
-
-	ui = new UI(player);
-	for (std::size_t i = 0; i < spawing.size(); i++) {
-		spawing[i] = new Spawning();
-		spawing[i]->SetPlayer(player);
-		spawing[i]->Initialize();
-	}
-
-	spawing[0]->SetPosition({ -20.0f,0.0f,-4.0f });
-	spawing[0]->SetRotation({ 0,90,0 });
-
-	//spawing[1]->SetPosition({ 0,0.0f,8.0f });
-	//spawing[1]->SetRotation({ 0,90,0 });
-
-	//spawing[2]->SetPosition({ 20.0f,0.0f,-4.0f });
-	//spawing[2]->SetRotation({ 0,90,0 });
 
 	//オブジェクト初期化
 	/*modelGround = Model::CreateFromOBJ("ground");
@@ -97,6 +77,40 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	// 3Dオブエクトにライトをセット
 	Object3d::SetLightGroup(lightGroup);
 
+	//この順番で書かないと例外スローになります
+	// デバイスをセット
+	FBXObject3d::SetDevice(dxCommon->GetDev());
+	// カメラをセット
+	FBXObject3d::SetCamera(camera);
+	// グラフィックスパイプライン生成
+	FBXObject3d::CreateGraphicsPipeline();
+	player = new Player();
+	player->Initialize();
+	player->SetMove(50.0f, 50.0f);
+	player->SetPosition({ 0.0f,0.0f,-30.0f });
+	//player->SetPosition({ 0.0f,0.0f,-30.0f });
+
+	// パーティクルマネージャ生成
+	particleMan = ParticleManager::GetInstance();
+	particleMan->SetCamera(camera);
+
+
+	ui = new UI(player);
+	for (std::size_t i = 0; i < spawing.size(); i++) {
+		spawing[i] = new Spawning();
+		spawing[i]->SetPlayer(player);
+		spawing[i]->Initialize();
+	}
+
+	spawing[0]->SetPosition({ -20.0f,0.0f,-4.0f });
+	spawing[0]->SetRotation({ 0,90,0 });
+
+	//spawing[1]->SetPosition({ 0,0.0f,8.0f });
+	//spawing[1]->SetRotation({ 0,90,0 });
+
+	//spawing[2]->SetPosition({ 20.0f,0.0f,-4.0f });
+	//spawing[2]->SetRotation({ 0,90,0 });
+
 	//カメラポジション
 	cameraPos.x = player->GetTargetPosition().x;
 	cameraPos.y = player->GetTargetPosition().y + 10;
@@ -104,25 +118,6 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	// カメラ注視点をセット
 	camera->SetTarget(player->GetTargetPosition());
 	camera->SetEye(cameraPos);
-	// モデル名を指定してファイル読み込み
-	model1 =ModelManager::GetIns()->GetFBXModel(ModelManager::Pla);
-
-	// デバイスをセット
-	FBXObject3d::SetDevice(dxCommon->GetDev());
-	// カメラをセット
-	FBXObject3d::SetCamera(camera);
-	// グラフィックスパイプライン生成
-	FBXObject3d::CreateGraphicsPipeline();
-	// パーティクルマネージャ生成
-	particleMan = ParticleManager::GetInstance();
-	particleMan->SetCamera(camera);
-
-	object1 = new FBXObject3d;
-	object1->Initialize();
-	object1->SetModel(model1);
-	object1->SetScale({ 0.007f,0.007f,0.007f });
-	object1->SetRotation(player->GetRotation());
-	object1->SetPosition(player->GetPosition());
 }
 
 void StartMap::Finalize() {
@@ -144,7 +139,7 @@ void StartMap::Finalize() {
 	delete objFloor;
 	delete modelStartMap;
 	delete objStartMap;
-	delete object1;
+	//delete object1;
 	//delete model1;
 	warp->Finalize();
 }
@@ -328,13 +323,13 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 	}
 
-	if (input->PushKey(DIK_0)) {
-		object1->PlayAnimation();
-	}
+	//if (input->PushKey(DIK_0)) {
+	//	object1->PlayAnimation();
+	//}
 	ui->Update();
-	object1->SetRotation(player->GetRotation());
-	object1->SetPosition(player->GetPosition());
-	object1->Update();
+	//object1->SetRotation(player->GetRotation());
+	//object1->SetPosition(player->GetPosition());
+	//object1->Update();
 	cameraPos.x = player->GetTargetPosition().x;
 	cameraPos.y = player->GetTargetPosition().y + distanceY;
 	cameraPos.z = player->GetPosition().z - distanceZ;
@@ -376,9 +371,9 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 
 	warp->Draw();
 	Object3d::PreDraw();
-	object1->Draw(dxCommon->GetCmdList());
+	//object1->Draw(dxCommon->GetCmdList());
 	//背景用
-	player->Draw();
+	player->Draw(dxCommon);
 	//for (int i = 0; i < StartEnemyMax; i++) {
 	//	enemy[i]->Draw();
 	//}

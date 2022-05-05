@@ -20,11 +20,14 @@ public:
 		EHub,
 		Enemy,
 		Fork,
+		Water,
 		LeftShose,
 		RightShose,
 	};
 	enum FBXName {
-		Pla
+		MottiMove,
+		//ArmHaveFB,
+		//MottiHand
 	};
 
 public:

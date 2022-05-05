@@ -100,9 +100,7 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	// カメラ注視点をセット
 	camera->SetTarget(player->GetTargetPosition());
 	camera->SetEye(cameraPos);
-	// モデル名を指定してファイル読み込み
-	model1 = ModelManager::GetIns()->GetFBXModel(ModelManager::Pla);
-
+	
 	// デバイスをセット
 	FBXObject3d::SetDevice(dxCommon->GetDev());
 	// カメラをセット
@@ -113,13 +111,6 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	particleMan = ParticleManager::GetInstance();
 	particleMan->SetCamera(camera);
 
-
-	object1 = new FBXObject3d;
-	object1->Initialize();
-	object1->SetModel(model1);
-	object1->SetScale({ 0.007f,0.007f,0.007f });
-	object1->SetRotation(player->GetRotation());
-	object1->SetPosition(player->GetPosition());
 	ui = new UI(player, bossenemy);
 	//ui->Initialize();
 }
@@ -145,8 +136,6 @@ void ThirdBoss::Finalize() {
 		}
 	}
 	delete camera;
-	delete object1;
-	//delete model1;
 }
 
 void ThirdBoss::Update(DirectXCommon* dxCommon) {
@@ -245,9 +234,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 	cameraPos.z = player->GetPosition().z - distanceZ;
 	camera->SetTarget(player->GetTargetPosition());
 	camera->SetEye(cameraPos);
-	object1->SetRotation(player->GetRotation());
-	object1->SetPosition(player->GetPosition());
-	object1->Update();
+
 	// 全ての衝突をチェック
 	//collsionManager->CheckAllCollisions();
 	/*DebugText::GetInstance()->Print("PUSH to RB!!",200, 100,1.0f);
@@ -271,9 +258,7 @@ void ThirdBoss::Draw(DirectXCommon* dxCommon) {
 	//Sprite::PreDraw();
 	//sprite->Draw();
 
-	object1->Draw(dxCommon->GetCmdList());
-
-	player->Draw();
+	player->Draw(dxCommon);
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i]->Draw();
 	}

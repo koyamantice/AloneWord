@@ -7,7 +7,8 @@
 #include "Sprite.h"
 #include "Texture.h"
 #include "DirectXCommon.h"
-
+#include "FBXModel.h"
+#include "FBXObject3d.h"
 class InterEnemy;
 class Player : public Object3d {
 public:
@@ -16,7 +17,7 @@ public:
 	bool Initialize() override;
 	void Finalize();
 	void Update() override;
-	void Draw();
+	void Draw(DirectXCommon* dxCommon);
 	void Pause(const int& Timer);
 private:
 	// DirectX::を省略
@@ -181,4 +182,7 @@ private:
 	XMFLOAT3 rot;
 	bool pause = false;
 	int count = 0;
+	//動いてるときのFBX
+	FBXModel* move_model1 = nullptr;
+	FBXObject3d* move_object1 = nullptr;
 };

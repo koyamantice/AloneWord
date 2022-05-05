@@ -16,9 +16,12 @@ void ModelManager::Initialize() {
 	LoadModel(EHub, "EHub");
 	LoadModel(Enemy, "Enemy");
 	LoadModel(Fork, "Fork");
+	LoadModel(Water,"Water");
 	LoadModel(LeftShose,"Motti");
 	LoadModel(RightShose,"chr_knight");
-	LoadFBXModel(Pla, "Motti_move");
+	LoadFBXModel(MottiMove, "Motti_move");
+	//LoadFBXModel(ArmHaveFB, "Arm_haveF");
+	//LoadFBXModel(MottiHand, "Motti_handF");
 }
 
 void ModelManager::LoadModel(const ModelName modelName, std::string fileName) {
