@@ -56,7 +56,7 @@ void ShockWave::SetWave(Pastel* pastel) {
 		damegeArea += 0.12f;
 
 		if (damegeArea >= 0.5f) {
-			safeArea += 0.12;
+			safeArea += 0.12f;
 		}
 		if (scale.x >= 20.0f) {
 			expand = false;

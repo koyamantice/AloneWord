@@ -205,7 +205,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 
 	Ray ray;
 	ray.start = { player->GetPosition().x,player->GetPosition().y + 3,player->GetPosition().z,1 };
-	ray.dir = { 0,0.025,-1,0 };
+	ray.dir = { 0,0.025f,-1.0f,0.0f };
 	RaycastHit raycastHit;
 
 	if (!collisionManager->Raycast(ray, &raycastHit)) {
