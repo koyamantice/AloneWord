@@ -47,8 +47,6 @@ private:
 	array<Object3d*, 4> objBlock;
 	array<XMFLOAT3, 4> BlockRotation;
 
-	FBXModel* model1 = nullptr;
-	FBXObject3d* object1 = nullptr;
 	DebugCamera* camera = { nullptr };
 	Texture* limit = nullptr;
 	Player* player = nullptr;

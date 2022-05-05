@@ -16,28 +16,6 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	Texture::SetCamera(camera);
 	// 3Dオブジェクトにカメラをセット
 	Object3d::SetCamera(camera);
-	//各オブジェクトの初期化
-	//プレイヤー
-	player = new Player();
-	player->Initialize();
-	player->SetPosition({ 0.0f,0.0f,-10.0f });
-	player->SetMove(250.0f, 200.0f);
-
-	//ボス
-	leftshose = new LeftShose();
-	leftshose->SetPlayer(player);
-	leftshose->Initialize();
-
-	rightshose = new RightShose();
-	rightshose->SetPlayer(player);
-	rightshose->Initialize();
-
-	//敵
-	for (std::size_t i = 0; i < enemy.size(); i++) {
-		enemy[i] = new Rice();
-		enemy[i]->SetPlayer(player);
-		enemy[i]->Initialize();
-	}
 
 	//ステージ床
 	objFloor = Object3d::Create();
@@ -91,20 +69,11 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	}
 
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
-	//srand(NULL);
+	//srand(NULL);GetFBXModel(ModelManager::MottiMove);
 	// ライト生成
 	lightGroup = LightGroup::Create();
 	// 3Dオブジェクトにライトをセット
 	Object3d::SetLightGroup(lightGroup);
-	//カメラポジション
-	cameraPos.x = player->GetTargetPosition().x;
-	cameraPos.y = player->GetTargetPosition().y + 10;
-	cameraPos.z = player->GetTargetPosition().z - 10;
-	// カメラ注視点をセット
-	camera->SetTarget(player->GetTargetPosition());
-	camera->SetEye(cameraPos);
-	// モデル名を指定してファイル読み込み
-	model1 =ModelManager::GetIns()->GetFBXModel(ModelManager::Pla);
 
 	// デバイスをセット
 	FBXObject3d::SetDevice(dxCommon->GetDev());
@@ -115,17 +84,38 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	// パーティクルマネージャ生成
 	particleMan = ParticleManager::GetInstance();
 	particleMan->SetCamera(camera);
+	//各オブジェクトの初期化
+	//プレイヤー
+	player = new Player();
+	player->Initialize();
+	player->SetPosition({ 0.0f,0.0f,-10.0f });
+	player->SetMove(250.0f, 200.0f);
 
+	//ボス
+	leftshose = new LeftShose();
+	leftshose->SetPlayer(player);
+	leftshose->Initialize();
 
-	object1 = new FBXObject3d;
-	object1->Initialize();
-	object1->SetModel(model1);
-	object1->SetScale({ 0.007f,0.007f,0.007f });
-	object1->SetRotation(player->GetRotation());
-	object1->SetPosition(player->GetPosition());
+	rightshose = new RightShose();
+	rightshose->SetPlayer(player);
+	rightshose->Initialize();
 
-	ui = new UI(player, leftshose,rightshose);
-	//ui->Initialize();
+	//敵
+	for (std::size_t i = 0; i < enemy.size(); i++) {
+		enemy[i] = new Rice();
+		enemy[i]->SetPlayer(player);
+		enemy[i]->Initialize();
+	}
+
+	//カメラポジション
+	cameraPos.x = player->GetTargetPosition().x;
+	cameraPos.y = player->GetTargetPosition().y + 10;
+	cameraPos.z = player->GetTargetPosition().z - 10;
+	// カメラ注視点をセット
+	camera->SetTarget(player->GetTargetPosition());
+	camera->SetEye(cameraPos);
+
+	ui = new UI(player, leftshose, rightshose);
 }
 
 void SecondBoss::Finalize() {
@@ -252,9 +242,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 	cameraPos.z = player->GetPosition().z - distanceZ;
 	camera->SetTarget(player->GetTargetPosition());
 	camera->SetEye(cameraPos);
-	object1->SetRotation(player->GetRotation());
-	object1->SetPosition(player->GetPosition());
-	object1->Update();
+
 	// 全ての衝突をチェック
 	//collsionManager->CheckAllCollisions();
 	/*DebugText::GetInstance()->Print("PUSH to RB!!",200, 100,1.0f);
@@ -278,9 +266,7 @@ void SecondBoss::Draw(DirectXCommon* dxCommon) {
 	//Sprite::PreDraw();
 	//sprite->Draw();
 
-	//object1->Draw(dxCommon->GetCmdList());
-
-	player->Draw();
+	player->Draw(dxCommon);
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i]->Draw();
 	}

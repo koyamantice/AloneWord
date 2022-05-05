@@ -17,23 +17,6 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	// 3Dオブジェクトにカメラをセット
 	Object3d::SetCamera(camera);
 	//各オブジェクトの初期化
-	//プレイヤー
-	player = new Player();
-	player->Initialize();
-	player->SetPosition({ 0.0f,0.0f,-10.0f });
-	player->SetMove(250.0f, 200.0f);
-
-	//ボス
-	bossenemy = new BossEnemy();
-	bossenemy->SetPlayer(player);
-	bossenemy->Initialize();
-
-	//敵
-	for (std::size_t i = 0; i < enemy.size(); i++) {
-		enemy[i] = new Rice();
-		enemy[i]->SetPlayer(player);
-		enemy[i]->Initialize();
-	}
 
 	//ステージ床
 	objFloor = Object3d::Create();
@@ -92,6 +75,34 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	lightGroup = LightGroup::Create();
 	// 3Dオブジェクトにライトをセット
 	Object3d::SetLightGroup(lightGroup);
+	
+	// デバイスをセット
+	FBXObject3d::SetDevice(dxCommon->GetDev());
+	// カメラをセット
+	FBXObject3d::SetCamera(camera);
+	// グラフィックスパイプライン生成
+	FBXObject3d::CreateGraphicsPipeline();
+	//プレイヤー
+	player = new Player();
+	player->Initialize();
+	player->SetPosition({ 0.0f,0.0f,-10.0f });
+	player->SetMove(250.0f, 200.0f);
+
+	//ボス
+	bossenemy = new BossEnemy();
+	bossenemy->SetPlayer(player);
+	bossenemy->Initialize();
+
+	//敵
+	for (std::size_t i = 0; i < enemy.size(); i++) {
+		enemy[i] = new Rice();
+		enemy[i]->SetPlayer(player);
+		enemy[i]->Initialize();
+	}
+
+	// パーティクルマネージャ生成
+	particleMan = ParticleManager::GetInstance();
+	particleMan->SetCamera(camera);
 	//カメラポジション
 	cameraPos.x = player->GetTargetPosition().x;
 	cameraPos.y = player->GetTargetPosition().y + 10;
@@ -100,26 +111,10 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	camera->SetTarget(player->GetTargetPosition());
 	camera->SetEye(cameraPos);
 	// モデル名を指定してファイル読み込み
-	model1 =ModelManager::GetIns()->GetFBXModel(ModelManager::Pla);
+	//model1 =ModelManager::GetIns()->GetFBXModel(ModelManager::MottiMove);
 
-	// デバイスをセット
-	FBXObject3d::SetDevice(dxCommon->GetDev());
-	// カメラをセット
-	FBXObject3d::SetCamera(camera);
-	// グラフィックスパイプライン生成
-	FBXObject3d::CreateGraphicsPipeline();
-	// パーティクルマネージャ生成
-	particleMan = ParticleManager::GetInstance();
-	particleMan->SetCamera(camera);
-
-
-	object1 = new FBXObject3d;
-	object1->Initialize();
-	object1->SetModel(model1);
-	object1->SetScale({ 0.007f,0.007f,0.007f });
-	object1->SetRotation(player->GetRotation());
-	object1->SetPosition(player->GetPosition());
 	ui = new UI(player, bossenemy);
+
 	//ui->Initialize();
 }
 
@@ -144,7 +139,7 @@ void BossScene::Finalize() {
 		}
 	}
 	delete camera;
-	delete object1;
+	//delete object1;
 	//delete model1;
 }
 
@@ -246,9 +241,9 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	cameraPos.z = player->GetPosition().z - distanceZ;
 	camera->SetTarget(player->GetTargetPosition());
 	camera->SetEye(cameraPos);
-	object1->SetRotation(player->GetRotation());
+	/*object1->SetRotation(player->GetRotation());
 	object1->SetPosition(player->GetPosition());
-	object1->Update();
+	object1->Update();*/
 	// 全ての衝突をチェック
 	//collsionManager->CheckAllCollisions();
 	/*DebugText::GetInstance()->Print("PUSH to RB!!",200, 100,1.0f);
@@ -272,9 +267,9 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	//Sprite::PreDraw();
 	//sprite->Draw();
 
-	object1->Draw(dxCommon->GetCmdList());
+	//object1->Draw(dxCommon->GetCmdList());
 
-	player->Draw();
+	player->Draw(dxCommon);
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i]->Draw();
 	}
