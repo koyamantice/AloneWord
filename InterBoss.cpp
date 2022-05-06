@@ -32,7 +32,7 @@ void InterBoss::Draw() {
 	ImGui::SliderFloat("frame", &frame, 25, -25);
 	ImGui::Text("Off::%d", pat);
 	//ImGui::Text("active::%d", active);
-	//ImGui::Text("haveTimer::%d", haveTimer);
+	ImGui::Text("haveTimer::%d", haveTimer);
 	//ImGui::Text("action::%d", action);
 	//ImGui::Text("Count::%d", AttackCount);
 	////ImGui::Unindent();

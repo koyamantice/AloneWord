@@ -20,8 +20,8 @@ void ModelManager::Initialize() {
 	LoadModel(LeftShose,"Motti");
 	LoadModel(RightShose,"chr_knight");
 	LoadFBXModel(MottiMove, "Motti_move");
-	//LoadFBXModel(ArmHaveFB, "Arm_haveF");
-	//LoadFBXModel(MottiHand, "Motti_handF");
+	LoadFBXModel(ArmHaveFB, "Arm_haveF");
+	//LoadFBXModel(MottiHand, "Motti__handF");
 }
 
 void ModelManager::LoadModel(const ModelName modelName, std::string fileName) {
