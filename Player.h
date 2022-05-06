@@ -190,4 +190,5 @@ private:
 	//動いてるときのFBX
 	FBXModel* move_model1 = nullptr;
 	FBXObject3d* move_object1 = nullptr;
+	int move_count = 0;
 };

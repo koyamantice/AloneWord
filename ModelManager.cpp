@@ -17,8 +17,9 @@ void ModelManager::Initialize() {
 	LoadModel(Enemy, "Enemy");
 	LoadModel(Fork, "Fork");
 	LoadModel(Water,"Water");
-	LoadModel(LeftShose,"Motti");
-	LoadModel(RightShose,"chr_knight");
+	LoadModel(LeftShoes,"LeftShoes");
+	LoadModel(RightShoes,"RightShoes");
+	LoadModel(Pastel, "Pestle");
 	LoadFBXModel(MottiMove, "Motti_move");
 	LoadFBXModel(ArmHaveFB, "Arm_haveF");
 	//LoadFBXModel(MottiHand, "Motti__handF");
