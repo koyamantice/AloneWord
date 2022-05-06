@@ -37,11 +37,7 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	objBossMap->SetRotation({ 0, 90, 0 });
 	objBossMap->SetScale({ 1.4f,1.5f,1.6f });
 	*/
-	//当たり判定確認用です
-	modelSphere = Model::CreateFromOBJ("sphere");
-	objSphere = TouchableObject::Create(modelSphere);
-	objSphere->SetScale({ 5.0f, 5.0f, 5.0f });
-	objSphere->SetPosition(pastel->GetPosition());
+	
 	// コライダーの追加
 	//objSphere->SetCollider(new SphereCollider);
 
@@ -96,6 +92,12 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
 	}
+
+	//当たり判定確認用です
+	modelSphere = Model::CreateFromOBJ("sphere");
+	objSphere = TouchableObject::Create(modelSphere);
+	objSphere->SetScale({ 5.0f, 5.0f, 5.0f });
+	objSphere->SetPosition(pastel->GetPosition());
 
 	//カメラポジション
 	cameraPos.x = player->GetTargetPosition().x;
