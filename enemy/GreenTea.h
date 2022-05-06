@@ -11,7 +11,8 @@ public:
 	void specialDraw() override;
 private:
 	HotWater* hotWater[50];
-	float degree;
+	XMFLOAT3 AfterPos{};
+	float degree=0.0f;
 	float y = 0.0f;
 	int check = false;
 	int count =0;

@@ -41,7 +41,7 @@ void UI::Update() {
 	{//HPˆ—
 		AfterPos[1] = { (float)(player->GetHp() * 43),55 };
 		plaPos = {
-		Ease(In,Quint,0.7f,(float)PlaHp->GetSize().x,(float)AfterPos[1].x),
+		Ease(In,Quad,0.7f,(float)PlaHp->GetSize().x,(float)AfterPos[1].x),
 		Ease(In,Quint,0.7f,(float)PlaHp->GetSize().y,(float)AfterPos[1].y),
 		};
 		PlaHp->SetSize(plaPos);
@@ -111,11 +111,13 @@ void UI::SeachBoss() {
 	radius = atan2f(position.x, position.z);// *PI / 180.0f;
 	circle.x = (sin(-radius)*150.0f)+WinApp::window_width/2; //*0.2251f;
 	circle.y = (cos(-radius)*150.0f)+WinApp::window_height/2; //*0.2251f;
-
-	if (fabs(pos.x) > 15.00f || fabs(pos.z) > 15.00f) {
+	if ((boss->GetPosition().x > player->GetPosition().x+8.0f||
+		boss->GetPosition().x < player->GetPosition().x - 8.0f)||
+		(boss->GetPosition().z > player->GetPosition().z + 8.0f ||
+		boss->GetPosition().z < player->GetPosition().z - 8.0f)){
 		invisible = 1;
-	}else {
-		invisible = 1;
+	} else {
+		invisible = 0;
 	}
 	Arrow->SetRotation(radius * (180.0f / XM_PI));//-radius * PI / 180.0f);
 	Arrow->SetPosition(circle);
@@ -134,8 +136,11 @@ void UI::SeachBoss2() {
 	circle2.x = (sin(-radius) * 150.0f) + WinApp::window_width / 2; //*0.2251f;
 	circle2.y = (cos(-radius) * 150.0f) + WinApp::window_height / 2; //*0.2251f;
 
-	if (fabs(pos.x) > 15.00f || fabs(pos.z) > 15.00f) {
-		invisible = 1;
+	if ((boss->GetPosition().x > player->GetPosition().x + 10.0f ||
+		boss->GetPosition().x < player->GetPosition().x - 10.0f) ||
+		(boss->GetPosition().z > player->GetPosition().z + 10.0f ||
+		boss->GetPosition().z < player->GetPosition().z - 10.0f)) {
+		invisible = 0;
 	}
 	else {
 		invisible = 1;

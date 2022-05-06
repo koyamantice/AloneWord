@@ -111,6 +111,9 @@ public:
 	//足元にパーティクル
 	void BirthParticle();
 	void BackPos();
+
+	const bool& GetWet() { return wet; }
+	void SetWet(bool wet) { this->wet = wet; }
 private:
 	Object3d* Armobj;
 	Object3d* object3d;
@@ -163,6 +166,8 @@ private:
 	float frameMax2 = 40.0f;
 	float frame3 = 0.0f;
 	float frameMax3 = 40.0f;
+	bool wet = false;
+	int wetC = 0;
 	//ステータス的なやつ
 	int HP = 10;
 	int Lv = 1;

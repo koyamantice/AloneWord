@@ -95,7 +95,13 @@ void Player::Update() {
 	StickrotX = input->GetPosX();
 	StickrotY = input->GetPosY();
 	//effecttexture->Update();
-	
+	if (wet) {
+		wetC++;
+		if (wetC>20) {
+			wet = false;
+			wetC = 0;
+		}
+	}
 	if (ArmMoveNumber == 0 && AttackMoveNumber == 0 && AttackFlag == false
 		&& Interval <= 80) {
 		if (!(StickrotX<650 && StickrotX>-650)) {
@@ -381,8 +387,8 @@ void Player::Update() {
 			angleZ = (position.z - targetpos.z);
 			angleR = sqrt(pow((position.x - targetpos.x), 2) + pow((position.z - targetpos.z), 2));
 			if (angleR >= 1.00) {
-				targetpos.x += (angleX / angleR) * 0.25f;
-				targetpos.x += (angleZ / angleR) * 0.25f;
+				targetpos.x += (angleX / (float)angleR) * 0.25f;
+				targetpos.x += (angleZ / (float)angleR) * 0.25f;
 			}
 			else {
 				targetpos = position;

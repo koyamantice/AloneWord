@@ -1,7 +1,7 @@
 #pragma once
 #include "Texture.h"
 #include "Object3d.h"
-
+#include"Player.h"
 class HotWater {
 private: // エイリアス
 	// DirectX::を省略
@@ -13,12 +13,17 @@ public:
 	void Init();
 	void Upda();
 	void Draw();
+	void SetPlayer(Player* player) { this->player = player; }
+	void Collide();
 	void Set(const XMFLOAT3& pos);
 	void Final();
 	const bool& GetIsAlive() { return IsAlive; };
 private:
+	int collide=0;
+	Player* player;
 	Object3d* water = nullptr;
 	Texture* hot=nullptr;
+	float radius=1.0f;
 	float frame = 0;
 	bool shrink = false;
 	XMFLOAT3 sca{};

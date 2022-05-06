@@ -9,6 +9,10 @@ using namespace DirectX;
 GreenTea::GreenTea() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::Demo);
 	enemyobj = new Object3d();
+	for (int i = 0; i < 50; i++) {
+		hotWater[i] = new HotWater;
+		hotWater[i]->Init();
+	}
 }
 
 void GreenTea::Initialize() {
@@ -28,16 +32,12 @@ void GreenTea::Initialize() {
 	texture->SetPosition(pos.x, -1, pos.z);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.3f,0.3f,0.3f });
-	for (int i = 0; i< 50; i++) {
-		hotWater[i] = new HotWater;
-		hotWater[i]->Init();
-	}
 	degree = 0.0f;
 	scale = 0.0f;
 }
 
 void GreenTea::Finalize() {
-	for (int i = 0; i < 50;i++) {
+	for (int i = 0; i < 50; i++) {
 		hotWater[i]->Final();
 	}
 	delete texture;
@@ -48,14 +48,15 @@ void GreenTea::Finalize() {
 //ボスの行動
 void GreenTea::Spec() {
 	for (int i = 0; i < 50; i++) {
-	hotWater[i]->Upda();
+		hotWater[i]->Upda();
+		hotWater[i]->SetPlayer(player);
 	}
-	//XMFLOAT3 AfterPos{};
 	if (AttackCount > 180 && pos.y <= 0.1f) {
 		if (!active) {
-			action = 0;// (rand() % 2);
+			action = 2;// (rand() % 2);
 			frame = 0;
 			pat = 1;
+			StartPos = pos;
 			active = true;
 		}
 	} else {
@@ -68,23 +69,18 @@ void GreenTea::Spec() {
 		}
 	}
 	if (active) {
-		if ((action % 2) == 0) {
-			//if (frame < 1.0f) {
-			//	frame += 0.002f;
-			//} else {
-			//	frame = 0;
-			//}
+		count++;
+		if (count % 15 == 0) {
+			for (int i = 0; i < 50; i++) {
+				if (!hotWater[i]->GetIsAlive()) {
+					hotWater[i]->Set(pos);
+					break;
+				}
+			}
+		}
+		if ((action % 3) == 0) {
 			if (pat == 1) {
 				radius++;
-				count++;
-				if (count%10==1) {
-					for (int i = 0; i < 50; i++) {
-						if (!hotWater[i]->GetIsAlive()) {
-							hotWater[i]->Set(pos);
-							break;
-						}
-					}
-				}
 				scale += 0.02f;
 				radius = (int)radius % 360;
 				if (radius == 0) {
@@ -101,7 +97,7 @@ void GreenTea::Spec() {
 				degree = radius * PI / 180.0f;
 				pos.x = cosf(degree) * scale;
 				pos.z = sinf(degree) * scale;
-			}else if (pat == 2) {
+			} else if (pat == 2) {
 				if (frame < 1.0f) {
 					frame += 0.002f;
 				} else {
@@ -125,126 +121,165 @@ void GreenTea::Spec() {
 			}
 			enemyobj->SetPosition(pos);
 			enemyobj->SetRotation({ 0,radius,0 });
-		} else if ((action % 2) == 1) {
-			if (AttackC < 3) {
-				switch (pat) {
-				case 1:
-					//AfterPos = {
-					//pos.x,
-					//3.0f,
-					//pos.z
-					//};
-					if (frame < 1.0f) {
-						frame += 0.01f;
-						break;
-					} else {
-						frame = 0;
-						pat++;
-						break;
-					}
-				case 2:
-				/*	AfterPos = {
-						player->GetPosition().x,
-					3.0f,
-						player->GetPosition().z
-					};*/
-					if (aiming < 180) {
-						frame = 0.5f;
-						aiming++;
-						break;
-					} else {
-						frame = 0;
-						aiming = 0;
-						pat++;
-						break;
-					}
-				case 3:
-					/*AfterPos = {
-						pos.x,
-						0,
-						pos.z,
-					};*/
-					if (frame < 1.0f) {
-						frame += 0.08f;
-						break;
-					}
-					if (frame >= 1.0f) {
-						frame = 1.0f;
-						if (coolT < 90) {
-							coolT++;
-							break;
-						} else {
-							coolT = 0;
-							frame = 0;
-							pat = 1;
-							AttackC++;
-							break;
-						}
-					}
-				default:
-					AttackC = 0;
-					pat = 1;
-					break;
-				}
+		} else if ((action % 3) == 1) {
+			if (frame < 1.0f) {
+				frame += 0.01f;
 			} else {
-				switch (pat) {
-				case 1:
-				/*	AfterPos = {
-					pos.x,
-					3.0f,
-					pos.z
-					};*/
-					if (frame < 1.0f) {
-						frame += 0.01f;
-						break;
-					} else {
-						frame = 0;
-						pat++;
-						break;
-					}
-				case 2:
-				/*	AfterPos = {
-					0,
-					3.0f,
-					0
-					};*/
-					if (frame < 1.0f) {
-						frame += 0.01f;
-						break;
-					} else {
-						frame = 0;
-						pat++;
-						break;
-					}
-				case 3:
-					/*AfterPos = {
-					0,
-					0,
-					0
-					};*/
-					if (frame < 1.0f) {
-						frame += 0.01f;
-						break;
-					} else {
-						frame = 0;
-						pat = 0;
-						AttackC = 0;
-						AttackCount = 30;
-						Effect = true;
-						active = false;
-						break;
-					}
-				default:
-					break;
-				}
+				frame = 0;
+				StartPos = AfterPos;
+				pat++;
 			}
-		/*	pos = {
-	Ease(In,Cubic,frame,pos.x,AfterPos.x),
-	Ease(In,Cubic,frame,pos.y,AfterPos.y),
-	Ease(In,Cubic,frame,pos.z,AfterPos.z)
-			};*/
-			enemyobj->SetPosition(pos);
+			switch (pat) {
+			case 1:
+				AfterPos = {
+					-20.0f,
+					0.0f,
+					0.0f
+				};
+				break;
+			case 2:
+				AfterPos = {
+					-20.0f,
+					0.0f,
+					20.0f
+				};
+				break;
+			case 3:
+				AfterPos = {
+				0.0f,
+				0.0f,
+				20.0f
+				};
+				break;
+			case 4:
+				AfterPos = {
+				0.0f,
+				0.0f,
+				0.0f
+				};
+				break;
+			case 5:
+				AfterPos = {
+				0.0f,
+				0.0f,
+				-20.0f
+				};
+				break;
+			case 6:
+				AfterPos = {
+				20.0f,
+				0.0f,
+				-20.0f
+				};
+				break;
+			case 7:
+				AfterPos = {
+				20.0f,
+				0.0f,
+				0.0f
+				};
+				break;
+			case 8:
+				AfterPos = {
+				0.0f,
+				0.0f,
+				0.0f
+				};
+				break;
+			default:
+				pat = 0;
+				AttackCount = 30;
+				Effect = true;
+				active = false;
+				frame = 0;
+				break;
+			}
+			pos = {
+Ease(In,Cubic,frame,StartPos.x,AfterPos.x),
+Ease(In,Cubic,frame,StartPos.y,AfterPos.y),
+Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
+			};
+		} else if ((action % 3) == 2) {
+			if (frame < 1.0f) {
+				frame += 0.01f;
+			} else {
+				frame = 0;
+				StartPos = AfterPos;
+				pat++;
+			}
+			switch (pat) {
+			case 1:
+				AfterPos = {
+					20.0f,
+					0.0f,
+					0.0f
+				};
+				break;
+			case 2:
+				AfterPos = {
+					20.0f,
+					0.0f,
+					-20.0f
+				};
+				break;
+			case 3:
+				AfterPos = {
+				0.0f,
+				0.0f,
+				-20.0f
+				};
+				break;
+			case 4:
+				AfterPos = {
+				0.0f,
+				0.0f,
+				0.0f
+				};
+				break;
+			case 5:
+				AfterPos = {
+				0.0f,
+				0.0f,
+				20.0f
+				};
+				break;
+			case 6:
+				AfterPos = {
+				-20.0f,
+				0.0f,
+				20.0f
+				};
+				break;
+			case 7:
+				AfterPos = {
+				-20.0f,
+				0.0f,
+				0.0f
+				};
+				break;
+			case 8:
+				AfterPos = {
+				0.0f,
+				0.0f,
+				0.0f
+				};
+				break;
+			default:
+				pat = 0;
+				AttackCount = 30;
+				Effect = true;
+				active = false;
+				frame = 0;
+				break;
+			}
+			pos = {
+Ease(In,Cubic,frame,StartPos.x,AfterPos.x),
+Ease(In,Cubic,frame,StartPos.y,AfterPos.y),
+Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
+			};
 		}
+
+		enemyobj->SetPosition(pos);
 	}
 }
 

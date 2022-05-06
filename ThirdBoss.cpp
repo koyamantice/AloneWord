@@ -17,6 +17,12 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	Texture::SetCamera(camera);
 	// 3Dオブジェクトにカメラをセット
 	Object3d::SetCamera(camera);
+	// デバイスをセット
+	FBXObject3d::SetDevice(dxCommon->GetDev());
+	// カメラをセット
+	FBXObject3d::SetCamera(camera);
+	// グラフィックスパイプライン生成
+	FBXObject3d::CreateGraphicsPipeline();
 	//各オブジェクトの初期化
 	//プレイヤー
 	player = new Player();
@@ -100,13 +106,6 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	// カメラ注視点をセット
 	camera->SetTarget(player->GetTargetPosition());
 	camera->SetEye(cameraPos);
-	
-	// デバイスをセット
-	FBXObject3d::SetDevice(dxCommon->GetDev());
-	// カメラをセット
-	FBXObject3d::SetCamera(camera);
-	// グラフィックスパイプライン生成
-	FBXObject3d::CreateGraphicsPipeline();
 	// パーティクルマネージャ生成
 	particleMan = ParticleManager::GetInstance();
 	particleMan->SetCamera(camera);
