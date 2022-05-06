@@ -7,7 +7,7 @@
 using namespace DirectX;
 
 RightShose::RightShose() {
-	model = ModelManager::GetIns()->GetModel(ModelManager::RightShose);
+	model = ModelManager::GetIns()->GetModel(ModelManager::RightShoes);
 	enemyobj = new Object3d();
 }
 
@@ -21,7 +21,7 @@ void RightShose::Initialize() {
 	
 	rot = { 0,90,0 };
 	enemyobj->SetRotation(rot);
-	enemyobj->SetScale({ 1.5f,1.5f,1.5f });
+	enemyobj->SetScale({ 1.0f,1.0f,1.0f });
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	//texture->SetColor({ 1,1,1,1 });

@@ -8,6 +8,7 @@
 #include<vector>
 #include "BaseCollider.h"
 #include "CollisionManager.h"
+
 #pragma comment(lib, "d3dcompiler.lib")
 
 using namespace std;
@@ -381,6 +382,7 @@ void Object3d::Draw()
 	if (model == nullptr) {
 		return;
 	}
+
 
 	// パイプラインステートの設定
 	cmdList->SetPipelineState(pipelineSet.pipelinestate.Get());

@@ -104,6 +104,8 @@ public: // メンバ関数
 	/// </summary>
 	void PlayAnimation();
 
+	void StopAnimation();
+
 protected: // メンバ変数
 	// 定数バッファ
 	ComPtr<ID3D12Resource> constBuffTransform;

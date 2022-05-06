@@ -110,12 +110,14 @@ void Player::Update() {
 			ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 			ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
 		}
+		
 		if (!(StickrotY<650 && StickrotY>-650)) {
 			rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 			position.z -= cos(atan2(StickrotX, StickrotY)) * PlayerSpeed;
 			ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 			ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
 		}
+		
 		//攻撃右回り
 		if (input->PushButton(input->Button_RB) && ArmWeight != 0.0f) {
 			AttackFlag = true;
@@ -156,7 +158,15 @@ void Player::Update() {
 				AttackFlag = false;
 			}
 		}
+	}
 
+	//アニメーション用のキー入力
+	if ((input->LeftTiltStick(input->Right)) || (input->LeftTiltStick(input->Left))
+		|| (input->LeftTiltStick(input->Up)) || (input->LeftTiltStick(input->Down))) {
+		move_count++;
+	}
+	else {
+		move_count = 0;
 	}
 
 	//腕を伸ばす
@@ -397,8 +407,12 @@ void Player::Update() {
 	}
 	move_object1->SetPosition(position);
 	move_object1->SetRotation(rot);
-	if (input->PushKey(DIK_0)) {
+	if (move_count == 1) {
 		move_object1->PlayAnimation();
+	}
+
+	else if (move_count == 0) {
+		move_object1->StopAnimation();
 	}
 	move_object1->Update();
 	
@@ -406,13 +420,11 @@ void Player::Update() {
 
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
-	//ImGui::Begin("test");
-	//ImGui::SliderFloat("StickrotX", &StickrotX, 1000, -1000);
-	//ImGui::SliderFloat("StickrotY", &StickrotY, 1000, -1000);
-	//ImGui::SliderFloat("PlayerX", &position.x, 1000, -1000);
-	//ImGui::SliderFloat("Playerz", &position.z, 1000, -1000);
-	//ImGui::Unindent();
-	//ImGui::End();
+	ImGui::Begin("test");
+	ImGui::Text("count::%d", move_count);
+
+	ImGui::Unindent();
+	ImGui::End();
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
 		//object3d->Draw();

@@ -7,7 +7,7 @@
 using namespace DirectX;
 
 Pastel::Pastel() {
-	model = ModelManager::GetIns()->GetModel(ModelManager::Fork);
+	model = ModelManager::GetIns()->GetModel(ModelManager::Pastel);
 	enemyobj = new Object3d();
 }
 
@@ -16,11 +16,11 @@ void Pastel::Initialize() {
 	IsAlive = 0;
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
-	pos = { 0.0f,5.0f,0.0f };
+	pos = { 0.0f,-3.0f,5.0f };
 	enemyobj->SetPosition(pos);
 	rot = { 0,90,0 };
 	enemyobj->SetRotation(rot);
-	enemyobj->SetScale({ 1.5f,1.5f,1.5f });
+	enemyobj->SetScale({ 0.5f,0.5f,0.5f });
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	//texture->SetColor({ 1,1,1,1 });
@@ -47,7 +47,7 @@ void Pastel::Spec() {
 	}
 	else {
 		if (!active && !Off) {
-			AttackCount++;
+			//AttackCount++;
 			//angle += 2.0f;
 			//angle2 = angle * (3.14f / 180.0f);
 			//pos.y = sin(angle2) * 0.5f + 0.5f;

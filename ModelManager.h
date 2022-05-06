@@ -21,8 +21,9 @@ public:
 		Enemy,
 		Fork,
 		Water,
-		LeftShose,
-		RightShose,
+		LeftShoes,
+		RightShoes,
+		Pastel,
 	};
 	enum FBXName {
 		MottiMove,

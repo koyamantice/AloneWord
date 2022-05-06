@@ -1,6 +1,7 @@
 #include "FBXObject3d.h"
 #include "FbxLoader.h"
 #include <d3dcompiler.h>
+#include <imgui.h>
 #pragma comment(lib, "d3dcompiler.lib")
 
 using namespace Microsoft::WRL;
@@ -270,6 +271,11 @@ void FBXObject3d::Draw(ID3D12GraphicsCommandList* cmdList)
 		return;
 	}
 
+
+	ImGui::Begin("test");
+	ImGui::Text("%d", isPlay);
+	ImGui::Unindent();
+	ImGui::End();
 	// パイプラインステートの設定
 	cmdList->SetPipelineState(pipelinestate.Get());
 	// ルートシグネチャの設定
@@ -303,4 +309,8 @@ void FBXObject3d::PlayAnimation()
 	currentTime = startTime;
 	//再生中状態にする
 	isPlay = true;
+}
+
+void FBXObject3d::StopAnimation() {
+	isPlay = false;
 }
