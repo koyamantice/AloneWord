@@ -16,11 +16,11 @@ void Pastel::Initialize() {
 	IsAlive = 0;
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
-	pos = { 0.0f,-3.0f,5.0f };
+	pos = { 0.0f,2.0f,5.0f };
 	enemyobj->SetPosition(pos);
 	rot = { 0,90,0 };
 	enemyobj->SetRotation(rot);
-	enemyobj->SetScale({ 0.5f,0.5f,0.5f });
+	enemyobj->SetScale({ 2.0f,2.0f,2.0f });
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	//texture->SetColor({ 1,1,1,1 });
