@@ -26,7 +26,7 @@ public:
 	};
 	enum FBXName {
 		MottiMove,
-		//ArmHaveFB,
+		ArmHaveFB,
 		//MottiHand
 	};
 

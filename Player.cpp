@@ -397,7 +397,11 @@ void Player::Update() {
 	}
 	move_object1->SetPosition(position);
 	move_object1->SetRotation(rot);
+	if (input->PushKey(DIK_0)) {
+		move_object1->PlayAnimation();
+	}
 	move_object1->Update();
+	
 }
 
 //描画
