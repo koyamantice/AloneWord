@@ -1,5 +1,6 @@
 #include "SceneFactory.h"
 #include "TitleScene.h"
+#include "StageSelect.h"
 #include "StartMap.h"
 #include "SecondMap.h"
 #include "ThirdMap.h"
@@ -17,6 +18,9 @@ BaseScene* SceneFactory::CreateScene(const std::string& sceneName) {
 	BaseScene* newScene = nullptr;
 	if (sceneName=="TITLE") {
 		newScene=new TitleScene();
+	}
+	else if (sceneName == "StageSelect") {
+		newScene = new StageSelect();
 	}
 	else if (sceneName == "STARTMAP") {
 		newScene = new StartMap();
