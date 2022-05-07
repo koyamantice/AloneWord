@@ -360,8 +360,8 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	ImGui::End();
 	Object3d::PreDraw();
 	//objFloor->Draw();
-	objFloor->Draw();
-	objStartMap->Draw();
+	//objFloor->Draw();
+	//objStartMap->Draw();
 	for (std::size_t i = 0; i < objBlock.size(); i++) {
 		objBlock[i]->Draw();
 	}

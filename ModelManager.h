@@ -28,8 +28,9 @@ public:
 	};
 	enum FBXName {
 		MottiMove,
-		ArmHaveFB,
-		//MottiHand
+		Arm_noCatch,
+		Arm_oneMore,
+		Motti_haveF,
 	};
 
 public:
