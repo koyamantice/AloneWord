@@ -312,8 +312,8 @@ void Pastel::specialDraw() {
 	for (std::size_t i = 0; i < Platformobj.size(); i++) {
 		Platformobj[i]->Draw();
 		Texture::PreDraw();
-			Plattexture[i]->Draw();
 		if (SetPlatform[i] && Plapos[i].y <= -1.0f) {
+			Plattexture[i]->Draw();
 		}
 	}
 }
