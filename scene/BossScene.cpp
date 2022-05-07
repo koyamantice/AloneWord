@@ -151,7 +151,17 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
-	bossenemy->Update();
+	if (input->TriggerKey(DIK_SPACE)) {
+		int a = 0;
+		a += 1;
+	}
+
+	if (!bossstart) {
+		bossenemy->Update2();
+	}
+	else {
+		bossenemy->Update();
+	}
 	particleMan->Update();
 	//objSphere->Update();
 	ui->Update();
@@ -176,10 +186,6 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		Audio::GetInstance()->StopWave(0);
 		Audio::GetInstance()->StopWave(1);
 		Audio::GetInstance()->LoopWave(1, 0.7f);
-	}
-	if (input->TriggerKey(DIK_SPACE)) {
-		int a = 0;
-		a += 1;
 	}
 
 	if (input->TriggerKey(DIK_C)) {

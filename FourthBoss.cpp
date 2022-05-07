@@ -96,8 +96,8 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	//当たり判定確認用です
 	modelSphere = Model::CreateFromOBJ("sphere");
 	objSphere = TouchableObject::Create(modelSphere);
-	objSphere->SetScale({ 5.0f, 5.0f, 5.0f });
-	objSphere->SetPosition(pastel->GetPosition());
+	objSphere->SetScale({ 2.0f, 2.0f, 2.0f });
+	objSphere->SetPosition({0.0f,0.0f,0.0f});
 
 	//カメラポジション
 	cameraPos.x = player->GetTargetPosition().x;
@@ -146,9 +146,9 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 	camera->Update();
 	player->Update();
 	pastel->Update();
-	pastel->GetOff(mill);
-	mill->collideAttackArm(player);
-	mill->Update();
+	//pastel->GetOff(mill);
+	pastel->collideAttackArm(player);
+	//mill->Update();
 	particleMan->Update();
 	objSphere->Update();
 	shockwave->Upda(pastel,player);
@@ -266,7 +266,7 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 		enemy[i]->Draw();
 	}
 	pastel->Draw();
-	mill->Draw();
+	//mill->Draw();
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Draw();
 	}

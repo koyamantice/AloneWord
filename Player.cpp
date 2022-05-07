@@ -378,6 +378,7 @@ void Player::Update() {
 	ArmCircleX = cosf(Armradius) * Armscale;
 	ArmCircleZ = sinf(Armradius) * Armscale;
 	Armpos.x = ArmCircleX + position.x;
+	Armpos.y = position.y;
 	Armpos.z = ArmCircleZ + position.z;
 	Armobj->SetPosition(Armpos);
 	//移動
@@ -422,7 +423,8 @@ void Player::Update() {
 void Player::Draw(DirectXCommon* dxCommon) {
 	ImGui::Begin("test");
 	ImGui::Text("count::%d", move_count);
-
+	ImGui::SliderFloat("position.x", &position.x, 50, 0);
+	ImGui::SliderFloat("position.z", &position.z, 50, 0);
 	ImGui::Unindent();
 	ImGui::End();
 	Object3d::PreDraw();

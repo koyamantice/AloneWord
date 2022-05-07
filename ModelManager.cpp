@@ -20,6 +20,7 @@ void ModelManager::Initialize() {
 	LoadModel(LeftShoes,"LeftShoes");
 	LoadModel(RightShoes,"RightShoes");
 	LoadModel(Pastel, "Pestle");
+	LoadModel(Platform, "Platform");
 	LoadFBXModel(MottiMove, "Motti_move");
 	LoadFBXModel(ArmHaveFB, "Arm_haveF");
 	//LoadFBXModel(MottiHand, "Motti__handF");
