@@ -146,9 +146,9 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 	camera->Update();
 	player->Update();
 	pastel->Update();
-	pastel->GetOff(mill);
-	mill->collideAttackArm(player);
-	mill->Update();
+	//pastel->GetOff(mill);
+	pastel->collideAttackArm(player);
+	//mill->Update();
 	particleMan->Update();
 	objSphere->Update();
 	shockwave->Upda(pastel,player);
@@ -266,7 +266,7 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 		enemy[i]->Draw();
 	}
 	pastel->Draw();
-	mill->Draw();
+	//mill->Draw();
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Draw();
 	}

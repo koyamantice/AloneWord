@@ -1,6 +1,6 @@
 #pragma once
 #include "InterBoss.h"
-#include "Mill.h"
+#include "Player.h"
 class Pastel :public InterBoss {
 public:
 	Pastel();
@@ -9,7 +9,7 @@ public:
 	void Finalize() override;
 	void Spec() override;
 	void specialDraw() override;
-	void GetOff(Mill* mill);
+	bool collideAttackArm(Player* player);
 
 private:
 
@@ -20,4 +20,7 @@ private:
 		Down
 	};
 	int oldpat = 0;
+	Object3d* Millobj = nullptr;
+	Model* Millmodel = nullptr;
+	XMFLOAT3 Millpos;
 };

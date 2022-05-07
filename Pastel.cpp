@@ -9,6 +9,8 @@ using namespace DirectX;
 Pastel::Pastel() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::Pastel);
 	enemyobj = new Object3d();
+	Millmodel = ModelManager::GetIns()->GetModel(ModelManager::EHub);
+	Millobj = new Object3d();
 }
 
 void Pastel::Initialize() {
@@ -21,6 +23,12 @@ void Pastel::Initialize() {
 	rot = { 0,90,0 };
 	enemyobj->SetRotation(rot);
 	enemyobj->SetScale({ 2.0f,2.0f,2.0f });
+	Millobj = Object3d::Create();
+	Millobj->SetModel(Millmodel);
+	Millpos = { 0.0f,0.0f,0.0f };
+	Millobj->SetPosition(Millpos);
+	Millobj->SetRotation({0,90,0});
+	Millobj->SetScale({ 5.5f,5.5f,5.5f });
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	//texture->SetColor({ 1,1,1,1 });
@@ -47,11 +55,11 @@ void Pastel::Spec() {
 	}
 	else {
 		if (!active && !Off) {
-			//AttackCount++;
-			//angle += 2.0f;
-			//angle2 = angle * (3.14f / 180.0f);
-			//pos.y = sin(angle2) * 0.5f + 0.5f;
-			//enemyobj->SetPosition(pos);
+			AttackCount++;
+			angle += 2.0f;
+			angle2 = angle * (3.14f / 180.0f);
+			pos.y = sin(angle2) * 0.5f + 0.5f;
+			enemyobj->SetPosition(pos);
 		}
 	}
 
@@ -204,10 +212,6 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 			rot.z = sin(angle2) * 90;
 		}
 
-		//if (pos.y <= 2.0f) {
-		//
-		//}
-		//
 		pos = {
 Ease(In,Cubic,frame,pos.x,AfterPos.x),
 Ease(In,Cubic,frame,pos.y,AfterPos.y),
@@ -217,24 +221,45 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 		enemyobj->SetRotation(rot);
 	}
 
+	if (haveEnemy >= 10.0f && !active) {
+		haveTimer++;
+		Off = true;
+		if (haveTimer == 1000) {
+			Off = false;
+			haveTimer = 0;
+			haveEnemy = 0.0f;
+		}
+	}
+
+	Millobj->Update();
 }
 
 void Pastel::specialDraw() {
+	Millobj->Draw();
 }
 
-void Pastel::GetOff(Mill* mill) {
-	float haveEnemy = mill->GetHaveEnemy();
-	int haveTimer = mill->GetHaveTimer();
-	if (haveTimer != 0) {
-		if (Off == false && !active) {
-			frame = 0.0f;
-			Off = true;
+bool Pastel::collideAttackArm(Player* player) {
+	XMFLOAT3 Armpos = player->GetArmPosition();
+	bool attackflag = player->GetAttackFlag();
+	float weight = player->GetArmWeight();
+	if (attackflag && !BossHit) {
+		if (Collision::CircleCollision(Armpos.x, Armpos.z, 1.0, Millpos.x, Millpos.z, 1.0)) {
+			BossHit = true;
+			player->SetAttackFlag(false);
+			//–Ý‚ð‰P‚É“ü‚ê‚Ä‚¢‚é
+			if (BossHit == true) {
+				haveEnemy += weight;
+				weight = 0.0f;
+				player->SetArmWeight(weight);
+				BossHit = false;
+			}
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 	else {
-		rot.z = 0.0f;
-		Off = false;
-		enemyobj->SetRotation(rot);
+		return false;
 	}
-
 }
