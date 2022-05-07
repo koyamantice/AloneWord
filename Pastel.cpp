@@ -15,6 +15,8 @@ Pastel::Pastel() {
 	Platformmodel = ModelManager::GetIns()->GetModel(ModelManager::Platform);
 	for (std::size_t i = 0; i < Platformobj.size(); i++) {
 		Platformobj[i] = TouchableObject::Create(Platformmodel);
+		Plattexture[i] = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+		Plattexture[i]->TextureCreate();
 	}
 }
 
@@ -47,11 +49,21 @@ void Pastel::Initialize() {
 	texture->SetPosition(pos.x, -1, pos.z);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.3f,0.3f,0.3f });
+	for (std::size_t i = 0; i < Platformobj.size(); i++) {
+		Platformobj[i] = TouchableObject::Create(Platformmodel);
+		//Plattexture[i] = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+		Plattexture[i]->SetRotation({90,0,0});
+		Plattexture[i]->SetScale({ 0.5f,0.5f,0.5f });
+		//Plattexture[i]->TextureCreate();
+	}
 }
 
 void Pastel::Finalize() {
 	//delete enemyobj;
 	delete texture;
+	for (std::size_t i = 0; i < Platformobj.size(); i++) {
+		delete Plattexture[i];
+	}
 }
 
 //ƒ{ƒX‚Ìs“®
@@ -276,14 +288,20 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 			}
 
 			if (Plapos[i].y <= 0.0f) {
-				Plapos[i].y += 0.25f;
+				Plapos[i].y += 0.10f;
 			}
 		}
 		else {
 			if (Plapos[i].y >= -10.0f) {
-				Plapos[i].y -= 0.25f;
+				Plapos[i].y -= 0.10f;
+			}
+			else {
+				SetPlatform[i] = false;
 			}
 		}
+		Plattexture[i]->Update();
+		Plattexture[i]->SetPosition({Plapos[i].x,0.0f,Plapos[i].z});
+		//Plattexture[i]->SetScale({1.0f,1.0f,1.0f});
 		Platformobj[i]->SetPosition(Plapos[i]);
 		Platformobj[i]->Update();
 	}
@@ -293,6 +311,10 @@ void Pastel::specialDraw() {
 	Millobj->Draw();
 	for (std::size_t i = 0; i < Platformobj.size(); i++) {
 		Platformobj[i]->Draw();
+		Texture::PreDraw();
+			Plattexture[i]->Draw();
+		if (SetPlatform[i] && Plapos[i].y <= -1.0f) {
+		}
 	}
 }
 

@@ -32,4 +32,5 @@ private:
 	array<XMFLOAT3, 4> Plapos ={};
 	array<bool, 4>SetPlatform = { false };
 	array<int, 4> BirthNumber;
+	array<Texture*, 4> Plattexture;
 };
