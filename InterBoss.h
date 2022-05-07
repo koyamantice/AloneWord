@@ -88,6 +88,7 @@ public:
 	/// </summary>
 	void Draw();
 
+	void Update2();
 	virtual void Spec()=0;//ボス特有の処理
 	virtual void specialDraw()=0;//ボス特有の描画
 

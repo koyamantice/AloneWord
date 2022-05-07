@@ -96,8 +96,8 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	//当たり判定確認用です
 	modelSphere = Model::CreateFromOBJ("sphere");
 	objSphere = TouchableObject::Create(modelSphere);
-	objSphere->SetScale({ 5.0f, 5.0f, 5.0f });
-	objSphere->SetPosition(pastel->GetPosition());
+	objSphere->SetScale({ 2.0f, 2.0f, 2.0f });
+	objSphere->SetPosition({0.0f,0.0f,0.0f});
 
 	//カメラポジション
 	cameraPos.x = player->GetTargetPosition().x;

@@ -4,6 +4,7 @@
 #include<iomanip>
 #include <Easing.h>
 #include"ImageManager.h"
+#include "TouchableObject.h"
 using namespace DirectX;
 
 Pastel::Pastel() {
@@ -11,6 +12,10 @@ Pastel::Pastel() {
 	enemyobj = new Object3d();
 	Millmodel = ModelManager::GetIns()->GetModel(ModelManager::EHub);
 	Millobj = new Object3d();
+	Platformmodel = ModelManager::GetIns()->GetModel(ModelManager::Platform);
+	for (std::size_t i = 0; i < Platformobj.size(); i++) {
+		Platformobj[i] = TouchableObject::Create(Platformmodel);
+	}
 }
 
 void Pastel::Initialize() {
@@ -28,7 +33,14 @@ void Pastel::Initialize() {
 	Millpos = { 0.0f,0.0f,0.0f };
 	Millobj->SetPosition(Millpos);
 	Millobj->SetRotation({0,90,0});
-	Millobj->SetScale({ 5.5f,5.5f,5.5f });
+	Millobj->SetScale({ 4.5f,4.5f,4.5f });
+	for (std::size_t i = 0; i < Platformobj.size(); i++) {
+		Platformobj[i] = TouchableObject::Create(Platformmodel);
+		Platformobj[i]->SetModel(Platformmodel);
+		Plapos[i] = { 0.0f,-10.0f,0.0f };
+		Platformobj[i]->SetScale({ 1.2f,1.2f,1.2f });
+		Platformobj[i]->SetPosition(Plapos[i]);
+	}
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	//texture->SetColor({ 1,1,1,1 });
@@ -101,6 +113,14 @@ void Pastel::Spec() {
 					break;
 				}
 				else {
+					for (std::size_t i = 0; i < Platformobj.size(); i++) {
+						//for (std::size_t j = 1; j < Platformobj.size(); j++) {
+							//if ((BirthNumber[i] == BirthNumber[j]) && i != j) {
+								SetPlatform[i] = true;
+								BirthNumber[i] = rand() % 3;
+							//}
+						//}
+					}
 					frame = 0;
 					action++;
 					break;
@@ -128,6 +148,7 @@ void Pastel::Spec() {
 				}
 				if (frame >= 1.0f) {
 					frame = 1.0f;
+					
 					if (coolT < 350) {
 						coolT++;
 						break;
@@ -157,6 +178,9 @@ void Pastel::Spec() {
 					}
 				}
 			case 4:
+				for (std::size_t i = 0; i < Platformobj.size(); i++) {
+					SetPlatform[i] = false;
+				}
 				AfterPos = {
 					pos.x,
 					5.0f,
@@ -232,10 +256,44 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 	}
 
 	Millobj->Update();
+	for (std::size_t i = 0; i < Platformobj.size(); i++) {
+		if (SetPlatform[i] == true) {
+			if (BirthNumber[i] == 0) {
+				Plapos[i].x = 10.0f;
+				Plapos[i].z = -10.0f;
+			}
+			else if (BirthNumber[i] == 1) {
+				Plapos[i].x = 10.0f;
+				Plapos[i].z = 10.0f;
+			}
+			else if (BirthNumber[i] == 2) {
+				Plapos[i].x = -10.0f;
+				Plapos[i].z = 10.0f;
+			}
+			else if (BirthNumber[i] == 3) {
+				Plapos[i].x = -10.0f;
+				Plapos[i].z = -10.0f;
+			}
+
+			if (Plapos[i].y <= 0.0f) {
+				Plapos[i].y += 0.25f;
+			}
+		}
+		else {
+			if (Plapos[i].y >= -10.0f) {
+				Plapos[i].y -= 0.25f;
+			}
+		}
+		Platformobj[i]->SetPosition(Plapos[i]);
+		Platformobj[i]->Update();
+	}
 }
 
 void Pastel::specialDraw() {
 	Millobj->Draw();
+	for (std::size_t i = 0; i < Platformobj.size(); i++) {
+		Platformobj[i]->Draw();
+	}
 }
 
 bool Pastel::collideAttackArm(Player* player) {

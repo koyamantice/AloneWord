@@ -52,6 +52,7 @@ protected:
 	int EffectNum = 0;
 	float distanceY = 10;
 	float distanceZ = 10;
+	bool bossstart = false;
 public:
 
 	virtual ~BaseScene()=default;

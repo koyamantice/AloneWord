@@ -24,6 +24,7 @@ public:
 		LeftShoes,
 		RightShoes,
 		Pastel,
+		Platform,
 	};
 	enum FBXName {
 		MottiMove,

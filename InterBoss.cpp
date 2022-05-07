@@ -25,18 +25,18 @@ void InterBoss::Update() {
 void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
 
-	ImGui::Begin("test");
-	//ImGui::SliderFloat("pos.x", &pos.x, 25, -25);
-	//ImGui::SliderFloat("pos.z", &pos.z, 25, -25);
-	ImGui::SliderFloat("HP", &BossHP, 50, 0);
-	ImGui::SliderFloat("frame", &frame, 25, -25);
-	ImGui::Text("Off::%d", pat);
-	//ImGui::Text("active::%d", active);
-	ImGui::Text("haveTimer::%d", haveTimer);
-	//ImGui::Text("action::%d", action);
-	//ImGui::Text("Count::%d", AttackCount);
-	////ImGui::Unindent();
-	ImGui::End();
+	//ImGui::Begin("test");
+	////ImGui::SliderFloat("pos.x", &pos.x, 25, -25);
+	////ImGui::SliderFloat("pos.z", &pos.z, 25, -25);
+	//ImGui::SliderFloat("HP", &BossHP, 50, 0);
+	//ImGui::SliderFloat("frame", &frame, 25, -25);
+	//ImGui::Text("Off::%d", pat);
+	////ImGui::Text("active::%d", active);
+	//ImGui::Text("haveTimer::%d", haveTimer);
+	////ImGui::Text("action::%d", action);
+	////ImGui::Text("Count::%d", AttackCount);
+	//////ImGui::Unindent();
+	//ImGui::End();
 	Object3d::PreDraw();
 	enemyobj->Draw();
 	Texture::PreDraw();
@@ -94,4 +94,8 @@ bool InterBoss::collideAttackArm() {
 	} else {
 		return false;
 	}
+}
+
+void InterBoss::Update2() {
+	enemyobj->Update();
 }
