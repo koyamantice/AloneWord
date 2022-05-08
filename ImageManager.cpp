@@ -22,6 +22,8 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(pinch, L"Resources/2d/HPmark_pinch.png");
 	Sprite::LoadTexture(weak, L"Resources/2d/HPmark_weak.png");
 
+	Sprite::LoadTexture(select1, L"Resources/2d/Selected.png");
+
 }
 
 void ImageManager::LoadTex2D() {

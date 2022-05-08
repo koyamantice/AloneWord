@@ -55,7 +55,7 @@ private:
 	array<Rice*, 10> enemy;
 	Warp* warp = nullptr;
 	//BossEnemy* bossenemy = nullptr;
-	array<Spawning*, StartSpawn> spawing;
+	Spawning* spawing;
 	ParticleManager* particleMan = nullptr;
 	bool start = false;
 	bool Clear = false;

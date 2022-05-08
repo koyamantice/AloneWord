@@ -17,6 +17,7 @@ public:
 	bool Initialize() override;
 	void Finalize();
 	void Update() override;
+	void SelectUp();
 	void Draw(DirectXCommon* dxCommon);
 	void Pause(const int& Timer);
 private:

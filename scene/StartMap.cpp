@@ -11,13 +11,6 @@
 #include <XorShift.h>
 #include "ImageManager.h"
 void StartMap::Initialize(DirectXCommon* dxCommon) {
-	//Texture::LoadTexture(0, L"Resources/2d/enemy.png");
-	////Texture::LoadTexture(1, L"Resources/2d/limit.png");
-	//Texture::LoadTexture(2, L"Resources/2d/shadow.png");
-	//Texture::LoadTexture(3, L"Resources/2d/Resporn.png");
-	//Texture::LoadTexture(4, L"Resources/2d/effect2.png");
-	//Texture::LoadTexture(5, L"Resources/2d/PlayerHP.png");
-	//Texture::LoadTexture(6, L"Resources/2d/magic2.png");
 	collisionManager = CollisionManager::GetInstance();
 	// カメラ生成
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
@@ -96,14 +89,12 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 
 
 	ui = new UI(player);
-	for (std::size_t i = 0; i < spawing.size(); i++) {
-		spawing[i] = new Spawning();
-		spawing[i]->SetPlayer(player);
-		spawing[i]->Initialize();
-	}
+	spawing = new Spawning();
+	spawing->SetPlayer(player);
+	spawing->Initialize();
 
-	spawing[0]->SetPosition({ -20.0f,0.0f,-4.0f });
-	spawing[0]->SetRotation({ 0,90,0 });
+	spawing->SetPosition({ -20.0f,0.0f,-4.0f });
+	spawing->SetRotation({ 0,90,0 });
 
 	//spawing[1]->SetPosition({ 0,0.0f,8.0f });
 	//spawing[1]->SetRotation({ 0,90,0 });
@@ -126,9 +117,7 @@ void StartMap::Finalize() {
 	//for (int i = 0; i < StartEnemyMax; i++) {
 	//	enemy[i]->Finalize();
 	//}
-	for (std::size_t i = 0; i < spawing.size(); i++) {
-		spawing[i]->Finalize();
-	}
+		spawing->Finalize();
 
 	for (std::size_t i = 0; i < objBlock.size(); i++) {
 		delete objBlock[i];
@@ -148,24 +137,21 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	if (pause) {
 		particleMan->Update();
 		//for (std::size_t i = 0; i < spawing.size(); i++) {
-		//	spawing[i]->Update();
+		//	spawing->Update();
 		//}
 		Pause(set);
 		return;
 	} else {
 		hit = false;
 	}
-	for (std::size_t i = 0; i < spawing.size(); i++) {
-		for (int j = 0; j < spawing[i]->GetEneMax(); j++) {
-			if (spawing[i]->GetEnemy(j)->collideAttackArm()) {
+	for (int j = 0; j < spawing->GetEneMax(); j++) {
+			if (spawing->GetEnemy(j)->collideAttackArm()) {
 				set = 30;
 				set = 15;
 				pause = true;
 				break;
 			}
-		}
 	}
-	//objFloor->Update();
 	objFloor->Update();
 	objStartMap->Update();
 	lightGroup->Update();
@@ -177,24 +163,19 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		objBlock[i]->SetRotation(BlockRotation[i]);
 		objBlock[i]->Update();
 	}
-	for (std::size_t i = 0; i < spawing.size(); i++) {
-		spawing[i]->Update();
-		if (spawing[i]->collideAttackArm()&&spawing[i]->GetIsAlive()) {
+		spawing->Update();
+		if (spawing->collideAttackArm()&&spawing->GetIsAlive()) {
 			hit = true;
-			set = spawing[i]->GetStop();
+			set = spawing->GetStop();
 			pause = true;
-			break;
 		}
-	}
 
 	if (warp->collidePlayer(player)) {
 		SceneManager::GetInstance()->ChangeScene("BOSS");
 	}
-	for (std::size_t i = 0; i < spawing.size(); i++) {
-		for (int j = 0; j < spawing[i]->GetEneMax(); j++) {
-			player->ResetWeight(spawing[i]->GetEnemy(j));
-			player->Rebound(spawing[i]->GetEnemy(j));
-		}
+	for (int j = 0; j < spawing->GetEneMax(); j++) {
+		player->ResetWeight(spawing->GetEnemy(j));
+		player->Rebound(spawing->GetEnemy(j));
 	}
 
 	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
@@ -227,14 +208,14 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	//for (std::size_t i = 0; i < spawing.size(); i++) {
 	//	for (int colA = 0; colA < 5; colA++) {
 	//		for (int colB = 1; colB < 5; colB++) {
-	//			if (spawing[i]->GetEnemy(colA)->GetIsAlive()) {
-	//				if (Collision::CheckSphere2Sphere(spawing[i]->GetEnemy(colA)->collider, spawing[i]->GetEnemy(colB)->collider) == true && colA != colB) {//当たり判定と自機同士の当たり判定の削除
-	//					spawing[i]->GetEnemy(colA)->SetHit(true);
-	//					spawing[i]->GetEnemy(colB)->SetHit(false);
+	//			if (spawing->GetEnemy(colA)->GetIsAlive()) {
+	//				if (Collision::CheckSphere2Sphere(spawing->GetEnemy(colA)->collider, spawing->GetEnemy(colB)->collider) == true && colA != colB) {//当たり判定と自機同士の当たり判定の削除
+	//					spawing->GetEnemy(colA)->SetHit(true);
+	//					spawing->GetEnemy(colB)->SetHit(false);
 	//					break;
 
 	//				} else {
-	//					spawing[i]->GetEnemy(colA)->SetHit(false);
+	//					spawing->GetEnemy(colA)->SetHit(false);
 	//				}
 	//			}
 	//		}
@@ -273,13 +254,6 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	}
 
 
-	if (spawing[0]->GetIsAlive() == 0) {
-		if (spawing[1]->GetIsAlive() == 0) {
-			if (spawing[2]->GetIsAlive() == 0) {
-				Clear = true;
-			}
-		}
-	}
 	if (input->TriggerKey(DIK_C)) {
 		Clear = true;
 	}
@@ -322,21 +296,12 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	if (player->GetHp() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 	}
-
-	//if (input->PushKey(DIK_0)) {
-	//	object1->PlayAnimation();
-	//}
 	ui->Update();
-	//object1->SetRotation(player->GetRotation());
-	//object1->SetPosition(player->GetPosition());
-	//object1->Update();
 	cameraPos.x = player->GetTargetPosition().x;
 	cameraPos.y = player->GetTargetPosition().y + distanceY;
 	cameraPos.z = player->GetPosition().z - distanceZ;
 	camera->SetTarget(player->GetTargetPosition());
 	camera->SetEye(cameraPos);
-	/*DebugText::GetInstance()->Print("PUSH to RB!!", 1040, 620, 2.0f);
-	DebugText::GetInstance()->Print("PUSH to A!!", 1040, 660, 2.0f);*/
 	if (player->GetArmWeight() > 0) {
 		DebugText::GetInstance()->Print("RB or LB :Rotate", 900, 620, 2.0f);
 	}
@@ -371,16 +336,9 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 
 	warp->Draw();
 	Object3d::PreDraw();
-	//object1->Draw(dxCommon->GetCmdList());
 	//背景用
 	player->Draw(dxCommon);
-	//for (int i = 0; i < StartEnemyMax; i++) {
-	//	enemy[i]->Draw();
-	//}
-	for (std::size_t i = 0; i < spawing.size(); i++) {
-		spawing[i]->Draw();
-	}
-	//bossenemy->Draw();
+	spawing->Draw();
 	ui->Draw();
 	Sprite::PreDraw();
 	//背景用
@@ -401,5 +359,5 @@ void StartMap::Pause(const int& Timer) {
 		pause = true;
 	}
 	player->Pause(Timer);
-	spawing[0]->Pause(Timer);
+	spawing->Pause(Timer);
 }

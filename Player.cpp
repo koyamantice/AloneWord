@@ -418,11 +418,103 @@ void Player::Update() {
 	
 }
 
+void Player::SelectUp() {
+	if (pause) {
+		return;
+	}
+	rot = this->object3d->GetRotation();
+	object3d->Update();
+	move_object1->SetPosition(position);
+	move_object1->SetRotation(rot);
+	if (move_count == 1) {
+		move_object1->PlayAnimation();
+	}
+
+	else if (move_count == 0) {
+		move_object1->StopAnimation();
+	}
+	move_object1->Update();
+	Armobj->Update();
+	StickrotX = input->GetPosX();
+	StickrotY = input->GetPosY();
+	//effecttexture->Update();
+	//object3d->SetRotation({ 90,0,0 });
+	if (position.x>13) {
+		position.x = 13;
+	}
+	if (position.x < -13) {
+		position.x = -13;
+	}	if (position.z > 9) {
+		position.z = 9;
+	}	if (position.z <-7) {
+		position.x = -7;
+	}
+
+	rot = {0,0,0};
+	if (ArmMoveNumber == 0 && AttackMoveNumber == 0 && AttackFlag == false
+		&& Interval <= 80) {
+		if (!(StickrotX<650 && StickrotX>-650)) {
+			rot.y= ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
+			position.x += sin(atan2(StickrotX, StickrotY)) * PlayerSpeed;
+			ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
+			ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
+		}
+
+		if (!(StickrotY<650 && StickrotY>-650)) {
+			rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
+			position.z -= cos(atan2(StickrotX, StickrotY)) * PlayerSpeed;
+			ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
+			ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
+		}
+	}
+
+	//アニメーション用のキー入力
+	if ((input->LeftTiltStick(input->Right)) || (input->LeftTiltStick(input->Left))
+		|| (input->LeftTiltStick(input->Up)) || (input->LeftTiltStick(input->Down))) {
+		move_count++;
+	} else {
+		move_count = 0;
+	}
+
+	// 落下処理
+	if (!onGround) {
+		// 下向き加速度
+		const float fallAcc = -0.01f;
+		const float fallVYMin = -0.5f;
+		// 加速
+		fallV.m128_f32[2] = max(fallV.m128_f32[2] + fallAcc, fallVYMin);
+		// 移動
+		position.x += fallV.m128_f32[0];
+		position.y += fallV.m128_f32[1];
+		position.z += fallV.m128_f32[2];
+	}
+
+	if (position.y <= 0.0f) {
+		position.y = 0.0f;
+		onGround = true;
+	}
+	Armradius = ArmSpeed * PI / 180.0f;
+	ArmCircleX = cosf(Armradius) * Armscale;
+	ArmCircleZ = sinf(Armradius) * Armscale;
+	Armpos.x = ArmCircleX + position.x;
+	Armpos.y = ArmCircleZ + position.y;
+	Armobj->SetPosition({0,-90,0});
+	//移動
+	object3d->Update();
+	object3d->SetPosition(position);
+	object3d->SetRotation(rot);
+	Armobj->SetRotation(ArmRot);
+	//パーティクル発生
+	BirthParticle();
+}
+
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
 	ImGui::Begin("test");
 	ImGui::Text("count::%d", move_count);
-
+	ImGui::SliderFloat("pos.x", &position.x,20.0f,-20.0f);
+	ImGui::SliderFloat("pos.y", &position.y,20.0f,-20.0f);
+	ImGui::SliderFloat("pos.z", &position.z,20.0f,-20.0f);
 	ImGui::Unindent();
 	ImGui::End();
 	Object3d::PreDraw();

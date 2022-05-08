@@ -28,6 +28,7 @@ public:
 		energy,
 		pinch,
 		weak,
+		select1,
 	};
 	enum tex2dName {
 	enemy,//Texture::LoadTexture(0, L"Resources/2d/enemy.png");
