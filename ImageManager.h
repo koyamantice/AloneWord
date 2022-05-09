@@ -19,6 +19,7 @@ public:
 		life,//Sprite::LoadTexture(5, L"Resources/2d/Life.png");
 		vignette,//Sprite::LoadTexture(6, L"Resources/2d/Vignette.png");
 		concent,
+		concent2,
 		punyu,
 		CLEAR,
 		OVER,

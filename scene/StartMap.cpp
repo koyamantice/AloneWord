@@ -17,13 +17,6 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	Texture::SetCamera(camera);
 	// 3Dオブジェクトにカメラをセット
 	Object3d::SetCamera(camera);
-
-	//オブジェクト初期化
-	/*modelGround = Model::CreateFromOBJ("ground");
-	objFloor = Object3d::Create();
-	objFloor->Initialize();
-	objFloor->SetModel(modelGround);
-	objFloor->SetPosition({ 0,-1,0 });*/
 	//ステージ床
 	objFloor = Object3d::Create();
 	modelFloor = Model::CreateFromOBJ("floor");
@@ -62,6 +55,9 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	limit->setscale({ 5.5f, 5.5f,  5.5f});*/
 	//背景スプライト生成
 	concent = Sprite::Create(ImageManager::concent, { 0.0f,0.0f });
+	//背景スプライト生成
+	concent2 = Sprite::Create(ImageManager::concent2, { 0.0f,0.0f });
+
 	// モデル読み込み
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
 	//srand(NULL);
@@ -80,28 +76,26 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	player = new Player();
 	player->Initialize();
 	player->SetMove(50.0f, 50.0f);
-	player->SetPosition({ 0.0f,0.0f,-30.0f });
+	player->SetPosition({ 0.0f,5.0f,-30.0f });
 	//player->SetPosition({ 0.0f,0.0f,-30.0f });
 
 	// パーティクルマネージャ生成
 	particleMan = ParticleManager::GetInstance();
 	particleMan->SetCamera(camera);
-
-
+	for (int i = 0;i<enemy.size(); i++) {
+		enemy[i] = new Rice();
+		enemy[i]->SetPlayer(player);
+		enemy[i]->Initialize();
+		enemy[i]->SetLimit({ 22,-22 , 30,-30 });
+		enemy[i]->Update();
+	}
 	ui = new UI(player);
 	spawing = new Spawning();
 	spawing->SetPlayer(player);
 	spawing->Initialize();
-
-	spawing->SetPosition({ -20.0f,0.0f,-4.0f });
+	spawing->SetPosition({ 0.0f,0.0f,0.0f });
 	spawing->SetRotation({ 0,90,0 });
-
-	//spawing[1]->SetPosition({ 0,0.0f,8.0f });
-	//spawing[1]->SetRotation({ 0,90,0 });
-
-	//spawing[2]->SetPosition({ 20.0f,0.0f,-4.0f });
-	//spawing[2]->SetRotation({ 0,90,0 });
-
+	spawing->Update();
 	//カメラポジション
 	cameraPos.x = player->GetTargetPosition().x;
 	cameraPos.y = player->GetTargetPosition().y + 10;
@@ -135,59 +129,48 @@ void StartMap::Finalize() {
 
 void StartMap::Update(DirectXCommon* dxCommon) {
 	if (pause) {
-		particleMan->Update();
-		//for (std::size_t i = 0; i < spawing.size(); i++) {
-		//	spawing->Update();
-		//}
 		Pause(set);
 		return;
 	} else {
 		hit = false;
 	}
+	if (tutorial%2==1) {
+		switch (tutorial) {
+		case 1:
+			if (input->TriggerButton(input->Button_A)) {
+				tutorial++;
+			}
+		break;
+		case 3:
+			if (input->TriggerButton(input->Button_A)) {
+				tutorial++;
+			}
+			break;
+
+
+		default:
+			break;
+		}
+		return;
+	}
+	if (player->GetPosition().y<=0 && tutorial == 0) {
+		tutorial=1;
+	}
+	if (enemy[0]->GetIsAlive() && tutorial == 2) {
+		tutorial = 3;
+	}
 	for (int j = 0; j < spawing->GetEneMax(); j++) {
 			if (spawing->GetEnemy(j)->collideAttackArm()) {
-				set = 30;
 				set = 15;
 				pause = true;
 				break;
 			}
 	}
-	objFloor->Update();
-	objStartMap->Update();
-	lightGroup->Update();
-	camera->Update();
-	player->Update();
-	particleMan->Update();
-	warp->Update(player);
-	for (std::size_t i = 0; i < objBlock.size(); i++) {
-		objBlock[i]->SetRotation(BlockRotation[i]);
-		objBlock[i]->Update();
-	}
-		spawing->Update();
-		if (spawing->collideAttackArm()&&spawing->GetIsAlive()) {
-			hit = true;
-			set = spawing->GetStop();
-			pause = true;
-		}
-
-	if (warp->collidePlayer(player)) {
-		SceneManager::GetInstance()->ChangeScene("BOSS");
-	}
-	for (int j = 0; j < spawing->GetEneMax(); j++) {
-		player->ResetWeight(spawing->GetEnemy(j));
-		player->Rebound(spawing->GetEnemy(j));
-	}
-
-	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
-		Audio::GetInstance()->StopWave(0);
-		Audio::GetInstance()->StopWave(1);
-		Audio::GetInstance()->LoopWave(1, 0.7f);
-	}
-	if (input->TriggerKey(DIK_SPACE)) {
-		set = 15;
+	if (spawing->collideAttackArm()&&spawing->GetIsAlive()) {
+		hit = true;
+		set = spawing->GetStop();
 		pause = true;
 	}
-
 	////敵同士の当たり判定
 	//if (sizeof(enemy) > 2) {//配列のサイズ確認
 	//	for (int colA = 0; colA < StartEnemyMax; colA++) {
@@ -205,35 +188,16 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	//		}
 	//	}
 	//}
-	//for (std::size_t i = 0; i < spawing.size(); i++) {
-	//	for (int colA = 0; colA < 5; colA++) {
-	//		for (int colB = 1; colB < 5; colB++) {
-	//			if (spawing->GetEnemy(colA)->GetIsAlive()) {
-	//				if (Collision::CheckSphere2Sphere(spawing->GetEnemy(colA)->collider, spawing->GetEnemy(colB)->collider) == true && colA != colB) {//当たり判定と自機同士の当たり判定の削除
-	//					spawing->GetEnemy(colA)->SetHit(true);
-	//					spawing->GetEnemy(colB)->SetHit(false);
-	//					break;
-
-	//				} else {
-	//					spawing->GetEnemy(colA)->SetHit(false);
-	//				}
-	//			}
-	//		}
-	//	}
-	//}
-
 	//その他シーン移行
 
 	/*if (bossenemy->GetHP() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("CLEAR");
 	}*/
 
-
 	Ray ray;
 	ray.start = { player->GetPosition().x,player->GetPosition().y + 3,player->GetPosition().z,1 };
 	ray.dir = { 0.0f,0.28f,-1.0f,0.0f };
 	RaycastHit raycastHit;
-
 	if (!collisionManager->Raycast(ray, &raycastHit)) {
 		if (distanceZ <= 10.0f) {
 			distanceZ += 0.25f;
@@ -253,50 +217,28 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		}
 	}
 
-
 	if (input->TriggerKey(DIK_C)) {
 		Clear = true;
 	}
-
-	if (player->GetPosition().z >= -22) {
-		start = true;
-	}
-
-	if (!Clear) {
-		if (player->GetPosition().z >= 23.9f) {
-			player->SetPosition({ player->GetPosition().x,0,23.9f });
-		}
-		if (player->GetPosition().z <= -22 && start) {
-			player->SetPosition({ player->GetPosition().x,0,-22 });
-		}
-		if (start == true) {
-			if (BlockRotation[0].x <= 45.0f) {
-				BlockRotation[0].x += 4.5f;
-				BlockRotation[2].x += 4.5f;
-			}
-
-			if (BlockRotation[1].x >= -45.0f) {
-				BlockRotation[1].x -= 4.5f;
-				BlockRotation[3].x -= 4.5f;
-			}
-		}
-	}
-	else {
-		if (BlockRotation[0].x >= 0.0f) {
-			BlockRotation[0].x -= 4.5f;
-			BlockRotation[2].x -= 4.5f;
-		}
-
-		if (BlockRotation[1].x <= 0.0f) {
-			BlockRotation[1].x += 4.5f;
-			BlockRotation[3].x += 4.5f;
-		}
-	}
-
 	if (player->GetHp() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 	}
 	ui->Update();
+	objFloor->Update();
+	objStartMap->Update();
+	lightGroup->Update();
+	camera->Update();
+	player->Update();
+	spawing->Update();
+	particleMan->Update();
+	for (int j = 0; j < spawing->GetEneMax(); j++) {
+		player->ResetWeight(spawing->GetEnemy(j));
+		player->Rebound(spawing->GetEnemy(j));
+	}
+	for (std::size_t i = 0; i < objBlock.size(); i++) {
+		objBlock[i]->SetRotation(BlockRotation[i]);
+		objBlock[i]->Update();
+	}
 	cameraPos.x = player->GetTargetPosition().x;
 	cameraPos.y = player->GetTargetPosition().y + distanceY;
 	cameraPos.z = player->GetPosition().z - distanceZ;
@@ -325,15 +267,12 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	ImGui::End();
 	Object3d::PreDraw();
 	//objFloor->Draw();
-	//objFloor->Draw();
-	//objStartMap->Draw();
+	objFloor->Draw();
+	objStartMap->Draw();
 	for (std::size_t i = 0; i < objBlock.size(); i++) {
 		objBlock[i]->Draw();
 	}
 	Texture::PreDraw();
-
-
-
 	warp->Draw();
 	Object3d::PreDraw();
 	//背景用
@@ -342,8 +281,8 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	ui->Draw();
 	Sprite::PreDraw();
 	//背景用
-	if (hit) {
-		concent->Draw();
+	if (tutorial%2==1) {
+		concent2->Draw();
 	}
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
@@ -358,6 +297,6 @@ void StartMap::Pause(const int& Timer) {
 	else {
 		pause = true;
 	}
-	player->Pause(Timer);
-	spawing->Pause(Timer);
+	//player->Pause(Timer);
+	//spawing->Pause(Timer);
 }

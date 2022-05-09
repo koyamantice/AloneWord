@@ -47,17 +47,18 @@ private:
 	array<Object3d*, 4> objBlock;
 	array<XMFLOAT3, 4> BlockRotation;
 	Sprite* concent = nullptr;
+	Sprite* concent2 = nullptr;
 	/*FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;*/
 	DebugCamera* camera = { nullptr };
 	Texture* limit = nullptr;
 	Player* player = nullptr;
-	array<Rice*, 10> enemy;
+	array<Rice*, 5> enemy;
 	Warp* warp = nullptr;
 	//BossEnemy* bossenemy = nullptr;
 	Spawning* spawing;
 	ParticleManager* particleMan = nullptr;
-	bool start = false;
+	int	tutorial =0;
 	bool Clear = false;
 	int a = 0;
 	CollisionManager* collisionManager = nullptr;

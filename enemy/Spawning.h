@@ -43,7 +43,7 @@ private:
 	bool Hit=false;
 	float Hp = 8.0f;
 	bool isAlive = true;
-	InterEnemy* enemy[EneMax] = {};
+	//InterEnemy* enemy[EneMax] = {};
 	Player* player = nullptr;
 	bool pause = false;
 	int stop = 0;

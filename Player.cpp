@@ -548,7 +548,6 @@ void Player::SelectUp() {
 	Armobj->SetRotation(ArmRot);
 	//パーティクル発生
 	BirthParticle();
-	have_object1->Update();
 }
 
 //描画
@@ -568,6 +567,7 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	}
 	arm_no_object1->Draw(dxCommon->GetCmdList());
 	move_object1->Draw(dxCommon->GetCmdList());
+
 	//have_object1->Draw(dxCommon->GetCmdList());
 }
 

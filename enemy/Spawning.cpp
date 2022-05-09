@@ -15,19 +15,19 @@ Spawning::Spawning(int Categoly) {
 	net[1] = Texture::Create(ImageManager::effect3, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	net[1]->TextureCreate();
 
-	if (Categoly==0) {
-		for (int i = 0; i < EneMax; i++) {
-			enemy[i] = new Rice();
-		}
-	} else 	if (Categoly == 1) {
-		for (int i = 0; i < EneMax; i++) {
-			enemy[i] = new Rice();
-		}
-	} else 	if (Categoly == 2) {
-		for (int i = 0; i < EneMax; i++) {
-			enemy[i] = new Rice();
-		}
-	}
+	//if (Categoly==0) {
+	//	for (int i = 0; i < EneMax; i++) {
+	//		enemy[i] = new Rice();
+	//	}
+	//} else 	if (Categoly == 1) {
+	//	for (int i = 0; i < EneMax; i++) {
+	//		enemy[i] = new Rice();
+	//	}
+	//} else 	if (Categoly == 2) {
+	//	for (int i = 0; i < EneMax; i++) {
+	//		enemy[i] = new Rice();
+	//	}
+	//}
 }
 
 void Spawning::Initialize() {
@@ -48,64 +48,59 @@ void Spawning::Initialize() {
 	net[1]->SetRotation({ 90,0,0 });
 	net[1]->SetScale({ 0.3f,0.3f,0.0f });
 
-	for (int i = 0; i < EneMax; i++) {
-		enemy[i]->SetPlayer(player);
-		enemy[i]->Initialize();
-		enemy[i]->SetLimit({22,-22 , 30,-30 });
-		enemy[i]->Update();
-	}
+
 }
 
 void Spawning::Update() {
 	if (pause) { return; }
 	if (Hp > 0) { isAlive = true; } else { isAlive = false; }
-	for (int i = 0; i < EneMax; i++) {
-		enemy[i]->SetBasePos(pos);
-		enemy[i]->Respawn(360.0f/EneMax*i);
-		if (isAlive|| enemy[i]->GetIsAlive()==true|| enemy[i]->GetIsTimer()<=100) {
-			enemy[i]->Update();
-			if (enemy[i]->GetIsAlive()) {
-				for (int colA = 0; colA < EneMax; colA++) {
-					for (int colB = 1; colB < EneMax; colB++) {
-						if (Collision::SphereCollision2(enemy[colA]->GetPosition(), 2.0f, enemy[colB]->GetPosition(), 2.0f) && colA != colB) {//“–‚½‚è”»’è‚ÆŽ©‹@“¯Žm‚Ì“–‚½‚è”»’è‚Ìíœ
-							DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
-							enemy[colA]->SetHit(true);
-							enemy[colB]->SetHit(false);
-							break;
-						} else {
-							enemy[colA]->SetHit(false);
-							break;
-						}
-					}
-				}
-			}
-		}
-	}
+	//for (int i = 0; i < EneMax; i++) {
+	//	enemy[i]->SetBasePos(pos);
+	//	enemy[i]->Respawn(360.0f/EneMax*i);
+	//	if (isAlive|| enemy[i]->GetIsAlive()==true|| enemy[i]->GetIsTimer()<=100) {
+	//		enemy[i]->Update();
+	//		if (enemy[i]->GetIsAlive()) {
+	//			for (int colA = 0; colA < EneMax; colA++) {
+	//				for (int colB = 1; colB < EneMax; colB++) {
+	//					if (Collision::SphereCollision2(enemy[colA]->GetPosition(), 2.0f, enemy[colB]->GetPosition(), 2.0f) && colA != colB) {//“–‚½‚è”»’è‚ÆŽ©‹@“¯Žm‚Ì“–‚½‚è”»’è‚Ìíœ
+	//						DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
+	//						enemy[colA]->SetHit(true);
+	//						enemy[colB]->SetHit(false);
+	//						break;
+	//					} else {
+	//						enemy[colA]->SetHit(false);
+	//						break;
+	//					}
+	//				}
+	//			}
+	//		}
+	//	}
+	//}
 
 	if (isAlive) {
 		object3d->Update();
 		object3d->SetPosition(pos);
-		for (int i = 0; i < EneMax;i++) {
-			if (Collision::CircleCollision(pos.x,pos.z,1.8f, enemy[i]->GetPosition().x,enemy[i]->GetPosition().z, 1.8f)) {
-				if (!enemy[i]->GetIsAlive()) {
-					enemy[i]->SetScale(rand() * (XM_PI / 180.0f));
-					enemy[i]->SetSpeed(rand());
-				} else {
+		//for (int i = 0; i < EneMax;i++) {
+		//	if (Collision::CircleCollision(pos.x,pos.z,1.8f, enemy[i]->GetPosition().x,enemy[i]->GetPosition().z, 1.8f)) {
+		//		if (!enemy[i]->GetIsAlive()) {
+		//			enemy[i]->SetScale(rand() * (XM_PI / 180.0f));
+		//			enemy[i]->SetSpeed(rand());
+		//		} else {
 
-				}
-			}
-		}
+		//		}
+		//	}
+		//}
 
 
 		if (Collision::CircleCollision(pos.x, pos.z, 2.0f, player->GetPosition().x, player->GetPosition().z, 1.5f)) {
 			player->BackPos();
 		}
-		for (int i = 0; i < EneMax;i++) {
-			if (enemy[i]->CollidePos(pos, 2.0f)) {
-				enemy[i]->SetHit(true);
-				break;
-			}
-		}
+		//for (int i = 0; i < EneMax;i++) {
+		//	if (enemy[i]->CollidePos(pos, 2.0f)) {
+		//		enemy[i]->SetHit(true);
+		//		break;
+		//	}
+		//}
 		//collideAttackArm();
 		texture->Update();
 		texture->SetPosition({ pos.x,pos.y + 5.0f,pos.z });
@@ -123,9 +118,9 @@ void Spawning::Update() {
 void Spawning::Finalize() {
 	delete object3d;
 	delete texture;
-	for (int i = 0; i < EneMax; i++) {
-		enemy[i]->Finalize();
-	}
+	//for (int i = 0; i < EneMax; i++) {
+	//	enemy[i]->Finalize();
+	//}
 
 }
 
@@ -149,16 +144,16 @@ if (ImGui::TreeNode("Debug")) {
 		net[0]->Draw();
 		net[1]->Draw();
 	}
-	for (int i = 0; i < EneMax; i++) {
-		enemy[i]->Draw();
-	}
+	//for (int i = 0; i < EneMax; i++) {
+	//	enemy[i]->Draw();
+	//}
 }
 
 void Spawning::Pause(const int& Timer) {
 	wait++;
-	for (int i = 0; i < EneMax; i++) {
-		enemy[i]->Pause(Timer);
-	}
+	//for (int i = 0; i < EneMax; i++) {
+	//	enemy[i]->Pause(Timer);
+	//}
 	if (wait >= Timer) {
 		pause = false;
 		wait = 0;
