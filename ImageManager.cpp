@@ -24,6 +24,9 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(weak, L"Resources/2d/HPmark_weak.png");
 	Sprite::LoadTexture(select1, L"Resources/2d/Selected.png");
 	Sprite::LoadTexture(kitchen, L"Resources/2d/kitchen.png");
+	Sprite::LoadTexture(meter, L"Resources/2d/hotWaterGauge.png");
+	Sprite::LoadTexture(meterbar, L"Resources/2d/hotWaterBar.png");
+
 }
 
 void ImageManager::LoadTex2D() {

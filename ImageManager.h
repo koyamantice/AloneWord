@@ -30,7 +30,9 @@ public:
 		pinch,
 		weak,
 		select1,
-		kitchen
+		kitchen,
+		meter,
+		meterbar
 	};
 	enum tex2dName {
 	enemy,//Texture::LoadTexture(0, L"Resources/2d/enemy.png");

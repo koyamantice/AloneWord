@@ -28,6 +28,13 @@ void GreenTea::Initialize() {
 
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
+
+	meter[0] = Sprite::Create(ImageManager::meter,{});
+	//meter[0]->SetAnchorPoint({});
+	meter[0]->SetPosition({680,0});
+	meter[1] = Sprite::Create(ImageManager::meterbar, {});
+	meter[1]->SetPosition({ 880,0 });
+
 	//texture->SetColor({ 1,1,1,1 });
 	texture->SetPosition(pos.x, -1, pos.z);
 	texture->SetRotation({ 90,0,0 });
@@ -287,4 +294,7 @@ void GreenTea::specialDraw() {
 	for (int i = 0; i < 50; i++) {
 		hotWater[i]->Draw();
 	}
+	Sprite::PreDraw();
+	meter[0]->Draw();
+	meter[1]->Draw();
 }

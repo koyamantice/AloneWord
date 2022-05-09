@@ -11,6 +11,7 @@ public:
 	void specialDraw() override;
 private:
 	HotWater* hotWater[50];
+	Sprite* meter[2]{};
 	XMFLOAT3 AfterPos{};
 	float degree=0.0f;
 	float y = 0.0f;
