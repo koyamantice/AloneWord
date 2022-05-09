@@ -21,7 +21,7 @@ void RightShose::Initialize() {
 	
 	rot = { 0,90,0 };
 	enemyobj->SetRotation(rot);
-	enemyobj->SetScale({ 1.0f,1.0f,1.0f });
+	enemyobj->SetScale({ 0.7f,0.7f,0.7f });
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	//texture->SetColor({ 1,1,1,1 });
@@ -86,6 +86,7 @@ void RightShose::Spec() {
 					Ease(In,Cubic,frame,pos.z,AfterPos.z),
 					};
 				}
+
 				//プレイヤーの位置をロックオンさせる
 				if (MoveCount == 100) {
 					double sb, sbx, sbz;

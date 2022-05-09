@@ -25,11 +25,7 @@ void ShockWave::Upda(Pastel* pastel,Player* player) {
 }
 
 void ShockWave::Draw() {
-	ImGui::Begin("test");
-	ImGui::SliderFloat("pos.x", &scale.x, 25, -25);
-	ImGui::Text("expand::%d", expand);
-	////ImGui::Unindent();
-	ImGui::End();
+	
 	if (expand) {
 		wave->Draw();
 	}

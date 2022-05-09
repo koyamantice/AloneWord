@@ -272,10 +272,10 @@ void FBXObject3d::Draw(ID3D12GraphicsCommandList* cmdList)
 	}
 
 
-	ImGui::Begin("test");
-	ImGui::Text("%d", isPlay);
-	ImGui::Unindent();
-	ImGui::End();
+	//ImGui::Begin("test");
+	//ImGui::Text("%d", isPlay);
+	//ImGui::Unindent();
+	//ImGui::End();
 	// パイプラインステートの設定
 	cmdList->SetPipelineState(pipelinestate.Get());
 	// ルートシグネチャの設定
