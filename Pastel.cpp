@@ -25,7 +25,7 @@ void Pastel::Initialize() {
 	IsAlive = 0;
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
-	pos = { 0.0f,5.0f,0.0f };
+	pos = { 0.0f,3.0f,0.0f };
 	enemyobj->SetPosition(pos);
 	rot = { 0,90,0 };
 	enemyobj->SetRotation(rot);
@@ -305,6 +305,10 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 		Platformobj[i]->SetPosition(Plapos[i]);
 		Platformobj[i]->Update();
 	}
+}
+
+void Pastel::App() {
+
 }
 
 void Pastel::specialDraw() {

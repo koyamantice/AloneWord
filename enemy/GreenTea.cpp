@@ -283,6 +283,9 @@ Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 	}
 }
 
+void GreenTea::App() {
+
+}
 void GreenTea::specialDraw() {
 	for (int i = 0; i < 50; i++) {
 		hotWater[i]->Draw();

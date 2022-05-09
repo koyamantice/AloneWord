@@ -61,7 +61,7 @@ protected:
 	XMFLOAT3 Aftereyepos;
 	XMFLOAT3 Aftertargetpos;
 	float frame = 0.0f;
-	int Interval = 0.0f;
+	int Interval = 0;
 public:
 
 	virtual ~BaseScene()=default;

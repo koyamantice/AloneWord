@@ -9,6 +9,7 @@ public:
 	void Initialize() override;
 	void Finalize() override;
 	void Spec() override;
+	void App() override;
 	void specialDraw() override;
 	void SetAct(LeftShose* leftshose);
 	bool HitShose(LeftShose* leftshose);

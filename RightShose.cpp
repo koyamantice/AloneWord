@@ -320,6 +320,9 @@ void RightShose::Spec() {
 	}
 }
 
+void RightShose::App() {
+
+}
 void RightShose::specialDraw() {
 }
 
