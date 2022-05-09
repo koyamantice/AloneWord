@@ -24,6 +24,7 @@ void ImageManager::Load2D() {
 
 	Sprite::LoadTexture(select1, L"Resources/2d/Selected.png");
 
+	Sprite::LoadTexture(kitchen, L"Resources/2d/kitchen.png");
 }
 
 void ImageManager::LoadTex2D() {

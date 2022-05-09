@@ -26,16 +26,15 @@ float easeOutBack(float x) {
 float easeInOut(float x) {
 	return x < 0.5 ? 8 * x * x * x * x : 1 - powf(-2 * x + 2, 4) / 2;
 }
-float easeBack(float x) 
-{
-const float c1 = 1.70158f;
-const float c3 = c1 + 1;
+float easeBack(float x) {
+	const float c1 = 1.70158f;
+	const float c3 = c1 + 1;
 
-return c3 * x * x * x - c1 * x * x;
+	return c3 * x * x * x - c1 * x * x;
 }
 Player::Player() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::Player);
-	Armmodel= ModelManager::GetIns()->GetModel(ModelManager::Arm);
+	Armmodel = ModelManager::GetIns()->GetModel(ModelManager::Arm);
 	object3d = new Object3d();
 	Armobj = new Object3d();
 	move_model1 = ModelManager::GetIns()->GetFBXModel(ModelManager::MottiMove);
@@ -47,7 +46,7 @@ bool Player::Initialize() {
 	object3d->SetModel(model);
 	position = { 0,0,0 };
 	object3d->SetPosition(position);
-	object3d->SetRotation({0,270,0});
+	object3d->SetRotation({ 0,270,0 });
 	object3d->SetScale({ 0.7f,0.7f,0.7f });
 
 	Armobj = Object3d::Create();
@@ -97,7 +96,7 @@ void Player::Update() {
 	//effecttexture->Update();
 	if (wet) {
 		wetC++;
-		if (wetC>20) {
+		if (wetC > 20) {
 			wet = false;
 			wetC = 0;
 		}
@@ -110,14 +109,14 @@ void Player::Update() {
 			ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 			ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
 		}
-		
+
 		if (!(StickrotY<650 && StickrotY>-650)) {
 			rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 			position.z -= cos(atan2(StickrotX, StickrotY)) * PlayerSpeed;
 			ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 			ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
 		}
-		
+
 		//攻撃右回り
 		if (input->PushButton(input->Button_RB) && ArmWeight != 0.0f) {
 			AttackFlag = true;
@@ -164,8 +163,7 @@ void Player::Update() {
 	if ((input->LeftTiltStick(input->Right)) || (input->LeftTiltStick(input->Left))
 		|| (input->LeftTiltStick(input->Up)) || (input->LeftTiltStick(input->Down))) {
 		move_count++;
-	}
-	else {
+	} else {
 		move_count = 0;
 	}
 
@@ -179,8 +177,7 @@ void Player::Update() {
 			frame = 0;
 			initscale = Armscale;
 		}
-	}
-	else if (ArmMoveNumber == 2) {
+	} else if (ArmMoveNumber == 2) {
 		Armscale = initscale - 3.0f * easeOutBack(frame / frameMax);
 		if (frame != frameMax) {
 			frame = frame + 1;
@@ -204,14 +201,11 @@ void Player::Update() {
 		}
 		if (frame2 <= 10.0f) {
 			power = 0.25f;
-		}
-		else if (frame2 > 10.0f && frame2 <= 20.0f) {
+		} else if (frame2 > 10.0f && frame2 <= 20.0f) {
 			power = 0.5f;
-		}
-		else if (frame2 > 20.0f && frame2 <= 30.0f) {
+		} else if (frame2 > 20.0f && frame2 <= 30.0f) {
 			power = 0.75f;
-		}
-		else {
+		} else {
 			power = 1.0f;
 		}
 
@@ -221,11 +215,11 @@ void Player::Update() {
 			AttackFlag = false;
 			frameMax2 = 40.0f;
 		}
-	} 
+	}
 
 	//攻撃時に腕を伸ばしている
 	if (AttackMoveNumber == 1 || AttackMoveNumber == 3) {
-		if (ArmWeight>0) {
+		if (ArmWeight > 0) {
 			Armscale = initscale + 3.0f * easeInOut(frame3 / frameMax3);
 			if (frame3 < frameMax3) {
 				frame3 = frame3 + 1;
@@ -245,7 +239,7 @@ void Player::Update() {
 			scaleVel = Armscale - initscale;
 			initscale = Armscale;
 			frame3 = 0;
-			frameMax3 = frameMax2/20;
+			frameMax3 = frameMax2 / 20;
 		}
 	}
 
@@ -290,7 +284,7 @@ void Player::Update() {
 		position.y += fallV.m128_f32[1];
 		position.z += fallV.m128_f32[2];
 	}
-	
+
 	// ワールド行列更新
 	UpdateWorldMatrix();
 	collider->Update();
@@ -299,8 +293,7 @@ void Player::Update() {
 	assert(sphereCollider);
 
 	// クエリーコールバッククラス
-	class PlayerQueryCallback : public QueryCallback
-	{
+	class PlayerQueryCallback : public QueryCallback {
 	public:
 		PlayerQueryCallback(Sphere* sphere) : sphere(sphere) {};
 
@@ -390,8 +383,7 @@ void Player::Update() {
 	//カメラのためのポジション(更新)
 	if (Interval == 0) {
 		targetpos = position;
-	}
-	else if(Interval != 0 && Interval <= 99) {
+	} else if (Interval != 0 && Interval <= 99) {
 		if (targetpos.x != position.x || targetpos.z != position.z) {
 			angleX = (position.x - targetpos.x);
 			angleZ = (position.z - targetpos.z);
@@ -399,8 +391,7 @@ void Player::Update() {
 			if (angleR >= 1.00) {
 				targetpos.x += (angleX / (float)angleR) * 0.25f;
 				targetpos.x += (angleZ / (float)angleR) * 0.25f;
-			}
-			else {
+			} else {
 				targetpos = position;
 			}
 		}
@@ -415,7 +406,7 @@ void Player::Update() {
 		move_object1->StopAnimation();
 	}
 	move_object1->Update();
-	
+
 }
 
 void Player::SelectUp() {
@@ -439,27 +430,17 @@ void Player::SelectUp() {
 	StickrotY = input->GetPosY();
 	//effecttexture->Update();
 	//object3d->SetRotation({ 90,0,0 });
-	if (position.x>13) {
-		position.x = 13;
-	}
-	if (position.x < -13) {
-		position.x = -13;
-	}	if (position.z > 9) {
-		position.z = 9;
-	}	if (position.z <-7) {
-		position.x = -7;
-	}
 
-	rot = {0,0,0};
-	if (ArmMoveNumber == 0 && AttackMoveNumber == 0 && AttackFlag == false
-		&& Interval <= 80) {
+	rot = { 0,0,0 };
+	if ((position.x <= 13 && position.x >= -13)) {
 		if (!(StickrotX<650 && StickrotX>-650)) {
-			rot.y= ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
+			rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 			position.x += sin(atan2(StickrotX, StickrotY)) * PlayerSpeed;
 			ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 			ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
 		}
-
+	}
+	if ((position.z <= 7.5f && position.z >= -6.65f)) {
 		if (!(StickrotY<650 && StickrotY>-650)) {
 			rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 			position.z -= cos(atan2(StickrotX, StickrotY)) * PlayerSpeed;
@@ -467,7 +448,18 @@ void Player::SelectUp() {
 			ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
 		}
 	}
-
+	if (position.x > 13) {
+		position.x = 13;
+	}
+	if (position.x < -13) {
+		position.x = -13;
+	}
+	if (position.z > 7.5f) {
+		position.z = 7.5f;
+	}
+	if (position.z < -6.65f) {
+		position.z = -6.65f;
+	}
 	//アニメーション用のキー入力
 	if ((input->LeftTiltStick(input->Right)) || (input->LeftTiltStick(input->Left))
 		|| (input->LeftTiltStick(input->Up)) || (input->LeftTiltStick(input->Down))) {
@@ -488,17 +480,16 @@ void Player::SelectUp() {
 		position.y += fallV.m128_f32[1];
 		position.z += fallV.m128_f32[2];
 	}
-
 	if (position.y <= 0.0f) {
 		position.y = 0.0f;
 		onGround = true;
 	}
-	Armradius = ArmSpeed * PI / 180.0f;
-	ArmCircleX = cosf(Armradius) * Armscale;
-	ArmCircleZ = sinf(Armradius) * Armscale;
-	Armpos.x = ArmCircleX + position.x;
-	Armpos.y = ArmCircleZ + position.y;
-	Armobj->SetPosition({0,-90,0});
+	//Armradius = ArmSpeed * PI / 180.0f;
+	//ArmCircleX = cosf(Armradius) * Armscale;
+	//ArmCircleZ = sinf(Armradius) * Armscale;
+	//Armpos.x = ArmCircleX + position.x;
+	//Armpos.y = ArmCircleZ + position.y;
+	//Armobj->SetPosition({0,-90,0});
 	//移動
 	object3d->Update();
 	object3d->SetPosition(position);
@@ -512,9 +503,9 @@ void Player::SelectUp() {
 void Player::Draw(DirectXCommon* dxCommon) {
 	ImGui::Begin("test");
 	ImGui::Text("count::%d", move_count);
-	ImGui::SliderFloat("pos.x", &position.x,20.0f,-20.0f);
-	ImGui::SliderFloat("pos.y", &position.y,20.0f,-20.0f);
-	ImGui::SliderFloat("pos.z", &position.z,20.0f,-20.0f);
+	ImGui::SliderFloat("pos.x", &position.x, 20.0f, -20.0f);
+	ImGui::SliderFloat("pos.y", &position.y, 20.0f, -20.0f);
+	ImGui::SliderFloat("pos.z", &position.z, 20.0f, -20.0f);
 	ImGui::Unindent();
 	ImGui::End();
 	Object3d::PreDraw();
@@ -526,20 +517,20 @@ void Player::Draw(DirectXCommon* dxCommon) {
 }
 
 void Player::Pause(const int& Timer) {
-		wait++;
-		if (wait >= Timer) {
-			pause = false;
-			wait = 0;
-		} else {
-			pause = true;
-		}
+	wait++;
+	if (wait >= Timer) {
+		pause = false;
+		wait = 0;
+	} else {
+		pause = true;
+	}
 }
 
 //敵が腕から離れる
 void Player::ResetWeight(InterEnemy* enemy) {
 	XMFLOAT3 boundpower = enemy->GetBoundPower();
 	XMFLOAT3 enepos = enemy->GetPosition();
-	if (ArmWeight==0.0f) {
+	if (ArmWeight == 0.0f) {
 		if (enemy->GetEnemyCatch()) {
 			enemy->SetBound(true);
 			enemy->SetEnemyCatch(false);
@@ -551,7 +542,7 @@ void Player::ResetWeight(InterEnemy* enemy) {
 //ダメージ食らったときにプレイヤーが飛ばされる
 void Player::Rebound(InterEnemy* enemy) {
 	XMFLOAT3 enepos = enemy->GetPosition();
-	
+
 	distance.x = position.x - enepos.x;
 	distance.z = position.z - enepos.z;
 
@@ -576,8 +567,7 @@ void Player::Rebound(InterEnemy* enemy) {
 		if (rebound.x <= 0.0f) {
 			rebound.x = 0.0f;
 		}
-	}
-	else {
+	} else {
 		rebound.x += 0.005f;
 		if (rebound.x >= 0.0f) {
 			rebound.x = 0.0f;
@@ -589,8 +579,7 @@ void Player::Rebound(InterEnemy* enemy) {
 		if (rebound.z <= 0.0f) {
 			rebound.z = 0.0f;
 		}
-	}
-	else {
+	} else {
 		rebound.z += 0.045f;
 		if (rebound.z >= 0.0f) {
 			rebound.z = 0.0f;
@@ -606,19 +595,19 @@ void Player::Rebound(InterEnemy* enemy) {
 }
 
 void Player::BirthParticle() {
-	
+
 	if (ArmMoveNumber == 0 && AttackMoveNumber == 0 && AttackFlag == false
 		&& Interval <= 80) {
 		if (input->LeftTiltStick(input->Right) || input->LeftTiltStick(input->Left) || input->LeftTiltStick(input->Up) || input->LeftTiltStick(input->Down)) {
 			count++;
 		}
 	}
-	if (count >=12) {
+	if (count >= 12) {
 		for (int i = 0; i < 6; ++i) {
 			const float rnd_vel = 0.1f;
 			XMFLOAT3 vel{};
 			vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-			vel.y = (float)rand() / RAND_MAX * rnd_vel -rnd_vel / 2.0f;
+			vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 			vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 			ParticleManager::GetInstance()->Add(30, { oldPos.x + vel.x,oldPos.y,oldPos.z + vel.z }, vel, XMFLOAT3(), 0.7f, 0.1f);
 		}

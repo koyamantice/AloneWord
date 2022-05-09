@@ -24,6 +24,9 @@ class StageSelect :
 private:
 	Sprite* BackGround = nullptr;
 	Sprite* select[5]{};
+	XMFLOAT2 selectP[5]{};
+	Sprite* plane[5]{};
+	float frame=0;
 	Input* input = Input::GetInstance();
 	DebugCamera* camera = { nullptr };
 	Player* player=nullptr;
@@ -31,4 +34,5 @@ private:
 		fork,
 		boots,
 	};
+	bool UICheck();
 };
