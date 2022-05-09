@@ -159,13 +159,13 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	if (enemy[0]->GetIsAlive() && tutorial == 2) {
 		tutorial = 3;
 	}
-	for (int j = 0; j < spawing->GetEneMax(); j++) {
-			if (spawing->GetEnemy(j)->collideAttackArm()) {
-				set = 15;
-				pause = true;
-				break;
-			}
-	}
+	//for (int j = 0; j < spawing->GetEneMax(); j++) {
+	//		if (spawing->GetEnemy(j)->collideAttackArm()) {
+	//			set = 15;
+	//			pause = true;
+	//			break;
+	//		}
+	//}
 	if (spawing->collideAttackArm()&&spawing->GetIsAlive()) {
 		hit = true;
 		set = spawing->GetStop();
@@ -231,10 +231,10 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	player->Update();
 	spawing->Update();
 	particleMan->Update();
-	for (int j = 0; j < spawing->GetEneMax(); j++) {
-		player->ResetWeight(spawing->GetEnemy(j));
-		player->Rebound(spawing->GetEnemy(j));
-	}
+	//for (int j = 0; j < spawing->GetEneMax(); j++) {
+	//	player->ResetWeight(spawing->GetEnemy(j));
+	//	player->Rebound(spawing->GetEnemy(j));
+	//}
 	for (std::size_t i = 0; i < objBlock.size(); i++) {
 		objBlock[i]->SetRotation(BlockRotation[i]);
 		objBlock[i]->Update();

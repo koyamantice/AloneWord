@@ -8,15 +8,12 @@ void Framework::Run() {
 	while (true)//ゲームループ
 	{
 		if (FPSManager::GetInstance()->Run()) {
-
 			//毎フレーム更新
 			Update(dxcommon);
-
 			//終了リクエストが来たら抜ける
 			if (IsEndRequst()) {
 				break;
 			}
-
 			//描画
 			Draw(dxcommon);
 		}
