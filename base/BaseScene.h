@@ -56,7 +56,12 @@ protected:
 	bool bossstart = false;
 	int appearanceNumber = 0;
 	int appearanceTimer = 0;
-	XMFLOAT3 Afterpos;
+	XMFLOAT3 cameraPos = { 0.0f,0.0f,0.0f };
+	XMFLOAT3 cameratargetPos = { 0.0f,0.0f,0.0f };
+	XMFLOAT3 Aftereyepos;
+	XMFLOAT3 Aftertargetpos;
+	float frame = 0.0f;
+	int Interval = 0.0f;
 public:
 
 	virtual ~BaseScene()=default;

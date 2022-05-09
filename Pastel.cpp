@@ -25,14 +25,14 @@ void Pastel::Initialize() {
 	IsAlive = 0;
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
-	pos = { 0.0f,2.0f,5.0f };
+	pos = { 0.0f,5.0f,0.0f };
 	enemyobj->SetPosition(pos);
 	rot = { 0,90,0 };
 	enemyobj->SetRotation(rot);
 	enemyobj->SetScale({ 2.0f,2.0f,2.0f });
 	Millobj = Object3d::Create();
 	Millobj->SetModel(Millmodel);
-	Millpos = { 0.0f,0.0f,0.0f };
+	Millpos = { 0.0f,0.0f,15.0f };
 	Millobj->SetPosition(Millpos);
 	Millobj->SetRotation({0,90,0});
 	Millobj->SetScale({ 4.5f,4.5f,4.5f });
@@ -82,7 +82,7 @@ void Pastel::Spec() {
 			AttackCount++;
 			angle += 2.0f;
 			angle2 = angle * (3.14f / 180.0f);
-			pos.y = sin(angle2) * 0.5f + 0.5f;
+			pos.y = sin(angle2) * 2 + 3;
 			enemyobj->SetPosition(pos);
 		}
 	}
@@ -211,7 +211,7 @@ void Pastel::Spec() {
 					AfterPos = {
 						0.0f,
 						5.0f,
-						5.0f,
+						0.0f,
 					};
 					if (frame < 1.0f) {
 						frame += 0.01f;

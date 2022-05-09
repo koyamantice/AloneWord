@@ -552,14 +552,14 @@ void Player::SelectUp() {
 
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
-	ImGui::Begin("test");
-	ImGui::Text("count::%d", move_count);
-	/*ImGui::SliderFloat("position.x", &position.x, 50, 0);
-	ImGui::SliderFloat("position.z", &position.z, 50, 0);*/
-	ImGui::Text("have:%d", have);
-	ImGui::Text("have_count:%d", have_count);
-	ImGui::Unindent();
-	ImGui::End();
+	//ImGui::Begin("test");
+	//ImGui::Text("count::%d", move_count);
+	///*ImGui::SliderFloat("position.x", &position.x, 50, 0);
+	//ImGui::SliderFloat("position.z", &position.z, 50, 0);*/
+	//ImGui::Text("have:%d", have);
+	//ImGui::Text("have_count:%d", have_count);
+	//ImGui::Unindent();
+	//ImGui::End();
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
 		//object3d->Draw();
@@ -641,12 +641,12 @@ void Player::Rebound(InterEnemy* enemy) {
 		}
 	}
 
-	if (position.x <= 25.0f && position.x >= -25.0f) {
-		position.x += rebound.x;
-	}
-	if (position.z <= 20.0f && position.z >= -20.0f) {
-		position.z += rebound.z;
-	}
+	//if (position.x <= 25.0f && position.x >= -25.0f) {
+	//	position.x += rebound.x;
+	//}
+	//if (position.z <= 20.0f && position.z >= -20.0f) {
+	//	position.z += rebound.z;
+	//}
 }
 
 void Player::BirthParticle() {
@@ -686,5 +686,49 @@ void Player::BackPos() {
 }
 
 void Player::Begin() {
+	if (pause) {
+		return;
+	}
+	oldPos = position;
+	rot = this->object3d->GetRotation();
+	object3d->Update();
+	Armobj->Update();
+	StickrotX = input->GetPosX();
+	StickrotY = input->GetPosY();
+	//effecttexture->Update();
+	if (wet) {
+		wetC++;
+		if (wetC > 20) {
+			wet = false;
+			wetC = 0;
+		}
+	}
+	
+	// ワールド行列更新
+	UpdateWorldMatrix();
+	
+	Armradius = ArmSpeed * PI / 180.0f;
+	ArmCircleX = cosf(Armradius) * Armscale;
+	ArmCircleZ = sinf(Armradius) * Armscale;
+	Armpos.x = ArmCircleX + position.x;
+	Armpos.y = position.y;
+	Armpos.z = ArmCircleZ + position.z;
+	Armobj->SetPosition(Armpos);
+	//移動
+	object3d->Update();
+	object3d->SetPosition(position);
+	object3d->SetRotation(rot);
+	Armobj->SetRotation(ArmRot);
+	//パーティクル発生
+	BirthParticle();
+	
+	move_object1->SetPosition(position);
+	move_object1->SetRotation(rot);
+	have_object1->SetPosition(position);
+	have_object1->SetRotation(rot);
+	arm_no_object1->SetPosition(position);
+	arm_no_object1->SetRotation(ArmRot);
+
+	arm_no_object1->Update();
 	move_object1->Update();
 }

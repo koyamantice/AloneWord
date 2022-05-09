@@ -98,16 +98,16 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	modelSphere = Model::CreateFromOBJ("sphere");
 	objSphere = TouchableObject::Create(modelSphere);
 	objSphere->SetScale({ 2.0f, 2.0f, 2.0f });
-	objSphere->SetPosition({0.0f,0.0f,0.0f});
+	objSphere->SetPosition({0.0f,0.0f,15.0f});
 
 	//カメラポジション
-	cameraPos.x = player->GetTargetPosition().x;
-	cameraPos.y = player->GetTargetPosition().y + 10;
-	cameraPos.z = player->GetTargetPosition().z - 10;
+	cameraPos.x = player->GetPosition().x;
+	cameraPos.y = player->GetPosition().y + distanceY;
+	cameraPos.z = player->GetPosition().z - distanceZ;
 	// カメラ注視点をセット
-	camera->SetTarget(player->GetTargetPosition());
+	cameratargetPos = player->GetPosition();
+	camera->SetTarget(cameratargetPos);
 	camera->SetEye(cameraPos);
-
 
 	ui = new UI(player, pastel);
 	//ui->Initialize();
@@ -144,24 +144,93 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 	objBossMap->Update();
 	objFloor->Update();
 	lightGroup->Update();
-	camera->Update();
+	
 	//最初の演出
 	if(!bossstart){
 		appearanceTimer++;
 		player->Begin();
 		pastel->Begin();
+		if (appearanceTimer == 1) {
+			cameraPos.x = player->GetPosition().x;
+			cameraPos.y = player->GetPosition().y + distanceY;
+			cameraPos.z = player->GetPosition().z - distanceZ;
+		}
 
 		if (appearanceTimer == 100) {
 			appearanceNumber++;
 		}
 
-		//if (appearanceNumber == 1) {
-		//	Afterpos = {}
-		//}
-		cameraPos.x = player->GetTargetPosition().x;
-		cameraPos.y = player->GetTargetPosition().y - distanceY;
-		cameraPos.z = player->GetPosition().z - distanceZ;
-		camera->SetTarget(player->GetTargetPosition());
+		if (appearanceNumber == 1) {
+			Aftereyepos = {
+				pastel->GetPosition().x,
+				pastel->GetPosition().y + distanceY,
+				pastel->GetPosition().z - distanceZ,
+			};
+
+			Aftertargetpos = {
+				pastel->GetPosition().x,
+				pastel->GetPosition().y + 5.0f,
+				pastel->GetPosition().z,
+			};
+
+			if (frame < 1.0f) {
+				frame += 0.01f;
+			}
+			else {
+				frame = 0;
+				appearanceNumber = 2;
+			}
+
+			cameraPos = {
+Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+			};
+
+			cameratargetPos = {
+Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+			};
+		}
+		else if (appearanceNumber == 2) {
+			Aftereyepos = {
+				player->GetPosition().x,
+				player->GetPosition().y + distanceY,
+				player->GetPosition().z - distanceZ,
+			};
+
+			Aftertargetpos = {
+				player->GetPosition().x,
+				player->GetPosition().y,
+				player->GetPosition().z,
+			};
+
+			if (frame < 1.0f) {
+				frame += 0.01f;
+			}
+			else {
+				bossstart = true;
+				appearanceTimer = 0;
+				appearanceNumber = 0;
+				frame = 0;
+			}
+
+			cameraPos = {
+Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+			};
+
+			cameratargetPos = {
+Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+			};
+		}
+		
+		camera->SetTarget(cameratargetPos);
+		camera->SetEye(cameraPos);
 	}
 	//戦闘開始
 	else {
@@ -178,11 +247,14 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 		particleMan->Update();
 		objSphere->Update();
 		shockwave->Upda(pastel, player);
-		cameraPos.x = player->GetTargetPosition().x;
-		cameraPos.y = player->GetTargetPosition().y + distanceY;
+		cameraPos.x = player->GetPosition().x;
+		cameraPos.y = player->GetPosition().y + distanceY;
 		cameraPos.z = player->GetPosition().z - distanceZ;
-		camera->SetTarget(player->GetTargetPosition());
+		camera->SetTarget(player->GetPosition());
+		camera->SetEye(cameraPos);
 	}
+
+	camera->Update();
 	/*
 	for (std::size_t i = 0; i < exp.size(); i++) {
 		for (std::size_t j = 0; j < exp[i].size(); j++) {
@@ -254,8 +326,6 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 	}
 	//object1->Update();
 
-	
-	camera->SetEye(cameraPos);
 	// 全ての衝突をチェック
 	//collsionManager->CheckAllCollisions();
 	/*DebugText::GetInstance()->Print("PUSH to RB!!",200, 100,1.0f);
@@ -292,11 +362,17 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 		effect[i]->Draw();
 	}
 
-	//for (std::size_t i = 0; i < exp.size(); i++) {
-	//	for (std::size_t j = 0; j < exp[i].size(); j++) {
-	//		exp[i][j]->Draw();
-	//	}
-	//}
+	XMFLOAT3 pos = player->GetPosition();
+	XMFLOAT3 enemypos = pastel->GetPosition();
+	ImGui::Begin("test");
+	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
+	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
+	//ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
+	//ImGui::SliderFloat("enemypos.y", &enemypos.y, 50, 0);
+	ImGui::Text("appearanceNumber::%d", appearanceNumber);
+	ImGui::Text("appearanceTimer::%d", appearanceTimer);
+	ImGui::Unindent();
+	ImGui::End();
 
 	ui->Draw();
 

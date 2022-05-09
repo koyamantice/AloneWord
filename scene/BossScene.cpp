@@ -8,6 +8,7 @@
 #include "MeshCollider.h"
 #include "SphereCollider.h"
 #include "CollisionManager.h"
+#include <Easing.h>
 void BossScene::Initialize(DirectXCommon* dxCommon) {
 	//インスタンス取得
 	collisionManager = CollisionManager::GetInstance();
@@ -103,13 +104,16 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	// パーティクルマネージャ生成
 	particleMan = ParticleManager::GetInstance();
 	particleMan->SetCamera(camera);
+
 	//カメラポジション
-	cameraPos.x = player->GetTargetPosition().x;
-	cameraPos.y = player->GetTargetPosition().y + 10;
-	cameraPos.z = player->GetTargetPosition().z - 10;
+	cameraPos.x = player->GetPosition().x;
+	cameraPos.y = player->GetPosition().y + distanceY;
+	cameraPos.z = player->GetPosition().z - distanceZ;
 	// カメラ注視点をセット
-	camera->SetTarget(player->GetTargetPosition());
+	cameratargetPos = player->GetPosition();
+	camera->SetTarget(cameratargetPos);
 	camera->SetEye(cameraPos);
+
 	// モデル名を指定してファイル読み込み
 	//model1 =ModelManager::GetIns()->GetFBXModel(ModelManager::MottiMove);
 
@@ -149,34 +153,114 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	objBossMap->Update();
 	objFloor->Update();
 	lightGroup->Update();
-	camera->Update();
-	player->Update();
-	if (input->TriggerKey(DIK_SPACE)) {
-		int a = 0;
-		a += 1;
-	}
 
+	//最初の演出
 	if (!bossstart) {
+		appearanceTimer++;
+		player->Begin();
 		bossenemy->Begin();
-	}
-	else {
-		bossenemy->Update();
-	}
-	particleMan->Update();
-	//objSphere->Update();
-	ui->Update();
-	for (std::size_t i = 0; i < enemy.size(); i++) {
-		enemy[i]->Update();
-		enemy[i]->SetEnemy();
-		player->ResetWeight(enemy[i]);
-		player->Rebound(enemy[i]);
-	}
+		if (appearanceTimer == 1) {
+			cameraPos.x = player->GetPosition().x;
+			cameraPos.y = player->GetPosition().y + distanceY;
+			cameraPos.z = player->GetPosition().z - distanceZ;
+		}
 
-	//for (std::size_t i = 0; i < exp.size(); i++) {
-	//	for (std::size_t j = 0; j < exp[i].size(); j++) {
-	//		exp[i][j]->Update(player, enemy[j]);
-	//	}
-	//}
+		if (appearanceTimer == 100) {
+			appearanceNumber++;
+		}
+
+		if (appearanceNumber == 1) {
+			Aftereyepos = {
+				bossenemy->GetPosition().x,
+				bossenemy->GetPosition().y + distanceY,
+				bossenemy->GetPosition().z - distanceZ,
+			};
+
+			Aftertargetpos = {
+				bossenemy->GetPosition().x,
+				bossenemy->GetPosition().y + 2.0f,
+				bossenemy->GetPosition().z,
+			};
+
+			if (frame < 1.0f) {
+				frame += 0.01f;
+			}
+			else {
+				frame = 0;
+				appearanceNumber = 2;
+			}
+
+			cameraPos = {
+Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+			};
+
+			cameratargetPos = {
+Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+			};
+		}
+		else if (appearanceNumber == 2) {
+			Aftereyepos = {
+				player->GetPosition().x,
+				player->GetPosition().y + distanceY,
+				player->GetPosition().z - distanceZ,
+			};
+
+			Aftertargetpos = {
+				player->GetPosition().x,
+				player->GetPosition().y,
+				player->GetPosition().z,
+			};
+
+			if (frame < 1.0f) {
+				frame += 0.01f;
+			}
+			else {
+				bossstart = true;
+				appearanceTimer = 0;
+				appearanceNumber = 0;
+				frame = 0;
+			}
+
+			cameraPos = {
+Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+			};
+
+			cameratargetPos = {
+Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+			};
+		}
+
+		camera->SetTarget(cameratargetPos);
+		camera->SetEye(cameraPos);
+	}
+	//戦闘開始
+	else {
+		player->Update();
+		bossenemy->Update();
+		for (std::size_t i = 0; i < enemy.size(); i++) {
+			enemy[i]->Update();
+			enemy[i]->SetEnemy();
+			player->ResetWeight(enemy[i]);
+			player->Rebound(enemy[i]);
+		}
+		ui->Update();
+		particleMan->Update();
+		objSphere->Update();
+		cameraPos.x = player->GetPosition().x;
+		cameraPos.y = player->GetPosition().y + distanceY;
+		cameraPos.z = player->GetPosition().z - distanceZ;
+		camera->SetTarget(player->GetPosition());
+		camera->SetEye(cameraPos);
+	}
+	camera->Update();
 
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Update(bossenemy);
@@ -241,15 +325,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	if (player->GetHp() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 	}
-	//object1->Update();
-	cameraPos.x = player->GetTargetPosition().x;
-	cameraPos.y = player->GetTargetPosition().y + distanceY;
-	cameraPos.z = player->GetPosition().z - distanceZ;
-	camera->SetTarget(player->GetTargetPosition());
-	camera->SetEye(cameraPos);
-	/*object1->SetRotation(player->GetRotation());
-	object1->SetPosition(player->GetPosition());
-	object1->Update();*/
+	
 	// 全ての衝突をチェック
 	//collsionManager->CheckAllCollisions();
 	/*DebugText::GetInstance()->Print("PUSH to RB!!",200, 100,1.0f);
