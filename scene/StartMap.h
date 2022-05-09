@@ -5,6 +5,7 @@
 #include "Spawning.h"
 #include "UI.h"
 #include <array>       // ヘッダファイルインクルード
+#include <thread>
 using namespace std;         //  名前空間指定
 class CollisionManager;
 class TouchableObject;
@@ -66,4 +67,5 @@ private:
 	int wait = 0;
 	int set = 0;
 	bool hit=false;
+	//std::thread t;
 };

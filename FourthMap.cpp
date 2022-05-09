@@ -151,17 +151,17 @@ void FourthMap::Update(DirectXCommon* dxCommon) {
 		Pause(set);
 		return;
 	}
-	for (std::size_t i = 0; i < spawing.size(); i++) {
-		for (int j = 0; j < 1; j++) {
-			if (spawing[i]->GetEnemy(j)->collideAttackArm()) {
-				set = 30;
-				set = 15;
+	//for (std::size_t i = 0; i < spawing.size(); i++) {
+	//	for (int j = 0; j < 1; j++) {
+	//		if (spawing[i]->GetEnemy(j)->collideAttackArm()) {
+	//			set = 30;
+	//			set = 15;
 
-				pause = true;
-				break;
-			}
-		}
-	}
+	//			pause = true;
+	//			break;
+	//		}
+	//	}
+	//}
 	//objFloor->Update();
 	objFloor->Update();
 	objFourthMap->Update();
@@ -185,12 +185,12 @@ void FourthMap::Update(DirectXCommon* dxCommon) {
 	if (warp->collidePlayer(player)) {
 		SceneManager::GetInstance()->ChangeScene("FourthBOSS");
 	}
-	for (std::size_t i = 0; i < spawing.size(); i++) {
-		for (int j = 0; j < 1; j++) {
-			player->ResetWeight(spawing[i]->GetEnemy(j));
-			player->Rebound(spawing[i]->GetEnemy(j));
-		}
-	}
+	//for (std::size_t i = 0; i < spawing.size(); i++) {
+	//	for (int j = 0; j < 1; j++) {
+	//		player->ResetWeight(spawing[i]->GetEnemy(j));
+	//		player->Rebound(spawing[i]->GetEnemy(j));
+	//	}
+	//}
 
 	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
 		Audio::GetInstance()->StopWave(0);

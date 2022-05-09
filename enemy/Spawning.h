@@ -33,7 +33,7 @@ public:
 	bool collideAttackArm();
 	void SetPlayer(Player* player) { this->player = player; };
 	const int& GetEneMax() { return EneMax; }
-	InterEnemy* GetEnemy(const int& num) { return enemy[num]; }
+	//InterEnemy* GetEnemy(const int& num) { return enemy[num]; }
 private:
 	TouchableObject* object3d;
 	Model* model;

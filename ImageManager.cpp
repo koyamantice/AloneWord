@@ -22,9 +22,7 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(energy, L"Resources/2d/HPmark_energy.png");
 	Sprite::LoadTexture(pinch, L"Resources/2d/HPmark_pinch.png");
 	Sprite::LoadTexture(weak, L"Resources/2d/HPmark_weak.png");
-
 	Sprite::LoadTexture(select1, L"Resources/2d/Selected.png");
-
 	Sprite::LoadTexture(kitchen, L"Resources/2d/kitchen.png");
 }
 
@@ -38,5 +36,4 @@ void ImageManager::LoadTex2D() {
 	Texture::LoadTexture(net, L"Resources/2d/motiNet.png");
 	Texture::LoadTexture(water, L"Resources/2d/puddle.png");
 	//Texture::LoadTexture(hit, L"Resources/2d/hit.png");
-
 }
