@@ -86,12 +86,12 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 		effect[i]->Initialize();
 	}
 
-	for (std::size_t i = 0; i < exp.size(); i++) {
-		for (std::size_t j = 0; j < exp[i].size(); j++) {
-			exp[i][j] = new Exp();
-			exp[i][j]->Initialize();
-		}
-	}
+	//for (std::size_t i = 0; i < exp.size(); i++) {
+	//	for (std::size_t j = 0; j < exp[i].size(); j++) {
+	//		exp[i][j] = new Exp();
+	//		exp[i][j]->Initialize();
+	//	}
+	//}
 
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
 	//srand(NULL);
@@ -267,11 +267,11 @@ void ThirdBoss::Draw(DirectXCommon* dxCommon) {
 		effect[i]->Draw();
 	}
 
-	for (std::size_t i = 0; i < exp.size(); i++) {
-		for (std::size_t j = 0; j < exp[i].size(); j++) {
-			exp[i][j]->Draw();
-		}
-	}
+	//for (std::size_t i = 0; i < exp.size(); i++) {
+	//	for (std::size_t j = 0; j < exp[i].size(); j++) {
+	//		exp[i][j]->Draw();
+	//	}
+	//}
 
 	ui->Draw();
 	// パーティクルの描画

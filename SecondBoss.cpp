@@ -61,12 +61,12 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 		effect[i]->Initialize();
 	}
 
-	for (std::size_t i = 0; i < exp.size(); i++) {
-		for (std::size_t j = 0; j < exp[i].size(); j++) {
-			exp[i][j] = new Exp();
-			exp[i][j]->Initialize();
-		}
-	}
+	//for (std::size_t i = 0; i < exp.size(); i++) {
+	//	for (std::size_t j = 0; j < exp[i].size(); j++) {
+	//		exp[i][j] = new Exp();
+	//		exp[i][j]->Initialize();
+	//	}
+	//}
 
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
 	//srand(NULL);GetFBXModel(ModelManager::MottiMove);
@@ -166,11 +166,11 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 		player->Rebound(enemy[i]);
 	}
 
-	for (std::size_t i = 0; i < exp.size(); i++) {
-		for (std::size_t j = 0; j < exp[i].size(); j++) {
-			exp[i][j]->Update(player, enemy[j]);
-		}
-	}
+	//for (std::size_t i = 0; i < exp.size(); i++) {
+	//	for (std::size_t j = 0; j < exp[i].size(); j++) {
+	//		exp[i][j]->Update(player, enemy[j]);
+	//	}
+	//}
 
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Update(leftshose);
@@ -277,11 +277,11 @@ void SecondBoss::Draw(DirectXCommon* dxCommon) {
 		effect[i]->Draw();
 	}
 
-	for (std::size_t i = 0; i < exp.size(); i++) {
-		for (std::size_t j = 0; j < exp[i].size(); j++) {
-			exp[i][j]->Draw();
-		}
-	}
+	//for (std::size_t i = 0; i < exp.size(); i++) {
+	//	for (std::size_t j = 0; j < exp[i].size(); j++) {
+	//		exp[i][j]->Draw();
+	//	}
+	//}
 
 	ui->Draw();
 	// パーティクルの描画

@@ -8,6 +8,7 @@
 #include "MeshCollider.h"
 #include "SphereCollider.h"
 #include "CollisionManager.h"
+#include <Easing.h>
 void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	//インスタンス取得
 	collisionManager = CollisionManager::GetInstance();
@@ -46,12 +47,12 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 		effect[i]->Initialize();
 	}
 
-	for (std::size_t i = 0; i < exp.size(); i++) {
-		for (std::size_t j = 0; j < exp[i].size(); j++) {
-			exp[i][j] = new Exp();
-			exp[i][j]->Initialize();
-		}
-	}
+	//for (std::size_t i = 0; i < exp.size(); i++) {
+	//	for (std::size_t j = 0; j < exp[i].size(); j++) {
+	//		exp[i][j] = new Exp();
+	//		exp[i][j]->Initialize();
+	//	}
+	//}
 
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
 	//srand(NULL);
@@ -144,27 +145,50 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 	objFloor->Update();
 	lightGroup->Update();
 	camera->Update();
-	player->Update();
-	pastel->Update();
-	//pastel->GetOff(mill);
-	pastel->collideAttackArm(player);
-	//mill->Update();
-	particleMan->Update();
-	objSphere->Update();
-	shockwave->Upda(pastel,player);
-	ui->Update();
-	for (std::size_t i = 0; i < enemy.size(); i++) {
-		enemy[i]->Update();
-		enemy[i]->SetEnemy();
-		player->ResetWeight(enemy[i]);
-		player->Rebound(enemy[i]);
-	}
+	//最初の演出
+	if(!bossstart){
+		appearanceTimer++;
+		player->Begin();
+		pastel->Begin();
 
+		if (appearanceTimer == 100) {
+			appearanceNumber++;
+		}
+
+		//if (appearanceNumber == 1) {
+		//	Afterpos = {}
+		//}
+		cameraPos.x = player->GetTargetPosition().x;
+		cameraPos.y = player->GetTargetPosition().y - distanceY;
+		cameraPos.z = player->GetPosition().z - distanceZ;
+		camera->SetTarget(player->GetTargetPosition());
+	}
+	//戦闘開始
+	else {
+		player->Update();
+		pastel->Update();
+		pastel->collideAttackArm(player);
+		for (std::size_t i = 0; i < enemy.size(); i++) {
+			enemy[i]->Update();
+			enemy[i]->SetEnemy();
+			player->ResetWeight(enemy[i]);
+			player->Rebound(enemy[i]);
+		}
+		ui->Update();
+		particleMan->Update();
+		objSphere->Update();
+		shockwave->Upda(pastel, player);
+		cameraPos.x = player->GetTargetPosition().x;
+		cameraPos.y = player->GetTargetPosition().y + distanceY;
+		cameraPos.z = player->GetPosition().z - distanceZ;
+		camera->SetTarget(player->GetTargetPosition());
+	}
+	/*
 	for (std::size_t i = 0; i < exp.size(); i++) {
 		for (std::size_t j = 0; j < exp[i].size(); j++) {
 			exp[i][j]->Update(player, enemy[j]);
 		}
-	}
+	}*/
 
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Update(pastel);
@@ -176,8 +200,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 		Audio::GetInstance()->LoopWave(1, 0.7f);
 	}
 	if (input->TriggerKey(DIK_SPACE)) {
-		int a = 0;
-		a += 1;
+		bossstart = true;
 	}
 
 	//敵同士の当たり判定
@@ -230,10 +253,8 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 	}
 	//object1->Update();
-	cameraPos.x = player->GetTargetPosition().x;
-	cameraPos.y = player->GetTargetPosition().y + distanceY;
-	cameraPos.z = player->GetPosition().z - distanceZ;
-	camera->SetTarget(player->GetTargetPosition());
+
+	
 	camera->SetEye(cameraPos);
 	// 全ての衝突をチェック
 	//collsionManager->CheckAllCollisions();
@@ -271,11 +292,11 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 		effect[i]->Draw();
 	}
 
-	for (std::size_t i = 0; i < exp.size(); i++) {
-		for (std::size_t j = 0; j < exp[i].size(); j++) {
-			exp[i][j]->Draw();
-		}
-	}
+	//for (std::size_t i = 0; i < exp.size(); i++) {
+	//	for (std::size_t j = 0; j < exp[i].size(); j++) {
+	//		exp[i][j]->Draw();
+	//	}
+	//}
 
 	ui->Draw();
 

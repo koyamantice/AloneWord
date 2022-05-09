@@ -52,7 +52,11 @@ protected:
 	int EffectNum = 0;
 	float distanceY = 10;
 	float distanceZ = 10;
+	//n‚Ü‚é‘O‚Ì‰‰o‚Ì‚½‚ß‚Ì•Ï”
 	bool bossstart = false;
+	int appearanceNumber = 0;
+	int appearanceTimer = 0;
+	XMFLOAT3 Afterpos;
 public:
 
 	virtual ~BaseScene()=default;

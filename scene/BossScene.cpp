@@ -62,12 +62,12 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 		effect[i]->Initialize();
 	}
 
-	for (std::size_t i = 0; i < exp.size(); i++) {
-		for (std::size_t j = 0; j < exp[i].size(); j++) {
-			exp[i][j] = new Exp();
-			exp[i][j]->Initialize();
-		}
-	}
+	//for (std::size_t i = 0; i < exp.size(); i++) {
+	//	for (std::size_t j = 0; j < exp[i].size(); j++) {
+	//		exp[i][j] = new Exp();
+	//		exp[i][j]->Initialize();
+	//	}
+	//}
 
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
 	//srand(NULL);
@@ -157,7 +157,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	}
 
 	if (!bossstart) {
-		bossenemy->Update2();
+		bossenemy->Begin();
 	}
 	else {
 		bossenemy->Update();
@@ -172,11 +172,11 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		player->Rebound(enemy[i]);
 	}
 
-	for (std::size_t i = 0; i < exp.size(); i++) {
-		for (std::size_t j = 0; j < exp[i].size(); j++) {
-			exp[i][j]->Update(player, enemy[j]);
-		}
-	}
+	//for (std::size_t i = 0; i < exp.size(); i++) {
+	//	for (std::size_t j = 0; j < exp[i].size(); j++) {
+	//		exp[i][j]->Update(player, enemy[j]);
+	//	}
+	//}
 
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Update(bossenemy);
@@ -285,11 +285,11 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 		effect[i]->Draw();
 	}
 
-	for (std::size_t i = 0; i < exp.size(); i++) {
-		for (std::size_t j = 0; j < exp[i].size(); j++) {
-			exp[i][j]->Draw();
-		}
-	}
+	//for (std::size_t i = 0; i < exp.size(); i++) {
+	//	for (std::size_t j = 0; j < exp[i].size(); j++) {
+	//		exp[i][j]->Draw();
+	//	}
+	//}
 
 	ui->Draw();
 	// パーティクルの描画

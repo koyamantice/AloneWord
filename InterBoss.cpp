@@ -96,6 +96,6 @@ bool InterBoss::collideAttackArm() {
 	}
 }
 
-void InterBoss::Update2() {
+void InterBoss::Begin() {
 	enemyobj->Update();
 }

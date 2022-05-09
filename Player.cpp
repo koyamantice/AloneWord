@@ -684,3 +684,7 @@ void Player::BirthParticle() {
 void Player::BackPos() {
 	position = oldPos;
 }
+
+void Player::Begin() {
+	move_object1->Update();
+}
