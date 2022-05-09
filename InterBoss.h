@@ -92,6 +92,8 @@ public:
 
 	void Begin();
 
+	void AppeaMovie();
+
 	virtual void App()=0;//ボス出現モーション
 
 	virtual void Spec()=0;//ボス特有の処理

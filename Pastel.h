@@ -13,6 +13,7 @@ public:
 	void Spec() override;
 	void App() override;
 	void specialDraw() override;
+	void MillUpdate();
 	bool collideAttackArm(Player* player);
 
 private:

@@ -92,6 +92,10 @@ bool InterBoss::collideAttackArm() {
 }
 
 void InterBoss::Begin() {
+	enemyobj->Update();
+}
+
+void InterBoss::AppeaMovie() {
 	App();
 	enemyobj->Update();
 }

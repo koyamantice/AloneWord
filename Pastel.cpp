@@ -25,14 +25,14 @@ void Pastel::Initialize() {
 	IsAlive = 0;
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
-	pos = { 0.0f,3.0f,0.0f };
+	pos = { 0.0f,3.0f,5.0f };
 	enemyobj->SetPosition(pos);
 	rot = { 0,90,0 };
 	enemyobj->SetRotation(rot);
 	enemyobj->SetScale({ 2.0f,2.0f,2.0f });
 	Millobj = Object3d::Create();
 	Millobj->SetModel(Millmodel);
-	Millpos = { 0.0f,0.0f,15.0f };
+	Millpos = { 0.0f,0.0f,0.0f };
 	Millobj->SetPosition(Millpos);
 	Millobj->SetRotation({0,90,0});
 	Millobj->SetScale({ 4.5f,4.5f,4.5f });
@@ -211,7 +211,7 @@ void Pastel::Spec() {
 					AfterPos = {
 						0.0f,
 						5.0f,
-						0.0f,
+						5.0f,
 					};
 					if (frame < 1.0f) {
 						frame += 0.01f;
@@ -236,7 +236,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 	
 	if (Off == true && !active) {
 		AfterPos.y = 1.0f;
-		AfterPos.z = 8.0f;
+		AfterPos.z = 5.0f;
 	
 		if (frame < 0.90f && pos.y != 1.0f) {
 			frame += 0.004f;
@@ -267,7 +267,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 		}
 	}
 
-	Millobj->Update();
+	MillUpdate();
 	for (std::size_t i = 0; i < Platformobj.size(); i++) {
 		if (SetPlatform[i] == true) {
 			if (BirthNumber[i] == 0) {
@@ -308,7 +308,19 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 }
 
 void Pastel::App() {
+	frame = 0.0f;
+	angle += 3.0f;
+	angle2 = angle * (3.14f / 180.0f);
+	rot.z = sin(angle2) * 90;
 
+	if (angle >= 500 && rot.z <= 0.0f) {
+		appearanceEnd = true;
+	}
+	enemyobj->SetRotation(rot);
+}
+
+void Pastel::MillUpdate() {
+	Millobj->Update();
 }
 
 void Pastel::specialDraw() {

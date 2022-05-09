@@ -150,6 +150,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 		appearanceTimer++;
 		player->Begin();
 		pastel->Begin();
+		pastel->MillUpdate();
 		if (appearanceTimer == 1) {
 			cameraPos.x = player->GetPosition().x;
 			cameraPos.y = player->GetPosition().y + distanceY;
@@ -178,10 +179,8 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 			}
 			else {
 				frame = 1.0f;
-				if (Interval < 90) {
-					Interval++;
-				}
-				else {
+				pastel->AppeaMovie();
+				if(pastel->GetAppearanceEnd() == true){
 					Interval = 0;
 					frame = 0.0f;
 					appearanceNumber = 2;
@@ -364,7 +363,7 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 		enemy[i]->Draw();
 	}
 	pastel->Draw();
-	//mill->Draw();
+	
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Draw();
 	}
