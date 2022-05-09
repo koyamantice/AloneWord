@@ -86,6 +86,7 @@ void RightShose::Spec() {
 					Ease(In,Cubic,frame,pos.z,AfterPos.z),
 					};
 				}
+
 				//プレイヤーの位置をロックオンさせる
 				if (MoveCount == 100) {
 					double sb, sbx, sbz;
