@@ -39,6 +39,10 @@ Player::Player() {
 	Armobj = new Object3d();
 	move_model1 = ModelManager::GetIns()->GetFBXModel(ModelManager::MottiMove);
 	move_object1 = new FBXObject3d;
+	have_model1 = ModelManager::GetIns()->GetFBXModel(ModelManager::Motti_haveF);
+	have_object1 = new FBXObject3d;
+	arm_no_model1 = ModelManager::GetIns()->GetFBXModel(ModelManager::Arm_noCatch);
+	arm_no_object1 = new FBXObject3d;
 }
 
 bool Player::Initialize() {
@@ -64,6 +68,16 @@ bool Player::Initialize() {
 	move_object1->SetScale({ 0.007f, 0.007f, 0.007f });
 	move_object1->SetPosition(position);
 	move_object1->SetRotation(rot);
+	have_object1->Initialize();
+	have_object1->SetModel(have_model1);
+	have_object1->SetScale({ 0.007f, 0.007f, 0.007f });
+	have_object1->SetPosition(position);
+	have_object1->SetRotation(rot);
+	arm_no_object1->Initialize();
+	arm_no_object1->SetModel(arm_no_model1);
+	arm_no_object1->SetScale({ 0.007f, 0.007f, 0.007f });
+	arm_no_object1->SetPosition(Armpos);
+	arm_no_object1->SetRotation(ArmRot);
 	//effecttexture = Texture::Create(4, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	//effecttexture->TextureCreate();
 	////effecttexture->SetRotation({ 90,0,0 });
@@ -152,6 +166,8 @@ void Player::Update() {
 			ArmMoveNumber = 1;
 			initscale = Armscale;
 			frame = 0;
+			have = true;
+			arm = true;
 			if (AttackMoveNumber != 0 || AttackFlag == true) {
 				AttackMoveNumber = 0;
 				AttackFlag = false;
@@ -371,6 +387,7 @@ void Player::Update() {
 	ArmCircleX = cosf(Armradius) * Armscale;
 	ArmCircleZ = sinf(Armradius) * Armscale;
 	Armpos.x = ArmCircleX + position.x;
+	Armpos.y = position.y;
 	Armpos.z = ArmCircleZ + position.z;
 	Armobj->SetPosition(Armpos);
 	//移動
@@ -396,8 +413,14 @@ void Player::Update() {
 			}
 		}
 	}
+
 	move_object1->SetPosition(position);
 	move_object1->SetRotation(rot);
+	have_object1->SetPosition(position);
+	have_object1->SetRotation(rot);
+	arm_no_object1->SetPosition(position);
+	arm_no_object1->SetRotation(ArmRot);
+	//FBXアニメーションの管理
 	if (move_count == 1) {
 		move_object1->PlayAnimation();
 	}
@@ -405,6 +428,34 @@ void Player::Update() {
 	else if (move_count == 0) {
 		move_object1->StopAnimation();
 	}
+
+	if (input->PushKey(DIK_0)) {
+		//have_object1->PlayAnimation();
+	}
+
+	if (have) {
+		have_count++;
+		if (have_count == 1) {
+			have_object1->PlayAnimation();
+		}
+		else if (have_count == 30) {
+			have_count = 0;
+			have = false;
+			have_object1->StopAnimation();
+		}
+	}
+	if (arm) {
+		arm_count++;
+		if (arm_count == 1) {
+			arm_no_object1->PlayAnimation();
+		}
+		else if (arm_count == 30) {
+			arm_count = 0;
+			arm = false;
+			arm_no_object1->StopAnimation();
+		}
+	}
+	arm_no_object1->Update();
 	move_object1->Update();
 
 }
@@ -497,23 +548,27 @@ void Player::SelectUp() {
 	Armobj->SetRotation(ArmRot);
 	//パーティクル発生
 	BirthParticle();
+	have_object1->Update();
 }
 
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
 	ImGui::Begin("test");
 	ImGui::Text("count::%d", move_count);
-	ImGui::SliderFloat("pos.x", &position.x, 20.0f, -20.0f);
-	ImGui::SliderFloat("pos.y", &position.y, 20.0f, -20.0f);
-	ImGui::SliderFloat("pos.z", &position.z, 20.0f, -20.0f);
+	/*ImGui::SliderFloat("position.x", &position.x, 50, 0);
+	ImGui::SliderFloat("position.z", &position.z, 50, 0);*/
+	ImGui::Text("have:%d", have);
+	ImGui::Text("have_count:%d", have_count);
 	ImGui::Unindent();
 	ImGui::End();
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
 		//object3d->Draw();
-		Armobj->Draw();
+		//Armobj->Draw();
 	}
+	arm_no_object1->Draw(dxCommon->GetCmdList());
 	move_object1->Draw(dxCommon->GetCmdList());
+	//have_object1->Draw(dxCommon->GetCmdList());
 }
 
 void Player::Pause(const int& Timer) {
