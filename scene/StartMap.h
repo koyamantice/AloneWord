@@ -14,8 +14,8 @@ class TouchableObject;
 /// </summary>
 const int StartSpawn = 1;
 class StartMap : public BaseScene {
-
 public:
+	~StartMap();
 	/// <summary>
 	/// 初期化
 	/// </summary>
@@ -38,34 +38,22 @@ private:
 	XMFLOAT3 cameraPos = { 0.0f,0.0f,0.0f };
 	Model* modelFloor = nullptr;
 	Object3d* objFloor;
-
 	Model* modelStartMap = nullptr;
 	TouchableObject* objStartMap;
 	UI* ui = nullptr;
-
-	//バリケード(仮)
-	array<Model*, 4> modelBlock;
-	array<Object3d*, 4> objBlock;
-	array<XMFLOAT3, 4> BlockRotation;
 	Sprite* concent = nullptr;
 	Sprite* concent2 = nullptr;
 	Sprite* concent3 = nullptr;
 	Sprite* concent4 = nullptr;
 	Sprite* concent5 = nullptr;
-
-	/*FBXModel* model1 = nullptr;
-	FBXObject3d* object1 = nullptr;*/
 	DebugCamera* camera = { nullptr };
 	Texture* limit = nullptr;
 	Player* player = nullptr;
-	array<Rice*, 5> enemy;
-	Warp* warp = nullptr;
-	//BossEnemy* bossenemy = nullptr;
+	array<Rice*, 3> enemy;
 	Spawning* spawing;
 	ParticleManager* particleMan = nullptr;
 	int	tutorial =0;
 	bool Clear = false;
-	int a = 0;
 	CollisionManager* collisionManager = nullptr;
 	bool pause = false;
 	int wait = 0;

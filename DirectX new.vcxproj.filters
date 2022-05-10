@@ -189,9 +189,6 @@
     <ClCompile Include="scene\BossScene.cpp">
       <Filter>stage\プレイマップ\フォーク</Filter>
     </ClCompile>
-    <ClCompile Include="scene\StartMap.cpp">
-      <Filter>stage\プレイマップ\フォーク</Filter>
-    </ClCompile>
     <ClCompile Include="FourthBoss.cpp">
       <Filter>stage\プレイマップ\杵</Filter>
     </ClCompile>
@@ -245,6 +242,9 @@
     </ClCompile>
     <ClCompile Include="Warp.cpp">
       <Filter>warp</Filter>
+    </ClCompile>
+    <ClCompile Include="scene\StartMap.cpp">
+      <Filter>stage\タイトル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -425,9 +425,6 @@
     <ClInclude Include="scene\BossScene.h">
       <Filter>stage\プレイマップ\フォーク</Filter>
     </ClInclude>
-    <ClInclude Include="scene\StartMap.h">
-      <Filter>stage\プレイマップ\フォーク</Filter>
-    </ClInclude>
     <ClInclude Include="FourthBoss.h">
       <Filter>stage\プレイマップ\杵</Filter>
     </ClInclude>
@@ -484,6 +481,9 @@
     </ClInclude>
     <ClInclude Include="light\DirectionalLight.h">
       <Filter>light</Filter>
+    </ClInclude>
+    <ClInclude Include="scene\StartMap.h">
+      <Filter>stage\タイトル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
