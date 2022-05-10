@@ -49,6 +49,10 @@ private:
 	array<XMFLOAT3, 4> BlockRotation;
 	Sprite* concent = nullptr;
 	Sprite* concent2 = nullptr;
+	Sprite* concent3 = nullptr;
+	Sprite* concent4 = nullptr;
+	Sprite* concent5 = nullptr;
+
 	/*FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;*/
 	DebugCamera* camera = { nullptr };

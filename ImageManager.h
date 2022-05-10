@@ -20,6 +20,9 @@ public:
 		vignette,//Sprite::LoadTexture(6, L"Resources/2d/Vignette.png");
 		concent,
 		concent2,
+		concent3,
+		concent4,
+		concent5,
 		punyu,
 		CLEAR,
 		OVER,

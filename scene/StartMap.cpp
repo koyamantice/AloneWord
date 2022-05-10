@@ -57,6 +57,12 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	concent = Sprite::Create(ImageManager::concent, { 0.0f,0.0f });
 	//背景スプライト生成
 	concent2 = Sprite::Create(ImageManager::concent2, { 0.0f,0.0f });
+	//背景スプライト生成
+	concent3 = Sprite::Create(ImageManager::concent3, { 0.0f,0.0f });
+	//背景スプライト生成
+	concent4 = Sprite::Create(ImageManager::concent4, { 0.0f,0.0f });
+	//背景スプライト生成
+	concent5 = Sprite::Create(ImageManager::concent5, { 0.0f,0.0f });
 
 	// モデル読み込み
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
@@ -184,13 +190,6 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 			tutorial = 7;
 		}
 	}
-	//for (int j = 0; j < spawing->GetEneMax(); j++) {
-	//		if (spawing->GetEnemy(j)->collideAttackArm()) {
-	//			set = 15;
-	//			pause = true;
-	//			break;
-	//		}
-	//}
 	if (spawing->collideAttackArm()&&spawing->GetIsAlive()) {
 		hit = true;
 		set = spawing->GetStop();
@@ -256,7 +255,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	player->Update();
 	spawing->Update();
 	particleMan->Update();
-	for (int j = 0; j < 1; j++) {
+	for (int j = 0; j < 2; j++) {
 		player->ResetWeight(enemy[j]);
 		player->Rebound(enemy[j]);
 	}
@@ -269,10 +268,6 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	cameraPos.z = player->GetPosition().z - distanceZ;
 	camera->SetTarget(player->GetTargetPosition());
 	camera->SetEye(cameraPos);
-	if (player->GetArmWeight() > 0) {
-		DebugText::GetInstance()->Print("RB or LB :Rotate", 900, 620, 2.0f);
-	}
-	DebugText::GetInstance()->Print("A         :Hand", 900, 650, 2.0f);
 }
 
 void StartMap::Draw(DirectXCommon* dxCommon) {
@@ -295,8 +290,22 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	ui->Draw();
 	Sprite::PreDraw();
 	//背景用
-	if (tutorial%2==1) {
+	switch (tutorial) {
+	case 1:
 		concent2->Draw();
+		break;
+	case 3:
+		concent3->Draw();
+		break;
+	case 5:
+		concent4->Draw();
+		break;
+	case 7:
+		concent5->Draw();
+		break;
+
+	default:
+		break;
 	}
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());

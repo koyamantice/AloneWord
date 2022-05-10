@@ -12,6 +12,10 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(life, L"Resources/2d/Life.png");
 	Sprite::LoadTexture(concent, L"Resources/2d/concent.png");
 	Sprite::LoadTexture(concent2, L"Resources/2d/concent2.png");
+	Sprite::LoadTexture(concent3, L"Resources/2d/concent3.png");
+	Sprite::LoadTexture(concent4, L"Resources/2d/concent4.png");
+	Sprite::LoadTexture(concent5, L"Resources/2d/concent5.png");
+
 	Sprite::LoadTexture(vignette, L"Resources/2d/Vignette.png");
 	Sprite::LoadTexture(CLEAR, L"Resources/2d/GAMECLEAR.png");
 	Sprite::LoadTexture(OVER, L"Resources/2d/GAMEOVER.png");
