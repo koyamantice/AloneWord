@@ -11,7 +11,9 @@ public:
 	void Initialize() override;
 	void Finalize() override;
 	void Spec() override;
+	void App() override;
 	void specialDraw() override;
+	void MillUpdate();
 	bool collideAttackArm(Player* player);
 
 private:

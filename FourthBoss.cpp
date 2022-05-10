@@ -84,9 +84,9 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	pastel->SetPlayer(player);
 	pastel->Initialize();
 	//ƒ{ƒX(‰P)
-	mill = new Mill();
+	/*mill = new Mill();
 	mill->SetPlayer(player);
-	mill->Initialize();
+	mill->Initialize();*/
 	//“G
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i] = new Rice();
@@ -150,6 +150,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 		appearanceTimer++;
 		player->Begin();
 		pastel->Begin();
+		pastel->MillUpdate();
 		if (appearanceTimer == 1) {
 			cameraPos.x = player->GetPosition().x;
 			cameraPos.y = player->GetPosition().y + distanceY;
@@ -173,12 +174,17 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 				pastel->GetPosition().z,
 			};
 
-			if (frame < 1.0f) {
+			if (frame <= 1.0f) {
 				frame += 0.01f;
 			}
 			else {
-				frame = 0;
-				appearanceNumber = 2;
+				frame = 1.0f;
+				pastel->AppeaMovie();
+				if(pastel->GetAppearanceEnd() == true){
+					Interval = 0;
+					frame = 0.0f;
+					appearanceNumber = 2;
+				}
 			}
 
 			cameraPos = {
@@ -357,7 +363,7 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 		enemy[i]->Draw();
 	}
 	pastel->Draw();
-	//mill->Draw();
+	
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Draw();
 	}
@@ -369,7 +375,7 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
 	//ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
 	//ImGui::SliderFloat("enemypos.y", &enemypos.y, 50, 0);
-	ImGui::Text("appearanceNumber::%d", appearanceNumber);
+	ImGui::Text("Interval::%d", Interval);
 	ImGui::Text("appearanceTimer::%d", appearanceTimer);
 	ImGui::Unindent();
 	ImGui::End();

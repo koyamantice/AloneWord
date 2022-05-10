@@ -43,6 +43,7 @@ public:
 	const int& GetPat() { return pat; }
 	const bool& GetActive() { return active; }
 	const bool& GetStun() { return stun; }
+	const bool& GetAppearanceEnd() { return appearanceEnd; }
 	//bool Collision(XMFLOAT3 position, float radius);
 	//セッター
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
@@ -53,6 +54,7 @@ public:
 	void SetDrawExp(int DrawExp) { this->DrawExp = DrawExp; }
 	void Setboundpower(XMFLOAT3 boundpower) { this->boundpower = boundpower; }
 	void SetStun(bool stun) { this->stun = stun; }
+	void SetAppearanceEnd(bool appearanceEnd) { this->appearanceEnd = appearanceEnd; }
 	//関数
 	void SetEnemy();
 	void DeadEnemy();
@@ -89,6 +91,11 @@ public:
 	void Draw();
 
 	void Begin();
+
+	void AppeaMovie();
+
+	virtual void App()=0;//ボス出現モーション
+
 	virtual void Spec()=0;//ボス特有の処理
 	virtual void specialDraw()=0;//ボス特有の描画
 
@@ -186,5 +193,6 @@ protected:
 	bool Off = false;
 	int haveTimer = 0;
 	float haveEnemy = 0.0f;
+	bool appearanceEnd = false;
 };
 
