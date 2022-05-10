@@ -68,15 +68,7 @@ void UI::Update() {
 }
 
 const void UI::Draw() {
-	ImGui::Begin("test");
-	if (ImGui::TreeNode("Debug")) {
-		ImGui::SliderFloat("pos.X", &circle.x, 1280, 0);
-		ImGui::SliderFloat("pos.Y", &circle.y, 720, 0);
-		//ImGui::Text("Sub %d", invisible);
-		//ImGui::Unindent();
-		ImGui::TreePop();
-	}
-	ImGui::End();
+
 	Sprite::PreDraw();
 	//Vignette->Draw();
 	if (boss) {
