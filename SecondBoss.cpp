@@ -41,8 +41,8 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 
 	objSphere = Object3d::Create();
 	modelSphere = Model::CreateFromOBJ("sphere");
-	objSphere->SetModel(modelSphere);
-	objSphere->SetPosition({ -10, 1, 0 });
+	//objSphere->SetModel(modelSphere);
+	//objSphere->SetPosition({ -10, 1, 0 });
 	// コライダーの追加
 	//objSphere->SetCollider(new SphereCollider);
 
@@ -255,7 +255,7 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 		}
 		ui->Update();
 		particleMan->Update();
-		objSphere->Update();
+		//objSphere->Update();
 		cameraPos.x = player->GetPosition().x;
 		cameraPos.y = player->GetPosition().y + distanceY;
 		cameraPos.z = player->GetPosition().z - distanceZ;

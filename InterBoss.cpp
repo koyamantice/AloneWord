@@ -66,7 +66,7 @@ bool InterBoss::collideAttackArm() {
 	float power = player->GetPower();
 	float weight = player->GetArmWeight();
 	if (attackflag && !BossHit) {
-		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 1.0f, Armpos.x, Armpos.y, Armpos.z, 1.0f) == true) {
+		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 1.0f, Armpos.x, Armpos.y, Armpos.z, 1.0f) == true && BossHP >= 1) {
 			BossHit = true;
 			player->SetAttackFlag(false);
 			//ついてる敵の数で音が変わる
