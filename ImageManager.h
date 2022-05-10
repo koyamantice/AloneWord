@@ -33,7 +33,13 @@ public:
 		pinch,
 		weak,
 		select1,
+		select2,
+		select3,
+		select4,
 		kitchen,
+		genkan,
+		niwa,
+		wait,
 		meter,
 		meterbar
 	};

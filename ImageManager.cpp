@@ -15,7 +15,6 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(concent3, L"Resources/2d/concent3.png");
 	Sprite::LoadTexture(concent4, L"Resources/2d/concent4.png");
 	Sprite::LoadTexture(concent5, L"Resources/2d/concent5.png");
-
 	Sprite::LoadTexture(vignette, L"Resources/2d/Vignette.png");
 	Sprite::LoadTexture(CLEAR, L"Resources/2d/GAMECLEAR.png");
 	Sprite::LoadTexture(OVER, L"Resources/2d/GAMEOVER.png");
@@ -27,7 +26,13 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(pinch, L"Resources/2d/HPmark_pinch.png");
 	Sprite::LoadTexture(weak, L"Resources/2d/HPmark_weak.png");
 	Sprite::LoadTexture(select1, L"Resources/2d/Selected.png");
+	Sprite::LoadTexture(select2, L"Resources/2d/kine_select.png");
+	Sprite::LoadTexture(select3, L"Resources/2d/shoes_Select.png");
+	Sprite::LoadTexture(select4, L"Resources/2d/wayway.png");
 	Sprite::LoadTexture(kitchen, L"Resources/2d/kitchen.png");
+	Sprite::LoadTexture(genkan, L"Resources/2d/shoes_Sname.png");
+	Sprite::LoadTexture(niwa, L"Resources/2d/kine_Sname.png");
+	Sprite::LoadTexture(wait, L"Resources/2d/wayway_Sname.png");
 	Sprite::LoadTexture(meter, L"Resources/2d/hotWaterGauge.png");
 	Sprite::LoadTexture(meterbar, L"Resources/2d/hotWaterBar.png");
 
