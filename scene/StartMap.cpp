@@ -146,8 +146,17 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 				tutorial++;
 			}
 			break;
+		case 5:
+			if (input->TriggerButton(input->Button_A)) {
+				tutorial++;
+			}
+			break;
+		case 7:
+			if (input->TriggerButton(input->Button_A)) {
 
-
+				SceneManager::GetInstance()->ChangeScene("StageSelect");
+			}
+			break;
 		default:
 			break;
 		}
@@ -156,8 +165,24 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	if (player->GetPosition().y<=0 && tutorial == 0) {
 		tutorial=1;
 	}
-	if (enemy[0]->GetIsAlive() && tutorial == 2) {
-		tutorial = 3;
+	if (tutorial == 2) {
+		enemy[0]->Demo();
+		if (enemy[0]->GetFollowed()) {
+			tutorial = 3;
+		}
+	}
+	if (tutorial == 4) {
+		enemy[0]->Demo();
+		if (enemy[0]->GetEnemyCatch()) {
+			tutorial = 5;
+		}
+	}
+	if (tutorial==6) {
+		enemy[0]->Demo(1);
+		enemy[1]->Demo(2);
+		if (!spawing->GetIsAlive()) {
+			tutorial = 7;
+		}
 	}
 	//for (int j = 0; j < spawing->GetEneMax(); j++) {
 	//		if (spawing->GetEnemy(j)->collideAttackArm()) {
@@ -218,7 +243,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	}
 
 	if (input->TriggerKey(DIK_C)) {
-		Clear = true;
+		SceneManager::GetInstance()->ChangeScene("CLEAR");
 	}
 	if (player->GetHp() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
@@ -231,10 +256,10 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	player->Update();
 	spawing->Update();
 	particleMan->Update();
-	//for (int j = 0; j < spawing->GetEneMax(); j++) {
-	//	player->ResetWeight(spawing->GetEnemy(j));
-	//	player->Rebound(spawing->GetEnemy(j));
-	//}
+	for (int j = 0; j < 1; j++) {
+		player->ResetWeight(enemy[j]);
+		player->Rebound(enemy[j]);
+	}
 	for (std::size_t i = 0; i < objBlock.size(); i++) {
 		objBlock[i]->SetRotation(BlockRotation[i]);
 		objBlock[i]->Update();
@@ -251,20 +276,6 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 }
 
 void StartMap::Draw(DirectXCommon* dxCommon) {
-	ImGui::Begin("test");
-	if (ImGui::TreeNode("Debug"))
-	{
-		if (ImGui::TreeNode("Field"))
-		{
-			float a = (float)XorShift::GetInstance()->xor128();
-			ImGui::SliderFloat("a", &a, 100, 0);
-			ImGui::SliderFloat("b", &distanceZ, 50, -50);
-			ImGui::Unindent();
-			ImGui::TreePop();
-		}
-		ImGui::TreePop();
-	}
-	ImGui::End();
 	Object3d::PreDraw();
 	//objFloor->Draw();
 	objFloor->Draw();
@@ -276,6 +287,9 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	warp->Draw();
 	Object3d::PreDraw();
 	//背景用
+	enemy[0]->Draw();
+	enemy[1]->Draw();
+
 	player->Draw(dxCommon);
 	spawing->Draw();
 	ui->Draw();

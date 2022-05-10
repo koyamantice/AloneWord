@@ -9,6 +9,7 @@ public:
 	void Initialize() override;
 	void Finalize() override;
 	void Update()override;
+	void Demo(int num=0);
 	void Draw() override;
 private:
 	bool collidePlayer() override;

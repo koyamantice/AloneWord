@@ -63,6 +63,8 @@ public:
 	void Follow();
 	void Reborn();
 	bool CollidePos(XMFLOAT3 pos,float radius);
+	const bool& GetFollowed() { return followed; }
+	const bool& GetEnemyCatcth() { return EnemyCatch; }
 protected:
 	const float PI = 3.14f;
 

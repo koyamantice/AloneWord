@@ -203,6 +203,195 @@ void Rice::Update() {
 	Restexture->Update();
 }
 
+void Rice::Demo(int num) {
+	assert(player);
+	playerpos = player->GetPosition();
+	Interval = player->GetInterval();
+	FlashCount = player->GetFlashCount();
+	oldpos = pos;
+	if (pos.y > 3.0f) {
+		pos.y = 3.0f;
+	}
+	if (IsAlive && !EnemyCatch && !Exp) {
+		if (hit) {
+			if (isMove) {
+				moveCount = (rand() % 120) + 30;
+				rot.y = (dir)-90;// *(XM_PI / 180.0f);
+				frame = 0.5f;
+				vel.x *= -1;
+				vel.y *= -1;
+				//isMove = false;
+			}
+			if (followed) {
+				if (rot.y < -90) {
+					dir = rot.y + 360 + 90;
+					rot.y = (dir)-90;// *(XM_PI / 180.0f);
+				} else {
+					dir = rot.y + 90;
+					rot.y = (dir)-90;// *(XM_PI / 180.0f);
+				}
+				vel.x *= -1;
+				vel.y *= -1;
+				followed = false;
+			}
+		}
+		Back();
+		if (LockOn()) {
+			moveCount = (rand() % 15) + 20;
+			isMove = false;
+			followed = true;
+			//if (pos.y>!1) {
+			//}
+		}
+		if (!followed && !LockOn()) {
+			rot.y = (dir)-90;// *(XM_PI / 180.0f);
+			speed_y = 3.0f / 20.0f;
+			if (pos.y > 0) {
+				pos.y -= speed_y;
+			} else {
+				pos.y = 0;
+			}
+			if (followed) {
+				if (rot.y < -90) {
+					dir = rot.y + 360 + 90;
+					rot.y = (dir)-90.0f;// *(XM_PI / 180.0f);
+				} else {
+					dir = rot.y + 90;
+					rot.y = (dir)-90.0f;// *(XM_PI / 180.0f);
+				}
+				followed = false;
+			}
+			Move();
+		}
+		if (followed) {
+			XMFLOAT3 position{};
+			position.x = (playerpos.x - pos.x);
+			position.z = (playerpos.z - pos.z);
+			pos.y += speed_y;
+			speed_y -= gravity;
+			rot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 90;// *(XM_PI / 180.0f);
+			if (pos.y < 0) {
+				pos.y = 0;
+				speed_y = 0;
+				Follow();
+			}
+			// 地面に当たったら跳ね返るように
+			enemyobj->SetPosition(pos);
+		}
+	}
+	if (!IsAlive) {
+		IsTimer--;
+		if (IsTimer == 100) {
+			if (!respawn) {
+				if (num==0) {
+					pos.x = 0;
+					pos.z = -10;
+				}
+				if (num==1) {
+					pos.x = 3;
+					pos.z = -10;
+				}
+				if (num==2) {
+					pos.x = -3;
+					pos.z = -10;
+				}
+			} else {
+				scale = 10.0f;
+			}
+			StartPos = pos;
+			frame = 0;
+			dir = 180;
+			rot.y = (dir)-90;// *(XM_PI / 180.0f);
+			enemyobj->SetRotation(rot);
+			enemyobj->SetPosition(pos);
+		} else if (IsTimer == 0) {
+			respawn = false;
+			IsAlive = true;
+			appearance = true;
+			isMove = false;
+			followed = false;
+			IsTimer = 200;
+		}
+	}	//倒したときの演出
+	if (bound == true) {
+		//enescale = { 0.4f,0.4f,0.4f };
+		boundpower.x = (float)(rand() % 4 - 2);
+		boundpower.y = (float)(rand() % 3 + 3);
+		boundpower.z = (float)(rand() % 4 - 2);
+		if (boundpower.x == 0.0f) {
+			boundpower.x = 1.0f;
+		}
+
+		if (boundpower.z == 0.0f) {
+			boundpower.z = 1.0f;
+		}
+		boundpower.x = boundpower.x / 10;
+		boundpower.y = boundpower.y / 10;
+		boundpower.z = boundpower.z / 10;
+		bound = false;
+		add = true;
+	}
+
+	//出現する瞬間
+	if (appearance == true) {
+		boundpower.y = 0.5;
+		enescale = { 0.0f,0.0f,0.0f };
+		pos.y = -3.0f;
+		add = true;
+		appearance = false;
+	}
+
+	//更に加算
+	if (add == true) {
+		boundpower.y -= 0.02f;
+		pos.x += boundpower.x;
+		pos.y += boundpower.y;
+		pos.z += boundpower.z;
+		if (boundpower.x != 0.0f && boundpower.z != 0.0f) {
+			enescale.x -= 0.02f;
+			enescale.y -= 0.02f;
+			enescale.z -= 0.02f;
+		} else {
+			if (enescale.x <= 0.7) {
+				enescale.x += 0.02f;
+				enescale.y += 0.02f;
+				enescale.z += 0.02f;
+			}
+		}
+	}
+
+	//演出フラグ終了
+	if (enescale.x <= 0.0f && enescale.y <= 0.0f && enescale.z <= 0.0f) {
+		add = false;
+		boundpower = { 0.0f,0.0f,0.0f };
+		pos.y = 0.0f;
+		IsAlive = false;
+	}
+
+	//敵出現完了
+	if (add == true && boundpower.y <= 0.0f && pos.y <= 0.0f && boundpower.x == 0.0f) {
+		boundpower = { 0.0f,0.0f,0.0f };
+		add = false;
+		pos.y = 0.0f;
+	}
+	collideArm();
+	collidePlayer();
+	collideAttackArm();
+	SetEnemy();
+	if (Exp == true) {
+		DeadEnemy();
+	}
+	enemyobj->SetPosition(pos);
+	texture->SetPosition({ pos.x,0,pos.z });
+	Restexture->SetPosition(pos);
+	player->SetInterval(Interval);
+	enemyobj->SetRotation(rot);
+	enemyobj->SetScale(enescale);
+	enemyobj->Update();
+	texture->Update();
+	Restexture->Update();
+}
+
 //描画
 void Rice::Draw() {
 	//ImGui::Begin("test");

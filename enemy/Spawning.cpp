@@ -14,20 +14,6 @@ Spawning::Spawning(int Categoly) {
 	net[0]->TextureCreate();
 	net[1] = Texture::Create(ImageManager::effect3, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	net[1]->TextureCreate();
-
-	//if (Categoly==0) {
-	//	for (int i = 0; i < EneMax; i++) {
-	//		enemy[i] = new Rice();
-	//	}
-	//} else 	if (Categoly == 1) {
-	//	for (int i = 0; i < EneMax; i++) {
-	//		enemy[i] = new Rice();
-	//	}
-	//} else 	if (Categoly == 2) {
-	//	for (int i = 0; i < EneMax; i++) {
-	//		enemy[i] = new Rice();
-	//	}
-	//}
 }
 
 void Spawning::Initialize() {
@@ -37,7 +23,7 @@ void Spawning::Initialize() {
 	object3d->SetScale({3.9f,3.9f,3.9f});
 
 	texture->SetPosition({ pos.x,pos.y + 4.5f,pos.z });
-	texture->SetRotation({ 0,0,0 });
+	texture->SetRotation({45,0,0 });
 	texture->SetScale({ (float)Hp*0.05f,0.2f,0.2f });
 
 	net[0]->SetPosition({pos.x,pos.y+1.0f,pos.z});
@@ -142,7 +128,7 @@ if (ImGui::TreeNode("Debug")) {
 		Texture::PreDraw();
 		texture->Draw();
 		net[0]->Draw();
-		net[1]->Draw();
+		//net[1]->Draw();
 	}
 	//for (int i = 0; i < EneMax; i++) {
 	//	enemy[i]->Draw();
