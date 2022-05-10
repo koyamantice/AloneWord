@@ -46,6 +46,9 @@ void Mill::Spec() {
 	}
 }
 
+void Mill::App() {
+
+}
 void Mill::specialDraw() {
 }
 
