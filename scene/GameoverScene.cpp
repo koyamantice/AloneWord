@@ -21,7 +21,7 @@ void GameoverScene::Update(DirectXCommon* dxCommon) {
 	}
 	if ( input->TriggerButton(input->Button_X)) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
-		SceneManager::GetInstance()->ChangeScene("BOSS");
+		SceneManager::GetInstance()->ChangeScene("StageSelect");
 	}
 	//DebugText::GetInstance()->Print("Buttun_B or ENTER to TITLE!!", 200, 100, 1.0f);
 }
