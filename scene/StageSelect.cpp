@@ -89,7 +89,7 @@ Ease(In,Quad,frame,1280,640),
 		select[0]->SetPosition(selectP[0]);
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
-			SceneManager::GetInstance()->ChangeScene("STARTMAP");
+			SceneManager::GetInstance()->ChangeScene("BOSS");
 		}
 	}
 	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 3.0f, 2.0f, 1.0f)) {
