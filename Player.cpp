@@ -487,16 +487,12 @@ void Player::SelectUp() {
 		if (!(StickrotX<650 && StickrotX>-650)) {
 			rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 			position.x += sin(atan2(StickrotX, StickrotY)) * PlayerSpeed;
-			ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
-			ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
 		}
 	}
 	if ((position.z <= 7.5f && position.z >= -6.65f)) {
 		if (!(StickrotY<650 && StickrotY>-650)) {
 			rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 			position.z -= cos(atan2(StickrotX, StickrotY)) * PlayerSpeed;
-			ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
-			ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
 		}
 	}
 	if (position.x > 13) {
@@ -538,14 +534,12 @@ void Player::SelectUp() {
 	//Armradius = ArmSpeed * PI / 180.0f;
 	//ArmCircleX = cosf(Armradius) * Armscale;
 	//ArmCircleZ = sinf(Armradius) * Armscale;
-	//Armpos.x = ArmCircleX + position.x;
-	//Armpos.y = ArmCircleZ + position.y;
-	//Armobj->SetPosition({0,-90,0});
+	Armobj->SetPosition({0,-90,-100});
 	//移動
 	object3d->Update();
 	object3d->SetPosition(position);
 	object3d->SetRotation(rot);
-	Armobj->SetRotation(ArmRot);
+	//Armobj->SetRotation(ArmRot);
 	//パーティクル発生
 	BirthParticle();
 }

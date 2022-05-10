@@ -10,8 +10,17 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	BackGround = Sprite::Create(ImageManager::SELECT, { 0.0f,0.0f });
 	select[0] = Sprite::Create(ImageManager::select1, selectP[0]);
 	select[0]->SetAnchorPoint({ 1.0f,0.0f });
+	select[1] = Sprite::Create(ImageManager::select2, selectP[0]);
+	select[1]->SetAnchorPoint({ 1.0f,0.0f });
+	select[2] = Sprite::Create(ImageManager::select3, selectP[0]);
+	select[2]->SetAnchorPoint({ 1.0f,0.0f });
+	select[3] = Sprite::Create(ImageManager::select4, selectP[0]);
+	select[3]->SetAnchorPoint({ 1.0f,0.0f });
+
 	plane[0] = Sprite::Create(ImageManager::kitchen, selectP[1]);
-	plane[0]->SetAnchorPoint({ 0.0f,0.0f });
+	plane[1] = Sprite::Create(ImageManager::genkan, selectP[1]);
+	plane[2] = Sprite::Create(ImageManager::niwa, selectP[1]);
+	plane[3] = Sprite::Create(ImageManager::wait, selectP[1]);
 	// ƒJƒƒ‰¶¬
 	//srand(NULL);
 	// ƒ‰ƒCƒg¶¬
@@ -97,8 +106,8 @@ Ease(In,Quad,frame,1280,640),
 Ease(In,Quad,frame,1280,640),
 480
 		};
-		plane[0]->SetPosition(selectP[1]);
-		select[0]->SetPosition(selectP[0]);
+		plane[1]->SetPosition(selectP[1]);
+		select[2]->SetPosition(selectP[0]);
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			SceneManager::GetInstance()->ChangeScene("SECONDBOSS");
@@ -118,11 +127,11 @@ Ease(In,Quad,frame,1280,640),
 Ease(In,Quad,frame,1280,640),
 480
 		};
-		plane[0]->SetPosition(selectP[1]);
-		select[0]->SetPosition(selectP[0]);
+		plane[3]->SetPosition(selectP[1]);
+		select[3]->SetPosition(selectP[0]);
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
-			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
-			SceneManager::GetInstance()->ChangeScene("THIRDBOSS");
+			//Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
+			//SceneManager::GetInstance()->ChangeScene("THIRDBOSS");
 		}
 	}
 	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -11.0f, 0.0f, 1.0f)) {
@@ -139,15 +148,31 @@ Ease(In,Quad,frame,1280,640),
 Ease(In,Quad,frame,1280,640),
 480
 		};
-		plane[0]->SetPosition(selectP[1]);
-		select[0]->SetPosition(selectP[0]);
+		plane[2]->SetPosition(selectP[1]);
+		select[1]->SetPosition(selectP[0]);
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			SceneManager::GetInstance()->ChangeScene("FOURTHBOSS");
 		}
 	}
 	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -5.0f, -5.0f, 1.0f)) {
-
+		if (frame >= 1.0f) {
+			frame = 1.0f;
+		} else {
+			frame += 0.06f;
+		}
+		selectP[0] = {
+		Ease(In,Quad,frame,0,640),
+		0
+		};
+		selectP[1] = {
+		Ease(In,Quad,frame,1280,640),
+		480
+		};
+		plane[3]->SetPosition(selectP[1]);
+		select[3]->SetPosition(selectP[0]);
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
+		}
 	}
 	if (UICheck()) {
 		frame = 0.0f;
@@ -160,7 +185,10 @@ Ease(In,Quad,frame,1280,640),
 	Ease(In,Quad,frame,1280,640),
 	480
 		};
-		plane[0]->SetPosition(selectP[1]);
+		for (int i = 0;i<4; i++) {
+			select[i]->SetPosition(selectP[0]);
+			plane[i]->SetPosition(selectP[1]);
+		}
 	}
 }
 
@@ -169,8 +197,10 @@ void StageSelect::Draw(DirectXCommon* dxCommon) {
 	BackGround->Draw();
 	player->Draw(dxCommon);
 	Sprite::PreDraw();
-	select[0]->Draw();
-	plane[0]->Draw();
+	for (int i = 0; i < 4;i++) {
+		select[i]->Draw();
+		plane[i]->Draw();
+	}
 }
 
 

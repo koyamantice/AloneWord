@@ -23,8 +23,8 @@ class StageSelect :
 	void Draw(DirectXCommon* dxCommon)override;
 private:
 	Sprite* BackGround = nullptr;
-	Sprite* select[5]{};
-	XMFLOAT2 selectP[5]{};
+	Sprite* select[4]{};
+	XMFLOAT2 selectP[4]{};
 	Sprite* plane[5]{};
 	float frame=0;
 	Input* input = Input::GetInstance();
