@@ -245,7 +245,9 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 	else {
 		player->Update();
 		leftshose->Update();
-		rightshose->SetAct(leftshose);
+		if (rightshose->GetHP() >= 1) {
+			rightshose->SetAct(leftshose);
+		}
 		rightshose->Update();
 		for (std::size_t i = 0; i < enemy.size(); i++) {
 			enemy[i]->Update();
@@ -338,8 +340,8 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 	//collsionManager->CheckAllCollisions();
 	/*DebugText::GetInstance()->Print("PUSH to RB!!",200, 100,1.0f);
 	DebugText::GetInstance()->Print("PUSH to A!!", 200, 115, 1.0f);*/
-	DebugText::GetInstance()->Print("RB or LB :Rotate", 900, 620, 2.0f);
-	DebugText::GetInstance()->Print("A         :Hand", 900, 650, 2.0f);
+	//DebugText::GetInstance()->Print("RB or LB :Rotate", 900, 620, 2.0f);
+	//DebugText::GetInstance()->Print("A         :Hand", 900, 650, 2.0f);
 	//DebugText::GetInstance()->Print("PUSH to RB!!", 1040, 620, 2.0f);
 	//DebugText::GetInstance()->Print("PUSH to A!!", 1040, 660, 2.0f);
 }

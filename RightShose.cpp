@@ -40,7 +40,7 @@ void RightShose::Spec() {
 	XMFLOAT3 AfterPos{};
 	if (AttackCount > 180 && pos.y <= 0.1f) {
 		if (!active) {
-			//action = (rand() % 2);
+			action = (rand() % 2);
 			frame = 0;
 			pat = 1;
 			active = true;

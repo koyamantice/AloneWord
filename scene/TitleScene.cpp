@@ -20,11 +20,11 @@ void TitleScene::Finalize() {
 
 void TitleScene::Update(DirectXCommon* dxCommon) {
 	Input* input = Input::GetInstance();
-	if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
+	if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_X)) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 		SceneManager::GetInstance()->ChangeScene("StageSelect");
 	}
-	else if (input->TriggerButton(input->Button_B)) {
+	else if (input->TriggerButton(input->Button_A)) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 		SceneManager::GetInstance()->ChangeScene("STARTMAP");
 	}
