@@ -44,6 +44,8 @@ public:
 	virtual void Draw(DirectXCommon* dxCommon);//=0でこのクラスは継承のみ
 
 	bool IsEndRequst() { return endResquest_; }
+
+	void SetEnd(bool endResquest_) { this->endResquest_ = endResquest_; }
 protected:
 	bool endResquest_ = false;
 	WinApp* winApp = nullptr;
@@ -56,5 +58,6 @@ protected:
 	DebugText* debugText = nullptr;
 	AbstractSceneFactory* sceneFactory_ = nullptr;
 	ImageManager* imageManager = nullptr;
+	SceneManager* scaneMana = nullptr;
 };
 

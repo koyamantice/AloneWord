@@ -24,6 +24,9 @@ class SceneManager;
 /// ƒV[ƒ“‹K’è
 /// </summary>
 class BaseScene {
+public:
+	const bool& GetEnd() { return end; }
+
 protected:
 	// DirectX::‚ğÈ—ª
 	using XMFLOAT2 = DirectX::XMFLOAT2;
@@ -62,6 +65,7 @@ protected:
 	XMFLOAT3 Aftertargetpos;
 	float frame = 0.0f;
 	int Interval = 0;
+	bool end = false;
 public:
 
 	virtual ~BaseScene()=default;

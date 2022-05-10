@@ -470,7 +470,7 @@ bool Rice::collidePlayer() {
 	if (IsAlive && !EnemyCatch && FlashCount == 0 && add == false && !Exp) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true) {
 			IsAlive = 0;
-			//player->SetHp(player->GetHp() - 1);
+			player->SetHp(player->GetHp() - 1);
 			Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 			if (player->GetAttackFlag() == false) {
 				player->SetDamageFlag(true);

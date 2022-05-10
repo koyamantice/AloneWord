@@ -90,11 +90,11 @@ const void UI::Draw() {
 	PlaHp->Draw();
 	//Life->Draw();
 
-	if (boss && invisible) {
+	if (boss && invisible && boss->GetHP() >= 1) {
 		Arrow->Draw();
 	}
 
-	if (boss2 && invisible) {
+	if (boss2 && invisible && boss2->GetHP() >= 1) {
 		Arrow2->Draw();
 	}
 }

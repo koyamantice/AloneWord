@@ -7,7 +7,7 @@ void TisGame::Initialize(DirectXCommon* dxCommon) {
 	//マネージャーセット
 	sceneFactory_ = new SceneFactory();
 	SceneManager::GetInstance()->SetSceneFactory(sceneFactory_);
-	SceneManager::GetInstance()->ChangeScene("StageSelect");
+	SceneManager::GetInstance()->ChangeScene("TITLE");
 }
 
 void TisGame::Finalize() {
