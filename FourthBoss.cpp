@@ -121,7 +121,7 @@ void FourthBoss::Finalize() {
 	}
 	player->Finalize();
 	pastel->Finalize();
-	mill->Finalize();
+	//mill->Finalize();
 	shockwave->Final();
 	delete objBossMap;
 	delete objFloor;
@@ -368,15 +368,15 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 
 	XMFLOAT3 pos = player->GetPosition();
 	XMFLOAT3 enemypos = pastel->GetPosition();
-	ImGui::Begin("test");
-	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
-	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
-	//ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
-	//ImGui::SliderFloat("enemypos.y", &enemypos.y, 50, 0);
-	ImGui::Text("Interval::%d", Interval);
-	ImGui::Text("appearanceTimer::%d", appearanceTimer);
-	ImGui::Unindent();
-	ImGui::End();
+	//ImGui::Begin("test");
+	////ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
+	////ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
+	////ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
+	////ImGui::SliderFloat("enemypos.y", &enemypos.y, 50, 0);
+	//ImGui::Text("Interval::%d", Interval);
+	//ImGui::Text("appearanceTimer::%d", appearanceTimer);
+	//ImGui::Unindent();
+	//ImGui::End();
 
 	ui->Draw();
 
