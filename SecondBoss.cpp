@@ -245,6 +245,7 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 	else {
 		player->Update();
 		leftshose->Update();
+		rightshose->SetAct(leftshose);
 		rightshose->Update();
 		for (std::size_t i = 0; i < enemy.size(); i++) {
 			enemy[i]->Update();
@@ -325,8 +326,8 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 	}
 
 	//‚»‚Ì‘¼ƒV[ƒ“ˆÚs
-	if (leftshose->GetHP() <= 0) {
-		SceneManager::GetInstance()->ChangeScene("SECONDMAP");
+	if (leftshose->GetHP() <= 0 && rightshose->GetHP() <= 0) {
+		SceneManager::GetInstance()->ChangeScene("StageSelect");
 	}
 
 	if (player->GetHp() <= 0) {

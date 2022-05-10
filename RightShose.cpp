@@ -39,15 +39,15 @@ void RightShose::Finalize() {
 void RightShose::Spec() {
 	XMFLOAT3 AfterPos{};
 	if (AttackCount > 180 && pos.y <= 0.1f) {
-		if (!active && LeftAct) {
-			action = (rand() % 2);
+		if (!active) {
+			//action = (rand() % 2);
 			frame = 0;
 			pat = 1;
 			active = true;
 		}
 	}
 	else {
-		if (!active && LeftAct) {
+		if (!active) {
 			AttackCount++;
 			angle += 2.0f;
 			angle2 = angle * (3.14f / 180.0f);

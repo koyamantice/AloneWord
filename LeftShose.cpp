@@ -92,7 +92,7 @@ void LeftShose::Spec() {
 					AfterPos.z = 0.0f;
 				}
 				else {
-					Afterrot = 180;
+					Afterrot = 270;
 					pat = 0;
 					AttackCount = 30;
 					Effect = true;

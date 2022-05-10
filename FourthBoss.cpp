@@ -324,7 +324,7 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 
 	//‚»‚Ì‘¼ƒV[ƒ“ˆÚs
 	if (pastel->GetHP() <= 0) {
-		SceneManager::GetInstance()->ChangeScene("FourthMAP");
+		SceneManager::GetInstance()->ChangeScene("StageSelect");
 	}
 
 	if (player->GetHp() <= 0) {

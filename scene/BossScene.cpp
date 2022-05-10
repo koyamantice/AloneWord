@@ -272,10 +272,6 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 		Audio::GetInstance()->LoopWave(1, 0.7f);
 	}
 
-	if (input->TriggerKey(DIK_C)) {
-		SceneManager::GetInstance()->ChangeScene("SECONDMAP");
-	}
-
 	//敵同士の当たり判定
 	if (sizeof(enemy) > 2) {//配列のサイズ確認
 		for (int colA = 0; colA < BossEnemyMax; colA++) {
@@ -319,7 +315,7 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 
 	//その他シーン移行
 	if (bossenemy->GetHP() <= 0) {
-		SceneManager::GetInstance()->ChangeScene("SECONDMAP");
+		SceneManager::GetInstance()->ChangeScene("StageSelect");
 	}
 
 	if (player->GetHp() <= 0) {
