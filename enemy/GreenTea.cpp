@@ -283,7 +283,7 @@ Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 	}
 }
 
-void GreenTea::App() {
+void GreenTea::App(int Timer) {
 	//後に記入
 }
 

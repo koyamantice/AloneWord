@@ -50,7 +50,6 @@ private:
 	array<Effect*, 40> effect;
 	array<InterEnemy*, 10> enemy;
 	Pastel* pastel = nullptr;
-	Mill* mill = nullptr;
 	ShockWave* shockwave = nullptr;
 	std::array<std::array<Exp*, 10>, 5> exp;
 	float weight = 0;

@@ -16,7 +16,7 @@ void BossEnemy::Initialize() {
 	IsAlive = 0;
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
-	pos = { 0.0f,0.0f,0.0f };
+	pos = { 0.0f,10.0f,0.0f };
 	enemyobj->SetPosition(pos);
 	rot = { 0,90,0 };
 	enemyobj->SetRotation(rot);
@@ -194,6 +194,7 @@ void BossEnemy::Spec() {
 					0,
 					0
 					};
+
 					if (frame < 1.0f) {
 						frame += 0.01f;
 						break;
@@ -220,8 +221,54 @@ void BossEnemy::Spec() {
 		}
 	}
 
-	void BossEnemy::App() {
+	void BossEnemy::App(int Timer) {
 
+		XMFLOAT3 AfterPos{};
+		XMFLOAT3 AfterRot{};
+		if (Timer == 220 || Timer == 400) {
+			appearMove++;
+			frame = 0.0f;
+		}
+
+		switch (appearMove) {
+		case 1:
+			AfterPos = {
+							pos.x,
+							0,
+							pos.z,
+			};
+			if (frame < 1.0f) {
+				frame += 0.08f;
+				break;
+			}
+			else {
+				frame = 1.0f;
+				break;
+			}
+
+		case 2:
+			AfterPos = {
+						pos.x,
+						1,
+						pos.z,
+			};
+			
+			if (frame < 1.0f) {
+				frame += 0.08f;
+				break;
+			}
+			else {
+				frame = 1.0;
+				break;
+			}
+		}
+	
+		pos = {
+		Ease(In,Cubic,frame,pos.x,AfterPos.x),
+		Ease(In,Cubic,frame,pos.y,AfterPos.y),
+		Ease(In,Cubic,frame,pos.z,AfterPos.z)
+		};
+		enemyobj->SetPosition(pos);
 	}
 
 	void BossEnemy::specialDraw() {

@@ -218,7 +218,7 @@ void LeftShose::Spec() {
 	}
 }
 
-void LeftShose::App() {
+void LeftShose::App(int Timer) {
 
 }
 

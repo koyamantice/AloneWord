@@ -138,6 +138,7 @@ void FourthBoss::Finalize() {
 		}
 	}
 	delete camera;
+	ui->Finalize();
 }
 
 void FourthBoss::Update(DirectXCommon* dxCommon) {
@@ -181,7 +182,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 			}
 			else {
 				frame = 1.0f;
-				pastel->AppeaMovie();
+				pastel->AppeaMovie(appearanceTimer);
 				if(pastel->GetAppearanceEnd() == true){
 					Interval = 0;
 					frame = 0.0f;
@@ -372,16 +373,7 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 
 	XMFLOAT3 pos = player->GetPosition();
 	XMFLOAT3 enemypos = pastel->GetPosition();
-	ImGui::Begin("test");
-	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
-	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
-	//ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
-	//ImGui::SliderFloat("enemypos.y", &enemypos.y, 50, 0);
-	ImGui::Text("Interval::%d", Interval);
-	ImGui::Text("appearanceTimer::%d", appearanceTimer);
-	ImGui::Unindent();
-	ImGui::End();
-
+	
 	ui->Draw();
 
 	// パーティクルの描画

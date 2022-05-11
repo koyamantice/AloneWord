@@ -25,18 +25,18 @@ void InterBoss::Update() {
 void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
 
-	//ImGui::Begin("test");
-	///*ImGui::SliderFloat("angle", &angle, 200, -25);
-	//ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
-	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
-	//ImGui::SliderFloat("rot.z", &rot.z, 360, -360);*/
-	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
-	//ImGui::SliderFloat("pos.y", &pos.y, 360, -360);
-	//ImGui::Text("AttackCount:%d", AttackCount);
+	ImGui::Begin("test");
+	/*ImGui::SliderFloat("angle", &angle, 200, -25);
+	ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
+	ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	ImGui::SliderFloat("rot.z", &rot.z, 360, -360);*/
+	ImGui::SliderFloat("rot.y", &frame, 360, -360);
+	ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	ImGui::Text("Move:%d", appearMove);
 	//ImGui::Text("Action:%d", action);
 	//ImGui::Text("Active:%d", active);
-	//////ImGui::Unindent();
-	//ImGui::End();
+	////ImGui::Unindent();
+	ImGui::End();
 	if (BossHP >= 1) {
 		Object3d::PreDraw();
 		enemyobj->Draw();
@@ -102,7 +102,7 @@ void InterBoss::Begin() {
 	enemyobj->Update();
 }
 
-void InterBoss::AppeaMovie() {
-	App();
+void InterBoss::AppeaMovie(int Timer) {
+	App(Timer);
 	enemyobj->Update();
 }

@@ -143,6 +143,7 @@ void SecondBoss::Finalize() {
 	delete camera;
 	delete object1;
 	delete model1;
+	ui->Finalize();
 }
 
 void SecondBoss::Update(DirectXCommon* dxCommon) {

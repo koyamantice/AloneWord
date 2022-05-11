@@ -143,6 +143,7 @@ void BossScene::Finalize() {
 		}
 	}
 	delete camera;
+	ui->Finalize();
 	//delete object1;
 	//delete model1;
 }
@@ -159,17 +160,42 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		appearanceTimer++;
 		player->Begin();
 		bossenemy->Begin();
-		if (appearanceTimer == 1) {
-			cameraPos.x = player->GetPosition().x;
-			cameraPos.y = player->GetPosition().y + distanceY;
-			cameraPos.z = player->GetPosition().z - distanceZ;
-		}
+		if (appearanceNumber == 0) {
+			if (appearanceTimer == 1) {
+				cameraPos.x = bossenemy->GetPosition().x + 5;
+				cameraPos.y = 2;
+				cameraPos.z = bossenemy->GetPosition().z + 8;
+				camera->SetTarget(player->GetPosition());
+			}
 
-		if (appearanceTimer == 100) {
-			appearanceNumber++;
-		}
+			else if (appearanceTimer == 20) {
+				Aftereyepos = {
+					bossenemy->GetPosition().x + 2,
+					2,
+					bossenemy->GetPosition().z + 5,
+				};
+			}
 
-		if (appearanceNumber == 1) {
+			if (frame < 1.0f) {
+				frame += 0.005f;
+			}
+			else {
+				bossenemy->AppeaMovie(appearanceTimer);
+				frame = 1.0f;
+			}
+
+			cameraPos = {
+Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+			};
+
+			if (appearanceTimer == 300) {
+				frame = 0.0f;
+				appearanceNumber++;
+			}
+		}
+		else if (appearanceNumber == 1) {
 			Aftereyepos = {
 				bossenemy->GetPosition().x,
 				bossenemy->GetPosition().y + distanceY,
@@ -178,16 +204,16 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 
 			Aftertargetpos = {
 				bossenemy->GetPosition().x,
-				bossenemy->GetPosition().y + 2.0f,
+				bossenemy->GetPosition().y + 5,
 				bossenemy->GetPosition().z,
 			};
 
 			if (frame < 1.0f) {
-				frame += 0.01f;
+				frame += 0.015f;
 			}
 			else {
-				frame = 0;
-				appearanceNumber = 2;
+				frame = 1.0f;
+				bossenemy->AppeaMovie(appearanceTimer);
 			}
 
 			cameraPos = {
@@ -201,8 +227,52 @@ Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
 Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
 Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			};
+
+			if (appearanceTimer == 500) {
+				frame = 0.0f;
+				appearanceNumber++;
+			}
 		}
+
 		else if (appearanceNumber == 2) {
+			Aftereyepos = {
+			bossenemy->GetPosition().x,
+			bossenemy->GetPosition().y + 5,
+			bossenemy->GetPosition().z - 7,
+			};
+
+			Aftertargetpos = {
+				bossenemy->GetPosition().x,
+				bossenemy->GetPosition().y + 3,
+				bossenemy->GetPosition().z,
+			};
+
+			if (frame < 1.0f) {
+				frame += 0.015f;
+			}
+			else {
+				frame = 1.0f;
+			}
+
+			cameraPos = {
+Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+			};
+
+			cameratargetPos = {
+Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+			};
+
+			if (appearanceTimer == 600) {
+				frame = 0.0f;
+				appearanceNumber++;
+			}
+
+		}
+		else if (appearanceNumber == 3) {
 			Aftereyepos = {
 				player->GetPosition().x,
 				player->GetPosition().y + distanceY,
@@ -333,6 +403,15 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 }
 
 void BossScene::Draw(DirectXCommon* dxCommon) {
+	ImGui::Begin("test");
+	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
+	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
+	//ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
+	ImGui::SliderFloat("frame", &frame, 50, 0);
+	ImGui::Text("appearanceTimer::%d", appearanceTimer);
+	ImGui::Unindent();
+	ImGui::End();
+
 	//各オブジェクトの描画
 	Object3d::PreDraw();
 	//objBossMap->Draw();

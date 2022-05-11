@@ -137,6 +137,7 @@ void ThirdBoss::Finalize() {
 		}
 	}
 	delete camera;
+	ui->Finalize();
 }
 
 void ThirdBoss::Update(DirectXCommon* dxCommon) {

@@ -8,6 +8,7 @@ class UI {
 public:
 	UI(Player* player, InterBoss* boss = nullptr, InterBoss* boss2 = nullptr);
 	void Update();
+	void Finalize();
 	const void Draw();
 private:
 	// DirectX::‚ğÈ—ª

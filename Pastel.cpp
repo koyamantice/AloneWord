@@ -307,7 +307,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 	}
 }
 
-void Pastel::App() {
+void Pastel::App(int Timer) {
 	frame = 0.0f;
 	angle += 3.0f;
 	angle2 = angle * (3.14f / 180.0f);

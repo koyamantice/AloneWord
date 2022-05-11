@@ -320,7 +320,7 @@ void RightShose::Spec() {
 	}
 }
 
-void RightShose::App() {
+void RightShose::App(int Timer) {
 
 }
 void RightShose::specialDraw() {
