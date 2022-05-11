@@ -18,6 +18,7 @@ public:
 
 	void Rebound();
 private:
+	Object3d* Piyopiyo;
 	bool collidePlayer() override;
 	bool collideAttackArm() override;
 	bool collideArm();

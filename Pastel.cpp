@@ -39,7 +39,7 @@ void Pastel::Initialize() {
 	for (std::size_t i = 0; i < Platformobj.size(); i++) {
 		Platformobj[i] = TouchableObject::Create(Platformmodel);
 		Platformobj[i]->SetModel(Platformmodel);
-		Plapos[i] = { 0.0f,-10.0f,0.0f };
+		Plapos[i] = { 0.0f,-30.0f,0.0f };
 		Platformobj[i]->SetScale({ 1.2f,1.2f,1.2f });
 		Platformobj[i]->SetPosition(Plapos[i]);
 	}
@@ -138,7 +138,7 @@ void Pastel::Spec() {
 					break;
 				}
 			case 2:
-				if (aiming < 50) {
+				if (aiming < 200) {
 					aiming++;
 					break;
 				}
@@ -292,7 +292,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 			}
 		}
 		else {
-			if (Plapos[i].y >= -10.0f) {
+			if (Plapos[i].y >= -30.0f) {
 				Plapos[i].y -= 0.10f;
 			}
 			else {
@@ -339,7 +339,7 @@ bool Pastel::collideAttackArm(Player* player) {
 	bool attackflag = player->GetAttackFlag();
 	float weight = player->GetArmWeight();
 	if (attackflag && !BossHit) {
-		if (Collision::CircleCollision(Armpos.x, Armpos.z, 1.0, Millpos.x, Millpos.z, 1.0)) {
+		if (Collision::CircleCollision(Armpos.x, Armpos.z, 1.3, Millpos.x, Millpos.z, 1.3)) {
 			BossHit = true;
 			player->SetAttackFlag(false);
 			//–Ý‚ð‰P‚É“ü‚ê‚Ä‚¢‚é

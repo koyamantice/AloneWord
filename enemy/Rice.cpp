@@ -10,6 +10,7 @@ using namespace DirectX;
 Rice::Rice() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::Enemy);
 	enemyobj = new Object3d();
+	Piyopiyo = new Object3d();
 }
 
 void Rice::Initialize() {
@@ -27,7 +28,11 @@ void Rice::Initialize() {
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.2f,0.2f,0.2f });
 	oldpos = pos;
-
+	Piyopiyo = Object3d::Create();
+	Piyopiyo->SetModel(ModelManager::GetIns()->GetModel(ModelManager::Piyopiyo));
+	Piyopiyo->SetPosition({ pos.x,pos.y + 2.0f,pos.z });
+	Piyopiyo->SetScale({1.0f, 2.0f, 2.0f});
+	Piyopiyo->SetRotation({ 60,0,0 });
 	//texture->SetColor({ 1.0f,0.0,0.0,1.0f });
 	Restexture = Texture::Create(ImageManager::Resporn, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	Restexture->TextureCreate();
@@ -187,6 +192,8 @@ void Rice::Update() {
 
 void Rice::Demo(int num) {
 	assert(player);
+	Piyopiyo->SetPosition({ pos.x,pos.y + 2.0f,pos.z });
+	Piyopiyo->Update();
 	if (hit&& IsAlive && !EnemyCatch && !Exp) {
 		if (frame < 0.4f) {
 			speed_y2 = 3.0f / 20.0f;
@@ -377,6 +384,7 @@ void Rice::Draw() {
 	if (IsAlive) {
 		Object3d::PreDraw();
 		enemyobj->Draw();
+		Piyopiyo->Draw();
 	}
 	Texture::PreDraw();
 	if (IsAlive && !EnemyCatch && !add) {
