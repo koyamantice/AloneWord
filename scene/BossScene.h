@@ -51,10 +51,13 @@ private:
 	array<Effect*,40> effect;
 	array<InterEnemy*,10> enemy;
 	InterBoss* bossenemy = nullptr;
+	Sprite* bossName = nullptr;
+	XMFLOAT2 namePos = { 0.0f,0.0f };
 	std::array<std::array<Exp*, 10>, 5> exp;
 	float weight = 0;
 	UI* ui=nullptr;
 	CollisionManager* collisionManager = nullptr;
 	ParticleManager* particleMan = nullptr;
+	float nameframe = 0.0f;
 };
 

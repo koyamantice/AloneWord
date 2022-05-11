@@ -258,7 +258,7 @@ void BossEnemy::Spec() {
 				break;
 			}
 			else {
-				frame = 1.0;
+				frame = 1.0f;
 				break;
 			}
 		}

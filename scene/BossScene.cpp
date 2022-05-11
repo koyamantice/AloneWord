@@ -9,6 +9,7 @@
 #include "SphereCollider.h"
 #include "CollisionManager.h"
 #include <Easing.h>
+#include "ImageManager.h"
 void BossScene::Initialize(DirectXCommon* dxCommon) {
 	//インスタンス取得
 	collisionManager = CollisionManager::GetInstance();
@@ -32,18 +33,9 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objBossMap->SetPosition({ 0,-1,2 });
 	objBossMap->SetRotation({ 0, 90, 0 });
 	objBossMap->SetScale({ 1.4f,1.5f,1.6f });
-	/*
-	objBossMap->SetModel(modelBossMap);
-	objBossMap->SetPosition({ 0,-1,2 });
-	objBossMap->SetRotation({ 0, 90, 0 });
-	objBossMap->SetScale({ 1.4f,1.5f,1.6f });
-	*/
+	
 	//当たり判定確認用です
 
-	objSphere = Object3d::Create();
-	modelSphere = Model::CreateFromOBJ("sphere");
-	objSphere->SetModel(modelSphere);
-	objSphere->SetPosition({ -10, 1, 0 });
 	// コライダーの追加
 	//objSphere->SetCollider(new SphereCollider);
 
@@ -57,6 +49,9 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	limit->SetPosition({ 0.0f,0.01f,0.0f });
 	limit->SetRotation({ 90.0f,0, 0 });
 	limit->SetScale({ 6,5,5 });*/
+
+	bossName = Sprite::Create(ImageManager::select1, namePos);
+	bossName->SetAnchorPoint({ 1.0f,0.0f });
 
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i] = new Effect();
@@ -228,7 +223,7 @@ Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
 Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			};
 
-			if (appearanceTimer == 500) {
+			if (appearanceTimer == 400) {
 				frame = 0.0f;
 				appearanceNumber++;
 			}
@@ -266,13 +261,34 @@ Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
 Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			};
 
-			if (appearanceTimer == 600) {
+			if (appearanceTimer == 450) {
 				frame = 0.0f;
 				appearanceNumber++;
 			}
 
 		}
+
 		else if (appearanceNumber == 3) {
+			if (nameframe >= 1.0f) {
+				nameframe = 1.0f;
+			}
+			else {
+				nameframe += 0.06f;
+			}
+			namePos = {
+			Ease(In,Quad,nameframe,2000,940),
+			480
+			};
+
+			bossName->SetPosition(namePos);
+			if (appearanceTimer == 520) {
+				nameframe = 0.0f;
+				appearanceNumber++;
+			}
+
+		}
+
+		else if (appearanceNumber == 4) {
 			Aftereyepos = {
 				player->GetPosition().x,
 				player->GetPosition().y + distanceY,
@@ -293,7 +309,21 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 				appearanceTimer = 0;
 				appearanceNumber = 0;
 				frame = 0;
+				nameframe = 0.0f;
 			}
+
+			if (nameframe >= 1.0f) {
+				nameframe = 1.0f;
+			}
+			else {
+				nameframe += 0.06f;
+			}
+			namePos = {
+			Ease(In,Quad,nameframe,940,2000),
+			480
+			};
+
+			bossName->SetPosition(namePos);
 
 			cameraPos = {
 Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
@@ -323,7 +353,6 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 		}
 		ui->Update();
 		particleMan->Update();
-		objSphere->Update();
 		cameraPos.x = player->GetPosition().x;
 		cameraPos.y = player->GetPosition().y + distanceY;
 		cameraPos.z = player->GetPosition().z - distanceZ;
@@ -407,15 +436,13 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
 	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
 	//ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
-	ImGui::SliderFloat("frame", &frame, 50, 0);
+	ImGui::SliderFloat("pos.x", &namePos.x, 50, 0);
 	ImGui::Text("appearanceTimer::%d", appearanceTimer);
 	ImGui::Unindent();
 	ImGui::End();
 
 	//各オブジェクトの描画
 	Object3d::PreDraw();
-	//objBossMap->Draw();
-	//objSphere->Draw();
 	objBossMap->Draw();
 	objFloor->Draw();
 
@@ -441,8 +468,13 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	//		exp[i][j]->Draw();
 	//	}
 	//}
-
-	ui->Draw();
+	if (bossstart) {
+		ui->Draw();
+	}
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
+	Sprite::PreDraw();
+	if (!bossstart) {
+		bossName->Draw();
+	}
 }
