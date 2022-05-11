@@ -41,8 +41,8 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 
 	objSphere = Object3d::Create();
 	modelSphere = Model::CreateFromOBJ("sphere");
-	//objSphere->SetModel(modelSphere);
-	//objSphere->SetPosition({ -10, 1, 0 });
+	objSphere->SetModel(modelSphere);
+	objSphere->SetPosition({ -10, 1, 0 });
 	// コライダーの追加
 	//objSphere->SetCollider(new SphereCollider);
 
@@ -143,6 +143,7 @@ void SecondBoss::Finalize() {
 	delete camera;
 	delete object1;
 	delete model1;
+	ui->Finalize();
 }
 
 void SecondBoss::Update(DirectXCommon* dxCommon) {
@@ -245,7 +246,9 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 	else {
 		player->Update();
 		leftshose->Update();
-		rightshose->SetAct(leftshose);
+		if (rightshose->GetHP() >= 1) {
+			rightshose->SetAct(leftshose);
+		}
 		rightshose->Update();
 		for (std::size_t i = 0; i < enemy.size(); i++) {
 			enemy[i]->Update();
@@ -255,7 +258,7 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 		}
 		ui->Update();
 		particleMan->Update();
-		//objSphere->Update();
+		objSphere->Update();
 		cameraPos.x = player->GetPosition().x;
 		cameraPos.y = player->GetPosition().y + distanceY;
 		cameraPos.z = player->GetPosition().z - distanceZ;
@@ -338,6 +341,8 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 	//collsionManager->CheckAllCollisions();
 	/*DebugText::GetInstance()->Print("PUSH to RB!!",200, 100,1.0f);
 	DebugText::GetInstance()->Print("PUSH to A!!", 200, 115, 1.0f);*/
+	//DebugText::GetInstance()->Print("RB or LB :Rotate", 900, 620, 2.0f);
+	//DebugText::GetInstance()->Print("A         :Hand", 900, 650, 2.0f);
 	//DebugText::GetInstance()->Print("PUSH to RB!!", 1040, 620, 2.0f);
 	//DebugText::GetInstance()->Print("PUSH to A!!", 1040, 660, 2.0f);
 }

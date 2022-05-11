@@ -92,9 +92,9 @@ public:
 
 	void Begin();
 
-	void AppeaMovie();
+	void AppeaMovie(int Timer);
 
-	virtual void App()=0;//ボス出現モーション
+	virtual void App(int Timer)=0;//ボス出現モーション
 
 	virtual void Spec()=0;//ボス特有の処理
 	virtual void specialDraw()=0;//ボス特有の描画
@@ -194,5 +194,6 @@ protected:
 	int haveTimer = 0;
 	float haveEnemy = 0.0f;
 	bool appearanceEnd = false;
+	int appearMove = 0;
 };
 

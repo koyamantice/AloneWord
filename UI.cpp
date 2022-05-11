@@ -67,6 +67,16 @@ void UI::Update() {
 	}
 }
 
+void UI::Finalize() {
+	delete BossHp;
+	delete BossHp2;
+	delete HpGauge;
+	delete Mark1;
+	delete PlaHp;
+	delete Arrow;
+	delete Arrow2;
+}
+
 const void UI::Draw() {
 
 	Sprite::PreDraw();

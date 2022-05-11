@@ -30,11 +30,10 @@ void InterBoss::Draw() {
 	//ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
 	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
 	//ImGui::SliderFloat("rot.z", &rot.z, 360, -360);*/
-	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
-	//ImGui::SliderFloat("pos.y", &pos.y, 360, -360);
-	//ImGui::Text("AttackCount:%d", AttackCount);
-	//ImGui::Text("Action:%d", action);
-	//ImGui::Text("Active:%d", active);
+	//ImGui::SliderFloat("rot.y", &frame, 360, -360);
+	//ImGui::Text("Move:%d", appearMove);
+	////ImGui::Text("Action:%d", action);
+	////ImGui::Text("Active:%d", active);
 	//////ImGui::Unindent();
 	//ImGui::End();
 	if (BossHP >= 1) {
@@ -102,7 +101,7 @@ void InterBoss::Begin() {
 	enemyobj->Update();
 }
 
-void InterBoss::AppeaMovie() {
-	App();
+void InterBoss::AppeaMovie(int Timer) {
+	App(Timer);
 	enemyobj->Update();
 }

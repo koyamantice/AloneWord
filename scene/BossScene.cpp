@@ -9,6 +9,7 @@
 #include "SphereCollider.h"
 #include "CollisionManager.h"
 #include <Easing.h>
+#include "ImageManager.h"
 void BossScene::Initialize(DirectXCommon* dxCommon) {
 	//インスタンス取得
 	collisionManager = CollisionManager::GetInstance();
@@ -32,18 +33,9 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objBossMap->SetPosition({ 0,-1,2 });
 	objBossMap->SetRotation({ 0, 90, 0 });
 	objBossMap->SetScale({ 1.4f,1.5f,1.6f });
-	/*
-	objBossMap->SetModel(modelBossMap);
-	objBossMap->SetPosition({ 0,-1,2 });
-	objBossMap->SetRotation({ 0, 90, 0 });
-	objBossMap->SetScale({ 1.4f,1.5f,1.6f });
-	*/
+	
 	//当たり判定確認用です
 
-	objSphere = Object3d::Create();
-	modelSphere = Model::CreateFromOBJ("sphere");
-	objSphere->SetModel(modelSphere);
-	objSphere->SetPosition({ -10, 1, 0 });
 	// コライダーの追加
 	//objSphere->SetCollider(new SphereCollider);
 
@@ -57,6 +49,9 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	limit->SetPosition({ 0.0f,0.01f,0.0f });
 	limit->SetRotation({ 90.0f,0, 0 });
 	limit->SetScale({ 6,5,5 });*/
+
+	bossName = Sprite::Create(ImageManager::select1, namePos);
+	bossName->SetAnchorPoint({ 1.0f,0.0f });
 
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i] = new Effect();
@@ -143,6 +138,7 @@ void BossScene::Finalize() {
 		}
 	}
 	delete camera;
+	ui->Finalize();
 	//delete object1;
 	//delete model1;
 }
@@ -159,17 +155,42 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		appearanceTimer++;
 		player->Begin();
 		bossenemy->Begin();
-		if (appearanceTimer == 1) {
-			cameraPos.x = player->GetPosition().x;
-			cameraPos.y = player->GetPosition().y + distanceY;
-			cameraPos.z = player->GetPosition().z - distanceZ;
-		}
+		if (appearanceNumber == 0) {
+			if (appearanceTimer == 1) {
+				cameraPos.x = bossenemy->GetPosition().x + 5;
+				cameraPos.y = 2;
+				cameraPos.z = bossenemy->GetPosition().z + 8;
+				camera->SetTarget(player->GetPosition());
+			}
 
-		if (appearanceTimer == 100) {
-			appearanceNumber++;
-		}
+			else if (appearanceTimer == 20) {
+				Aftereyepos = {
+					bossenemy->GetPosition().x + 2,
+					2,
+					bossenemy->GetPosition().z + 5,
+				};
+			}
 
-		if (appearanceNumber == 1) {
+			if (frame < 1.0f) {
+				frame += 0.005f;
+			}
+			else {
+				bossenemy->AppeaMovie(appearanceTimer);
+				frame = 1.0f;
+			}
+
+			cameraPos = {
+Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+			};
+
+			if (appearanceTimer == 300) {
+				frame = 0.0f;
+				appearanceNumber++;
+			}
+		}
+		else if (appearanceNumber == 1) {
 			Aftereyepos = {
 				bossenemy->GetPosition().x,
 				bossenemy->GetPosition().y + distanceY,
@@ -178,16 +199,16 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 
 			Aftertargetpos = {
 				bossenemy->GetPosition().x,
-				bossenemy->GetPosition().y + 2.0f,
+				bossenemy->GetPosition().y + 5,
 				bossenemy->GetPosition().z,
 			};
 
 			if (frame < 1.0f) {
-				frame += 0.01f;
+				frame += 0.015f;
 			}
 			else {
-				frame = 0;
-				appearanceNumber = 2;
+				frame = 1.0f;
+				bossenemy->AppeaMovie(appearanceTimer);
 			}
 
 			cameraPos = {
@@ -201,8 +222,73 @@ Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
 Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
 Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			};
+
+			if (appearanceTimer == 400) {
+				frame = 0.0f;
+				appearanceNumber++;
+			}
 		}
+
 		else if (appearanceNumber == 2) {
+			Aftereyepos = {
+			bossenemy->GetPosition().x,
+			bossenemy->GetPosition().y + 5,
+			bossenemy->GetPosition().z - 7,
+			};
+
+			Aftertargetpos = {
+				bossenemy->GetPosition().x,
+				bossenemy->GetPosition().y + 3,
+				bossenemy->GetPosition().z,
+			};
+
+			if (frame < 1.0f) {
+				frame += 0.015f;
+			}
+			else {
+				frame = 1.0f;
+			}
+
+			cameraPos = {
+Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+			};
+
+			cameratargetPos = {
+Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+			};
+
+			if (appearanceTimer == 450) {
+				frame = 0.0f;
+				appearanceNumber++;
+			}
+
+		}
+
+		else if (appearanceNumber == 3) {
+			if (nameframe >= 1.0f) {
+				nameframe = 1.0f;
+			}
+			else {
+				nameframe += 0.06f;
+			}
+			namePos = {
+			Ease(In,Quad,nameframe,2000,940),
+			480
+			};
+
+			bossName->SetPosition(namePos);
+			if (appearanceTimer == 520) {
+				nameframe = 0.0f;
+				appearanceNumber++;
+			}
+
+		}
+
+		else if (appearanceNumber == 4) {
 			Aftereyepos = {
 				player->GetPosition().x,
 				player->GetPosition().y + distanceY,
@@ -223,7 +309,21 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 				appearanceTimer = 0;
 				appearanceNumber = 0;
 				frame = 0;
+				nameframe = 0.0f;
 			}
+
+			if (nameframe >= 1.0f) {
+				nameframe = 1.0f;
+			}
+			else {
+				nameframe += 0.06f;
+			}
+			namePos = {
+			Ease(In,Quad,nameframe,940,2000),
+			480
+			};
+
+			bossName->SetPosition(namePos);
 
 			cameraPos = {
 Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
@@ -253,7 +353,6 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 		}
 		ui->Update();
 		particleMan->Update();
-		objSphere->Update();
 		cameraPos.x = player->GetPosition().x;
 		cameraPos.y = player->GetPosition().y + distanceY;
 		cameraPos.z = player->GetPosition().z - distanceZ;
@@ -326,17 +425,24 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 	//collsionManager->CheckAllCollisions();
 	/*DebugText::GetInstance()->Print("PUSH to RB!!",200, 100,1.0f);
 	DebugText::GetInstance()->Print("PUSH to A!!", 200, 115, 1.0f);*/
-	//DebugText::GetInstance()->Print("RB or LB :Rotate", 900, 620, 2.0f);
-	//DebugText::GetInstance()->Print("A         :Hand", 900, 650, 2.0f);
+	/*DebugText::GetInstance()->Print("RB or LB :Rotate", 900, 620, 2.0f);
+	DebugText::GetInstance()->Print("A         :Hand", 900, 650, 2.0f);*/
 	//DebugText::GetInstance()->Print("PUSH to RB!!", 1040, 620, 2.0f);
 	//DebugText::GetInstance()->Print("PUSH to A!!", 1040, 660, 2.0f);
 }
 
 void BossScene::Draw(DirectXCommon* dxCommon) {
+	ImGui::Begin("test");
+	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
+	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
+	//ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
+	ImGui::SliderFloat("pos.x", &namePos.x, 50, 0);
+	ImGui::Text("appearanceTimer::%d", appearanceTimer);
+	ImGui::Unindent();
+	ImGui::End();
+
 	//各オブジェクトの描画
 	Object3d::PreDraw();
-	//objBossMap->Draw();
-	//objSphere->Draw();
 	objBossMap->Draw();
 	objFloor->Draw();
 
@@ -362,8 +468,13 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	//		exp[i][j]->Draw();
 	//	}
 	//}
-
-	ui->Draw();
+	if (bossstart) {
+		ui->Draw();
+	}
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
+	Sprite::PreDraw();
+	if (!bossstart) {
+		bossName->Draw();
+	}
 }

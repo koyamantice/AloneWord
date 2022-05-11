@@ -123,6 +123,8 @@ void FourthBoss::Finalize() {
 	pastel->Finalize();
 	//mill->Finalize();
 	shockwave->Final();
+	delete objSphere;
+	delete modelSphere;
 	delete objBossMap;
 	delete objFloor;
 	delete modelBossMap;
@@ -136,6 +138,7 @@ void FourthBoss::Finalize() {
 		}
 	}
 	delete camera;
+	ui->Finalize();
 }
 
 void FourthBoss::Update(DirectXCommon* dxCommon) {
@@ -179,7 +182,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 			}
 			else {
 				frame = 1.0f;
-				pastel->AppeaMovie();
+				pastel->AppeaMovie(appearanceTimer);
 				if(pastel->GetAppearanceEnd() == true){
 					Interval = 0;
 					frame = 0.0f;
@@ -336,6 +339,8 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 	//collsionManager->CheckAllCollisions();
 	/*DebugText::GetInstance()->Print("PUSH to RB!!",200, 100,1.0f);
 	DebugText::GetInstance()->Print("PUSH to A!!", 200, 115, 1.0f);*/
+	//DebugText::GetInstance()->Print("RB or LB :Rotate", 900, 620, 2.0f);
+	//DebugText::GetInstance()->Print("A         :Hand", 900, 650, 2.0f);
 	//DebugText::GetInstance()->Print("PUSH to RB!!", 1040, 620, 2.0f);
 	//DebugText::GetInstance()->Print("PUSH to A!!", 1040, 660, 2.0f);
 }
@@ -368,16 +373,7 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 
 	XMFLOAT3 pos = player->GetPosition();
 	XMFLOAT3 enemypos = pastel->GetPosition();
-	//ImGui::Begin("test");
-	////ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
-	////ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
-	////ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
-	////ImGui::SliderFloat("enemypos.y", &enemypos.y, 50, 0);
-	//ImGui::Text("Interval::%d", Interval);
-	//ImGui::Text("appearanceTimer::%d", appearanceTimer);
-	//ImGui::Unindent();
-	//ImGui::End();
-
+	
 	ui->Draw();
 
 	// パーティクルの描画
