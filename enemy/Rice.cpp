@@ -285,15 +285,15 @@ void Rice::Demo(int num) {
 			if (!respawn) {
 				if (num==0) {
 					pos.x = 0;
-					pos.z = -10;
+					pos.z = -5;
 				}
 				if (num==1) {
 					pos.x = 3;
-					pos.z = -10;
+					pos.z = -5;
 				}
 				if (num==2) {
 					pos.x = -3;
-					pos.z = -10;
+					pos.z = -5;
 				}
 			} else {
 				scale = 10.0f;

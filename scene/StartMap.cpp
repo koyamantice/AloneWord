@@ -10,6 +10,11 @@
 #include "CollisionManager.h"
 #include <XorShift.h>
 #include "ImageManager.h"
+
+StartMap::~StartMap() {
+	//Finalize();
+}
+
 void StartMap::Initialize(DirectXCommon* dxCommon) {
 	collisionManager = CollisionManager::GetInstance();
 	// カメラ生成
@@ -25,29 +30,12 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	objFloor->SetScale({ 4.0f,1.0f,5.0f });
 
 	//ステージマップ
-	modelStartMap = Model::CreateFromOBJ("StartMap");
+	modelStartMap = Model::CreateFromOBJ("BossMap");
 	objStartMap = TouchableObject::Create(modelStartMap);
 	objStartMap->SetPosition({ 0,-1,2 });
 	objStartMap->SetRotation({ 0, 90, 0 });
-	objStartMap->SetScale({ 1.4f,1.5f,1.6f });
-	//バリケード
-	for (std::size_t i = 0; i < objBlock.size(); i++) {
-		objBlock[i] = Object3d::Create();
-		modelBlock[i] = Model::CreateFromOBJ("Fork");
-		objBlock[i]->SetModel(modelBlock[i]);
-		BlockRotation[i] = { 0.0f,90.0f,0.0f };
-		objBlock[i]->SetRotation(BlockRotation[i]);
-	}
-	//バリケード的なやつの各場所設定
-	objBlock[0]->SetPosition({ -5.5f,0.0f,-25.0f });
-	objBlock[1]->SetPosition({ 3.5f,0.0f,-25.0f });
-	objBlock[2]->SetPosition({ -5.5f,0.0f, 25.0f });
-	objBlock[3]->SetPosition({ 3.5f,0.0f, 25.0f });
+	objStartMap->SetScale({ 1.2f,1.2f,1.2f });
 
-	//普通のテクスチャ(板ポリ)
-	warp = new Warp;
-	warp->Initialize();
-	warp->SetPosition({ 0.0f,10.0f,50.0f });
 	/*limit = texture::create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
 	limit->texturecreate();
 	limit->setposition({ 0.0f,0.01f,0.0f });
@@ -82,7 +70,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	player = new Player();
 	player->Initialize();
 	player->SetMove(50.0f, 50.0f);
-	player->SetPosition({ 0.0f,5.0f,-30.0f });
+	player->SetPosition({ 0.0f,5.0f,-10.0f });
 	//player->SetPosition({ 0.0f,0.0f,-30.0f });
 
 	// パーティクルマネージャ生成
@@ -113,24 +101,15 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 
 void StartMap::Finalize() {
 	delete camera;
-	//３ｄのモデルのデリート
-	//for (int i = 0; i < StartEnemyMax; i++) {
-	//	enemy[i]->Finalize();
-	//}
-		spawing->Finalize();
-
-	for (std::size_t i = 0; i < objBlock.size(); i++) {
-		delete objBlock[i];
-		delete modelBlock[i];
+	for (int i = 0; i < enemy.size(); i++) {
+		enemy[i]->Finalize();
 	}
+	spawing->Finalize();
 	player->Finalize();
 	delete modelFloor;
 	delete objFloor;
 	delete modelStartMap;
 	delete objStartMap;
-	//delete object1;
-	//delete model1;
-	warp->Finalize();
 }
 
 void StartMap::Update(DirectXCommon* dxCommon) {
@@ -184,8 +163,9 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		}
 	}
 	if (tutorial==6) {
-		enemy[0]->Demo(1);
-		enemy[1]->Demo(2);
+		for (int j = 0; j < enemy.size(); j++) {
+			enemy[j]->Demo(j);
+		}
 		if (!spawing->GetIsAlive()) {
 			tutorial = 7;
 		}
@@ -212,14 +192,8 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	//		}
 	//	}
 	//}
-	//その他シーン移行
-
-	/*if (bossenemy->GetHP() <= 0) {
-		SceneManager::GetInstance()->ChangeScene("CLEAR");
-	}*/
-
 	Ray ray;
-	ray.start = { player->GetPosition().x,player->GetPosition().y + 3,player->GetPosition().z,1 };
+	ray.start = { player->GetPosition().x,player->GetPosition().y + 1,player->GetPosition().z,1 };
 	ray.dir = { 0.0f,0.28f,-1.0f,0.0f };
 	RaycastHit raycastHit;
 	if (!collisionManager->Raycast(ray, &raycastHit)) {
@@ -255,38 +229,26 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	player->Update();
 	spawing->Update();
 	particleMan->Update();
-	for (int j = 0; j < 2; j++) {
+	for (int j = 0; j < enemy.size(); j++) {
 		player->ResetWeight(enemy[j]);
 		player->Rebound(enemy[j]);
 	}
-	for (std::size_t i = 0; i < objBlock.size(); i++) {
-		objBlock[i]->SetRotation(BlockRotation[i]);
-		objBlock[i]->Update();
-	}
 	cameraPos.x = player->GetTargetPosition().x;
-	cameraPos.y = player->GetTargetPosition().y + distanceY;
+	cameraPos.y = player->GetTargetPosition().y +( distanceY-2);
 	cameraPos.z = player->GetPosition().z - distanceZ;
 	camera->SetTarget(player->GetTargetPosition());
 	camera->SetEye(cameraPos);
 }
 
 void StartMap::Draw(DirectXCommon* dxCommon) {
-	Object3d::PreDraw();
-	//objFloor->Draw();
 	objFloor->Draw();
 	objStartMap->Draw();
-	for (std::size_t i = 0; i < objBlock.size(); i++) {
-		objBlock[i]->Draw();
-	}
-	Texture::PreDraw();
-	warp->Draw();
-	Object3d::PreDraw();
-	//背景用
+
 	enemy[0]->Draw();
 	enemy[1]->Draw();
-
-	player->Draw(dxCommon);
+	enemy[2]->Draw();
 	spawing->Draw();
+	player->Draw(dxCommon);
 	ui->Draw();
 	Sprite::PreDraw();
 	//背景用
@@ -320,6 +282,4 @@ void StartMap::Pause(const int& Timer) {
 	else {
 		pause = true;
 	}
-	//player->Pause(Timer);
-	//spawing->Pause(Timer);
 }

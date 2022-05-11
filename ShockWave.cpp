@@ -70,7 +70,7 @@ bool ShockWave::CollideWave(Player* player) {
 	XMFLOAT3 playerpos = player->GetPosition();
 	
 	if (Collision::SphereCollision(pos.x, pos.y, pos.z, damegeArea, playerpos.x, playerpos.y, playerpos.z, damegeArea)) {
-		DebugText::GetInstance()->Print("damegeHit", 0, 0, 2.0f);
+		//DebugText::GetInstance()->Print("damegeHit", 0, 0, 2.0f);
 		return true;
 	}
 	else {
@@ -81,7 +81,7 @@ bool ShockWave::CollideWave(Player* player) {
 bool ShockWave::CollideSafeWave(Player* player) {
 	XMFLOAT3 playerpos = player->GetPosition();
 	if (Collision::SphereCollision(pos.x, pos.y, pos.z, safeArea, playerpos.x, playerpos.y, playerpos.z, safeArea)) {
-		DebugText::GetInstance()->Print("safeHit", 0, 10, 2.0f);
+		//DebugText::GetInstance()->Print("safeHit", 0, 10, 2.0f);
 		return true;
 	}
 	else {

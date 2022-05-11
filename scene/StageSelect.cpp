@@ -81,15 +81,15 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 			0
 		};
 		selectP[1] = {
-Ease(In,Quad,frame,1280,640),
-480
+		Ease(In,Quad,frame,1280,640),
+		480
 		};
 		plane[0]->SetPosition(selectP[1]);
 
 		select[0]->SetPosition(selectP[0]);
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
-			SceneManager::GetInstance()->ChangeScene("STARTMAP");
+			SceneManager::GetInstance()->ChangeScene("BOSS");
 		}
 	}
 	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 3.0f, 2.0f, 1.0f)) {
@@ -103,8 +103,8 @@ Ease(In,Quad,frame,1280,640),
 			0
 		};
 		selectP[1] = {
-Ease(In,Quad,frame,1280,640),
-480
+		Ease(In,Quad,frame,1280,640),
+		480
 		};
 		plane[1]->SetPosition(selectP[1]);
 		select[2]->SetPosition(selectP[0]);
@@ -124,8 +124,8 @@ Ease(In,Quad,frame,1280,640),
 			0
 		};
 		selectP[1] = {
-Ease(In,Quad,frame,1280,640),
-480
+		Ease(In,Quad,frame,1280,640),
+		480
 		};
 		plane[3]->SetPosition(selectP[1]);
 		select[3]->SetPosition(selectP[0]);
@@ -145,8 +145,8 @@ Ease(In,Quad,frame,1280,640),
 			0
 		};
 		selectP[1] = {
-Ease(In,Quad,frame,1280,640),
-480
+		Ease(In,Quad,frame,1280,640),
+		480
 		};
 		plane[2]->SetPosition(selectP[1]);
 		select[1]->SetPosition(selectP[0]);
@@ -182,8 +182,8 @@ Ease(In,Quad,frame,1280,640),
 		};
 		select[0]->SetPosition(selectP[0]);
 		selectP[1] = {
-	Ease(In,Quad,frame,1280,640),
-	480
+		Ease(In,Quad,frame,1280,640),
+		480
 		};
 		for (int i = 0;i<4; i++) {
 			select[i]->SetPosition(selectP[0]);

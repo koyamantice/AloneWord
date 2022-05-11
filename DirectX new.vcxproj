@@ -271,7 +271,6 @@
     <ClCompile Include="enemy\Spawning.cpp" />
     <ClCompile Include="Exp.cpp" />
     <ClCompile Include="FourthBoss.cpp" />
-    <ClCompile Include="FourthMap.cpp" />
     <ClCompile Include="FPSManager\FPSManager.cpp" />
     <ClCompile Include="HotWater.cpp" />
     <ClCompile Include="ImageManager.cpp" />
@@ -301,11 +300,9 @@
     <ClCompile Include="scene\TisGame.cpp" />
     <ClCompile Include="scene\TitleScene.cpp" />
     <ClCompile Include="SecondBoss.cpp" />
-    <ClCompile Include="SecondMap.cpp" />
     <ClCompile Include="LeftShose.cpp" />
     <ClCompile Include="ShockWave.cpp" />
     <ClCompile Include="ThirdBoss.cpp" />
-    <ClCompile Include="ThirdMap.cpp" />
     <ClCompile Include="UI.cpp" />
     <ClCompile Include="Warp.cpp" />
   </ItemGroup>
@@ -359,7 +356,6 @@
     <ClInclude Include="enemy\Spawning.h" />
     <ClInclude Include="Exp.h" />
     <ClInclude Include="FourthBoss.h" />
-    <ClInclude Include="FourthMap.h" />
     <ClInclude Include="FPSManager\FPSManager.h" />
     <ClInclude Include="HotWater.h" />
     <ClInclude Include="ImageManager.h" />
@@ -391,10 +387,8 @@
     <ClInclude Include="scene\TisGame.h" />
     <ClInclude Include="scene\TitleScene.h" />
     <ClInclude Include="SecondBoss.h" />
-    <ClInclude Include="SecondMap.h" />
     <ClInclude Include="LeftShose.h" />
     <ClInclude Include="ThirdBoss.h" />
-    <ClInclude Include="ThirdMap.h" />
     <ClInclude Include="UI.h" />
     <ClInclude Include="Warp.h" />
   </ItemGroup>
