@@ -556,11 +556,12 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	//ImGui::End();
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
+		move_object1->Draw(dxCommon->GetCmdList());
 		//object3d->Draw();
 		Armobj->Draw();
 	}
 	//arm_no_object1->Draw(dxCommon->GetCmdList());
-	move_object1->Draw(dxCommon->GetCmdList());
+	
 
 	//have_object1->Draw(dxCommon->GetCmdList());
 }

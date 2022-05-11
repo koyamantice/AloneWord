@@ -122,6 +122,7 @@ protected:
 	XMFLOAT3 playerpos{};
 	
 	XMFLOAT3 targetpos{};
+	XMFLOAT3 Afterrot = {0.0f,90.0f,0.0f};
 	XMFLOAT3 StartPos{};
 	XMFLOAT3 EndPos{};
 	XMFLOAT3 EndRot{};
@@ -160,7 +161,7 @@ protected:
 	float z_min = -20;
 	float z_max = 20;
 	bool pause = false;
-	bool respawn = false;	float Afterrot = 90;//‰ŠúŒü‚«
+	bool respawn = false;
 	//
 	float BossHP = 40;
 	bool BossHit = false;

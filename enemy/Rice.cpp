@@ -467,7 +467,7 @@ bool Rice::collideArm() {
 
 //プレイヤーがダメージを食らう
 bool Rice::collidePlayer() {
-	if (IsAlive && !EnemyCatch && FlashCount == 0 && add == false && !Exp) {
+	if (IsAlive && !EnemyCatch && FlashCount == 0 && add == false && !Exp && Interval == 0) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true) {
 			IsAlive = 0;
 			player->SetHp(player->GetHp() - 1);
