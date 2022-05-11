@@ -57,6 +57,12 @@ void Rice::Update() {
 	if (pos.y > 3.0f) {
 		pos.y = 3.0f;
 	}
+	if (hit && IsAlive && !EnemyCatch && !Exp) {
+		if (frame < 0.4f) {
+			speed_y2 = 3.0f / 20.0f;
+		}
+		Rebound();
+	}
 	if (IsAlive && !EnemyCatch && !Exp) {
 		Back();
 		if (LockOn()) {

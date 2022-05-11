@@ -132,11 +132,11 @@ void BossScene::Finalize() {
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Finalize();
 	}
-	for (std::size_t i = 0; i < exp.size(); i++) {
-		for (std::size_t j = 0; j < exp[i].size(); j++) {
-			exp[i][j]->Finalize();
-		}
-	}
+	//for (std::size_t i = 0; i < exp.size(); i++) {
+	//	for (std::size_t j = 0; j < exp[i].size(); j++) {
+	//		exp[i][j]->Finalize();
+	//	}
+	//}
 	delete camera;
 	ui->Finalize();
 	//delete object1;
@@ -149,7 +149,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	objBossMap->Update();
 	objFloor->Update();
 	lightGroup->Update();
-
+	ParticleManager::GetInstance()->Update();
 	//最初の演出
 	if (!bossstart) {
 		appearanceTimer++;
@@ -352,7 +352,6 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			player->Rebound(enemy[i]);
 		}
 		ui->Update();
-		particleMan->Update();
 		cameraPos.x = player->GetPosition().x;
 		cameraPos.y = player->GetPosition().y + distanceY;
 		cameraPos.z = player->GetPosition().z - distanceZ;
@@ -373,16 +372,20 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 
 	//敵同士の当たり判定
 	if (sizeof(enemy) > 2) {//配列のサイズ確認
-		for (int colA = 0; colA < BossEnemyMax; colA++) {
-			for (int colB = 1; colB < BossEnemyMax; colB++) {
-				if (Collision::CircleCollision(enemy[colA]->GetPosition().x, enemy[colA]->GetPosition().z,3.0f, enemy[colB]->GetPosition().x, enemy[colB]->GetPosition().z,3.0f) == true && colA != colB) {//蠖薙◆繧雁愛螳壹→閾ｪ讖溷酔螢ｫ縺ｮ蠖薙◆繧雁愛螳壹・蜑企勁
-					//DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
-					enemy[colA]->SetHit(true);
-					enemy[colB]->SetHit(false);
-					break;
-				}
-				else {
-					enemy[colA]->SetHit(false);
+		for (int colA = 0; colA < enemy.size(); colA++) {
+			for (int colB = 1; colB < enemy.size(); colB++) {
+				if (!enemy[colA]->GetEnemyCatcth() && !enemy[colB]->GetEnemyCatcth()) {
+					if (Collision::CircleCollision(enemy[colA]->GetPosition().x, enemy[colA]->GetPosition().z, 1.0f, enemy[colB]->GetPosition().x, enemy[colB]->GetPosition().z, 1.0f) && colA != colB) {//当たり判定と自機同士の当たり判定の削除
+						if (!enemy[colA]->GetHit()) {
+							enemy[colA]->SetHit(true);
+							enemy[colA]->SetExP(enemy[colB]->GetPosition());
+						}
+						if (!enemy[colB]->GetHit()) {
+							enemy[colB]->SetHit(true);
+							enemy[colB]->SetExP(enemy[colA]->GetPosition());
+						}
+						break;
+					}
 				}
 			}
 		}
