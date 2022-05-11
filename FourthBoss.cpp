@@ -121,8 +121,10 @@ void FourthBoss::Finalize() {
 	}
 	player->Finalize();
 	pastel->Finalize();
-	mill->Finalize();
+	//mill->Finalize();
 	shockwave->Final();
+	delete objSphere;
+	delete modelSphere;
 	delete objBossMap;
 	delete objFloor;
 	delete modelBossMap;

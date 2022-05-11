@@ -53,7 +53,12 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 void StageSelect::Finalize() {
 	delete BackGround;
 	player->Finalize();
-
+	for (int i = 0; i < 3; i++) {
+		delete  select[i];
+	}
+	for (int i = 0; i < 4; i++) {
+		delete  plane[i];
+	}
 }
 bool StageSelect::UICheck() {
 	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 9.0f, -2.0f, 1.0f)) { return false; }
