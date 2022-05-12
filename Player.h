@@ -194,16 +194,6 @@ private:
 	//動いてるときのFBX
 	FBXModel* move_model1 = nullptr;
 	FBXObject3d* move_object1 = nullptr;
-	//腕を伸ばしたときのFBX
-	//(捕まえてない)
-	FBXModel* arm_no_model1 = nullptr;
-	FBXObject3d* arm_no_object1 = nullptr;
-	//(捕まえてない)
-	FBXModel* arm_one_model1 = nullptr;
-	FBXObject3d* arm_one_object1 = nullptr;
-	//プレイヤーのFBX
-	FBXModel* have_model1 = nullptr;
-	FBXObject3d* have_object1 = nullptr;
 	int move_count = 0;
 	int have_count = 0;
 	int arm_count = 0;
