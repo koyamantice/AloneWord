@@ -209,4 +209,5 @@ private:
 	int arm_count = 0;
 	bool have = false;
 	bool arm = false;
+	float speedlimit = 0.0f;
 };
