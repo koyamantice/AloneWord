@@ -195,9 +195,9 @@ private:
 	FBXModel* move_model1 = nullptr;
 	FBXObject3d* move_object1 = nullptr;
 	int move_count = 0;
-	int have_count = 0;
-	int arm_count = 0;
-	bool have = false;
-	bool arm = false;
+	//チャージ攻撃のための変数
 	float speedlimit = 0.0f;
+	int chargeTimer = 0;
+	float afterSpeed = 0;
+	float afterScale = 0;
 };
