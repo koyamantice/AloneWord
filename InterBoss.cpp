@@ -8,10 +8,7 @@ using namespace DirectX;
 void InterBoss::Update() {
 	Interval = player->GetInterval();
 	FlashCount = player->GetFlashCount();
-	{
-		rot.y = Ease(In, Quint, 0.7f, rot.y, Afterrot);
-		enemyobj->SetRotation(rot);
-	}
+
 	collideAttackArm();
 	collidePlayer();
 	Spec();
@@ -25,17 +22,18 @@ void InterBoss::Update() {
 void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
 
-	//ImGui::Begin("test");
-	///*ImGui::SliderFloat("angle", &angle, 200, -25);
-	//ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
-	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
-	//ImGui::SliderFloat("rot.z", &rot.z, 360, -360);*/
+	ImGui::Begin("test");
+	/*ImGui::SliderFloat("angle", &angle, 200, -25);
+	ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
+	
+	ImGui::SliderFloat("rot.z", &rot.z, 360, -360);*/
 	//ImGui::SliderFloat("rot.y", &frame, 360, -360);
 	//ImGui::Text("Move:%d", appearMove);
-	////ImGui::Text("Action:%d", action);
-	////ImGui::Text("Active:%d", active);
-	//////ImGui::Unindent();
-	//ImGui::End();
+	//ImGui::Text("Action:%d", action);
+	//ImGui::Text("Active:%d", active);
+	////ImGui::Unindent();
+	ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	ImGui::End();
 	if (BossHP >= 1) {
 		Object3d::PreDraw();
 		enemyobj->Draw();

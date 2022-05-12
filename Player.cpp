@@ -115,7 +115,7 @@ void Player::Update() {
 			wetC = 0;
 		}
 	}
-	if (ArmMoveNumber == 0 && AttackMoveNumber == 0 && AttackFlag == false
+	if (AttackMoveNumber == 0 && AttackFlag == false
 		&& Interval <= 80) {
 		if (!(StickrotX<650 && StickrotX>-650)) {
 			rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
@@ -162,7 +162,7 @@ void Player::Update() {
 		}
 
 		//腕のばす
-		if (input->TriggerButton(input->Button_A) && ArmWeight <= 6.0f) {
+		if (input->TriggerButton(input->Button_A) && ArmWeight <= 6.0f && ArmMoveNumber == 0) {
 			ArmMoveNumber = 1;
 			initscale = Armscale;
 			frame = 0;
@@ -546,21 +546,22 @@ void Player::SelectUp() {
 
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
-	//ImGui::Begin("test");
-	//ImGui::Text("count::%d", move_count);
-	///*ImGui::SliderFloat("position.x", &position.x, 50, 0);
-	//ImGui::SliderFloat("position.z", &position.z, 50, 0);*/
-	//ImGui::Text("have:%d", have);
-	//ImGui::Text("have_count:%d", have_count);
-	//ImGui::Unindent();
-	//ImGui::End();
+	ImGui::Begin("test");
+	ImGui::Text("count::%d", move_count);
+	/*ImGui::SliderFloat("position.x", &position.x, 50, 0);
+	ImGui::SliderFloat("position.z", &position.z, 50, 0);*/
+	ImGui::Text("AttacF:%d", AttackFlag);
+	ImGui::Text("AttackMove:%d", ArmMoveNumber);
+	ImGui::Unindent();
+	ImGui::End();
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
+		move_object1->Draw(dxCommon->GetCmdList());
 		//object3d->Draw();
 		Armobj->Draw();
 	}
 	//arm_no_object1->Draw(dxCommon->GetCmdList());
-	move_object1->Draw(dxCommon->GetCmdList());
+	
 
 	//have_object1->Draw(dxCommon->GetCmdList());
 }

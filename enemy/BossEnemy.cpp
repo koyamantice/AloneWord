@@ -63,28 +63,28 @@ void BossEnemy::Spec() {
 				pat++;
 			}
 			if (pat == 1) {
-				Afterrot = 45;
+				Afterrot.y = 45;
 				AfterPos.x = 25.0f;
 				AfterPos.z = -20.0f;
 			} else if (pat == 2) {
-				Afterrot = -90;
+				Afterrot.y = -90;
 				AfterPos.x = 25.0f;
 				AfterPos.z = 20.0f;
 
 			} else if (pat == 3) {
-				Afterrot = -225;
+				Afterrot.y = -225;
 				AfterPos.x = -25.0f;
 				AfterPos.z = -20.0f;
 			} else if (pat == 4) {
-				Afterrot = -90;
+				Afterrot.y = -90;
 				AfterPos.x = -25.0f;
 				AfterPos.z = 20.0f;
 			} else if (pat == 5) {
-				Afterrot = 45;
+				Afterrot.y = 45;
 				AfterPos.x = 0.0f;
 				AfterPos.z = 0.0f;
 			} else {
-				Afterrot = 180;
+				Afterrot.y = 90;
 				pat = 0;
 				AttackCount = 30;
 				Effect = true;
@@ -219,12 +219,14 @@ void BossEnemy::Spec() {
 				enemyobj->SetPosition(pos);
 			}
 		}
+
+		rot.y = Ease(In, Quint, 0.7f, rot.y, Afterrot.y);
+		enemyobj->SetRotation(rot);
 	}
 
 	void BossEnemy::App(int Timer) {
 
 		XMFLOAT3 AfterPos{};
-		XMFLOAT3 AfterRot{};
 		if (Timer == 220 || Timer == 400) {
 			appearMove++;
 			frame = 0.0f;

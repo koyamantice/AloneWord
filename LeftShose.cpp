@@ -18,13 +18,14 @@ void LeftShose::Initialize() {
 	enemyobj->SetModel(model);
 	pos = { -10.0f,0.0f,0.0f };
 	enemyobj->SetPosition(pos);
-	rot = { 0,90,0 };
+	rot = { 0,270,0 };
+	Afterrot.y = rot.y;
 	enemyobj->SetRotation(rot);
 	enemyobj->SetScale({ 0.7f,0.7f,0.7f });
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	//texture->SetColor({ 1,1,1,1 });
-	texture->SetPosition(pos.x, -1, pos.z);
+	texture->SetPosition(pos.x, -100, pos.z);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.3f,0.3f,0.3f });
 }
@@ -66,33 +67,33 @@ void LeftShose::Spec() {
 					pat++;
 				}
 				if (pat == 1) {
-					Afterrot = 45;
+					Afterrot.y = 225;
 					AfterPos.x = 25.0f;
 					AfterPos.z = -20.0f;
 				}
 				else if (pat == 2) {
-					Afterrot = -90;
+					Afterrot.y = -270;
 					AfterPos.x = 25.0f;
 					AfterPos.z = 20.0f;
 
 				}
 				else if (pat == 3) {
-					Afterrot = -180;
+					Afterrot.y = 0;
 					AfterPos.x = -25.0f;
 					AfterPos.z = 20.0f;
 				}
 				else if (pat == 4) {
-					Afterrot = -270;
+					Afterrot.y = -90;
 					AfterPos.x = -25.0f;
 					AfterPos.z = -20.0f;
 				}
 				else if (pat == 5) {
-					Afterrot = -45;
+					Afterrot.y = 135;
 					AfterPos.x = -10.0f;
 					AfterPos.z = 0.0f;
 				}
 				else {
-					Afterrot = 270;
+					Afterrot.y = 270;
 					pat = 0;
 					AttackCount = 30;
 					Effect = true;
@@ -119,6 +120,7 @@ void LeftShose::Spec() {
 		else if ((action % 2) == 1) {
 
 			if (AttackC < 3) {
+				Afterrot.x = 90.0f;
 				switch (pat) {
 				case 1:
 					AfterPos = {
@@ -186,6 +188,7 @@ void LeftShose::Spec() {
 						break;
 					}
 				case 2:
+					Afterrot.x = 0.0f;
 					AfterPos = {
 					-10,
 					0,
@@ -216,6 +219,9 @@ void LeftShose::Spec() {
 			enemyobj->SetPosition(pos);
 		}
 	}
+	rot.y = Ease(In, Quint, 0.7f, rot.y, Afterrot.y);
+	rot.x = Ease(In, Quint, 0.7f, rot.x, Afterrot.x);
+	enemyobj->SetRotation(rot);
 }
 
 void LeftShose::App(int Timer) {
