@@ -48,6 +48,8 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	camera->SetEye(XMFLOAT3{ 0,15,-0.5f });
 	//camera->SetTarget(XMFLOAT3{ 0,0,0 });
 	camera->SetDistance(200.0f);
+	ParticleManager::GetInstance()->SetCamera(camera);
+
 }
 
 void StageSelect::Finalize() {
@@ -73,8 +75,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 	lightGroup->Update();
 	camera->Update();
 	player->SelectUp();
-
-
+	ParticleManager::GetInstance()->Update();
 	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 9.0f, -2.0f, 1.0f)) {
 		if (frame >= 1.0f) {
 			frame = 1.0f;

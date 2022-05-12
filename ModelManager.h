@@ -25,6 +25,7 @@ public:
 		RightShoes,
 		Pastel,
 		Platform,
+		Piyopiyo
 	};
 	enum FBXName {
 		MottiMove,

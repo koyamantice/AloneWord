@@ -152,7 +152,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	}
 	if (tutorial == 2) {
 		enemy[0]->Demo();
-		if (enemy[0]->GetFollowed()) {
+		if (enemy[0]->GetFollowed()&& enemy[0]->GetStart()) {
 			tutorial = 3;
 		}
 	}
@@ -176,22 +176,25 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		pause = true;
 	}
 	////敵同士の当たり判定
-	//if (sizeof(enemy) > 2) {//配列のサイズ確認
-	//	for (int colA = 0; colA < StartEnemyMax; colA++) {
-	//		for (int colB = 1; colB < StartEnemyMax; colB++) {
-	//			if (Collision::CheckSphere2Sphere(enemy[colA]->collider, enemy[colB]->collider) == true && colA != colB) {//当たり判定と自機同士の当たり判定の削除
-	//				//DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
-	//				enemy[colA]->SetHit(true);
-	//				enemy[colB]->SetHit(false);
-	//				break;
-
-	//			}
-	//			else {
-	//				enemy[colA]->SetHit(false);
-	//			}
-	//		}
-	//	}
-	//}
+	if (sizeof(enemy) > 2) {//配列のサイズ確認
+		for (int colA = 0; colA < enemy.size(); colA++) {
+			for (int colB = 1; colB < enemy.size(); colB++) {
+				if (!enemy[colA]->GetEnemyCatcth()&& !enemy[colB]->GetEnemyCatcth()) {
+					if (Collision::CircleCollision(enemy[colA]->GetPosition().x, enemy[colA]->GetPosition().z, 1.0f, enemy[colB]->GetPosition().x, enemy[colB]->GetPosition().z, 1.0f) && colA != colB) {//当たり判定と自機同士の当たり判定の削除
+						if (!enemy[colA]->GetHit()) {
+							enemy[colA]->SetHit(true);
+							enemy[colA]->SetExP(enemy[colB]->GetPosition());
+						}
+						if (!enemy[colB]->GetHit()) {
+							enemy[colB]->SetHit(true);
+							enemy[colB]->SetExP(enemy[colA]->GetPosition());
+						}
+						break;
+					}
+				}
+			}
+		}
+	}
 	Ray ray;
 	ray.start = { player->GetPosition().x,player->GetPosition().y + 1,player->GetPosition().z,1 };
 	ray.dir = { 0.0f,0.28f,-1.0f,0.0f };

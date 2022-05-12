@@ -10,6 +10,7 @@ using namespace DirectX;
 Rice::Rice() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::Enemy);
 	enemyobj = new Object3d();
+	Piyopiyo = new Object3d();
 }
 
 void Rice::Initialize() {
@@ -27,7 +28,11 @@ void Rice::Initialize() {
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.2f,0.2f,0.2f });
 	oldpos = pos;
-
+	Piyopiyo = Object3d::Create();
+	Piyopiyo->SetModel(ModelManager::GetIns()->GetModel(ModelManager::Piyopiyo));
+	Piyopiyo->SetPosition({ pos.x,pos.y + 2.0f,pos.z });
+	Piyopiyo->SetScale({1.0f, 2.0f, 2.0f});
+	Piyopiyo->SetRotation({ 60,0,0 });
 	//texture->SetColor({ 1.0f,0.0,0.0,1.0f });
 	Restexture = Texture::Create(ImageManager::Resporn, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	Restexture->TextureCreate();
@@ -49,32 +54,16 @@ void Rice::Update() {
 	Interval = player->GetInterval();
 	FlashCount = player->GetFlashCount();
 	oldpos = pos;
-	if (pos.y>3.0f) {
+	if (pos.y > 3.0f) {
 		pos.y = 3.0f;
 	}
-	if (IsAlive && !EnemyCatch && !Exp) {
-		if (hit) {
-			if (isMove) {
-				moveCount = (rand() % 120) + 30;
-				rot.y = (dir)-90;// *(XM_PI / 180.0f);
-				frame = 0.5f;
-				vel.x *= -1;
-				vel.y *= -1;
-				//isMove = false;
-			}
-			if (followed) {
-				if (rot.y < -90) {
-					dir = rot.y + 360 + 90;
-					rot.y = (dir)-90;// *(XM_PI / 180.0f);
-				} else {
-					dir = rot.y + 90;
-					rot.y = (dir)-90;// *(XM_PI / 180.0f);
-				}
-				vel.x *= -1;
-				vel.y *= -1;
-				followed = false;
-			}
+	if (hit && IsAlive && !EnemyCatch && !Exp) {
+		if (frame < 0.4f) {
+			speed_y2 = 3.0f / 20.0f;
 		}
+		Rebound();
+	}
+	if (IsAlive && !EnemyCatch && !Exp) {
 		Back();
 		if (LockOn()) {
 			moveCount = (rand() % 15) + 20;
@@ -82,14 +71,16 @@ void Rice::Update() {
 			followed = true;
 			//if (pos.y>!1) {
 			//}
-		} 
-		if (!followed&&!LockOn()) {
+		}
+		if (!followed && !LockOn()) {
 			rot.y = (dir)-90;// *(XM_PI / 180.0f);
 			speed_y = 3.0f / 20.0f;
 			if (pos.y > 0) {
 				pos.y -= speed_y;
+				start = false;
 			} else {
 				pos.y = 0;
+				start = true;
 			}
 			if (followed) {
 				if (rot.y < -90) {
@@ -182,7 +173,9 @@ void Rice::Update() {
 		add = false;
 		pos.y = 0.0f;
 	}
-
+	if (hit&&IsAlive && !EnemyCatch && !Exp) {
+		Rebound();
+	}
 	collideArm();
 	collidePlayer();
 	collideAttackArm();
@@ -205,6 +198,14 @@ void Rice::Update() {
 
 void Rice::Demo(int num) {
 	assert(player);
+	Piyopiyo->SetPosition({ pos.x,pos.y + 2.0f,pos.z });
+	Piyopiyo->Update();
+	if (hit&& IsAlive && !EnemyCatch && !Exp) {
+		if (frame < 0.4f) {
+			speed_y2 = 3.0f / 20.0f;
+		}
+		Rebound();
+	}
 	playerpos = player->GetPosition();
 	Interval = player->GetInterval();
 	FlashCount = player->GetFlashCount();
@@ -213,28 +214,6 @@ void Rice::Demo(int num) {
 		pos.y = 3.0f;
 	}
 	if (IsAlive && !EnemyCatch && !Exp) {
-		if (hit) {
-			if (isMove) {
-				moveCount = (rand() % 120) + 30;
-				rot.y = (dir)-90;// *(XM_PI / 180.0f);
-				frame = 0.5f;
-				vel.x *= -1;
-				vel.y *= -1;
-				//isMove = false;
-			}
-			if (followed) {
-				if (rot.y < -90) {
-					dir = rot.y + 360 + 90;
-					rot.y = (dir)-90;// *(XM_PI / 180.0f);
-				} else {
-					dir = rot.y + 90;
-					rot.y = (dir)-90;// *(XM_PI / 180.0f);
-				}
-				vel.x *= -1;
-				vel.y *= -1;
-				followed = false;
-			}
-		}
 		Back();
 		if (LockOn()) {
 			moveCount = (rand() % 15) + 20;
@@ -243,7 +222,7 @@ void Rice::Demo(int num) {
 			//if (pos.y>!1) {
 			//}
 		}
-		if (!followed && !LockOn()) {
+		if (!followed && !LockOn()&&!hit) {
 			rot.y = (dir)-90;// *(XM_PI / 180.0f);
 			speed_y = 3.0f / 20.0f;
 			if (pos.y > 0) {
@@ -263,7 +242,7 @@ void Rice::Demo(int num) {
 			}
 			Move();
 		}
-		if (followed) {
+		if (followed && !hit) {
 			XMFLOAT3 position{};
 			position.x = (playerpos.x - pos.x);
 			position.z = (playerpos.z - pos.z);
@@ -272,6 +251,7 @@ void Rice::Demo(int num) {
 			rot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 90;// *(XM_PI / 180.0f);
 			if (pos.y < 0) {
 				pos.y = 0;
+				start = true;
 				speed_y = 0;
 				Follow();
 			}
@@ -283,15 +263,15 @@ void Rice::Demo(int num) {
 		IsTimer--;
 		if (IsTimer == 100) {
 			if (!respawn) {
-				if (num==0) {
+				if (num == 0) {
 					pos.x = 0;
 					pos.z = -5;
 				}
-				if (num==1) {
+				if (num == 1) {
 					pos.x = 3;
 					pos.z = -5;
 				}
-				if (num==2) {
+				if (num == 2) {
 					pos.x = -3;
 					pos.z = -5;
 				}
@@ -306,6 +286,9 @@ void Rice::Demo(int num) {
 			enemyobj->SetPosition(pos);
 		} else if (IsTimer == 0) {
 			respawn = false;
+			pos.y += speed_y;
+			speed_y -= gravity;
+			start = false;
 			IsAlive = true;
 			appearance = true;
 			isMove = false;
@@ -407,6 +390,7 @@ void Rice::Draw() {
 	if (IsAlive) {
 		Object3d::PreDraw();
 		enemyobj->Draw();
+		Piyopiyo->Draw();
 	}
 	Texture::PreDraw();
 	if (IsAlive && !EnemyCatch && !add) {
@@ -463,6 +447,56 @@ bool Rice::collideArm() {
 	} else {
 		return false;
 	}
+}
+
+void Rice::Rebound() {
+	XMFLOAT3 enepos = exP;
+	XMFLOAT3 distance{};
+	if (isMove) {
+		moveCount = (rand() % 120) + 30;
+		rot.y = (dir)-90;// *(XM_PI / 180.0f);
+		frame = 0.5f;
+		isMove = false;
+	}
+	if (followed) {
+		if (rot.y < -90) {
+			dir = rot.y + 360 + 90;
+			rot.y = (dir)-90;// *(XM_PI / 180.0f);
+		} else {
+			dir = rot.y + 90;
+			rot.y = (dir)-90;// *(XM_PI / 180.0f);
+		}
+		followed = false;
+	}
+	if (frame >= 1.0f&& !stun) {
+		moveCount = (rand() % 60) + 60;
+		frame = 0.0f;
+		followed = false;
+		isMove = false;
+		stun = true;
+	} else {
+		frame += 0.05f;
+		distance.x = pos.x - enepos.x;
+		distance.z = pos.z - enepos.z;
+
+		vel.x = sin(atan2f(distance.x, distance.z)) * 0.1f;
+		vel.y = cos(atan2f(distance.x, distance.z)) * 0.1f;
+		pos.x -= vel.x;
+		pos.y += speed_y2;
+		speed_y2 -= gravity2;
+		pos.z += vel.y;
+	}
+	if (stun) {
+		if (frame >= 1.0f) {
+			frame = 0.0f;
+			hit = false;
+			stun = false;
+		} else {
+			frame += 0.01f;
+		}
+	}
+	enemyobj->SetPosition(pos);
+
 }
 
 //プレイヤーがダメージを食らう
@@ -528,28 +562,21 @@ bool Rice::LockOn() {
 
 //敵が動く
 void Rice::Move() {
-	if (pos.z > z_max) {pos.z = z_max;}
-	if (pos.z < z_min) {pos.z = z_min;}
-	if (pos.x > x_max) {pos.x = x_max;}
-	if (pos.x < x_min) {pos.x = x_min;}
+	if (pos.z > z_max) { pos.z = z_max; }
+	if (pos.z < z_min) { pos.z = z_min; }
+	if (pos.x > x_max) { pos.x = x_max; }
+	if (pos.x < x_min) { pos.x = x_min; }
 	if (moveCount <= 0 && !isMove) {
 		isMove = true;
-	} 
-	if(moveCount >0) {
+	}
+	if (moveCount > 0) {
 		moveCount--;
-		if (moveCount%2==1) {
+		if (moveCount % 2 == 1) {
 			dir += dirVel;
 		}
 		dir %= 360;
 	}
 	if (isMove) {
-		if (hit) {
-			moveCount = (rand() % 60) + 60;
-			frame = 0.0f;
-			isMove = false;
-			dirVel *= -1;
-			return;
-		}
 		if (frame >= 1.0f) {
 			moveCount = (rand() % 60) + 60;
 			frame = 0.0f;
@@ -558,13 +585,12 @@ void Rice::Move() {
 		} else {
 			frame += 0.05f;
 		}
-		vel.x= sin(-dir * (XM_PI / 180.0f)) * 0.13f;
-		vel.y=cos(-dir * (XM_PI / 180.0f)) * 0.13f;
-		
-		pos.x -=vel.x;
-		pos.z +=vel.y;
-		enemyobj->SetPosition(pos);
+		vel.x = sin(-dir * (XM_PI / 180.0f)) * 0.13f;
+		vel.y = cos(-dir * (XM_PI / 180.0f)) * 0.13f;
 
+		pos.x -= vel.x;
+		pos.z += vel.y;
+		enemyobj->SetPosition(pos);
 	}
 }
 

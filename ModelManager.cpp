@@ -21,6 +21,7 @@ void ModelManager::Initialize() {
 	LoadModel(RightShoes,"RightShoes");
 	LoadModel(Pastel, "Pestle");
 	LoadModel(Platform, "Platform");
+	LoadModel(Piyopiyo, "Piyopiyo");
 	LoadFBXModel(MottiMove, "Motti_move");
 	LoadFBXModel(Arm_noCatch, "Arm_noCatch");
 	LoadFBXModel(Arm_oneMore, "Arm_oneMore");

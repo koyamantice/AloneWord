@@ -541,7 +541,7 @@ void Player::SelectUp() {
 	object3d->SetRotation(rot);
 	//Armobj->SetRotation(ArmRot);
 	//パーティクル発生
-	BirthParticle();
+	//BirthParticle();
 }
 
 //描画
@@ -646,10 +646,11 @@ void Player::Rebound(InterEnemy* enemy) {
 
 void Player::BirthParticle() {
 
-	if (ArmMoveNumber == 0 && AttackMoveNumber == 0 && AttackFlag == false
-		&& Interval <= 80) {
+	if (ArmMoveNumber == 0 && AttackMoveNumber == 0 && AttackFlag == false&& Interval <= 80) {
 		if (input->LeftTiltStick(input->Right) || input->LeftTiltStick(input->Left) || input->LeftTiltStick(input->Up) || input->LeftTiltStick(input->Down)) {
-			count++;
+			if (oldPos.x!= position.x) {
+				count++;
+			}
 		}
 	}
 	if (count >= 12) {
