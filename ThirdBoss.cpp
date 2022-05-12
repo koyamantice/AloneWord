@@ -100,13 +100,10 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	lightGroup = LightGroup::Create();
 	// 3Dオブジェクトにライトをセット
 	Object3d::SetLightGroup(lightGroup);
-	//カメラポジション
-	cameraPos.x = player->GetTargetPosition().x;
-	cameraPos.y = player->GetTargetPosition().y + 10;
-	cameraPos.z = player->GetTargetPosition().z - 10;
-	// カメラ注視点をセット
-	cameratargetPos = player->GetPosition();
-	camera->SetTarget(cameratargetPos);
+	cameraPos.x = player->GetPosition().x;
+	cameraPos.y = player->GetPosition().y + distanceY;
+	cameraPos.z = player->GetPosition().z - distanceZ;
+	camera->SetTarget(player->GetPosition());
 	camera->SetEye(cameraPos);
 	// パーティクルマネージャ生成
 	particleMan = ParticleManager::GetInstance();

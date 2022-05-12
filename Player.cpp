@@ -60,7 +60,7 @@ bool Player::Initialize() {
 	collider->SetAttribute(COLLISION_ATTR_ALLIES);
 
 	//カメラのためのポジション(初期化)
-	targetpos = position;
+	//targetpos = position;
 	return true;
 }
 
@@ -103,22 +103,30 @@ void Player::Update() {
 			ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
 		}
 
-
-
 		if (input->TriggerButton(input->Button_RB)) {
-			speedlimit = ArmSpeed + 90;
+			speedlimit = ArmSpeed - 90;
 		}
 
 		if (input->PushButton(input->Button_RB)) {
 			chargeTimer++;
-			if (speedlimit >= ArmSpeed) {
-				ArmSpeed++;
+			if (chargeTimer == 100) {
+				chargeTimer = 0;
+				RotCount++;
+			}
+			if (speedlimit <= ArmSpeed) {
+				ArmSpeed--;
+				ArmRot.y++;
 			}
 		}
 		else {
-			if (chargeTimer >= 100) {
+			
+			if (RotCount >= 1) {
 				AttackFlag = true;
-				afterSpeed = ArmSpeed + 360;
+				afterSpeed = ArmSpeed + (450 * RotCount);
+				initArmRotation = ArmRot.y - (450 * RotCount);
+			}
+			else {
+				chargeTimer = 0;
 			}
 		}
 
@@ -165,10 +173,11 @@ void Player::Update() {
 	}
 
 	if (AttackFlag == true) {
-		if (frame >= 1.0f) {
+		if (frame >= RotCount) {
 			frame = 0.0f;
 			AttackFlag = false;
 			chargeTimer = 0;
+			RotCount = 0;
 		}
 		else {
 			frame += 0.02f;
@@ -178,6 +187,7 @@ void Player::Update() {
 
 	//ArmSpeed++;
 	ArmSpeed = Ease(In, Cubic, frame, ArmSpeed, afterSpeed);
+	ArmRot.y = Ease(In, Cubic, frame, ArmRot.y, initArmRotation);
 	//アニメーション用のキー入力
 	if ((input->LeftTiltStick(input->Right)) || (input->LeftTiltStick(input->Left))
 		|| (input->LeftTiltStick(input->Up)) || (input->LeftTiltStick(input->Down))) {
@@ -284,11 +294,6 @@ void Player::Update() {
 	if (FlashCount == 4) {
 		FlashCount = 0;
 		Interval = 0;
-	}
-
-	if (Exp >= Lv * 10) {
-		Lv++;
-		Exp = 0.0f;
 	}
 
 	// 落下処理
@@ -401,7 +406,7 @@ void Player::Update() {
 	//パーティクル発生
 	BirthParticle();
 	//カメラのためのポジション(更新)
-	if (Interval == 0) {
+	/*if (Interval == 0) {
 		targetpos = position;
 	} else if (Interval != 0 && Interval <= 99) {
 		if (targetpos.x != position.x || targetpos.z != position.z) {
@@ -415,7 +420,7 @@ void Player::Update() {
 				targetpos = position;
 			}
 		}
-	}
+	}*/
 
 	move_object1->SetPosition(position);
 	move_object1->SetRotation(rot);
