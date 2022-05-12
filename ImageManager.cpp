@@ -35,7 +35,7 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(wait, L"Resources/2d/wayway_Sname.png");
 	Sprite::LoadTexture(meter, L"Resources/2d/hotWaterGauge.png");
 	Sprite::LoadTexture(meterbar, L"Resources/2d/hotWaterBar.png");
-
+	Sprite::LoadTexture(button, L"Resources/2d/select.png");
 }
 
 void ImageManager::LoadTex2D() {
