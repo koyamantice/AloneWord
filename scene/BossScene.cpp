@@ -32,8 +32,8 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objBossMap = TouchableObject::Create(modelBossMap);
 	objBossMap->SetPosition({ 0,-1,2 });
 	objBossMap->SetRotation({ 0, 90, 0 });
-	objBossMap->SetScale({ 1.4f,1.5f,1.6f });
-	
+	objBossMap->SetScale({ 1.2f,1.2f,1.2f });
+
 	//当たり判定確認用です
 
 	// コライダーの追加
@@ -396,24 +396,24 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 	ray.dir = { 0,0.025f,-1.0f,0.0f };
 	RaycastHit raycastHit;
 
-	if (!collisionManager->Raycast(ray, &raycastHit)) {
-		if (distanceZ <= 10.0f) {
-			distanceZ += 0.25f;
-		}
+	//if (!collisionManager->Raycast(ray, &raycastHit)) {
+	//	if (distanceZ <= 10.0f) {
+	//		distanceZ += 0.25f;
+	//	}
 
-		if (distanceY >= 10.0f) {
-			distanceY -= 0.25f;
-		}
-	}
-	else {
-		if (distanceZ >= 6.0f) {
-			distanceZ -= 0.4f;
-		}
+	//	if (distanceY >= 10.0f) {
+	//		distanceY -= 0.25f;
+	//	}
+	//}
+	//else {
+	//	if (distanceZ >= 6.0f) {
+	//		distanceZ -= 0.4f;
+	//	}
 
-		if (distanceY <= 18.0f) {
-			distanceY += 0.25f;
-		}
-	}
+	//	if (distanceY <= 18.0f) {
+	//		distanceY += 0.25f;
+	//	}
+	//}
 
 	//その他シーン移行
 	if (bossenemy->GetHP() <= 0) {
@@ -435,14 +435,15 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 }
 
 void BossScene::Draw(DirectXCommon* dxCommon) {
-	//ImGui::Begin("test");
-	////ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
-	////ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
-	////ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
-	//ImGui::SliderFloat("pos.x", &namePos.x, 50, 0);
+	ImGui::Begin("test");
+	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
+	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
+	//ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
+	ImGui::SliderFloat("pos.y", &distanceY, 30, 0);
+	ImGui::SliderFloat("pos.z", &distanceZ, 30, 0);
 	//ImGui::Text("appearanceTimer::%d", appearanceTimer);
-	//ImGui::Unindent();
-	//ImGui::End();
+	ImGui::Unindent();
+	ImGui::End();
 
 	//各オブジェクトの描画
 	Object3d::PreDraw();

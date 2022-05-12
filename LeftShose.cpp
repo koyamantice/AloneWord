@@ -21,7 +21,7 @@ void LeftShose::Initialize() {
 	rot = { 0,270,0 };
 	Afterrot.y = rot.y;
 	enemyobj->SetRotation(rot);
-	enemyobj->SetScale({ 0.7f,0.7f,0.7f });
+	enemyobj->SetScale({ 0.3f,0.3f,0.3f });
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	//texture->SetColor({ 1,1,1,1 });
