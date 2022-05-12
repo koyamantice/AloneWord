@@ -19,13 +19,14 @@ void RightShose::Initialize() {
 	pos = { 10.0f,0.0f,0.0f };
 	enemyobj->SetPosition(pos);
 	
-	rot = { 0,90,0 };
+	rot = { 0,270,0 };
+	Afterrot.y = rot.y;
 	enemyobj->SetRotation(rot);
 	enemyobj->SetScale({ 0.7f,0.7f,0.7f });
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	//texture->SetColor({ 1,1,1,1 });
-	texture->SetPosition(pos.x, -1, pos.z);
+	texture->SetPosition(pos.x, -100, pos.z);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.3f,0.3f,0.3f });
 }
@@ -70,6 +71,7 @@ void RightShose::Spec() {
 					0,
 					0
 					};
+					Afterrot.y = 270;
 					if (frame < 0.45f) {
 						frame += 0.004f;
 					}
@@ -86,6 +88,13 @@ void RightShose::Spec() {
 					Ease(In,Cubic,frame,pos.z,AfterPos.z),
 					};
 				}
+
+				if (MoveCount == 80) {
+					XMFLOAT3 position{};
+					position.x = (player->GetPosition().x - pos.x);
+					position.z = (player->GetPosition().z - pos.z);
+					Afterrot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 270;// *(XM_PI / 180.0f);
+				}
 				//プレイヤーの位置をロックオンさせる
 				if (MoveCount == 100) {
 					double sb, sbx, sbz;
@@ -93,7 +102,7 @@ void RightShose::Spec() {
 						hitpoint = HitNot;
 						sbx = player->GetPosition().x - pos.x;
 						sbz = player->GetPosition().z - pos.z;
-						//rot.y = (atan2f(position.x, position.z) * (180.0f / XM_PI)) - 90;
+						
 						sb = sqrt(sbx * sbx + sbz * sbz);
 						speedX = sbx / sb * 0.5;
 						speedZ = sbz / sb * 0.5;
@@ -116,6 +125,7 @@ void RightShose::Spec() {
 				//プレイヤーにスピード加算
 				pos.x += speedX;
 				pos.z += speedZ;
+				
 				//敵の位置が壁まで行ったら戻る
 				if (pos.x >= x_max) {
 					hitpoint = HitRight;
@@ -221,6 +231,7 @@ void RightShose::Spec() {
 		if ((action % 2) == 1) {
 
 			if (AttackC < 3) {
+				Afterrot.x = 270.0f;
 				switch (pat) {
 				case 1:
 					AfterPos = {
@@ -288,6 +299,7 @@ void RightShose::Spec() {
 						break;
 					}
 				case 2:
+					Afterrot.x = 0.0f;
 					AfterPos = {
 					10,
 					0,
@@ -318,6 +330,9 @@ void RightShose::Spec() {
 			enemyobj->SetPosition(pos);
 		}
 	}
+	rot.y = Ease(In, Quint, 0.7f, rot.y, Afterrot.y);
+	rot.x = Ease(In, Quint, 0.7f, rot.x, Afterrot.x);
+	enemyobj->SetRotation(rot);
 }
 
 void RightShose::App(int Timer) {
