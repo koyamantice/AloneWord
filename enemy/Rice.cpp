@@ -59,7 +59,7 @@ void Rice::Update() {
 	}
 	if (hit && IsAlive && !EnemyCatch && !Exp) {
 		if (frame < 0.4f) {
-			speed_y2 = 3.0f / 20.0f;
+			speed_y2 = 1.5f / 20.0f;
 		}
 		Rebound();
 	}
@@ -202,7 +202,7 @@ void Rice::Demo(int num) {
 	Piyopiyo->Update();
 	if (hit&& IsAlive && !EnemyCatch && !Exp) {
 		if (frame < 0.4f) {
-			speed_y2 = 3.0f / 20.0f;
+			speed_y2 = 1.5f / 20.0f;
 		}
 		Rebound();
 	}
@@ -390,7 +390,7 @@ void Rice::Draw() {
 	if (IsAlive) {
 		Object3d::PreDraw();
 		enemyobj->Draw();
-		Piyopiyo->Draw();
+	//	Piyopiyo->Draw();
 	}
 	Texture::PreDraw();
 	if (IsAlive && !EnemyCatch && !add) {
@@ -479,8 +479,8 @@ void Rice::Rebound() {
 		distance.x = pos.x - enepos.x;
 		distance.z = pos.z - enepos.z;
 
-		vel.x = sin(atan2f(distance.x, distance.z)) * 0.1f;
-		vel.y = cos(atan2f(distance.x, distance.z)) * 0.1f;
+		vel.x = sin(atan2f(distance.x, distance.z)) * 0.05f;
+		vel.y = cos(atan2f(distance.x, distance.z)) * 0.05f;
 		pos.x -= vel.x;
 		pos.y += speed_y2;
 		speed_y2 -= gravity2;

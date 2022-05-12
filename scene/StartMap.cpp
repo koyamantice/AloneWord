@@ -119,61 +119,9 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	} else {
 		hit = false;
 	}
-	if (tutorial%2==1) {
-		switch (tutorial) {
-		case 1:
-			if (input->TriggerButton(input->Button_A)) {
-				tutorial++;
-			}
-		break;
-		case 3:
-			if (input->TriggerButton(input->Button_A)) {
-				tutorial++;
-			}
-			break;
-		case 5:
-			if (input->TriggerButton(input->Button_A)) {
-				tutorial++;
-			}
-			break;
-		case 7:
-			if (input->TriggerButton(input->Button_A)) {
-
-				SceneManager::GetInstance()->ChangeScene("StageSelect");
-			}
-			break;
-		default:
-			break;
-		}
-		return;
-	}
-	if (player->GetPosition().y<=0 && tutorial == 0) {
-		tutorial=1;
-	}
-	if (tutorial == 2) {
-		enemy[0]->Demo();
-		if (enemy[0]->GetFollowed()&& enemy[0]->GetStart()) {
-			tutorial = 3;
-		}
-	}
-	if (tutorial == 4) {
-		enemy[0]->Demo();
-		if (enemy[0]->GetEnemyCatch()) {
-			tutorial = 5;
-		}
-	}
-	if (tutorial==6) {
-		for (int j = 0; j < enemy.size(); j++) {
-			enemy[j]->Demo(j);
-		}
-		if (!spawing->GetIsAlive()) {
-			tutorial = 7;
-		}
-	}
-	if (spawing->collideAttackArm()&&spawing->GetIsAlive()) {
-		hit = true;
-		set = spawing->GetStop();
-		pause = true;
+	if (input->PushButton(input->Select)) {
+		int a = 0;
+		a++;
 	}
 	////敵同士の当たり判定
 	if (sizeof(enemy) > 2) {//配列のサイズ確認
