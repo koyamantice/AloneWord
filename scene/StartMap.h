@@ -46,6 +46,7 @@ private:
 	Sprite* concent3 = nullptr;
 	Sprite* concent4 = nullptr;
 	Sprite* concent5 = nullptr;
+	Sprite* button = nullptr;
 	DebugCamera* camera = { nullptr };
 	Texture* limit = nullptr;
 	Player* player = nullptr;

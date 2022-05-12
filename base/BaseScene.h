@@ -54,7 +54,10 @@ protected:
 	float pointLightAtten[3] = { 0.3f,0.1f,0.1f };
 	int EffectNum = 0;
 	float distanceY = 12;
+	float distanceZ = 12;
+=======
 	float distanceZ = 5;
+>>>>>>> 87fae4b32dbea9fa85e9940437a51405a94e79d9
 	//n‚Ü‚é‘O‚Ì‰‰o‚Ì‚½‚ß‚Ì•Ï”
 	bool bossstart = false;
 	int appearanceNumber = 0;
