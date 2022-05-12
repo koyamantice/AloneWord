@@ -53,8 +53,8 @@ protected:
 	float pointLightColor[3] = { 1,1,1 };
 	float pointLightAtten[3] = { 0.3f,0.1f,0.1f };
 	int EffectNum = 0;
-	float distanceY = 10;
-	float distanceZ = 10;
+	float distanceY = 12;
+	float distanceZ = 5;
 	//n‚Ü‚é‘O‚Ì‰‰o‚Ì‚½‚ß‚Ì•Ï”
 	bool bossstart = false;
 	int appearanceNumber = 0;

@@ -20,7 +20,7 @@ void BossEnemy::Initialize() {
 	enemyobj->SetPosition(pos);
 	rot = { 0,90,0 };
 	enemyobj->SetRotation(rot);
-	enemyobj->SetScale({ 1.5f,1.5f,1.5f });
+	enemyobj->SetScale({ 0.8f,0.8f,0.8f });
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	//texture->SetColor({ 1,1,1,1 });
