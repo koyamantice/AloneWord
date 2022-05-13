@@ -20,8 +20,9 @@ Pastel::Pastel() {
 	}
 }
 
-void Pastel::Initialize() {
+void Pastel::Initialize(bool shadow) {
 	assert(player);
+	this->shadow = shadow;
 	IsAlive = 0;
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);

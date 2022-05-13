@@ -38,7 +38,9 @@ void InterBoss::Draw() {
 		Object3d::PreDraw();
 		enemyobj->Draw();
 		Texture::PreDraw();
-		texture->Draw();
+		if (shadow) {
+			texture->Draw();
+		}
 	}
 	specialDraw();
 }

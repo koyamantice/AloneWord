@@ -11,8 +11,9 @@ LeftShose::LeftShose() {
 	enemyobj = new Object3d();
 }
 
-void LeftShose::Initialize() {
+void LeftShose::Initialize(bool shadow) {
 	assert(player);
+	this->shadow = shadow;
 	IsAlive = 0;
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);

@@ -11,8 +11,9 @@ BossEnemy::BossEnemy() {
 	enemyobj = new Object3d();
 }
 
-void BossEnemy::Initialize() {
+void BossEnemy::Initialize(bool shadow) {
 	assert(player);
+	this->shadow = shadow;
 	IsAlive = 0;
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);

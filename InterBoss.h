@@ -76,7 +76,7 @@ public:
 /// <summary>
 /// 初期化
 /// </summary>
-	virtual void Initialize() = 0;
+	virtual void Initialize(bool shadow=true) = 0;
 	/// <summary>
 	/// 終了
 	/// </summary>
@@ -182,6 +182,7 @@ protected:
 	float y = 0.0f;
 	float angle = 0.0f;
 	float angle2 = 0.0f;
+	bool shadow=false;
 	//待機モーションのためのやつ
 	enum Motion {
 		Up,

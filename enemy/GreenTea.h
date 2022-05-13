@@ -5,7 +5,7 @@ class GreenTea :public InterBoss {
 public:
 	GreenTea();
 
-	void Initialize() override;
+	void Initialize(bool shadow = true) override;
 	void Finalize() override;
 	void Spec() override;
 	void App(int Timer) override;

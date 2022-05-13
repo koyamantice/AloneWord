@@ -8,7 +8,7 @@ class Pastel :public InterBoss {
 public:
 	Pastel();
 
-	void Initialize() override;
+	void Initialize(bool shadow = true) override;
 	void Finalize() override;
 	void Spec() override;
 	void App(int Timer) override;

@@ -15,8 +15,9 @@ GreenTea::GreenTea() {
 	}
 }
 
-void GreenTea::Initialize() {
+void GreenTea::Initialize(bool shadow) {
 	assert(player);
+	this->shadow = shadow;
 	pos = { 0.0f,0.0f,0.0f };
 	rot = { 0,0,0 };
 	IsAlive = true;
