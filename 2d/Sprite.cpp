@@ -418,6 +418,13 @@ void Sprite::SetSize(XMFLOAT2 size) {
 	TransferVertices();
 }
 
+void Sprite::SetScale(float scale) {
+	size.x *= scale;
+	size.y *= scale;
+	// 頂点バッファへのデータ転送
+	TransferVertices();
+}
+
 void Sprite::SetAnchorPoint(XMFLOAT2 anchorpoint) {
 	this->anchorpoint = anchorpoint;
 

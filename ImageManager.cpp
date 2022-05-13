@@ -37,6 +37,7 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(meterbar, L"Resources/2d/hotWaterBar.png");
 	Sprite::LoadTexture(button, L"Resources/2d/select.png");
 	Sprite::LoadTexture(num, L"Resources/2d/Num.png");
+	Sprite::LoadTexture(bairitu, L"Resources/2d/Bairitu.png");
 
 }
 

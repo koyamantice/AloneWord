@@ -32,8 +32,8 @@ private:
 	Sprite* Arrow = nullptr;
 	Sprite* Arrow2 = nullptr;
 	Sprite* Vignette = nullptr;
-	Sprite* number[5][10]{};
-
+	Sprite* number[2][10]{};
+	Sprite* bairitu = nullptr;
 	XMFLOAT2 bossPos{};
 	XMFLOAT2 bossPos2{};
 	XMFLOAT2 plaPos{};
@@ -42,6 +42,8 @@ private:
 	XMFLOAT2 AfterPos[2]{};
 	XMFLOAT2 AfterPos2[2]{};
 	const float PI = 3.145265f;
+	std::vector<int> power;
+	float strong =200.0f;
 	float speed = 0;
 
 	float scale = 50;

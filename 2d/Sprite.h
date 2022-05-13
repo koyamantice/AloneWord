@@ -134,6 +134,11 @@ public: // メンバ関数
 	/// </summary>
 	/// <param name="size">サイズ</param>
 	void SetSize(XMFLOAT2 size);
+	/// <summary>
+	/// 
+	/// </summary>
+	/// <param name="scale"></param>
+	void SetScale(float scale);
 
 	/// <summary>
 	/// サイズの設定
