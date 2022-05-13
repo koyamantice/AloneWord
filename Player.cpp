@@ -87,7 +87,7 @@ void Player::Update() {
 			wetC = 0;
 		}
 	}
-	if (AttackMoveNumber == 0 && AttackFlag == false
+	if (AttackFlag == false
 		&& Interval <= 80) {
 		if (!(StickrotX<650 && StickrotX>-650)) {
 			rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
@@ -109,7 +109,7 @@ void Player::Update() {
 
 		if (input->PushButton(input->Button_RB)) {
 			chargeTimer++;
-			if (chargeTimer == 100 && RotCount <= 2) {
+			if ((chargeTimer % 100 == 0) && (RotCount <= 2)) {
 				chargeTimer = 0;
 				RotCount++;
 			}
@@ -119,14 +119,19 @@ void Player::Update() {
 			}
 		}
 		else {
-			
 			if (RotCount >= 1) {
+				AttackMoveNumber = 1;
 				AttackFlag = true;
 				afterSpeed = ArmSpeed + ((360 * RotCount) + 90);
 				initArmRotation = ArmRot.y - ((360 * RotCount) + 90);
+				initscale = Armscale + 3.0f;
 			}
 			else {
-				chargeTimer = 0;
+				if (chargeTimer != 0) {
+					AttackFlag = true;
+					chargeTimer = 0;
+					initArmRotation = 90;
+				}
 			}
 		}
 
@@ -161,7 +166,7 @@ void Player::Update() {
 		}*/
 
 		//腕のばす
-		if (input->TriggerButton(input->Button_A) && ArmWeight <= 6.0f && ArmMoveNumber == 0) {
+		/*if (input->TriggerButton(input->Button_A) && ArmWeight <= 6.0f && ArmMoveNumber == 0) {
 			ArmMoveNumber = 1;
 			initscale = Armscale;
 			frame = 0;
@@ -169,30 +174,47 @@ void Player::Update() {
 				AttackMoveNumber = 0;
 				AttackFlag = false;
 			}
-		}
+		}*/
 	}
 
 	if (AttackFlag == true) {
-		if (frame >= RotCount) {
-			frame = 0.0f;
-			AttackFlag = false;
-			chargeTimer = 0;
-			RotCount = 0;
-		}
-		else {
-			if (RotCount == 1) {
-				frame += 0.02f;
-			}
-			else if (RotCount == 2) {
-				frame += 0.015f;
+		if (AttackMoveNumber == 1) {
+			if (frame >= 1.0f) {
+				frame = 0.0f;
+				chargeTimer = 0;
+				AttackMoveNumber = 2;
+				RotCount = 0;
+				initscale = 1.0f;
+			/*	ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
+				ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;*/
 			}
 			else {
-				frame += 0.01f;
+				if (RotCount == 1) {
+					frame += 0.01f;
+				}
+				else if (RotCount == 2) {
+					frame += 0.01f;
+				}
+				else {
+					frame += 0.01f;
+				}
+			}
+			ArmSpeed = Ease(In, Cubic, frame, ArmSpeed, afterSpeed);
+			ArmRot.y = Ease(In, Cubic, frame, ArmRot.y, initArmRotation);
+			Armscale = Ease(In, Cubic, frame, Armscale, initscale);
+		}
+		else {
+			if (frame2 >= 1.0f) {
+				AttackMoveNumber = 0;
+				AttackFlag = false;
+				frame2 = 0.0f;
+			}
+			else {
+				frame2 += 0.02f;
 			}
 		}
-		//ArmSpeed++;
-		ArmSpeed = Ease(In, Cubic, frame, ArmSpeed, afterSpeed);
-		ArmRot.y = Ease(In, Cubic, frame, ArmRot.y, initArmRotation);
+		
+		Armscale = Ease(In, Cubic, frame2, Armscale, initscale);
 	}
 
 
@@ -537,10 +559,9 @@ void Player::SelectUp() {
 void Player::Draw(DirectXCommon* dxCommon) {
 	ImGui::Begin("test");
 	ImGui::SliderFloat("frame", &frame, 1, 0);
-	ImGui::SliderFloat("ArmSpeed", &ArmSpeed, 360, -360);
-	ImGui::SliderFloat("afterSpeed", &afterSpeed, 360, -360);
-	ImGui::Text("RotCount:%d", RotCount);
-	ImGui::Text("timer:%d", chargeTimer);
+	ImGui::SliderFloat("frame2", &frame2, 1, 0);
+	ImGui::SliderFloat("RotCount", &RotCount, 3, 0);
+	ImGui::Text("%d", AttackMoveNumber);
 	ImGui::Unindent();
 	ImGui::End();
 	Object3d::PreDraw();

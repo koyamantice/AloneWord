@@ -155,7 +155,7 @@ private:
 	int FlashCount = 0;
 	//イージングのためのやつ
 	float frame = 0.0f;
-	float frameMax = 15.0f;
+	float frame2 = 0.0f;
 	bool wet = false;
 	int wetC = 0;
 	//ステータス的なやつ
@@ -185,4 +185,5 @@ private:
 	float afterSpeed = 0;
 	float afterScale = 0;
 	float RotCount = 0.0f;
+	bool SetArm = false;
 };
