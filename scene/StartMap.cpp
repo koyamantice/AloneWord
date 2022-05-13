@@ -11,9 +11,6 @@
 #include <XorShift.h>
 #include "ImageManager.h"
 
-StartMap::~StartMap() {
-	//Finalize();
-}
 
 void StartMap::Initialize(DirectXCommon* dxCommon) {
 	collisionManager = CollisionManager::GetInstance();
@@ -36,22 +33,6 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	objStartMap->SetRotation({ 0, 90, 0 });
 	objStartMap->SetScale({ 1.2f,1.2f,1.2f });
 
-	/*limit = texture::create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
-	limit->texturecreate();
-	limit->setposition({ 0.0f,0.01f,0.0f });
-	limit->setrotation({ 90.0f,0, 0 });
-	limit->setscale({ 5.5f, 5.5f,  5.5f});*/
-	//背景スプライト生成
-	concent = Sprite::Create(ImageManager::concent, { 0.0f,0.0f });
-	//背景スプライト生成
-	concent2 = Sprite::Create(ImageManager::concent2, { 0.0f,0.0f });
-	//背景スプライト生成
-	concent3 = Sprite::Create(ImageManager::concent3, { 0.0f,0.0f });
-	//背景スプライト生成
-	concent4 = Sprite::Create(ImageManager::concent4, { 0.0f,0.0f });
-	//背景スプライト生成
-	concent5 = Sprite::Create(ImageManager::concent5, { 0.0f,0.0f });
-
 	// モデル読み込み
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
 	//srand(NULL);
@@ -71,8 +52,6 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	player->Initialize();
 	player->SetMove(50.0f, 50.0f);
 	player->SetPosition({ 0.0f,5.0f,-10.0f });
-	//player->SetPosition({ 0.0f,0.0f,-30.0f });
-
 	// パーティクルマネージャ生成
 	particleMan = ParticleManager::GetInstance();
 	particleMan->SetCamera(camera);
@@ -143,7 +122,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 			}
 		}
 	}
-	Ray ray;
+	/*Ray ray;
 	ray.start = { player->GetPosition().x,player->GetPosition().y + 1,player->GetPosition().z,1 };
 	ray.dir = { 0.0f,0.28f,-1.0f,0.0f };
 	RaycastHit raycastHit;
@@ -164,7 +143,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		if (distanceY <= 18.0f) {
 			distanceY += 0.25f;
 		}
-	}
+	}*/
 
 	if (input->TriggerKey(DIK_C)) {
 		SceneManager::GetInstance()->ChangeScene("CLEAR");
@@ -180,9 +159,10 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	player->Update();
 	spawing->Update();
 	particleMan->Update();
-	for (int j = 0; j < enemy.size(); j++) {
-		player->ResetWeight(enemy[j]);
-		player->Rebound(enemy[j]);
+	for (int i = 0; i < enemy.size()-1; i++) {
+		enemy[i]->Demo(i);
+		player->ResetWeight(enemy[i]);
+		player->Rebound(enemy[i]);
 	}
 	cameraPos.x = player->GetTargetPosition().x;
 	cameraPos.y = player->GetTargetPosition().y +( distanceY-2);
@@ -195,33 +175,17 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	objFloor->Draw();
 	objStartMap->Draw();
 
-	enemy[0]->Draw();
-	enemy[1]->Draw();
-	enemy[2]->Draw();
-	spawing->Draw();
+	for (int i = 0; i < enemy.size() - 1; i++) {
+		enemy[i]->Draw();
+	}
 	player->Draw(dxCommon);
 	ui->Draw();
-	Sprite::PreDraw();
-	//背景用
-	switch (tutorial) {
-	case 1:
-		concent2->Draw();
-		break;
-	case 3:
-		concent3->Draw();
-		break;
-	case 5:
-		concent4->Draw();
-		break;
-	case 7:
-		concent5->Draw();
-		break;
 
-	default:
-		break;
-	}
+	spawing->Draw();
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
+	Sprite::PreDraw();
+
 }
 
 void StartMap::Pause(const int& Timer) {
