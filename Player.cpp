@@ -116,6 +116,7 @@ void Player::Update() {
 			if (speedlimit <= ArmSpeed) {
 				ArmSpeed--;
 				ArmRot.y++;
+				rot.y++;
 			}
 		}
 		else {
@@ -124,14 +125,11 @@ void Player::Update() {
 				AttackFlag = true;
 				afterSpeed = ArmSpeed + ((360 * RotCount) + 90);
 				initArmRotation = ArmRot.y - ((360 * RotCount) + 90);
+				initrotation = rot.y - ((360 * RotCount) + 90);
 				initscale = Armscale + 3.0f;
 			}
 			else {
-				if (chargeTimer != 0) {
-					AttackFlag = true;
-					chargeTimer = 0;
-					initArmRotation = 90;
-				}
+				chargeTimer = 0;
 			}
 		}
 
@@ -185,8 +183,7 @@ void Player::Update() {
 				AttackMoveNumber = 2;
 				RotCount = 0;
 				initscale = 1.0f;
-			/*	ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
-				ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;*/
+				rotation.y = 270.0f;
 			}
 			else {
 				if (RotCount == 1) {
@@ -199,6 +196,7 @@ void Player::Update() {
 					frame += 0.01f;
 				}
 			}
+			rot.y = Ease(In, Cubic, frame, rot.y, initrotation);
 			ArmSpeed = Ease(In, Cubic, frame, ArmSpeed, afterSpeed);
 			ArmRot.y = Ease(In, Cubic, frame, ArmRot.y, initArmRotation);
 			Armscale = Ease(In, Cubic, frame, Armscale, initscale);
