@@ -180,7 +180,15 @@ void Player::Update() {
 			RotCount = 0;
 		}
 		else {
-			frame += 0.02f;
+			if (RotCount == 1) {
+				frame += 0.02f;
+			}
+			else if (RotCount == 2) {
+				frame += 0.015f;
+			}
+			else {
+				frame += 0.01f;
+			}
 		}
 		//ArmSpeed++;
 		ArmSpeed = Ease(In, Cubic, frame, ArmSpeed, afterSpeed);
