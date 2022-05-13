@@ -36,6 +36,24 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	Vignette = Sprite::Create(ImageManager::vignette, { 0.0f,0.0f });
 	Vignette->SetPosition({ 0,0 });
 	Vignette->SetColor({ 255,255,255,0.75f });
+	const int w = 48;
+	const int h = 80;
+	const int l = 10;
+	const float onePos = WinApp::window_width - 208.0f;
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 10; j++) {
+			number[i][j] = Sprite::Create(ImageManager::GetIns()->num,{ (float)j * 48 ,(float)i*80});
+			int number_index_y = j / l;
+			int number_index_x = j % l;
+			number[i][j]->SetTextureRect(
+				{ static_cast<float>(number_index_x) * w, static_cast<float>(number_index_y) * h },
+				{ static_cast<float>(w), static_cast<float>(h) });
+			number[i][j]->SetSize({ w,h });
+			//number[i][j]->SetScale(1.0f);
+			number[i][j]->SetAnchorPoint({ 0,0 });
+			//number[i][j]->SetPosition({ (float)WinApp::window_width - 93 - 55 * i ,7 });
+		}
+	}
 }
 void UI::Update() {
 	{//HPˆ—
@@ -98,6 +116,11 @@ const void UI::Draw() {
 
 	if (boss2 && invisible && boss2->GetHP() >= 1) {
 		Arrow2->Draw();
+	}
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 5; j++) {
+			number[j][i]->Draw();
+		}
 	}
 }
 

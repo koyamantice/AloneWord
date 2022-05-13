@@ -32,6 +32,7 @@ private:
 	Sprite* Arrow = nullptr;
 	Sprite* Arrow2 = nullptr;
 	Sprite* Vignette = nullptr;
+	Sprite* number[5][10]{};
 
 	XMFLOAT2 bossPos{};
 	XMFLOAT2 bossPos2{};
