@@ -55,6 +55,7 @@ protected:
 	int EffectNum = 0;
 	float distanceY = 12;
 	float distanceZ = 12;
+
 	//n‚Ü‚é‘O‚Ì‰‰o‚Ì‚½‚ß‚Ì•Ï”
 	bool bossstart = false;
 	int appearanceNumber = 0;

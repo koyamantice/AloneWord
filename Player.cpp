@@ -13,25 +13,10 @@
 #include "CollisionAttribute.h"
 #include "FbxLoader.h"
 #include <ModelManager.h>
+#include <Easing.h>
 using namespace DirectX;
 Input* input = Input::GetInstance();
-float easeInSine(float x) {
-	return x * x * x;
-}
 
-float easeOutBack(float x) {
-	return x == 1 ? 1 : 1 - powf(2, -10 * x);
-}
-
-float easeInOut(float x) {
-	return x < 0.5 ? 8 * x * x * x * x : 1 - powf(-2 * x + 2, 4) / 2;
-}
-float easeBack(float x) {
-	const float c1 = 1.70158f;
-	const float c3 = c1 + 1;
-
-	return c3 * x * x * x - c1 * x * x;
-}
 Player::Player() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::Player);
 	Armmodel = ModelManager::GetIns()->GetModel(ModelManager::Arm);
@@ -75,7 +60,7 @@ bool Player::Initialize() {
 	collider->SetAttribute(COLLISION_ATTR_ALLIES);
 
 	//カメラのためのポジション(初期化)
-	targetpos = position;
+	//targetpos = position;
 	return true;
 }
 
@@ -102,65 +87,105 @@ void Player::Update() {
 			wetC = 0;
 		}
 	}
-	if (AttackMoveNumber == 0 && AttackFlag == false
-		&& Interval <= 80) {
+
+	//プレイヤーの動き系
+	if (Interval <= 80) {
+		//プレイヤーの移動
 		if (!(StickrotX<650 && StickrotX>-650)) {
-			rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 			position.x += sin(atan2(StickrotX, StickrotY)) * PlayerSpeed;
-			ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
-			ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
+			if (chargeTimer == 0) {
+				rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
+				ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
+				ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
+			}
 		}
 
 		if (!(StickrotY<650 && StickrotY>-650)) {
-			rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 			position.z -= cos(atan2(StickrotX, StickrotY)) * PlayerSpeed;
-			ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
-			ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
-		}
-
-		//攻撃右回り
-		if (input->PushButton(input->Button_RB) && ArmWeight != 0.0f) {
-			AttackFlag = true;
-			AttackMoveNumber = 1;
-			initscale = Armscale;
-			initspeed = ArmSpeed;
-			initrotation = rot.y;
-			initArmRotation = ArmRot.y;
-			frame2 = 0;
-			frame3 = 0;
-			if (ArmMoveNumber != 0) {
-				ArmMoveNumber = 0;
+			if (chargeTimer == 0) {
+				rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
+				ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
+				ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
 			}
 		}
 
-		//左回り
-		if (input->PushButton(input->Button_LB) && ArmWeight != 0.0f) {
-			AttackFlag = true;
-			AttackMoveNumber = 3;
-			initscale = Armscale;
-			initspeed = ArmSpeed;
-			initrotation = rot.y;
-			initArmRotation = ArmRot.y;
-			frame2 = 0;
-			frame3 = 0;
-			if (ArmMoveNumber != 0) {
-				ArmMoveNumber = 0;
+		//腕振り回す系
+		if (AttackFlag == false) {
+			if (input->TriggerButton(input->Button_RB)) {
+				speedlimit = ArmSpeed - 90;
 			}
-		}
 
-		//腕のばす
-		if (input->TriggerButton(input->Button_A) && ArmWeight <= 6.0f && ArmMoveNumber == 0) {
-			ArmMoveNumber = 1;
-			initscale = Armscale;
-			frame = 0;
-			have = true;
-			arm = true;
-			if (AttackMoveNumber != 0 || AttackFlag == true) {
-				AttackMoveNumber = 0;
-				AttackFlag = false;
+			//ため時間
+			if (input->PushButton(input->Button_RB)) {
+				chargeTimer++;
+				PlayerSpeed = 0.1f;
+				if ((chargeTimer % 100 == 0) && (RotCount <= 2)) {
+					RotCount++;
+				}
+				if (speedlimit <= ArmSpeed) {
+					ArmSpeed--;
+					ArmRot.y++;
+					rot.y++;
+				}
+			}
+			else {
+				PlayerSpeed = 0.3f;
+				if (RotCount >= 1) {
+					AttackMoveNumber = 1;
+					AttackFlag = true;
+					afterSpeed = ArmSpeed + ((360 * RotCount) + 90);
+					initArmRotation = ArmRot.y - ((360 * RotCount) + 90);
+					initrotation = rot.y - ((360 * RotCount) + 90);
+					initscale = Armscale + 3.0f;
+				}
+				else {
+					chargeTimer = 0;
+				}
 			}
 		}
 	}
+
+	//振り回している
+	if (AttackFlag == true) {
+		if (AttackMoveNumber == 1) {
+			if (frame >= 1.0f) {
+				frame = 0.0f;
+				chargeTimer = 0;
+				AttackMoveNumber = 2;
+				RotCount = 0;
+				initscale = 1.0f;
+				rotation.y = 270.0f;
+			}
+			else {
+				if (RotCount == 1) {
+					frame += 0.01f;
+				}
+				else if (RotCount == 2) {
+					frame += 0.01f;
+				}
+				else {
+					frame += 0.01f;
+				}
+			}
+			rot.y = Ease(In, Cubic, frame, rot.y, initrotation);
+			ArmSpeed = Ease(In, Cubic, frame, ArmSpeed, afterSpeed);
+			ArmRot.y = Ease(In, Cubic, frame, ArmRot.y, initArmRotation);
+			Armscale = Ease(In, Cubic, frame, Armscale, initscale);
+		}
+		else {
+			if (frame2 >= 1.0f) {
+				AttackMoveNumber = 0;
+				AttackFlag = false;
+				frame2 = 0.0f;
+			}
+			else {
+				frame2 += 0.02f;
+			}
+		}
+		
+		Armscale = Ease(In, Cubic, frame2, Armscale, initscale);
+	}
+
 
 	//アニメーション用のキー入力
 	if ((input->LeftTiltStick(input->Right)) || (input->LeftTiltStick(input->Left))
@@ -171,90 +196,90 @@ void Player::Update() {
 	}
 
 	//腕を伸ばす
-	if (ArmMoveNumber == 1) {
-		Armscale = initscale + 3.0f * easeOutBack(frame / frameMax);
-		if (frame != frameMax) {
-			frame = frame + 1;
-		} else {
-			ArmMoveNumber = 2;
-			frame = 0;
-			initscale = Armscale;
-		}
-	} else if (ArmMoveNumber == 2) {
-		Armscale = initscale - 3.0f * easeOutBack(frame / frameMax);
-		if (frame != frameMax) {
-			frame = frame + 1;
-		} else {
-			ArmMoveNumber = 0;
-			initscale = Armscale;
-			//Armscale += ArmWeight;
-		}
-	}
+	//if (ArmMoveNumber == 1) {
+	//	Armscale = initscale + 3.0f * easeOutBack(frame / frameMax);
+	//	if (frame != frameMax) {
+	//		frame = frame + 1;
+	//	} else {
+	//		ArmMoveNumber = 2;
+	//		frame = 0;
+	//		initscale = Armscale;
+	//	}
+	//} else if (ArmMoveNumber == 2) {
+	//	Armscale = initscale - 3.0f * easeOutBack(frame / frameMax);
+	//	if (frame != frameMax) {
+	//		frame = frame + 1;
+	//	} else {
+	//		ArmMoveNumber = 0;
+	//		initscale = Armscale;
+	//		//Armscale += ArmWeight;
+	//	}
+	//}
 
-	//攻撃
-	if (AttackFlag == true) {
-		if (AttackMoveNumber == 1 || AttackMoveNumber == 2) {
-			ArmSpeed = initspeed - 360.0f * easeBack(frame2 / frameMax2);
-			rot.y = initrotation + 360.0f * easeBack(frame2 / frameMax2);
-			ArmRot.y = initArmRotation + 360.0f * easeBack(frame2 / frameMax2);
-		} else {
-			ArmSpeed = initspeed + 360.0f * easeBack(frame2 / frameMax2);
-			rot.y = initrotation - 360.0f * easeBack(frame2 / frameMax2);
-			ArmRot.y = initArmRotation - 360.0f * easeBack(frame2 / frameMax2);
-		}
-		if (frame2 <= 10.0f) {
-			power = 0.25f;
-		} else if (frame2 > 10.0f && frame2 <= 20.0f) {
-			power = 0.5f;
-		} else if (frame2 > 20.0f && frame2 <= 30.0f) {
-			power = 0.75f;
-		} else {
-			power = 1.0f;
-		}
+	////攻撃
+	//if (AttackFlag == true) {
+	//	if (AttackMoveNumber == 1 || AttackMoveNumber == 2) {
+	//		ArmSpeed = initspeed - 360.0f * easeBack(frame2 / frameMax2);
+	//		rot.y = initrotation + 360.0f * easeBack(frame2 / frameMax2);
+	//		ArmRot.y = initArmRotation + 360.0f * easeBack(frame2 / frameMax2);
+	//	} else {
+	//		ArmSpeed = initspeed + 360.0f * easeBack(frame2 / frameMax2);
+	//		rot.y = initrotation - 360.0f * easeBack(frame2 / frameMax2);
+	//		ArmRot.y = initArmRotation - 360.0f * easeBack(frame2 / frameMax2);
+	//	}
+	//	if (frame2 <= 10.0f) {
+	//		power = 0.25f;
+	//	} else if (frame2 > 10.0f && frame2 <= 20.0f) {
+	//		power = 0.5f;
+	//	} else if (frame2 > 20.0f && frame2 <= 30.0f) {
+	//		power = 0.75f;
+	//	} else {
+	//		power = 1.0f;
+	//	}
 
-		if (frame2 < frameMax2) {
-			frame2 = frame2 + 1;
-		} else {
-			AttackFlag = false;
-			frameMax2 = 40.0f;
-		}
-	}
+	//	if (frame2 < frameMax2) {
+	//		frame2 = frame2 + 1;
+	//	} else {
+	//		AttackFlag = false;
+	//		frameMax2 = 40.0f;
+	//	}
+	//}
 
-	//攻撃時に腕を伸ばしている
-	if (AttackMoveNumber == 1 || AttackMoveNumber == 3) {
-		if (ArmWeight > 0) {
-			Armscale = initscale + 3.0f * easeInOut(frame3 / frameMax3);
-			if (frame3 < frameMax3) {
-				frame3 = frame3 + 1;
-			} else {
-				if (AttackMoveNumber == 1) {
-					AttackMoveNumber = 2;
-				} else if (AttackMoveNumber == 3) {
-					AttackMoveNumber = 4;
-				}
-				initscale = Armscale;
-				scaleVel = 3.0f;
-				frame3 = 0;
-				frameMax3 = frameMax2;
-			}
-		} else {
-			AttackMoveNumber = 2;
-			scaleVel = Armscale - initscale;
-			initscale = Armscale;
-			frame3 = 0;
-			frameMax3 = frameMax2 / 20;
-		}
-	}
+	////攻撃時に腕を伸ばしている
+	//if (AttackMoveNumber == 1 || AttackMoveNumber == 3) {
+	//	if (ArmWeight > 0) {
+	//		Armscale = initscale + 3.0f * easeInOut(frame3 / frameMax3);
+	//		if (frame3 < frameMax3) {
+	//			frame3 = frame3 + 1;
+	//		} else {
+	//			if (AttackMoveNumber == 1) {
+	//				AttackMoveNumber = 2;
+	//			} else if (AttackMoveNumber == 3) {
+	//				AttackMoveNumber = 4;
+	//			}
+	//			initscale = Armscale;
+	//			scaleVel = 3.0f;
+	//			frame3 = 0;
+	//			frameMax3 = frameMax2;
+	//		}
+	//	} else {
+	//		AttackMoveNumber = 2;
+	//		scaleVel = Armscale - initscale;
+	//		initscale = Armscale;
+	//		frame3 = 0;
+	//		frameMax3 = frameMax2 / 20;
+	//	}
+	//}
 
-	else if (AttackMoveNumber == 2 || AttackMoveNumber == 4) {
-		Armscale = initscale - scaleVel * easeInOut(frame3 / frameMax3);
-		if (frame3 < frameMax3) {
-			frame3 = frame3 + 1;
-		} else {
-			AttackMoveNumber = 0;
-			frameMax3 = frameMax2;
-		}
-	}
+	//else if (AttackMoveNumber == 2 || AttackMoveNumber == 4) {
+	//	Armscale = initscale - scaleVel * easeInOut(frame3 / frameMax3);
+	//	if (frame3 < frameMax3) {
+	//		frame3 = frame3 + 1;
+	//	} else {
+	//		AttackMoveNumber = 0;
+	//		frameMax3 = frameMax2;
+	//	}
+	//}
 
 	//FlashCount == 4までプレイヤーがダメージを食らったあとの判定
 	if (Interval != 0 && FlashCount <= 5) {
@@ -268,11 +293,6 @@ void Player::Update() {
 	if (FlashCount == 4) {
 		FlashCount = 0;
 		Interval = 0;
-	}
-
-	if (Exp >= Lv * 10) {
-		Lv++;
-		Exp = 0.0f;
 	}
 
 	// 落下処理
@@ -385,7 +405,7 @@ void Player::Update() {
 	//パーティクル発生
 	BirthParticle();
 	//カメラのためのポジション(更新)
-	if (Interval == 0) {
+	/*if (Interval == 0) {
 		targetpos = position;
 	} else if (Interval != 0 && Interval <= 99) {
 		if (targetpos.x != position.x || targetpos.z != position.z) {
@@ -399,7 +419,7 @@ void Player::Update() {
 				targetpos = position;
 			}
 		}
-	}
+	}*/
 
 	move_object1->SetPosition(position);
 	move_object1->SetRotation(rot);
@@ -507,11 +527,10 @@ void Player::SelectUp() {
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
 	ImGui::Begin("test");
-	ImGui::Text("count::%d", move_count);
-	/*ImGui::SliderFloat("position.x", &position.x, 50, 0);
-	ImGui::SliderFloat("position.z", &position.z, 50, 0);*/
-	ImGui::Text("AttacF:%d", AttackFlag);
-	ImGui::Text("AttackMove:%d", ArmMoveNumber);
+	ImGui::SliderFloat("frame", &frame, 1, 0);
+	ImGui::SliderFloat("frame2", &frame2, 1, 0);
+	ImGui::SliderFloat("RotCount", &RotCount, 3, 0);
+	ImGui::Text("%d", AttackMoveNumber);
 	ImGui::Unindent();
 	ImGui::End();
 	Object3d::PreDraw();

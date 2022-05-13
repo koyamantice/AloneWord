@@ -35,8 +35,6 @@ public:
 /// <returns>座標</returns>
 	const XMFLOAT3& GetPosition() { return  object3d->GetPosition(); }
 
-	const XMFLOAT3& GetTargetPosition() { return  targetpos; }
-
 	const XMFLOAT3& GetRotation() { return object3d->GetRotation(); }
 
 	const XMFLOAT3& GetArmPosition() { return Armpos; }
@@ -63,10 +61,6 @@ public:
 
 	const float& GetPower() { return power; }
 
-	const int& GetLv() { return Lv; }
-
-	const float& GetExp() { return Exp; }
-
 	/// <summary>
 	/// 座標の設定
 	/// </summary>
@@ -83,10 +77,6 @@ public:
 
 	void SetHp(int hp) { this->HP = hp; }
 
-	void SetLv(int Lv) { this->Lv = Lv; }
-
-	void SetExp(float Exp) { this->Exp = Exp; }
-	
 	void SetInterval(int Interval) { this->Interval = Interval; }
 
 	void SetFlash(int Flash) { this->FlashCount = FlashCount; }
@@ -165,17 +155,11 @@ private:
 	int FlashCount = 0;
 	//イージングのためのやつ
 	float frame = 0.0f;
-	float frameMax = 15.0f;
 	float frame2 = 0.0f;
-	float frameMax2 = 40.0f;
-	float frame3 = 0.0f;
-	float frameMax3 = 40.0f;
 	bool wet = false;
 	int wetC = 0;
 	//ステータス的なやつ
 	int HP = 10;
-	int Lv = 1;
-	float Exp = 0.0f;
 	float StickrotX = 0;
 	float StickrotY = 0;
 	XMFLOAT3 angle = { 0,0,0 };
@@ -186,7 +170,7 @@ private:
 	double angleR;
 	float angleX;
 	float angleZ;
-	XMFLOAT3 targetpos = { 0,0,-10 };
+	
 	int wait = 0;
 	XMFLOAT3 rot;
 	bool pause = false;
@@ -195,9 +179,11 @@ private:
 	FBXModel* move_model1 = nullptr;
 	FBXObject3d* move_object1 = nullptr;
 	int move_count = 0;
-	int have_count = 0;
-	int arm_count = 0;
-	bool have = false;
-	bool arm = false;
+	//チャージ攻撃のための変数
 	float speedlimit = 0.0f;
+	int chargeTimer = 0;
+	float afterSpeed = 0;
+	float afterScale = 0;
+	float RotCount = 0.0f;
+	bool SetArm = false;
 };

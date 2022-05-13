@@ -69,12 +69,10 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	spawing->SetPosition({ 0.0f,0.0f,0.0f });
 	spawing->SetRotation({ 0,90,0 });
 	spawing->Update();
-	//カメラポジション
-	cameraPos.x = player->GetTargetPosition().x;
-	cameraPos.y = player->GetTargetPosition().y + 10;
-	cameraPos.z = player->GetTargetPosition().z - 10;
-	// カメラ注視点をセット
-	camera->SetTarget(player->GetTargetPosition());
+	cameraPos.x = player->GetPosition().x;
+	cameraPos.y = player->GetPosition().y + distanceY;
+	cameraPos.z = player->GetPosition().z - distanceZ;
+	camera->SetTarget(player->GetPosition());
 	camera->SetEye(cameraPos);
 }
 
@@ -164,10 +162,10 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		player->ResetWeight(enemy[i]);
 		player->Rebound(enemy[i]);
 	}
-	cameraPos.x = player->GetTargetPosition().x;
-	cameraPos.y = player->GetTargetPosition().y +( distanceY-2);
+	cameraPos.x = player->GetPosition().x;
+	cameraPos.y = player->GetPosition().y + distanceY;
 	cameraPos.z = player->GetPosition().z - distanceZ;
-	camera->SetTarget(player->GetTargetPosition());
+	camera->SetTarget(player->GetPosition());
 	camera->SetEye(cameraPos);
 }
 

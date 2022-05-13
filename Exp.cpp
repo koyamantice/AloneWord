@@ -129,11 +129,11 @@ void Exp::Follow(Player* player) {
 }
 
 bool Exp::Collide(Player* player) {
-	float PlaExp = player->GetExp();
+	//float PlaExp = player->GetExp();
 	if (ExpAlive) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, player->GetPosition().x, player->GetPosition().y, player->GetPosition().z, 0.5f) == true) {
 			ExpAlive = false;
-			player->SetExp(player->GetExp() + 1.0f);
+			//player->SetExp(player->GetExp() + 1.0f);
 			return true;
 		} else {
 			return false;

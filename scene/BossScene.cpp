@@ -435,15 +435,15 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 }
 
 void BossScene::Draw(DirectXCommon* dxCommon) {
-	ImGui::Begin("test");
-	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
-	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
-	//ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
-	ImGui::SliderFloat("pos.y", &distanceY, 30, 0);
-	ImGui::SliderFloat("pos.z", &distanceZ, 30, 0);
-	//ImGui::Text("appearanceTimer::%d", appearanceTimer);
-	ImGui::Unindent();
-	ImGui::End();
+	//ImGui::Begin("test");
+	////ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
+	////ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
+	////ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
+	//ImGui::SliderFloat("pos.y", &distanceY, 30, 0);
+	//ImGui::SliderFloat("pos.z", &distanceZ, 30, 0);
+	////ImGui::Text("appearanceTimer::%d", appearanceTimer);
+	//ImGui::Unindent();
+	//ImGui::End();
 
 	//各オブジェクトの描画
 	Object3d::PreDraw();
