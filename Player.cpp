@@ -87,94 +87,65 @@ void Player::Update() {
 			wetC = 0;
 		}
 	}
-	if (AttackFlag == false
-		&& Interval <= 80) {
+
+	//プレイヤーの動き系
+	if (Interval <= 80) {
+		//プレイヤーの移動
 		if (!(StickrotX<650 && StickrotX>-650)) {
-			rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 			position.x += sin(atan2(StickrotX, StickrotY)) * PlayerSpeed;
-			ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
-			ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
+			if (chargeTimer == 0) {
+				rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
+				ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
+				ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
+			}
 		}
 
 		if (!(StickrotY<650 && StickrotY>-650)) {
-			rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 			position.z -= cos(atan2(StickrotX, StickrotY)) * PlayerSpeed;
-			ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
-			ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
-		}
-
-		if (input->TriggerButton(input->Button_RB)) {
-			speedlimit = ArmSpeed - 90;
-		}
-
-		if (input->PushButton(input->Button_RB)) {
-			chargeTimer++;
-			if ((chargeTimer % 100 == 0) && (RotCount <= 2)) {
-				chargeTimer = 0;
-				RotCount++;
-			}
-			if (speedlimit <= ArmSpeed) {
-				ArmSpeed--;
-				ArmRot.y++;
-				rot.y++;
+			if (chargeTimer == 0) {
+				rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
+				ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
+				ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
 			}
 		}
-		else {
-			if (RotCount >= 1) {
-				AttackMoveNumber = 1;
-				AttackFlag = true;
-				afterSpeed = ArmSpeed + ((360 * RotCount) + 90);
-				initArmRotation = ArmRot.y - ((360 * RotCount) + 90);
-				initrotation = rot.y - ((360 * RotCount) + 90);
-				initscale = Armscale + 3.0f;
+
+		//腕振り回す系
+		if (AttackFlag == false) {
+			if (input->TriggerButton(input->Button_RB)) {
+				speedlimit = ArmSpeed - 90;
+			}
+
+			//ため時間
+			if (input->PushButton(input->Button_RB)) {
+				chargeTimer++;
+				PlayerSpeed = 0.1f;
+				if ((chargeTimer % 100 == 0) && (RotCount <= 2)) {
+					RotCount++;
+				}
+				if (speedlimit <= ArmSpeed) {
+					ArmSpeed--;
+					ArmRot.y++;
+					rot.y++;
+				}
 			}
 			else {
-				chargeTimer = 0;
+				PlayerSpeed = 0.3f;
+				if (RotCount >= 1) {
+					AttackMoveNumber = 1;
+					AttackFlag = true;
+					afterSpeed = ArmSpeed + ((360 * RotCount) + 90);
+					initArmRotation = ArmRot.y - ((360 * RotCount) + 90);
+					initrotation = rot.y - ((360 * RotCount) + 90);
+					initscale = Armscale + 3.0f;
+				}
+				else {
+					chargeTimer = 0;
+				}
 			}
 		}
-
-		//攻撃右回り
-	/*	if (input->PushButton(input->Button_RB) && ArmWeight != 0.0f) {
-			AttackFlag = true;
-			AttackMoveNumber = 1;
-			initscale = Armscale;
-			initspeed = ArmSpeed;
-			initrotation = rot.y;
-			initArmRotation = ArmRot.y;
-			frame2 = 0;
-			frame3 = 0;
-			if (ArmMoveNumber != 0) {
-				ArmMoveNumber = 0;
-			}
-		}*/
-
-		//左回り
-		/*if (input->PushButton(input->Button_LB) && ArmWeight != 0.0f) {
-			AttackFlag = true;
-			AttackMoveNumber = 3;
-			initscale = Armscale;
-			initspeed = ArmSpeed;
-			initrotation = rot.y;
-			initArmRotation = ArmRot.y;
-			frame2 = 0;
-			frame3 = 0;
-			if (ArmMoveNumber != 0) {
-				ArmMoveNumber = 0;
-			}
-		}*/
-
-		//腕のばす
-		/*if (input->TriggerButton(input->Button_A) && ArmWeight <= 6.0f && ArmMoveNumber == 0) {
-			ArmMoveNumber = 1;
-			initscale = Armscale;
-			frame = 0;
-			if (AttackMoveNumber != 0 || AttackFlag == true) {
-				AttackMoveNumber = 0;
-				AttackFlag = false;
-			}
-		}*/
 	}
 
+	//振り回している
 	if (AttackFlag == true) {
 		if (AttackMoveNumber == 1) {
 			if (frame >= 1.0f) {
