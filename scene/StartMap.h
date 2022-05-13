@@ -15,7 +15,7 @@ class TouchableObject;
 const int StartSpawn = 1;
 class StartMap : public BaseScene {
 public:
-	~StartMap();
+	//~StartMap();
 	/// <summary>
 	/// 初期化
 	/// </summary>

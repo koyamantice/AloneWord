@@ -9,8 +9,8 @@ void InterBoss::Update() {
 	Interval = player->GetInterval();
 	FlashCount = player->GetFlashCount();
 
-	collideAttackArm();
-	collidePlayer();
+	//collideAttackArm();
+	//collidePlayer();
 	Spec();
 	player->SetInterval(Interval);
 

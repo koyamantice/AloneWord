@@ -109,7 +109,7 @@ void Player::Update() {
 
 		if (input->PushButton(input->Button_RB)) {
 			chargeTimer++;
-			if (chargeTimer == 100) {
+			if (chargeTimer == 100 && RotCount <= 2) {
 				chargeTimer = 0;
 				RotCount++;
 			}
@@ -122,8 +122,8 @@ void Player::Update() {
 			
 			if (RotCount >= 1) {
 				AttackFlag = true;
-				afterSpeed = ArmSpeed + (450 * RotCount);
-				initArmRotation = ArmRot.y - (450 * RotCount);
+				afterSpeed = ArmSpeed + ((360 * RotCount) + 90);
+				initArmRotation = ArmRot.y - ((360 * RotCount) + 90);
 			}
 			else {
 				chargeTimer = 0;
@@ -182,12 +182,12 @@ void Player::Update() {
 		else {
 			frame += 0.02f;
 		}
-		
+		//ArmSpeed++;
+		ArmSpeed = Ease(In, Cubic, frame, ArmSpeed, afterSpeed);
+		ArmRot.y = Ease(In, Cubic, frame, ArmRot.y, initArmRotation);
 	}
 
-	//ArmSpeed++;
-	ArmSpeed = Ease(In, Cubic, frame, ArmSpeed, afterSpeed);
-	ArmRot.y = Ease(In, Cubic, frame, ArmRot.y, initArmRotation);
+
 	//アニメーション用のキー入力
 	if ((input->LeftTiltStick(input->Right)) || (input->LeftTiltStick(input->Left))
 		|| (input->LeftTiltStick(input->Up)) || (input->LeftTiltStick(input->Down))) {
@@ -531,7 +531,7 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	ImGui::SliderFloat("frame", &frame, 1, 0);
 	ImGui::SliderFloat("ArmSpeed", &ArmSpeed, 360, -360);
 	ImGui::SliderFloat("afterSpeed", &afterSpeed, 360, -360);
-	ImGui::Text("AttacF:%d", AttackFlag);
+	ImGui::Text("RotCount:%d", RotCount);
 	ImGui::Text("timer:%d", chargeTimer);
 	ImGui::Unindent();
 	ImGui::End();

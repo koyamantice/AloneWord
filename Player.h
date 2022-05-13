@@ -184,5 +184,5 @@ private:
 	int chargeTimer = 0;
 	float afterSpeed = 0;
 	float afterScale = 0;
-	int RotCount = 0;
+	float RotCount = 0.0f;
 };
