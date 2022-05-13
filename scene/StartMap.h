@@ -50,7 +50,7 @@ private:
 	DebugCamera* camera = { nullptr };
 	Texture* limit = nullptr;
 	Player* player = nullptr;
-	array<Rice*, 3> enemy;
+	array<Rice*, 7> enemy;
 	Spawning* spawing;
 	ParticleManager* particleMan = nullptr;
 	int	tutorial =0;

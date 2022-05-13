@@ -200,12 +200,12 @@ void Rice::Demo(int num) {
 	assert(player);
 	Piyopiyo->SetPosition({ pos.x,pos.y + 2.0f,pos.z });
 	Piyopiyo->Update();
-	if (hit&& IsAlive && !EnemyCatch && !Exp) {
-		if (frame < 0.4f) {
-			speed_y2 = 1.5f / 20.0f;
-		}
-		Rebound();
-	}
+	//if (hit&& IsAlive && !EnemyCatch && !Exp) {
+	//	if (frame < 0.4f) {
+	//		speed_y2 = 1.5f / 20.0f;
+	//	}
+	//	Rebound();
+	//}
 	playerpos = player->GetPosition();
 	Interval = player->GetInterval();
 	FlashCount = player->GetFlashCount();
@@ -214,72 +214,63 @@ void Rice::Demo(int num) {
 		pos.y = 3.0f;
 	}
 	if (IsAlive && !EnemyCatch && !Exp) {
-		Back();
-		if (LockOn()) {
-			moveCount = (rand() % 15) + 20;
-			isMove = false;
-			followed = true;
-			//if (pos.y>!1) {
-			//}
-		}
-		if (!followed && !LockOn()&&!hit) {
-			rot.y = (dir)-90;// *(XM_PI / 180.0f);
-			speed_y = 3.0f / 20.0f;
-			if (pos.y > 0) {
-				pos.y -= speed_y;
-			} else {
-				pos.y = 0;
-			}
-			if (followed) {
-				if (rot.y < -90) {
-					dir = rot.y + 360 + 90;
-					rot.y = (dir)-90.0f;// *(XM_PI / 180.0f);
-				} else {
-					dir = rot.y + 90;
-					rot.y = (dir)-90.0f;// *(XM_PI / 180.0f);
-				}
-				followed = false;
-			}
-			Move();
-		}
-		if (followed && !hit) {
-			XMFLOAT3 position{};
-			position.x = (playerpos.x - pos.x);
-			position.z = (playerpos.z - pos.z);
-			pos.y += speed_y;
-			speed_y -= gravity;
-			rot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 90;// *(XM_PI / 180.0f);
-			if (pos.y < 0) {
-				pos.y = 0;
-				start = true;
-				speed_y = 0;
-				Follow();
-			}
-			// 地面に当たったら跳ね返るように
-			enemyobj->SetPosition(pos);
-		}
+		//Back();
+		//if (LockOn()) {
+		//	moveCount = (rand() % 15) + 20;
+		//	isMove = false;
+		//	followed = true;
+		//	//if (pos.y>!1) {
+		//	//}
+		//}
+		//if (!followed && !LockOn()&&!hit) {
+		//	rot.y = (dir)-90;// *(XM_PI / 180.0f);
+		//	speed_y = 3.0f / 20.0f;
+		//	if (pos.y > 0) {
+		//		pos.y -= speed_y;
+		//	} else {
+		//		pos.y = 0;
+		//	}
+		//	if (followed) {
+		//		if (rot.y < -90) {
+		//			dir = rot.y + 360 + 90;
+		//			rot.y = (dir)-90.0f;// *(XM_PI / 180.0f);
+		//		} else {
+		//			dir = rot.y + 90;
+		//			rot.y = (dir)-90.0f;// *(XM_PI / 180.0f);
+		//		}
+		//		followed = false;
+		//	}
+		//	Move();
+		//}
+		//if (followed && !hit) {
+		//	XMFLOAT3 position{};
+		//	position.x = (playerpos.x - pos.x);
+		//	position.z = (playerpos.z - pos.z);
+		//	pos.y += speed_y;
+		//	speed_y -= gravity;
+		//	rot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 90;// *(XM_PI / 180.0f);
+		//	if (pos.y < 0) {
+		//		pos.y = 0;
+		//		start = true;
+		//		speed_y = 0;
+		//		Follow();
+		//	}
+		//	// 地面に当たったら跳ね返るように
+		//	enemyobj->SetPosition(pos);
+		//}
 	}
 	if (!IsAlive) {
 		IsTimer--;
 		if (IsTimer == 100) {
-			if (!respawn) {
-				if (num == 0) {
-					pos.x = 0;
-					pos.z = -5;
-				}
-				if (num == 1) {
-					pos.x = 3;
-					pos.z = -5;
-				}
-				if (num == 2) {
-					pos.x = -3;
-					pos.z = -5;
-				}
-			} else {
-				scale = 10.0f;
-			}
+			speed = (float)num* 60;
+			scale = 14;
 			StartPos = pos;
 			frame = 0;
+			radius = speed * PI / 180.0f;
+			circleX = cosf(radius) * scale;
+			circleZ = sinf(radius) * scale;
+			pos.x = circleX + basePos.x;
+			pos.z = circleZ + basePos.z;
 			dir = 180;
 			rot.y = (dir)-90;// *(XM_PI / 180.0f);
 			enemyobj->SetRotation(rot);
