@@ -47,8 +47,6 @@ public:
 
 	const int& GetFlashCount() { return FlashCount; }
 
-	const int& GetArmMoveNumber() { return ArmMoveNumber; }
-
 	const bool& GetAttackFlag() { return AttackFlag; }
 
 	const bool& GetDamageFlag() { return DamageFlag; }
@@ -81,16 +79,13 @@ public:
 
 	void SetFlash(int Flash) { this->FlashCount = FlashCount; }
 
-	void SetArmMoveNumber(int ArmMoveNumber) { this->ArmMoveNumber = ArmMoveNumber; }
-
 	void SetAttackFlag(bool AttackFlag) { this->AttackFlag = AttackFlag; }
 
 	void SetDamageFlag(bool DamageFlag) { this->DamageFlag = DamageFlag; }
 
 	void SetArmWeight(float ArmWeight) { this->ArmWeight = ArmWeight; }
 
-	void SetArmScale(float Armscale) { this->Armscale = Armscale; }
-
+	void SetAddSpeed(float AddSpeed) { this->AddSpeed = AddSpeed; }
 	void SetMove(float XMax, float ZMax) { this->XMax = XMax; this->ZMax = ZMax; }
 
 	//腕の重みリセット
@@ -122,9 +117,7 @@ private:
 
 	float PlayerSpeed = 0.3f;
 	//座標を戻す
-	bool undoPos = false;
 	float AfterRot =270.0f;
-	float rad = 0.4f;
 	float XMax = 0.0f;
 	float ZMax = 0.0f;
 	const float PI = 3.14f;
@@ -147,7 +140,6 @@ private:
 	float ArmWeight = 0.0f;
 	float power = 0.0f;
 	//いろいろなフラグ
-	int ArmMoveNumber = 0;
 	bool AttackFlag = false;
 	bool DamageFlag = false;
 	int AttackMoveNumber = 0;
@@ -170,7 +162,6 @@ private:
 	double angleR;
 	float angleX;
 	float angleZ;
-	
 	int wait = 0;
 	XMFLOAT3 rot;
 	bool pause = false;
@@ -183,7 +174,8 @@ private:
 	float speedlimit = 0.0f;
 	int chargeTimer = 0;
 	float afterSpeed = 0;
-	float afterScale = 0;
 	float RotCount = 0.0f;
 	bool SetArm = false;
+	float AddSpeed = 0.0f;
+	float Speedframe = 0.0f;
 };

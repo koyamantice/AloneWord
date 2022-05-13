@@ -109,6 +109,16 @@ void Player::Update() {
 			}
 		}
 
+
+		if (AddSpeed != 0.0f) {
+			Speedframe += 0.02f;
+			AddSpeed = Ease(Out, Cubic, Speedframe, AddSpeed, 0.0f);
+		}
+		else {
+			Speedframe = 0.0f;
+		}
+		PlayerSpeed = 0.3f + AddSpeed;
+
 		//腕振り回す系
 		if (AttackFlag == false) {
 			if (input->TriggerButton(input->Button_RB)) {
@@ -129,7 +139,7 @@ void Player::Update() {
 				}
 			}
 			else {
-				PlayerSpeed = 0.3f;
+				
 				if (RotCount >= 1) {
 					AttackMoveNumber = 1;
 					AttackFlag = true;
@@ -186,7 +196,6 @@ void Player::Update() {
 		Armscale = Ease(In, Cubic, frame2, Armscale, initscale);
 	}
 
-
 	//アニメーション用のキー入力
 	if ((input->LeftTiltStick(input->Right)) || (input->LeftTiltStick(input->Left))
 		|| (input->LeftTiltStick(input->Up)) || (input->LeftTiltStick(input->Down))) {
@@ -194,92 +203,6 @@ void Player::Update() {
 	} else {
 		move_count = 0;
 	}
-
-	//腕を伸ばす
-	//if (ArmMoveNumber == 1) {
-	//	Armscale = initscale + 3.0f * easeOutBack(frame / frameMax);
-	//	if (frame != frameMax) {
-	//		frame = frame + 1;
-	//	} else {
-	//		ArmMoveNumber = 2;
-	//		frame = 0;
-	//		initscale = Armscale;
-	//	}
-	//} else if (ArmMoveNumber == 2) {
-	//	Armscale = initscale - 3.0f * easeOutBack(frame / frameMax);
-	//	if (frame != frameMax) {
-	//		frame = frame + 1;
-	//	} else {
-	//		ArmMoveNumber = 0;
-	//		initscale = Armscale;
-	//		//Armscale += ArmWeight;
-	//	}
-	//}
-
-	////攻撃
-	//if (AttackFlag == true) {
-	//	if (AttackMoveNumber == 1 || AttackMoveNumber == 2) {
-	//		ArmSpeed = initspeed - 360.0f * easeBack(frame2 / frameMax2);
-	//		rot.y = initrotation + 360.0f * easeBack(frame2 / frameMax2);
-	//		ArmRot.y = initArmRotation + 360.0f * easeBack(frame2 / frameMax2);
-	//	} else {
-	//		ArmSpeed = initspeed + 360.0f * easeBack(frame2 / frameMax2);
-	//		rot.y = initrotation - 360.0f * easeBack(frame2 / frameMax2);
-	//		ArmRot.y = initArmRotation - 360.0f * easeBack(frame2 / frameMax2);
-	//	}
-	//	if (frame2 <= 10.0f) {
-	//		power = 0.25f;
-	//	} else if (frame2 > 10.0f && frame2 <= 20.0f) {
-	//		power = 0.5f;
-	//	} else if (frame2 > 20.0f && frame2 <= 30.0f) {
-	//		power = 0.75f;
-	//	} else {
-	//		power = 1.0f;
-	//	}
-
-	//	if (frame2 < frameMax2) {
-	//		frame2 = frame2 + 1;
-	//	} else {
-	//		AttackFlag = false;
-	//		frameMax2 = 40.0f;
-	//	}
-	//}
-
-	////攻撃時に腕を伸ばしている
-	//if (AttackMoveNumber == 1 || AttackMoveNumber == 3) {
-	//	if (ArmWeight > 0) {
-	//		Armscale = initscale + 3.0f * easeInOut(frame3 / frameMax3);
-	//		if (frame3 < frameMax3) {
-	//			frame3 = frame3 + 1;
-	//		} else {
-	//			if (AttackMoveNumber == 1) {
-	//				AttackMoveNumber = 2;
-	//			} else if (AttackMoveNumber == 3) {
-	//				AttackMoveNumber = 4;
-	//			}
-	//			initscale = Armscale;
-	//			scaleVel = 3.0f;
-	//			frame3 = 0;
-	//			frameMax3 = frameMax2;
-	//		}
-	//	} else {
-	//		AttackMoveNumber = 2;
-	//		scaleVel = Armscale - initscale;
-	//		initscale = Armscale;
-	//		frame3 = 0;
-	//		frameMax3 = frameMax2 / 20;
-	//	}
-	//}
-
-	//else if (AttackMoveNumber == 2 || AttackMoveNumber == 4) {
-	//	Armscale = initscale - scaleVel * easeInOut(frame3 / frameMax3);
-	//	if (frame3 < frameMax3) {
-	//		frame3 = frame3 + 1;
-	//	} else {
-	//		AttackMoveNumber = 0;
-	//		frameMax3 = frameMax2;
-	//	}
-	//}
 
 	//FlashCount == 4までプレイヤーがダメージを食らったあとの判定
 	if (Interval != 0 && FlashCount <= 5) {
@@ -405,22 +328,6 @@ void Player::Update() {
 	//パーティクル発生
 	BirthParticle();
 	//カメラのためのポジション(更新)
-	/*if (Interval == 0) {
-		targetpos = position;
-	} else if (Interval != 0 && Interval <= 99) {
-		if (targetpos.x != position.x || targetpos.z != position.z) {
-			angleX = (position.x - targetpos.x);
-			angleZ = (position.z - targetpos.z);
-			angleR = sqrt(pow((position.x - targetpos.x), 2) + pow((position.z - targetpos.z), 2));
-			if (angleR >= 1.00) {
-				targetpos.x += (angleX / (float)angleR) * 0.25f;
-				targetpos.x += (angleZ / (float)angleR) * 0.25f;
-			} else {
-				targetpos = position;
-			}
-		}
-	}*/
-
 	move_object1->SetPosition(position);
 	move_object1->SetRotation(rot);
 	//FBXアニメーションの管理
@@ -527,10 +434,9 @@ void Player::SelectUp() {
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
 	ImGui::Begin("test");
-	ImGui::SliderFloat("frame", &frame, 1, 0);
-	ImGui::SliderFloat("frame2", &frame2, 1, 0);
-	ImGui::SliderFloat("RotCount", &RotCount, 3, 0);
-	ImGui::Text("%d", AttackMoveNumber);
+	ImGui::SliderFloat("Speedframe", &Speedframe, 1, 0);
+	ImGui::SliderFloat("AddSpeed", &AddSpeed, 10, 0);
+	ImGui::SliderFloat("PlayerSpeed", &PlayerSpeed, 10, 0);
 	ImGui::Unindent();
 	ImGui::End();
 	Object3d::PreDraw();
@@ -625,7 +531,7 @@ void Player::Rebound(InterEnemy* enemy) {
 
 void Player::BirthParticle() {
 
-	if (ArmMoveNumber == 0 && AttackMoveNumber == 0 && AttackFlag == false&& Interval <= 80) {
+	if (AttackMoveNumber == 0 && AttackFlag == false&& Interval <= 80) {
 		if (input->LeftTiltStick(input->Right) || input->LeftTiltStick(input->Left) || input->LeftTiltStick(input->Up) || input->LeftTiltStick(input->Down)) {
 			if (oldPos.x!= position.x) {
 				count++;
