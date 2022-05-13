@@ -176,7 +176,7 @@ void Rice::Update() {
 	if (hit&&IsAlive && !EnemyCatch && !Exp) {
 		Rebound();
 	}
-	collideArm();
+	//collideArm();
 	
 	//collidePlayer();
 	//collideAttackArm();
@@ -349,7 +349,7 @@ void Rice::Demo(int num) {
 		add = false;
 		pos.y = 0.0f;
 	}
-	collideArm();
+	//collideArm();
 	//collidePlayer();
 	//collideAttackArm();
 	SetEnemy();
@@ -501,7 +501,7 @@ bool Rice::collidePlayer() {
 			player->SetHp(player->GetHp() - 1);
 			Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 			if (player->GetAttackFlag() == false) {
-				player->SetDamageFlag(true);
+				
 			}
 			Interval = 100;
 			return true;

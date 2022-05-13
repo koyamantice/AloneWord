@@ -7,6 +7,7 @@
 #include<iomanip>
 #include "stdlib.h"
 #include"Rice.h"
+#include "InterBoss.h"
 #include "SphereCollider.h"
 #include "ParticleManager.h"
 #include "CollisionManager.h"
@@ -434,9 +435,12 @@ void Player::SelectUp() {
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
 	ImGui::Begin("test");
-	ImGui::SliderFloat("Speedframe", &Speedframe, 1, 0);
+	/*ImGui::SliderFloat("Speedframe", &Speedframe, 1, 0);
 	ImGui::SliderFloat("AddSpeed", &AddSpeed, 10, 0);
-	ImGui::SliderFloat("PlayerSpeed", &PlayerSpeed, 10, 0);
+	ImGui::SliderFloat("PlayerWeight", &ArmWeight, 10, 0);*/
+	ImGui::Text("%d", DamageFlag);
+	ImGui::SliderFloat("PlayerWeight", &rebound.x, 10, 0);
+	ImGui::SliderFloat("damageframe", &damageframe, 10, 0);
 	ImGui::Unindent();
 	ImGui::End();
 	Object3d::PreDraw();
@@ -475,52 +479,25 @@ void Player::ResetWeight(InterEnemy* enemy) {
 }
 
 //ダメージ食らったときにプレイヤーが飛ばされる
-void Player::Rebound(InterEnemy* enemy) {
+void Player::Rebound(InterBoss* enemy) {
 	XMFLOAT3 enepos = enemy->GetPosition();
 
 	distance.x = position.x - enepos.x;
 	distance.z = position.z - enepos.z;
 
-
-	if (DamageFlag == true) {
-		if (distance.x <= 0) {
-			rebound.x = -0.2f;
-		} else {
-			rebound.x = 0.2f;
-		}
-
-		if (distance.z <= 0) {
-			rebound.z = -0.2f;
-		} else {
-			rebound.z = 0.2f;
-		}
+	if (damageframe >= 1.0f) {
+		damageframe = 0.0f;
 		DamageFlag = false;
 	}
-
-	if (rebound.x >= 0.0) {
-		rebound.x -= 0.005f;
-		if (rebound.x <= 0.0f) {
-			rebound.x = 0.0f;
-		}
-	} else {
-		rebound.x += 0.005f;
-		if (rebound.x >= 0.0f) {
-			rebound.x = 0.0f;
-		}
+	else {
+		damageframe += 0.05;
+		rebound.x = sin(atan2f(distance.x, distance.z)) * 0.05f;
+		rebound.y = cos(atan2f(distance.x, distance.z)) * 0.05f;
+		pos.x -= rebound.x;
+		pos.z += rebound.z;
 	}
 
-	if (rebound.z >= 0.0) {
-		rebound.z -= 0.045f;
-		if (rebound.z <= 0.0f) {
-			rebound.z = 0.0f;
-		}
-	} else {
-		rebound.z += 0.045f;
-		if (rebound.z >= 0.0f) {
-			rebound.z = 0.0f;
-		}
-	}
-
+	object3d->SetPosition(position);
 	//if (position.x <= 25.0f && position.x >= -25.0f) {
 	//	position.x += rebound.x;
 	//}

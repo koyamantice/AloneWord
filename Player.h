@@ -9,6 +9,7 @@
 #include "DirectXCommon.h"
 #include "FBXModel.h"
 #include "FBXObject3d.h"
+class InterBoss;
 class InterEnemy;
 class Player : public Object3d {
 public:
@@ -92,7 +93,7 @@ public:
 	void ResetWeight(InterEnemy* enemy);
 
 	//ダメージ食らったとき
-	void Rebound(InterEnemy* enemy);
+	void Rebound(InterBoss* enemy);
 	
 	//エフェクト
 	void EffectMove();
@@ -148,6 +149,8 @@ private:
 	//イージングのためのやつ
 	float frame = 0.0f;
 	float frame2 = 0.0f;
+	float Speedframe = 0.0f;
+	float damageframe = 0.0f;
 	bool wet = false;
 	int wetC = 0;
 	//ステータス的なやつ
@@ -177,5 +180,4 @@ private:
 	float RotCount = 0.0f;
 	bool SetArm = false;
 	float AddSpeed = 0.0f;
-	float Speedframe = 0.0f;
 };

@@ -9,9 +9,9 @@ void InterBoss::Update() {
 	Interval = player->GetInterval();
 	FlashCount = player->GetFlashCount();
 
-	//collideAttackArm();
+	collideAttackArm();
 	//collidePlayer();
-	Spec();
+	//Spec();
 	player->SetInterval(Interval);
 
 	enemyobj->Update();
@@ -23,6 +23,7 @@ void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
 
 	ImGui::Begin("test");
+	ImGui::SliderFloat("HP", &BossHP, 50, 0.0f);
 	/*ImGui::SliderFloat("angle", &angle, 200, -25);
 	ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
 	
@@ -66,21 +67,28 @@ bool InterBoss::collideAttackArm() {
 	float weight = player->GetArmWeight();
 	if (attackflag && !BossHit) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 1.3f, Armpos.x, Armpos.y, Armpos.z, 1.3f) == true && BossHP >= 1) {
-			BossHit = true;
-			player->SetAttackFlag(false);
-			//ついてる敵の数で音が変わる
-			if (weight <= 3) {
-				Audio::GetInstance()->PlayWave("Resources/Sound/strongL1.wav", 0.4f);
-			} else if (weight > 3 && weight <= 6) {
-				Audio::GetInstance()->PlayWave("Resources/Sound/strongL2.wav", 0.4f);
-			} else if (weight >= 7) {
-				Audio::GetInstance()->PlayWave("Resources/Sound/strongL3.wav", 0.4f);
+			//player->SetAttackFlag(false);
+			if (weight != 0.0f) {
+				BossHit = true;
+				//ついてる敵の数で音が変わる
+				if (weight <= 3) {
+					Audio::GetInstance()->PlayWave("Resources/Sound/strongL1.wav", 0.4f);
+				}
+				else if (weight > 3 && weight <= 6) {
+					Audio::GetInstance()->PlayWave("Resources/Sound/strongL2.wav", 0.4f);
+				}
+				else if (weight >= 7) {
+					Audio::GetInstance()->PlayWave("Resources/Sound/strongL3.wav", 0.4f);
+				}
+			}
+			else {
+				player->SetDamageFlag(true);
 			}
 
 			//ボスのHPをへらす
 			if (BossHit == true) {
 				Effect = true;
-				BossHP -= (weight * 2) * power;
+				BossHP -= (weight * 2);
 				weight = 0.0f;
 				boundpower.x = (float)(rand() % 4 - 2);
 				boundpower.y = (float)(rand() % 6);

@@ -160,7 +160,6 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	for (int i = 0; i < enemy.size()-1; i++) {
 		enemy[i]->Demo(i);
 		player->ResetWeight(enemy[i]);
-		player->Rebound(enemy[i]);
 	}
 	cameraPos.x = player->GetPosition().x;
 	cameraPos.y = player->GetPosition().y + distanceY;
