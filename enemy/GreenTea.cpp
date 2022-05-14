@@ -7,7 +7,7 @@
 using namespace DirectX;
 
 GreenTea::GreenTea() {
-	model = ModelManager::GetIns()->GetModel(ModelManager::Demo);
+	model = ModelManager::GetIns()->GetModel(ModelManager::Kyusu);
 	enemyobj = new Object3d();
 	for (int i = 0; i < 50; i++) {
 		hotWater[i] = new HotWater;
@@ -25,7 +25,7 @@ void GreenTea::Initialize(bool shadow) {
 	enemyobj->SetModel(model);
 	enemyobj->SetPosition(pos);
 	enemyobj->SetRotation(rot);
-	enemyobj->SetScale({ 1.0f,1.0f,1.0f });
+	enemyobj->SetScale({ 0.5f,0.5f,0.5f });
 
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();

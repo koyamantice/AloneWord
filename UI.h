@@ -24,7 +24,12 @@ private:
 	Player* player = nullptr;
 	InterBoss* boss = nullptr;
 	InterBoss* boss2 = nullptr;
-	Sprite* BossHp = nullptr;
+	Sprite* BossHp[3]{};
+	enum {
+		max,
+		damage,
+		now,
+	};
 	Sprite* BossHp2 = nullptr;
 	Sprite* PlaHp = nullptr;
 	Sprite* HpGauge = nullptr;
@@ -37,7 +42,7 @@ private:
 	Sprite* Vignette = nullptr;
 	Sprite* number[2][10]{};
 	Sprite* bairitu = nullptr;
-	XMFLOAT2 bossPos{};
+	XMFLOAT2 bossPos[2]{};
 	XMFLOAT2 bossPos2{};
 	XMFLOAT2 plaPos{};
 	XMFLOAT2 ArrowPos{};

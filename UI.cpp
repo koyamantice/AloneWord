@@ -7,9 +7,19 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	this->player = player;
 	this->boss = boss;
 	this->boss2 = boss2;
-	BossHp = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
-	BossHp->SetPosition({ 260.0f,20.0f });
-	BossHp->SetColor({ 1.0f,0.0f,0.0,1.0 });
+	BossHp[max] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
+	BossHp[max]->SetPosition({ 260.0f,20.0f });
+	BossHp[max]->SetColor({ 1.0f,0.0f,0.0f,1.0f });
+	BossHp[damage] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
+	BossHp[damage]->SetPosition({ 260.0f,20.0f });
+	BossHp[damage]->SetColor({ 1.0f,1.0f,0.0f,1.0f });
+	BossHp[now] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
+	BossHp[now]->SetPosition({ 260.0f,20.0f });
+	BossHp[now]->SetColor({ 0.0f,1.0f,0.0f,1.0f });
+	AfterPos[0] = { (float)(boss->GetHP() * 20),30 };
+	BossHp[max]->SetSize(AfterPos[0]);
+	BossHp[damage]->SetSize(AfterPos[0]);
+	BossHp[now]->SetSize(AfterPos[0]);
 	BossHp2 = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
 	BossHp2->SetPosition({ 260.0f,80.0f });
 	BossHp2->SetColor({ 1.0f,0.0f,0.0,1.0 });
@@ -82,11 +92,17 @@ void UI::Update() {
 	}
 	if (boss) {
 		AfterPos[0] = { (float)(boss->GetHP() * 20),30 };
-		bossPos = {
-		Ease(In,Quint,0.7f,BossHp->GetSize().x,AfterPos[0].x),
-		Ease(In,Quint,0.7f,BossHp->GetSize().y,AfterPos[0].y),
+
+		bossPos[0] = {
+		Ease(In,Quint,0.7f,BossHp[now]->GetSize().x,AfterPos[0].x),
+		Ease(In,Quint,0.7f,BossHp[now]->GetSize().y,AfterPos[0].y),
 		};
-		BossHp->SetSize(bossPos);
+		bossPos[1] = {
+		Ease(In,Quint,0.5f,BossHp[damage]->GetSize().x,AfterPos[0].x),
+		Ease(In,Quint,0.5f,BossHp[damage]->GetSize().y,AfterPos[0].y),
+		};
+		BossHp[damage]->SetSize(bossPos[1]);
+		BossHp[now]->SetSize(bossPos[0]);
 		SeachBoss();
 	}
 	if (boss2) {
@@ -101,7 +117,9 @@ void UI::Update() {
 }
 
 void UI::Finalize() {
-	delete BossHp;
+	for (int i = 0; i < 3;i++) {
+		delete BossHp[i];
+	}
 	delete BossHp2;
 	delete HpGauge;
 	delete Mark1;
@@ -112,7 +130,7 @@ void UI::Finalize() {
 
 const void UI::Draw() {
 	ImGui::Begin("test");
-	ImGui::SliderFloat("rot.x", &pos.x, 270, -90);
+	ImGui::SliderFloat("rot.x", &AfterPos[0].x, 270, -90);
 	ImGui::SliderFloat("rot.y", &pos.y, 270, -90);
 	//ImGui::SliderInt("dir", &dir, 360, -360);
 	////ImGui::SliderFloat("speed_y", &speed_y, 360, 0);
@@ -125,7 +143,9 @@ const void UI::Draw() {
 	Sprite::PreDraw();
 	//Vignette->Draw();
 	if (boss) {
-		BossHp->Draw();
+		BossHp[max]->Draw();
+		BossHp[damage]->Draw();
+		BossHp[now]->Draw();
 	}
 	if (boss2) {
 		BossHp2->Draw();
