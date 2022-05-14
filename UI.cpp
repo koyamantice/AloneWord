@@ -1,6 +1,8 @@
 ﻿#include "UI.h"
 #include <Easing.h>
 #include <ImageManager.h>
+#include"Collision.h"
+
 UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	this->player = player;
 	this->boss = boss;
@@ -40,7 +42,7 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	bairitu->SetAnchorPoint({ 1.0f,0.0f });
 	bairitu->SetScale(0.7f);
 	const int w = 48;
-	const int h = 80;
+	const int h = 48;
 	const int l = 10;
 	const float onePos = WinApp::window_width - 208.0f;
 	for (int i = 0; i < 2; i++) {
@@ -193,10 +195,7 @@ void UI::SeachBoss() {
 	radius = atan2f(position.x, position.z);// *PI / 180.0f;
 	circle.x = (sin(-radius)*150.0f)+WinApp::window_width/2; //*0.2251f;
 	circle.y = (cos(-radius)*150.0f)+WinApp::window_height/2; //*0.2251f;
-	if ((boss->GetPosition().x > player->GetPosition().x+8.0f||
-		boss->GetPosition().x < player->GetPosition().x - 8.0f)||
-		(boss->GetPosition().z > player->GetPosition().z + 8.0f ||
-		boss->GetPosition().z < player->GetPosition().z - 8.0f)){
+	if (!Collision::CircleCollision(bos.x,bos.z,10.0f,pla.x,pla.z,1.0f)){
 		invisible = 1;
 	} else {
 		invisible = 0;

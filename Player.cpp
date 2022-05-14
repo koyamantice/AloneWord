@@ -390,6 +390,9 @@ void Player::Update() {
 		position.y = 0.0f;
 		onGround = true;
 	}
+	if (position.z< -17) {
+		position.z = -17;
+	}
 	Armradius = ArmSpeed * PI / 180.0f;
 	ArmCircleX = cosf(Armradius) * Armscale;
 	ArmCircleZ = sinf(Armradius) * Armscale;
@@ -527,11 +530,13 @@ void Player::SelectUp() {
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
 	ImGui::Begin("test");
+	ImGui::SliderFloat("pos.x", &position.x, 80, -90);
+	ImGui::SliderFloat("pos.z", &position.z, 80, -90);
 	ImGui::SliderFloat("frame", &frame, 1, 0);
 	ImGui::SliderFloat("frame2", &frame2, 1, 0);
 	ImGui::SliderFloat("RotCount", &RotCount, 3, 0);
 	ImGui::Text("%d", AttackMoveNumber);
-	ImGui::Unindent();
+	//ImGui::Unindent();
 	ImGui::End();
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
