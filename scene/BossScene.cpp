@@ -349,7 +349,9 @@ Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
 			enemy[i]->Update();
 			enemy[i]->SetEnemy();
 			player->ResetWeight(enemy[i]);
-			player->Rebound(enemy[i]);
+		}
+		if (player->GetDamageFlag() == true) {
+			player->Rebound(bossenemy);
 		}
 		ui->Update();
 		cameraPos.x = player->GetPosition().x;

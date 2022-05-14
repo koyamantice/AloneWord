@@ -7,6 +7,7 @@
 #include<iomanip>
 #include "stdlib.h"
 #include"Rice.h"
+#include "InterBoss.h"
 #include "SphereCollider.h"
 #include "ParticleManager.h"
 #include "CollisionManager.h"
@@ -93,7 +94,7 @@ void Player::Update() {
 		//プレイヤーの移動
 		if (!(StickrotX<650 && StickrotX>-650)) {
 			position.x += sin(atan2(StickrotX, StickrotY)) * PlayerSpeed;
-			if (chargeTimer == 0) {
+			if (chargeTimer == 0 && !SetScale) {
 				rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 				ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 				ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
@@ -102,19 +103,29 @@ void Player::Update() {
 
 		if (!(StickrotY<650 && StickrotY>-650)) {
 			position.z -= cos(atan2(StickrotX, StickrotY)) * PlayerSpeed;
-			if (chargeTimer == 0) {
+			if (chargeTimer == 0 && !SetScale) {
 				rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 				ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 				ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
 			}
 		}
 
+
+		if (AddSpeed != 0.0f) {
+			Speedframe += 0.02f;
+			AddSpeed = Ease(Out, Cubic, Speedframe, AddSpeed, 0.0f);
+		}
+		else {
+			Speedframe = 0.0f;
+		}
+		PlayerSpeed = 0.3f + AddSpeed;
+
+		if (input->TriggerButton(input->Button_RB)) {
+			speedlimit = ArmSpeed - 90;
+		}
+
 		//腕振り回す系
 		if (AttackFlag == false) {
-			if (input->TriggerButton(input->Button_RB)) {
-				speedlimit = ArmSpeed - 90;
-			}
-
 			//ため時間
 			if (input->PushButton(input->Button_RB)) {
 				chargeTimer++;
@@ -125,18 +136,17 @@ void Player::Update() {
 				if (speedlimit <= ArmSpeed) {
 					ArmSpeed--;
 					ArmRot.y++;
-					rot.y++;
 				}
 			}
 			else {
-				PlayerSpeed = 0.3f;
-				if (RotCount >= 1) {
+				if (chargeTimer >= 100) {
 					AttackMoveNumber = 1;
 					AttackFlag = true;
 					afterSpeed = ArmSpeed + ((360 * RotCount) + 90);
 					initArmRotation = ArmRot.y - ((360 * RotCount) + 90);
-					initrotation = rot.y - ((360 * RotCount) + 90);
+					initrotation = rot.y - (360 * RotCount);
 					initscale = Armscale + 3.0f;
+					//chargeTimer = 0;
 				}
 				else {
 					chargeTimer = 0;
@@ -186,6 +196,21 @@ void Player::Update() {
 		Armscale = Ease(In, Cubic, frame2, Armscale, initscale);
 	}
 
+	if (SetScale) {
+		initscale = 1.0f;
+		if (frame2 >= 1.0f) {
+			AttackMoveNumber = 0;
+			frame2 = 0.0f;
+			SetScale = false;
+			frame = 0.0f;
+			chargeTimer = 0;
+			RotCount = 0;
+		}
+		else {
+			frame2 += 0.02;
+		}
+		Armscale = Ease(In, Cubic, frame2, Armscale, initscale);
+	}
 
 	//アニメーション用のキー入力
 	if ((input->LeftTiltStick(input->Right)) || (input->LeftTiltStick(input->Left))
@@ -194,92 +219,6 @@ void Player::Update() {
 	} else {
 		move_count = 0;
 	}
-
-	//腕を伸ばす
-	//if (ArmMoveNumber == 1) {
-	//	Armscale = initscale + 3.0f * easeOutBack(frame / frameMax);
-	//	if (frame != frameMax) {
-	//		frame = frame + 1;
-	//	} else {
-	//		ArmMoveNumber = 2;
-	//		frame = 0;
-	//		initscale = Armscale;
-	//	}
-	//} else if (ArmMoveNumber == 2) {
-	//	Armscale = initscale - 3.0f * easeOutBack(frame / frameMax);
-	//	if (frame != frameMax) {
-	//		frame = frame + 1;
-	//	} else {
-	//		ArmMoveNumber = 0;
-	//		initscale = Armscale;
-	//		//Armscale += ArmWeight;
-	//	}
-	//}
-
-	////攻撃
-	//if (AttackFlag == true) {
-	//	if (AttackMoveNumber == 1 || AttackMoveNumber == 2) {
-	//		ArmSpeed = initspeed - 360.0f * easeBack(frame2 / frameMax2);
-	//		rot.y = initrotation + 360.0f * easeBack(frame2 / frameMax2);
-	//		ArmRot.y = initArmRotation + 360.0f * easeBack(frame2 / frameMax2);
-	//	} else {
-	//		ArmSpeed = initspeed + 360.0f * easeBack(frame2 / frameMax2);
-	//		rot.y = initrotation - 360.0f * easeBack(frame2 / frameMax2);
-	//		ArmRot.y = initArmRotation - 360.0f * easeBack(frame2 / frameMax2);
-	//	}
-	//	if (frame2 <= 10.0f) {
-	//		power = 0.25f;
-	//	} else if (frame2 > 10.0f && frame2 <= 20.0f) {
-	//		power = 0.5f;
-	//	} else if (frame2 > 20.0f && frame2 <= 30.0f) {
-	//		power = 0.75f;
-	//	} else {
-	//		power = 1.0f;
-	//	}
-
-	//	if (frame2 < frameMax2) {
-	//		frame2 = frame2 + 1;
-	//	} else {
-	//		AttackFlag = false;
-	//		frameMax2 = 40.0f;
-	//	}
-	//}
-
-	////攻撃時に腕を伸ばしている
-	//if (AttackMoveNumber == 1 || AttackMoveNumber == 3) {
-	//	if (ArmWeight > 0) {
-	//		Armscale = initscale + 3.0f * easeInOut(frame3 / frameMax3);
-	//		if (frame3 < frameMax3) {
-	//			frame3 = frame3 + 1;
-	//		} else {
-	//			if (AttackMoveNumber == 1) {
-	//				AttackMoveNumber = 2;
-	//			} else if (AttackMoveNumber == 3) {
-	//				AttackMoveNumber = 4;
-	//			}
-	//			initscale = Armscale;
-	//			scaleVel = 3.0f;
-	//			frame3 = 0;
-	//			frameMax3 = frameMax2;
-	//		}
-	//	} else {
-	//		AttackMoveNumber = 2;
-	//		scaleVel = Armscale - initscale;
-	//		initscale = Armscale;
-	//		frame3 = 0;
-	//		frameMax3 = frameMax2 / 20;
-	//	}
-	//}
-
-	//else if (AttackMoveNumber == 2 || AttackMoveNumber == 4) {
-	//	Armscale = initscale - scaleVel * easeInOut(frame3 / frameMax3);
-	//	if (frame3 < frameMax3) {
-	//		frame3 = frame3 + 1;
-	//	} else {
-	//		AttackMoveNumber = 0;
-	//		frameMax3 = frameMax2;
-	//	}
-	//}
 
 	//FlashCount == 4までプレイヤーがダメージを食らったあとの判定
 	if (Interval != 0 && FlashCount <= 5) {
@@ -408,22 +347,6 @@ void Player::Update() {
 	//パーティクル発生
 	BirthParticle();
 	//カメラのためのポジション(更新)
-	/*if (Interval == 0) {
-		targetpos = position;
-	} else if (Interval != 0 && Interval <= 99) {
-		if (targetpos.x != position.x || targetpos.z != position.z) {
-			angleX = (position.x - targetpos.x);
-			angleZ = (position.z - targetpos.z);
-			angleR = sqrt(pow((position.x - targetpos.x), 2) + pow((position.z - targetpos.z), 2));
-			if (angleR >= 1.00) {
-				targetpos.x += (angleX / (float)angleR) * 0.25f;
-				targetpos.x += (angleZ / (float)angleR) * 0.25f;
-			} else {
-				targetpos = position;
-			}
-		}
-	}*/
-
 	move_object1->SetPosition(position);
 	move_object1->SetRotation(rot);
 	//FBXアニメーションの管理
@@ -530,13 +453,7 @@ void Player::SelectUp() {
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
 	ImGui::Begin("test");
-	ImGui::SliderFloat("pos.x", &position.x, 80, -90);
-	ImGui::SliderFloat("pos.z", &position.z, 80, -90);
-	ImGui::SliderFloat("frame", &frame, 1, 0);
-	ImGui::SliderFloat("frame2", &frame2, 1, 0);
-	ImGui::SliderFloat("RotCount", &RotCount, 3, 0);
-	ImGui::Text("%d", AttackMoveNumber);
-	//ImGui::Unindent();
+
 	ImGui::End();
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
@@ -574,8 +491,8 @@ void Player::ResetWeight(InterEnemy* enemy) {
 }
 
 //ダメージ食らったときにプレイヤーが飛ばされる
-void Player::Rebound(InterEnemy* enemy) {
-	XMFLOAT3 enepos = enemy->GetPosition();
+void Player::Rebound(InterBoss* boss) {
+	XMFLOAT3 enepos = boss->GetPosition();
 
 	distance.x = position.x - enepos.x;
 	distance.z = position.z - enepos.z;
@@ -584,13 +501,15 @@ void Player::Rebound(InterEnemy* enemy) {
 	if (DamageFlag == true) {
 		if (distance.x <= 0) {
 			rebound.x = -0.2f;
-		} else {
+		}
+		else {
 			rebound.x = 0.2f;
 		}
 
 		if (distance.z <= 0) {
 			rebound.z = -0.2f;
-		} else {
+		}
+		else {
 			rebound.z = 0.2f;
 		}
 		DamageFlag = false;
@@ -601,7 +520,8 @@ void Player::Rebound(InterEnemy* enemy) {
 		if (rebound.x <= 0.0f) {
 			rebound.x = 0.0f;
 		}
-	} else {
+	}
+	else {
 		rebound.x += 0.005f;
 		if (rebound.x >= 0.0f) {
 			rebound.x = 0.0f;
@@ -613,24 +533,25 @@ void Player::Rebound(InterEnemy* enemy) {
 		if (rebound.z <= 0.0f) {
 			rebound.z = 0.0f;
 		}
-	} else {
+	}
+	else {
 		rebound.z += 0.045f;
 		if (rebound.z >= 0.0f) {
 			rebound.z = 0.0f;
 		}
 	}
 
-	//if (position.x <= 25.0f && position.x >= -25.0f) {
-	//	position.x += rebound.x;
-	//}
-	//if (position.z <= 20.0f && position.z >= -20.0f) {
-	//	position.z += rebound.z;
-	//}
+	if (position.x <= 25.0f && position.x >= -25.0f) {
+		position.x += rebound.x;
+	}
+	if (position.z <= 20.0f && position.z >= -20.0f) {
+		position.z += rebound.z;
+	}
 }
 
 void Player::BirthParticle() {
 
-	if (ArmMoveNumber == 0 && AttackMoveNumber == 0 && AttackFlag == false&& Interval <= 80) {
+	if (AttackMoveNumber == 0 && AttackFlag == false&& Interval <= 80) {
 		if (input->LeftTiltStick(input->Right) || input->LeftTiltStick(input->Left) || input->LeftTiltStick(input->Up) || input->LeftTiltStick(input->Down)) {
 			if (oldPos.x!= position.x) {
 				count++;

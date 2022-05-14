@@ -9,6 +9,7 @@
 #include "DirectXCommon.h"
 #include "FBXModel.h"
 #include "FBXObject3d.h"
+class InterBoss;
 class InterEnemy;
 class Player : public Object3d {
 public:
@@ -47,8 +48,6 @@ public:
 
 	const int& GetFlashCount() { return FlashCount; }
 
-	const int& GetArmMoveNumber() { return ArmMoveNumber; }
-
 	const bool& GetAttackFlag() { return AttackFlag; }
 
 	const bool& GetDamageFlag() { return DamageFlag; }
@@ -81,23 +80,27 @@ public:
 
 	void SetFlash(int Flash) { this->FlashCount = FlashCount; }
 
-	void SetArmMoveNumber(int ArmMoveNumber) { this->ArmMoveNumber = ArmMoveNumber; }
+	void SetCharge(int chargeTimer) { this->chargeTimer = chargeTimer; }
 
 	void SetAttackFlag(bool AttackFlag) { this->AttackFlag = AttackFlag; }
 
 	void SetDamageFlag(bool DamageFlag) { this->DamageFlag = DamageFlag; }
 
+	void SetArmScale(bool SetScale) { this->SetScale = SetScale; }
+
 	void SetArmWeight(float ArmWeight) { this->ArmWeight = ArmWeight; }
 
-	void SetArmScale(float Armscale) { this->Armscale = Armscale; }
+	void SetAddSpeed(float AddSpeed) { this->AddSpeed = AddSpeed; }
 
+	void SetFrame(float frame) { this->frame = frame; }
+	void SetFrame2(float frame2) { this->frame2 = frame2; }
 	void SetMove(float XMax, float ZMax) { this->XMax = XMax; this->ZMax = ZMax; }
 
 	//腕の重みリセット
 	void ResetWeight(InterEnemy* enemy);
 
 	//ダメージ食らったとき
-	void Rebound(InterEnemy* enemy);
+	void Rebound(InterBoss* enemy);
 	
 	//エフェクト
 	void EffectMove();
@@ -122,9 +125,7 @@ private:
 
 	float PlayerSpeed = 0.3f;
 	//座標を戻す
-	bool undoPos = false;
 	float AfterRot =270.0f;
-	float rad = 0.4f;
 	float XMax = 0.0f;
 	float ZMax = 0.0f;
 	const float PI = 3.14f;
@@ -147,7 +148,6 @@ private:
 	float ArmWeight = 0.0f;
 	float power = 0.0f;
 	//いろいろなフラグ
-	int ArmMoveNumber = 0;
 	bool AttackFlag = false;
 	bool DamageFlag = false;
 	int AttackMoveNumber = 0;
@@ -156,6 +156,8 @@ private:
 	//イージングのためのやつ
 	float frame = 0.0f;
 	float frame2 = 0.0f;
+	float Speedframe = 0.0f;
+	float damageframe = 0.0f;
 	bool wet = false;
 	int wetC = 0;
 	//ステータス的なやつ
@@ -170,7 +172,6 @@ private:
 	double angleR;
 	float angleX;
 	float angleZ;
-	
 	int wait = 0;
 	XMFLOAT3 rot;
 	bool pause = false;
@@ -183,7 +184,7 @@ private:
 	float speedlimit = 0.0f;
 	int chargeTimer = 0;
 	float afterSpeed = 0;
-	float afterScale = 0;
 	float RotCount = 0.0f;
-	bool SetArm = false;
+	bool SetScale = false;
+	float AddSpeed = 0.0f;
 };
