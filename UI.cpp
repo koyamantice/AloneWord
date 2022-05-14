@@ -166,7 +166,7 @@ void UI::EaseScale() {
 		Up = false;
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 10; j++) {
-				number[i][j]->SetSize({ 48,80 });
+				number[i][j]->SetSize({ 48,48 });
 				if (i > 0) {
 					number[i][j]->SetScale(1.0f);
 				} else {
