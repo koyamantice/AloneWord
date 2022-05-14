@@ -44,7 +44,8 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	Arrow->SetAnchorPoint({ 0.5f,0.5f });
 	Arrow->SetIsFlipY(true);
 	Arrow->SetPosition({ 0,0 });
-	Arrow2 = Sprite::Create(ImageManager::arrow, { 0.0f,0.0f });
+	Arrow2 = Sprite::Create(ImageManager::arrow2, { 0.0f,0.0f });
+	Arrow2->SetAnchorPoint({ 0.5f,0.5f });
 	Arrow2->SetIsFlipY(true);
 	Arrow2->SetPosition({ 0,0 });
 	Vignette = Sprite::Create(ImageManager::vignette, { 0.0f,0.0f });
@@ -157,11 +158,11 @@ const void UI::Draw() {
 	PlaHp->Draw();
 	//Life->Draw();
 
-	if (boss && invisible && boss->GetHP() >= 1) {
+	if (boss && invisible[0] && boss->GetHP() >= 1) {
 		Arrow->Draw();
 	}
 
-	if (boss2 && invisible && boss2->GetHP() >= 1) {
+	if (boss2 && invisible[1] && boss2->GetHP() >= 1) {
 		Arrow2->Draw();
 	}
 	for (int i = 0; i < power.size() && i < 2; i++) {
@@ -218,9 +219,9 @@ void UI::SeachBoss() {
 	circle.x = (sin(-radius)*150.0f)+WinApp::window_width/2; //*0.2251f;
 	circle.y = (cos(-radius)*150.0f)+WinApp::window_height/2; //*0.2251f;
 	if (!Collision::CircleCollision(bos.x,bos.z,10.0f,pla.x,pla.z,1.0f)){
-		invisible = 1;
+		invisible[0] = 1;
 	} else {
-		invisible = 0;
+		invisible[0] = 0;
 	}
 	Arrow->SetRotation(radius * (180.0f / XM_PI));//-radius * PI / 180.0f);
 	Arrow->SetPosition(circle);
@@ -236,17 +237,14 @@ void UI::SeachBoss2() {
 	position.z = (pla.z - bos.z);
 
 	radius = atan2f(position.x, position.z);// *PI / 180.0f;
-	circle2.x = (sin(-radius) * 150.0f) + WinApp::window_width / 2; //*0.2251f;
-	circle2.y = (cos(-radius) * 150.0f) + WinApp::window_height / 2; //*0.2251f;
+	circle2.x = (sin(-radius) * 100.0f) + WinApp::window_width / 2; //*0.2251f;
+	circle2.y = (cos(-radius) * 100.0f) + WinApp::window_height / 2; //*0.2251f;
 
-	if ((boss->GetPosition().x > player->GetPosition().x + 10.0f ||
-		boss->GetPosition().x < player->GetPosition().x - 10.0f) ||
-		(boss->GetPosition().z > player->GetPosition().z + 10.0f ||
-		boss->GetPosition().z < player->GetPosition().z - 10.0f)) {
-		invisible = 0;
+	if (!Collision::CircleCollision(bos.x, bos.z, 10.0f, pla.x, pla.z, 1.0f)) {
+		invisible[1] = 1;
 	}
 	else {
-		invisible = 1;
+		invisible[1] = 0;
 	}
 	Arrow2->SetRotation(radius * (180.0f / XM_PI));//-radius * PI / 180.0f);
 	Arrow2->SetPosition(circle2);

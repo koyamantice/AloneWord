@@ -68,7 +68,7 @@ private:
 	double posR;
 	float Check;
 	float Check2;
-	int invisible = false;
+	int invisible[2] {};
 private:
 	void SeachBoss();
 	void SeachBoss2();

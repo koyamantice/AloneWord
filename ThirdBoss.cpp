@@ -181,15 +181,15 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 			}
 
 			cameraPos = {
-Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
-Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
-Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+			Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+			Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+			Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
 			};
-
+			
 			cameratargetPos = {
-Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
-Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
-Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+			Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+			Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+			Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			};
 		}
 		else if (appearanceNumber == 2) {
