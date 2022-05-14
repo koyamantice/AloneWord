@@ -10,6 +10,9 @@ public:
 	void Update();
 	void Finalize();
 	const void Draw();
+
+	void SetUp(bool Up) { this->Up = Up; }
+	void EaseScale();
 private:
 	// DirectX::Çè»ó™
 	using XMFLOAT2 = DirectX::XMFLOAT2;
@@ -43,16 +46,19 @@ private:
 	XMFLOAT2 AfterPos2[2]{};
 	const float PI = 3.145265f;
 	std::vector<int> power;
-	float strong =200.0f;
+	float strong =20.0f;
+	XMFLOAT2 pos{ (float)WinApp::window_width - 70 ,21 + 80 };
 	float speed = 0;
-
+	bool Up=false;
+	float vel = 2.0f;
+	float frame = 0.0f;
 	float scale = 50;
 	double a;
 	double b;
 	XMFLOAT2 basePos = { 1280 / 2,720 / 2 };
 	XMFLOAT2 circle={640.0f,360.0f};
 	XMFLOAT2 circle2 = { 640.0f,360.0f };
-	XMFLOAT3 pos{};
+	//XMFLOAT3 pos{};
 	double posR;
 	float Check;
 	float Check2;

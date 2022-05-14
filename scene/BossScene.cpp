@@ -212,15 +212,15 @@ Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
 			}
 
 			cameraPos = {
-Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
-Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
-Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
-			};
-
-			cameratargetPos = {
-Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
-Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
-Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+		Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+		Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+		Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+					};
+		
+					cameratargetPos = {
+		Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+		Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+		Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			};
 
 			if (appearanceTimer == 400) {
@@ -250,15 +250,15 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			}
 
 			cameraPos = {
-Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
-Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
-Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
-			};
-
-			cameratargetPos = {
-Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
-Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
-Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+		Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+		Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+		Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+					};
+		
+					cameratargetPos = {
+		Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+		Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+		Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			};
 
 			if (appearanceTimer == 450) {
@@ -326,15 +326,15 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			bossName->SetPosition(namePos);
 
 			cameraPos = {
-Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
-Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
-Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
-			};
-
-			cameratargetPos = {
-Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
-Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
-Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+		Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+		Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+		Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+					};
+		
+					cameratargetPos = {
+		Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+		Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+		Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			};
 		}
 
