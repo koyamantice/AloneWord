@@ -1,6 +1,8 @@
 ﻿#include "UI.h"
 #include <Easing.h>
 #include <ImageManager.h>
+#include"Collision.h"
+
 UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	this->player = player;
 	this->boss = boss;
@@ -36,11 +38,11 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	Vignette = Sprite::Create(ImageManager::vignette, { 0.0f,0.0f });
 	Vignette->SetPosition({ 0,0 });
 	Vignette->SetColor({ 255,255,255,0.75f });
-	bairitu = Sprite::Create(ImageManager::bairitu, { 1280.0f,0.0f });
+	bairitu = Sprite::Create(ImageManager::bairitu, { 1240.0f,10.0f });
 	bairitu->SetAnchorPoint({ 1.0f,0.0f });
-	//bairitu->SetScale(2.5f);
+	bairitu->SetScale(0.7f);
 	const int w = 48;
-	const int h = 80;
+	const int h = 48;
 	const int l = 10;
 	const float onePos = WinApp::window_width - 208.0f;
 	for (int i = 0; i < 2; i++) {
@@ -53,17 +55,17 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 				{ static_cast<float>(w), static_cast<float>(h) });
 			number[i][j]->SetSize({ w,h });
 			if (i>0) {
-				number[i][j]->SetScale(1.4f);
+				number[i][j]->SetScale(1.0f);
 			}
 			else {
-				number[i][j]->SetScale(1.2f);
+				number[i][j]->SetScale(0.8f);
 			}
 			number[i][j]->SetAnchorPoint({ 0,0 });
 		}
 	}
 	for (int j = 0; j < 10; j++) {
 		number[0][j]->SetPosition(pos);
-		number[1][j]->SetPosition({ (float)WinApp::window_width - 93 -  55 ,7+80 });
+		number[1][j]->SetPosition(pos2);
 	}
 }
 void UI::Update() {
@@ -118,7 +120,7 @@ const void UI::Draw() {
 	////ImGui::Text("Count::%d", moveCount);
 	////ImGui::Text("Move::%d", isMove);
 	////ImGui::Text("Hit::%d", hit);
-	//////ImGui::Unindent();
+	////ImGui::Unindent();
 	ImGui::End();
 	Sprite::PreDraw();
 	//Vignette->Draw();
@@ -157,18 +159,18 @@ void UI::EaseScale() {
 	}
 	//pos.x = Ease(In,Quad,frame, (float)WinApp::window_width - 70, (float)WinApp::window_width - 90);
 	//pos.y = Ease(In, Quad, frame, 21 + 80, 40 + 80);
-	vel = Ease(In, Quad, frame, 1.5f, 1.2f);
+	vel = Ease(In, Quad, frame, 1.3f, 1.1f);
 
 	if (frame > 1.2f) {
 		frame = 0.0f;
 		Up = false;
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 10; j++) {
-				number[i][j]->SetSize({ 48,80 });
+				number[i][j]->SetSize({ 48,48 });
 				if (i > 0) {
-					number[i][j]->SetScale(1.4f);
+					number[i][j]->SetScale(1.0f);
 				} else {
-					number[i][j]->SetScale(1.2f);
+					number[i][j]->SetScale(0.8f);
 				}
 			}
 		}
@@ -193,10 +195,7 @@ void UI::SeachBoss() {
 	radius = atan2f(position.x, position.z);// *PI / 180.0f;
 	circle.x = (sin(-radius)*150.0f)+WinApp::window_width/2; //*0.2251f;
 	circle.y = (cos(-radius)*150.0f)+WinApp::window_height/2; //*0.2251f;
-	if ((boss->GetPosition().x > player->GetPosition().x+8.0f||
-		boss->GetPosition().x < player->GetPosition().x - 8.0f)||
-		(boss->GetPosition().z > player->GetPosition().z + 8.0f ||
-		boss->GetPosition().z < player->GetPosition().z - 8.0f)){
+	if (!Collision::CircleCollision(bos.x,bos.z,10.0f,pla.x,pla.z,1.0f)){
 		invisible = 1;
 	} else {
 		invisible = 0;

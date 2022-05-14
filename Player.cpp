@@ -329,6 +329,9 @@ void Player::Update() {
 		position.y = 0.0f;
 		onGround = true;
 	}
+	if (position.z< -17) {
+		position.z = -17;
+	}
 	Armradius = ArmSpeed * PI / 180.0f;
 	ArmCircleX = cosf(Armradius) * Armscale;
 	ArmCircleZ = sinf(Armradius) * Armscale;
@@ -450,12 +453,7 @@ void Player::SelectUp() {
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
 	ImGui::Begin("test");
-	/*ImGui::SliderFloat("Speedframe", &Speedframe, 1, 0);
-	ImGui::SliderFloat("AddSpeed", &AddSpeed, 10, 0);
-	ImGui::SliderFloat("PlayerWeight", &ArmWeight, 10, 0);*/
-	ImGui::Text("%d", DamageFlag);
-	ImGui::SliderFloat("rebound.x", &rebound.x, 10, 0);
-	ImGui::Unindent();
+
 	ImGui::End();
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
