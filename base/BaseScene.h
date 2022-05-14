@@ -20,6 +20,7 @@ class SceneManager;
 #include "ParticleManager.h"
 #include "FPSManager.h"
 #include<memory>
+#include "SceneChange.h"
 
 /// <summary>
 /// ƒV[ƒ“‹K’è

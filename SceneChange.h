@@ -38,6 +38,7 @@
 class SceneChange {
 public:
 	SceneChange();
+	void Initialize();
 	void Update();
 	void Finalize();
 	const void Draw();
@@ -48,6 +49,8 @@ public:
 	void ShrinkChange();
 	
 	const float& GetScale() { return scale; }
+
+	const float& GetTimer() { return timer; }
 	
 	void SetStartChange(bool startchange) { this->startchange = startchange; }
 	void SetEndChange(bool endchange) { this->endchange = endchange; }

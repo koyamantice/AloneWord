@@ -21,16 +21,15 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 	Input* input = Input::GetInstance();
 	if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_X)) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
-		SceneManager::GetInstance()->ChangeScene("StageSelect");
+		scenechange->SetStartChange(true);
 	}
 	else if (input->TriggerButton(input->Button_A)) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 		scenechange->SetStartChange(true);
-		scenechange->SetEndChange(false);
 	}
-	else if (input->TriggerButton(input->Button_Y)) {
-		scenechange->SetStartChange(false);
-		scenechange->SetEndChange(true);
+
+	if (scenechange->GetTimer() >= 99) {
+		SceneManager::GetInstance()->ChangeScene("StageSelect");
 	}
 
 	scenechange->Update();
@@ -54,7 +53,7 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 void TitleScene::Draw(DirectXCommon* dxCommon) {
 	sprite->PreDraw();
 	//”wŒi—p
-	//sprite->Draw();
+	sprite->Draw();
 	scenechange->Draw();
 	//‘O–Ê—p
 

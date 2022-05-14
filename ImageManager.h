@@ -46,6 +46,7 @@ public:
 		button,
 		num,
 		bairitu,
+		Change,
 	};
 	enum tex2dName {
 	enemy,//Texture::LoadTexture(0, L"Resources/2d/enemy.png");

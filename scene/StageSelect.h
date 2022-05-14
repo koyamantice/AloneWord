@@ -1,7 +1,7 @@
 #pragma once
 #include "BaseScene.h"
 #include "Player.h"
-
+#include "SceneChange.h"
 class StageSelect :
     public BaseScene {
 
@@ -30,6 +30,7 @@ private:
 	Input* input = Input::GetInstance();
 	DebugCamera* camera = { nullptr };
 	Player* player=nullptr;
+	SceneChange* scenechange = false;
 	enum stage {
 		fork,
 		boots,
