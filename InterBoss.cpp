@@ -86,7 +86,7 @@ bool InterBoss::collideAttackArm() {
 				}
 			}
 			else {
-				//Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
+				Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 				player->SetDamageFlag(true);
 			}
 

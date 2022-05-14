@@ -453,9 +453,8 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	/*ImGui::SliderFloat("Speedframe", &Speedframe, 1, 0);
 	ImGui::SliderFloat("AddSpeed", &AddSpeed, 10, 0);
 	ImGui::SliderFloat("PlayerWeight", &ArmWeight, 10, 0);*/
-	ImGui::Text("%d", SetScale);
-	ImGui::Text("%d", RotCount);
-	ImGui::Text("%d", chargeTimer);
+	ImGui::Text("%d", DamageFlag);
+	ImGui::SliderFloat("rebound.x", &rebound.x, 10, 0);
 	ImGui::Unindent();
 	ImGui::End();
 	Object3d::PreDraw();
@@ -502,26 +501,54 @@ void Player::Rebound(InterBoss* boss) {
 
 
 	if (DamageFlag == true) {
+		if (distance.x <= 0) {
+			rebound.x = -0.2f;
+		}
+		else {
+			rebound.x = 0.2f;
+		}
 
-		rebound.x = sin(atan2f(distance.x, distance.z)) * 2.0f;
-		rebound.z = cos(atan2f(distance.x, distance.z)) * 2.0f;
+		if (distance.z <= 0) {
+			rebound.z = -0.2f;
+		}
+		else {
+			rebound.z = 0.2f;
+		}
 		DamageFlag = false;
 	}
 
-	if (damageframe >= 1.0f) {
-		rebound.x = 0.0f;
-		rebound.z = 0.0f;
+	if (rebound.x >= 0.0) {
+		rebound.x -= 0.005f;
+		if (rebound.x <= 0.0f) {
+			rebound.x = 0.0f;
+		}
 	}
 	else {
-		damageframe += 0.01f;
+		rebound.x += 0.005f;
+		if (rebound.x >= 0.0f) {
+			rebound.x = 0.0f;
+		}
 	}
 
-	rebound.x = Ease(Out, Cubic, damageframe, rebound.x, 0.0f);
-	rebound.z = Ease(Out, Cubic, damageframe, rebound.z, 0.0f);
+	if (rebound.z >= 0.0) {
+		rebound.z -= 0.045f;
+		if (rebound.z <= 0.0f) {
+			rebound.z = 0.0f;
+		}
+	}
+	else {
+		rebound.z += 0.045f;
+		if (rebound.z >= 0.0f) {
+			rebound.z = 0.0f;
+		}
+	}
 
-		position.x -= rebound.x;
-	
+	if (position.x <= 25.0f && position.x >= -25.0f) {
+		position.x += rebound.x;
+	}
+	if (position.z <= 20.0f && position.z >= -20.0f) {
 		position.z += rebound.z;
+	}
 }
 
 void Player::BirthParticle() {
