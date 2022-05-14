@@ -150,7 +150,6 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	if (player->GetHp() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 	}
-	ui->Update();
 	objFloor->Update();
 	objStartMap->Update();
 	lightGroup->Update();
@@ -163,6 +162,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		player->ResetWeight(enemy[i]);
 		player->Rebound(enemy[i]);
 	}
+	ui->Update();
 	cameraPos.x = player->GetPosition().x;
 	cameraPos.y = player->GetPosition().y + distanceY;
 	cameraPos.z = player->GetPosition().z - distanceZ;
@@ -178,11 +178,11 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 		enemy[i]->Draw();
 	}
 	player->Draw(dxCommon);
-	ui->Draw();
 
 	spawing->Draw();
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
+	ui->Draw();
 	Sprite::PreDraw();
 
 }
