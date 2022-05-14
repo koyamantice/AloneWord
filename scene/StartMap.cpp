@@ -144,7 +144,8 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	}*/
 
 	if (input->TriggerKey(DIK_C)) {
-		SceneManager::GetInstance()->ChangeScene("CLEAR");
+		//SceneManager::GetInstance()->ChangeScene("CLEAR");
+		ui->SetUp(true);
 	}
 	if (player->GetHp() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");

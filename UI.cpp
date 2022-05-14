@@ -53,27 +53,21 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 				{ static_cast<float>(w), static_cast<float>(h) });
 			number[i][j]->SetSize({ w,h });
 			if (i>0) {
+				number[i][j]->SetScale(1.4f);
+			}
+			else {
 				number[i][j]->SetScale(1.2f);
 			}
 			number[i][j]->SetAnchorPoint({ 0,0 });
 		}
 	}
 	for (int j = 0; j < 10; j++) {
-		number[0][j]->SetPosition({ (float)WinApp::window_width - 70 ,21+80 });
-		number[1][j]->SetPosition({ (float)WinApp::window_width - 93 - 55 ,7+80 });
+		number[0][j]->SetPosition(pos);
+		number[1][j]->SetPosition({ (float)WinApp::window_width - 93 -  55 ,7+80 });
 	}
 }
 void UI::Update() {
-	//storng=player->power;
-	//strong *= 100;
-	power.clear();
-	for (int tmp = strong; tmp > 0;) {
-		power.push_back(tmp % 10);
-		tmp /= 10;
-	}
-
-
-	{//HPˆ—
+	{//HP
 		AfterPos[1] = { (float)(player->GetHp() * 43),55 };
 		plaPos = {
 		Ease(In,Quad,0.7f,(float)PlaHp->GetSize().x,(float)AfterPos[1].x),
@@ -81,7 +75,9 @@ void UI::Update() {
 		};
 		PlaHp->SetSize(plaPos);
 	}
-
+	if (Up) {
+		EaseScale();
+	}
 	if (boss) {
 		AfterPos[0] = { (float)(boss->GetHP() * 20),30 };
 		bossPos = {
@@ -113,7 +109,17 @@ void UI::Finalize() {
 }
 
 const void UI::Draw() {
-
+	ImGui::Begin("test");
+	ImGui::SliderFloat("rot.x", &pos.x, 270, -90);
+	ImGui::SliderFloat("rot.y", &pos.y, 270, -90);
+	//ImGui::SliderInt("dir", &dir, 360, -360);
+	////ImGui::SliderFloat("speed_y", &speed_y, 360, 0);
+	ImGui::SliderFloat("scale", &vel, 360, 0);
+	////ImGui::Text("Count::%d", moveCount);
+	////ImGui::Text("Move::%d", isMove);
+	////ImGui::Text("Hit::%d", hit);
+	//////ImGui::Unindent();
+	ImGui::End();
 	Sprite::PreDraw();
 	//Vignette->Draw();
 	if (boss) {
@@ -138,6 +144,41 @@ const void UI::Draw() {
 		number[i][power[i]]->Draw();
 	}
 	bairitu->Draw();
+}
+
+void UI::EaseScale() {
+	//strong = 2;
+	//strong *= 10;
+	strong = strong;
+	power.clear();
+	for (int tmp = strong; tmp > 0;) {
+		power.push_back(tmp % 10);
+		tmp /= 10;
+	}
+	//pos.x = Ease(In,Quad,frame, (float)WinApp::window_width - 70, (float)WinApp::window_width - 90);
+	//pos.y = Ease(In, Quad, frame, 21 + 80, 40 + 80);
+	vel = Ease(In, Quad, frame, 1.5f, 1.2f);
+
+	if (frame > 1.2f) {
+		frame = 0.0f;
+		Up = false;
+		for (int i = 0; i < 2; i++) {
+			for (int j = 0; j < 10; j++) {
+				number[i][j]->SetSize({ 48,80 });
+				if (i > 0) {
+					number[i][j]->SetScale(1.4f);
+				} else {
+					number[i][j]->SetScale(1.2f);
+				}
+			}
+		}
+	} else {
+		frame += 0.3f;
+	}
+
+	for (int i = 0; i < power.size() && i < 2; i++) {
+		number[i][power[i]]->SetScale(vel);
+	}
 }
 
 void UI::SeachBoss() {
