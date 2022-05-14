@@ -292,6 +292,7 @@
     <ClCompile Include="Pastel.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RightShose.cpp" />
+    <ClCompile Include="SceneChange.cpp" />
     <ClCompile Include="scene\BossScene.cpp" />
     <ClCompile Include="scene\ClearScene.cpp" />
     <ClCompile Include="scene\GameoverScene.cpp" />
@@ -322,6 +323,7 @@
     <ClInclude Include="3d\Mesh.h" />
     <ClInclude Include="3d\Model.h" />
     <ClInclude Include="3d\Object3d.h" />
+    <ClInclude Include="SceneChange.h" />
     <ClInclude Include="ShockWave.h" />
     <ClInclude Include="base\AbstractSceneFactory.h" />
     <ClInclude Include="base\Audio.h" />

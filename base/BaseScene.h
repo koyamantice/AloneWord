@@ -11,6 +11,7 @@ class SceneManager;
 #include "Texture.h"
 #include <DirectXMath.h>
 #include "Player.h"
+#include "SceneChange.h"
 #include "Rice.h"
 #include "input.h"
 #include "Effect.h"

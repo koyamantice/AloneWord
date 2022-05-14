@@ -246,6 +246,9 @@
     <ClCompile Include="scene\StartMap.cpp">
       <Filter>stage\タイトル</Filter>
     </ClCompile>
+    <ClCompile Include="SceneChange.cpp">
+      <Filter>effect</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2d\Sprite.h">
@@ -484,6 +487,9 @@
     </ClInclude>
     <ClInclude Include="scene\StartMap.h">
       <Filter>stage\タイトル</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneChange.h">
+      <Filter>effect</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

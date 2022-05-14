@@ -5,17 +5,16 @@
 #include "DebugText.h"
 #include"ImageManager.h"
 void TitleScene::Initialize(DirectXCommon* dxCommon) {
-
 	//背景スプライト生成
 	sprite = Sprite::Create(ImageManager::TITLE, { 0.0f,0.0f });
 	//スプライト生成
-
-
+	scenechange = new SceneChange();
 }
 
 void TitleScene::Finalize() {
 	//３ｄのモデルのデリート
 	delete sprite;
+	scenechange->Finalize();
 }
 
 void TitleScene::Update(DirectXCommon* dxCommon) {
@@ -26,8 +25,18 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 	}
 	else if (input->TriggerButton(input->Button_A)) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
-		SceneManager::GetInstance()->ChangeScene("STARTMAP");
+		scenechange->SetStartChange(true);
+		scenechange->SetEndChange(false);
 	}
+	else if (input->TriggerButton(input->Button_Y)) {
+		scenechange->SetStartChange(false);
+		scenechange->SetEndChange(true);
+	}
+
+	scenechange->Update();
+	//if (scenechange->GetScale() >= 100.0f) {
+	//	//SceneManager::GetInstance()->ChangeScene("STARTMAP");
+	//}
 	//if (input->PushKey(DIK_SPACE) || input->TriggerButton(input->Button_X)) {
 	//	SceneManager::GetInstance()->ChangeScene("SECONDBOSS");
 	//}
@@ -45,8 +54,8 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 void TitleScene::Draw(DirectXCommon* dxCommon) {
 	sprite->PreDraw();
 	//背景用
-	sprite->Draw();
-
+	//sprite->Draw();
+	scenechange->Draw();
 	//前面用
 
 }
