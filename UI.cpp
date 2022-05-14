@@ -55,10 +55,10 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 				{ static_cast<float>(w), static_cast<float>(h) });
 			number[i][j]->SetSize({ w,h });
 			if (i>0) {
-				number[i][j]->SetScale(1.0f);
+				number[i][j]->SetScale(1.8f);
 			}
 			else {
-				number[i][j]->SetScale(0.8f);
+				number[i][j]->SetScale(1.6f);
 			}
 			number[i][j]->SetAnchorPoint({ 0,0 });
 		}
@@ -168,9 +168,9 @@ void UI::EaseScale() {
 			for (int j = 0; j < 10; j++) {
 				number[i][j]->SetSize({ 48,48 });
 				if (i > 0) {
-					number[i][j]->SetScale(1.0f);
+					number[i][j]->SetScale(1.8f);
 				} else {
-					number[i][j]->SetScale(0.8f);
+					number[i][j]->SetScale(1.6f);
 				}
 			}
 		}
