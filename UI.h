@@ -47,7 +47,8 @@ private:
 	const float PI = 3.145265f;
 	std::vector<int> power;
 	float strong =20.0f;
-	XMFLOAT2 pos{ (float)WinApp::window_width - 70 ,21 + 80 };
+	XMFLOAT2 pos{ (float)WinApp::window_width - 150 ,21 + 80 };
+	XMFLOAT2 pos2{ (float)WinApp::window_width - 225 ,7 + 80 };
 	float speed = 0;
 	bool Up=false;
 	float vel = 2.0f;

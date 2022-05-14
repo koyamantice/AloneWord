@@ -36,9 +36,9 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	Vignette = Sprite::Create(ImageManager::vignette, { 0.0f,0.0f });
 	Vignette->SetPosition({ 0,0 });
 	Vignette->SetColor({ 255,255,255,0.75f });
-	bairitu = Sprite::Create(ImageManager::bairitu, { 1280.0f,0.0f });
+	bairitu = Sprite::Create(ImageManager::bairitu, { 1240.0f,10.0f });
 	bairitu->SetAnchorPoint({ 1.0f,0.0f });
-	//bairitu->SetScale(2.5f);
+	bairitu->SetScale(0.7f);
 	const int w = 48;
 	const int h = 80;
 	const int l = 10;
@@ -63,7 +63,7 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	}
 	for (int j = 0; j < 10; j++) {
 		number[0][j]->SetPosition(pos);
-		number[1][j]->SetPosition({ (float)WinApp::window_width - 93 -  55 ,7+80 });
+		number[1][j]->SetPosition(pos2);
 	}
 }
 void UI::Update() {
@@ -118,7 +118,7 @@ const void UI::Draw() {
 	////ImGui::Text("Count::%d", moveCount);
 	////ImGui::Text("Move::%d", isMove);
 	////ImGui::Text("Hit::%d", hit);
-	//////ImGui::Unindent();
+	////ImGui::Unindent();
 	ImGui::End();
 	Sprite::PreDraw();
 	//Vignette->Draw();
@@ -157,7 +157,7 @@ void UI::EaseScale() {
 	}
 	//pos.x = Ease(In,Quad,frame, (float)WinApp::window_width - 70, (float)WinApp::window_width - 90);
 	//pos.y = Ease(In, Quad, frame, 21 + 80, 40 + 80);
-	vel = Ease(In, Quad, frame, 1.5f, 1.2f);
+	vel = Ease(In, Quad, frame, 1.3f, 1.1f);
 
 	if (frame > 1.2f) {
 		frame = 0.0f;
