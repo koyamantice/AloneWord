@@ -176,7 +176,8 @@ void Rice::Update() {
 	if (hit&&IsAlive && !EnemyCatch && !Exp) {
 		Rebound();
 	}
-	//collideArm();
+	collideArm();
+	
 	//collidePlayer();
 	//collideAttackArm();
 	SetEnemy();
@@ -348,7 +349,7 @@ void Rice::Demo(int num) {
 		add = false;
 		pos.y = 0.0f;
 	}
-	//collideArm();
+	collideArm();
 	//collidePlayer();
 	//collideAttackArm();
 	SetEnemy();
@@ -397,11 +398,12 @@ bool Rice::collideArm() {
 	float armweight = player->GetArmWeight();
 	float armspeed = player->GetArmSpeed();
 	float armscale = player->GetArmScale();
-	int armMove = player->GetArmMoveNumber();
-	if (IsAlive && armMove >= 1 && !EnemyCatch && add == false && !Exp) {
+	bool AttackFlag = player->GetAttackFlag();
+	if (IsAlive && AttackFlag && !EnemyCatch && add == false && !Exp) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.8f, Armpos.x, Armpos.y, Armpos.z, 0.8f) == true) {
 			EnemyCatch = true;
 			armweight += 1.0f;
+			player->SetAddSpeed(1.0f);
 			if (armweight == 1) {
 				savespeed = 5.0;
 				savesacale = 1.0f;
@@ -428,6 +430,7 @@ bool Rice::collideArm() {
 				pos.y = 1.0f;
 			}
 			player->SetArmWeight(armweight);
+			
 		}
 	}
 	if (EnemyCatch == true) {
@@ -498,7 +501,7 @@ bool Rice::collidePlayer() {
 			player->SetHp(player->GetHp() - 1);
 			Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 			if (player->GetAttackFlag() == false) {
-				player->SetDamageFlag(true);
+				
 			}
 			Interval = 100;
 			return true;

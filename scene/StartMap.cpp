@@ -100,6 +100,19 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		int a = 0;
 		a++;
 	}
+
+	ui->Update();
+	objFloor->Update();
+	objStartMap->Update();
+	lightGroup->Update();
+	camera->Update();
+	player->Update();
+	spawing->Update();
+	particleMan->Update();
+	for (int i = 0; i < enemy.size() - 1; i++) {
+		enemy[i]->Demo(i);
+		player->ResetWeight(enemy[i]);
+	}
 	////敵同士の当たり判定
 	if (sizeof(enemy) > 2) {//配列のサイズ確認
 		for (int colA = 0; colA < enemy.size(); colA++) {
@@ -150,19 +163,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	if (player->GetHp() <= 0) {
 		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 	}
-	objFloor->Update();
-	objStartMap->Update();
-	lightGroup->Update();
-	camera->Update();
-	player->Update();
-	spawing->Update();
-	particleMan->Update();
-	for (int i = 0; i < enemy.size()-1; i++) {
-		enemy[i]->Demo(i);
-		player->ResetWeight(enemy[i]);
-		player->Rebound(enemy[i]);
-	}
-	ui->Update();
+
 	cameraPos.x = player->GetPosition().x;
 	cameraPos.y = player->GetPosition().y + distanceY;
 	cameraPos.z = player->GetPosition().z - distanceZ;

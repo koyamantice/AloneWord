@@ -239,8 +239,8 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			enemy[i]->Update();
 			enemy[i]->SetEnemy();
 			player->ResetWeight(enemy[i]);
-			player->Rebound(enemy[i]);
 		}
+		player->Rebound(bossenemy);
 		ui->Update();
 		particleMan->Update();
 		objSphere->Update();
