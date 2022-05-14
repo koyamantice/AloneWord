@@ -41,8 +41,8 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	bairitu = Sprite::Create(ImageManager::bairitu, { 1240.0f,10.0f });
 	bairitu->SetAnchorPoint({ 1.0f,0.0f });
 	bairitu->SetScale(0.7f);
-	const int w = 48;
-	const int h = 48;
+	const int w = 54;
+	const int h = 60;
 	const int l = 10;
 	const float onePos = WinApp::window_width - 208.0f;
 	for (int i = 0; i < 2; i++) {
@@ -55,7 +55,7 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 				{ static_cast<float>(w), static_cast<float>(h) });
 			number[i][j]->SetSize({ w,h });
 			if (i>0) {
-				number[i][j]->SetScale(1.8f);
+				number[i][j]->SetScale(2.4f);
 			}
 			else {
 				number[i][j]->SetScale(1.6f);
@@ -168,7 +168,7 @@ void UI::EaseScale() {
 			for (int j = 0; j < 10; j++) {
 				number[i][j]->SetSize({ 48,48 });
 				if (i > 0) {
-					number[i][j]->SetScale(1.8f);
+					number[i][j]->SetScale(2.4f);
 				} else {
 					number[i][j]->SetScale(1.6f);
 				}
