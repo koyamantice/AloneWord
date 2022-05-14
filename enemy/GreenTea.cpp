@@ -99,6 +99,8 @@ void GreenTea::Spec() {
 				pos.x = cosf(degree) * scale;
 				pos.z = sinf(degree) * scale;
 			} else if (pat == 2) {
+				rot.y+= (rand() % 10)+1;
+				enemyobj->SetRotation(rot);
 				if (frame < 1.0f) {
 					frame += 0.002f;
 				} else {
@@ -123,6 +125,18 @@ void GreenTea::Spec() {
 			enemyobj->SetPosition(pos);
 			enemyobj->SetRotation({ 0,radius,0 });
 		} else if ((action % 3) == 1) {
+			rot.z += vel;
+			if (rot.z>Zma) {
+				rot.z = Zma;
+				vel = -vel;
+			}
+			if (rot.z < Zmi) {
+				rot.z = Zmi;
+				vel = -vel;
+			}
+
+			rot.y += (rand() % 10) + 1;
+			enemyobj->SetRotation(rot);
 			if (frame < 1.0f) {
 				frame += 0.01f;
 			} else {
@@ -201,6 +215,17 @@ Ease(In,Cubic,frame,StartPos.y,AfterPos.y),
 Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 			};
 		} else if ((action % 3) == 2) {
+			rot.z += vel;
+			if (rot.z > Zma) {
+				rot.z = Zma;
+				vel = -vel;
+			}
+			if (rot.z < Zmi) {
+				rot.z = Zmi;
+				vel = -vel;
+			}
+			rot.y += (rand() % 10) + 1;
+			enemyobj->SetRotation(rot);
 			if (frame < 1.0f) {
 				frame += 0.01f;
 			} else {

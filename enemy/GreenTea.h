@@ -18,6 +18,9 @@ private:
 	float y = 0.0f;
 	int check = false;
 	int count =0;
+	float vel = 3;
+	float Zma=45;
+	float Zmi=-45;
 	//‘Ò‹@ƒ‚[ƒVƒ‡ƒ“‚Ì‚½‚ß‚Ì‚â‚Â
 	enum Motion {
 		Up,

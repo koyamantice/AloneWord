@@ -16,7 +16,9 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	BossHp[now] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
 	BossHp[now]->SetPosition({ 260.0f,20.0f });
 	BossHp[now]->SetColor({ 0.0f,1.0f,0.0f,1.0f });
-	AfterPos[0] = { (float)(boss->GetHP() * 20),30 };
+	if (boss) {
+		AfterPos[0] = { (float)(boss->GetHP() * 20),30 };
+	}
 	BossHp[max]->SetSize(AfterPos[0]);
 	BossHp[damage]->SetSize(AfterPos[0]);
 	BossHp[now]->SetSize(AfterPos[0]);
