@@ -176,7 +176,7 @@ void Rice::Update() {
 	if (hit&&IsAlive && !EnemyCatch && !Exp) {
 		Rebound();
 	}
-	//collideArm();
+	collideArm();
 	
 	//collidePlayer();
 	//collideAttackArm();
@@ -349,7 +349,7 @@ void Rice::Demo(int num) {
 		add = false;
 		pos.y = 0.0f;
 	}
-	//collideArm();
+	collideArm();
 	//collidePlayer();
 	//collideAttackArm();
 	SetEnemy();

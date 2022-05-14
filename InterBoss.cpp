@@ -23,7 +23,7 @@ void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
 
 	ImGui::Begin("test");
-	ImGui::SliderFloat("HP", &BossHP, 50, 0.0f);
+	//ImGui::SliderFloat("HP", &BossHP, 50, 0.0f);
 	/*ImGui::SliderFloat("angle", &angle, 200, -25);
 	ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
 	
@@ -82,6 +82,7 @@ bool InterBoss::collideAttackArm() {
 				}
 			}
 			else {
+				//Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 				player->SetDamageFlag(true);
 			}
 

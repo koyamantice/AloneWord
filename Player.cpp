@@ -120,12 +120,12 @@ void Player::Update() {
 		}
 		PlayerSpeed = 0.3f + AddSpeed;
 
+		if (input->TriggerButton(input->Button_RB)) {
+			speedlimit = ArmSpeed - 90;
+		}
+
 		//腕振り回す系
 		if (AttackFlag == false) {
-			if (input->TriggerButton(input->Button_RB)) {
-				speedlimit = ArmSpeed - 90;
-			}
-
 			//ため時間
 			if (input->PushButton(input->Button_RB)) {
 				chargeTimer++;
@@ -136,17 +136,15 @@ void Player::Update() {
 				if (speedlimit <= ArmSpeed) {
 					ArmSpeed--;
 					ArmRot.y++;
-					rot.y++;
 				}
 			}
 			else {
-				
 				if (RotCount >= 1) {
 					AttackMoveNumber = 1;
 					AttackFlag = true;
 					afterSpeed = ArmSpeed + ((360 * RotCount) + 90);
 					initArmRotation = ArmRot.y - ((360 * RotCount) + 90);
-					initrotation = rot.y - ((360 * RotCount) + 90);
+					initrotation = rot.y - (360 * RotCount);
 					initscale = Armscale + 3.0f;
 				}
 				else {
@@ -439,8 +437,9 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	ImGui::SliderFloat("AddSpeed", &AddSpeed, 10, 0);
 	ImGui::SliderFloat("PlayerWeight", &ArmWeight, 10, 0);*/
 	ImGui::Text("%d", DamageFlag);
-	ImGui::SliderFloat("PlayerWeight", &rebound.x, 10, 0);
-	ImGui::SliderFloat("damageframe", &damageframe, 10, 0);
+	ImGui::SliderFloat("rebound.x", &rebound.x, 1000, -1000);
+	ImGui::SliderFloat("rebound.z", &rebound.z, 1000, -1000);
+	ImGui::SliderFloat("damageframe", &damageframe, 1000, 0.0f);
 	ImGui::Unindent();
 	ImGui::End();
 	Object3d::PreDraw();
@@ -479,31 +478,34 @@ void Player::ResetWeight(InterEnemy* enemy) {
 }
 
 //ダメージ食らったときにプレイヤーが飛ばされる
-void Player::Rebound(InterBoss* enemy) {
-	XMFLOAT3 enepos = enemy->GetPosition();
+void Player::Rebound(InterBoss* boss) {
+	XMFLOAT3 enepos = boss->GetPosition();
 
 	distance.x = position.x - enepos.x;
 	distance.z = position.z - enepos.z;
 
-	if (damageframe >= 1.0f) {
-		damageframe = 0.0f;
+
+	if (DamageFlag == true) {
+
+		rebound.x = sin(atan2f(distance.x, distance.z)) * 2.0f;
+		rebound.z = cos(atan2f(distance.x, distance.z)) * 2.0f;
 		DamageFlag = false;
 	}
+
+	if (damageframe >= 1.0f) {
+		rebound.x = 0.0f;
+		rebound.z = 0.0f;
+	}
 	else {
-		damageframe += 0.05;
-		rebound.x = sin(atan2f(distance.x, distance.z)) * 0.05f;
-		rebound.y = cos(atan2f(distance.x, distance.z)) * 0.05f;
-		pos.x -= rebound.x;
-		pos.z += rebound.z;
+		damageframe += 0.01f;
 	}
 
-	object3d->SetPosition(position);
-	//if (position.x <= 25.0f && position.x >= -25.0f) {
-	//	position.x += rebound.x;
-	//}
-	//if (position.z <= 20.0f && position.z >= -20.0f) {
-	//	position.z += rebound.z;
-	//}
+	rebound.x = Ease(Out, Cubic, damageframe, rebound.x, 0.0f);
+	rebound.z = Ease(Out, Cubic, damageframe, rebound.z, 0.0f);
+
+		position.x -= rebound.x;
+	
+		position.z += rebound.z;
 }
 
 void Player::BirthParticle() {
