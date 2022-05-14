@@ -11,7 +11,7 @@ void InterBoss::Update() {
 
 	collideAttackArm();
 	//collidePlayer();
-	//Spec();
+	Spec();
 	player->SetInterval(Interval);
 
 	enemyobj->Update();

@@ -17,6 +17,7 @@ void ModelManager::Initialize() {
 	LoadModel(Enemy, "Enemy");
 	LoadModel(Fork, "Fork");
 	LoadModel(Water,"Water");
+	LoadModel(Kyusu,"Teapot");
 	LoadModel(LeftShoes,"LeftShoes");
 	LoadModel(RightShoes,"RightShoes");
 	LoadModel(Pastel, "Pestle");

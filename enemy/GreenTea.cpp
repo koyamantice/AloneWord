@@ -7,7 +7,7 @@
 using namespace DirectX;
 
 GreenTea::GreenTea() {
-	model = ModelManager::GetIns()->GetModel(ModelManager::Demo);
+	model = ModelManager::GetIns()->GetModel(ModelManager::Kyusu);
 	enemyobj = new Object3d();
 	for (int i = 0; i < 50; i++) {
 		hotWater[i] = new HotWater;
@@ -25,7 +25,7 @@ void GreenTea::Initialize(bool shadow) {
 	enemyobj->SetModel(model);
 	enemyobj->SetPosition(pos);
 	enemyobj->SetRotation(rot);
-	enemyobj->SetScale({ 1.0f,1.0f,1.0f });
+	enemyobj->SetScale({ 0.5f,0.5f,0.5f });
 
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
@@ -99,6 +99,8 @@ void GreenTea::Spec() {
 				pos.x = cosf(degree) * scale;
 				pos.z = sinf(degree) * scale;
 			} else if (pat == 2) {
+				rot.y+= (rand() % 10)+1;
+				enemyobj->SetRotation(rot);
 				if (frame < 1.0f) {
 					frame += 0.002f;
 				} else {
@@ -123,6 +125,18 @@ void GreenTea::Spec() {
 			enemyobj->SetPosition(pos);
 			enemyobj->SetRotation({ 0,radius,0 });
 		} else if ((action % 3) == 1) {
+			rot.z += vel;
+			if (rot.z>Zma) {
+				rot.z = Zma;
+				vel = -vel;
+			}
+			if (rot.z < Zmi) {
+				rot.z = Zmi;
+				vel = -vel;
+			}
+
+			rot.y += (rand() % 10) + 1;
+			enemyobj->SetRotation(rot);
 			if (frame < 1.0f) {
 				frame += 0.01f;
 			} else {
@@ -201,6 +215,17 @@ Ease(In,Cubic,frame,StartPos.y,AfterPos.y),
 Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 			};
 		} else if ((action % 3) == 2) {
+			rot.z += vel;
+			if (rot.z > Zma) {
+				rot.z = Zma;
+				vel = -vel;
+			}
+			if (rot.z < Zmi) {
+				rot.z = Zmi;
+				vel = -vel;
+			}
+			rot.y += (rand() % 10) + 1;
+			enemyobj->SetRotation(rot);
 			if (frame < 1.0f) {
 				frame += 0.01f;
 			} else {

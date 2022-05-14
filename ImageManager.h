@@ -16,6 +16,7 @@ public:
 		debugText,
 		playerHp,//Sprite::LoadTexture(3, L"Resources/2d/PlayerHP.png");
 		arrow,//Sprite::LoadTexture(4, L"Resources/2d/Arrow.png");
+		arrow2,
 		life,//Sprite::LoadTexture(5, L"Resources/2d/Life.png");
 		vignette,//Sprite::LoadTexture(6, L"Resources/2d/Vignette.png");
 		concent,

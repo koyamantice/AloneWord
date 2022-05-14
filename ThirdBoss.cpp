@@ -55,7 +55,7 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	objBossMap = TouchableObject::Create(modelBossMap);
 	objBossMap->SetPosition({ 0,-1,2 });
 	objBossMap->SetRotation({ 0, 90, 0 });
-	objBossMap->SetScale({ 1.4f,1.5f,1.6f });
+	objBossMap->SetScale({ 1.2f,1.2f,1.2f });
 	/*
 	objBossMap->SetModel(modelBossMap);
 	objBossMap->SetPosition({ 0,-1,2 });
@@ -181,15 +181,15 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 			}
 
 			cameraPos = {
-Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
-Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
-Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+			Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+			Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+			Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
 			};
-
+			
 			cameratargetPos = {
-Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
-Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
-Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+			Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+			Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+			Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			};
 		}
 		else if (appearanceNumber == 2) {
@@ -282,28 +282,28 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 		}
 	}
 
-	Ray ray;
-	ray.start = { player->GetPosition().x,player->GetPosition().y + 3,player->GetPosition().z,1 };
-	ray.dir = { 0,0.025f,-1,0 };
-	RaycastHit raycastHit;
+	//Ray ray;
+	//ray.start = { player->GetPosition().x,player->GetPosition().y + 3,player->GetPosition().z,1 };
+	//ray.dir = { 0,0.025f,-1,0 };
+	//RaycastHit raycastHit;
 
-	if (!collisionManager->Raycast(ray, &raycastHit)) {
-		if (distanceZ <= 10.0f) {
-			distanceZ += 0.25f;
-		}
+	//if (!collisionManager->Raycast(ray, &raycastHit)) {
+	//	if (distanceZ <= 10.0f) {
+	//		distanceZ += 0.25f;
+	//	}
 
-		if (distanceY >= 10.0f) {
-			distanceY -= 0.25f;
-		}
-	} else {
-		if (distanceZ >= 6.0f) {
-			distanceZ -= 0.4f;
-		}
+	//	if (distanceY >= 10.0f) {
+	//		distanceY -= 0.25f;
+	//	}
+	//} else {
+	//	if (distanceZ >= 6.0f) {
+	//		distanceZ -= 0.4f;
+	//	}
 
-		if (distanceY <= 18.0f) {
-			distanceY += 0.25f;
-		}
-	}
+	//	if (distanceY <= 18.0f) {
+	//		distanceY += 0.25f;
+	//	}
+	//}
 
 	//‚»‚Ì‘¼ƒV[ƒ“ˆÚs
 	if (bossenemy->GetHP() <= 0) {

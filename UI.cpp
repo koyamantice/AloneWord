@@ -7,9 +7,21 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	this->player = player;
 	this->boss = boss;
 	this->boss2 = boss2;
-	BossHp = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
-	BossHp->SetPosition({ 260.0f,20.0f });
-	BossHp->SetColor({ 1.0f,0.0f,0.0,1.0 });
+	BossHp[max] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
+	BossHp[max]->SetPosition({ 260.0f,20.0f });
+	BossHp[max]->SetColor({ 1.0f,0.0f,0.0f,1.0f });
+	BossHp[damage] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
+	BossHp[damage]->SetPosition({ 260.0f,20.0f });
+	BossHp[damage]->SetColor({ 1.0f,1.0f,0.0f,1.0f });
+	BossHp[now] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
+	BossHp[now]->SetPosition({ 260.0f,20.0f });
+	BossHp[now]->SetColor({ 0.0f,1.0f,0.0f,1.0f });
+	if (boss) {
+		AfterPos[0] = { (float)(boss->GetHP() * 20),30 };
+	}
+	BossHp[max]->SetSize(AfterPos[0]);
+	BossHp[damage]->SetSize(AfterPos[0]);
+	BossHp[now]->SetSize(AfterPos[0]);
 	BossHp2 = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
 	BossHp2->SetPosition({ 260.0f,80.0f });
 	BossHp2->SetColor({ 1.0f,0.0f,0.0,1.0 });
@@ -32,7 +44,8 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	Arrow->SetAnchorPoint({ 0.5f,0.5f });
 	Arrow->SetIsFlipY(true);
 	Arrow->SetPosition({ 0,0 });
-	Arrow2 = Sprite::Create(ImageManager::arrow, { 0.0f,0.0f });
+	Arrow2 = Sprite::Create(ImageManager::arrow2, { 0.0f,0.0f });
+	Arrow2->SetAnchorPoint({ 0.5f,0.5f });
 	Arrow2->SetIsFlipY(true);
 	Arrow2->SetPosition({ 0,0 });
 	Vignette = Sprite::Create(ImageManager::vignette, { 0.0f,0.0f });
@@ -82,11 +95,17 @@ void UI::Update() {
 	}
 	if (boss) {
 		AfterPos[0] = { (float)(boss->GetHP() * 20),30 };
-		bossPos = {
-		Ease(In,Quint,0.7f,BossHp->GetSize().x,AfterPos[0].x),
-		Ease(In,Quint,0.7f,BossHp->GetSize().y,AfterPos[0].y),
+
+		bossPos[0] = {
+		Ease(In,Quint,0.7f,BossHp[now]->GetSize().x,AfterPos[0].x),
+		Ease(In,Quint,0.7f,BossHp[now]->GetSize().y,AfterPos[0].y),
 		};
-		BossHp->SetSize(bossPos);
+		bossPos[1] = {
+		Ease(In,Quint,0.5f,BossHp[damage]->GetSize().x,AfterPos[0].x),
+		Ease(In,Quint,0.5f,BossHp[damage]->GetSize().y,AfterPos[0].y),
+		};
+		BossHp[damage]->SetSize(bossPos[1]);
+		BossHp[now]->SetSize(bossPos[0]);
 		SeachBoss();
 	}
 	if (boss2) {
@@ -101,7 +120,9 @@ void UI::Update() {
 }
 
 void UI::Finalize() {
-	delete BossHp;
+	for (int i = 0; i < 3;i++) {
+		delete BossHp[i];
+	}
 	delete BossHp2;
 	delete HpGauge;
 	delete Mark1;
@@ -112,7 +133,7 @@ void UI::Finalize() {
 
 const void UI::Draw() {
 	ImGui::Begin("test");
-	ImGui::SliderFloat("rot.x", &pos.x, 270, -90);
+	ImGui::SliderFloat("rot.x", &AfterPos[0].x, 270, -90);
 	ImGui::SliderFloat("rot.y", &pos.y, 270, -90);
 	//ImGui::SliderInt("dir", &dir, 360, -360);
 	////ImGui::SliderFloat("speed_y", &speed_y, 360, 0);
@@ -125,7 +146,9 @@ const void UI::Draw() {
 	Sprite::PreDraw();
 	//Vignette->Draw();
 	if (boss) {
-		BossHp->Draw();
+		BossHp[max]->Draw();
+		BossHp[damage]->Draw();
+		BossHp[now]->Draw();
 	}
 	if (boss2) {
 		BossHp2->Draw();
@@ -135,11 +158,11 @@ const void UI::Draw() {
 	PlaHp->Draw();
 	//Life->Draw();
 
-	if (boss && invisible && boss->GetHP() >= 1) {
+	if (boss && invisible[0] && boss->GetHP() >= 1) {
 		Arrow->Draw();
 	}
 
-	if (boss2 && invisible && boss2->GetHP() >= 1) {
+	if (boss2 && invisible[1] && boss2->GetHP() >= 1) {
 		Arrow2->Draw();
 	}
 	for (int i = 0; i < power.size() && i < 2; i++) {
@@ -196,9 +219,9 @@ void UI::SeachBoss() {
 	circle.x = (sin(-radius)*150.0f)+WinApp::window_width/2; //*0.2251f;
 	circle.y = (cos(-radius)*150.0f)+WinApp::window_height/2; //*0.2251f;
 	if (!Collision::CircleCollision(bos.x,bos.z,10.0f,pla.x,pla.z,1.0f)){
-		invisible = 1;
+		invisible[0] = 1;
 	} else {
-		invisible = 0;
+		invisible[0] = 0;
 	}
 	Arrow->SetRotation(radius * (180.0f / XM_PI));//-radius * PI / 180.0f);
 	Arrow->SetPosition(circle);
@@ -214,17 +237,14 @@ void UI::SeachBoss2() {
 	position.z = (pla.z - bos.z);
 
 	radius = atan2f(position.x, position.z);// *PI / 180.0f;
-	circle2.x = (sin(-radius) * 150.0f) + WinApp::window_width / 2; //*0.2251f;
-	circle2.y = (cos(-radius) * 150.0f) + WinApp::window_height / 2; //*0.2251f;
+	circle2.x = (sin(-radius) * 100.0f) + WinApp::window_width / 2; //*0.2251f;
+	circle2.y = (cos(-radius) * 100.0f) + WinApp::window_height / 2; //*0.2251f;
 
-	if ((boss->GetPosition().x > player->GetPosition().x + 10.0f ||
-		boss->GetPosition().x < player->GetPosition().x - 10.0f) ||
-		(boss->GetPosition().z > player->GetPosition().z + 10.0f ||
-		boss->GetPosition().z < player->GetPosition().z - 10.0f)) {
-		invisible = 0;
+	if (!Collision::CircleCollision(bos.x, bos.z, 10.0f, pla.x, pla.z, 1.0f)) {
+		invisible[1] = 1;
 	}
 	else {
-		invisible = 1;
+		invisible[1] = 0;
 	}
 	Arrow2->SetRotation(radius * (180.0f / XM_PI));//-radius * PI / 180.0f);
 	Arrow2->SetPosition(circle2);

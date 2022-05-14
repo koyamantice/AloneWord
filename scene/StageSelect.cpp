@@ -136,8 +136,8 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		plane[3]->SetPosition(selectP[1]);
 		select[3]->SetPosition(selectP[0]);
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
-			//Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
-			//SceneManager::GetInstance()->ChangeScene("THIRDBOSS");
+			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
+			SceneManager::GetInstance()->ChangeScene("THIRDBOSS");
 		}
 	}
 	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -11.0f, 0.0f, 1.0f)) {

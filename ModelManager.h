@@ -21,6 +21,7 @@ public:
 		Enemy,
 		Fork,
 		Water,
+		Kyusu,
 		LeftShoes,
 		RightShoes,
 		Pastel,
