@@ -1,7 +1,7 @@
 #pragma once
 //#include "Sprite.h"
 //#include "Texture.h"
-//class SceneChange {
+//class ExpamdChange {
 //private: // エイリアス
 //// Microsoft::WRL::を省略
 //	template <class T> using ComPtr = Microsoft::WRL::ComPtr<T>;
@@ -35,17 +35,16 @@
 #pragma once
 #include"Sprite.h"
 
-class SceneChange {
+class ExpandChange {
 public:
-	SceneChange();
-	void Initialize();
+	ExpandChange();
 	void Update();
 	void Finalize();
 	const void Draw();
 
 	//void EaseScale();
 
-	void ExpandChange();
+	void Expand();
 	void ShrinkChange();
 	
 	const float& GetScale() { return scale; }
@@ -53,7 +52,6 @@ public:
 	const float& GetTimer() { return timer; }
 	
 	void SetStartChange(bool startchange) { this->startchange = startchange; }
-	void SetEndChange(bool endchange) { this->endchange = endchange; }
 private:
 	// DirectX::を省略
 	using XMFLOAT2 = DirectX::XMFLOAT2;
@@ -67,7 +65,6 @@ private:
 		XMFLOAT2 pos = { 640.0f,360.0f, };
 		float scale = 1.0f;
 		bool startchange = false;
-		bool endchange = false;
 		int timer = 0;
 };
 

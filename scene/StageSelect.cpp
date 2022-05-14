@@ -49,10 +49,10 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	//camera->SetTarget(XMFLOAT3{ 0,0,0 });
 	camera->SetDistance(200.0f);
 	ParticleManager::GetInstance()->SetCamera(camera);
-	scenechange = new SceneChange();
-	scenechange->Update();
-	scenechange->SetStartChange(true);
-
+	shrinkchange = new ShrinkChange();
+	shrinkchange->SetEndChange(true);
+	//スプライト生成
+	expandchange = new ExpandChange();
 }
 
 void StageSelect::Finalize() {
@@ -64,7 +64,8 @@ void StageSelect::Finalize() {
 	for (int i = 0; i < 4; i++) {
 		delete  plane[i];
 	}
-	scenechange->Finalize();
+	expandchange->Finalize();
+	shrinkchange->Finalize();
 }
 bool StageSelect::UICheck() {
 	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 9.0f, -2.0f, 1.0f)) { return false; }
@@ -79,7 +80,8 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 	lightGroup->Update();
 	camera->Update();
 	player->SelectUp();
-	scenechange->Update();
+	expandchange->Update();
+	shrinkchange->Update();
 	ParticleManager::GetInstance()->Update();
 	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 9.0f, -2.0f, 1.0f)) {
 		if (frame >= 1.0f) {
@@ -212,7 +214,8 @@ void StageSelect::Draw(DirectXCommon* dxCommon) {
 		select[i]->Draw();
 		plane[i]->Draw();
 	}
-	scenechange->Draw();
+	expandchange->Draw();
+	shrinkchange->Draw();
 }
 
 

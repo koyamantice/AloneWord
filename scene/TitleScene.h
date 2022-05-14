@@ -1,6 +1,6 @@
 #pragma once
 #include "SceneManager.h"
-#include "SceneChange.h"
+#include "ExpandChange.h"
 /// <summary>
 /// タイトルシーン
 /// </summary>
@@ -28,6 +28,6 @@ class TitleScene : public BaseScene {
 
 	private:
 		Sprite* sprite = { nullptr };
-		SceneChange* scenechange = nullptr;
+		ExpandChange* expandchange = nullptr;
 };
 

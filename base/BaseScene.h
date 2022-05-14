@@ -11,7 +11,7 @@ class SceneManager;
 #include "Texture.h"
 #include <DirectXMath.h>
 #include "Player.h"
-#include "SceneChange.h"
+#include "ExpandChange.h"
 #include "Rice.h"
 #include "input.h"
 #include "Effect.h"
@@ -20,7 +20,6 @@ class SceneManager;
 #include "ParticleManager.h"
 #include "FPSManager.h"
 #include<memory>
-#include "SceneChange.h"
 
 /// <summary>
 /// ƒV[ƒ“‹K’è

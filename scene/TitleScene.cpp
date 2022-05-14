@@ -8,31 +8,31 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 	//背景スプライト生成
 	sprite = Sprite::Create(ImageManager::TITLE, { 0.0f,0.0f });
 	//スプライト生成
-	scenechange = new SceneChange();
+	expandchange = new ExpandChange();
 }
 
 void TitleScene::Finalize() {
 	//３ｄのモデルのデリート
 	delete sprite;
-	scenechange->Finalize();
+	expandchange->Finalize();
 }
 
 void TitleScene::Update(DirectXCommon* dxCommon) {
 	Input* input = Input::GetInstance();
 	if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_X)) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
-		scenechange->SetStartChange(true);
+		expandchange->SetStartChange(true);
 	}
 	else if (input->TriggerButton(input->Button_A)) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
-		scenechange->SetStartChange(true);
+		expandchange->SetStartChange(true);
 	}
 
-	if (scenechange->GetTimer() >= 99) {
+	if (expandchange->GetTimer() >= 58) {
 		SceneManager::GetInstance()->ChangeScene("StageSelect");
 	}
 
-	scenechange->Update();
+	expandchange->Update();
 	//if (scenechange->GetScale() >= 100.0f) {
 	//	//SceneManager::GetInstance()->ChangeScene("STARTMAP");
 	//}
@@ -54,7 +54,7 @@ void TitleScene::Draw(DirectXCommon* dxCommon) {
 	sprite->PreDraw();
 	//背景用
 	sprite->Draw();
-	scenechange->Draw();
+	expandchange->Draw();
 	//前面用
 
 }
