@@ -39,7 +39,8 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(button, L"Resources/2d/select.png");
 	Sprite::LoadTexture(num, L"Resources/2d/Num.png");
 	Sprite::LoadTexture(bairitu, L"Resources/2d/Bairitu.png");
-
+	Sprite::LoadTexture(Change, L"Resources/2d/Change.png");
+	Sprite::LoadTexture(Change2, L"Resources/2d/Change2.png");
 }
 
 void ImageManager::LoadTex2D() {

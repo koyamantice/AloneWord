@@ -5,29 +5,37 @@
 #include "DebugText.h"
 #include"ImageManager.h"
 void TitleScene::Initialize(DirectXCommon* dxCommon) {
-
 	//背景スプライト生成
 	sprite = Sprite::Create(ImageManager::TITLE, { 0.0f,0.0f });
 	//スプライト生成
-
-
+	expandchange = new ExpandChange();
 }
 
 void TitleScene::Finalize() {
 	//３ｄのモデルのデリート
 	delete sprite;
+	expandchange->Finalize();
 }
 
 void TitleScene::Update(DirectXCommon* dxCommon) {
 	Input* input = Input::GetInstance();
 	if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_X)) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
-		SceneManager::GetInstance()->ChangeScene("StageSelect");
+		expandchange->SetStartChange(true);
 	}
 	else if (input->TriggerButton(input->Button_A)) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
-		SceneManager::GetInstance()->ChangeScene("STARTMAP");
+		expandchange->SetStartChange(true);
 	}
+
+	if (expandchange->GetTimer() >= 58) {
+		SceneManager::GetInstance()->ChangeScene("StageSelect");
+	}
+
+	expandchange->Update();
+	//if (scenechange->GetScale() >= 100.0f) {
+	//	//SceneManager::GetInstance()->ChangeScene("STARTMAP");
+	//}
 	//if (input->PushKey(DIK_SPACE) || input->TriggerButton(input->Button_X)) {
 	//	SceneManager::GetInstance()->ChangeScene("SECONDBOSS");
 	//}
@@ -46,7 +54,7 @@ void TitleScene::Draw(DirectXCommon* dxCommon) {
 	sprite->PreDraw();
 	//背景用
 	sprite->Draw();
-
+	expandchange->Draw();
 	//前面用
 
 }
