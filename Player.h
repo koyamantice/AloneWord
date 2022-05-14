@@ -80,13 +80,20 @@ public:
 
 	void SetFlash(int Flash) { this->FlashCount = FlashCount; }
 
+	void SetCharge(int chargeTimer) { this->chargeTimer = chargeTimer; }
+
 	void SetAttackFlag(bool AttackFlag) { this->AttackFlag = AttackFlag; }
 
 	void SetDamageFlag(bool DamageFlag) { this->DamageFlag = DamageFlag; }
 
+	void SetArmScale(bool SetScale) { this->SetScale = SetScale; }
+
 	void SetArmWeight(float ArmWeight) { this->ArmWeight = ArmWeight; }
 
 	void SetAddSpeed(float AddSpeed) { this->AddSpeed = AddSpeed; }
+
+	void SetFrame(float frame) { this->frame = frame; }
+	void SetFrame2(float frame2) { this->frame2 = frame2; }
 	void SetMove(float XMax, float ZMax) { this->XMax = XMax; this->ZMax = ZMax; }
 
 	//腕の重みリセット
@@ -178,6 +185,6 @@ private:
 	int chargeTimer = 0;
 	float afterSpeed = 0;
 	float RotCount = 0.0f;
-	bool SetArm = false;
+	bool SetScale = false;
 	float AddSpeed = 0.0f;
 };

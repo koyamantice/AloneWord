@@ -94,7 +94,7 @@ void Player::Update() {
 		//プレイヤーの移動
 		if (!(StickrotX<650 && StickrotX>-650)) {
 			position.x += sin(atan2(StickrotX, StickrotY)) * PlayerSpeed;
-			if (chargeTimer == 0) {
+			if (chargeTimer == 0 && !SetScale) {
 				rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 				ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 				ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
@@ -103,7 +103,7 @@ void Player::Update() {
 
 		if (!(StickrotY<650 && StickrotY>-650)) {
 			position.z -= cos(atan2(StickrotX, StickrotY)) * PlayerSpeed;
-			if (chargeTimer == 0) {
+			if (chargeTimer == 0 && !SetScale) {
 				rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 				ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 				ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
@@ -139,13 +139,14 @@ void Player::Update() {
 				}
 			}
 			else {
-				if (RotCount >= 1) {
+				if (chargeTimer >= 100) {
 					AttackMoveNumber = 1;
 					AttackFlag = true;
 					afterSpeed = ArmSpeed + ((360 * RotCount) + 90);
 					initArmRotation = ArmRot.y - ((360 * RotCount) + 90);
 					initrotation = rot.y - (360 * RotCount);
 					initscale = Armscale + 3.0f;
+					//chargeTimer = 0;
 				}
 				else {
 					chargeTimer = 0;
@@ -192,6 +193,22 @@ void Player::Update() {
 			}
 		}
 		
+		Armscale = Ease(In, Cubic, frame2, Armscale, initscale);
+	}
+
+	if (SetScale) {
+		initscale = 1.0f;
+		if (frame2 >= 1.0f) {
+			AttackMoveNumber = 0;
+			frame2 = 0.0f;
+			SetScale = false;
+			frame = 0.0f;
+			chargeTimer = 0;
+			RotCount = 0;
+		}
+		else {
+			frame2 += 0.02;
+		}
 		Armscale = Ease(In, Cubic, frame2, Armscale, initscale);
 	}
 
@@ -436,10 +453,9 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	/*ImGui::SliderFloat("Speedframe", &Speedframe, 1, 0);
 	ImGui::SliderFloat("AddSpeed", &AddSpeed, 10, 0);
 	ImGui::SliderFloat("PlayerWeight", &ArmWeight, 10, 0);*/
-	ImGui::Text("%d", DamageFlag);
-	ImGui::SliderFloat("rebound.x", &rebound.x, 1000, -1000);
-	ImGui::SliderFloat("rebound.z", &rebound.z, 1000, -1000);
-	ImGui::SliderFloat("damageframe", &damageframe, 1000, 0.0f);
+	ImGui::Text("%d", SetScale);
+	ImGui::Text("%d", RotCount);
+	ImGui::Text("%d", chargeTimer);
 	ImGui::Unindent();
 	ImGui::End();
 	Object3d::PreDraw();
