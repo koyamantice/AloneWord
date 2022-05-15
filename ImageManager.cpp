@@ -41,6 +41,8 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(bairitu, L"Resources/2d/Bairitu.png");
 	Sprite::LoadTexture(Change, L"Resources/2d/Change.png");
 	Sprite::LoadTexture(Change2, L"Resources/2d/Change2.png");
+	Sprite::LoadTexture(BlackFilter, L"Resources/2d/Blackfilter.png");
+	Sprite::LoadTexture(WhiteFilter, L"Resources/2d/Whitefilter.png");
 }
 
 void ImageManager::LoadTex2D() {

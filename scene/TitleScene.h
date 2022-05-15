@@ -29,5 +29,12 @@ class TitleScene : public BaseScene {
 	private:
 		Sprite* sprite = { nullptr };
 		ExpandChange* expandchange = nullptr;
+
+		enum Select {
+			Start,
+			Select,
+		};
+
+		int SelectNumber = 0;
 };
 

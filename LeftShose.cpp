@@ -227,6 +227,84 @@ void LeftShose::Spec() {
 
 void LeftShose::App(int Timer) {
 
+	XMFLOAT3 AfterPos{};
+	XMFLOAT3 AfterRot{};
+	if (Timer == 1) {
+		pos = { -13.0f,0.0f,18.0f };
+	}
+	
+	if (Timer == 20 || Timer == 250 || Timer == 450 || Timer == 550) {
+		appearMove++;
+		frame = 0.0f;
+		frame2 = 0.0f;
+	}
+
+	switch (appearMove) {
+	case 1:
+		AfterPos = {
+						pos.x,
+						0,
+						0,
+		};
+		if (frame < 1.0f) {
+			frame += 0.005f;
+			break;
+		}
+		else {
+			frame = 0.0f;
+			break;
+		}
+
+	case 2:
+		AfterRot = {
+					rot.x,
+					180,
+					rot.z,
+		};
+
+		if (frame2 < 1.0f) {
+			frame2 += 0.005f;
+			break;
+		}
+		else {
+			frame2 = 1.0f;
+			break;
+		}
+
+	case 3:
+		AfterPos = {
+						13,
+						0,
+						pos.z,
+		};
+		if (frame < 1.0f) {
+			frame += 0.005f;
+			break;
+		}
+		else {
+			frame = 0.0f;
+			break;
+		}
+
+	case 4:
+		pos = { -10.0f,0.0f,0.0f };
+		rot = { 0,270,0 };
+	}
+
+	pos = {
+	Ease(In,Cubic,frame,pos.x,AfterPos.x),
+	Ease(In,Cubic,frame,pos.y,AfterPos.y),
+	Ease(In,Cubic,frame,pos.z,AfterPos.z)
+	};
+
+
+	rot = {
+	Ease(In,Cubic,frame2,rot.x,AfterRot.x),
+	Ease(In,Cubic,frame2,rot.y,AfterRot.y),
+	Ease(In,Cubic,frame2,rot.z,AfterRot.z)
+	};
+	enemyobj->SetPosition(pos);
+	enemyobj->SetRotation(rot);
 }
 
 void LeftShose::specialDraw() {

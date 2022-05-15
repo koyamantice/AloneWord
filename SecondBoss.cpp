@@ -8,6 +8,7 @@
 #include "MeshCollider.h"
 #include "SphereCollider.h"
 #include "CollisionManager.h"
+#include "ImageManager.h"
 #include <Easing.h>
 void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	//インスタンス取得
@@ -57,6 +58,8 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	limit->SetRotation({ 90.0f,0, 0 });
 	limit->SetScale({ 6,5,5 });*/
 
+	BlackFilter = Sprite::Create(ImageManager::BlackFilter, { 0.0f,0.0f });
+	
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i] = new Effect();
 		effect[i]->Initialize();
@@ -156,51 +159,50 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 		player->Begin();
 		leftshose->Begin();
 		rightshose->Begin();
-		if (appearanceTimer == 1) {
+		rightshose->AppeaMovie(appearanceTimer);
+		leftshose->AppeaMovie(appearanceTimer);
+		if (appearanceNumber == 0) {
+			cameraPos.x = rightshose->GetPosition().x + 5;
+			cameraPos.y = rightshose->GetPosition().y + 2;
+			cameraPos.z = rightshose->GetPosition().z - 3;
+			cameratargetPos = rightshose->GetPosition();
+
+			if (appearanceTimer == 200) {
+				appearanceNumber++;
+			}
+		}
+		
+		else if (appearanceNumber == 1) {
+			cameraPos.x = leftshose->GetPosition().x - 5;
+			cameraPos.y = leftshose->GetPosition().y + 2;
+			cameraPos.z = leftshose->GetPosition().z - 3;
+			cameratargetPos = rightshose->GetPosition();
+
+			if (appearanceTimer == 400) {
+				appearanceNumber++;
+			}
+		}
+
+		else if (appearanceNumber == 2) {
 			cameraPos.x = player->GetPosition().x;
 			cameraPos.y = player->GetPosition().y + distanceY;
-			cameraPos.z = player->GetPosition().z - distanceZ;
-		}
+			cameraPos.z = player->GetPosition().z - 5;
+			cameratargetPos = { 0.0f,2.0f,0.0 };
 
-		if (appearanceTimer == 100) {
-			appearanceNumber++;
-
-		}
-
-		if (appearanceNumber == 1) {
-			Aftereyepos = {
-				0,
-				leftshose->GetPosition().y + distanceY,
-				leftshose->GetPosition().z - distanceZ,
-			};
-
-			Aftertargetpos = {
-			0,
-			2.0f,
-			0,
-			};
-
-			if (frame < 1.0f) {
-				frame += 0.01f;
+			if (appearanceTimer == 510) {
+				appearanceNumber++;
+				//個々の音変更案件
+				Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 			}
-			else {
-				frame = 0;
-				appearanceNumber = 2;
-			}
-
-			cameraPos = {
-Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
-Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
-Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
-			};
-
-			cameratargetPos = {
-Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
-Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
-Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
-			};
 		}
-		else if (appearanceNumber == 2) {
+
+
+		else if (appearanceNumber == 3) {
+			if (appearanceTimer == 700) {
+				appearanceNumber++;
+			}
+		}
+		else if (appearanceNumber == 4) {
 			Aftereyepos = {
 				player->GetPosition().x,
 				player->GetPosition().y + distanceY,
@@ -346,6 +348,16 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 }
 
 void SecondBoss::Draw(DirectXCommon* dxCommon) {
+	//ImGui::Begin("test");
+	////ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
+	////ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
+	////ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
+	////ImGui::SliderFloat("pos.y", &distanceY, 30, 0);
+	////ImGui::SliderFloat("pos.z", &distanceZ, 30, 0);
+	//ImGui::Text("appearanceTimer::%d", appearanceTimer);
+	//ImGui::Text("appearanceNumber::%d", appearanceNumber);
+	//ImGui::Unindent();
+	//ImGui::End();
 	//各オブジェクトの描画
 	Object3d::PreDraw();
 	//objBossMap->Draw();
@@ -374,8 +386,13 @@ void SecondBoss::Draw(DirectXCommon* dxCommon) {
 	//		exp[i][j]->Draw();
 	//	}
 	//}
-
-	ui->Draw();
+	if (bossstart) {
+		ui->Draw();
+	}
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
+	Sprite::PreDraw();
+	if (appearanceNumber == 3 && appearanceTimer <= 600) {
+		BlackFilter->Draw();
+	}
 }

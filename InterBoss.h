@@ -154,6 +154,7 @@ protected:
 	double Check2;
 
 	float frame = 0;
+	float frame2 = 0.0f;
 	int Interval = 0;
 	int FlashCount = 0;
 	float x_min = -25;

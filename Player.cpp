@@ -452,9 +452,11 @@ void Player::SelectUp() {
 
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
-	ImGui::Begin("test");
 
-	ImGui::End();
+	//ImGui::Begin("test");
+	//ImGui::SliderFloat("pos.x", &position.x, 50, -50);
+	//ImGui::SliderFloat("pos.z", &position.z, 50, -50);
+	//ImGui::End();
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
 		move_object1->Draw(dxCommon->GetCmdList());

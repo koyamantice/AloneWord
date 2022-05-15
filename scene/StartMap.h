@@ -56,6 +56,8 @@ private:
 	int	tutorial =0;
 	bool Clear = false;
 	CollisionManager* collisionManager = nullptr;
+	ExpandChange* expandchange = false;
+	ShrinkChange* shrinkchange = false;
 	bool pause = false;
 	int wait = 0;
 	int set = 0;

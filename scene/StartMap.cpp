@@ -74,6 +74,10 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	cameraPos.z = player->GetPosition().z - distanceZ;
 	camera->SetTarget(player->GetPosition());
 	camera->SetEye(cameraPos);
+	shrinkchange = new ShrinkChange();
+	shrinkchange->SetEndChange(true);
+	//スプライト生成
+	expandchange = new ExpandChange();
 }
 
 void StartMap::Finalize() {
@@ -87,6 +91,8 @@ void StartMap::Finalize() {
 	delete objFloor;
 	delete modelStartMap;
 	delete objStartMap;
+	expandchange->Finalize();
+	shrinkchange->Finalize();
 }
 
 void StartMap::Update(DirectXCommon* dxCommon) {
@@ -109,6 +115,8 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	player->Update();
 	spawing->Update();
 	particleMan->Update();
+	expandchange->Update();
+	shrinkchange->Update();
 	for (int i = 0; i < enemy.size() - 1; i++) {
 		enemy[i]->Demo(i);
 		player->ResetWeight(enemy[i]);
@@ -185,7 +193,8 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	particleMan->Draw(dxCommon->GetCmdList());
 	ui->Draw();
 	Sprite::PreDraw();
-
+	expandchange->Draw();
+	shrinkchange->Draw();
 }
 
 void StartMap::Pause(const int& Timer) {
