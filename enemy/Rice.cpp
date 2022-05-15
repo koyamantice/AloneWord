@@ -394,7 +394,7 @@ void Rice::Draw() {
 
 //敵をキャッチ
 bool Rice::collideArm() {
-	XMFLOAT3 Armpos = player->GetArmPosition();
+	XMFLOAT3 Armpos = player->GetPosition();
 	float armweight = player->GetArmWeight();
 	float armspeed = player->GetArmSpeed();
 	float armscale = player->GetArmScale();
@@ -540,6 +540,30 @@ bool Rice::collideAttackArm() {
 			return false;
 		}
 	} else {
+		return false;
+	}
+}
+
+//回転が止まった時離れる
+bool Rice::BoundEnemy() {
+	XMFLOAT3 plapos = player->GetPosition();
+	bool attackflag = player->GetAttackFlag();
+	float armweight = player->GetArmWeight();
+	if (IsAlive && EnemyCatch && !attackflag) {
+		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.8f, plapos.x, plapos.y, plapos.z, 0.8f) == true) {
+			IsAlive = false;
+			if (armweight != 0.0f) {//持ってる方
+				//enescale = { 0.4f,0.4f,0.4f };
+				armweight = 0.0f;
+				player->SetArmWeight(armweight);
+			}
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	else {
 		return false;
 	}
 }

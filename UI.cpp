@@ -144,17 +144,17 @@ void UI::Finalize() {
 }
 
 const void UI::Draw() {
-	ImGui::Begin("test");
-	ImGui::SliderFloat("rot.x", &AfterPos[0].x, 270, -90);
-	ImGui::SliderFloat("rot.y", &pos.y, 270, -90);
-	//ImGui::SliderInt("dir", &dir, 360, -360);
-	////ImGui::SliderFloat("speed_y", &speed_y, 360, 0);
-	ImGui::SliderFloat("scale", &vel, 360, 0);
-	////ImGui::Text("Count::%d", moveCount);
-	////ImGui::Text("Move::%d", isMove);
-	////ImGui::Text("Hit::%d", hit);
-	////ImGui::Unindent();
-	ImGui::End();
+	//ImGui::Begin("test");
+	//ImGui::SliderFloat("rot.x", &AfterPos[0].x, 270, -90);
+	//ImGui::SliderFloat("rot.y", &pos.y, 270, -90);
+	////ImGui::SliderInt("dir", &dir, 360, -360);
+	//////ImGui::SliderFloat("speed_y", &speed_y, 360, 0);
+	//ImGui::SliderFloat("scale", &vel, 360, 0);
+	//////ImGui::Text("Count::%d", moveCount);
+	//////ImGui::Text("Move::%d", isMove);
+	//////ImGui::Text("Hit::%d", hit);
+	//////ImGui::Unindent();
+	//ImGui::End();
 	Sprite::PreDraw();
 	//Vignette->Draw();
 	if (boss) {

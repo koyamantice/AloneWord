@@ -23,6 +23,7 @@ private:
 	bool collidePlayer() override;
 	bool collideAttackArm() override;
 	bool collideArm();
+	bool BoundEnemy();
 	bool LockOn();
 	void Move();
 	float speed_y = 3.0f/20.0f;

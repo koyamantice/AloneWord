@@ -94,7 +94,7 @@ void Player::Update() {
 		//プレイヤーの移動
 		if (!(StickrotX<650 && StickrotX>-650)) {
 			position.x += sin(atan2(StickrotX, StickrotY)) * PlayerSpeed;
-			if (chargeTimer == 0 && !SetScale) {
+			if (chargeTimer == 0) {
 				rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 				ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 				ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
@@ -103,7 +103,7 @@ void Player::Update() {
 
 		if (!(StickrotY<650 && StickrotY>-650)) {
 			position.z -= cos(atan2(StickrotX, StickrotY)) * PlayerSpeed;
-			if (chargeTimer == 0 && !SetScale) {
+			if (chargeTimer == 0) {
 				rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 				ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 				ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
@@ -120,10 +120,6 @@ void Player::Update() {
 		}
 		PlayerSpeed = 0.3f + AddSpeed;
 
-		if (input->TriggerButton(input->Button_RB)) {
-			speedlimit = ArmSpeed - 90;
-		}
-
 		//腕振り回す系
 		if (AttackFlag == false) {
 			//ため時間
@@ -133,19 +129,21 @@ void Player::Update() {
 				if ((chargeTimer % 100 == 0) && (RotCount <= 2)) {
 					RotCount++;
 				}
-				if (speedlimit <= ArmSpeed) {
+				/*if (speedlimit <= ArmSpeed) {
 					ArmSpeed--;
 					ArmRot.y++;
-				}
+				}*/
 			}
 			else {
 				if (chargeTimer >= 100) {
-					AttackMoveNumber = 1;
 					AttackFlag = true;
-					afterSpeed = ArmSpeed + ((360 * RotCount) + 90);
+					AttackMoveNumber = 1;
+					RotTimer = 200 * RotCount;
+					RotPower = 10.0f;
+				/*	afterSpeed = ArmSpeed + ((360 * RotCount) + 90);
 					initArmRotation = ArmRot.y - ((360 * RotCount) + 90);
 					initrotation = rot.y - (360 * RotCount);
-					initscale = Armscale + 3.0f;
+					initscale = Armscale + 3.0f;*/
 					//chargeTimer = 0;
 				}
 				else {
@@ -157,7 +155,24 @@ void Player::Update() {
 
 	//振り回している
 	if (AttackFlag == true) {
-		if (AttackMoveNumber == 1) {
+		RotTimer--;
+
+		if (RotTimer >= 0 && RotPower >= 0.0f) {
+			rot.y -= RotPower;
+			ArmSpeed += RotPower;
+		}
+		else {
+			chargeTimer = 0;
+			RotCount = 0;
+			RotTimer = 0;
+			ArmWeight = 0.0f;
+			AttackFlag = false;
+		}
+
+		if (RotTimer <= 150) {
+			RotPower -= 0.05f;
+		}
+	/*	if (AttackMoveNumber == 1) {
 			if (frame >= 1.0f) {
 				frame = 0.0f;
 				chargeTimer = 0;
@@ -193,24 +208,24 @@ void Player::Update() {
 			}
 		}
 		
-		Armscale = Ease(In, Cubic, frame2, Armscale, initscale);
+		Armscale = Ease(In, Cubic, frame2, Armscale, initscale);*/
 	}
 
-	if (SetScale) {
-		initscale = 1.0f;
-		if (frame2 >= 1.0f) {
-			AttackMoveNumber = 0;
-			frame2 = 0.0f;
-			SetScale = false;
-			frame = 0.0f;
-			chargeTimer = 0;
-			RotCount = 0;
-		}
-		else {
-			frame2 += 0.02;
-		}
-		Armscale = Ease(In, Cubic, frame2, Armscale, initscale);
-	}
+	//if (SetScale) {
+	//	initscale = 1.0f;
+	//	if (frame2 >= 1.0f) {
+	//		AttackMoveNumber = 0;
+	//		frame2 = 0.0f;
+	//		SetScale = false;
+	//		frame = 0.0f;
+	//		chargeTimer = 0;
+	//		RotCount = 0;
+	//	}
+	//	else {
+	//		frame2 += 0.02;
+	//	}
+	//	Armscale = Ease(In, Cubic, frame2, Armscale, initscale);
+	//}
 
 	//アニメーション用のキー入力
 	if ((input->LeftTiltStick(input->Right)) || (input->LeftTiltStick(input->Left))
@@ -453,15 +468,17 @@ void Player::SelectUp() {
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
 
-	//ImGui::Begin("test");
-	//ImGui::SliderFloat("pos.x", &position.x, 50, -50);
-	//ImGui::SliderFloat("pos.z", &position.z, 50, -50);
-	//ImGui::End();
+	ImGui::Begin("test");
+	ImGui::SliderFloat("RotCount", &RotCount, 50, -50);
+	ImGui::SliderFloat("ArmWeight", &ArmWeight, 50, -50);
+	ImGui::Text("TImer::%d", RotTimer);
+	ImGui::Text("Attack::%d", AttackFlag);
+	ImGui::End();
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
 		move_object1->Draw(dxCommon->GetCmdList());
 		//object3d->Draw();
-		Armobj->Draw();
+		//Armobj->Draw();
 	}
 	//arm_no_object1->Draw(dxCommon->GetCmdList());
 	

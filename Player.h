@@ -86,14 +86,10 @@ public:
 
 	void SetDamageFlag(bool DamageFlag) { this->DamageFlag = DamageFlag; }
 
-	void SetArmScale(bool SetScale) { this->SetScale = SetScale; }
-
 	void SetArmWeight(float ArmWeight) { this->ArmWeight = ArmWeight; }
 
 	void SetAddSpeed(float AddSpeed) { this->AddSpeed = AddSpeed; }
 
-	void SetFrame(float frame) { this->frame = frame; }
-	void SetFrame2(float frame2) { this->frame2 = frame2; }
 	void SetMove(float XMax, float ZMax) { this->XMax = XMax; this->ZMax = ZMax; }
 
 	//腕の重みリセット
@@ -142,7 +138,7 @@ private:
 	float circleZ = 0.0f;
 	float Armradius = 0.0f;
 	float ArmSpeed = 90.0f;
-	float Armscale = 1.0f;
+	float Armscale = 0.5f;
 	float ArmCircleX = 0.0f;
 	float ArmCircleZ = 0.0f;
 	float ArmWeight = 0.0f;
@@ -181,10 +177,9 @@ private:
 	FBXObject3d* move_object1 = nullptr;
 	int move_count = 0;
 	//チャージ攻撃のための変数
-	float speedlimit = 0.0f;
+	float RotPower = 10.0f;
 	int chargeTimer = 0;
-	float afterSpeed = 0;
+	int RotTimer = 0;
 	float RotCount = 0.0f;
-	bool SetScale = false;
 	float AddSpeed = 0.0f;
 };
