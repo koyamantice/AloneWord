@@ -80,6 +80,13 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 		number[0][j]->SetPosition(pos);
 		number[1][j]->SetPosition(pos2);
 	}
+	strong = player->GetArmWeight() * 5;
+	power.clear();
+	for (int tmp = strong; tmp > 0;) {
+		power.push_back(tmp % 10);
+		tmp /= 10;
+	}
+
 }
 void UI::Update() {
 	{//HP
@@ -89,6 +96,11 @@ void UI::Update() {
 		Ease(In,Quint,0.7f,(float)PlaHp->GetSize().y,(float)AfterPos[1].y),
 		};
 		PlaHp->SetSize(plaPos);
+	}
+	if (strong!= player->GetArmWeight()) {
+		if (!Up) {
+			Up = true;
+		}
 	}
 	if (Up) {
 		EaseScale();
@@ -165,21 +177,24 @@ const void UI::Draw() {
 	if (boss2 && invisible[1] && boss2->GetHP() >= 1) {
 		Arrow2->Draw();
 	}
-	for (int i = 0; i < power.size() && i < 2; i++) {
-		number[i][power[i]]->Draw();
+	if (player->GetAttackFlag()) {
+		for (int i = 0; i < power.size() && i < 2; i++) {
+			number[i][power[i]]->Draw();
+		}
+		bairitu->Draw();
 	}
-	bairitu->Draw();
 }
 
 void UI::EaseScale() {
 	//strong = 2;
 	//strong *= 10;
-	strong = strong;
+	strong = player->GetArmWeight()*5;
 	power.clear();
 	for (int tmp = strong; tmp > 0;) {
 		power.push_back(tmp % 10);
 		tmp /= 10;
 	}
+	strong = player->GetArmWeight();
 	//pos.x = Ease(In,Quad,frame, (float)WinApp::window_width - 70, (float)WinApp::window_width - 90);
 	//pos.y = Ease(In, Quad, frame, 21 + 80, 40 + 80);
 	vel = Ease(In, Quad, frame, 1.3f, 1.1f);

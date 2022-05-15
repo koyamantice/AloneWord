@@ -139,9 +139,18 @@ void BossEnemy::Spec() {
 					};
 					if (frame < 1.0f) {
 						frame += 0.08f;
+						Afterrot.z += vel;
+						if (rot.z > 45) {
+							rot.z = 45;
+							vel = -vel;
+						}
+						if (rot.z < -45) {
+							rot.z = -45;
+							vel = -vel;
+						}
 						break;
-					}
-					if (frame >= 1.0f) {
+					}else{
+						Afterrot.z = 0;
 						frame = 1.0f;
 						if (coolT < 90) {
 							coolT++;
@@ -218,9 +227,10 @@ void BossEnemy::Spec() {
 		Ease(In,Cubic,frame,pos.z,AfterPos.z)
 				};
 				enemyobj->SetPosition(pos);
+		rot.y = Ease(In, Quint, 0.7f, rot.y, Afterrot.y);
+		enemyobj->SetRotation(rot);
 			}
-		}
-
+	}
 		rot.y = Ease(In, Quint, 0.7f, rot.y, Afterrot.y);
 		enemyobj->SetRotation(rot);
 	}

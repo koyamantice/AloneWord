@@ -18,11 +18,5 @@ class Onomato {
 
 	Texture* onomato;
 
-
-
-
-
-
-
 };
 

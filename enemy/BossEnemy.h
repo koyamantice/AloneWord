@@ -12,7 +12,7 @@ public:
 	void specialDraw() override;
 
 private:
-
+	float vel = 3.0f;
 	float y = 0.0f;
 	//‘Ò‹@ƒ‚[ƒVƒ‡ƒ“‚Ì‚½‚ß‚Ì‚â‚Â
 	enum Motion {
