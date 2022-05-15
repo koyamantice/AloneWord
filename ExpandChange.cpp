@@ -28,20 +28,20 @@ void ExpandChange::Update() {
 
 const void ExpandChange::Draw() {
 
-	ImGui::Begin("test");
-	//ImGExpandChange::SliderFloat("HP", &BossHP, 50, 0.0f);
-	/*ImGExpandChange::SliderFloat("angle", &angle, 200, -25);
-	ImGExpandChange::SliderFloat("rot.x", &rot.x, 360, -360);
-	ImGExpandChange::SliderFloat("rot.z", &rot.z, 360, -360);*/
-	//ImGExpandChange::SliderFloat("rot.y", &frame, 360, -360);
-	//ImGExpandChange::Text("Move:%d", appearMove);
-	//ImGExpandChange::Text("Action:%d", action);
-	//ImGExpandChange::Text("Active:%d", active);
-	////ImGExpandChange::Unindent();
-	//ImGui::SliderFloat("scale", &scale, 2, 0);
-	ImGui::Text("Timer:%d", timer);
-	ImGui::Text("startchange:%d", startchange);
-	ImGui::End();
+	//ImGui::Begin("test");
+	////ImGExpandChange::SliderFloat("HP", &BossHP, 50, 0.0f);
+	///*ImGExpandChange::SliderFloat("angle", &angle, 200, -25);
+	//ImGExpandChange::SliderFloat("rot.x", &rot.x, 360, -360);
+	//ImGExpandChange::SliderFloat("rot.z", &rot.z, 360, -360);*/
+	////ImGExpandChange::SliderFloat("rot.y", &frame, 360, -360);
+	////ImGExpandChange::Text("Move:%d", appearMove);
+	////ImGExpandChange::Text("Action:%d", action);
+	////ImGExpandChange::Text("Active:%d", active);
+	//////ImGExpandChange::Unindent();
+	////ImGui::SliderFloat("scale", &scale, 2, 0);
+	//ImGui::Text("Timer:%d", timer);
+	//ImGui::Text("startchange:%d", startchange);
+	//ImGui::End();
 	//if (startchange || endchange) {
 	//
 	//}

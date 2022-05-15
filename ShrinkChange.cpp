@@ -29,20 +29,20 @@ void ShrinkChange::Update() {
 
 const void ShrinkChange::Draw() {
 
-	ImGui::Begin("test");
-	//ImGShrinkChange::SliderFloat("HP", &BossHP, 50, 0.0f);
-	/*ImGShrinkChange::SliderFloat("angle", &angle, 200, -25);
-	ImGShrinkChange::SliderFloat("rot.x", &rot.x, 360, -360);
-	ImGShrinkChange::SliderFloat("rot.z", &rot.z, 360, -360);*/
-	//ImGShrinkChange::SliderFloat("rot.y", &frame, 360, -360);
-	//ImGShrinkChange::Text("Move:%d", appearMove);
-	//ImGShrinkChange::Text("Action:%d", action);
-	//ImGShrinkChange::Text("Active:%d", active);
-	////ImGShrinkChange::Unindent();
-	//ImGui::SliderFloat("scale", &scale, 2, 0);
-	ImGui::Text("Timer:%d", timer);
-	ImGui::Text("endflag", endchange);
-	ImGui::End();
+	//ImGui::Begin("test");
+	////ImGShrinkChange::SliderFloat("HP", &BossHP, 50, 0.0f);
+	///*ImGShrinkChange::SliderFloat("angle", &angle, 200, -25);
+	//ImGShrinkChange::SliderFloat("rot.x", &rot.x, 360, -360);
+	//ImGShrinkChange::SliderFloat("rot.z", &rot.z, 360, -360);*/
+	////ImGShrinkChange::SliderFloat("rot.y", &frame, 360, -360);
+	////ImGShrinkChange::Text("Move:%d", appearMove);
+	////ImGShrinkChange::Text("Action:%d", action);
+	////ImGShrinkChange::Text("Active:%d", active);
+	//////ImGShrinkChange::Unindent();
+	////ImGui::SliderFloat("scale", &scale, 2, 0);
+	//ImGui::Text("Timer:%d", timer);
+	//ImGui::Text("endflag", endchange);
+	//ImGui::End();
 	//if (startchange || endchange) {
 	//
 	//}

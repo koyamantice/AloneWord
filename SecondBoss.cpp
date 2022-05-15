@@ -156,51 +156,37 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 		player->Begin();
 		leftshose->Begin();
 		rightshose->Begin();
-		if (appearanceTimer == 1) {
+		rightshose->AppeaMovie(appearanceTimer);
+		leftshose->AppeaMovie(appearanceTimer);
+		if (appearanceNumber == 0) {
+			cameraPos.x = rightshose->GetPosition().x + 5;
+			cameraPos.y = rightshose->GetPosition().y + 2;
+			cameraPos.z = rightshose->GetPosition().z - 3;
+			cameratargetPos = rightshose->GetPosition();
+
+			if (appearanceTimer == 200) {
+				appearanceNumber++;
+			}
+		}
+		
+		else if (appearanceNumber == 1) {
+			cameraPos.x = leftshose->GetPosition().x - 5;
+			cameraPos.y = leftshose->GetPosition().y + 2;
+			cameraPos.z = leftshose->GetPosition().z - 3;
+			cameratargetPos = rightshose->GetPosition();
+
+			if (appearanceTimer == 400) {
+				appearanceNumber++;
+			}
+		}
+
+		else if (appearanceNumber == 2) {
 			cameraPos.x = player->GetPosition().x;
 			cameraPos.y = player->GetPosition().y + distanceY;
-			cameraPos.z = player->GetPosition().z - distanceZ;
+			cameraPos.z = player->GetPosition().z - 5;
+			cameratargetPos = { 0.0f,2.0f,0.0 };
 		}
-
-		if (appearanceTimer == 100) {
-			appearanceNumber++;
-
-		}
-
-		if (appearanceNumber == 1) {
-			Aftereyepos = {
-				0,
-				leftshose->GetPosition().y + distanceY,
-				leftshose->GetPosition().z - distanceZ,
-			};
-
-			Aftertargetpos = {
-			0,
-			2.0f,
-			0,
-			};
-
-			if (frame < 1.0f) {
-				frame += 0.01f;
-			}
-			else {
-				frame = 0;
-				appearanceNumber = 2;
-			}
-
-			cameraPos = {
-Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
-Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
-Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
-			};
-
-			cameratargetPos = {
-Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
-Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
-Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
-			};
-		}
-		else if (appearanceNumber == 2) {
+		else if (appearanceNumber == 3) {
 			Aftereyepos = {
 				player->GetPosition().x,
 				player->GetPosition().y + distanceY,
@@ -217,10 +203,10 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 				frame += 0.01f;
 			}
 			else {
-				bossstart = true;
-				appearanceTimer = 0;
-				appearanceNumber = 0;
-				frame = 0;
+				//bossstart = true;
+				//appearanceTimer = 0;
+				//appearanceNumber = 0;
+				//frame = 0;
 			}
 
 			cameraPos = {
@@ -346,6 +332,15 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 }
 
 void SecondBoss::Draw(DirectXCommon* dxCommon) {
+	ImGui::Begin("test");
+	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
+	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
+	//ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
+	//ImGui::SliderFloat("pos.y", &distanceY, 30, 0);
+	//ImGui::SliderFloat("pos.z", &distanceZ, 30, 0);
+	ImGui::Text("appearanceTimer::%d", appearanceTimer);
+	ImGui::Unindent();
+	ImGui::End();
 	//各オブジェクトの描画
 	Object3d::PreDraw();
 	//objBossMap->Draw();
