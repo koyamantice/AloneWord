@@ -419,8 +419,8 @@ void Player::SelectUp() {
 void Player::Draw(DirectXCommon* dxCommon) {
 
 	ImGui::Begin("test");
-	ImGui::SliderFloat("rebound", &rebound.x, 50, -50);
-	ImGui::SliderFloat("reboundz", &rebound.z, 50, -50);
+	ImGui::SliderFloat("rebound", &position.x, 50, -50);
+	ImGui::SliderFloat("reboundz", &position.z, 50, -50);
 	//ImGui::Text("TImer::%d", RotTimer);
 	ImGui::Text("Attack::%d", DamageFlag);
 	ImGui::End();
