@@ -29,8 +29,8 @@ public:
 	const XMFLOAT3& GetRotation() { return enemyobj->GetRotation(); }
 
 	/// À•WE‰ñ“]‚Ìİ’è
-	void SetPosition(XMFLOAT3 position) { enemyobj->SetPosition(position); }
-	void SetRotation(XMFLOAT3 rotation) { enemyobj->SetRotation(rotation); }
+	void SetPosition(const XMFLOAT3& position) { enemyobj->SetPosition(position); }
+	void SetRotation(const XMFLOAT3& rotation) { enemyobj->SetRotation(rotation); }
 	const int& GetIsTimer() { return IsTimer; };
 	const bool& GetEnemyCatch() { return EnemyCatch; }
 	const XMFLOAT3& GetBoundPower() { return boundpower; }
@@ -39,16 +39,16 @@ public:
 	const bool& GetIsAlive() { return IsAlive; }
 	const int& GetDrawExp() { return DrawExp; }
 	//bool Collision(XMFLOAT3 position, float radius);
-	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
-	void SetEnemyCatch(bool EnemyCatch) { this->EnemyCatch = EnemyCatch; }
-	void SetBound(bool bound) { this->bound = bound; }
-	void SetScale(float Scale) { this->scale=Scale; }
-	void SetSpeed(float speed) { this->speed = speed; }
-	void SetHit(bool hit) { this->hit = hit; }
+	void SetIsAlive(const int& IsAlive) { this->IsAlive = IsAlive; }
+	void SetEnemyCatch(const bool& EnemyCatch) { this->EnemyCatch = EnemyCatch; }
+	void SetBound(const bool& bound) { this->bound = bound; }
+	void SetScale(const float& Scale) { this->scale=Scale; }
+	void SetSpeed(const float& speed) { this->speed = speed; }
+	void SetHit(const bool& hit) { this->hit = hit; }
 	void Back();
-	void SetDrawExp(int DrawExp) { this->DrawExp = DrawExp; }
-	void Setboundpower(XMFLOAT3 boundpower) { this->boundpower = boundpower; }
-	void SetLimit(XMFLOAT4 limit) {
+	void SetDrawExp(const int& DrawExp) { this->DrawExp = DrawExp; }
+	void Setboundpower(const XMFLOAT3& boundpower) { this->boundpower = boundpower; }
+	void SetLimit(const XMFLOAT4& limit) {
 		this->z_max = limit.x;
 		this->z_min = limit.y;
 		this->x_max = limit.z;
