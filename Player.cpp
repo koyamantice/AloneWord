@@ -122,6 +122,9 @@ void Player::Update() {
 
 		//腕振り回す系
 		if (AttackFlag == false) {
+			if (input->TriggerButton(input->Button_RB)) {
+				RotCount = 0;
+			}
 			//ため時間
 			if (input->PushButton(input->Button_RB)) {
 				chargeTimer++;
@@ -172,60 +175,7 @@ void Player::Update() {
 		if (RotTimer <= 150) {
 			RotPower -= 0.05f;
 		}
-	/*	if (AttackMoveNumber == 1) {
-			if (frame >= 1.0f) {
-				frame = 0.0f;
-				chargeTimer = 0;
-				AttackMoveNumber = 2;
-				RotCount = 0;
-				initscale = 1.0f;
-				rotation.y = 270.0f;
-			}
-			else {
-				if (RotCount == 1) {
-					frame += 0.01f;
-				}
-				else if (RotCount == 2) {
-					frame += 0.01f;
-				}
-				else {
-					frame += 0.01f;
-				}
-			}
-			rot.y = Ease(In, Cubic, frame, rot.y, initrotation);
-			ArmSpeed = Ease(In, Cubic, frame, ArmSpeed, afterSpeed);
-			ArmRot.y = Ease(In, Cubic, frame, ArmRot.y, initArmRotation);
-			Armscale = Ease(In, Cubic, frame, Armscale, initscale);
-		}
-		else {
-			if (frame2 >= 1.0f) {
-				AttackMoveNumber = 0;
-				AttackFlag = false;
-				frame2 = 0.0f;
-			}
-			else {
-				frame2 += 0.02f;
-			}
-		}
-		
-		Armscale = Ease(In, Cubic, frame2, Armscale, initscale);*/
 	}
-
-	//if (SetScale) {
-	//	initscale = 1.0f;
-	//	if (frame2 >= 1.0f) {
-	//		AttackMoveNumber = 0;
-	//		frame2 = 0.0f;
-	//		SetScale = false;
-	//		frame = 0.0f;
-	//		chargeTimer = 0;
-	//		RotCount = 0;
-	//	}
-	//	else {
-	//		frame2 += 0.02;
-	//	}
-	//	Armscale = Ease(In, Cubic, frame2, Armscale, initscale);
-	//}
 
 	//アニメーション用のキー入力
 	if ((input->LeftTiltStick(input->Right)) || (input->LeftTiltStick(input->Left))
@@ -469,10 +419,10 @@ void Player::SelectUp() {
 void Player::Draw(DirectXCommon* dxCommon) {
 
 	ImGui::Begin("test");
-	ImGui::SliderFloat("RotCount", &RotCount, 50, -50);
-	ImGui::SliderFloat("ArmWeight", &ArmWeight, 50, -50);
-	ImGui::Text("TImer::%d", RotTimer);
-	ImGui::Text("Attack::%d", AttackFlag);
+	ImGui::SliderFloat("rebound", &rebound.x, 50, -50);
+	ImGui::SliderFloat("reboundz", &rebound.z, 50, -50);
+	//ImGui::Text("TImer::%d", RotTimer);
+	ImGui::Text("Attack::%d", DamageFlag);
 	ImGui::End();
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
@@ -519,22 +469,22 @@ void Player::Rebound(InterBoss* boss) {
 
 	if (DamageFlag == true) {
 		if (distance.x <= 0) {
-			rebound.x = -0.2f;
+			rebound.x = -5.2f;
 		}
 		else {
-			rebound.x = 0.2f;
+			rebound.x = 5.2f;
 		}
 
 		if (distance.z <= 0) {
-			rebound.z = -0.2f;
+			rebound.z = -5.2f;
 		}
 		else {
-			rebound.z = 0.2f;
+			rebound.z = 5.2f;
 		}
 		DamageFlag = false;
 	}
 
-	if (rebound.x >= 0.0) {
+	if (rebound.x > 0.0) {
 		rebound.x -= 0.005f;
 		if (rebound.x <= 0.0f) {
 			rebound.x = 0.0f;
@@ -547,7 +497,7 @@ void Player::Rebound(InterBoss* boss) {
 		}
 	}
 
-	if (rebound.z >= 0.0) {
+	if (rebound.z > 0.0) {
 		rebound.z -= 0.045f;
 		if (rebound.z <= 0.0f) {
 			rebound.z = 0.0f;
@@ -566,6 +516,8 @@ void Player::Rebound(InterBoss* boss) {
 	if (position.z <= 20.0f && position.z >= -20.0f) {
 		position.z += rebound.z;
 	}
+
+	object3d->SetPosition(position);
 }
 
 void Player::BirthParticle() {
