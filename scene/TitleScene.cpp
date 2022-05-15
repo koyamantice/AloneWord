@@ -22,14 +22,21 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 	if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_X)) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 		expandchange->SetStartChange(true);
+		SelectNumber = Select;
 	}
 	else if (input->TriggerButton(input->Button_A)) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 		expandchange->SetStartChange(true);
+		SelectNumber = Start;
 	}
 
 	if (expandchange->GetTimer() >= 58) {
-		SceneManager::GetInstance()->ChangeScene("StageSelect");
+		if (SelectNumber == Select) {
+			SceneManager::GetInstance()->ChangeScene("StageSelect");
+		}
+		else {
+			SceneManager::GetInstance()->ChangeScene("STARTMAP");
+		}
 	}
 
 	expandchange->Update();

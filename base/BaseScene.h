@@ -19,6 +19,8 @@ class SceneManager;
 #include "Warp.h"
 #include "ParticleManager.h"
 #include "FPSManager.h"
+#include "ExpandChange.h"
+#include "ShrinkChange.h"
 #include<memory>
 
 /// <summary>
