@@ -70,9 +70,6 @@ bool InterBoss::collideAttackArm() {
 	if (attackflag && !BossHit) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 1.3f, Armpos.x, Armpos.y, Armpos.z, 1.3f) == true && BossHP > 0) {
 			player->SetAttackFlag(false);
-			player->SetArmScale(true);
-			player->SetFrame(0.0f);
-			player->SetFrame2(0.0f);
 			player->SetCharge(0);
 			if (weight != 0.0f) {
 				BossHit = true;
@@ -97,9 +94,9 @@ bool InterBoss::collideAttackArm() {
 				Effect = true;
 				BossHP -= (weight * 2);
 				weight = 0.0f;
-				boundpower.x = (float)(rand() % 4 - 2);
-				boundpower.y = (float)(rand() % 6);
-				boundpower.z = (float)(rand() % 4 - 2);
+				//boundpower.x = (float)(rand() % 4 - 2);
+				//boundpower.y = (float)(rand() % 6);
+				//boundpower.z = (float)(rand() % 4 - 2);
 				player->SetArmWeight(weight);
 				BossHit = false;
 			}
