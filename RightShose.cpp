@@ -344,8 +344,8 @@ void RightShose::App(int Timer) {
 	if (Timer == 1) {
 		pos = { 13.0f,0.0f,18.0f };
 	}
-
-	if (Timer == 20 || Timer == 250 || Timer == 450){
+	
+	if (Timer == 20 || Timer == 250 || Timer == 450 || Timer == 550){
 		appearMove++;
 		frame = 0.0f;
 		frame2 = 0.0f;
@@ -397,7 +397,9 @@ void RightShose::App(int Timer) {
 			frame = 0.0f;
 			break;
 		}
-
+	case 4:
+		pos = { 10.0f,0.0f,0.0f };
+		rot = { 0,270,0 };
 	}
 
 	pos = {
