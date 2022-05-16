@@ -13,8 +13,9 @@
 #include "CollisionManager.h"
 #include "CollisionAttribute.h"
 #include "FbxLoader.h"
-#include <ModelManager.h>
-#include <Easing.h>
+#include "ModelManager.h"
+#include "ImageManager.h"
+#include "Easing.h"
 using namespace DirectX;
 Input* input = Input::GetInstance();
 
@@ -25,6 +26,7 @@ Player::Player() {
 	Armobj = new Object3d();
 	move_model1 = ModelManager::GetIns()->GetFBXModel(ModelManager::MottiMove);
 	move_object1 = new FBXObject3d;
+	Charge = Texture::Create(ImageManager::Charge, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 }
 
 bool Player::Initialize() {
@@ -51,6 +53,11 @@ bool Player::Initialize() {
 	move_object1->SetPosition(position);
 	move_object1->SetRotation(rot);
 	
+	Charge = Texture::Create(ImageManager::Charge, { 0,0,0 }, { 1,1,1 }, { 1,1,1,1 });
+	Charge->TextureCreate();
+	Charge->SetPosition(position);
+	Charge->SetRotation({ 90.0f,0, 0 });
+	Charge->SetScale(sca);
 	//effecttexture = Texture::Create(4, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	//effecttexture->TextureCreate();
 	////effecttexture->SetRotation({ 90,0,0 });
@@ -76,6 +83,9 @@ void Player::Update() {
 	}
 	oldPos = position;
 	rot = this->object3d->GetRotation();
+	Charge->Update();
+	Charge->SetPosition(position);
+	Charge->SetScale(sca);
 	object3d->Update();
 	Armobj->Update();
 	StickrotX = input->GetPosX();
@@ -129,8 +139,22 @@ void Player::Update() {
 			if (input->PushButton(input->Button_RB)) {
 				chargeTimer++;
 				PlayerSpeed = 0.1f;
+				if (sca.x > 0.0f) {
+					sca.x -= 0.02f;
+					sca.y -= 0.02f;
+					sca.z -= 0.02f;
+				} else {
+					sca = { 0.7f,0.7f,0.7f };
+				}
 				if ((chargeTimer % 100 == 0) && (RotCount <= 2)) {
 					RotCount++;
+				}
+				if (RotCount<1) {
+					Charge->SetColor({1,1,1,1});
+				} else if(RotCount < 2) {
+					Charge->SetColor({ 1,1,0,1 });
+				} else {
+					Charge->SetColor({ 1,0,0,1 });
 				}
 				/*if (speedlimit <= ArmSpeed) {
 					ArmSpeed--;
@@ -424,6 +448,8 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	////ImGui::Text("TImer::%d", RotTimer);
 	//ImGui::Text("Attack::%d", DamageFlag);
 	//ImGui::End();
+	Texture::PreDraw();
+	Charge->Draw();
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
 		move_object1->Draw(dxCommon->GetCmdList());

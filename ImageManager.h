@@ -62,6 +62,8 @@ public:
 	net,//Texture::LoadTexture(6, L"Resources/2d/Resporn.png");
 	water,
 	hit,
+	Charge,
+
 	};
 public:
 	static ImageManager* GetIns();		//Žæ“¾—p
