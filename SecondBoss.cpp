@@ -153,7 +153,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 	objFloor->Update();
 	lightGroup->Update();
 
-	//Å‰‚Ì‰‰o
+	//Å‰‚Ì‰‰o(“±“ü)
 	if (!bossstart) {
 		appearanceTimer++;
 		player->Begin();

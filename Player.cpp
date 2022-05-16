@@ -167,7 +167,7 @@ void Player::Update() {
 						};
 					}
 				}
-
+				//チャージ時のエフェクト
 				if (RotCount<1) {
 					Charge->SetColor({1,1,1,1});
 				} else if(RotCount < 2) {
@@ -181,6 +181,7 @@ void Player::Update() {
 				}*/
 			}
 			else {
+				//ため開放
 				if (chargeTimer >= 100) {
 					AttackFlag = true;
 					AttackMoveNumber = 1;
@@ -200,7 +201,7 @@ void Player::Update() {
 		}
 	}
 
-
+	//チャージ時間に応じてプレイヤーのスケール変更
 	if (ChangeScale == true) {
 		if (scaleframe >= 1.0f) {
 			ChangeScale = false;

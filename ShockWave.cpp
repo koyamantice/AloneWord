@@ -49,6 +49,7 @@ void ShockWave::SetWave(Pastel* pastel) {
 	int action = pastel->GetAction();
 	int pat = pastel->GetPat();
 	XMFLOAT3 pos = pastel->GetPosition();
+	//ÕŒ‚”g‚ÌˆÊ’u‚ðŒˆ‚ß‚é
 	if (action == 3 && pos.y == 2.0f && !expand) {
 		if (pat == 0 || pat == 1) {
 			this->pos.x = pos.x + 5;
@@ -69,6 +70,7 @@ void ShockWave::SetWave(Pastel* pastel) {
 		scale.y += 0.05f;
 		scale.z += 0.05f;
 
+		//ÕŒ‚”g‚ªL‚ª‚é
 		damegeArea += 0.12f;
 
 		if (damegeArea >= 0.5f) {

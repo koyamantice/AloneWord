@@ -243,6 +243,7 @@ void BossEnemy::Spec() {
 			frame = 0.0f;
 		}
 
+		//導入シーンにおいてフレーム数によって行動を決める
 		switch (appearMove) {
 		case 1:
 			AfterPos = {
