@@ -55,7 +55,7 @@ void ExpandChange::Finalize() {
 	delete change;
 }
 
-//ボスによって衝撃波が走る
+//シーン切り替え
 void ExpandChange::Expand() {
 	scale = 1.1f;
 	timer++;
@@ -63,6 +63,5 @@ void ExpandChange::Expand() {
 		timer = 0;
 		startchange = false;
 	}
-
 }
 

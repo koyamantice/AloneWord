@@ -58,6 +58,5 @@ private:
 	UI* ui=nullptr;
 	CollisionManager* collisionManager = nullptr;
 	ParticleManager* particleMan = nullptr;
-	float nameframe = 0.0f;
 };
 

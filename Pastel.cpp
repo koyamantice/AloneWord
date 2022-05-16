@@ -26,14 +26,14 @@ void Pastel::Initialize(bool shadow) {
 	IsAlive = 0;
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
-	pos = { 0.0f,3.0f,5.0f };
+	pos = { 0.0f,5.0f,8.0f };
 	enemyobj->SetPosition(pos);
-	rot = { 0,90,0 };
+	rot = { 0,270,0 };
 	enemyobj->SetRotation(rot);
 	enemyobj->SetScale({ 2.0f,2.0f,2.0f });
 	Millobj = Object3d::Create();
 	Millobj->SetModel(Millmodel);
-	Millpos = { 0.0f,0.0f,0.0f };
+	Millpos = { 0.0f,-2.0f,0.0f };
 	Millobj->SetPosition(Millpos);
 	Millobj->SetRotation({0,90,0});
 	Millobj->SetScale({ 4.5f,4.5f,4.5f });
@@ -81,10 +81,10 @@ void Pastel::Spec() {
 	else {
 		if (!active && !Off) {
 			AttackCount++;
-			angle += 2.0f;
+			/*angle += 2.0f;
 			angle2 = angle * (3.14f / 180.0f);
 			pos.y = sin(angle2) * 2 + 3;
-			enemyobj->SetPosition(pos);
+			enemyobj->SetPosition(pos);*/
 		}
 	}
 
@@ -309,14 +309,48 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 }
 
 void Pastel::App(int Timer) {
-	frame = 0.0f;
-	angle += 3.0f;
-	angle2 = angle * (3.14f / 180.0f);
-	rot.z = sin(angle2) * 90;
 
-	if (angle >= 500 && rot.z <= 0.0f) {
-		appearanceEnd = true;
+	XMFLOAT3 AfterPos{};
+	XMFLOAT3 AfterRot{};
+
+	if (Timer == 1) {
+		frame = 0.0f;
+		frame2 = 0.0f;
+		appearMove++;
 	}
+	switch (appearMove) {
+	case 1:
+		frame = 0.0f;
+		angle += 3.0f;
+		angle2 = angle * (3.14f / 180.0f);
+		rot.z = sin(angle2) * 45;
+
+		if ((angle >= 500) && (rot.z >= 44.0f)) {
+			rot.z = 45.0f;
+			appearMove++;
+		}
+	case 2:
+		AfterRot = {
+			rot.x,
+			90.0f,
+			rot.z,
+		};
+		if (frame < 1.0f) {
+			frame += 0.005f;
+			break;
+		}
+		else {
+			frame = 0.0f;
+			break;
+		}
+	}
+
+	rot = {
+Ease(In,Cubic,frame,rot.x,AfterRot.x),
+Ease(In,Cubic,frame,rot.y,AfterRot.y),
+Ease(In,Cubic,frame,rot.z,AfterRot.z)
+	};
+
 	enemyobj->SetRotation(rot);
 }
 

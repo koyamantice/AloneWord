@@ -69,6 +69,7 @@ protected:
 	float frame = 0.0f;
 	int Interval = 0;
 	bool end = false;
+	float nameframe = 0.0f;
 public:
 
 	virtual ~BaseScene()=default;
