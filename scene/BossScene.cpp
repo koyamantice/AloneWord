@@ -150,7 +150,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	objFloor->Update();
 	lightGroup->Update();
 	ParticleManager::GetInstance()->Update();
-	//最初の演出
+	//最初の演出(導入)
 	if (!bossstart) {
 		appearanceTimer++;
 		player->Begin();

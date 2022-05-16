@@ -352,6 +352,7 @@ void RightShose::App(int Timer) {
 		frame2 = 0.0f;
 	}
 
+	//導入シーンにおいてフレーム数によって行動を決める
 	switch (appearMove) {
 	case 1:
 		AfterPos = {

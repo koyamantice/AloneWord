@@ -31,7 +31,7 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	objBossMap = TouchableObject::Create(modelBossMap);
 	objBossMap->SetPosition({ 0,-1,2 });
 	objBossMap->SetRotation({ 0, 90, 0 });
-	objBossMap->SetScale({ 1.4f,1.5f,1.6f });
+	objBossMap->SetScale({ 3.0f, 1.5f, 3.0f });
 	/*
 	objBossMap->SetModel(modelBossMap);
 	objBossMap->SetPosition({ 0,-1,2 });
@@ -153,7 +153,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 	objFloor->Update();
 	lightGroup->Update();
 
-	//最初の演出
+	//最初の演出(導入)
 	if (!bossstart) {
 		appearanceTimer++;
 		player->Begin();
@@ -348,16 +348,16 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 }
 
 void SecondBoss::Draw(DirectXCommon* dxCommon) {
-	ImGui::Begin("test");
-	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
-	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
-	//ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
-	//ImGui::SliderFloat("pos.y", &distanceY, 30, 0);
-	//ImGui::SliderFloat("pos.z", &distanceZ, 30, 0);
-	ImGui::Text("appearanceTimer::%d", appearanceTimer);
-	ImGui::Text("appearanceNumber::%d", appearanceNumber);
-	ImGui::Unindent();
-	ImGui::End();
+	//ImGui::Begin("test");
+	////ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
+	////ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
+	////ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
+	////ImGui::SliderFloat("pos.y", &distanceY, 30, 0);
+	////ImGui::SliderFloat("pos.z", &distanceZ, 30, 0);
+	//ImGui::Text("appearanceTimer::%d", appearanceTimer);
+	//ImGui::Text("appearanceNumber::%d", appearanceNumber);
+	//ImGui::Unindent();
+	//ImGui::End();
 	//各オブジェクトの描画
 	Object3d::PreDraw();
 	//objBossMap->Draw();

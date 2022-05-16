@@ -12,6 +12,8 @@ Pastel::Pastel() {
 	enemyobj = new Object3d();
 	Millmodel = ModelManager::GetIns()->GetModel(ModelManager::EHub);
 	Millobj = new Object3d();
+	Mottimodel = ModelManager::GetIns()->GetModel(ModelManager::Enemy);
+	Mottiobj = new Object3d();
 	Platformmodel = ModelManager::GetIns()->GetModel(ModelManager::Platform);
 	for (std::size_t i = 0; i < Platformobj.size(); i++) {
 		Platformobj[i] = TouchableObject::Create(Platformmodel);
@@ -26,17 +28,21 @@ void Pastel::Initialize(bool shadow) {
 	IsAlive = 0;
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
-	pos = { 0.0f,3.0f,5.0f };
+	pos = { 0.0f,5.0f,7.5f };
 	enemyobj->SetPosition(pos);
-	rot = { 0,90,0 };
+	rot = { 0,270,0 };
 	enemyobj->SetRotation(rot);
 	enemyobj->SetScale({ 2.0f,2.0f,2.0f });
 	Millobj = Object3d::Create();
 	Millobj->SetModel(Millmodel);
-	Millpos = { 0.0f,0.0f,0.0f };
+	Millpos = { 0.0f,-2.0f,0.0f };
 	Millobj->SetPosition(Millpos);
 	Millobj->SetRotation({0,90,0});
 	Millobj->SetScale({ 4.5f,4.5f,4.5f });
+	Mottiobj = Object3d::Create();
+	Mottiobj->SetModel(Mottimodel);
+	Mottiobj->SetPosition({ 0.0f,1.0f,0.0f });
+	Mottiobj->SetScale(MottiScale);
 	for (std::size_t i = 0; i < Platformobj.size(); i++) {
 		Platformobj[i] = TouchableObject::Create(Platformmodel);
 		Platformobj[i]->SetModel(Platformmodel);
@@ -81,9 +87,25 @@ void Pastel::Spec() {
 	else {
 		if (!active && !Off) {
 			AttackCount++;
-			angle += 2.0f;
-			angle2 = angle * (3.14f / 180.0f);
-			pos.y = sin(angle2) * 2 + 3;
+			AfterPos = {
+				pos.x,
+				5.0f,
+				pos.z
+			};
+
+			if (frame < 1.0f) {
+				frame += 0.01f;
+			}
+			else {
+				frame = 1.0f;
+			}
+
+			pos = {
+	Ease(In,Cubic,frame,pos.x,AfterPos.x),
+	Ease(In,Cubic,frame,pos.y,AfterPos.y),
+	Ease(In,Cubic,frame,pos.z,AfterPos.z)
+			};
+			
 			enemyobj->SetPosition(pos);
 		}
 	}
@@ -91,33 +113,54 @@ void Pastel::Spec() {
 	if (Off == false) {
 		if (active) {
 			switch (action) {
+			//その場所まで行く
 			case 1:
 				if (pat == 0) {
 					AfterPos = {
-					20.0f,
+					10.0f,
 					5.0f,
 					-15.0f
+					};
+					Afterrot = {
+						rot.x,
+						180.0f,
+						-45.0f,
 					};
 				}
 				else if (pat == 1) {
 					AfterPos = {
-					20.0f,
+					10.0f,
 					5.0f,
 					15.0f
+					};
+					Afterrot = {
+					rot.x,
+					180.0f,
+					-45.0f,
 					};
 				}
 				else if (pat == 2) {
 					AfterPos = {
-					-20.0f,
+					-10.0f,
 					5.0f,
 					15.0f
+					};
+					Afterrot = {
+					rot.x,
+					360.0f,
+					-45.0f,
 					};
 				}
 				else if (pat == 3) {
 					AfterPos = {
-					-20.0f,
+					-10.0f,
 					5.0f,
 					-15.0f
+					};
+					Afterrot = {
+					rot.x,
+					360.0f,
+					-45.0f,
 					};
 				}
 
@@ -126,6 +169,7 @@ void Pastel::Spec() {
 					break;
 				}
 				else {
+					//回避ポイントの場所をランダムで決める
 					for (std::size_t i = 0; i < Platformobj.size(); i++) {
 						//for (std::size_t j = 1; j < Platformobj.size(); j++) {
 							//if ((BirthNumber[i] == BirthNumber[j]) && i != j) {
@@ -139,6 +183,7 @@ void Pastel::Spec() {
 					break;
 				}
 			case 2:
+				//攻撃までの間
 				if (aiming < 200) {
 					aiming++;
 					break;
@@ -150,10 +195,16 @@ void Pastel::Spec() {
 					break;
 				}
 			case 3:
+				//攻撃
 				AfterPos = {
 					pos.x,
-					0,
+					2,
 					pos.z,
+				};
+				Afterrot = {
+					rot.x,
+					rot.y,
+					45,
 				};
 				if (frame < 1.0f) {
 					frame += 0.08f;
@@ -194,6 +245,7 @@ void Pastel::Spec() {
 				for (std::size_t i = 0; i < Platformobj.size(); i++) {
 					SetPlatform[i] = false;
 				}
+				//空に戻ります
 				AfterPos = {
 					pos.x,
 					5.0f,
@@ -209,10 +261,16 @@ void Pastel::Spec() {
 					break;
 				}
 			case 5:
+				//元の位置に戻ります
 					AfterPos = {
 						0.0f,
 						5.0f,
-						5.0f,
+						7.5f,
+					};
+					Afterrot = {
+						0.0f,
+						90.0f,
+						0.0f,
 					};
 					if (frame < 1.0f) {
 						frame += 0.01f;
@@ -232,27 +290,43 @@ Ease(In,Cubic,frame,pos.x,AfterPos.x),
 Ease(In,Cubic,frame,pos.y,AfterPos.y),
 Ease(In,Cubic,frame,pos.z,AfterPos.z)
 		};
+
+		rot = {
+Ease(In,Cubic,frame,rot.x,Afterrot.x),
+Ease(In,Cubic,frame,rot.y,Afterrot.y),
+Ease(In,Cubic,frame,rot.z,Afterrot.z)
+		};
 		enemyobj->SetPosition(pos);
+		enemyobj->SetRotation(rot);
 	}
 	
 	if (Off == true && !active) {
-		AfterPos.y = 1.0f;
-		AfterPos.z = 5.0f;
-	
-		if (frame < 0.90f && pos.y != 1.0f) {
+		AfterPos.y = 2.0f;
+		AfterPos.z = 7.5f;
+		Afterrot = {
+			rot.x,
+			270.0f,
+			rot.z,
+		};
+		if (frame < 0.90f && pos.y != 2.0f) {
 			frame += 0.004f;
 		}
 		else {
 			frame = 0.0f;
-			angle += 2.0f;
+			angle += 3.0f;
 			angle2 = angle * (3.14f / 180.0f);
-			rot.z = sin(angle2) * 90;
+			rot.z = sin(angle2) * 45;
 		}
 
 		pos = {
 Ease(In,Cubic,frame,pos.x,AfterPos.x),
 Ease(In,Cubic,frame,pos.y,AfterPos.y),
 Ease(In,Cubic,frame,pos.z,AfterPos.z)
+		};
+		rot = {
+	Ease(In,Cubic,frame,rot.x,Afterrot.x),
+	Ease(In,Cubic,frame,rot.y,Afterrot.y),
+	Ease(In,Cubic,frame,rot.z,Afterrot.z)
 		};
 		enemyobj->SetPosition(pos);
 		enemyobj->SetRotation(rot);
@@ -261,31 +335,38 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 	if (haveEnemy >= 10.0f && !active) {
 		haveTimer++;
 		Off = true;
+		if (haveTimer % 100 == 0) {
+			MottiScale.x -= 0.1f;
+			MottiScale.y -= 0.1f;
+			MottiScale.z -= 0.1f;
+		}
 		if (haveTimer == 1000) {
 			Off = false;
 			haveTimer = 0;
 			haveEnemy = 0.0f;
+			MottiScale = { 0.0f,0.0f,0.0f };
 		}
 	}
 
 	MillUpdate();
+	
 	for (std::size_t i = 0; i < Platformobj.size(); i++) {
 		if (SetPlatform[i] == true) {
 			if (BirthNumber[i] == 0) {
-				Plapos[i].x = 10.0f;
-				Plapos[i].z = -10.0f;
+				Plapos[i].x = 7.0f;
+				Plapos[i].z = -7.0f;
 			}
 			else if (BirthNumber[i] == 1) {
-				Plapos[i].x = 10.0f;
-				Plapos[i].z = 10.0f;
+				Plapos[i].x = 7.0f;
+				Plapos[i].z = 7.0f;
 			}
 			else if (BirthNumber[i] == 2) {
-				Plapos[i].x = -10.0f;
-				Plapos[i].z = 10.0f;
+				Plapos[i].x = -7.0f;
+				Plapos[i].z = 7.0f;
 			}
 			else if (BirthNumber[i] == 3) {
-				Plapos[i].x = -10.0f;
-				Plapos[i].z = -10.0f;
+				Plapos[i].x = -7.0f;
+				Plapos[i].z = -7.0f;
 			}
 
 			if (Plapos[i].y <= 0.0f) {
@@ -305,18 +386,57 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 		//Plattexture[i]->SetScale({1.0f,1.0f,1.0f});
 		Platformobj[i]->SetPosition(Plapos[i]);
 		Platformobj[i]->Update();
+		Mottiobj->SetScale(MottiScale);
+		Mottiobj->Update();
 	}
 }
 
 void Pastel::App(int Timer) {
-	frame = 0.0f;
-	angle += 3.0f;
-	angle2 = angle * (3.14f / 180.0f);
-	rot.z = sin(angle2) * 90;
 
-	if (angle >= 500 && rot.z <= 0.0f) {
-		appearanceEnd = true;
+	XMFLOAT3 AfterPos{};
+	XMFLOAT3 AfterRot{};
+
+	if (Timer == 1) {
+		frame = 0.0f;
+		frame2 = 0.0f;
+		appearMove++;
 	}
+
+	//導入シーンにおいてフレーム数によって行動を決める
+	switch (appearMove) {
+	case 1:
+		frame = 0.0f;
+		angle += 3.0f;
+		angle2 = angle * (3.14f / 180.0f);
+		rot.z = sin(angle2) * 45;
+
+		if ((angle >= 500) && (rot.z >= 44.0f)) {
+			rot.z = 45.0f;
+			appearMove++;
+		}
+	case 2:
+		AfterRot = {
+			rot.x,
+			90.0f,
+			rot.z,
+		};
+		if (frame < 1.0f) {
+			frame += 0.005f;
+			break;
+		}
+		else {
+			frame = 0.0f;
+			appearMove++;
+			break;
+		}
+	}
+
+	rot = {
+Ease(In,Cubic,frame,rot.x,AfterRot.x),
+Ease(In,Cubic,frame,rot.y,AfterRot.y),
+Ease(In,Cubic,frame,rot.z,AfterRot.z)
+	};
+
 	enemyobj->SetRotation(rot);
 }
 
@@ -326,6 +446,7 @@ void Pastel::MillUpdate() {
 
 void Pastel::specialDraw() {
 	Millobj->Draw();
+	Mottiobj->Draw();
 	for (std::size_t i = 0; i < Platformobj.size(); i++) {
 		Platformobj[i]->Draw();
 		Texture::PreDraw();
@@ -346,6 +467,14 @@ bool Pastel::collideAttackArm(Player* player) {
 			//餅を臼に入れている
 			if (BossHit == true) {
 				haveEnemy += weight;
+				if (haveEnemy < 11.0f) {
+					MottiScale.x += (weight / 10);
+					MottiScale.y += (weight / 10);
+					MottiScale.z += (weight / 10);
+				}
+				else {
+					MottiScale = {1.0f,1.0f,1.0f};
+				}
 				weight = 0.0f;
 				player->SetArmWeight(weight);
 				BossHit = false;

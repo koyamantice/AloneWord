@@ -28,7 +28,10 @@ private:
 	//ボスではないオブジェクト用
 	Object3d* Millobj = nullptr;
 	Model* Millmodel = nullptr;
+	Object3d* Mottiobj = nullptr;
+	Model* Mottimodel = nullptr;
 	XMFLOAT3 Millpos = {0,0,0};
+	XMFLOAT3 MottiScale = { 0.0f,0.0f,0.0f };
 	array<TouchableObject*, 4> Platformobj;
 	Model* Platformmodel = nullptr;
 	array<XMFLOAT3, 4> Plapos ={};
