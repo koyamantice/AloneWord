@@ -475,11 +475,11 @@ void Player::TitleUp() {
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
 
-	ImGui::Begin("test");
-	ImGui::SliderFloat("pos.x", &position.x, 50, -50);
-	ImGui::SliderFloat("pos.z", &position.z, 50, -50);
-	ImGui::SliderFloat("rot.y", &rot.y, 50, -50);
-	ImGui::End();
+	//ImGui::Begin("test");
+	//ImGui::SliderFloat("pos.x", &position.x, 50, -50);
+	//ImGui::SliderFloat("pos.z", &position.z, 50, -50);
+	//ImGui::SliderFloat("rot.y", &rot.y, 50, -50);
+	//ImGui::End();
 	Texture::PreDraw();
 	Charge->Draw();
 	Object3d::PreDraw();

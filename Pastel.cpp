@@ -80,6 +80,7 @@ void Pastel::Spec() {
 	}
 	else {
 		if (!active && !Off) {
+			pos.y = 5.0f;
 			AttackCount++;
 			/*angle += 2.0f;
 			angle2 = angle * (3.14f / 180.0f);
@@ -91,33 +92,54 @@ void Pastel::Spec() {
 	if (Off == false) {
 		if (active) {
 			switch (action) {
+			//その場所まで行く
 			case 1:
 				if (pat == 0) {
 					AfterPos = {
-					20.0f,
+					10.0f,
 					5.0f,
 					-15.0f
+					};
+					Afterrot = {
+						rot.x,
+						180.0f,
+						-45.0f,
 					};
 				}
 				else if (pat == 1) {
 					AfterPos = {
-					20.0f,
+					10.0f,
 					5.0f,
 					15.0f
+					};
+					Afterrot = {
+					rot.x,
+					180.0f,
+					-45.0f,
 					};
 				}
 				else if (pat == 2) {
 					AfterPos = {
-					-20.0f,
+					-10.0f,
 					5.0f,
 					15.0f
+					};
+					Afterrot = {
+					rot.x,
+					360.0f,
+					-45.0f,
 					};
 				}
 				else if (pat == 3) {
 					AfterPos = {
-					-20.0f,
+					-10.0f,
 					5.0f,
 					-15.0f
+					};
+					Afterrot = {
+					rot.x,
+					360.0f,
+					-45.0f,
 					};
 				}
 
@@ -126,6 +148,7 @@ void Pastel::Spec() {
 					break;
 				}
 				else {
+					//回避ポイントの場所をランダムで決める
 					for (std::size_t i = 0; i < Platformobj.size(); i++) {
 						//for (std::size_t j = 1; j < Platformobj.size(); j++) {
 							//if ((BirthNumber[i] == BirthNumber[j]) && i != j) {
@@ -139,6 +162,7 @@ void Pastel::Spec() {
 					break;
 				}
 			case 2:
+				//攻撃までの間
 				if (aiming < 200) {
 					aiming++;
 					break;
@@ -150,6 +174,7 @@ void Pastel::Spec() {
 					break;
 				}
 			case 3:
+				//攻撃
 				AfterPos = {
 					pos.x,
 					0,
@@ -232,7 +257,14 @@ Ease(In,Cubic,frame,pos.x,AfterPos.x),
 Ease(In,Cubic,frame,pos.y,AfterPos.y),
 Ease(In,Cubic,frame,pos.z,AfterPos.z)
 		};
+
+		rot = {
+Ease(In,Cubic,frame,rot.x,Afterrot.x),
+Ease(In,Cubic,frame,rot.y,Afterrot.y),
+Ease(In,Cubic,frame,rot.z,Afterrot.z)
+		};
 		enemyobj->SetPosition(pos);
+		enemyobj->SetRotation(rot);
 	}
 	
 	if (Off == true && !active) {
@@ -272,20 +304,20 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 	for (std::size_t i = 0; i < Platformobj.size(); i++) {
 		if (SetPlatform[i] == true) {
 			if (BirthNumber[i] == 0) {
-				Plapos[i].x = 10.0f;
-				Plapos[i].z = -10.0f;
+				Plapos[i].x = 7.0f;
+				Plapos[i].z = -7.0f;
 			}
 			else if (BirthNumber[i] == 1) {
-				Plapos[i].x = 10.0f;
-				Plapos[i].z = 10.0f;
+				Plapos[i].x = 7.0f;
+				Plapos[i].z = 7.0f;
 			}
 			else if (BirthNumber[i] == 2) {
-				Plapos[i].x = -10.0f;
-				Plapos[i].z = 10.0f;
+				Plapos[i].x = -7.0f;
+				Plapos[i].z = 7.0f;
 			}
 			else if (BirthNumber[i] == 3) {
-				Plapos[i].x = -10.0f;
-				Plapos[i].z = -10.0f;
+				Plapos[i].x = -7.0f;
+				Plapos[i].z = -7.0f;
 			}
 
 			if (Plapos[i].y <= 0.0f) {
@@ -341,6 +373,7 @@ void Pastel::App(int Timer) {
 		}
 		else {
 			frame = 0.0f;
+			appearMove++;
 			break;
 		}
 	}

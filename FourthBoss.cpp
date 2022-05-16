@@ -8,6 +8,7 @@
 #include "MeshCollider.h"
 #include "SphereCollider.h"
 #include "CollisionManager.h"
+#include "ImageManager.h"
 #include <Easing.h>
 void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	//インスタンス取得
@@ -87,6 +88,11 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	/*mill = new Mill();
 	mill->SetPlayer(player);
 	mill->Initialize();*/
+
+	//ボスの名前表記
+	bossName = Sprite::Create(ImageManager::select1, namePos);
+	bossName->SetAnchorPoint({ 1.0f,0.0f });
+
 	//敵
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i] = new Rice();
@@ -149,17 +155,17 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 	lightGroup->Update();
 	
 	//最初の演出
-	if(!bossstart){
+	if (!bossstart) {
 		appearanceTimer++;
 		player->Begin();
 		pastel->Begin();
 		pastel->MillUpdate();
 		pastel->AppeaMovie(appearanceTimer);
 		if (appearanceNumber == 0) {
-			cameraPos.x = -9;
-			cameraPos.y = 8;
+			cameraPos.x = -7;
+			cameraPos.y = 9;
 			cameraPos.z = 0;
-			cameratargetPos = { 0.0f,5.0f,0.0f };
+			cameratargetPos = { 0.0f,4.0f,0.0f };
 
 			if (appearanceTimer == 100) {
 				appearanceNumber++;
@@ -221,12 +227,30 @@ Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
 Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			};
 
-			if (appearanceTimer == 500) {
+			if (appearanceTimer == 360) {
 				appearanceNumber++;
 				frame = 0.0f;
 			}
 		}
 		else if (appearanceNumber == 4) {
+			if (nameframe >= 1.0f) {
+				nameframe = 1.0f;
+			}
+			else {
+				nameframe += 0.06f;
+			}
+			namePos = {
+			Ease(In,Quad,nameframe,2000,940),
+			480
+			};
+
+			bossName->SetPosition(namePos);
+			if (appearanceTimer == 450) {
+				nameframe = 0.0f;
+				appearanceNumber++;
+			}
+		}
+		else if (appearanceNumber == 5) {
 			Aftereyepos = {
 			player->GetPosition().x,
 			player->GetPosition().y + distanceY,
@@ -249,6 +273,18 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 				frame = 0;
 			}
 
+			if (nameframe >= 1.0f) {
+				nameframe = 1.0f;
+			}
+			else {
+				nameframe += 0.06f;
+			}
+			namePos = {
+			Ease(In,Quad,nameframe,940,2000),
+			480
+			};
+
+			bossName->SetPosition(namePos);
 
 			cameraPos = {
 		Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
@@ -372,16 +408,16 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 }
 
 void FourthBoss::Draw(DirectXCommon* dxCommon) {
-	ImGui::Begin("test");
-	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
-	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
-	//ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
-	//ImGui::SliderFloat("pos.y", &distanceY, 30, 0);
-	//ImGui::SliderFloat("pos.z", &distanceZ, 30, 0);
-	ImGui::Text("appearanceTimer::%d", appearanceTimer);
-	ImGui::Text("appearanceNumber::%d", appearanceNumber);
-	ImGui::Unindent();
-	ImGui::End();
+	//ImGui::Begin("test");
+	////ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
+	////ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
+	////ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
+	////ImGui::SliderFloat("pos.y", &distanceY, 30, 0);
+	////ImGui::SliderFloat("pos.z", &distanceZ, 30, 0);
+	//ImGui::Text("appearanceTimer::%d", appearanceTimer);
+	//ImGui::Text("appearanceNumber::%d", appearanceNumber);
+	//ImGui::Unindent();
+	//ImGui::End();
 	//各オブジェクトの描画
 	Object3d::PreDraw();
 	//objBossMap->Draw();
@@ -414,4 +450,7 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
+	if (!bossstart) {
+		bossName->Draw();
+	}
 }
