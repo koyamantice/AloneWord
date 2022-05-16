@@ -19,6 +19,7 @@ public:
 	void Finalize();
 	void Update() override;
 	void SelectUp();
+	void TitleUp();
 	void Draw(DirectXCommon* dxCommon);
 	void Pause(const int& Timer);
 	void Begin();

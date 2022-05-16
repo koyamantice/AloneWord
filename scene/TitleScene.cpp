@@ -5,6 +5,31 @@
 #include "DebugText.h"
 #include"ImageManager.h"
 void TitleScene::Initialize(DirectXCommon* dxCommon) {
+	// カメラ生成
+	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
+	Texture::SetCamera(camera);
+	// 3Dオブジェクトにカメラをセット
+	Object3d::SetCamera(camera);
+	// モデル読み込み
+	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
+	//srand(NULL);
+	// ライト生成
+	lightGroup = LightGroup::Create();
+	// 3Dオブエクトにライトをセット
+	Object3d::SetLightGroup(lightGroup);
+
+	//この順番で書かないと例外スローになります
+	// デバイスをセット
+	FBXObject3d::SetDevice(dxCommon->GetDev());
+	// カメラをセット
+	FBXObject3d::SetCamera(camera);
+	// グラフィックスパイプライン生成
+	FBXObject3d::CreateGraphicsPipeline();
+	player = new Player();
+	player->Initialize();
+	player->SetMove(50.0f, 50.0f);
+	player->SetPosition({ 0.0f,5.0f,-10.0f });
+
 	//背景スプライト生成
 	sprite = Sprite::Create(ImageManager::TITLE, { 0.0f,0.0f });
 	//スプライト生成
@@ -13,6 +38,7 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 
 void TitleScene::Finalize() {
 	//３ｄのモデルのデリート
+	delete player;
 	delete sprite;
 	expandchange->Finalize();
 }
@@ -38,23 +64,14 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 			SceneManager::GetInstance()->ChangeScene("STARTMAP");
 		}
 	}
-
+	player->TitleUp();
 	expandchange->Update();
-	//if (scenechange->GetScale() >= 100.0f) {
-	//	//SceneManager::GetInstance()->ChangeScene("STARTMAP");
-	//}
-	//if (input->PushKey(DIK_SPACE) || input->TriggerButton(input->Button_X)) {
-	//	SceneManager::GetInstance()->ChangeScene("SECONDBOSS");
-	//}
-	//if (input->PushKey(DIK_SPACE) || input->TriggerButton(input->Button_Y)) {
-	//	SceneManager::GetInstance()->ChangeScene("FOURTHBOSS");
-	//}
-	//if (input->PushKey(DIK_3)) {
-	//	SceneManager::GetInstance()->ChangeScene("THIRDBOSS");
-	//}
-	//DebugText::GetInstance()->Print("Button_A to STARTMAP!!", 100, 100, 1.5f);
-	//DebugText::GetInstance()->Print("SPACE to BOSS!!", 100, 130, 1.5f);
-
+	camera->Update();
+	cameraPos.x = player->GetPosition().x;
+	cameraPos.y = player->GetPosition().y+7.0f;
+	cameraPos.z = player->GetPosition().z - distanceZ;
+	camera->SetTarget(player->GetPosition());
+	camera->SetEye(cameraPos);
 }
 
 void TitleScene::Draw(DirectXCommon* dxCommon) {
@@ -62,6 +79,7 @@ void TitleScene::Draw(DirectXCommon* dxCommon) {
 	//背景用
 	sprite->Draw();
 	expandchange->Draw();
+	player->Draw(dxCommon);
 	//前面用
 
 }

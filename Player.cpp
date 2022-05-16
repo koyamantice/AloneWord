@@ -46,6 +46,7 @@ bool Player::Initialize() {
 	Armpos.z = ArmCircleZ + pos.z;
 	Armobj->SetPosition(Armpos);
 	Armobj->SetScale({ 1.4f,1.4f,1.4f });
+	Armobj->Update();
 
 	move_object1->Initialize();
 	move_object1->SetModel(move_model1);
@@ -58,6 +59,7 @@ bool Player::Initialize() {
 	Charge->SetPosition(position);
 	Charge->SetRotation({ 90.0f,0, 0 });
 	Charge->SetScale(sca);
+	Charge->Update();
 	//effecttexture = Texture::Create(4, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	//effecttexture->TextureCreate();
 	////effecttexture->SetRotation({ 90,0,0 });
@@ -75,6 +77,7 @@ bool Player::Initialize() {
 void Player::Finalize() {
 	delete object3d;
 	delete Armobj;
+	delete Charge;
 }
 
 void Player::Update() {
@@ -439,15 +442,44 @@ void Player::SelectUp() {
 	//BirthParticle();
 }
 
+void Player::TitleUp() {
+	if (pause) {
+		return;
+	}
+	rot = this->object3d->GetRotation();
+	//アニメーション用のキー入力
+	rot.y = 75.0f;
+	move_count++;
+	position.y = 0.0f;
+	onGround = true;
+
+	//移動
+	object3d->Update();
+	object3d->SetPosition(position);
+	object3d->SetRotation(rot);
+	//パーティクル発生
+	BirthParticle();
+	//カメラのためのポジション(更新)
+	move_object1->SetPosition(position);
+	move_object1->SetRotation(rot);
+	//FBXアニメーションの管理
+	if (move_count == 1) {
+		move_object1->PlayAnimation();
+	}
+	else if (move_count == 0) {
+		move_object1->StopAnimation();
+	}
+	move_object1->Update();
+}
+
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
 
-	//ImGui::Begin("test");
-	//ImGui::SliderFloat("rebound", &position.x, 50, -50);
-	//ImGui::SliderFloat("reboundz", &position.z, 50, -50);
-	////ImGui::Text("TImer::%d", RotTimer);
-	//ImGui::Text("Attack::%d", DamageFlag);
-	//ImGui::End();
+	ImGui::Begin("test");
+	ImGui::SliderFloat("pos.x", &position.x, 50, -50);
+	ImGui::SliderFloat("pos.z", &position.z, 50, -50);
+	ImGui::SliderFloat("rot.y", &rot.y, 50, -50);
+	ImGui::End();
 	Texture::PreDraw();
 	Charge->Draw();
 	Object3d::PreDraw();
