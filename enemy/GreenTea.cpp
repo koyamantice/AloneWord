@@ -89,7 +89,7 @@ void GreenTea::Spec() {
 			if (pat == 1) {
 				radius++;
 				scale += 0.02f;
-				radius = (int)radius % 360;
+				radius = (float)((int)radius % 360);
 				if (radius == 0) {
 					if (check >= 2) {
 						pat++;

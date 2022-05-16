@@ -41,13 +41,13 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	//HPスプライト生成
 	HpGauge = Sprite::Create(ImageManager::hpGauge, { 0.0f,0.0f });
 	HpGauge->SetPosition({ 22.0f,560.0f });
-	Mark1 = Sprite::Create(ImageManager::energy, { 0.0f,0.0f });
-	Mark1->SetPosition({ 30.0f,576.0f });
-	Mark1->SetSize({ 120.0f,120.0f });
-	Mark2 = Sprite::Create(ImageManager::pinch, { 0.0f,0.0f });
-	Mark2->SetPosition({ 0.0f,642.0f });
-	Mark3 = Sprite::Create(ImageManager::weak, { 0.0f,0.0f });
-	Mark3->SetPosition({ 0.0f,642.0f });
+	Mark[energy] = Sprite::Create(ImageManager::energy, { 0.0f,0.0f });
+	Mark[energy]->SetPosition({ 30.0f,576.0f });
+	Mark[energy]->SetSize({ 120.0f,120.0f });
+	Mark[pinch] = Sprite::Create(ImageManager::pinch, { 0.0f,0.0f });
+	Mark[pinch]->SetPosition({ 30.0f,576.0f });;
+	Mark[weak] = Sprite::Create(ImageManager::weak, { 0.0f,0.0f });
+	Mark[weak]->SetPosition({ 30.0f,576.0f });
 	PlaHp[max] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
 	PlaHp[max]->SetPosition({ 163.0f,632.0f });
 	PlaHp[max]->SetColor({ 1.0f,0.0f,0.0f,1.0f });
@@ -168,10 +168,9 @@ void UI::Finalize() {
 		delete BossHp[i];
 		delete BossHp2[i];
 		delete PlaHp[i];
-
+		delete Mark[i];
 	}
 	delete HpGauge;
-	delete Mark1;
 	delete Arrow;
 	delete Arrow2;
 }
@@ -201,7 +200,13 @@ const void UI::Draw() {
 		BossHp2[now]->Draw();
 	}
 	HpGauge->Draw();
-	Mark1->Draw();
+	if (player->GetHp()>7) {
+		Mark[energy]->Draw();
+	} else if(player->GetHp() >3) {
+		Mark[pinch]->Draw();
+	} else {
+		Mark[weak]->Draw();
+	}
 	PlaHp[max]->Draw();
 	PlaHp[damage]->Draw();
 	PlaHp[now]->Draw();
@@ -228,7 +233,7 @@ void UI::EaseScale() {
 	//strong *= 10;
 	strong = player->GetArmWeight()*5;
 	power.clear();
-	for (int tmp = strong; tmp > 0;) {
+	for (int tmp = (int)strong; tmp > 0;) {
 		power.push_back(tmp % 10);
 		tmp /= 10;
 	}

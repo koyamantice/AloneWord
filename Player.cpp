@@ -13,8 +13,9 @@
 #include "CollisionManager.h"
 #include "CollisionAttribute.h"
 #include "FbxLoader.h"
-#include <ModelManager.h>
-#include <Easing.h>
+#include "ModelManager.h"
+#include "ImageManager.h"
+#include "Easing.h"
 using namespace DirectX;
 Input* input = Input::GetInstance();
 
@@ -25,6 +26,7 @@ Player::Player() {
 	Armobj = new Object3d();
 	move_model1 = ModelManager::GetIns()->GetFBXModel(ModelManager::MottiMove);
 	move_object1 = new FBXObject3d;
+	Charge = Texture::Create(ImageManager::Charge, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 }
 
 bool Player::Initialize() {
@@ -44,6 +46,7 @@ bool Player::Initialize() {
 	Armpos.z = ArmCircleZ + pos.z;
 	Armobj->SetPosition(Armpos);
 	Armobj->SetScale({ 1.4f,1.4f,1.4f });
+	Armobj->Update();
 
 	move_object1->Initialize();
 	move_object1->SetModel(move_model1);
@@ -51,6 +54,12 @@ bool Player::Initialize() {
 	move_object1->SetPosition(position);
 	move_object1->SetRotation(rot);
 	
+	Charge = Texture::Create(ImageManager::Charge, { 0,0,0 }, { 1,1,1 }, { 1,1,1,1 });
+	Charge->TextureCreate();
+	Charge->SetPosition(position);
+	Charge->SetRotation({ 90.0f,0, 0 });
+	Charge->SetScale(sca);
+	Charge->Update();
 	//effecttexture = Texture::Create(4, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	//effecttexture->TextureCreate();
 	////effecttexture->SetRotation({ 90,0,0 });
@@ -68,6 +77,7 @@ bool Player::Initialize() {
 void Player::Finalize() {
 	delete object3d;
 	delete Armobj;
+	delete Charge;
 }
 
 void Player::Update() {
@@ -76,6 +86,9 @@ void Player::Update() {
 	}
 	oldPos = position;
 	rot = this->object3d->GetRotation();
+	Charge->Update();
+	Charge->SetPosition(position);
+	Charge->SetScale(sca);
 	object3d->Update();
 	Armobj->Update();
 	StickrotX = input->GetPosX();
@@ -129,8 +142,22 @@ void Player::Update() {
 			if (input->PushButton(input->Button_RB)) {
 				chargeTimer++;
 				PlayerSpeed = 0.1f;
+				if (sca.x > 0.0f) {
+					sca.x -= 0.02f;
+					sca.y -= 0.02f;
+					sca.z -= 0.02f;
+				} else {
+					sca = { 0.7f,0.7f,0.7f };
+				}
 				if ((chargeTimer % 100 == 0) && (RotCount <= 2)) {
 					RotCount++;
+				}
+				if (RotCount<1) {
+					Charge->SetColor({1,1,1,1});
+				} else if(RotCount < 2) {
+					Charge->SetColor({ 1,1,0,1 });
+				} else {
+					Charge->SetColor({ 1,0,0,1 });
 				}
 				/*if (speedlimit <= ArmSpeed) {
 					ArmSpeed--;
@@ -415,15 +442,46 @@ void Player::SelectUp() {
 	//BirthParticle();
 }
 
+void Player::TitleUp() {
+	if (pause) {
+		return;
+	}
+	rot = this->object3d->GetRotation();
+	//アニメーション用のキー入力
+	rot.y = 75.0f;
+	move_count++;
+	position.y = 0.0f;
+	onGround = true;
+
+	//移動
+	object3d->Update();
+	object3d->SetPosition(position);
+	object3d->SetRotation(rot);
+	//パーティクル発生
+	BirthParticle();
+	//カメラのためのポジション(更新)
+	move_object1->SetPosition(position);
+	move_object1->SetRotation(rot);
+	//FBXアニメーションの管理
+	if (move_count == 1) {
+		move_object1->PlayAnimation();
+	}
+	else if (move_count == 0) {
+		move_object1->StopAnimation();
+	}
+	move_object1->Update();
+}
+
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
 
-	//ImGui::Begin("test");
-	//ImGui::SliderFloat("rebound", &position.x, 50, -50);
-	//ImGui::SliderFloat("reboundz", &position.z, 50, -50);
-	////ImGui::Text("TImer::%d", RotTimer);
-	//ImGui::Text("Attack::%d", DamageFlag);
-	//ImGui::End();
+	ImGui::Begin("test");
+	ImGui::SliderFloat("pos.x", &position.x, 50, -50);
+	ImGui::SliderFloat("pos.z", &position.z, 50, -50);
+	ImGui::SliderFloat("rot.y", &rot.y, 50, -50);
+	ImGui::End();
+	Texture::PreDraw();
+	Charge->Draw();
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
 		move_object1->Draw(dxCommon->GetCmdList());

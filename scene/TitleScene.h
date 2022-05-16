@@ -29,7 +29,8 @@ class TitleScene : public BaseScene {
 	private:
 		Sprite* sprite = { nullptr };
 		ExpandChange* expandchange = nullptr;
-
+		DebugCamera* camera = { nullptr };
+		Player* player = nullptr;
 		enum Select {
 			Start,
 			Select,

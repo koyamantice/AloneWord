@@ -19,6 +19,7 @@ public:
 	void Finalize();
 	void Update() override;
 	void SelectUp();
+	void TitleUp();
 	void Draw(DirectXCommon* dxCommon);
 	void Pause(const int& Timer);
 	void Begin();
@@ -112,6 +113,8 @@ private:
 	Object3d* object3d;
 	Model* model;
 	Model* Armmodel;
+	Texture* Charge=nullptr;
+	XMFLOAT3 sca = { 0.7f,0.7f,0.7f };
 	XMFLOAT3 pos = { 0,0,-10 };
 	XMFLOAT3 oldPos{};
 	XMFLOAT3 Armpos = { 0,0,0 };
