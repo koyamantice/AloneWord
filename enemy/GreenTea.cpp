@@ -65,7 +65,11 @@ void GreenTea::Spec() {
 			AttackCount++;
 			angle += 2.0f;
 			angle2 = angle * (3.14f / 180.0f);
-			pos.y = sin(angle2) * 0.5f + 0.5f;
+			if (AttackCount<=90) {
+				pos.y = sin(angle2) * 0.5f + 0.5f;
+			} else {
+				pos.x = sin(angle2);
+			}
 			enemyobj->SetPosition(pos);
 		}
 	}

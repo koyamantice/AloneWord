@@ -418,12 +418,12 @@ void Player::SelectUp() {
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
 
-	ImGui::Begin("test");
-	ImGui::SliderFloat("rebound", &position.x, 50, -50);
-	ImGui::SliderFloat("reboundz", &position.z, 50, -50);
-	//ImGui::Text("TImer::%d", RotTimer);
-	ImGui::Text("Attack::%d", DamageFlag);
-	ImGui::End();
+	//ImGui::Begin("test");
+	//ImGui::SliderFloat("rebound", &position.x, 50, -50);
+	//ImGui::SliderFloat("reboundz", &position.z, 50, -50);
+	////ImGui::Text("TImer::%d", RotTimer);
+	//ImGui::Text("Attack::%d", DamageFlag);
+	//ImGui::End();
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
 		move_object1->Draw(dxCommon->GetCmdList());
@@ -510,14 +510,14 @@ void Player::Rebound(InterBoss* boss) {
 		}
 	}
 
-	if (position.x <= 25.0f && position.x >= -25.0f) {
-		position.x += rebound.x;
-	}
-	if (position.z <= 20.0f && position.z >= -20.0f) {
-		position.z += rebound.z;
-	}
+	//if (position.x <= 25.0f && position.x >= -25.0f) {
+	//	position.x += rebound.x;
+	//}
+	//if (position.z <= 20.0f && position.z >= -20.0f) {
+	//	position.z += rebound.z;
+	//}
 
-	object3d->SetPosition(position);
+	//object3d->SetPosition(position);
 }
 
 void Player::BirthParticle() {
