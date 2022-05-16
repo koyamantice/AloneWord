@@ -177,8 +177,13 @@ void Pastel::Spec() {
 				//çUåÇ
 				AfterPos = {
 					pos.x,
-					0,
+					2,
 					pos.z,
+				};
+				Afterrot = {
+					rot.x,
+					rot.y,
+					45,
 				};
 				if (frame < 1.0f) {
 					frame += 0.08f;

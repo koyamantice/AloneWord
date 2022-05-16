@@ -2,6 +2,7 @@
 #include "ImageManager.h"
 #include"Collision.h"
 #include "DebugText.h"
+#include "imgui.h"
 void ShockWave::Init() {
 	wave = Texture::Create(ImageManager::enemy, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
 	wave->TextureCreate();
@@ -25,6 +26,14 @@ void ShockWave::Upda(Pastel* pastel,Player* player) {
 }
 
 void ShockWave::Draw() {
+	//ImGui::Begin("test");
+	///*ImGui::SliderFloat("frame", &frame, 1, 0.0f);
+	//ImGui::SliderFloat("frame2", &frame2, 1, 0.0f);
+	//ImGui::Text("Move:%d", appearMove);*/
+	//ImGui::SliderFloat("pos.x", &pos.x, 360, -360);
+	//ImGui::SliderFloat("pos.y", &pos.y, 360, -360);
+	//ImGui::SliderFloat("pos.z", &pos.z, 360, -360);
+	//ImGui::End();
 	
 	if (expand) {
 		wave->Draw();
@@ -38,9 +47,20 @@ void ShockWave::Final() {
 //ƒ{ƒX‚É‚æ‚Á‚ÄÕŒ‚”g‚ª‘–‚é
 void ShockWave::SetWave(Pastel* pastel) {
 	int action = pastel->GetAction();
+	int pat = pastel->GetPat();
 	XMFLOAT3 pos = pastel->GetPosition();
-	if (action == 3 && pos.y == 0.0f && !expand) {
-		this->pos = pos;
+	if (action == 3 && pos.y == 2.0f && !expand) {
+		if (pat == 0 || pat == 1) {
+			this->pos.x = pos.x + 5;
+			this->pos.y = 0.0f;
+			this->pos.z = pos.z;
+		}
+		else {
+			this->pos.x = pos.x - 5;
+			this->pos.y = 0.0f;
+			this->pos.z = pos.z;
+		}
+		//this->pos = pos;
 		expand = true;
 	}
 

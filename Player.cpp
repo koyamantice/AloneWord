@@ -35,7 +35,7 @@ bool Player::Initialize() {
 	position = { 0,0,0 };
 	object3d->SetPosition(position);
 	object3d->SetRotation({ 0,270,0 });
-	object3d->SetScale({ 0.7f,0.7f,0.7f });
+	object3d->SetScale(plasca);
 
 	Armobj = Object3d::Create();
 	Armobj->SetModel(Armmodel);
@@ -50,7 +50,7 @@ bool Player::Initialize() {
 
 	move_object1->Initialize();
 	move_object1->SetModel(move_model1);
-	move_object1->SetScale({ 0.007f, 0.007f, 0.007f });
+	move_object1->SetScale(plasca);
 	move_object1->SetPosition(position);
 	move_object1->SetRotation(rot);
 	
@@ -151,7 +151,23 @@ void Player::Update() {
 				}
 				if ((chargeTimer % 100 == 0) && (RotCount <= 2)) {
 					RotCount++;
+					ChangeScale = true;
+					if (RotCount == 1) {
+						Aftersca = {
+						0.006,
+						0.006,
+						0.006,
+						};
+					}
+					else if (RotCount == 2) {
+						Aftersca = {
+						0.005,
+						0.005,
+						0.005,
+						};
+					}
 				}
+
 				if (RotCount<1) {
 					Charge->SetColor({1,1,1,1});
 				} else if(RotCount < 2) {
@@ -170,11 +186,12 @@ void Player::Update() {
 					AttackMoveNumber = 1;
 					RotTimer = 200 * RotCount;
 					RotPower = 10.0f;
-				/*	afterSpeed = ArmSpeed + ((360 * RotCount) + 90);
-					initArmRotation = ArmRot.y - ((360 * RotCount) + 90);
-					initrotation = rot.y - (360 * RotCount);
-					initscale = Armscale + 3.0f;*/
-					//chargeTimer = 0;
+					ChangeScale = true;
+					Aftersca = {
+					0.007,
+					0.007,
+					0.007,
+					};
 				}
 				else {
 					chargeTimer = 0;
@@ -183,6 +200,22 @@ void Player::Update() {
 		}
 	}
 
+
+	if (ChangeScale == true) {
+		if (scaleframe >= 1.0f) {
+			ChangeScale = false;
+			scaleframe = 0.0f;
+		}
+		else {
+			scaleframe += 0.1f;
+		}
+
+		plasca = {
+		Ease(In,Cubic,scaleframe,plasca.x,Aftersca.x),
+		Ease(In,Cubic,scaleframe,plasca.y,Aftersca.y),
+		Ease(In,Cubic,scaleframe,plasca.z,Aftersca.z)
+		};
+	}
 	//振り回している
 	if (AttackFlag == true) {
 		RotTimer--;
@@ -340,6 +373,7 @@ void Player::Update() {
 	BirthParticle();
 	//カメラのためのポジション(更新)
 	move_object1->SetPosition(position);
+	move_object1->SetScale(plasca);
 	move_object1->SetRotation(rot);
 	//FBXアニメーションの管理
 	if (move_count == 1) {
@@ -365,6 +399,7 @@ void Player::SelectUp() {
 	rot = this->object3d->GetRotation();
 	object3d->Update();
 	move_object1->SetPosition(position);
+	move_object1->SetScale(plasca);
 	move_object1->SetRotation(rot);
 	if (move_count == 1) {
 		move_object1->PlayAnimation();
@@ -461,6 +496,7 @@ void Player::TitleUp() {
 	BirthParticle();
 	//カメラのためのポジション(更新)
 	move_object1->SetPosition(position);
+	move_object1->SetScale(plasca);
 	move_object1->SetRotation(rot);
 	//FBXアニメーションの管理
 	if (move_count == 1) {
@@ -475,11 +511,10 @@ void Player::TitleUp() {
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
 
-	//ImGui::Begin("test");
-	//ImGui::SliderFloat("pos.x", &position.x, 50, -50);
-	//ImGui::SliderFloat("pos.z", &position.z, 50, -50);
-	//ImGui::SliderFloat("rot.y", &rot.y, 50, -50);
-	//ImGui::End();
+	ImGui::Begin("test");
+	ImGui::SliderFloat("sca.x", &plasca.x, 50, -50);
+	ImGui::SliderFloat("scaleframe", &scaleframe, 1, 0);
+	ImGui::End();
 	Texture::PreDraw();
 	Charge->Draw();
 	Object3d::PreDraw();

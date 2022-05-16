@@ -114,6 +114,8 @@ private:
 	Model* model;
 	Model* Armmodel;
 	Texture* Charge=nullptr;
+	XMFLOAT3 plasca = { 0.007f,0.007f,0.007f };
+	XMFLOAT3 Aftersca = { 0,0,0 };
 	XMFLOAT3 sca = { 0.7f,0.7f,0.7f };
 	XMFLOAT3 pos = { 0,0,-10 };
 	XMFLOAT3 oldPos{};
@@ -157,6 +159,7 @@ private:
 	float frame2 = 0.0f;
 	float Speedframe = 0.0f;
 	float damageframe = 0.0f;
+	float scaleframe = 0.0f;
 	bool wet = false;
 	int wetC = 0;
 	//ステータス的なやつ
@@ -185,4 +188,5 @@ private:
 	int RotTimer = 0;
 	float RotCount = 0.0f;
 	float AddSpeed = 0.0f;
+	bool ChangeScale = false;
 };
