@@ -180,9 +180,9 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 			}
 
 			cameraPos = {
-Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
-Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
-Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+			Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+			Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+			Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
 			};
 
 			if (appearanceTimer == 300) {
@@ -329,9 +329,9 @@ Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
 		Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
 		Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
 		Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
-					};
+		};
 		
-					cameratargetPos = {
+		cameratargetPos = {
 		Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
 		Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
 		Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)

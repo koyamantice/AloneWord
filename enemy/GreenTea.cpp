@@ -52,8 +52,10 @@ void GreenTea::Spec() {
 		hotWater[i]->Upda();
 		hotWater[i]->SetPlayer(player);
 	}
-	if (AttackCount > 180 && pos.y <= 0.1f) {
+	if (AttackCount > 180) {
 		if (!active) {
+			pos.y = 0.0f;
+			pos.x = 0.0f;
 			action = 2;// (rand() % 2);
 			frame = 0;
 			pat = 1;

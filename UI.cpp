@@ -22,9 +22,22 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	BossHp[max]->SetSize(AfterPos[0]);
 	BossHp[damage]->SetSize(AfterPos[0]);
 	BossHp[now]->SetSize(AfterPos[0]);
-	BossHp2 = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
-	BossHp2->SetPosition({ 260.0f,80.0f });
-	BossHp2->SetColor({ 1.0f,0.0f,0.0,1.0 });
+	BossHp2[max] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
+	BossHp2[max]->SetPosition({ 260.0f,20.0f });
+	BossHp2[max]->SetColor({ 1.0f,0.0f,0.0f,1.0f });
+	BossHp2[damage] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
+	BossHp2[damage]->SetPosition({ 260.0f,20.0f });
+	BossHp2[damage]->SetColor({ 1.0f,1.0f,0.0f,1.0f });
+	BossHp2[now] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
+	BossHp2[now]->SetPosition({ 260.0f,20.0f });
+	BossHp2[now]->SetColor({ 0.0f,1.0f,0.0f,1.0f });
+	if (boss2) {
+		AfterPos2[0] = { (float)(boss->GetHP() * 20),30 };
+	}
+	BossHp2[max]->SetSize(AfterPos2[0]);
+	BossHp2[damage]->SetSize(AfterPos2[0]);
+	BossHp2[now]->SetSize(AfterPos2[0]);
+
 	//HPスプライト生成
 	HpGauge = Sprite::Create(ImageManager::hpGauge, { 0.0f,0.0f });
 	HpGauge->SetPosition({ 22.0f,560.0f });
@@ -35,8 +48,16 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	Mark2->SetPosition({ 0.0f,642.0f });
 	Mark3 = Sprite::Create(ImageManager::weak, { 0.0f,0.0f });
 	Mark3->SetPosition({ 0.0f,642.0f });
-	PlaHp = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
-	PlaHp->SetPosition({ 163.0f,632.0f });
+	PlaHp[max] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
+	PlaHp[max]->SetPosition({ 163.0f,632.0f });
+	PlaHp[max]->SetColor({ 1.0f,0.0f,0.0f,1.0f });
+	PlaHp[damage] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
+	PlaHp[damage]->SetPosition({ 163.0f,632.0f });
+	PlaHp[damage]->SetColor({ 1.0f,1.0f,0.0f,1.0f });
+	PlaHp[now] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
+	PlaHp[now]->SetPosition({ 163.0f,632.0f });
+	PlaHp[now]->SetColor({ 0.0f,1.0f,0.0f,1.0f });
+
 	//背景スプライト生成
 	Life = Sprite::Create(ImageManager::life, { 0.0f,0.0f });
 	Life->SetPosition({ 20.0f,620.0f });
@@ -91,11 +112,16 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 void UI::Update() {
 	{//HP
 		AfterPos[1] = { (float)(player->GetHp() * 43),55 };
-		plaPos = {
-		Ease(In,Quad,0.7f,(float)PlaHp->GetSize().x,(float)AfterPos[1].x),
-		Ease(In,Quint,0.7f,(float)PlaHp->GetSize().y,(float)AfterPos[1].y),
+		plaPos[0] = {
+		Ease(In,Quad,0.7f,(float)PlaHp[now]->GetSize().x,(float)AfterPos[1].x),
+		Ease(In,Quint,0.7f,(float)PlaHp[now]->GetSize().y,(float)AfterPos[1].y),
 		};
-		PlaHp->SetSize(plaPos);
+		plaPos[1] = {
+		Ease(In,Quad,0.2f,(float)PlaHp[damage]->GetSize().x,(float)AfterPos[1].x),
+		Ease(In,Quint,0.2f,(float)PlaHp[damage]->GetSize().y,(float)AfterPos[1].y),
+		};
+		PlaHp[now]->SetSize(plaPos[0]);
+		PlaHp[damage]->SetSize(plaPos[1]);
 	}
 	if (strong!= player->GetArmWeight()) {
 		if (!Up) {
@@ -122,11 +148,17 @@ void UI::Update() {
 	}
 	if (boss2) {
 		AfterPos2[0] = { (float)(boss2->GetHP() * 20),30 };
-		bossPos2 = {
-		Ease(In,Quint,0.7f,BossHp2->GetSize().x,AfterPos2[0].x),
-		Ease(In,Quint,0.7f,BossHp2->GetSize().y,AfterPos2[0].y),
+
+		bossPos2[0] = {
+		Ease(In,Quint,0.7f,BossHp2[now]->GetSize().x,AfterPos[0].x),
+		Ease(In,Quint,0.7f,BossHp2[now]->GetSize().y,AfterPos[0].y),
 		};
-		BossHp2->SetSize(bossPos2);
+		bossPos2[1] = {
+		Ease(In,Quint,0.5f,BossHp2[damage]->GetSize().x,AfterPos[0].x),
+		Ease(In,Quint,0.5f,BossHp2[damage]->GetSize().y,AfterPos[0].y),
+		};
+		BossHp2[damage]->SetSize(bossPos2[1]);
+		BossHp2[now]->SetSize(bossPos2[0]);
 		SeachBoss2();
 	}
 }
@@ -134,11 +166,12 @@ void UI::Update() {
 void UI::Finalize() {
 	for (int i = 0; i < 3;i++) {
 		delete BossHp[i];
+		delete BossHp2[i];
+		delete PlaHp[i];
+
 	}
-	delete BossHp2;
 	delete HpGauge;
 	delete Mark1;
-	delete PlaHp;
 	delete Arrow;
 	delete Arrow2;
 }
@@ -163,11 +196,16 @@ const void UI::Draw() {
 		BossHp[now]->Draw();
 	}
 	if (boss2) {
-		BossHp2->Draw();
+		BossHp2[max]->Draw();
+		BossHp2[damage]->Draw();
+		BossHp2[now]->Draw();
 	}
 	HpGauge->Draw();
 	Mark1->Draw();
-	PlaHp->Draw();
+	PlaHp[max]->Draw();
+	PlaHp[damage]->Draw();
+	PlaHp[now]->Draw();
+
 	//Life->Draw();
 
 	if (boss && invisible[0] && boss->GetHP() >= 1) {
@@ -233,7 +271,7 @@ void UI::SeachBoss() {
 	radius = atan2f(position.x, position.z);// *PI / 180.0f;
 	circle.x = (sin(-radius)*150.0f)+WinApp::window_width/2; //*0.2251f;
 	circle.y = (cos(-radius)*150.0f)+WinApp::window_height/2; //*0.2251f;
-	if (!Collision::CircleCollision(bos.x,bos.z,10.0f,pla.x,pla.z,1.0f)){
+	if (!Collision::CircleCollision(bos.x,bos.z,18.0f,pla.x,pla.z,1.0f)){
 		invisible[0] = 1;
 	} else {
 		invisible[0] = 0;
@@ -255,7 +293,7 @@ void UI::SeachBoss2() {
 	circle2.x = (sin(-radius) * 100.0f) + WinApp::window_width / 2; //*0.2251f;
 	circle2.y = (cos(-radius) * 100.0f) + WinApp::window_height / 2; //*0.2251f;
 
-	if (!Collision::CircleCollision(bos.x, bos.z, 10.0f, pla.x, pla.z, 1.0f)) {
+	if (!Collision::CircleCollision(bos.x, bos.z, 18.0f, pla.x, pla.z, 1.0f)) {
 		invisible[1] = 1;
 	}
 	else {

@@ -29,7 +29,6 @@ class SceneManager;
 class BaseScene {
 public:
 	const bool& GetEnd() { return end; }
-
 protected:
 	// DirectX::‚ğÈ—ª
 	using XMFLOAT2 = DirectX::XMFLOAT2;

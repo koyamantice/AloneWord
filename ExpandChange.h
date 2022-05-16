@@ -31,7 +31,6 @@
 //	bool endchange = false;
 //};
 //
-
 #pragma once
 #include"Sprite.h"
 
@@ -49,9 +48,9 @@ public:
 	
 	const float& GetScale() { return scale; }
 
-	const float& GetTimer() { return timer; }
+	const int& GetTimer() { return timer; }
 	
-	void SetStartChange(bool startchange) { this->startchange = startchange; }
+	void SetStartChange(const bool& startchange) { this->startchange = startchange; }
 private:
 	// DirectX::Çè»ó™
 	using XMFLOAT2 = DirectX::XMFLOAT2;
@@ -59,7 +58,6 @@ private:
 	using XMFLOAT4 = DirectX::XMFLOAT4;
 	using XMVECTOR = DirectX::XMVECTOR;
 	using XMMATRIX = DirectX::XMMATRIX;
-
 private:
 		Sprite* change = nullptr;
 		XMFLOAT2 pos = { 640.0f,360.0f, };

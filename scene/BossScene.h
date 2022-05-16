@@ -49,7 +49,7 @@ private:
 	Texture* limit = nullptr;
 	Player* player = nullptr;
 	array<Effect*,40> effect;
-	array<Rice*,10> enemy;
+	array<Rice*,6> enemy;
 	InterBoss* bossenemy = nullptr;
 	Sprite* bossName = nullptr;
 	XMFLOAT2 namePos = { 0.0f,0.0f };

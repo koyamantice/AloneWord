@@ -47,7 +47,7 @@ public:
 
 	const float& GetScale() { return scale; }
 
-	const float& GetTimer() { return timer; }
+	const int& GetTimer() { return timer; }
 
 	void SetEndChange(bool endchange) { this->endchange = endchange; }
 private:
