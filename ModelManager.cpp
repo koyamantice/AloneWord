@@ -23,7 +23,7 @@ void ModelManager::Initialize() {
 	LoadModel(Pastel, "Pestle");
 	LoadModel(Platform, "Platform");
 	LoadModel(Piyopiyo, "Piyopiyo");
-	LoadFBXModel(MottiMove, "Motti_move");
+	LoadFBXModel(MottiMove, "Motti_moveF");
 }
 
 void ModelManager::LoadModel(const ModelName modelName, std::string fileName) {
