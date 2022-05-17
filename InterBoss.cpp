@@ -81,6 +81,7 @@ bool InterBoss::collideAttackArm() {
 				distance.x = Armpos.x - pos.x;
 				distance.z = Armpos.z - pos.z;
 				player->SetDistance(distance);
+				player->SetJumpG(0.5f);
 				Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 				player->SetDamageFlag(true);
 			}

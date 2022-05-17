@@ -95,6 +95,8 @@ public:
 
 	void SetAddSpeed(float AddSpeed) { this->AddSpeed = AddSpeed; }
 
+	void SetJumpG(float JumpG) { this->JumpG = JumpG; }
+
 	void SetMove(float XMax, float ZMax) { this->XMax = XMax; this->ZMax = ZMax; }
 
 	void SetRotTimer(int RotTimer) { this->RotTimer = RotTimer; }
@@ -207,6 +209,7 @@ private:
 	int RotTimer = 0;
 	int RotCount = 0;
 	float AddSpeed = 0.0f;
+	float JumpG = 0.0f;
 	bool ChangeScale = false;
 	//チャージ時エフェクトのパーティクル(配列可濃厚なのでこっちに書く)
 	array<Texture*,20> ChargeEffect;

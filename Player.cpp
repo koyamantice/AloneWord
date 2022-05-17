@@ -501,8 +501,9 @@ void Player::Draw(DirectXCommon* dxCommon) {
 
 	ImGui::Begin("test");
 	ImGui::Text("c:%d", EffectTimer[0]);
-	ImGui::SliderFloat("ChangeSpeed0", &ChargeSpeed[0], 1, 0.0f);
-	ImGui::SliderFloat("ChangeSpeed1", &ChargeSpeed[1], 1, 0.0f);
+	ImGui::SliderFloat("pos.x", &position.x, 100, -100);
+	ImGui::SliderFloat("pos.z", &position.z, 100, -100);
+	ImGui::SliderFloat("JumpG", &JumpG, 100, -100);
 	ImGui::End();
 	Texture::PreDraw();
 	Charge->Draw();
@@ -553,10 +554,9 @@ void Player::Rebound(InterBoss* boss) {
 	distance.x = position.x - enepos.x;
 	distance.z = position.z - enepos.z;
 */
-
 	if (DamageFlag == true) {
 		rebound.x = sin(atan2f(distance.x, distance.z)) * 0.5f;
-		rebound.y = cos(atan2f(distance.x, distance.z)) * 0.5f;
+		rebound.z = cos(atan2f(distance.x, distance.z)) * 0.5f;
 
 		if (damageframe >= 1.0f) {
 			damageframe = 0.0f;
@@ -572,12 +572,18 @@ void Player::Rebound(InterBoss* boss) {
 		Ease(In,Cubic,damageframe,rebound.z,0)
 		};
 
+		JumpG -= 0.05f;
+		if (position.y < 0.0f) {
+			position.y = 0.0f;
+			JumpG = 0.0f;
+		}
+		position.y += JumpG;
 	}
 
-	if (position.x <= 25.0f && position.x >= -25.0f) {
+	if (position.x <= 22.0f && position.x >= -20.0f) {
 		position.x += rebound.x;
 	}
-	if (position.z <= 20.0f && position.z >= -20.0f) {
+	if (position.z <= 20.0f && position.z >= -17.0f) {
 		position.z += rebound.z;
 	}
 
