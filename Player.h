@@ -115,7 +115,7 @@ public:
 	void EffectMove();
 
 	//チャージ
-	void ChargeEffect();
+	void ChargeEffectMove();
 	
 	//足元にパーティクル
 	void BirthParticle();
@@ -129,6 +129,7 @@ private:
 	Model* model;
 	Model* Armmodel;
 	Texture* Charge=nullptr;
+	
 	XMFLOAT3 plasca = { 0.007f,0.007f,0.007f };
 	XMFLOAT3 Aftersca = { 0,0,0 };
 	XMFLOAT3 sca = { 0.7f,0.7f,0.7f };
@@ -204,13 +205,13 @@ private:
 	float RotPower = 10.0f;
 	int chargeTimer = 0;
 	int RotTimer = 0;
-	float RotCount = 0.0f;
+	int RotCount = 0;
 	float AddSpeed = 0.0f;
 	bool ChangeScale = false;
 	//チャージ時エフェクトのパーティクル(配列可濃厚なのでこっちに書く)
-	array<Object3d*,20>  Chargeobj;
-	Model* Chargemodel;
+	array<Texture*,20> ChargeEffect;
 	array<XMFLOAT3, 20> chargepos;
+	array<XMFLOAT3, 20> chargerot;
 	array<bool ,20>ChargeAlive;
 	array<float,20> Chargeradius;
 	array<float,20> ChargeSpeed;
