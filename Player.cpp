@@ -20,16 +20,20 @@ using namespace DirectX;
 Input* input = Input::GetInstance();
 
 Player::Player() {
+	//モデル読み込み
 	model = ModelManager::GetIns()->GetModel(ModelManager::Player);
 	Armmodel = ModelManager::GetIns()->GetModel(ModelManager::Arm);
 	object3d = new Object3d();
 	Armobj = new Object3d();
 	move_model1 = ModelManager::GetIns()->GetFBXModel(ModelManager::MottiMove);
 	move_object1 = new FBXObject3d;
+	power_model1 = ModelManager::GetIns()->GetFBXModel(ModelManager::MottiPower);
+	power_object1 = new FBXObject3d;
 	Charge = Texture::Create(ImageManager::Charge, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 }
 
 bool Player::Initialize() {
+	//各モデルの初期化
 	object3d = Object3d::Create();
 	object3d->SetModel(model);
 	position = { 0,0,0 };
@@ -53,6 +57,13 @@ bool Player::Initialize() {
 	move_object1->SetScale(plasca);
 	move_object1->SetPosition(position);
 	move_object1->SetRotation(rot);
+
+
+	power_object1->Initialize();
+	power_object1->SetModel(power_model1);
+	power_object1->SetScale(plasca);
+	power_object1->SetPosition(position);
+	power_object1->SetRotation(rot);
 	
 	Charge = Texture::Create(ImageManager::Charge, { 0,0,0 }, { 1,1,1 }, { 1,1,1,1 });
 	Charge->TextureCreate();
@@ -151,21 +162,6 @@ void Player::Update() {
 				}
 				if ((chargeTimer % 100 == 0) && (RotCount <= 2)) {
 					RotCount++;
-					ChangeScale = true;
-					if (RotCount == 1) {
-						Aftersca = {
-						0.006,
-						0.006,
-						0.006,
-						};
-					}
-					else if (RotCount == 2) {
-						Aftersca = {
-						0.005f,
-						0.005f,
-						0.005f,
-						};
-					}
 				}
 				//チャージ時のエフェクト
 				if (RotCount<1) {
@@ -189,12 +185,7 @@ void Player::Update() {
 					AttackMoveNumber = 1;
 					RotTimer = 200 * (int)RotCount;
 					RotPower = 10.0f;
-					ChangeScale = true;
-					Aftersca = {
-					0.007f,
-					0.007f,
-					0.007f,
-					};
+					chargeTimer = 0;
 				}
 				else {
 					chargeTimer = 0;
@@ -203,22 +194,6 @@ void Player::Update() {
 		}
 	}
 
-	//チャージ時間に応じてプレイヤーのスケール変更
-	if (ChangeScale == true) {
-		if (scaleframe >= 1.0f) {
-			ChangeScale = false;
-			scaleframe = 0.0f;
-		}
-		else {
-			scaleframe += 0.1f;
-		}
-
-		plasca = {
-		Ease(In,Cubic,scaleframe,plasca.x,Aftersca.x),
-		Ease(In,Cubic,scaleframe,plasca.y,Aftersca.y),
-		Ease(In,Cubic,scaleframe,plasca.z,Aftersca.z)
-		};
-	}
 	//振り回している
 	if (AttackFlag == true) {
 		RotTimer--;
@@ -378,7 +353,11 @@ void Player::Update() {
 	move_object1->SetPosition(position);
 	move_object1->SetScale(plasca);
 	move_object1->SetRotation(rot);
-	//FBXアニメーションの管理
+
+	power_object1->SetPosition(position);
+	power_object1->SetScale(plasca);
+	power_object1->SetRotation(rot);
+	//FBXアニメーションの管理(移動)
 	if (move_count == 1) {
 		move_object1->PlayAnimation();
 	}
@@ -386,13 +365,16 @@ void Player::Update() {
 	else if (move_count == 0) {
 		move_object1->StopAnimation();
 	}
-
-	if (input->PushKey(DIK_0)) {
-		//have_object1->PlayAnimation();
+	//FBXアニメーションの管理(貯め)
+	if (chargeTimer == 1) {
+		power_object1->PlayAnimation();
+	}
+	else if (chargeTimer == 0) {
+		power_object1->StopAnimation();
 	}
 
 	move_object1->Update();
-
+	power_object1->Update();
 }
 
 void Player::SelectUp() {
@@ -515,17 +497,18 @@ void Player::TitleUp() {
 void Player::Draw(DirectXCommon* dxCommon) {
 
 	ImGui::Begin("test");
-	ImGui::SliderFloat("rebound.x", &rebound.x, 50, -50);
-	ImGui::SliderFloat("distance.x", &distance.x, 1, 0);
-	ImGui::Text("%d", DamageFlag);
+	ImGui::Text("%d", chargeTimer);
 	ImGui::End();
 	Texture::PreDraw();
 	Charge->Draw();
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
-		move_object1->Draw(dxCommon->GetCmdList());
-		//object3d->Draw();
-		//Armobj->Draw();
+		if (chargeTimer != 0) {
+			power_object1->Draw(dxCommon->GetCmdList());
+		}
+		else {
+			move_object1->Draw(dxCommon->GetCmdList());
+		}
 	}
 	//arm_no_object1->Draw(dxCommon->GetCmdList());
 	

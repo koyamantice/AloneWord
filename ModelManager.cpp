@@ -24,6 +24,7 @@ void ModelManager::Initialize() {
 	LoadModel(Platform, "Platform");
 	LoadModel(Piyopiyo, "Piyopiyo");
 	LoadFBXModel(MottiMove, "Motti_moveF");
+	LoadFBXModel(MottiPower, "Motti_Move");
 }
 
 void ModelManager::LoadModel(const ModelName modelName, std::string fileName) {

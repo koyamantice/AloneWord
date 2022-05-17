@@ -30,6 +30,7 @@ public:
 	};
 	enum FBXName {
 		MottiMove,
+		MottiPower,
 	};
 
 public:

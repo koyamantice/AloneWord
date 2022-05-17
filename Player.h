@@ -191,6 +191,9 @@ private:
 	//動いてるときのFBX
 	FBXModel* move_model1 = nullptr;
 	FBXObject3d* move_object1 = nullptr;
+	//パワーを貯めているときのFBX
+	FBXModel* power_model1 = nullptr;
+	FBXObject3d* power_object1 = nullptr;
 	int move_count = 0;
 	//チャージ攻撃のための変数
 	float RotPower = 10.0f;
