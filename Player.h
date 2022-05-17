@@ -9,6 +9,8 @@
 #include "DirectXCommon.h"
 #include "FBXModel.h"
 #include "FBXObject3d.h"
+#include <array>       // ヘッダファイルインクルード
+using namespace std;         //  名前空間指定
 class InterBoss;
 class InterEnemy;
 class Player : public Object3d {
@@ -111,6 +113,9 @@ public:
 	
 	//エフェクト
 	void EffectMove();
+
+	//チャージ
+	void ChargeEffect();
 	
 	//足元にパーティクル
 	void BirthParticle();
@@ -202,4 +207,16 @@ private:
 	float RotCount = 0.0f;
 	float AddSpeed = 0.0f;
 	bool ChangeScale = false;
+	//チャージ時エフェクトのパーティクル(配列可濃厚なのでこっちに書く)
+	array<Object3d*,20>  Chargeobj;
+	Model* Chargemodel;
+	array<XMFLOAT3, 20> chargepos;
+	array<bool ,20>ChargeAlive;
+	array<float,20> Chargeradius;
+	array<float,20> ChargeSpeed;
+	array<float,20> Chargescale;
+	array<float,20> ChargeCircleX;
+	array<float,20> ChargeCircleZ;
+	array<float,20> Chargeframe;
+	array<int, 20> EffectTimer;
 };

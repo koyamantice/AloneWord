@@ -27,9 +27,11 @@ Player::Player() {
 	Armobj = new Object3d();
 	move_model1 = ModelManager::GetIns()->GetFBXModel(ModelManager::MottiMove);
 	move_object1 = new FBXObject3d;
-	power_model1 = ModelManager::GetIns()->GetFBXModel(ModelManager::MottiPower);
-	power_object1 = new FBXObject3d;
 	Charge = Texture::Create(ImageManager::Charge, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Chargemodel = ModelManager::GetIns()->GetModel(ModelManager::Particle);
+	for (std::size_t i = 0; i < Chargeobj.size(); i++) {
+		Chargeobj[i] = new Object3d();
+	}
 }
 
 bool Player::Initialize() {
@@ -58,19 +60,19 @@ bool Player::Initialize() {
 	move_object1->SetPosition(position);
 	move_object1->SetRotation(rot);
 
-
-	power_object1->Initialize();
-	power_object1->SetModel(power_model1);
-	power_object1->SetScale(plasca);
-	power_object1->SetPosition(position);
-	power_object1->SetRotation(rot);
-	
 	Charge = Texture::Create(ImageManager::Charge, { 0,0,0 }, { 1,1,1 }, { 1,1,1,1 });
 	Charge->TextureCreate();
 	Charge->SetPosition(position);
 	Charge->SetRotation({ 90.0f,0, 0 });
 	Charge->SetScale(sca);
 	Charge->Update();
+
+	for (std::size_t i = 0; i < Chargeobj.size(); i++) {
+		Chargeobj[i] = Object3d::Create();
+		Chargeobj[i]->SetModel(Chargemodel);
+		Chargeobj[i]->SetScale({ 0.7f,0.7f,0.7f });
+		EffectTimer[i] = 0;
+	}
 	//effecttexture = Texture::Create(4, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	//effecttexture->TextureCreate();
 	////effecttexture->SetRotation({ 90,0,0 });
@@ -151,6 +153,7 @@ void Player::Update() {
 			}
 			//ため時間
 			if (input->PushButton(input->Button_RB)) {
+				ChargeEffect();
 				chargeTimer++;
 				PlayerSpeed = 0.1f;
 				if (sca.x > 0.0f) {
@@ -179,13 +182,17 @@ void Player::Update() {
 				}*/
 			}
 			else {
+				for (std::size_t i = 0; i < Chargeobj.size(); i++) {
+					ChargeAlive[i] = false;
+					EffectTimer[i] = 0;
+					Chargeframe[i] = 0.0f;
+				}
 				//ため開放
 				if (chargeTimer >= 100) {
 					AttackFlag = true;
 					AttackMoveNumber = 1;
 					RotTimer = 200 * (int)RotCount;
 					RotPower = 10.0f;
-					chargeTimer = 0;
 				}
 				else {
 					chargeTimer = 0;
@@ -342,10 +349,13 @@ void Player::Update() {
 	Armpos.y = position.y;
 	Armpos.z = ArmCircleZ + position.z;
 	Armobj->SetPosition(Armpos);
-	//移動
+	//各オブジェクトのアップデート
 	object3d->Update();
 	object3d->SetPosition(position);
 	object3d->SetRotation(rot);
+	for (std::size_t i = 0; i < Chargeobj.size(); i++) {
+		Chargeobj[i]->Update();
+	}
 	Armobj->SetRotation(ArmRot);
 	//パーティクル発生
 	BirthParticle();
@@ -354,9 +364,6 @@ void Player::Update() {
 	move_object1->SetScale(plasca);
 	move_object1->SetRotation(rot);
 
-	power_object1->SetPosition(position);
-	power_object1->SetScale(plasca);
-	power_object1->SetRotation(rot);
 	//FBXアニメーションの管理(移動)
 	if (move_count == 1) {
 		move_object1->PlayAnimation();
@@ -365,16 +372,8 @@ void Player::Update() {
 	else if (move_count == 0) {
 		move_object1->StopAnimation();
 	}
-	//FBXアニメーションの管理(貯め)
-	if (chargeTimer == 1) {
-		power_object1->PlayAnimation();
-	}
-	else if (chargeTimer == 0) {
-		power_object1->StopAnimation();
-	}
 
 	move_object1->Update();
-	power_object1->Update();
 }
 
 void Player::SelectUp() {
@@ -497,17 +496,20 @@ void Player::TitleUp() {
 void Player::Draw(DirectXCommon* dxCommon) {
 
 	ImGui::Begin("test");
-	ImGui::Text("%d", chargeTimer);
+	ImGui::Text("c:%d", EffectTimer[0]);
+	ImGui::SliderFloat("ChangeSpeed0", &ChargeSpeed[0], 1, 0.0f);
+	ImGui::SliderFloat("ChangeSpeed1", &ChargeSpeed[1], 1, 0.0f);
 	ImGui::End();
 	Texture::PreDraw();
 	Charge->Draw();
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
-		if (chargeTimer != 0) {
-			power_object1->Draw(dxCommon->GetCmdList());
-		}
-		else {
-			move_object1->Draw(dxCommon->GetCmdList());
+		move_object1->Draw(dxCommon->GetCmdList());
+	}
+
+	for (std::size_t i = 0; i < Chargeobj.size(); i++) {
+		if (ChargeAlive[i] == true) {
+			Chargeobj[i]->Draw();
 		}
 	}
 	//arm_no_object1->Draw(dxCommon->GetCmdList());
@@ -655,4 +657,43 @@ void Player::Begin() {
 	move_object1->SetRotation(rot);
 	
 	move_object1->Update();
+}
+
+void Player::ChargeEffect() {
+	for (std::size_t i = 0; i < Chargeobj.size(); i++) {
+		if (ChargeAlive[i] == false) {
+			if (EffectTimer[i] == 0) {
+				EffectTimer[i] = rand() % 50;
+			}
+			else {
+				EffectTimer[i]--;
+			}
+			if (EffectTimer[i] == 1) {
+				ChargeSpeed[i] = (float)(rand() % 360);
+				Chargescale[i] = (float)(rand() % 3 + 3);
+				chargepos[i].y = (float)(rand() % 2 + 2);
+				ChargeAlive[i] = true;
+				EffectTimer[i] = 0;
+			}
+		}
+		else {
+			if (Chargescale[i] <= 1.0f) {
+				Chargeframe[i] = 0.0f;
+				ChargeAlive[i] = false;
+			}
+			else {
+				Chargeframe[i] += 0.01f;
+			}
+
+			Chargescale[i] = Ease(In, Cubic, Chargeframe[i], Chargescale[i], 0.0f);
+			chargepos[i].y = Ease(In, Cubic, Chargeframe[i], chargepos[i].y, 0.0f);
+		}
+		Chargeradius[i] = ChargeSpeed[i] * PI / 180.0f;
+		ChargeCircleX[i] = cosf(Chargeradius[i]) * Chargescale[i];
+		ChargeCircleZ[i] = sinf(Chargeradius[i]) * Chargescale[i];
+		chargepos[i].x = ChargeCircleX[i] + position.x;
+		chargepos[i].z = ChargeCircleZ[i] + position.z;
+		Chargeobj[i]->SetPosition(chargepos[i]);
+	}
+
 }

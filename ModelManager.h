@@ -26,11 +26,11 @@ public:
 		RightShoes,
 		Pastel,
 		Platform,
-		Piyopiyo
+		Piyopiyo,
+		Particle,
 	};
 	enum FBXName {
 		MottiMove,
-		MottiPower,
 	};
 
 public:
