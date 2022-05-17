@@ -161,9 +161,9 @@ void Player::Update() {
 					}
 					else if (RotCount == 2) {
 						Aftersca = {
-						0.005,
-						0.005,
-						0.005,
+						0.005f,
+						0.005f,
+						0.005f,
 						};
 					}
 				}
@@ -172,6 +172,8 @@ void Player::Update() {
 					Charge->SetColor({1,1,1,1});
 				} else if(RotCount < 2) {
 					Charge->SetColor({ 1,1,0,1 });
+				} else if (RotCount < 3) {
+					Charge->SetColor({ 1,0.5f,0,1 });
 				} else {
 					Charge->SetColor({ 1,0,0,1 });
 				}
@@ -185,13 +187,13 @@ void Player::Update() {
 				if (chargeTimer >= 100) {
 					AttackFlag = true;
 					AttackMoveNumber = 1;
-					RotTimer = 200 * RotCount;
+					RotTimer = 200 * (int)RotCount;
 					RotPower = 10.0f;
 					ChangeScale = true;
 					Aftersca = {
-					0.007,
-					0.007,
-					0.007,
+					0.007f,
+					0.007f,
+					0.007f,
 					};
 				}
 				else {
@@ -484,9 +486,9 @@ void Player::TitleUp() {
 	}
 	rot = this->object3d->GetRotation();
 	//アニメーション用のキー入力
-	rot.y = 75.0f;
+	rot.y = 60.0f;
 	move_count++;
-	position.y = 0.0f;
+	position.y = -1.0f;
 	onGround = true;
 
 	//移動

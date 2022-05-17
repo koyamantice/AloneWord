@@ -103,7 +103,7 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	}
 	strong = player->GetArmWeight() * 5;
 	power.clear();
-	for (int tmp = strong; tmp > 0;) {
+	for (int tmp = (int)strong; tmp > 0;) {
 		power.push_back(tmp % 10);
 		tmp /= 10;
 	}

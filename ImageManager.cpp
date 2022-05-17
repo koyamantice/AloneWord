@@ -43,6 +43,9 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(Change2, L"Resources/2d/Change2.png");
 	Sprite::LoadTexture(BlackFilter, L"Resources/2d/Blackfilter.png");
 	Sprite::LoadTexture(WhiteFilter, L"Resources/2d/Whitefilter.png");
+	Sprite::LoadTexture(Tbutton, L"Resources/2d/Title1.png");
+	Sprite::LoadTexture(sky, L"Resources/2d/sky.png");
+
 }
 
 void ImageManager::LoadTex2D() {

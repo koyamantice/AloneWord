@@ -31,7 +31,15 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 	player->SetPosition({ 0.0f,5.0f,-10.0f });
 
 	//背景スプライト生成
-	sprite = Sprite::Create(ImageManager::TITLE, { 0.0f,0.0f });
+	sprite[back] = Sprite::Create(ImageManager::TITLE, { 0.0f,0.0f });
+	sprite[button1] = Sprite::Create(ImageManager::Tbutton, { 320.0f,600.0f });
+	sprite[button1]->SetAnchorPoint({ 0.5f,0.5f });
+	sprite[button1]->SetScale(0.7f);
+	sprite[button2] = Sprite::Create(ImageManager::Tbutton, { 960.0f,600.0f });
+	sprite[button2]->SetAnchorPoint({ 0.5f,0.5f });
+	sprite[button2]->SetScale(0.7f);
+	sprite[sky] = Sprite::Create(ImageManager::sky, { 0.0f,0.0f });
+
 	//スプライト生成
 	expandchange = new ExpandChange();
 }
@@ -39,7 +47,7 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 void TitleScene::Finalize() {
 	//３ｄのモデルのデリート
 	delete player;
-	delete sprite;
+	delete sprite[0];
 	expandchange->Finalize();
 }
 
@@ -49,8 +57,7 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 		expandchange->SetStartChange(true);
 		SelectNumber = Select;
-	}
-	else if (input->TriggerButton(input->Button_A)) {
+	} else if (input->TriggerButton(input->Button_A)) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 		expandchange->SetStartChange(true);
 		SelectNumber = Start;
@@ -59,8 +66,7 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 	if (expandchange->GetTimer() >= 58) {
 		if (SelectNumber == Select) {
 			SceneManager::GetInstance()->ChangeScene("StageSelect");
-		}
-		else {
+		} else {
 			SceneManager::GetInstance()->ChangeScene("STARTMAP");
 		}
 	}
@@ -68,19 +74,23 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 	expandchange->Update();
 	camera->Update();
 	cameraPos.x = player->GetPosition().x;
-	cameraPos.y = player->GetPosition().y+7.0f;
-	cameraPos.z = player->GetPosition().z - distanceZ;
+	cameraPos.y = player->GetPosition().y + 4.0f;
+	cameraPos.z = player->GetPosition().z - 4.0f;
 	camera->SetTarget(player->GetPosition());
 	camera->SetEye(cameraPos);
 }
 
 void TitleScene::Draw(DirectXCommon* dxCommon) {
-	sprite->PreDraw();
+	Sprite::PreDraw();
 	//背景用
-	sprite->Draw();
-	expandchange->Draw();
+	sprite[0]->Draw();
+	sprite[3]->Draw();
+	sprite[1]->Draw();
+	sprite[2]->Draw();
+
 	player->Draw(dxCommon);
 	//前面用
+	expandchange->Draw();
 
 }
 

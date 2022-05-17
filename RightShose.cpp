@@ -124,8 +124,8 @@ void RightShose::Spec() {
 
 			if (Attack) {
 				//プレイヤーにスピード加算
-				pos.x += speedX;
-				pos.z += speedZ;
+				pos.x += (float)speedX;
+				pos.z += (float)speedZ;
 				
 				//敵の位置が壁まで行ったら戻る
 				if (pos.x >= x_max) {
@@ -159,7 +159,7 @@ void RightShose::Spec() {
 
 				//跳ねるような感じで戻る(戻りきったら攻撃回数が加算される)
 				if (hitpoint == HitRight) {
-					Deadbound.y -= 0.02;
+					Deadbound.y -= 0.02f;
 					pos.y += Deadbound.y;
 					if (pos.y > 0.0f) {
 						pos.x -= Deadbound.x;
@@ -176,7 +176,7 @@ void RightShose::Spec() {
 					}
 				}
 				else if (hitpoint == HitLeft) {
-					Deadbound.y -= 0.02;
+					Deadbound.y -= 0.02f;
 					pos.y += Deadbound.y;
 					if (pos.y > 0.0f) {
 						pos.x += Deadbound.x;
@@ -193,7 +193,7 @@ void RightShose::Spec() {
 					}
 				}
 				else if (hitpoint == HitUp) {
-					Deadbound.y -= 0.02;
+					Deadbound.y -= 0.02f;
 					pos.y += Deadbound.y;
 					if (pos.y > 0.0f) {
 						pos.z -= Deadbound.z;
@@ -210,7 +210,7 @@ void RightShose::Spec() {
 					}
 				}
 				else if (hitpoint == HitDown) {
-					Deadbound.y -= 0.02;
+					Deadbound.y -= 0.02f;
 					pos.y += Deadbound.y;
 					if (pos.y > 0.0f) {
 						pos.z += Deadbound.z;

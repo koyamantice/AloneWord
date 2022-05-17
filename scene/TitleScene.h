@@ -27,7 +27,15 @@ class TitleScene : public BaseScene {
 		void Draw(DirectXCommon* dxCommon) override;
 
 	private:
-		Sprite* sprite = { nullptr };
+		Sprite* sprite[10]{};
+		enum {
+			back,
+			button1,
+			button2,
+			sky,
+			tutorial,
+			select,
+		};
 		ExpandChange* expandchange = nullptr;
 		DebugCamera* camera = { nullptr };
 		Player* player = nullptr;
