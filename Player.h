@@ -43,6 +43,8 @@ public:
 
 	const XMFLOAT3& GetArmRotation() { return ArmRot; }
 
+	const XMFLOAT3& GetDistance() { return distance; }
+
 	const int& GetHp() { return HP; }
 
 	const int& GetInterval() { return Interval; }
@@ -92,6 +94,14 @@ public:
 	void SetAddSpeed(float AddSpeed) { this->AddSpeed = AddSpeed; }
 
 	void SetMove(float XMax, float ZMax) { this->XMax = XMax; this->ZMax = ZMax; }
+
+	void SetRotTimer(int RotTimer) { this->RotTimer = RotTimer; }
+
+	void SetChargeTimer(int chargeTimer) { this->chargeTimer = chargeTimer; }
+
+	void SetRotCount(int RotCount) { this->RotCount = RotCount; }
+
+	void SetDistance(XMFLOAT3 distance) { this->distance = distance; }
 
 	//腕の重みリセット
 	void ResetWeight(InterEnemy* enemy);

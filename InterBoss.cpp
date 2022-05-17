@@ -59,6 +59,7 @@ bool InterBoss::collideAttackArm() {
 	bool attackflag = player->GetAttackFlag();
 	float power = player->GetPower();
 	float weight = player->GetArmWeight();
+	XMFLOAT3 distance = player->GetDistance();
 	if (attackflag && !BossHit) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 1.3f, Armpos.x, Armpos.y, Armpos.z, 1.3f) == true && BossHP > 0) {
 			player->SetAttackFlag(false);
@@ -77,6 +78,9 @@ bool InterBoss::collideAttackArm() {
 				}
 			}
 			else {
+				distance.x = Armpos.x - pos.x;
+				distance.z = Armpos.z - pos.z;
+				player->SetDistance(distance);
 				Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 				player->SetDamageFlag(true);
 			}

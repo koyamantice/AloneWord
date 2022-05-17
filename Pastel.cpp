@@ -463,6 +463,9 @@ bool Pastel::collideAttackArm(Player* player) {
 	if (attackflag && !BossHit) {
 		if (Collision::CircleCollision(Armpos.x, Armpos.z, 1.3, Millpos.x, Millpos.z, 1.3)) {
 			BossHit = true;
+			player->SetRotTimer(0);
+			player->SetRotCount(0);
+			player->SetChargeTimer(0);
 			player->SetAttackFlag(false);
 			//–Ý‚ð‰P‚É“ü‚ê‚Ä‚¢‚é
 			if (BossHit == true) {
