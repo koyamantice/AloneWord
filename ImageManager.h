@@ -52,7 +52,7 @@ public:
 		WhiteFilter,
 		Tbutton,
 		sky,
-
+		
 	};
 	enum tex2dName {
 	enemy,//Texture::LoadTexture(0, L"Resources/2d/enemy.png");
@@ -66,7 +66,7 @@ public:
 	water,
 	hit,
 	Charge,
-
+	ChargeEffect,
 	};
 public:
 	static ImageManager* GetIns();		//Žæ“¾—p

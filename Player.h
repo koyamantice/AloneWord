@@ -9,6 +9,8 @@
 #include "DirectXCommon.h"
 #include "FBXModel.h"
 #include "FBXObject3d.h"
+#include <array>       // ヘッダファイルインクルード
+using namespace std;         //  名前空間指定
 class InterBoss;
 class InterEnemy;
 class Player : public Object3d {
@@ -93,6 +95,8 @@ public:
 
 	void SetAddSpeed(float AddSpeed) { this->AddSpeed = AddSpeed; }
 
+	void SetJumpG(float JumpG) { this->JumpG = JumpG; }
+
 	void SetMove(float XMax, float ZMax) { this->XMax = XMax; this->ZMax = ZMax; }
 
 	void SetRotTimer(int RotTimer) { this->RotTimer = RotTimer; }
@@ -111,6 +115,9 @@ public:
 	
 	//エフェクト
 	void EffectMove();
+
+	//チャージ
+	void ChargeEffectMove();
 	
 	//足元にパーティクル
 	void BirthParticle();
@@ -124,6 +131,7 @@ private:
 	Model* model;
 	Model* Armmodel;
 	Texture* Charge=nullptr;
+	
 	XMFLOAT3 plasca = { 0.007f,0.007f,0.007f };
 	XMFLOAT3 Aftersca = { 0,0,0 };
 	XMFLOAT3 sca = { 0.7f,0.7f,0.7f };
@@ -191,12 +199,28 @@ private:
 	//動いてるときのFBX
 	FBXModel* move_model1 = nullptr;
 	FBXObject3d* move_object1 = nullptr;
+	//パワーを貯めているときのFBX
+	FBXModel* power_model1 = nullptr;
+	FBXObject3d* power_object1 = nullptr;
 	int move_count = 0;
 	//チャージ攻撃のための変数
 	float RotPower = 10.0f;
 	int chargeTimer = 0;
 	int RotTimer = 0;
-	float RotCount = 0.0f;
+	int RotCount = 0;
 	float AddSpeed = 0.0f;
+	float JumpG = 0.0f;
 	bool ChangeScale = false;
+	//チャージ時エフェクトのパーティクル(配列可濃厚なのでこっちに書く)
+	array<Texture*,20> ChargeEffect;
+	array<XMFLOAT3, 20> chargepos;
+	array<XMFLOAT3, 20> chargerot;
+	array<bool ,20>ChargeAlive;
+	array<float,20> Chargeradius;
+	array<float,20> ChargeSpeed;
+	array<float,20> Chargescale;
+	array<float,20> ChargeCircleX;
+	array<float,20> ChargeCircleZ;
+	array<float,20> Chargeframe;
+	array<int, 20> EffectTimer;
 };
