@@ -513,8 +513,9 @@ void Player::TitleUp() {
 void Player::Draw(DirectXCommon* dxCommon) {
 
 	ImGui::Begin("test");
-	ImGui::SliderFloat("sca.x", &plasca.x, 50, -50);
-	ImGui::SliderFloat("scaleframe", &scaleframe, 1, 0);
+	ImGui::SliderFloat("rebound.x", &rebound.x, 50, -50);
+	ImGui::SliderFloat("distance.x", &distance.x, 1, 0);
+	ImGui::Text("%d", DamageFlag);
 	ImGui::End();
 	Texture::PreDraw();
 	Charge->Draw();
@@ -555,63 +556,40 @@ void Player::ResetWeight(InterEnemy* enemy) {
 
 //ダメージ食らったときにプレイヤーが飛ばされる
 void Player::Rebound(InterBoss* boss) {
-	XMFLOAT3 enepos = boss->GetPosition();
+	/*XMFLOAT3 enepos = boss->GetPosition();
 
 	distance.x = position.x - enepos.x;
 	distance.z = position.z - enepos.z;
-
+*/
 
 	if (DamageFlag == true) {
-		if (distance.x <= 0) {
-			rebound.x = -5.2f;
+		rebound.x = sin(atan2f(distance.x, distance.z)) * 0.5f;
+		rebound.y = cos(atan2f(distance.x, distance.z)) * 0.5f;
+
+		if (damageframe >= 1.0f) {
+			damageframe = 0.0f;
+			DamageFlag = false;
 		}
 		else {
-			rebound.x = 5.2f;
+			damageframe += 0.05f;
 		}
 
-		if (distance.z <= 0) {
-			rebound.z = -5.2f;
-		}
-		else {
-			rebound.z = 5.2f;
-		}
-		DamageFlag = false;
+		rebound = {
+		Ease(In,Cubic,damageframe,rebound.x,0),
+		Ease(In,Cubic,damageframe,rebound.y,0),
+		Ease(In,Cubic,damageframe,rebound.z,0)
+		};
+
 	}
 
-	if (rebound.x > 0.0) {
-		rebound.x -= 0.005f;
-		if (rebound.x <= 0.0f) {
-			rebound.x = 0.0f;
-		}
+	if (position.x <= 25.0f && position.x >= -25.0f) {
+		position.x += rebound.x;
 	}
-	else {
-		rebound.x += 0.005f;
-		if (rebound.x >= 0.0f) {
-			rebound.x = 0.0f;
-		}
+	if (position.z <= 20.0f && position.z >= -20.0f) {
+		position.z += rebound.z;
 	}
 
-	if (rebound.z > 0.0) {
-		rebound.z -= 0.045f;
-		if (rebound.z <= 0.0f) {
-			rebound.z = 0.0f;
-		}
-	}
-	else {
-		rebound.z += 0.045f;
-		if (rebound.z >= 0.0f) {
-			rebound.z = 0.0f;
-		}
-	}
-
-	//if (position.x <= 25.0f && position.x >= -25.0f) {
-	//	position.x += rebound.x;
-	//}
-	//if (position.z <= 20.0f && position.z >= -20.0f) {
-	//	position.z += rebound.z;
-	//}
-
-	//object3d->SetPosition(position);
+	object3d->SetPosition(position);
 }
 
 void Player::BirthParticle() {
