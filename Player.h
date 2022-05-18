@@ -118,6 +118,9 @@ public:
 
 	//チャージ
 	void ChargeEffectMove();
+
+	//チャージの開放
+	void ChargeRelease();
 	
 	//足元にパーティクル
 	void BirthParticle();
@@ -218,8 +221,11 @@ private:
 	//チャージ時エフェクトのパーティクル(配列可濃厚なのでこっちに書く)
 	array<Texture*,20> ChargeEffect;
 	array<XMFLOAT3, 20> chargepos;
+	array<XMFLOAT3, 20> boundpower;
 	array<XMFLOAT3, 20> chargerot;
+	array<XMFLOAT3, 20> chargesca;
 	array<bool ,20>ChargeAlive;
+	array<bool, 20>EffectRelease;
 	array<float,20> Chargeradius;
 	array<float,20> ChargeSpeed;
 	array<float,20> Chargescale;

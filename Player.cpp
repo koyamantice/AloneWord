@@ -16,6 +16,7 @@
 #include "ModelManager.h"
 #include "ImageManager.h"
 #include "Easing.h"
+#include <XorShift.h>
 using namespace DirectX;
 Input* input = Input::GetInstance();
 
@@ -72,7 +73,8 @@ bool Player::Initialize() {
 		ChargeEffect[i]->TextureCreate();
 		//chargerot[i] = { 90.0f,0.0f,0.0f };
 		ChargeEffect[i]->SetRotation(chargerot[i]);
-		ChargeEffect[i]->SetScale({ 0.3f,0.3f,0.3f });
+		chargesca[i] = { 0.3f,0.3f,0.3f };
+		ChargeEffect[i]->SetScale(chargesca[i]);
 		ChargeEffect[i]->Update();
 	}
 	//effecttexture = Texture::Create(4, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
@@ -213,12 +215,26 @@ void Player::Update() {
 			}
 			else {
 				for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
-					ChargeAlive[i] = false;
 					EffectTimer[i] = 0;
 					Chargeframe[i] = 0.0f;
 				}
 				//ため開放
 				if (chargeTimer >= 100) {
+					for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
+						if (EffectRelease[i] == false) {
+							boundpower[i].x = (float)((int)(XorShift::GetInstance()->xor128()) % 20 - 10);
+							boundpower[i].y = (float)((int)(XorShift::GetInstance()->xor128()) % 10 - 5);
+							boundpower[i].z = (float)((int)(XorShift::GetInstance()->xor128()) % 20 - 10);
+							boundpower[i].x = boundpower[i].x / 10;
+							boundpower[i].y = boundpower[i].y / 10;
+							boundpower[i].z = boundpower[i].z / 10;
+							chargesca[i].x = 0.3f;
+							chargesca[i].y = 0.3f;
+							chargesca[i].z = 0.3f;
+							EffectRelease[i] = true;
+						}
+					}
+					ChargeRelease();
 					AttackFlag = true;
 					AttackMoveNumber = 1;
 					RotTimer = 200 * (int)RotCount;
@@ -231,12 +247,20 @@ void Player::Update() {
 					};
 				}
 				else {
+					for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
+						ChargeAlive[i] = false;
+					}
 					chargeTimer = 0;
 				}
 			}
 		}
 	}
 
+	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
+		if (EffectRelease[i] == true) {
+			ChargeRelease();
+		}
+	}
 	//チャージ時間に応じてプレイヤーのスケール変更
 	if (ChangeScale == true) {
 		if (scaleframe >= 1.0f) {
@@ -545,9 +569,11 @@ void Player::TitleUp() {
 void Player::Draw(DirectXCommon* dxCommon) {
 
 	ImGui::Begin("test");
-	ImGui::SliderFloat("pso.x", &position.x, 50, -50);
+	/*ImGui::SliderFloat("pso.x", &position.x, 50, -50);
 	ImGui::SliderFloat("pso.y", &position.y, 50, -50);
-	ImGui::SliderFloat("pso.z", &position.z, 50, -50);
+	ImGui::SliderFloat("pso.z", &position.z, 50, -50);*/
+	ImGui::Text("Alive:%d", ChargeAlive[0]);
+	ImGui::Text("Releae:%d", EffectRelease[0]);
 	ImGui::End();
 	Texture::PreDraw();
 	if (input->PushButton(input->Button_RB)) {
@@ -760,5 +786,25 @@ void Player::ChargeEffectMove() {
 		//ChargeEffect[i]->SetRotation(chargerot[i]);
 		ChargeEffect[i]->SetPosition(chargepos[i]);
 	}
+}
 
+void Player::ChargeRelease() {
+	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
+		if (EffectRelease[i] == true) {
+			chargesca[i].x -= 0.01f;
+			chargesca[i].y -= 0.01f;
+			chargesca[i].z -= 0.01f;
+			boundpower[i].y -= 0.02f;
+			chargepos[i].x += boundpower[i].x;
+			chargepos[i].y += boundpower[i].y;
+			chargepos[i].z += boundpower[i].z;
+		}
+
+		if (chargesca[i].x <= 0.0f) {
+			EffectRelease[i] = false;
+			ChargeAlive[i] = false;
+		}
+		ChargeEffect[i]->SetScale(chargesca[i]);
+		ChargeEffect[i]->SetPosition(chargepos[i]);
+	}
 }
