@@ -24,7 +24,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	modelFloor = Model::CreateFromOBJ("floor");
 	objFloor->SetModel(modelFloor);
 	objFloor->SetPosition({ 0, -1, 0 });
-	objFloor->SetScale({ 4.0f,1.0f,5.0f });
+	objFloor->SetScale({ 6.0f,1.0f,6.0f });
 
 	//ステージマップ
 	modelStartMap = Model::CreateFromOBJ("BossMap");

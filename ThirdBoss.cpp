@@ -49,7 +49,7 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	modelFloor = Model::CreateFromOBJ("floor");
 	objFloor->SetModel(modelFloor);
 	objFloor->SetPosition({ 0, -1, 0 });
-	objFloor->SetScale({ 6.0f,1.0f,6.0f });
+	objFloor->SetScale({ 8.0f,1.0f,8.0f });
 
 	//objSkydome = Object3d::Create();
 	//modelSkydome = Model::CreateFromOBJ("skydome");
