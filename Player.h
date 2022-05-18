@@ -103,7 +103,7 @@ public:
 
 	void SetChargeTimer(int chargeTimer) { this->chargeTimer = chargeTimer; }
 
-	void SetRotCount(float RotCount) { this->RotCount = RotCount; }
+	void SetRotCount(int RotCount) { this->RotCount = RotCount; }
 
 	void SetDistance(XMFLOAT3 distance) { this->distance = distance; }
 

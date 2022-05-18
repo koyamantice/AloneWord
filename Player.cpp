@@ -70,7 +70,7 @@ bool Player::Initialize() {
 	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
 		ChargeEffect[i] = Texture::Create(ImageManager::ChargeEffect, { 0,0,0 }, { 1,1,1 }, { 1,1,1,1 });
 		ChargeEffect[i]->TextureCreate();
-		chargerot[i] = { 90.0f,0.0f,180.0f };
+		//chargerot[i] = { 90.0f,0.0f,0.0f };
 		ChargeEffect[i]->SetRotation(chargerot[i]);
 		ChargeEffect[i]->SetScale({ 0.3f,0.3f,0.3f });
 		ChargeEffect[i]->Update();
@@ -107,7 +107,7 @@ void Player::Update() {
 	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
 		ChargeEffect[i]->Update();
 		ChargeEffect[i]->SetPosition(chargepos[i]);
-		ChargeEffect[i]->SetScale({0.3f,0.1f,0.3f});
+		ChargeEffect[i]->SetScale({0.1f,0.1f,0.1f});
 	}
 	object3d->Update();
 	Armobj->Update();
@@ -160,11 +160,8 @@ void Player::Update() {
 			}
 			//ため時間
 			if (input->PushButton(input->Button_RB)) {
-<<<<<<< HEAD
 				move_count = 0;
-=======
 				ChargeEffectMove();
->>>>>>> 9281deb26df9e42aac8f4cfe2c3d04b0337053a6
 				chargeTimer++;
 				PlayerSpeed = 0.1f;
 
@@ -197,11 +194,7 @@ void Player::Update() {
 				}
 				if ((chargeTimer % 100 == 0) && (RotCount <= 2)) {
 					RotCount++;
-<<<<<<< HEAD
 					ChangeScale = true;
-
-=======
->>>>>>> 9281deb26df9e42aac8f4cfe2c3d04b0337053a6
 				}
 				//チャージ時のエフェクト
 				if (RotCount<1) {
@@ -230,15 +223,12 @@ void Player::Update() {
 					AttackMoveNumber = 1;
 					RotTimer = 200 * (int)RotCount;
 					RotPower = 10.0f;
-<<<<<<< HEAD
 					ChangeScale = true;
 					plasca = {
 					0.007f,
 					0.007f,
 					0.007f,
 					};
-=======
->>>>>>> 9281deb26df9e42aac8f4cfe2c3d04b0337053a6
 				}
 				else {
 					chargeTimer = 0;
@@ -247,7 +237,6 @@ void Player::Update() {
 		}
 	}
 
-<<<<<<< HEAD
 	//チャージ時間に応じてプレイヤーのスケール変更
 	if (ChangeScale == true) {
 		if (scaleframe >= 1.0f) {
@@ -264,8 +253,6 @@ void Player::Update() {
 		//Ease(In,Cubic,scaleframe,plasca.z,Aftersca.z)
 		//};
 	}
-=======
->>>>>>> 9281deb26df9e42aac8f4cfe2c3d04b0337053a6
 	//振り回している
 	if (AttackFlag == true) {
 		RotTimer--;
@@ -558,7 +545,6 @@ void Player::TitleUp() {
 void Player::Draw(DirectXCommon* dxCommon) {
 
 	ImGui::Begin("test");
-<<<<<<< HEAD
 	ImGui::SliderFloat("pso.x", &position.x, 50, -50);
 	ImGui::SliderFloat("pso.y", &position.y, 50, -50);
 	ImGui::SliderFloat("pso.z", &position.z, 50, -50);
@@ -566,20 +552,12 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	Texture::PreDraw();
 	if (input->PushButton(input->Button_RB)) {
 		Charge->Draw();
-=======
-	ImGui::Text("c:%d", EffectTimer[0]);
-	ImGui::SliderFloat("pos.x", &position.x, 100, -100);
-	ImGui::SliderFloat("pos.z", &position.z, 100, -100);
-	ImGui::SliderFloat("JumpG", &JumpG, 100, -100);
-	ImGui::End();
-	Texture::PreDraw();
-	Charge->Draw();
+	}
 
 	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
 		if (ChargeAlive[i] == true) {
 			ChargeEffect[i]->Draw();
 		}
->>>>>>> 9281deb26df9e42aac8f4cfe2c3d04b0337053a6
 	}
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
@@ -779,7 +757,7 @@ void Player::ChargeEffectMove() {
 		ChargeCircleZ[i] = sinf(Chargeradius[i]) * Chargescale[i];
 		chargepos[i].x = ChargeCircleX[i] + position.x;
 		chargepos[i].z = ChargeCircleZ[i] + position.z;
-		ChargeEffect[i]->SetRotation(chargerot[i]);
+		//ChargeEffect[i]->SetRotation(chargerot[i]);
 		ChargeEffect[i]->SetPosition(chargepos[i]);
 	}
 

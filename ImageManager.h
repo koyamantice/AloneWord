@@ -52,11 +52,7 @@ public:
 		WhiteFilter,
 		Tbutton,
 		sky,
-<<<<<<< HEAD
 		ground,
-=======
-		
->>>>>>> 9281deb26df9e42aac8f4cfe2c3d04b0337053a6
 	};
 	enum tex2dName {
 	enemy,//Texture::LoadTexture(0, L"Resources/2d/enemy.png");
