@@ -129,7 +129,7 @@ void Player::Update() {
 		//プレイヤーの移動
 		if (!(StickrotX<650 && StickrotX>-650)) {
 			position.x += sin(atan2(StickrotX, StickrotY)) * PlayerSpeed;
-			if (chargeTimer == 0) {
+			if (!AttackFlag) {
 				rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 				ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 				ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
@@ -138,7 +138,7 @@ void Player::Update() {
 
 		if (!(StickrotY<650 && StickrotY>-650)) {
 			position.z -= cos(atan2(StickrotX, StickrotY)) * PlayerSpeed;
-			if (chargeTimer == 0) {
+			if (!AttackFlag) {
 				rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 				ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 				ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
@@ -165,7 +165,7 @@ void Player::Update() {
 				move_count = 0;
 				ChargeEffectMove();
 				chargeTimer++;
-				PlayerSpeed = 0.1f;
+				PlayerSpeed = 0.2f;
 
 				if (plasca.x<0.004f) {
 					state = down;
@@ -220,7 +220,7 @@ void Player::Update() {
 				}
 				//ため開放
 				if (chargeTimer >= 100) {
-					ChargeRelease();
+					ReleaseStart = true;
 					AttackFlag = true;
 					AttackMoveNumber = 1;
 					RotTimer = 200 * (int)RotCount;
@@ -242,10 +242,8 @@ void Player::Update() {
 		}
 	}
 
-	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
-		if (EffectRelease[i] == true) {
-			ChargeRelease();
-		}
+	if (ReleaseStart == true) {
+		ChargeRelease();
 	}
 	//チャージ時間に応じてプレイヤーのスケール変更
 	if (ChangeScale == true) {
@@ -558,8 +556,8 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	/*ImGui::SliderFloat("pso.x", &position.x, 50, -50);
 	ImGui::SliderFloat("pso.y", &position.y, 50, -50);
 	ImGui::SliderFloat("pso.z", &position.z, 50, -50);*/
-	ImGui::SliderFloat("boundpower.x", &boundpower[0].z, 50, -50);
-	ImGui::Text("Alive:%d", ChargeAlive[0]);
+	ImGui::SliderFloat("boundpower.x", &chargepos[0].y, 50, -50);
+	ImGui::SliderFloat("boundpower.x", &chargesca[0].x, 50, -50);
 	ImGui::Text("Releae:%d", EffectRelease[0]);
 	ImGui::End();
 	Texture::PreDraw();
@@ -784,9 +782,10 @@ void Player::ChargeRelease() {
 				boundpower[i].x = boundpower[i].x / 10;
 				boundpower[i].y = boundpower[i].y / 10;
 				boundpower[i].z = boundpower[i].z / 10;
-				chargesca[i].x = 0.3f;
-				chargesca[i].y = 0.3f;
-				chargesca[i].z = 0.3f;
+				chargesca[i].x = 0.5f;
+				chargesca[i].y = 0.5f;
+				chargesca[i].z = 0.5f;
+				chargepos[i] = position;
 				EffectRelease[i] = true;
 			}
 			else {
@@ -800,7 +799,8 @@ void Player::ChargeRelease() {
 
 				if (chargesca[i].x <= 0.0f) {
 					EffectRelease[i] = false;
-					//ChargeAlive[i] = false;
+					ChargeAlive[i] = false;
+					ReleaseStart = false;
 				}
 			}
 		ChargeEffect[i]->SetScale(chargesca[i]);

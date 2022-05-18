@@ -218,6 +218,7 @@ private:
 	float AddSpeed = 0.0f;
 	float JumpG = 0.0f;
 	bool ChangeScale = false;
+	bool ReleaseStart = false;
 	//チャージ時エフェクトのパーティクル(配列可濃厚なのでこっちに書く)
 	array<Texture*,20> ChargeEffect;
 	array<XMFLOAT3, 20> chargepos;
