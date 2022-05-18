@@ -100,6 +100,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 		enemy[i] = new Rice();
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
+		enemy[i]->SetLimit({ 21.0f,-17.0f,19.0f,-19.0f });
 	}
 
 	// パーティクルマネージャ生成

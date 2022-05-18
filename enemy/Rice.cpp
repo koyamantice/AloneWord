@@ -107,7 +107,7 @@ void Rice::Update() {
 				Follow();
 			}
 			// 地面に当たったら跳ね返るように
-			enemyobj->SetPosition(pos);
+			//enemyobj->SetPosition(pos);
 		}
 	}
 	Reborn();
@@ -184,6 +184,10 @@ void Rice::Update() {
 	if (Exp == true) {
 		DeadEnemy();
 	}
+	if (pos.z > z_max) { pos.z = z_max; }
+	if (pos.z < z_min) { pos.z = z_min; }
+	if (pos.x > x_max) { pos.x = x_max; }
+	if (pos.x < x_min) { pos.x = x_min; }
 	enemyobj->SetPosition(pos);
 	texture->SetPosition({ pos.x,0,pos.z });
 	Restexture->SetPosition(pos);
@@ -201,64 +205,12 @@ void Rice::Demo(int num) {
 	assert(player);
 	Piyopiyo->SetPosition({ pos.x,pos.y + 2.0f,pos.z });
 	Piyopiyo->Update();
-	//if (hit&& IsAlive && !EnemyCatch && !Exp) {
-	//	if (frame < 0.4f) {
-	//		speed_y2 = 1.5f / 20.0f;
-	//	}
-	//	Rebound();
-	//}
 	playerpos = player->GetPosition();
 	Interval = player->GetInterval();
 	FlashCount = player->GetFlashCount();
 	oldpos = pos;
 	if (pos.y > 3.0f) {
 		pos.y = 3.0f;
-	}
-	if (IsAlive && !EnemyCatch && !Exp) {
-		//Back();
-		//if (LockOn()) {
-		//	moveCount = (rand() % 15) + 20;
-		//	isMove = false;
-		//	followed = true;
-		//	//if (pos.y>!1) {
-		//	//}
-		//}
-		//if (!followed && !LockOn()&&!hit) {
-		//	rot.y = (dir)-90;// *(XM_PI / 180.0f);
-		//	speed_y = 3.0f / 20.0f;
-		//	if (pos.y > 0) {
-		//		pos.y -= speed_y;
-		//	} else {
-		//		pos.y = 0;
-		//	}
-		//	if (followed) {
-		//		if (rot.y < -90) {
-		//			dir = rot.y + 360 + 90;
-		//			rot.y = (dir)-90.0f;// *(XM_PI / 180.0f);
-		//		} else {
-		//			dir = rot.y + 90;
-		//			rot.y = (dir)-90.0f;// *(XM_PI / 180.0f);
-		//		}
-		//		followed = false;
-		//	}
-		//	Move();
-		//}
-		//if (followed && !hit) {
-		//	XMFLOAT3 position{};
-		//	position.x = (playerpos.x - pos.x);
-		//	position.z = (playerpos.z - pos.z);
-		//	pos.y += speed_y;
-		//	speed_y -= gravity;
-		//	rot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 90;// *(XM_PI / 180.0f);
-		//	if (pos.y < 0) {
-		//		pos.y = 0;
-		//		start = true;
-		//		speed_y = 0;
-		//		Follow();
-		//	}
-		//	// 地面に当たったら跳ね返るように
-		//	enemyobj->SetPosition(pos);
-		//}
 	}
 	if (!IsAlive) {
 		IsTimer--;
@@ -356,6 +308,10 @@ void Rice::Demo(int num) {
 	if (Exp == true) {
 		DeadEnemy();
 	}
+	if (pos.z > z_max) { pos.z = z_max; }
+	if (pos.z < z_min) { pos.z = z_min; }
+	if (pos.x > x_max) { pos.x = x_max; }
+	if (pos.x < x_min) { pos.x = x_min; }
 	enemyobj->SetPosition(pos);
 	texture->SetPosition({ pos.x,0,pos.z });
 	Restexture->SetPosition(pos);
@@ -369,16 +325,6 @@ void Rice::Demo(int num) {
 
 //描画
 void Rice::Draw() {
-	//ImGui::Begin("test");
-	//ImGui::SliderFloat("rot.y", &rot.y, 270, -90);
-	//ImGui::SliderInt("dir", &dir, 360, -360);
-	////ImGui::SliderFloat("speed_y", &speed_y, 360, 0);
-	//////ImGui::SliderFloat("scale", &scale, 360, 0);
-	////ImGui::Text("Count::%d", moveCount);
-	////ImGui::Text("Move::%d", isMove);
-	////ImGui::Text("Hit::%d", hit);
-	//////ImGui::Unindent();
-	//ImGui::End();
 	if (IsAlive) {
 		Object3d::PreDraw();
 		enemyobj->Draw();
@@ -580,10 +526,6 @@ bool Rice::LockOn() {
 
 //敵が動く
 void Rice::Move() {
-	if (pos.z > z_max) { pos.z = z_max; }
-	if (pos.z < z_min) { pos.z = z_min; }
-	if (pos.x > x_max) { pos.x = x_max; }
-	if (pos.x < x_min) { pos.x = x_min; }
 	if (moveCount <= 0 && !isMove) {
 		isMove = true;
 	}
