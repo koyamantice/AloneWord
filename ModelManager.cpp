@@ -23,6 +23,7 @@ void ModelManager::Initialize() {
 	LoadModel(Pastel, "Pestle");
 	LoadModel(Platform, "Platform");
 	LoadModel(Piyopiyo, "Piyopiyo");
+	LoadModel(skydome, "skydome");
 	LoadFBXModel(MottiMove, "Motti_moveF");
 }
 

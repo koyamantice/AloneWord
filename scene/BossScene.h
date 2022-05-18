@@ -43,6 +43,9 @@ private:
 	Model* modelSphere = nullptr;
 	Object3d* objSphere;
 
+	Model* modelSkydome = nullptr;
+	Object3d* objSkydome;
+
 	/*FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;*/
 	DebugCamera* camera = { nullptr };

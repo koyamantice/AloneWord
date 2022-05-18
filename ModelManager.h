@@ -26,6 +26,7 @@ public:
 		RightShoes,
 		Pastel,
 		Platform,
+		skydome,
 		Piyopiyo
 	};
 	enum FBXName {

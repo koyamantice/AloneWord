@@ -27,6 +27,12 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objFloor->SetPosition({ 0, -1, 0 });
 	objFloor->SetScale({ 6.0f,1.0f,6.0f });
 
+	objSkydome = Object3d::Create();
+	modelSkydome = Model::CreateFromOBJ("skydome");
+	objSkydome->SetModel(modelSkydome);
+	objSkydome->SetPosition({ 0, -1, 0 });
+	objSkydome->SetScale({ 1.0f,1.0f,1.0f });
+
 	//ステージマップ
 	modelBossMap = Model::CreateFromOBJ("BossMap");
 	objBossMap = TouchableObject::Create(modelBossMap);
@@ -129,6 +135,8 @@ void BossScene::Finalize() {
 	delete objFloor;
 	delete modelBossMap;
 	delete modelFloor;
+	delete objSkydome;
+	delete modelSkydome;
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Finalize();
 	}
@@ -148,6 +156,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	//各オブジェクトの更新
 	objBossMap->Update();
 	objFloor->Update();
+	objSkydome->Update();
 	lightGroup->Update();
 	ParticleManager::GetInstance()->Update();
 	//最初の演出(導入)
@@ -451,6 +460,7 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw();
 	objBossMap->Draw();
 	objFloor->Draw();
+	objSkydome->Draw();
 
 	Texture::PreDraw();
 	//limit->Draw();
