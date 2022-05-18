@@ -49,6 +49,8 @@ private:
 	array<InterEnemy*, 5> enemy;
 	InterBoss* bossenemy = nullptr;
 	std::array<std::array<Exp*, 5>, 5> exp;
+	Sprite* bossName = nullptr;
+	XMFLOAT2 namePos = { 0.0f,0.0f };
 	float weight = 0;
 	UI* ui = nullptr;
 	CollisionManager* collisionManager = nullptr;

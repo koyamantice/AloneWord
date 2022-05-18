@@ -111,7 +111,7 @@ public:
 	void ResetWeight(InterEnemy* enemy);
 
 	//ダメージ食らったとき
-	void Rebound(InterBoss* enemy);
+	void Rebound();
 	
 	//エフェクト
 	void EffectMove();

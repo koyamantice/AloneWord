@@ -8,6 +8,7 @@
 #include "MeshCollider.h"
 #include "SphereCollider.h"
 #include "CollisionManager.h"
+#include "ImageManager.h"
 #include <Easing.h>
 
 void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
@@ -82,6 +83,10 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	limit->SetRotation({ 90.0f,0, 0 });
 	limit->SetScale({ 6,5,5 });*/
 
+	//ボスの名前表記
+	bossName = Sprite::Create(ImageManager::select1, namePos);
+	bossName->SetAnchorPoint({ 1.0f,0.0f });
+
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i] = new Effect();
 		effect[i]->Initialize();
@@ -145,58 +150,106 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 	lightGroup->Update();
 	
 	//最初の演出(導入)
+	//最初の演出(導入)
 	if (!bossstart) {
 		appearanceTimer++;
 		player->Begin();
 		bossenemy->Begin();
-		if (appearanceTimer == 1) {
-			cameraPos.x = player->GetPosition().x;
-			cameraPos.y = player->GetPosition().y + distanceY;
-			cameraPos.z = player->GetPosition().z - distanceZ;
+		bossenemy->AppeaMovie(appearanceTimer);
+		if (appearanceNumber == 0) {
+			cameraPos.x = -7;
+			cameraPos.y = 9;
+			cameraPos.z = 0;
+			cameratargetPos = { 0.0f,4.0f,0.0f };
+
+			if (appearanceTimer == 100) {
+				appearanceNumber++;
+			}
 		}
 
-		if (appearanceTimer == 100) {
-			appearanceNumber++;
+		else if (appearanceNumber == 1) {
+			cameraPos.x = bossenemy->GetPosition().x + 5;
+			cameraPos.y = bossenemy->GetPosition().y;
+			cameraPos.z = bossenemy->GetPosition().z;
+			cameratargetPos = bossenemy->GetPosition();
+
+			if (appearanceTimer == 200) {
+				appearanceNumber++;
+			}
+
 		}
 
-		if (appearanceNumber == 1) {
+		else if (appearanceNumber == 2) {
+			cameraPos.x = bossenemy->GetPosition().x;
+			cameraPos.y = bossenemy->GetPosition().y + 5;
+			cameraPos.z = bossenemy->GetPosition().z - distanceZ;
+			cameratargetPos = { 0.0f,5.0f,8.0f };
+
+			if (appearanceTimer == 300) {
+				appearanceNumber++;
+			}
+		}
+
+		else if (appearanceNumber == 3) {
 			Aftereyepos = {
 				bossenemy->GetPosition().x,
-				bossenemy->GetPosition().y + distanceY,
-				bossenemy->GetPosition().z - distanceZ,
+				bossenemy->GetPosition().y,
+				bossenemy->GetPosition().z - 7,
 			};
 
 			Aftertargetpos = {
 				bossenemy->GetPosition().x,
-				bossenemy->GetPosition().y + 2.0f,
+				bossenemy->GetPosition().y,
 				bossenemy->GetPosition().z,
 			};
 
 			if (frame < 1.0f) {
-				frame += 0.01f;
+				frame += 0.015f;
 			}
 			else {
-				frame = 0;
-				appearanceNumber = 2;
+				frame = 1.0f;
 			}
 
 			cameraPos = {
-			Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
-			Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
-			Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+		Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+		Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+		Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
 			};
-			
+
 			cameratargetPos = {
-			Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
-			Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
-			Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			};
+
+			if (appearanceTimer == 360) {
+				appearanceNumber++;
+				frame = 0.0f;
+			}
 		}
-		else if (appearanceNumber == 2) {
+		else if (appearanceNumber == 4) {
+			if (nameframe >= 1.0f) {
+				nameframe = 1.0f;
+			}
+			else {
+				nameframe += 0.06f;
+			}
+			namePos = {
+			Ease(In,Quad,nameframe,2000,940),
+			480
+			};
+
+			bossName->SetPosition(namePos);
+			if (appearanceTimer == 450) {
+				nameframe = 0.0f;
+				appearanceNumber++;
+			}
+		}
+		else if (appearanceNumber == 5) {
 			Aftereyepos = {
-				player->GetPosition().x,
-				player->GetPosition().y + distanceY,
-				player->GetPosition().z - distanceZ,
+			player->GetPosition().x,
+			player->GetPosition().y + distanceY,
+			player->GetPosition().z - distanceZ,
 			};
 
 			Aftertargetpos = {
@@ -215,10 +268,23 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 				frame = 0;
 			}
 
+			if (nameframe >= 1.0f) {
+				nameframe = 1.0f;
+			}
+			else {
+				nameframe += 0.06f;
+			}
+			namePos = {
+			Ease(In,Quad,nameframe,940,2000),
+			480
+			};
+
+			bossName->SetPosition(namePos);
+
 			cameraPos = {
-Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
-Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
-Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+		Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+		Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+		Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
 			};
 
 			cameratargetPos = {
@@ -226,6 +292,7 @@ Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
 Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
 Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			};
+
 		}
 
 		camera->SetTarget(cameratargetPos);
@@ -240,7 +307,9 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			enemy[i]->SetEnemy();
 			player->ResetWeight(enemy[i]);
 		}
-		player->Rebound(bossenemy);
+		if (player->GetDamageFlag() == true) {
+			player->Rebound();
+		}
 		ui->Update();
 		particleMan->Update();
 		objSphere->Update();
@@ -325,6 +394,18 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 }
 
 void ThirdBoss::Draw(DirectXCommon* dxCommon) {
+	ImGui::Begin("test");
+	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
+	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
+	//ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
+	//ImGui::SliderFloat("pos.y", &distanceY, 30, 0);
+	//ImGui::SliderFloat("pos.z", &distanceZ, 30, 0);
+	ImGui::SliderFloat("nameframe", &nameframe, 30, 0);
+	ImGui::SliderFloat("namepos.x", &namePos.x, 30, 0);
+	ImGui::Text("appearanceTimer::%d", appearanceTimer);
+	ImGui::Text("appearanceNumber::%d", appearanceNumber);
+	ImGui::Unindent();
+	ImGui::End();
 	//各オブジェクトの描画
 	Object3d::PreDraw();
 	//objBossMap->Draw();
@@ -352,8 +433,8 @@ void ThirdBoss::Draw(DirectXCommon* dxCommon) {
 	//		exp[i][j]->Draw();
 	//	}
 	//}
-
 	ui->Draw();
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
+	bossName->Draw();
 }

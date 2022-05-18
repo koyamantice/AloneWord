@@ -16,6 +16,7 @@ public:
 	void SetPlayer(Player* player) { this->player = player; }
 	void Collide();
 	void Set(const XMFLOAT3& pos);
+	void AppeaSet(const XMFLOAT3& pos);
 	void Final();
 	const bool& GetIsAlive() { return IsAlive; };
 private:
@@ -31,5 +32,7 @@ private:
 	XMFLOAT3 pos{};
 	bool onGround=false;
 	bool IsAlive = false;
+	bool hit;
+	
 };
 

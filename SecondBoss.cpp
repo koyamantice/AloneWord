@@ -254,8 +254,10 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			enemy[i]->SetEnemy();
 			player->ResetWeight(enemy[i]);
 		}
-		player->Rebound(rightshose);
-		player->Rebound(leftshose);
+		if (player->GetDamageFlag() == true) {
+			player->Rebound();
+			player->Rebound();
+		}
 		ui->Update();
 		particleMan->Update();
 		objSphere->Update();

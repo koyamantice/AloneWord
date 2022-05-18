@@ -317,10 +317,150 @@ Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 
 void GreenTea::App(int Timer) {
 	//後に記入
+	hotWater[0]->Upda();
+	hotWater[0]->SetPlayer(player);
+	if (Timer == 1) {
+		appearMove++;
+		pos = { 13.0f,0.0f,18.0f };
+		//rot = { 0.0f,315.0f,0.0f };
+	}
+
+	if (Timer == 40 || Timer == 120) {
+		Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
+	}
+
+	if (AttackC <= 1) {
+		if (AttackC == 0) {
+			AttackPos = {
+							-18,
+							pos.y,
+							8,
+			};
+		}
+		else if (AttackC == 1) {
+			AttackPos = {
+							18,
+							pos.y,
+							8,
+			};
+		}
+		if (!Attack) {
+			MoveCount++;
+			if (MoveCount == 1) {
+				XMFLOAT3 position{};
+				position.x = (AttackPos.x - pos.x);
+				position.z = (AttackPos.z - pos.z);
+				//Afterrot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 270;// *(XM_PI / 180.0f);
+			}
+			else if (MoveCount == 2) {
+				double sb, sbx, sbz;
+				if (!Attack) {
+					hitpoint = HitNot;
+					sbx = AttackPos.x - pos.x;
+					sbz = AttackPos.z - pos.z;
+
+					sb = sqrt(sbx * sbx + sbz * sbz);
+					speedX = sbx / sb * 1.0f;
+					speedZ = sbz / sb * 1.0f;
+					Attack = true;
+				}
+			}
+		}
+
+		if (Attack) {
+			//プレイヤーにスピード加算
+			pos.x += (float)speedX;
+			pos.z += (float)speedZ;
+
+			//敵の位置が壁まで行ったら戻る
+			if (pos.x >= x_max) {
+				hitpoint = HitRight;
+				Deadbound.y = 0.5f;
+				Deadbound.x = 0.2f;
+				speedX = 0.0f;
+				speedZ = 0.0f;
+			}
+			else if (pos.x <= x_min) {
+				hitpoint = HitLeft;
+				Deadbound.y = 0.5f;
+				Deadbound.x = 0.2f;
+				speedX = 0.0f;
+				speedZ = 0.0f;
+
+			}
+
+			//跳ねるような感じで戻る(戻りきったら攻撃回数が加算される)
+			if (hitpoint == HitRight) {
+				Deadbound.y -= 0.02f;
+				pos.y += Deadbound.y;
+				if (pos.y > 0.0f) {
+					pos.x -= Deadbound.x;
+				}
+				else {
+					pos.y = 0.0f;
+				}
+
+				if (pos.y == 0.0f) {
+					MoveCount = 0;
+					Attack = false;
+					hitpoint = HitNot;
+					AttackC++;
+				}
+			}
+			else if (hitpoint == HitLeft) {
+
+				Deadbound.y -= 0.02f;
+				pos.y += Deadbound.y;
+				if (pos.y > 0.0f) {
+					pos.x += Deadbound.x;
+				}
+				else {
+					pos.y = 0.0f;
+				}
+
+				if (pos.y == 0.0f) {
+					MoveCount = 0;
+					Attack = false;
+					hitpoint = HitNot;
+					AttackC++;
+				}
+			}
+		}
+	}
+	else {
+		AfterPos = {
+			0,
+			pos.y,
+			0,
+		};
+		if (frame < 1.0f) {
+			frame += 0.01f;
+		}
+		else {
+			frame = 1.0f;
+		}
+	}
+
+	if (Timer == 200 || Timer == 220) {
+		hotWater[0]->AppeaSet(pos);
+	}
+	
+	pos = {
+	Ease(In,Cubic,frame,pos.x,AfterPos.x),
+	Ease(In,Cubic,frame,pos.y,AfterPos.y),
+	Ease(In,Cubic,frame,pos.z,AfterPos.z)
+	};
+
+	enemyobj->SetPosition(pos);
+	enemyobj->SetRotation(rot);
 }
 
 void GreenTea::specialDraw() {
 	for (int i = 0; i < 50; i++) {
 		hotWater[i]->Draw();
 	}
+}
+
+void GreenTea::AppearDraw() {
+	hotWater[0]->Draw();
 }

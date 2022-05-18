@@ -78,7 +78,7 @@ void HotWater::Draw() {
 		if (!onGround) {
 			water->Draw();
 		}
-		Texture::PreDraw();
+		Texture::PreDraw(); 
 		hot->Draw();
 	}
 }
@@ -99,6 +99,18 @@ void HotWater::Set(const XMFLOAT3& pos) {
 	vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 	vel.y = (float)rand() / RAND_MAX * (rnd_vel * 2.0f); //- rnd_vel / 2.0f;
 	vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+	if (!IsAlive) {
+		IsAlive = true;
+	}
+}
+
+void HotWater::AppeaSet(const XMFLOAT3& pos) {
+	this->pos = pos;
+	water->SetPosition(this->pos);
+	const float rnd_vel = 0.2f;
+	vel.x = -0.2f;
+	vel.y = 0.2f; //- rnd_vel / 2.0f;
+	vel.z = 0;
 	if (!IsAlive) {
 		IsAlive = true;
 	}
