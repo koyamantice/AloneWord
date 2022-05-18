@@ -121,7 +121,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		enemy[i]->Demo(i);
 		player->ResetWeight(enemy[i]);
 	}
-	player->Rebound2(spawing);
+	//player->Rebound(spawing);
 
 	if (input->TriggerKey(DIK_C)) {
 		//SceneManager::GetInstance()->ChangeScene("CLEAR");
