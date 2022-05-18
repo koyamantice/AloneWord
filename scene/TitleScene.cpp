@@ -4,6 +4,7 @@
 #include "input.h"
 #include "DebugText.h"
 #include"ImageManager.h"
+#include <TisGame.h>
 void TitleScene::Initialize(DirectXCommon* dxCommon) {
 	// カメラ生成
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
@@ -32,12 +33,12 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 
 	//背景スプライト生成
 	sprite[back] = Sprite::Create(ImageManager::TITLE, { 0.0f,0.0f });
-	sprite[button1] = Sprite::Create(ImageManager::Tbutton, { 320.0f,600.0f });
+	sprite[button1] = Sprite::Create(ImageManager::Tbutton, buttonPos[0]);
 	sprite[button1]->SetAnchorPoint({ 0.5f,0.5f });
-	sprite[button1]->SetScale(0.7f);
-	sprite[button2] = Sprite::Create(ImageManager::Tbutton, { 960.0f,600.0f });
+	sprite[button1]->SetScale(0.4f);
+	sprite[button2] = Sprite::Create(ImageManager::Tbutton, buttonPos[1]);
 	sprite[button2]->SetAnchorPoint({ 0.5f,0.5f });
-	sprite[button2]->SetScale(0.7f);
+	sprite[button2]->SetScale(0.4f);
 	sprite[sky] = Sprite::Create(ImageManager::sky, { 0.0f,0.0f });
 	sprite[ground] = Sprite::Create(ImageManager::ground, { 0.0f,0.0f });
 	//スプライト生成
@@ -53,23 +54,56 @@ void TitleScene::Finalize() {
 
 void TitleScene::Update(DirectXCommon* dxCommon) {
 	Input* input = Input::GetInstance();
-	if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_X)) {
+	
+	if (input->LeftTriggerStick(input->Down)) {
+		SelectNumber++;
+	}
+	if (input->LeftTriggerStick(input->Up)) {
+		SelectNumber--;
+	}
+	switch (SelectNumber) {
+	case Start:
+		buttonPos[0] = { 165.0f,470.0f };
+		buttonPos[1] = { 430.0f,470.0f };
+		break;
+	case Select:
+		buttonPos[0] = { 165.0f,550.0f };
+		buttonPos[1] = { 430.0f,550.0f };
+		break;
+	case Exit:
+		buttonPos[0] = { 165.0f,620.0f };
+		buttonPos[1] = { 430.0f,620.0f };
+
+		break;
+	default:
+		if (SelectNumber > Exit) {
+			SelectNumber = Exit;
+		}
+		if (SelectNumber < Start) {
+			SelectNumber = Start;
+		}
+		break;
+	}
+	if (input->TriggerButton(input->Button_A)) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 		expandchange->SetStartChange(true);
-		SelectNumber = Select;
-	} else if (input->TriggerButton(input->Button_A)) {
-		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
-		expandchange->SetStartChange(true);
-		SelectNumber = Start;
 	}
 
+
 	if (expandchange->GetTimer() >= 58) {
-		if (SelectNumber == Select) {
-			SceneManager::GetInstance()->ChangeScene("StageSelect");
-		} else {
+		if (SelectNumber == Start) {
 			SceneManager::GetInstance()->ChangeScene("STARTMAP");
+		} 
+		if (SelectNumber == Select){
+			SceneManager::GetInstance()->ChangeScene("StageSelect");
+		}
+		if (SelectNumber == Exit) {
+			SceneManager::GetInstance()->SetEnd(true);
 		}
 	}
+	sprite[button1]->SetPosition(buttonPos[0]);
+	sprite[button2]->SetPosition(buttonPos[1]);
+
 	player->TitleUp();
 	expandchange->Update();
 	camera->Update();

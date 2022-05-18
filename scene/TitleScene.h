@@ -43,8 +43,12 @@ class TitleScene : public BaseScene {
 		enum Select {
 			Start,
 			Select,
+			Exit,
 		};
-
+		XMFLOAT2 buttonPos[2]{
+			{ 160.0f,600.0f },
+			{ 430.0f,600.0f }
+		};
 		int SelectNumber = 0;
 };
 

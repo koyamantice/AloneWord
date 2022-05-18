@@ -153,14 +153,14 @@ void GreenTea::Spec() {
 			switch (pat) {
 			case 1:
 				AfterPos = {
-					-20.0f,
+					-17.0f,
 					0.0f,
 					0.0f
 				};
 				break;
 			case 2:
 				AfterPos = {
-					-20.0f,
+					-17.0f,
 					0.0f,
 					20.0f
 				};
@@ -183,19 +183,19 @@ void GreenTea::Spec() {
 				AfterPos = {
 				0.0f,
 				0.0f,
-				-20.0f
+				-17.0f
 				};
 				break;
 			case 6:
 				AfterPos = {
-				20.0f,
+				17.0f,
 				0.0f,
-				-20.0f
+				-17.0f
 				};
 				break;
 			case 7:
 				AfterPos = {
-				20.0f,
+				17.0f,
 				0.0f,
 				0.0f
 				};
@@ -242,23 +242,23 @@ Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 			switch (pat) {
 			case 1:
 				AfterPos = {
-					20.0f,
+					17.0f,
 					0.0f,
 					0.0f
 				};
 				break;
 			case 2:
 				AfterPos = {
-					20.0f,
+					17.0f,
 					0.0f,
-					-20.0f
+					-17.0f
 				};
 				break;
 			case 3:
 				AfterPos = {
 				0.0f,
 				0.0f,
-				-20.0f
+				-17.0f
 				};
 				break;
 			case 4:
@@ -272,19 +272,19 @@ Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 				AfterPos = {
 				0.0f,
 				0.0f,
-				20.0f
+				17.0f
 				};
 				break;
 			case 6:
 				AfterPos = {
-				-20.0f,
+				-17.0f,
 				0.0f,
-				20.0f
+				17.0f
 				};
 				break;
 			case 7:
 				AfterPos = {
-				-20.0f,
+				-17.0f,
 				0.0f,
 				0.0f
 				};

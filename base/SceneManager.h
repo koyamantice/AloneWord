@@ -17,6 +17,9 @@ public:
 	/// </summary>
 	void Draw(DirectXCommon* dxCommon);
 
+	bool IsEndRequst() { return endResquest_; }
+
+	void SetEnd(bool endResquest_) { this->endResquest_ = endResquest_; }
 
 public:
 	//次シーン予約
@@ -24,6 +27,7 @@ public:
 
 	void SetSceneFactory(AbstractSceneFactory* sceneFactory) { sceneFactory_ = sceneFactory; }
 private:
+	bool endResquest_ = false;
 	//今のシーン
 	BaseScene* scene_ = nullptr;
 	//次のシーン
