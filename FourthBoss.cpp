@@ -451,7 +451,6 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 	XMFLOAT3 enemypos = pastel->GetPosition();
 	
 	ui->Draw();
-
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
 	if (!bossstart) {
