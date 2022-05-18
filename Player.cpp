@@ -220,20 +220,6 @@ void Player::Update() {
 				}
 				//ため開放
 				if (chargeTimer >= 100) {
-					for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
-						if (EffectRelease[i] == false) {
-							boundpower[i].x = (float)((int)(XorShift::GetInstance()->xor128()) % 20 - 10);
-							boundpower[i].y = (float)((int)(XorShift::GetInstance()->xor128()) % 10 - 5);
-							boundpower[i].z = (float)((int)(XorShift::GetInstance()->xor128()) % 20 - 10);
-							boundpower[i].x = boundpower[i].x / 10;
-							boundpower[i].y = boundpower[i].y / 10;
-							boundpower[i].z = boundpower[i].z / 10;
-							chargesca[i].x = 0.3f;
-							chargesca[i].y = 0.3f;
-							chargesca[i].z = 0.3f;
-							EffectRelease[i] = true;
-						}
-					}
 					ChargeRelease();
 					AttackFlag = true;
 					AttackMoveNumber = 1;
@@ -572,6 +558,7 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	/*ImGui::SliderFloat("pso.x", &position.x, 50, -50);
 	ImGui::SliderFloat("pso.y", &position.y, 50, -50);
 	ImGui::SliderFloat("pso.z", &position.z, 50, -50);*/
+	ImGui::SliderFloat("boundpower.x", &boundpower[0].z, 50, -50);
 	ImGui::Text("Alive:%d", ChargeAlive[0]);
 	ImGui::Text("Releae:%d", EffectRelease[0]);
 	ImGui::End();
@@ -790,20 +777,32 @@ void Player::ChargeEffectMove() {
 
 void Player::ChargeRelease() {
 	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
-		if (EffectRelease[i] == true) {
-			chargesca[i].x -= 0.01f;
-			chargesca[i].y -= 0.01f;
-			chargesca[i].z -= 0.01f;
-			boundpower[i].y -= 0.02f;
-			chargepos[i].x += boundpower[i].x;
-			chargepos[i].y += boundpower[i].y;
-			chargepos[i].z += boundpower[i].z;
-		}
+			if (EffectRelease[i] == false) {
+				boundpower[i].x = (float)((int)(XorShift::GetInstance()->xor128()) % 20 - 10);
+				boundpower[i].y = (float)((int)(XorShift::GetInstance()->xor128()) % 10 - 5);
+				boundpower[i].z = (float)((int)(XorShift::GetInstance()->xor128()) % 20 - 10);
+				boundpower[i].x = boundpower[i].x / 10;
+				boundpower[i].y = boundpower[i].y / 10;
+				boundpower[i].z = boundpower[i].z / 10;
+				chargesca[i].x = 0.3f;
+				chargesca[i].y = 0.3f;
+				chargesca[i].z = 0.3f;
+				EffectRelease[i] = true;
+			}
+			else {
+				chargesca[i].x -= 0.01f;
+				chargesca[i].y -= 0.01f;
+				chargesca[i].z -= 0.01f;
+				boundpower[i].y -= 0.02f;
+				chargepos[i].x += boundpower[i].x;
+				chargepos[i].y += boundpower[i].y;
+				chargepos[i].z += boundpower[i].z;
 
-		if (chargesca[i].x <= 0.0f) {
-			EffectRelease[i] = false;
-			ChargeAlive[i] = false;
-		}
+				if (chargesca[i].x <= 0.0f) {
+					EffectRelease[i] = false;
+					//ChargeAlive[i] = false;
+				}
+			}
 		ChargeEffect[i]->SetScale(chargesca[i]);
 		ChargeEffect[i]->SetPosition(chargepos[i]);
 	}
