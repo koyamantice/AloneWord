@@ -140,32 +140,41 @@ void Player::Update() {
 			}
 			//ため時間
 			if (input->PushButton(input->Button_RB)) {
+				move_count = 0;
 				chargeTimer++;
 				PlayerSpeed = 0.1f;
-				if (sca.x > 0.0f) {
-					sca.x -= 0.02f;
-					sca.y -= 0.02f;
-					sca.z -= 0.02f;
-				} else {
+
+				if (plasca.x<0.004f) {
+					state = down;
+				}
+				if (plasca.x >= 0.007f) {
+					state = up;
+				}
+
+				if (state==up) {
+					plasca.x -= 0.00015f;
+					plasca.y -= 0.00015f;
+					plasca.z -= 0.00015f;
+				} 
+				if(state==down) {
+					plasca = {
+					0.007f,
+					0.007f,
+					0.007f,
+					};
+				}
+
+				if (sca.x < 0.4f) {
 					sca = { 0.7f,0.7f,0.7f };
+				} else {
+					sca.x -= 0.015f;
+					sca.y -= 0.015f;
+					sca.z -= 0.015f;
 				}
 				if ((chargeTimer % 100 == 0) && (RotCount <= 2)) {
 					RotCount++;
 					ChangeScale = true;
-					if (RotCount == 1) {
-						Aftersca = {
-						0.006,
-						0.006,
-						0.006,
-						};
-					}
-					else if (RotCount == 2) {
-						Aftersca = {
-						0.005f,
-						0.005f,
-						0.005f,
-						};
-					}
+
 				}
 				//チャージ時のエフェクト
 				if (RotCount<1) {
@@ -190,7 +199,7 @@ void Player::Update() {
 					RotTimer = 200 * (int)RotCount;
 					RotPower = 10.0f;
 					ChangeScale = true;
-					Aftersca = {
+					plasca = {
 					0.007f,
 					0.007f,
 					0.007f,
@@ -213,11 +222,11 @@ void Player::Update() {
 			scaleframe += 0.1f;
 		}
 
-		plasca = {
-		Ease(In,Cubic,scaleframe,plasca.x,Aftersca.x),
-		Ease(In,Cubic,scaleframe,plasca.y,Aftersca.y),
-		Ease(In,Cubic,scaleframe,plasca.z,Aftersca.z)
-		};
+		//plasca = {
+		//Ease(In,Cubic,scaleframe,plasca.x,Aftersca.x),
+		//Ease(In,Cubic,scaleframe,plasca.y,Aftersca.y),
+		//Ease(In,Cubic,scaleframe,plasca.z,Aftersca.z)
+		//};
 	}
 	//振り回している
 	if (AttackFlag == true) {
@@ -486,9 +495,9 @@ void Player::TitleUp() {
 	}
 	rot = this->object3d->GetRotation();
 	//アニメーション用のキー入力
-	rot.y = 60.0f;
+	rot.y = 0.0f;
 	move_count++;
-	position.y = -1.0f;
+	//position = { 2.0f,-4.0f ,0};
 	onGround = true;
 
 	//移動
@@ -515,12 +524,14 @@ void Player::TitleUp() {
 void Player::Draw(DirectXCommon* dxCommon) {
 
 	ImGui::Begin("test");
-	ImGui::SliderFloat("rebound.x", &rebound.x, 50, -50);
-	ImGui::SliderFloat("distance.x", &distance.x, 1, 0);
-	ImGui::Text("%d", DamageFlag);
+	ImGui::SliderFloat("pso.x", &position.x, 50, -50);
+	ImGui::SliderFloat("pso.y", &position.y, 50, -50);
+	ImGui::SliderFloat("pso.z", &position.z, 50, -50);
 	ImGui::End();
 	Texture::PreDraw();
-	Charge->Draw();
+	if (input->PushButton(input->Button_RB)) {
+		Charge->Draw();
+	}
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
 		move_object1->Draw(dxCommon->GetCmdList());

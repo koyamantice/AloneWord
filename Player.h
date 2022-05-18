@@ -45,7 +45,7 @@ public:
 
 	const XMFLOAT3& GetDistance() { return distance; }
 
-	const int& GetHp() { return HP; }
+	const float& GetHp() { return HP; }
 
 	const int& GetInterval() { return Interval; }
 
@@ -77,7 +77,7 @@ public:
 
 	void SetArmRotation(XMFLOAT3 ArmRot) { this->ArmRot = ArmRot; }
 
-	void SetHp(int hp) { this->HP = hp; }
+	void SetHp(float hp) { this->HP = hp; }
 
 	void SetInterval(int Interval) { this->Interval = Interval; }
 
@@ -99,7 +99,7 @@ public:
 
 	void SetChargeTimer(int chargeTimer) { this->chargeTimer = chargeTimer; }
 
-	void SetRotCount(int RotCount) { this->RotCount = RotCount; }
+	void SetRotCount(float RotCount) { this->RotCount = RotCount; }
 
 	void SetDistance(XMFLOAT3 distance) { this->distance = distance; }
 
@@ -133,7 +133,11 @@ private:
 	XMFLOAT3 ArmRot = { 0,270,0 };
 	XMFLOAT3 distance{};
 	XMFLOAT3 rebound{};
-
+	bool state;
+	enum state {
+		up,
+		down
+	};
 	float PlayerSpeed = 0.3f;
 	//座標を戻す
 	float AfterRot =270.0f;
@@ -173,7 +177,7 @@ private:
 	bool wet = false;
 	int wetC = 0;
 	//ステータス的なやつ
-	int HP = 10;
+	float HP = 10;
 	float StickrotX = 0;
 	float StickrotY = 0;
 	XMFLOAT3 angle = { 0,0,0 };

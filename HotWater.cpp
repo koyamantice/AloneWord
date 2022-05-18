@@ -86,7 +86,7 @@ void HotWater::Draw() {
 void HotWater::Collide() {
 	if (!player->GetWet()) {
 		if (Collision::CircleCollision(pos.x, pos.z, radius, player->GetPosition().x, player->GetPosition().z, 1.0f)) {
-			player->SetHp((float)player->GetHp() - 0.5f);
+			player->SetHp(player->GetHp() - 0.5f);
 			player->SetWet(true);
 		}
 	}

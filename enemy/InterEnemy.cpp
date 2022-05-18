@@ -117,7 +117,7 @@ void InterEnemy::Reborn() {
 			pos.x = circleX + basePos.x;
 			pos.z = circleZ + basePos.z;
 			dir=(rand() % 360);
-			rot.y = (dir)-90;// *(XM_PI / 180.0f);
+			rot.y = (float)(dir-90);// *(XM_PI / 180.0f);
 			enemyobj->SetRotation(rot);
 			enemyobj->SetPosition(pos);
 		}

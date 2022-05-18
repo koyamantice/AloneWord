@@ -73,7 +73,7 @@ void Rice::Update() {
 			//}
 		}
 		if (!followed && !LockOn()) {
-			rot.y = (dir)-90;// *(XM_PI / 180.0f);
+			rot.y = (float)(dir-90);// *(XM_PI / 180.0f);
 			speed_y = 3.0f / 20.0f;
 			if (pos.y > 0) {
 				pos.y -= speed_y;
