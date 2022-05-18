@@ -314,7 +314,9 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			enemy[i]->SetEnemy();
 			player->ResetWeight(enemy[i]);
 		}
-		player->Rebound(pastel);
+		if (player->GetDamageFlag() == true) {
+			player->Rebound();
+		}
 		ui->Update();
 		particleMan->Update();
 		//objSphere->Update();
@@ -409,16 +411,18 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 }
 
 void FourthBoss::Draw(DirectXCommon* dxCommon) {
-	//ImGui::Begin("test");
-	////ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
-	////ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
-	////ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
-	////ImGui::SliderFloat("pos.y", &distanceY, 30, 0);
-	////ImGui::SliderFloat("pos.z", &distanceZ, 30, 0);
-	//ImGui::Text("appearanceTimer::%d", appearanceTimer);
-	//ImGui::Text("appearanceNumber::%d", appearanceNumber);
-	//ImGui::Unindent();
-	//ImGui::End();
+	ImGui::Begin("test");
+	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
+	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
+	//ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
+	//ImGui::SliderFloat("pos.y", &distanceY, 30, 0);
+	//ImGui::SliderFloat("pos.z", &distanceZ, 30, 0);
+	ImGui::SliderFloat("nameframe", &nameframe, 30, 0);
+	ImGui::SliderFloat("namepos.x", &namePos.x, 30, 0);
+	ImGui::Text("appearanceTimer::%d", appearanceTimer);
+	ImGui::Text("appearanceNumber::%d", appearanceNumber);
+	ImGui::Unindent();
+	ImGui::End();
 	//各オブジェクトの描画
 	Object3d::PreDraw();
 	//objBossMap->Draw();
@@ -448,7 +452,6 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 	XMFLOAT3 enemypos = pastel->GetPosition();
 	
 	ui->Draw();
-
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
 	if (!bossstart) {

@@ -361,7 +361,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 			player->ResetWeight(enemy[i]);
 		}
 		if (player->GetDamageFlag() == true) {
-			player->Rebound(bossenemy);
+			player->Rebound();
 		}
 		ui->Update();
 		cameraPos.x = player->GetPosition().x;

@@ -16,6 +16,7 @@
 #include "ModelManager.h"
 #include "ImageManager.h"
 #include "Easing.h"
+#include <XorShift.h>
 using namespace DirectX;
 Input* input = Input::GetInstance();
 
@@ -72,7 +73,8 @@ bool Player::Initialize() {
 		ChargeEffect[i]->TextureCreate();
 		//chargerot[i] = { 90.0f,0.0f,0.0f };
 		ChargeEffect[i]->SetRotation(chargerot[i]);
-		ChargeEffect[i]->SetScale({ 0.3f,0.3f,0.3f });
+		chargesca[i] = { 0.3f,0.3f,0.3f };
+		ChargeEffect[i]->SetScale(chargesca[i]);
 		ChargeEffect[i]->Update();
 	}
 	//effecttexture = Texture::Create(4, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
@@ -127,7 +129,7 @@ void Player::Update() {
 		//プレイヤーの移動
 		if (!(StickrotX<650 && StickrotX>-650)) {
 			position.x += sin(atan2(StickrotX, StickrotY)) * PlayerSpeed;
-			if (chargeTimer == 0) {
+			if (!AttackFlag) {
 				rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 				ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 				ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
@@ -136,7 +138,7 @@ void Player::Update() {
 
 		if (!(StickrotY<650 && StickrotY>-650)) {
 			position.z -= cos(atan2(StickrotX, StickrotY)) * PlayerSpeed;
-			if (chargeTimer == 0) {
+			if (!AttackFlag) {
 				rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 				ArmRot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;
 				ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
@@ -163,7 +165,7 @@ void Player::Update() {
 				move_count = 0;
 				ChargeEffectMove();
 				chargeTimer++;
-				PlayerSpeed = 0.1f;
+				PlayerSpeed = 0.2f;
 
 				if (plasca.x<0.004f) {
 					state = down;
@@ -213,12 +215,12 @@ void Player::Update() {
 			}
 			else {
 				for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
-					ChargeAlive[i] = false;
 					EffectTimer[i] = 0;
 					Chargeframe[i] = 0.0f;
 				}
 				//ため開放
 				if (chargeTimer >= 100) {
+					ReleaseStart = true;
 					AttackFlag = true;
 					AttackMoveNumber = 1;
 					RotTimer = 200 * (int)RotCount;
@@ -231,12 +233,18 @@ void Player::Update() {
 					};
 				}
 				else {
+					for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
+						ChargeAlive[i] = false;
+					}
 					chargeTimer = 0;
 				}
 			}
 		}
 	}
 
+	if (ReleaseStart == true) {
+		ChargeRelease();
+	}
 	//チャージ時間に応じてプレイヤーのスケール変更
 	if (ChangeScale == true) {
 		if (scaleframe >= 1.0f) {
@@ -544,11 +552,14 @@ void Player::TitleUp() {
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
 
-	ImGui::Begin("test");
-	ImGui::SliderFloat("pso.x", &position.x, 50, -50);
-	ImGui::SliderFloat("pso.y", &position.y, 50, -50);
-	ImGui::SliderFloat("pso.z", &position.z, 50, -50);
-	ImGui::End();
+	//ImGui::Begin("test");
+	///*ImGui::SliderFloat("pso.x", &position.x, 50, -50);
+	//ImGui::SliderFloat("pso.y", &position.y, 50, -50);
+	//ImGui::SliderFloat("pso.z", &position.z, 50, -50);*/
+	//ImGui::SliderFloat("boundpower.x", &chargepos[0].y, 50, -50);
+	//ImGui::SliderFloat("boundpower.x", &chargesca[0].x, 50, -50);
+	//ImGui::Text("Releae:%d", EffectRelease[0]);
+	//ImGui::End();
 	Texture::PreDraw();
 	if (chargeTimer!=0&&!AttackFlag) {
 		Charge->Draw();
@@ -594,7 +605,7 @@ void Player::ResetWeight(InterEnemy* enemy) {
 }
 
 //ダメージ食らったときにプレイヤーが飛ばされる
-void Player::Rebound(InterBoss* boss) {
+void Player::Rebound() {
 	/*XMFLOAT3 enepos = boss->GetPosition();
 
 	distance.x = position.x - enepos.x;
@@ -760,5 +771,39 @@ void Player::ChargeEffectMove() {
 		//ChargeEffect[i]->SetRotation(chargerot[i]);
 		ChargeEffect[i]->SetPosition(chargepos[i]);
 	}
+}
 
+void Player::ChargeRelease() {
+	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
+			if (EffectRelease[i] == false) {
+				boundpower[i].x = (float)((int)(XorShift::GetInstance()->xor128()) % 20 - 10);
+				boundpower[i].y = (float)((int)(XorShift::GetInstance()->xor128()) % 10 - 5);
+				boundpower[i].z = (float)((int)(XorShift::GetInstance()->xor128()) % 20 - 10);
+				boundpower[i].x = boundpower[i].x / 10;
+				boundpower[i].y = boundpower[i].y / 10;
+				boundpower[i].z = boundpower[i].z / 10;
+				chargesca[i].x = 0.5f;
+				chargesca[i].y = 0.5f;
+				chargesca[i].z = 0.5f;
+				chargepos[i] = position;
+				EffectRelease[i] = true;
+			}
+			else {
+				chargesca[i].x -= 0.01f;
+				chargesca[i].y -= 0.01f;
+				chargesca[i].z -= 0.01f;
+				boundpower[i].y -= 0.02f;
+				chargepos[i].x += boundpower[i].x;
+				chargepos[i].y += boundpower[i].y;
+				chargepos[i].z += boundpower[i].z;
+
+				if (chargesca[i].x <= 0.0f) {
+					EffectRelease[i] = false;
+					ChargeAlive[i] = false;
+					ReleaseStart = false;
+				}
+			}
+		ChargeEffect[i]->SetScale(chargesca[i]);
+		ChargeEffect[i]->SetPosition(chargepos[i]);
+	}
 }

@@ -111,13 +111,16 @@ public:
 	void ResetWeight(InterEnemy* enemy);
 
 	//ダメージ食らったとき
-	void Rebound(InterBoss* enemy);
+	void Rebound();
 	
 	//エフェクト
 	void EffectMove();
 
 	//チャージ
 	void ChargeEffectMove();
+
+	//チャージの開放
+	void ChargeRelease();
 	
 	//足元にパーティクル
 	void BirthParticle();
@@ -215,11 +218,15 @@ private:
 	float AddSpeed = 0.0f;
 	float JumpG = 0.0f;
 	bool ChangeScale = false;
+	bool ReleaseStart = false;
 	//チャージ時エフェクトのパーティクル(配列可濃厚なのでこっちに書く)
 	array<Texture*,20> ChargeEffect;
 	array<XMFLOAT3, 20> chargepos;
+	array<XMFLOAT3, 20> boundpower;
 	array<XMFLOAT3, 20> chargerot;
+	array<XMFLOAT3, 20> chargesca;
 	array<bool ,20>ChargeAlive;
+	array<bool, 20>EffectRelease;
 	array<float,20> Chargeradius;
 	array<float,20> ChargeSpeed;
 	array<float,20> Chargescale;
