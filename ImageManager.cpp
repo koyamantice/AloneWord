@@ -19,7 +19,7 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(vignette, L"Resources/2d/Vignette.png");
 	Sprite::LoadTexture(CLEAR, L"Resources/2d/GAMECLEAR.png");
 	Sprite::LoadTexture(OVER, L"Resources/2d/GAMEOVER.png");
-	Sprite::LoadTexture(TITLE, L"Resources/2d/title.png");
+	Sprite::LoadTexture(TITLE, L"Resources/2d/TitleParts/layoutImage.png");
 	Sprite::LoadTexture(SELECT, L"Resources/2d/kariSelect.png");
 	Sprite::LoadTexture(playerhp, L"Resources/2d/HPBar.png");
 	Sprite::LoadTexture(hpGauge, L"Resources/2d/HPGauge.png");
@@ -45,6 +45,7 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(WhiteFilter, L"Resources/2d/Whitefilter.png");
 	Sprite::LoadTexture(Tbutton, L"Resources/2d/Title1.png");
 	Sprite::LoadTexture(sky, L"Resources/2d/sky.png");
+	Sprite::LoadTexture(ground, L"Resources/2d/ground.png");
 
 }
 
@@ -59,6 +60,6 @@ void ImageManager::LoadTex2D() {
 	Texture::LoadTexture(net, L"Resources/2d/motiNet.png");
 	Texture::LoadTexture(water, L"Resources/2d/puddle.png");
 	Texture::LoadTexture(Charge, L"Resources/2d/Charge.png");
-
+	Texture::LoadTexture(ChargeEffect, L"Resources/2d/ChargeEffect.png");
 	//Texture::LoadTexture(hit, L"Resources/2d/hit.png");
 }

@@ -26,8 +26,13 @@ public:
 		RightShoes,
 		Pastel,
 		Platform,
+<<<<<<< HEAD
 		skydome,
 		Piyopiyo
+=======
+		Piyopiyo,
+		Particle,
+>>>>>>> 1f13526bd201f624931c029f698ca6f6573400c8
 	};
 	enum FBXName {
 		MottiMove,

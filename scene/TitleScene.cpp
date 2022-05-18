@@ -39,7 +39,7 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 	sprite[button2]->SetAnchorPoint({ 0.5f,0.5f });
 	sprite[button2]->SetScale(0.7f);
 	sprite[sky] = Sprite::Create(ImageManager::sky, { 0.0f,0.0f });
-
+	sprite[ground] = Sprite::Create(ImageManager::ground, { 0.0f,0.0f });
 	//スプライト生成
 	expandchange = new ExpandChange();
 }
@@ -81,14 +81,21 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 }
 
 void TitleScene::Draw(DirectXCommon* dxCommon) {
+	
 	Sprite::PreDraw();
+
 	//背景用
 	sprite[0]->Draw();
+	//sprite[4]->Draw();
 	sprite[3]->Draw();
 	sprite[1]->Draw();
 	sprite[2]->Draw();
 
+
 	player->Draw(dxCommon);
+
+	Sprite::PreDraw();
+	
 	//前面用
 	expandchange->Draw();
 

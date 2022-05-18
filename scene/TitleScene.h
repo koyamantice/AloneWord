@@ -33,6 +33,7 @@ class TitleScene : public BaseScene {
 			button1,
 			button2,
 			sky,
+			ground,
 			tutorial,
 			select,
 		};

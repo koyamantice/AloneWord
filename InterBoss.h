@@ -157,9 +157,9 @@ protected:
 	float frame2 = 0.0f;
 	int Interval = 0;
 	int FlashCount = 0;
-	float x_min = -25;
-	float x_max = 25;
-	float z_min = -20;
+	float x_min = -20;
+	float x_max = 22;
+	float z_min = -17;
 	float z_max = 20;
 	bool pause = false;
 	bool respawn = false;

@@ -69,24 +69,24 @@ void LeftShose::Spec() {
 				}
 				if (pat == 1) {
 					Afterrot.y = 225;
-					AfterPos.x = 25.0f;
-					AfterPos.z = -20.0f;
+					AfterPos.x = 19.0f;
+					AfterPos.z = -17.0f;
 				}
 				else if (pat == 2) {
 					Afterrot.y = -270;
-					AfterPos.x = 25.0f;
+					AfterPos.x = 19.0f;
 					AfterPos.z = 20.0f;
 
 				}
 				else if (pat == 3) {
 					Afterrot.y = 0;
-					AfterPos.x = -25.0f;
+					AfterPos.x = -19.0f;
 					AfterPos.z = 20.0f;
 				}
 				else if (pat == 4) {
 					Afterrot.y = -90;
-					AfterPos.x = -25.0f;
-					AfterPos.z = -20.0f;
+					AfterPos.x = -19.0f;
+					AfterPos.z = -17.0f;
 				}
 				else if (pat == 5) {
 					Afterrot.y = 135;
