@@ -29,10 +29,12 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(select1, L"Resources/2d/Selected.png");
 	Sprite::LoadTexture(select2, L"Resources/2d/kine_select.png");
 	Sprite::LoadTexture(select3, L"Resources/2d/shoes_Select.png");
-	Sprite::LoadTexture(select4, L"Resources/2d/wayway.png");
+	Sprite::LoadTexture(select4, L"Resources/2d/washitu2.png");
+	Sprite::LoadTexture(select5, L"Resources/2d/wayway.png");
 	Sprite::LoadTexture(kitchen, L"Resources/2d/kitchen.png");
 	Sprite::LoadTexture(genkan, L"Resources/2d/shoes_Sname.png");
 	Sprite::LoadTexture(niwa, L"Resources/2d/kine_Sname.png");
+	Sprite::LoadTexture(washitu, L"Resources/2d/washitu.png");
 	Sprite::LoadTexture(wait, L"Resources/2d/wayway_Sname.png");
 	Sprite::LoadTexture(meter, L"Resources/2d/hotWaterGauge.png");
 	Sprite::LoadTexture(meterbar, L"Resources/2d/hotWaterBar.png");

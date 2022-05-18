@@ -37,9 +37,11 @@ public:
 		select2,
 		select3,
 		select4,
+		select5,
 		kitchen,
 		genkan,
 		niwa,
+		washitu,
 		wait,
 		meter,
 		meterbar,
@@ -53,6 +55,7 @@ public:
 		Tbutton,
 		sky,
 		ground,
+		
 	};
 	enum tex2dName {
 	enemy,//Texture::LoadTexture(0, L"Resources/2d/enemy.png");

@@ -187,7 +187,7 @@ void Player::Update() {
 					};
 				}
 
-				if (sca.x < 0.4f) {
+				if (sca.x < 0.0f) {
 					sca = { 0.7f,0.7f,0.7f };
 				} else {
 					sca.x -= 0.015f;
@@ -563,7 +563,7 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	ImGui::Text("Releae:%d", EffectRelease[0]);
 	ImGui::End();
 	Texture::PreDraw();
-	if (input->PushButton(input->Button_RB)) {
+	if (chargeTimer!=0&&!AttackFlag) {
 		Charge->Draw();
 	}
 

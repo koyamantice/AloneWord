@@ -42,7 +42,7 @@ void InterBoss::Draw() {
 //プレイヤーがダメージを食らう
 bool InterBoss::collidePlayer() {
 	XMFLOAT3 playerpos = player->GetPosition();
-	int playerhp = player->GetHp();
+	float playerhp = player->GetHp();
 	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) && FlashCount == 0 && Interval == 0 && BossHP >= 1) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 		player->SetHp(playerhp - 1);
