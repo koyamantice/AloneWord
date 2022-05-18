@@ -16,11 +16,14 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	select[2]->SetAnchorPoint({ 1.0f,0.0f });
 	select[3] = Sprite::Create(ImageManager::select4, selectP[0]);
 	select[3]->SetAnchorPoint({ 1.0f,0.0f });
+	select[4] = Sprite::Create(ImageManager::select5, selectP[0]);
+	select[4]->SetAnchorPoint({ 1.0f,0.0f });
 
 	plane[0] = Sprite::Create(ImageManager::kitchen, selectP[1]);
 	plane[1] = Sprite::Create(ImageManager::genkan, selectP[1]);
 	plane[2] = Sprite::Create(ImageManager::niwa, selectP[1]);
-	plane[3] = Sprite::Create(ImageManager::wait, selectP[1]);
+	plane[3] = Sprite::Create(ImageManager::washitu, selectP[1]);
+	plane[4] = Sprite::Create(ImageManager::wait, selectP[1]);
 	// ƒJƒƒ‰¶¬
 	//srand(NULL);
 	// ƒ‰ƒCƒg¶¬
@@ -68,11 +71,11 @@ void StageSelect::Finalize() {
 	shrinkchange->Finalize();
 }
 bool StageSelect::UICheck() {
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 9.0f, -2.0f, 1.0f)) { return false; }
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 3.0f, 2.0f, 1.0f)) { return false; }
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -5.0f, 5.0f, 1.0f)) { return false; }
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -11.0f, 0.0f, 1.0f)) { return false; }
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -5.0f, -5.0f, 1.0f)) { return false; }
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 7.0f, -5.0f, 2.0f)) { return false; }
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 7.0f, 3.0f, 2.0f)) { return false; }
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -1.5f, 3.0f, 2.0f)) { return false; }
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -11.0f, 0.0f, 2.0f)) { return false; }
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -2.0f, -4.0f, 2.0f)) { return false; }
 	return true;
 }
 void StageSelect::Update(DirectXCommon* dxCommon) {
@@ -83,7 +86,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 	expandchange->Update();
 	shrinkchange->Update();
 	ParticleManager::GetInstance()->Update();
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 9.0f, -2.0f, 1.0f)) {
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 7.0f, -5.0f, 2.0f)) {
 		if (frame >= 1.0f) {
 			frame = 1.0f;
 		} else {
@@ -105,7 +108,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 			SceneManager::GetInstance()->ChangeScene("BOSS");
 		}
 	}
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 3.0f, 2.0f, 1.0f)) {
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 7.0f, 3.0f, 2.0f)) {
 		if (frame >= 1.0f) {
 			frame = 1.0f;
 		} else {
@@ -126,7 +129,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 			SceneManager::GetInstance()->ChangeScene("SECONDBOSS");
 		}
 	}
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -5.0f, 5.0f, 1.0f)) {
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -1.5f, 3.0f, 2.0f)) {
 		if (frame >= 1.0f) {
 			frame = 1.0f;
 		} else {
@@ -147,7 +150,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 			SceneManager::GetInstance()->ChangeScene("THIRDBOSS");
 		}
 	}
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -11.0f, 0.0f, 1.0f)) {
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -11.0f, 0.0f, 2.0f)) {
 		if (frame >= 1.0f) {
 			frame = 1.0f;
 		} else {
@@ -168,7 +171,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 			SceneManager::GetInstance()->ChangeScene("FOURTHBOSS");
 		}
 	}
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -5.0f, -5.0f, 1.0f)) {
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -2.0f, -4.0f, 2.0f)) {
 		if (frame >= 1.0f) {
 			frame = 1.0f;
 		} else {
@@ -182,8 +185,8 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		Ease(In,Quad,frame,1280,640),
 		480
 		};
-		plane[3]->SetPosition(selectP[1]);
-		select[3]->SetPosition(selectP[0]);
+		plane[4]->SetPosition(selectP[1]);
+		select[4]->SetPosition(selectP[0]);
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
 		}
 	}
@@ -198,7 +201,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		Ease(In,Quad,frame,1280,640),
 		480
 		};
-		for (int i = 0;i<4; i++) {
+		for (int i = 0;i<5; i++) {
 			select[i]->SetPosition(selectP[0]);
 			plane[i]->SetPosition(selectP[1]);
 		}
@@ -210,7 +213,7 @@ void StageSelect::Draw(DirectXCommon* dxCommon) {
 	BackGround->Draw();
 	player->Draw(dxCommon);
 	Sprite::PreDraw();
-	for (int i = 0; i < 4;i++) {
+	for (int i = 0; i < 5;i++) {
 		select[i]->Draw();
 		plane[i]->Draw();
 	}

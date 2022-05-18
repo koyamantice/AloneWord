@@ -23,13 +23,13 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	BossHp[damage]->SetSize(AfterPos[0]);
 	BossHp[now]->SetSize(AfterPos[0]);
 	BossHp2[max] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
-	BossHp2[max]->SetPosition({ 260.0f,20.0f });
+	BossHp2[max]->SetPosition({ 260.0f,70.0f });
 	BossHp2[max]->SetColor({ 1.0f,0.0f,0.0f,1.0f });
 	BossHp2[damage] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
-	BossHp2[damage]->SetPosition({ 260.0f,20.0f });
+	BossHp2[damage]->SetPosition({ 260.0f,70.0f });
 	BossHp2[damage]->SetColor({ 1.0f,1.0f,0.0f,1.0f });
 	BossHp2[now] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
-	BossHp2[now]->SetPosition({ 260.0f,20.0f });
+	BossHp2[now]->SetPosition({ 260.0f,70.0f });
 	BossHp2[now]->SetColor({ 0.0f,1.0f,0.0f,1.0f });
 	if (boss2) {
 		AfterPos2[0] = { (float)(boss->GetHP() * 20),30 };
@@ -150,12 +150,12 @@ void UI::Update() {
 		AfterPos2[0] = { (float)(boss2->GetHP() * 20),30 };
 
 		bossPos2[0] = {
-		Ease(In,Quint,0.7f,BossHp2[now]->GetSize().x,AfterPos[0].x),
-		Ease(In,Quint,0.7f,BossHp2[now]->GetSize().y,AfterPos[0].y),
+		Ease(In,Quint,0.7f,BossHp2[now]->GetSize().x,AfterPos2[0].x),
+		Ease(In,Quint,0.7f,BossHp2[now]->GetSize().y,AfterPos2[0].y),
 		};
 		bossPos2[1] = {
-		Ease(In,Quint,0.5f,BossHp2[damage]->GetSize().x,AfterPos[0].x),
-		Ease(In,Quint,0.5f,BossHp2[damage]->GetSize().y,AfterPos[0].y),
+		Ease(In,Quint,0.5f,BossHp2[damage]->GetSize().x,AfterPos2[0].x),
+		Ease(In,Quint,0.5f,BossHp2[damage]->GetSize().y,AfterPos2[0].y),
 		};
 		BossHp2[damage]->SetSize(bossPos2[1]);
 		BossHp2[now]->SetSize(bossPos2[0]);

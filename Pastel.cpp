@@ -461,7 +461,7 @@ bool Pastel::collideAttackArm(Player* player) {
 	bool attackflag = player->GetAttackFlag();
 	float weight = player->GetArmWeight();
 	if (attackflag && !BossHit) {
-		if (Collision::CircleCollision(Armpos.x, Armpos.z, 1.3, Millpos.x, Millpos.z, 1.3)) {
+		if (Collision::CircleCollision(Armpos.x, Armpos.z, 1.3f, Millpos.x, Millpos.z, 1.3f)) {
 			BossHit = true;
 			player->SetRotTimer(0);
 			player->SetRotCount(0);

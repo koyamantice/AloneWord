@@ -84,10 +84,10 @@ void Rice::Update() {
 			}
 			if (followed) {
 				if (rot.y < -90) {
-					dir = rot.y + 360 + 90;
+					dir = (int)rot.y + 360 + 90;
 					rot.y = (dir)-90.0f;// *(XM_PI / 180.0f);
 				} else {
-					dir = rot.y + 90;
+					dir = (int)rot.y + 90;
 					rot.y = (dir)-90.0f;// *(XM_PI / 180.0f);
 				}
 				followed = false;
@@ -273,7 +273,7 @@ void Rice::Demo(int num) {
 			pos.x = circleX + basePos.x;
 			pos.z = circleZ + basePos.z;
 			dir = 180;
-			rot.y = (dir)-90;// *(XM_PI / 180.0f);
+			rot.y = (float)dir-90;// *(XM_PI / 180.0f);
 			enemyobj->SetRotation(rot);
 			enemyobj->SetPosition(pos);
 		} else if (IsTimer == 0) {
@@ -448,17 +448,17 @@ void Rice::Rebound() {
 	XMFLOAT3 distance{};
 	if (isMove) {
 		moveCount = (rand() % 120) + 30;
-		rot.y = (dir)-90;// *(XM_PI / 180.0f);
+		rot.y = (float)dir-90;// *(XM_PI / 180.0f);
 		frame = 0.5f;
 		isMove = false;
 	}
 	if (followed) {
 		if (rot.y < -90) {
-			dir = rot.y + 360 + 90;
-			rot.y = (dir)-90;// *(XM_PI / 180.0f);
+			dir = (int)rot.y + 360 + 90;
+			rot.y = (float)dir-90;// *(XM_PI / 180.0f);
 		} else {
-			dir = rot.y + 90;
-			rot.y = (dir)-90;// *(XM_PI / 180.0f);
+			dir = (int)rot.y + 90;
+			rot.y = (float)dir-90;// *(XM_PI / 180.0f);
 		}
 		followed = false;
 	}

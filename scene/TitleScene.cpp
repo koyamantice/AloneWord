@@ -87,7 +87,7 @@ void TitleScene::Draw(DirectXCommon* dxCommon) {
 	//”wŒi—p
 	sprite[0]->Draw();
 	//sprite[4]->Draw();
-	sprite[3]->Draw();
+	//sprite[3]->Draw();
 	sprite[1]->Draw();
 	sprite[2]->Draw();
 
