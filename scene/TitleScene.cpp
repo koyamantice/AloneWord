@@ -81,7 +81,9 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 }
 
 void TitleScene::Draw(DirectXCommon* dxCommon) {
+	
 	Sprite::PreDraw();
+
 	//”wŒi—p
 	sprite[0]->Draw();
 	//sprite[4]->Draw();
@@ -89,7 +91,11 @@ void TitleScene::Draw(DirectXCommon* dxCommon) {
 	sprite[1]->Draw();
 	sprite[2]->Draw();
 
+
 	player->Draw(dxCommon);
+
+	Sprite::PreDraw();
+	
 	//‘O–Ê—p
 	expandchange->Draw();
 

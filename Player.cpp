@@ -20,6 +20,7 @@ using namespace DirectX;
 Input* input = Input::GetInstance();
 
 Player::Player() {
+	//モデル読み込み
 	model = ModelManager::GetIns()->GetModel(ModelManager::Player);
 	Armmodel = ModelManager::GetIns()->GetModel(ModelManager::Arm);
 	object3d = new Object3d();
@@ -27,9 +28,14 @@ Player::Player() {
 	move_model1 = ModelManager::GetIns()->GetFBXModel(ModelManager::MottiMove);
 	move_object1 = new FBXObject3d;
 	Charge = Texture::Create(ImageManager::Charge, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	
+	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
+		ChargeEffect[i] = Texture::Create(ImageManager::ChargeEffect, {0,0,0}, {0.5f,0.5f,0.5f}, {1,1,1,1});
+	}
 }
 
 bool Player::Initialize() {
+	//各モデルの初期化
 	object3d = Object3d::Create();
 	object3d->SetModel(model);
 	position = { 0,0,0 };
@@ -53,13 +59,22 @@ bool Player::Initialize() {
 	move_object1->SetScale(plasca);
 	move_object1->SetPosition(position);
 	move_object1->SetRotation(rot);
-	
+
 	Charge = Texture::Create(ImageManager::Charge, { 0,0,0 }, { 1,1,1 }, { 1,1,1,1 });
 	Charge->TextureCreate();
 	Charge->SetPosition(position);
-	Charge->SetRotation({ 90.0f,0, 0 });
+	Charge->SetRotation({ 90.0f,0.0f,0.0f });
 	Charge->SetScale(sca);
 	Charge->Update();
+
+	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
+		ChargeEffect[i] = Texture::Create(ImageManager::ChargeEffect, { 0,0,0 }, { 1,1,1 }, { 1,1,1,1 });
+		ChargeEffect[i]->TextureCreate();
+		chargerot[i] = { 90.0f,0.0f,180.0f };
+		ChargeEffect[i]->SetRotation(chargerot[i]);
+		ChargeEffect[i]->SetScale({ 0.3f,0.3f,0.3f });
+		ChargeEffect[i]->Update();
+	}
 	//effecttexture = Texture::Create(4, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	//effecttexture->TextureCreate();
 	////effecttexture->SetRotation({ 90,0,0 });
@@ -89,6 +104,11 @@ void Player::Update() {
 	Charge->Update();
 	Charge->SetPosition(position);
 	Charge->SetScale(sca);
+	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
+		ChargeEffect[i]->Update();
+		ChargeEffect[i]->SetPosition(chargepos[i]);
+		ChargeEffect[i]->SetScale({0.3f,0.1f,0.3f});
+	}
 	object3d->Update();
 	Armobj->Update();
 	StickrotX = input->GetPosX();
@@ -140,7 +160,11 @@ void Player::Update() {
 			}
 			//ため時間
 			if (input->PushButton(input->Button_RB)) {
+<<<<<<< HEAD
 				move_count = 0;
+=======
+				ChargeEffectMove();
+>>>>>>> 9281deb26df9e42aac8f4cfe2c3d04b0337053a6
 				chargeTimer++;
 				PlayerSpeed = 0.1f;
 
@@ -173,8 +197,11 @@ void Player::Update() {
 				}
 				if ((chargeTimer % 100 == 0) && (RotCount <= 2)) {
 					RotCount++;
+<<<<<<< HEAD
 					ChangeScale = true;
 
+=======
+>>>>>>> 9281deb26df9e42aac8f4cfe2c3d04b0337053a6
 				}
 				//チャージ時のエフェクト
 				if (RotCount<1) {
@@ -192,18 +219,26 @@ void Player::Update() {
 				}*/
 			}
 			else {
+				for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
+					ChargeAlive[i] = false;
+					EffectTimer[i] = 0;
+					Chargeframe[i] = 0.0f;
+				}
 				//ため開放
 				if (chargeTimer >= 100) {
 					AttackFlag = true;
 					AttackMoveNumber = 1;
 					RotTimer = 200 * (int)RotCount;
 					RotPower = 10.0f;
+<<<<<<< HEAD
 					ChangeScale = true;
 					plasca = {
 					0.007f,
 					0.007f,
 					0.007f,
 					};
+=======
+>>>>>>> 9281deb26df9e42aac8f4cfe2c3d04b0337053a6
 				}
 				else {
 					chargeTimer = 0;
@@ -212,6 +247,7 @@ void Player::Update() {
 		}
 	}
 
+<<<<<<< HEAD
 	//チャージ時間に応じてプレイヤーのスケール変更
 	if (ChangeScale == true) {
 		if (scaleframe >= 1.0f) {
@@ -228,6 +264,8 @@ void Player::Update() {
 		//Ease(In,Cubic,scaleframe,plasca.z,Aftersca.z)
 		//};
 	}
+=======
+>>>>>>> 9281deb26df9e42aac8f4cfe2c3d04b0337053a6
 	//振り回している
 	if (AttackFlag == true) {
 		RotTimer--;
@@ -376,7 +414,7 @@ void Player::Update() {
 	Armpos.y = position.y;
 	Armpos.z = ArmCircleZ + position.z;
 	Armobj->SetPosition(Armpos);
-	//移動
+	//各オブジェクトのアップデート
 	object3d->Update();
 	object3d->SetPosition(position);
 	object3d->SetRotation(rot);
@@ -387,7 +425,8 @@ void Player::Update() {
 	move_object1->SetPosition(position);
 	move_object1->SetScale(plasca);
 	move_object1->SetRotation(rot);
-	//FBXアニメーションの管理
+
+	//FBXアニメーションの管理(移動)
 	if (move_count == 1) {
 		move_object1->PlayAnimation();
 	}
@@ -396,12 +435,7 @@ void Player::Update() {
 		move_object1->StopAnimation();
 	}
 
-	if (input->PushKey(DIK_0)) {
-		//have_object1->PlayAnimation();
-	}
-
 	move_object1->Update();
-
 }
 
 void Player::SelectUp() {
@@ -524,6 +558,7 @@ void Player::TitleUp() {
 void Player::Draw(DirectXCommon* dxCommon) {
 
 	ImGui::Begin("test");
+<<<<<<< HEAD
 	ImGui::SliderFloat("pso.x", &position.x, 50, -50);
 	ImGui::SliderFloat("pso.y", &position.y, 50, -50);
 	ImGui::SliderFloat("pso.z", &position.z, 50, -50);
@@ -531,13 +566,26 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	Texture::PreDraw();
 	if (input->PushButton(input->Button_RB)) {
 		Charge->Draw();
+=======
+	ImGui::Text("c:%d", EffectTimer[0]);
+	ImGui::SliderFloat("pos.x", &position.x, 100, -100);
+	ImGui::SliderFloat("pos.z", &position.z, 100, -100);
+	ImGui::SliderFloat("JumpG", &JumpG, 100, -100);
+	ImGui::End();
+	Texture::PreDraw();
+	Charge->Draw();
+
+	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
+		if (ChargeAlive[i] == true) {
+			ChargeEffect[i]->Draw();
+		}
+>>>>>>> 9281deb26df9e42aac8f4cfe2c3d04b0337053a6
 	}
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
 		move_object1->Draw(dxCommon->GetCmdList());
-		//object3d->Draw();
-		//Armobj->Draw();
 	}
+
 	//arm_no_object1->Draw(dxCommon->GetCmdList());
 	
 
@@ -574,10 +622,9 @@ void Player::Rebound(InterBoss* boss) {
 	distance.x = position.x - enepos.x;
 	distance.z = position.z - enepos.z;
 */
-
 	if (DamageFlag == true) {
 		rebound.x = sin(atan2f(distance.x, distance.z)) * 0.5f;
-		rebound.y = cos(atan2f(distance.x, distance.z)) * 0.5f;
+		rebound.z = cos(atan2f(distance.x, distance.z)) * 0.5f;
 
 		if (damageframe >= 1.0f) {
 			damageframe = 0.0f;
@@ -593,12 +640,18 @@ void Player::Rebound(InterBoss* boss) {
 		Ease(In,Cubic,damageframe,rebound.z,0)
 		};
 
+		JumpG -= 0.05f;
+		if (position.y < 0.0f) {
+			position.y = 0.0f;
+			JumpG = 0.0f;
+		}
+		position.y += JumpG;
 	}
 
-	if (position.x <= 25.0f && position.x >= -25.0f) {
+	if (position.x <= 22.0f && position.x >= -20.0f) {
 		position.x += rebound.x;
 	}
-	if (position.z <= 20.0f && position.z >= -20.0f) {
+	if (position.z <= 20.0f && position.z >= -17.0f) {
 		position.z += rebound.z;
 	}
 
@@ -683,4 +736,51 @@ void Player::Begin() {
 	move_object1->SetRotation(rot);
 	
 	move_object1->Update();
+}
+
+void Player::ChargeEffectMove() {
+	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
+		array<XMFLOAT3,20> chargeposition{};
+		
+		if (ChargeAlive[i] == false) {
+			if (EffectTimer[i] == 0) {
+				EffectTimer[i] = rand() % 50;
+				chargeposition[i].x = (position.x - chargepos[i].x);
+				chargeposition[i].y = (position.y - chargepos[i].y);
+				chargeposition[i].z = (position.z - chargepos[i].z);
+				chargerot[i].z = (atan2f(chargeposition[i].x, chargeposition[i].y) * (180.0f / XM_PI)) - 90;// *(XM_PI / 180.0f);
+				chargerot[i].y = (atan2f(chargeposition[i].x, chargeposition[i].z) * (180.0f / XM_PI)) - 90;// *(XM_PI / 180.0f);
+			}
+			else {
+				EffectTimer[i]--;
+			}
+			if (EffectTimer[i] == 1) {
+				ChargeSpeed[i] = (float)(rand() % 360);
+				Chargescale[i] = (float)(rand() % 3 + 3);
+				chargepos[i].y = (float)(rand() % 2 + 2);
+				ChargeAlive[i] = true;
+				EffectTimer[i] = 0;
+			}
+		}
+		else {
+			if (Chargescale[i] <= 1.0f) {
+				Chargeframe[i] = 0.0f;
+				ChargeAlive[i] = false;
+			}
+			else {
+				Chargeframe[i] += 0.01f;
+			}
+
+			Chargescale[i] = Ease(In, Cubic, Chargeframe[i], Chargescale[i], 0.0f);
+			chargepos[i].y = Ease(In, Cubic, Chargeframe[i], chargepos[i].y, 0.0f);
+		}
+		Chargeradius[i] = ChargeSpeed[i] * PI / 180.0f;
+		ChargeCircleX[i] = cosf(Chargeradius[i]) * Chargescale[i];
+		ChargeCircleZ[i] = sinf(Chargeradius[i]) * Chargescale[i];
+		chargepos[i].x = ChargeCircleX[i] + position.x;
+		chargepos[i].z = ChargeCircleZ[i] + position.z;
+		ChargeEffect[i]->SetRotation(chargerot[i]);
+		ChargeEffect[i]->SetPosition(chargepos[i]);
+	}
+
 }
