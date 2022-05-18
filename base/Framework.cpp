@@ -81,7 +81,7 @@ void Framework::Update(DirectXCommon* dxCommon) {
 	input->Update();
 	XorShift::GetInstance()->initrand((unsigned int)time(NULL));
 	XorShift::GetInstance()->init_xor128((unsigned long)time(NULL));
-	if (winApp->ProcessMessage() || input->TriggerKey(DIK_ESCAPE)) {
+	if (winApp->ProcessMessage() || input->TriggerKey(DIK_ESCAPE)|| SceneManager::GetInstance()->IsEndRequst()) {
 		endResquest_ = true;
 		return;
 	}

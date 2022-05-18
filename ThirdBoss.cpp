@@ -48,20 +48,20 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	modelFloor = Model::CreateFromOBJ("floor");
 	objFloor->SetModel(modelFloor);
 	objFloor->SetPosition({ 0, -1, 0 });
-	objFloor->SetScale({ 3.0f,1.0f,3.0f });
+	objFloor->SetScale({ 6.0f,1.0f,6.0f });
+
+	//objSkydome = Object3d::Create();
+	//modelSkydome = Model::CreateFromOBJ("skydome");
+	//objSkydome->SetModel(modelSkydome);
+	//objSkydome->SetPosition({ 0, -1, 0 });
+	//objSkydome->SetScale({ 1.0f,1.0f,1.0f });
 
 	//ステージマップ
 	modelBossMap = Model::CreateFromOBJ("BossMap");
 	objBossMap = TouchableObject::Create(modelBossMap);
-	objBossMap->SetPosition({ 0,-1,2 });
+	objBossMap->SetPosition({ 0,0,4 });
 	objBossMap->SetRotation({ 0, 90, 0 });
-	objBossMap->SetScale({ 3.0f, 1.5f, 3.0f });
-	/*
-	objBossMap->SetModel(modelBossMap);
-	objBossMap->SetPosition({ 0,-1,2 });
-	objBossMap->SetRotation({ 0, 90, 0 });
-	objBossMap->SetScale({ 1.4f,1.5f,1.6f });
-	*/
+	objBossMap->SetScale({ 3.0f,1.5f,3.0f });
 	//当たり判定確認用です
 
 	objSphere = Object3d::Create();

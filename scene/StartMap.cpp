@@ -29,10 +29,10 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	//ステージマップ
 	modelStartMap = Model::CreateFromOBJ("BossMap");
 	objStartMap = TouchableObject::Create(modelStartMap);
-	objStartMap->SetPosition({ 0,-1,2 });
+	objStartMap->SetPosition({ 0,0,4 });
 	objStartMap->SetRotation({ 0, 90, 0 });
-	objStartMap->SetScale({ 1.2f,1.2f,1.2f });
-
+	objStartMap->SetScale({ 3.0f,1.5f,3.0f });
+	//当たり判定確認用です
 	// モデル読み込み
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
 	//srand(NULL);
@@ -121,6 +121,8 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		enemy[i]->Demo(i);
 		player->ResetWeight(enemy[i]);
 	}
+	//player->Rebound(bossenemy);
+
 	////敵同士の当たり判定
 	if (sizeof(enemy) > 2) {//配列のサイズ確認
 		for (int colA = 0; colA < enemy.size(); colA++) {
