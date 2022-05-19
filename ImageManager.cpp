@@ -21,7 +21,7 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(OVER, L"Resources/2d/GAMEOVER.png");
 	Sprite::LoadTexture(TITLE, L"Resources/2d/TitleParts/layoutImage.png");
 	Sprite::LoadTexture(SELECT, L"Resources/2d/kariSelect.png");
-	//Sprite::LoadTexture(SELECT1, L"Resources/2d/Select.png");
+	Sprite::LoadTexture(SELECT1, L"Resources/2d/noSelect.png");
 	Sprite::LoadTexture(playerhp, L"Resources/2d/HPBar.png");
 	Sprite::LoadTexture(hpGauge, L"Resources/2d/HPGauge.png");
 	Sprite::LoadTexture(energy, L"Resources/2d/HPmark_energy.png");
