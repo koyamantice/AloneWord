@@ -342,7 +342,7 @@ void RightShose::App(int Timer) {
 	XMFLOAT3 AfterPos{};
 	XMFLOAT3 AfterRot{};
 
-	if (Timer == 1) {
+	if (Timer == 0) {
 		pos = { 13.0f,0.0f,18.0f };
 		rot = { 0.0f,315.0f,0.0f };
 	}

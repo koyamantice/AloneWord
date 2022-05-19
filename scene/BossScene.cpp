@@ -55,7 +55,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	limit->SetPosition({ 0.0f,0.01f,0.0f });
 	limit->SetRotation({ 90.0f,0, 0 });
 	limit->SetScale({ 6,5,5 });*/
-
+	//テクスチャ関係の初期化
 	bossName = Sprite::Create(ImageManager::select1, namePos);
 	bossName->SetAnchorPoint({ 1.0f,0.0f });
 
@@ -63,6 +63,8 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	//WhiteFilter->SetAnchorPoint({ 1.0f,0.0f });
 	WhiteFilter->SetColor(WhiteColor);
 
+	BlackFilter = Sprite::Create(ImageManager::BlackFilter, { 0.0f,0.0f });
+	BlackFilter->SetColor(BlackColor);
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i] = new Effect();
 		effect[i]->Initialize();
@@ -112,9 +114,9 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	particleMan->SetCamera(camera);
 
 	//カメラポジション
-	cameraPos.x = player->GetPosition().x;
-	cameraPos.y = player->GetPosition().y + distanceY;
-	cameraPos.z = player->GetPosition().z - distanceZ;
+	cameraPos.x = bossenemy->GetPosition().x + 5;
+	cameraPos.y = 2;
+	cameraPos.z = bossenemy->GetPosition().z + 8;
 	// カメラ注視点をセット
 	cameratargetPos = player->GetPosition();
 	camera->SetTarget(cameratargetPos);
@@ -168,7 +170,13 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	//最初の演出(導入)
 	if (!end) {
 		if (!bossstart) {
-			appearanceTimer++;
+			if (BlackColor.w >= 0.0f) {
+				BlackColor.w -= 0.005f;
+				frame = 0.0f;
+			}
+			else {
+				appearanceTimer++;
+			}
 			player->Begin();
 			bossenemy->Begin();
 			if (appearanceNumber == 0) {
@@ -434,6 +442,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	}
 
 	camera->Update();
+	BlackFilter->SetColor(BlackColor);
 	expandchange->Update();
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Update(bossenemy);
@@ -507,9 +516,9 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
 	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
 	//ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
-	//ImGui::SliderFloat("WhiteFilter", &WhiteColor.w, 30, 0);
-	//ImGui::SliderFloat("pos.z", &distanceZ, 30, 0);
-	ImGui::Text("endT::%d", EndTimer);
+	ImGui::SliderFloat("frame.y", &frame, 30, 0);
+	ImGui::SliderFloat("color.w", &BlackColor.w, 30, 0);
+	ImGui::Text("AppeaT::%d", appearanceTimer);
 	ImGui::Unindent();
 	ImGui::End();
 
@@ -550,6 +559,7 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	particleMan->Draw(dxCommon->GetCmdList());
 	Sprite::PreDraw();
 	if (!bossstart) {
+		BlackFilter->Draw();
 		bossName->Draw();
 	}
 	

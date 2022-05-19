@@ -88,11 +88,13 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	/*mill = new Mill();
 	mill->SetPlayer(player);
 	mill->Initialize();*/
-
+	//テクスチャ関係の初期化
 	//ボスの名前表記
 	bossName = Sprite::Create(ImageManager::select1, namePos);
 	bossName->SetAnchorPoint({ 1.0f,0.0f });
 
+	BlackFilter = Sprite::Create(ImageManager::BlackFilter, { 0.0f,0.0f });
+	BlackFilter->SetColor(BlackColor);
 	//敵
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i] = new Rice();
@@ -157,7 +159,13 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 	
 	//最初の演出(導入)
 	if (!bossstart) {
-		appearanceTimer++;
+		if (BlackColor.w >= 0.0f) {
+			BlackColor.w -= 0.005f;
+			frame = 0.0f;
+		}
+		else {
+			appearanceTimer++;
+		}
 		player->Begin();
 		pastel->Begin();
 		pastel->MillUpdate();
@@ -327,7 +335,7 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 		camera->SetTarget(player->GetPosition());
 		camera->SetEye(cameraPos);
 	}
-
+	BlackFilter->SetColor(BlackColor);
 	camera->Update();
 	/*
 	for (std::size_t i = 0; i < exp.size(); i++) {
@@ -454,7 +462,18 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 	ui->Draw();
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
+	Sprite::PreDraw();
 	if (!bossstart) {
+		BlackFilter->Draw();
 		bossName->Draw();
 	}
+
+	if (end) {
+		//WhiteFilter->Draw();
+	}
+
+	Sprite::PreDraw();
+
+	//前面用
+	//expandchange->Draw();
 }

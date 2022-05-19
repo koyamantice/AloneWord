@@ -84,10 +84,12 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	limit->SetRotation({ 90.0f,0, 0 });
 	limit->SetScale({ 6,5,5 });*/
 
-
+	//テクスチャ関係の初期化
 	bossName = Sprite::Create(ImageManager::select1, namePos);
 	bossName->SetAnchorPoint({ 1.0f,0.0f });
 
+	BlackFilter = Sprite::Create(ImageManager::BlackFilter, { 0.0f,0.0f });
+	BlackFilter->SetColor(BlackColor);
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i] = new Effect();
 		effect[i]->Initialize();
@@ -152,7 +154,13 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 	
 	//最初の演出(導入)
 	if (!bossstart) {
-		appearanceTimer++;
+		if (BlackColor.w >= 0.0f) {
+			BlackColor.w -= 0.005f;
+			frame = 0.0f;
+		}
+		else {
+			appearanceTimer++;
+		}
 		player->Begin();
 		bossenemy->Begin();
 		bossenemy->AppeaMovie(appearanceTimer);
@@ -302,6 +310,7 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 		camera->SetTarget(player->GetPosition());
 		camera->SetEye(cameraPos);
 	}
+	BlackFilter->SetColor(BlackColor);
 	camera->Update();
 
 	for (std::size_t i = 0; i < effect.size(); i++) {
@@ -418,7 +427,19 @@ void ThirdBoss::Draw(DirectXCommon* dxCommon) {
 	ui->Draw();
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
+	Sprite::PreDraw();
 	if (!bossstart) {
+		BlackFilter->Draw();
 		bossName->Draw();
 	}
+
+	if (end) {
+		//WhiteFilter->Draw();
+	}
+
+	Sprite::PreDraw();
+
+	//前面用
+	//expandchange->Draw();
+
 }

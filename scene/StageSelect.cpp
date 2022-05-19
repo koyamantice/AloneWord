@@ -11,7 +11,7 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	BackGround = Texture::Create(ImageManager::SELECTTex, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	BackGround->TextureCreate();
 	BackGround->SetRotation({ 90,0,0 });
-	BackGround->SetPosition({ 0.0f,0.0f,0.0f });
+	BackGround->SetPosition({ 0.0f,0.0f,0.5f });
 	BackGround->SetScale({ 3.2f,1.8f,1.0f });
 	select[0] = Sprite::Create(ImageManager::select1, selectP[0]);
 	select[0]->SetAnchorPoint({ 1.0f,0.0f });
@@ -122,6 +122,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		select[0]->SetPosition(selectP[0]);
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
+			//SceneManager::GetInstance()->ChangeScene("BOSS");
 			//SceneManager::GetInstance()->ChangeScene("BOSS");
 			StageSelectNumber = fork;
 			/*Aftertargetpos = player->GetPosition();
@@ -305,6 +306,25 @@ Ease(In,Cubic,selectframe,cameratargetPos.z,Aftertargetpos.z)
 		}
 	}
 
+	//ƒV[ƒ“‚ª‚±‚±‚Å•Ï‚í‚é
+	if (cameraPos.y <= 0.3f) {
+		frame = 0.0f;
+		selectframe = 0.0f;
+		cameraPos = { 0.0f,0.0f,0.0f };
+		if (StageSelectNumber == fork) {
+			SceneManager::GetInstance()->ChangeScene("BOSS");
+		}
+		else if (StageSelectNumber == boots) {
+			SceneManager::GetInstance()->ChangeScene("SECONDBOSS");
+		}
+		else if (StageSelectNumber == Tea) {
+			SceneManager::GetInstance()->ChangeScene("THIRDBOSS");
+		}
+		else if (StageSelectNumber == Pastel) {
+			SceneManager::GetInstance()->ChangeScene("FOURTHBOSS");
+		}
+		StageSelectNumber = No;
+	}
 	camera->Update();
 }
 

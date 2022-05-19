@@ -57,8 +57,9 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	limit->SetPosition({ 0.0f,0.01f,0.0f });
 	limit->SetRotation({ 90.0f,0, 0 });
 	limit->SetScale({ 6,5,5 });*/
-
+	//テクスチャ関係の初期化
 	BlackFilter = Sprite::Create(ImageManager::BlackFilter, { 0.0f,0.0f });
+	BlackFilter->SetColor(BlackColor);
 	
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i] = new Effect();
@@ -156,7 +157,13 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 
 	//最初の演出(導入)
 	if (!bossstart) {
-		appearanceTimer++;
+		if (BlackColor.w >= 0.0f) {
+			BlackColor.w -= 0.005f;
+			frame = 0.0f;
+		}
+		else {
+			appearanceTimer++;
+		}
 		player->Begin();
 		leftshose->Begin();
 		rightshose->Begin();
@@ -268,6 +275,7 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 		camera->SetTarget(player->GetPosition());
 		camera->SetEye(cameraPos);
 	}
+	BlackFilter->SetColor(BlackColor);
 	camera->Update();
 
 	for (std::size_t i = 0; i < effect.size(); i++) {
@@ -389,13 +397,22 @@ void SecondBoss::Draw(DirectXCommon* dxCommon) {
 	//		exp[i][j]->Draw();
 	//	}
 	//}
-	if (bossstart) {
-		ui->Draw();
-	}
+	
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
 	Sprite::PreDraw();
-	if (appearanceNumber == 3 && appearanceTimer <= 600) {
+	if (!bossstart) {
 		BlackFilter->Draw();
+		//bossName->Draw();
 	}
+
+	if (end) {
+		//WhiteFilter->Draw();
+	}
+
+	Sprite::PreDraw();
+
+	//前面用
+	//expandchange->Draw();
+
 }
