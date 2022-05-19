@@ -12,7 +12,6 @@ class TouchableObject;
 /// <summary>
 /// ゲームプレイシーン
 /// </summary>
-const int StartSpawn = 1;
 class StartMap : public BaseScene {
 public:
 	//~StartMap();
@@ -38,26 +37,29 @@ private:
 	XMFLOAT3 cameraPos = { 0.0f,0.0f,0.0f };
 	Model* modelFloor = nullptr;
 	Object3d* objFloor;
-	Model* modelStartMap = nullptr;
-	TouchableObject* objStartMap;
-	UI* ui = nullptr;
-	Sprite* concent = nullptr;
-	Sprite* concent2 = nullptr;
-	Sprite* concent3 = nullptr;
-	Sprite* concent4 = nullptr;
-	Sprite* concent5 = nullptr;
+
+	Model* modelBossMap = nullptr;
+	TouchableObject* objBossMap;
+
+	Model* modelSphere = nullptr;
+	Object3d* objSphere;
+
+	Model* modelSkydome = nullptr;
+	Object3d* objSkydome;
+
 	Sprite* button = nullptr;
 	DebugCamera* camera = { nullptr };
-	Texture* limit = nullptr;
 	Player* player = nullptr;
+	array<Effect*, 40> effect;
 	array<Rice*, 7> enemy;
-	InterBoss* spawing;
-	ParticleManager* particleMan = nullptr;
-	int	tutorial =0;
-	bool Clear = false;
+	InterBoss* bossenemy = nullptr;
+	UI* ui = nullptr;
 	CollisionManager* collisionManager = nullptr;
+	ParticleManager* particleMan = nullptr;
 	ExpandChange* expandchange = false;
 	ShrinkChange* shrinkchange = false;
+	int	tutorial =0;
+	bool Clear = false;
 	bool pause = false;
 	int wait = 0;
 	int set = 0;

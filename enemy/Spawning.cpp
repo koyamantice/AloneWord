@@ -68,7 +68,7 @@ void Spawning::Spec() {
 		net[0]->SetRotation({ 90,0,0 });
 		net[1]->Update();
 		net[1]->SetPosition(smooth);
-		smooth.y = smooth.y + 0.1f;
+		smooth.y = smooth.y + 0.05f;
 		if (smooth.y > 7.0f) {
 			smooth.y = pos.y + 4.5f;
 		}

@@ -157,9 +157,9 @@ void Player::Update() {
 
 		//腕振り回す系
 		if (AttackFlag == false) {
-			if (input->TriggerButton(input->Button_RB)) {
-				RotCount = 0;
-			}
+			//if (input->TriggerButton(input->Button_RB)) {
+			//	RotCount = 0;
+			//}
 			//ため時間
 			if (input->PushButton(input->Button_RB)) {
 				move_count = 0;
@@ -556,8 +556,8 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	ImGui::SliderFloat("pso.x", &position.x, 50, -50);
 	ImGui::SliderFloat("pso.y", &position.y, 50, -50);
 	ImGui::SliderFloat("pso.z", &position.z, 50, -50);
-	//ImGui::SliderFloat("boundpower.x", &chargepos[0].y, 50, -50);
-	//ImGui::SliderFloat("boundpower.x", &chargesca[0].x, 50, -50);
+	ImGui::SliderInt("boundpower.x", &chargeTimer, 50, -50);
+	//ImGui::("boundpower.x %d", &AttackFlag, 50, -50);
 	//ImGui::Text("Releae:%d", EffectRelease[0]);
 	ImGui::End();
 	Texture::PreDraw();
