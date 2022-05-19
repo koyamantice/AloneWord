@@ -220,6 +220,7 @@ void Player::Update() {
 				}
 				//ため開放
 				if (chargeTimer >= 100) {
+
 					ReleaseStart = true;
 					AttackFlag = true;
 					AttackMoveNumber = 1;
@@ -558,7 +559,8 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	//ImGui::SliderFloat("pso.z", &position.z, 50, -50);*/
 	//ImGui::SliderFloat("boundpower.x", &chargepos[0].y, 50, -50);
 	//ImGui::SliderFloat("boundpower.x", &chargesca[0].x, 50, -50);
-	//ImGui::Text("Releae:%d", EffectRelease[0]);
+	//ImGui::Text("AttackFlag:%d", AttackFlag);
+	//ImGui::Text("chargeTimer:%d",chargeTimer);
 	//ImGui::End();
 	Texture::PreDraw();
 	if (chargeTimer!=0&&!AttackFlag) {

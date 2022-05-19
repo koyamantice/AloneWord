@@ -429,7 +429,12 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 
 	//その他シーン移行
 	if (bossenemy->GetHP() <= 0) {
+		end = true;
 		SceneManager::GetInstance()->ChangeScene("StageSelect");
+	}
+
+	if (end == true) {
+
 	}
 
 	if (player->GetHp() <= 0) {
