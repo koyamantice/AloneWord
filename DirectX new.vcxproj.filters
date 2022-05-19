@@ -356,9 +356,6 @@
     <ClInclude Include="Exp.h">
       <Filter>exp</Filter>
     </ClInclude>
-    <ClInclude Include="InterBoss.h">
-      <Filter>enemy\ボス</Filter>
-    </ClInclude>
     <ClInclude Include="enemy\Rice.h">
       <Filter>enemy\ザコ敵</Filter>
     </ClInclude>
@@ -496,6 +493,9 @@
     </ClInclude>
     <ClInclude Include="ShrinkChange.h">
       <Filter>effect</Filter>
+    </ClInclude>
+    <ClInclude Include="InterBoss.h">
+      <Filter>enemy\ボス</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

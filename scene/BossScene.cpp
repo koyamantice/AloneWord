@@ -59,6 +59,10 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	bossName = Sprite::Create(ImageManager::select1, namePos);
 	bossName->SetAnchorPoint({ 1.0f,0.0f });
 
+	WhiteFilter = Sprite::Create(ImageManager::WhiteFilter, { 0.0f,0.0f });
+	//WhiteFilter->SetAnchorPoint({ 1.0f,0.0f });
+	WhiteFilter->SetColor(WhiteColor);
+
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i] = new Effect();
 		effect[i]->Initialize();
@@ -161,214 +165,232 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	lightGroup->Update();
 	ParticleManager::GetInstance()->Update();
 	//最初の演出(導入)
-	if (!bossstart) {
-		appearanceTimer++;
-		player->Begin();
-		bossenemy->Begin();
-		if (appearanceNumber == 0) {
-			if (appearanceTimer == 1) {
-				cameraPos.x = bossenemy->GetPosition().x + 5;
-				cameraPos.y = 2;
-				cameraPos.z = bossenemy->GetPosition().z + 8;
-				camera->SetTarget(player->GetPosition());
-			}
+	if (!end) {
+		if (!bossstart) {
+			appearanceTimer++;
+			player->Begin();
+			bossenemy->Begin();
+			if (appearanceNumber == 0) {
+				if (appearanceTimer == 1) {
+					cameraPos.x = bossenemy->GetPosition().x + 5;
+					cameraPos.y = 2;
+					cameraPos.z = bossenemy->GetPosition().z + 8;
+					camera->SetTarget(player->GetPosition());
+				}
 
-			else if (appearanceTimer == 20) {
-				Aftereyepos = {
-					bossenemy->GetPosition().x + 2,
-					2,
-					bossenemy->GetPosition().z + 5,
+				else if (appearanceTimer == 20) {
+					Aftereyepos = {
+						bossenemy->GetPosition().x + 2,
+						2,
+						bossenemy->GetPosition().z + 5,
+					};
+				}
+
+				if (frame < 1.0f) {
+					frame += 0.005f;
+				}
+				else {
+					bossenemy->AppeaMovie(appearanceTimer);
+					frame = 1.0f;
+				}
+
+				cameraPos = {
+				Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+				Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+				Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
 				};
-			}
 
-			if (frame < 1.0f) {
-				frame += 0.005f;
+				if (appearanceTimer == 300) {
+					frame = 0.0f;
+					appearanceNumber++;
+				}
 			}
-			else {
-				bossenemy->AppeaMovie(appearanceTimer);
-				frame = 1.0f;
-			}
+			else if (appearanceNumber == 1) {
+				Aftereyepos = {
+					bossenemy->GetPosition().x,
+					bossenemy->GetPosition().y + distanceY,
+					bossenemy->GetPosition().z - distanceZ,
+				};
 
-			cameraPos = {
+				Aftertargetpos = {
+					bossenemy->GetPosition().x,
+					bossenemy->GetPosition().y + 5,
+					bossenemy->GetPosition().z,
+				};
+
+				if (frame < 1.0f) {
+					frame += 0.015f;
+				}
+				else {
+					frame = 1.0f;
+					bossenemy->AppeaMovie(appearanceTimer);
+				}
+
+				cameraPos = {
 			Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
 			Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
 			Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
-			};
+				};
 
-			if (appearanceTimer == 300) {
-				frame = 0.0f;
-				appearanceNumber++;
+				cameratargetPos = {
+	Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+	Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+	Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+				};
+
+				if (appearanceTimer == 400) {
+					frame = 0.0f;
+					appearanceNumber++;
+				}
 			}
-		}
-		else if (appearanceNumber == 1) {
-			Aftereyepos = {
-				bossenemy->GetPosition().x,
-				bossenemy->GetPosition().y + distanceY,
-				bossenemy->GetPosition().z - distanceZ,
-			};
 
-			Aftertargetpos = {
+			else if (appearanceNumber == 2) {
+				Aftereyepos = {
 				bossenemy->GetPosition().x,
 				bossenemy->GetPosition().y + 5,
-				bossenemy->GetPosition().z,
-			};
+				bossenemy->GetPosition().z - 7,
+				};
 
-			if (frame < 1.0f) {
-				frame += 0.015f;
-			}
-			else {
-				frame = 1.0f;
-				bossenemy->AppeaMovie(appearanceTimer);
+				Aftertargetpos = {
+					bossenemy->GetPosition().x,
+					bossenemy->GetPosition().y + 3,
+					bossenemy->GetPosition().z,
+				};
+
+				if (frame < 1.0f) {
+					frame += 0.015f;
+				}
+				else {
+					frame = 1.0f;
+				}
+
+				cameraPos = {
+			Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+			Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+			Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+				};
+
+				cameratargetPos = {
+	Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+	Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+	Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+				};
+
+				if (appearanceTimer == 450) {
+					frame = 0.0f;
+					appearanceNumber++;
+				}
+
 			}
 
-			cameraPos = {
-		Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
-		Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
-		Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
-					};
-		
-					cameratargetPos = {
-		Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
-		Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
-		Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
-			};
+			else if (appearanceNumber == 3) {
+				if (nameframe >= 1.0f) {
+					nameframe = 1.0f;
+				}
+				else {
+					nameframe += 0.06f;
+				}
+				namePos = {
+				Ease(In,Quad,nameframe,2000,940),
+				480
+				};
 
-			if (appearanceTimer == 400) {
-				frame = 0.0f;
-				appearanceNumber++;
+				bossName->SetPosition(namePos);
+				if (appearanceTimer == 520) {
+					nameframe = 0.0f;
+					appearanceNumber++;
+				}
+
 			}
+
+			else if (appearanceNumber == 4) {
+				Aftereyepos = {
+					player->GetPosition().x,
+					player->GetPosition().y + distanceY,
+					player->GetPosition().z - distanceZ,
+				};
+
+				Aftertargetpos = {
+					player->GetPosition().x,
+					player->GetPosition().y,
+					player->GetPosition().z,
+				};
+
+				if (frame < 1.0f) {
+					frame += 0.01f;
+				}
+				else {
+					bossstart = true;
+					appearanceTimer = 0;
+					appearanceNumber = 0;
+					frame = 0;
+					nameframe = 0.0f;
+				}
+
+				if (nameframe >= 1.0f) {
+					nameframe = 1.0f;
+				}
+				else {
+					nameframe += 0.06f;
+				}
+				namePos = {
+				Ease(In,Quad,nameframe,940,2000),
+				480
+				};
+
+				bossName->SetPosition(namePos);
+
+				cameraPos = {
+			Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+			Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+			Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+				};
+
+				cameratargetPos = {
+				Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+				Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+				Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+				};
+			}
+
+			camera->SetTarget(cameratargetPos);
+			camera->SetEye(cameraPos);
+		}
+		//戦闘開始
+		else {
+
+			player->Update();
+			bossenemy->Update();
+			for (std::size_t i = 0; i < enemy.size(); i++) {
+				enemy[i]->Update();
+				enemy[i]->SetEnemy();
+				player->ResetWeight(enemy[i]);
+			}
+			if (player->GetDamageFlag() == true) {
+				player->Rebound();
+			}
+			ui->Update();
+			cameraPos.x = player->GetPosition().x;
+			cameraPos.y = player->GetPosition().y + distanceY;
+			cameraPos.z = player->GetPosition().z - distanceZ;
+			camera->SetTarget(player->GetPosition());
+			camera->SetEye(cameraPos);
+		}
+		//その他シーン移行
+		if (bossenemy->GetHP() <= 0) {
+			end = true;
+			//SceneManager::GetInstance()->ChangeScene("StageSelect");
 		}
 
-		else if (appearanceNumber == 2) {
-			Aftereyepos = {
-			bossenemy->GetPosition().x,
-			bossenemy->GetPosition().y + 5,
-			bossenemy->GetPosition().z - 7,
-			};
-
-			Aftertargetpos = {
-				bossenemy->GetPosition().x,
-				bossenemy->GetPosition().y + 3,
-				bossenemy->GetPosition().z,
-			};
-
-			if (frame < 1.0f) {
-				frame += 0.015f;
-			}
-			else {
-				frame = 1.0f;
-			}
-
-			cameraPos = {
-		Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
-		Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
-		Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
-					};
-		
-					cameratargetPos = {
-		Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
-		Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
-		Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
-			};
-
-			if (appearanceTimer == 450) {
-				frame = 0.0f;
-				appearanceNumber++;
-			}
-
+		if (player->GetHp() <= 0) {
+			SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 		}
-
-		else if (appearanceNumber == 3) {
-			if (nameframe >= 1.0f) {
-				nameframe = 1.0f;
-			}
-			else {
-				nameframe += 0.06f;
-			}
-			namePos = {
-			Ease(In,Quad,nameframe,2000,940),
-			480
-			};
-
-			bossName->SetPosition(namePos);
-			if (appearanceTimer == 520) {
-				nameframe = 0.0f;
-				appearanceNumber++;
-			}
-
-		}
-
-		else if (appearanceNumber == 4) {
-			Aftereyepos = {
-				player->GetPosition().x,
-				player->GetPosition().y + distanceY,
-				player->GetPosition().z - distanceZ,
-			};
-
-			Aftertargetpos = {
-				player->GetPosition().x,
-				player->GetPosition().y,
-				player->GetPosition().z,
-			};
-
-			if (frame < 1.0f) {
-				frame += 0.01f;
-			}
-			else {
-				bossstart = true;
-				appearanceTimer = 0;
-				appearanceNumber = 0;
-				frame = 0;
-				nameframe = 0.0f;
-			}
-
-			if (nameframe >= 1.0f) {
-				nameframe = 1.0f;
-			}
-			else {
-				nameframe += 0.06f;
-			}
-			namePos = {
-			Ease(In,Quad,nameframe,940,2000),
-			480
-			};
-
-			bossName->SetPosition(namePos);
-
-			cameraPos = {
-		Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
-		Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
-		Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
-		};
-		
-		cameratargetPos = {
-		Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
-		Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
-		Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
-			};
-		}
-
-		camera->SetTarget(cameratargetPos);
-		camera->SetEye(cameraPos);
 	}
-	//戦闘開始
 	else {
-		player->Update();
-		bossenemy->Update();
-		for (std::size_t i = 0; i < enemy.size(); i++) {
-			enemy[i]->Update();
-			enemy[i]->SetEnemy();
-			player->ResetWeight(enemy[i]);
+		if (WhiteColor.w <= 1.0f) {
+			WhiteColor.w += 0.005f;
 		}
-		if (player->GetDamageFlag() == true) {
-			player->Rebound();
-		}
-		ui->Update();
-		cameraPos.x = player->GetPosition().x;
-		cameraPos.y = player->GetPosition().y + distanceY;
-		cameraPos.z = player->GetPosition().z - distanceZ;
-		camera->SetTarget(player->GetPosition());
-		camera->SetEye(cameraPos);
+		WhiteFilter->SetColor(WhiteColor);
 	}
 	camera->Update();
 
@@ -427,19 +449,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	//	}
 	//}
 
-	//その他シーン移行
-	if (bossenemy->GetHP() <= 0) {
-		end = true;
-		SceneManager::GetInstance()->ChangeScene("StageSelect");
-	}
-
-	if (end == true) {
-
-	}
-
-	if (player->GetHp() <= 0) {
-		SceneManager::GetInstance()->ChangeScene("GAMEOVER");
-	}
+	
 	
 	// 全ての衝突をチェック
 	//collsionManager->CheckAllCollisions();
@@ -452,15 +462,15 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 }
 
 void BossScene::Draw(DirectXCommon* dxCommon) {
-	//ImGui::Begin("test");
-	////ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
-	////ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
-	////ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
-	//ImGui::SliderFloat("pos.y", &distanceY, 30, 0);
+	ImGui::Begin("test");
+	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
+	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
+	//ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
+	ImGui::SliderFloat("WhiteFilter", &WhiteColor.w, 30, 0);
 	//ImGui::SliderFloat("pos.z", &distanceZ, 30, 0);
-	////ImGui::Text("appearanceTimer::%d", appearanceTimer);
-	//ImGui::Unindent();
-	//ImGui::End();
+	ImGui::Text("end::%d", end);
+	ImGui::Unindent();
+	ImGui::End();
 
 	//各オブジェクトの描画
 	Object3d::PreDraw();
@@ -490,7 +500,7 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	//		exp[i][j]->Draw();
 	//	}
 	//}
-	if (bossstart) {
+	if (bossstart && !end) {
 		ui->Draw();
 	}
 	// パーティクルの描画
@@ -498,5 +508,9 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	Sprite::PreDraw();
 	if (!bossstart) {
 		bossName->Draw();
+	}
+	
+	if (end) {
+		WhiteFilter->Draw();
 	}
 }

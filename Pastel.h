@@ -12,6 +12,7 @@ public:
 	void Finalize() override;
 	void Spec() override;
 	void App(int Timer) override;
+	void End(int Timer) override;
 	void specialDraw() override;
 	void MillUpdate();
 	bool collideAttackArm(Player* player);

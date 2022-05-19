@@ -443,7 +443,6 @@ void GreenTea::App(int Timer) {
 			frame += 0.01f;
 		}
 		else {
-			rot.y = 180.0f;
 			frame = 1.0f;
 		}
 	}
@@ -466,6 +465,10 @@ void GreenTea::App(int Timer) {
 
 	enemyobj->SetPosition(pos);
 	enemyobj->SetRotation(rot);
+}
+
+void GreenTea::End(int Timer) {
+	//ボスを倒したあとの挙動(後で記述)
 }
 
 void GreenTea::specialDraw() {

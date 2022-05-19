@@ -115,3 +115,9 @@ void InterBoss::AppeaMovie(int Timer) {
 	App(Timer);
 	enemyobj->Update();
 }
+
+void InterBoss::EndMovie(int Timer) {
+	End(Timer);
+	enemyobj->Update();
+}
+
