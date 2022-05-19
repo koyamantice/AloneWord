@@ -402,7 +402,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 				cameraPos.x += 0.05f;
 			}
 			else if (EndTimer == 100) {
-				cameraPos.x = bossenemy->GetPosition().x - 4;
+				cameraPos.x = bossenemy->GetPosition().x;
 				cameraPos.y = bossenemy->GetPosition().y + 4;
 				cameraPos.z = bossenemy->GetPosition().z - 4;
 			}
@@ -411,22 +411,17 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 				cameraPos.x -= 0.05f;
 			}
 
-			if (EndTimer == 150) {
+			if (EndTimer == 100) {
 				EndNumber = 1;
 			}
 		}
 		else if (EndNumber == 1) {
-			if (EndTimer == 200) {
-				cameraPos.x = bossenemy->GetPosition().x;
-				cameraPos.y = bossenemy->GetPosition().y + 4;
-				cameraPos.z = bossenemy->GetPosition().z + 4;
-			}
 			if (WhiteColor.w <= 1.0f) {
 				WhiteColor.w += 0.005f;
 			}
 			
-			if (EndTimer == 400) {
-				EndNumber = 2;
+			if (EndTimer == 300) {
+				EndNumber++;
 			}
 		}
 		else if (EndNumber == 2) {
@@ -441,7 +436,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		camera->SetTarget(bossenemy->GetPosition());
 		camera->SetEye(cameraPos);
 
-		if (EndTimer == 1000) {
+		if (EndTimer == 700) {
 			expandchange->SetStartChange(true);
 		}
 
