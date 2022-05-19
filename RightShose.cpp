@@ -389,6 +389,10 @@ void RightShose::App(int Timer) {
 	enemyobj->SetPosition(pos);
 	enemyobj->SetRotation(rot);
 }
+
+void RightShose::End(int Timer) {
+	//ボスを倒したあとの挙動(後で記述)
+}
 void RightShose::specialDraw() {
 }
 

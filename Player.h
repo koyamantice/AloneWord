@@ -25,6 +25,7 @@ public:
 	void Draw(DirectXCommon* dxCommon);
 	void Pause(const int& Timer);
 	void Begin();
+	void End();
 private:
 	// DirectX::を省略
 	using XMFLOAT2 = DirectX::XMFLOAT2;

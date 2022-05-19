@@ -220,6 +220,7 @@ void Player::Update() {
 				}
 				//ため開放
 				if (chargeTimer >= 100) {
+
 					ReleaseStart = true;
 					AttackFlag = true;
 					AttackMoveNumber = 1;
@@ -716,6 +717,49 @@ void Player::Begin() {
 	move_object1->SetPosition(position);
 	move_object1->SetRotation(rot);
 	
+	move_object1->Update();
+}
+
+void Player::End() {
+	if (pause) {
+		return;
+	}
+	oldPos = position;
+	rot = this->object3d->GetRotation();
+	object3d->Update();
+	Armobj->Update();
+	StickrotX = input->GetPosX();
+	StickrotY = input->GetPosY();
+	//effecttexture->Update();
+	if (wet) {
+		wetC++;
+		if (wetC > 20) {
+			wet = false;
+			wetC = 0;
+		}
+	}
+
+	// ワールド行列更新
+	UpdateWorldMatrix();
+
+	Armradius = ArmSpeed * PI / 180.0f;
+	ArmCircleX = cosf(Armradius) * Armscale;
+	ArmCircleZ = sinf(Armradius) * Armscale;
+	Armpos.x = ArmCircleX + position.x;
+	Armpos.y = position.y;
+	Armpos.z = ArmCircleZ + position.z;
+	Armobj->SetPosition(Armpos);
+	//移動
+	object3d->Update();
+	object3d->SetPosition(position);
+	object3d->SetRotation(rot);
+	Armobj->SetRotation(ArmRot);
+	//パーティクル発生
+	BirthParticle();
+
+	move_object1->SetPosition(position);
+	move_object1->SetRotation(rot);
+
 	move_object1->Update();
 }
 

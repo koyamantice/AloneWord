@@ -287,3 +287,7 @@ void BossEnemy::Spec() {
 
 	void BossEnemy::specialDraw() {
 	}
+
+	void BossEnemy::End(int Timer){
+		//ボスを倒したあとの挙動(後で記述)
+	}
