@@ -29,6 +29,7 @@ public:
 		OVER,
 		TITLE,
 		SELECT,
+		SELECT1,
 		hpGauge,
 		energy,
 		pinch,
@@ -53,6 +54,7 @@ public:
 		BlackFilter,
 		WhiteFilter,
 		Tbutton,
+		Tselect,
 		sky,
 		ground,
 		

@@ -32,10 +32,10 @@ class TitleScene : public BaseScene {
 			back,
 			button1,
 			button2,
-			sky,
+			select ,
 			ground,
 			tutorial,
-			select,
+			//select,
 		};
 		ExpandChange* expandchange = nullptr;
 		DebugCamera* camera = { nullptr };
@@ -47,7 +47,7 @@ class TitleScene : public BaseScene {
 		};
 		XMFLOAT2 buttonPos[2]{
 			{ 160.0f,600.0f },
-			{ 430.0f,600.0f }
+			{ 440.0f,600.0f }
 		};
 		int SelectNumber = 0;
 };

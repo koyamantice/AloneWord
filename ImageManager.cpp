@@ -21,6 +21,7 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(OVER, L"Resources/2d/GAMEOVER.png");
 	Sprite::LoadTexture(TITLE, L"Resources/2d/TitleParts/layoutImage.png");
 	Sprite::LoadTexture(SELECT, L"Resources/2d/kariSelect.png");
+	//Sprite::LoadTexture(SELECT1, L"Resources/2d/Select.png");
 	Sprite::LoadTexture(playerhp, L"Resources/2d/HPBar.png");
 	Sprite::LoadTexture(hpGauge, L"Resources/2d/HPGauge.png");
 	Sprite::LoadTexture(energy, L"Resources/2d/HPmark_energy.png");
@@ -46,6 +47,7 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(BlackFilter, L"Resources/2d/Blackfilter.png");
 	Sprite::LoadTexture(WhiteFilter, L"Resources/2d/Whitefilter.png");
 	Sprite::LoadTexture(Tbutton, L"Resources/2d/Title1.png");
+	Sprite::LoadTexture(Tselect, L"Resources/2d/TitleParts/menu.png");
 	Sprite::LoadTexture(sky, L"Resources/2d/sky.png");
 	Sprite::LoadTexture(ground, L"Resources/2d/ground.png");
 

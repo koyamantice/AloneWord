@@ -525,11 +525,11 @@ void Player::TitleUp() {
 	}
 	rot = this->object3d->GetRotation();
 	//アニメーション用のキー入力
-	rot.y = 0.0f;
+	rot.y = 45.0f;
 	move_count++;
 	//position = { 2.0f,-4.0f ,0};
 	onGround = true;
-
+	position = {4.0f,-1.0f,-5.0f};
 	//移動
 	object3d->Update();
 	object3d->SetPosition(position);
@@ -553,15 +553,14 @@ void Player::TitleUp() {
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
 
-	//ImGui::Begin("test");
-	///*ImGui::SliderFloat("pso.x", &position.x, 50, -50);
-	//ImGui::SliderFloat("pso.y", &position.y, 50, -50);
-	//ImGui::SliderFloat("pso.z", &position.z, 50, -50);*/
+	ImGui::Begin("test");
+	ImGui::SliderFloat("pso.x", &position.x, 50, -50);
+	ImGui::SliderFloat("pso.y", &position.y, 50, -50);
+	ImGui::SliderFloat("pso.z", &position.z, 50, -50);
 	//ImGui::SliderFloat("boundpower.x", &chargepos[0].y, 50, -50);
 	//ImGui::SliderFloat("boundpower.x", &chargesca[0].x, 50, -50);
-	//ImGui::Text("AttackFlag:%d", AttackFlag);
-	//ImGui::Text("chargeTimer:%d",chargeTimer);
-	//ImGui::End();
+	//ImGui::Text("Releae:%d", EffectRelease[0]);
+	ImGui::End();
 	Texture::PreDraw();
 	if (chargeTimer!=0&&!AttackFlag) {
 		Charge->Draw();
@@ -697,14 +696,6 @@ void Player::Begin() {
 	StickrotX = input->GetPosX();
 	StickrotY = input->GetPosY();
 	//effecttexture->Update();
-	if (wet) {
-		wetC++;
-		if (wetC > 20) {
-			wet = false;
-			wetC = 0;
-		}
-	}
-	
 	// ワールド行列更新
 	UpdateWorldMatrix();
 	
