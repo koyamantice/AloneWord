@@ -107,7 +107,7 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 	player->TitleUp();
 	expandchange->Update();
 	camera->Update();
-	cameraPos.x = player->GetPosition().x;
+	cameraPos.x = player->GetPosition().x-3.0f;
 	cameraPos.y = player->GetPosition().y + 4.0f;
 	cameraPos.z = player->GetPosition().z - 4.0f;
 	camera->SetTarget(player->GetPosition());
