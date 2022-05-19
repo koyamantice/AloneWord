@@ -87,7 +87,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	// モデル名を指定してファイル読み込み
 	//model1 =ModelManager::GetIns()->GetFBXModel(ModelManager::MottiMove);
 
-	ui = new UI(player, bossenemy);
+	ui = new UI(player);
 
 	shrinkchange = new ShrinkChange();
 	shrinkchange->SetEndChange(true);

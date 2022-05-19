@@ -101,13 +101,13 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 		number[0][j]->SetPosition(pos);
 		number[1][j]->SetPosition(pos2);
 	}
-	strong = player->GetArmWeight() * 5;
-	power.clear();
-	for (int tmp = (int)strong; tmp > 0;) {
-		power.push_back(tmp % 10);
-		tmp /= 10;
+	for (int i = 0; i < 2; i++) {
+		if (i > 0) {
+			number[i][0]->SetScale(0.4f);
+		} else {
+			number[i][0]->SetScale(0.3f);
+		}
 	}
-
 }
 void UI::Update() {
 	{//HP
@@ -221,10 +221,12 @@ const void UI::Draw() {
 		Arrow2->Draw();
 	}
 	if (player->GetAttackFlag()) {
-		for (int i = 0; i < power.size() && i < 2; i++) {
-			number[i][power[i]]->Draw();
+		if (power.size() != 0) {
+			bairitu->Draw();
+			for (int i = 0; i < power.size() && i < 2; i++) {
+				number[i][power[i]]->Draw();
+			}
 		}
-		bairitu->Draw();
 	}
 }
 

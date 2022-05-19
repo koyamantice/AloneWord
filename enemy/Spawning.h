@@ -13,6 +13,10 @@ public:
 	void End(int Timer) override {};
 private:
 	Texture* net[2] = { nullptr };
-	Texture* texture = nullptr;
+	Texture* BossHp[1]{};
+	XMFLOAT2 AfterPos[2]{};
+	enum {
+		now,
+	};
 	XMFLOAT3 smooth{ pos.x, pos.y + 4.5f,pos.z };
 };

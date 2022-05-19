@@ -72,6 +72,7 @@ public:
 	hit,
 	Charge,
 	ChargeEffect,
+	spawnhp,
 	};
 public:
 	static ImageManager* GetIns();		//Žæ“¾—p
