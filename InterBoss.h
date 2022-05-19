@@ -169,7 +169,7 @@ protected:
 	bool pause = false;
 	bool respawn = false;
 	//
-	float BossHP = 40;
+	float BossHP = 4;
 	bool BossHit = false;
 	bool Effect = false;
 	//
@@ -201,7 +201,11 @@ protected:
 	bool Off = false;
 	int haveTimer = 0;
 	float haveEnemy = 0.0f;
+	//登場シーン
 	bool appearanceEnd = false;
 	int appearMove = 0;
+	//倒したあとのシーン
+	int EndMove = 0;
+	float endframe = 0.0f;
 };
 

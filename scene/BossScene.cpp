@@ -124,7 +124,8 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	//model1 =ModelManager::GetIns()->GetFBXModel(ModelManager::MottiMove);
 
 	ui = new UI(player, bossenemy);
-
+	//スプライト生成
+	expandchange = new ExpandChange();
 	//ui->Initialize();
 }
 
@@ -358,7 +359,6 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		}
 		//戦闘開始
 		else {
-
 			player->Update();
 			bossenemy->Update();
 			for (std::size_t i = 0; i < enemy.size(); i++) {
@@ -386,14 +386,73 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 			SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 		}
 	}
+	//ボス撃破ムービー演出
 	else {
-		if (WhiteColor.w <= 1.0f) {
-			WhiteColor.w += 0.005f;
+		EndTimer++;
+		bossenemy->EndMovie(EndTimer);
+		player->End();
+		if (EndNumber == 0) {
+			if (EndTimer == 1) {
+				cameraPos.x = bossenemy->GetPosition().x + 4;
+				cameraPos.y = bossenemy->GetPosition().y + 4;
+				cameraPos.z = bossenemy->GetPosition().z + 4;
+			}
+
+			if ((EndTimer >= 1) && (EndTimer <= 99)) {
+				cameraPos.x += 0.05f;
+			}
+			else if (EndTimer == 100) {
+				cameraPos.x = bossenemy->GetPosition().x - 4;
+				cameraPos.y = bossenemy->GetPosition().y + 4;
+				cameraPos.z = bossenemy->GetPosition().z - 4;
+			}
+
+			if ((EndTimer >= 101) && (EndTimer <= 150)) {
+				cameraPos.x -= 0.05f;
+			}
+
+			if (EndTimer == 150) {
+				EndNumber = 1;
+			}
+		}
+		else if (EndNumber == 1) {
+			if (EndTimer == 200) {
+				cameraPos.x = bossenemy->GetPosition().x;
+				cameraPos.y = bossenemy->GetPosition().y + 4;
+				cameraPos.z = bossenemy->GetPosition().z + 4;
+			}
+			if (WhiteColor.w <= 1.0f) {
+				WhiteColor.w += 0.005f;
+			}
+			
+			if (EndTimer == 400) {
+				EndNumber = 2;
+			}
+		}
+		else if (EndNumber == 2) {
+			if (WhiteColor.w >= 0.0f) {
+				WhiteColor.w -= 0.005f;
+			}
+			cameraPos.x = bossenemy->GetPosition().x;
+			cameraPos.y = bossenemy->GetPosition().y + 7;
+			cameraPos.z = bossenemy->GetPosition().z - 10;
 		}
 		WhiteFilter->SetColor(WhiteColor);
-	}
-	camera->Update();
+		camera->SetTarget(bossenemy->GetPosition());
+		camera->SetEye(cameraPos);
 
+		if (EndTimer == 1000) {
+			expandchange->SetStartChange(true);
+		}
+
+
+		if (expandchange->GetTimer() >= 58) {
+			SceneManager::GetInstance()->ChangeScene("StageSelect");
+		}
+	}
+
+	camera->Update();
+	expandchange->Update();
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Update(bossenemy);
 	}
@@ -466,9 +525,9 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
 	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
 	//ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
-	ImGui::SliderFloat("WhiteFilter", &WhiteColor.w, 30, 0);
+	//ImGui::SliderFloat("WhiteFilter", &WhiteColor.w, 30, 0);
 	//ImGui::SliderFloat("pos.z", &distanceZ, 30, 0);
-	ImGui::Text("end::%d", end);
+	ImGui::Text("endT::%d", EndTimer);
 	ImGui::Unindent();
 	ImGui::End();
 
@@ -484,11 +543,13 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	//sprite->Draw();
 
 	//object1->Draw(dxCommon->GetCmdList());
-
-	player->Draw(dxCommon);
-	for (std::size_t i = 0; i < enemy.size(); i++) {
-		enemy[i]->Draw();
+	if (EndNumber <= 1) {
+		player->Draw(dxCommon);
+		for (std::size_t i = 0; i < enemy.size(); i++) {
+			enemy[i]->Draw();
+		}
 	}
+
 	bossenemy->Draw();
 
 	for (std::size_t i = 0; i < effect.size(); i++) {
@@ -513,4 +574,10 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	if (end) {
 		WhiteFilter->Draw();
 	}
+
+	Sprite::PreDraw();
+
+	//前面用
+	expandchange->Draw();
+
 }
