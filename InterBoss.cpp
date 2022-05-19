@@ -15,8 +15,10 @@ void InterBoss::Update() {
 	player->SetInterval(Interval);
 
 	enemyobj->Update();
-	texture->SetPosition(pos.x, 0, pos.z);
-	texture->Update();
+	if (shadow) {
+		texture->SetPosition(pos.x, 0, pos.z);
+		texture->Update();
+	}
 }
 
 void InterBoss::Draw() {

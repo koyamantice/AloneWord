@@ -65,7 +65,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	ui = new UI(player);
 	spawing = new Spawning();
 	spawing->SetPlayer(player);
-	spawing->Initialize();
+	spawing->Initialize(false);
 	spawing->SetPosition({ 0.0f,0.0f,0.0f });
 	spawing->SetRotation({ 0,90,0 });
 	spawing->Update();

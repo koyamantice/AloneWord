@@ -51,7 +51,7 @@ private:
 	Texture* limit = nullptr;
 	Player* player = nullptr;
 	array<Rice*, 7> enemy;
-	Spawning* spawing;
+	InterBoss* spawing;
 	ParticleManager* particleMan = nullptr;
 	int	tutorial =0;
 	bool Clear = false;

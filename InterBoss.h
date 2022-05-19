@@ -9,6 +9,7 @@
 #include "Audio.h"
 #include"Rice.h"
 #include"ModelManager.h"
+#include "TouchableObject.h"
 
 
 #define DIRECTINPUT_VERSION 0x0800
