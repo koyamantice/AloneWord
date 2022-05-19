@@ -2,6 +2,7 @@
 #include "BaseScene.h"
 #include "LeftShose.h"
 #include "RightShose.h"
+#include "ExpandChange.h"
 #include "UI.h"
 #include <array>       // ヘッダファイルインクルード
 using namespace std;         //  名前空間指定
@@ -56,5 +57,6 @@ private:
 	UI* ui = nullptr;
 	CollisionManager* collisionManager = nullptr;
 	ParticleManager* particleMan = nullptr;
+	ExpandChange* expandchange = nullptr;
 };
 

@@ -400,11 +400,11 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		bossenemy->EndMovie(EndTimer);
 		player->End();
 		if (EndNumber == 0) {
-			if (EndTimer == 1) {
+			/*if (EndTimer == 1) {
 				cameraPos.x = bossenemy->GetPosition().x;
 				cameraPos.y = bossenemy->GetPosition().y + 4;
 				cameraPos.z = bossenemy->GetPosition().z + 4;
-			}
+			}*/
 
 			if (EndTimer == 50) {
 				EndNumber = 1;
@@ -536,9 +536,6 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	//object1->Draw(dxCommon->GetCmdList());
 	if (EndNumber <= 1) {
 		player->Draw(dxCommon);
-		for (std::size_t i = 0; i < enemy.size(); i++) {
-			enemy[i]->Draw();
-		}
 	}
 
 	bossenemy->Draw();
@@ -565,6 +562,11 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	
 	if (end) {
 		WhiteFilter->Draw();
+	}
+	else {
+		for (std::size_t i = 0; i < enemy.size(); i++) {
+			enemy[i]->Draw();
+		}
 	}
 
 	Sprite::PreDraw();

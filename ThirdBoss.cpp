@@ -424,7 +424,9 @@ void ThirdBoss::Draw(DirectXCommon* dxCommon) {
 	//		exp[i][j]->Draw();
 	//	}
 	//}
-	ui->Draw();
+	if (bossstart && !end) {
+		ui->Draw();
+	}
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
 	Sprite::PreDraw();

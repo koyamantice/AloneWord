@@ -26,7 +26,7 @@ void InterBoss::Draw() {
 
 	ImGui::Begin("test");
 	ImGui::SliderFloat("endframe", &endframe, 1, 0.0f);
-	ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
 	/*ImGui::SliderFloat("pos.x", &pos.x, 1, 0.0f);
 	ImGui::Text("Move:%d", appearMove);*/
 	//ImGui::SliderFloat("angle", &angle, 360, -360);
