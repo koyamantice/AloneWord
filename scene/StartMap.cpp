@@ -50,8 +50,8 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	FBXObject3d::CreateGraphicsPipeline();
 	player = new Player();
 	player->Initialize();
-	player->SetMove(50.0f, 50.0f);
-	player->SetPosition({ 0.0f,5.0f,-10.0f });
+	player->SetPosition({ 0.0f,0.0f,-10.0f });
+	player->SetMove(250.0f, 200.0f);
 	// パーティクルマネージャ生成
 	particleMan = ParticleManager::GetInstance();
 	particleMan->SetCamera(camera);
@@ -93,6 +93,9 @@ void StartMap::Finalize() {
 	delete objStartMap;
 	expandchange->Finalize();
 	shrinkchange->Finalize();
+	delete camera;
+	ui->Finalize();
+
 }
 
 void StartMap::Update(DirectXCommon* dxCommon) {
@@ -107,9 +110,9 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		a++;
 	}
 
-	ui->Update();
-	objFloor->Update();
 	objStartMap->Update();
+	objFloor->Update();
+	//objSkydome->Update();
 	lightGroup->Update();
 	camera->Update();
 	player->Update();
@@ -122,11 +125,6 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		player->ResetWeight(enemy[i]);
 	}
 	//player->Rebound(spawing);
-
-	if (input->TriggerKey(DIK_C)) {
-		//SceneManager::GetInstance()->ChangeScene("CLEAR");
-		ui->SetUp(true);
-	}
 	if (player->GetHp() <= 0) {
 		player->SetHp(10);
 	}

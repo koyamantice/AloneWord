@@ -39,7 +39,7 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 	sprite[button2] = Sprite::Create(ImageManager::Tbutton, buttonPos[1]);
 	sprite[button2]->SetAnchorPoint({ 0.5f,0.5f });
 	sprite[button2]->SetScale(0.4f);
-	sprite[sky] = Sprite::Create(ImageManager::sky, { 0.0f,0.0f });
+	sprite[select] = Sprite::Create(ImageManager::Tselect, { 76.0f,418.0f });
 	sprite[ground] = Sprite::Create(ImageManager::ground, { 0.0f,0.0f });
 	//スプライト生成
 	expandchange = new ExpandChange();
@@ -64,15 +64,15 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 	switch (SelectNumber) {
 	case Start:
 		buttonPos[0] = { 165.0f,470.0f };
-		buttonPos[1] = { 430.0f,470.0f };
+		buttonPos[1] = { 440.0f,470.0f };
 		break;
 	case Select:
 		buttonPos[0] = { 165.0f,550.0f };
-		buttonPos[1] = { 430.0f,550.0f };
+		buttonPos[1] = { 440.0f,550.0f };
 		break;
 	case Exit:
 		buttonPos[0] = { 165.0f,620.0f };
-		buttonPos[1] = { 430.0f,620.0f };
+		buttonPos[1] = { 440.0f,620.0f };
 
 		break;
 	default:
@@ -107,10 +107,10 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 	player->TitleUp();
 	expandchange->Update();
 	camera->Update();
-	cameraPos.x = player->GetPosition().x-3.0f;
+	cameraPos.x = player->GetPosition().x;
 	cameraPos.y = player->GetPosition().y + 4.0f;
-	cameraPos.z = player->GetPosition().z - 4.0f;
-	camera->SetTarget(player->GetPosition());
+	cameraPos.z = player->GetPosition().z - 6.0f;
+	camera->SetTarget({0,0,0});
 	camera->SetEye(cameraPos);
 }
 
@@ -120,7 +120,7 @@ void TitleScene::Draw(DirectXCommon* dxCommon) {
 
 	//背景用
 	sprite[0]->Draw();
-	//sprite[4]->Draw();
+	sprite[select]->Draw();
 	//sprite[3]->Draw();
 	sprite[1]->Draw();
 	sprite[2]->Draw();
