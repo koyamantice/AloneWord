@@ -74,6 +74,8 @@ protected:
 	float nameframe = 0.0f;
 	Sprite* WhiteFilter = nullptr;
 	XMFLOAT4 WhiteColor = { 1.0f,1.0f,1.0f,0.0f };
+	//‚±‚Ì•Ï”‚Í\‚µ–ó‚È‚¢
+	float cameraMoveX = 0.0f;
 public:
 
 	virtual ~BaseScene()=default;

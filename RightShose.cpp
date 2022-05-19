@@ -30,6 +30,7 @@ void RightShose::Initialize(bool shadow) {
 	texture->SetPosition(pos.x, -100, pos.z);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.3f,0.3f,0.3f });
+	shadow = false;
 }
 
 void RightShose::Finalize() {
