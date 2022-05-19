@@ -393,25 +393,12 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		player->End();
 		if (EndNumber == 0) {
 			if (EndTimer == 1) {
-				cameraPos.x = bossenemy->GetPosition().x + 4;
+				cameraPos.x = bossenemy->GetPosition().x;
 				cameraPos.y = bossenemy->GetPosition().y + 4;
 				cameraPos.z = bossenemy->GetPosition().z + 4;
 			}
 
-			if ((EndTimer >= 1) && (EndTimer <= 99)) {
-				cameraPos.x += 0.05f;
-			}
-			else if (EndTimer == 100) {
-				cameraPos.x = bossenemy->GetPosition().x;
-				cameraPos.y = bossenemy->GetPosition().y + 4;
-				cameraPos.z = bossenemy->GetPosition().z - 4;
-			}
-
-			if ((EndTimer >= 101) && (EndTimer <= 150)) {
-				cameraPos.x -= 0.05f;
-			}
-
-			if (EndTimer == 100) {
+			if (EndTimer == 50) {
 				EndNumber = 1;
 			}
 		}
