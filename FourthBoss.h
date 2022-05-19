@@ -51,12 +51,11 @@ private:
 	array<InterEnemy*, 10> enemy;
 	Pastel* pastel = nullptr;
 	ShockWave* shockwave = nullptr;
-	Sprite* bossName = nullptr;
-	XMFLOAT2 namePos = { 0.0f,0.0f };
 	std::array<std::array<Exp*, 10>, 5> exp;
 	float weight = 0;
 	UI* ui = nullptr;
 	CollisionManager* collisionManager = nullptr;
 	ParticleManager* particleMan = nullptr;
+	ExpandChange* expandchange = nullptr;
 };
 

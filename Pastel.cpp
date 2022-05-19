@@ -10,9 +10,9 @@ using namespace DirectX;
 Pastel::Pastel() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::Pastel);
 	enemyobj = new Object3d();
-	Millmodel = ModelManager::GetIns()->GetModel(ModelManager::EHub);
+	Millmodel = ModelManager::GetIns()->GetModel(ModelManager::Mill);
 	Millobj = new Object3d();
-	Mottimodel = ModelManager::GetIns()->GetModel(ModelManager::Enemy);
+	Mottimodel = ModelManager::GetIns()->GetModel(ModelManager::SiroMotti);
 	Mottiobj = new Object3d();
 	Platformmodel = ModelManager::GetIns()->GetModel(ModelManager::Platform);
 	for (std::size_t i = 0; i < Platformobj.size(); i++) {
@@ -38,7 +38,7 @@ void Pastel::Initialize(bool shadow) {
 	Millpos = { 0.0f,-2.0f,0.0f };
 	Millobj->SetPosition(Millpos);
 	Millobj->SetRotation({0,90,0});
-	Millobj->SetScale({ 4.5f,4.5f,4.5f });
+	Millobj->SetScale({ 1.0f,1.0f,1.0f });
 	Mottiobj = Object3d::Create();
 	Mottiobj->SetModel(Mottimodel);
 	Mottiobj->SetPosition({ 0.0f,1.0f,0.0f });
@@ -442,6 +442,76 @@ Ease(In,Cubic,frame,rot.z,AfterRot.z)
 
 void Pastel::End(int Timer) {
 	//ボスを倒したあとの挙動(後で記述)
+	XMFLOAT3 scale = { 0.8f,0.8f,0.8f };
+	float RotPower = 0.0f;
+	XMFLOAT3 AfterScale{};
+	//float endframe = 0.0f;
+	//ボスを倒したあとの挙動(後で記述)
+	if (Timer == 300) {
+		pos = { 0.0f,0.0f,0.0f };
+		rot = { 0,90,0 };
+	}
+
+	if (Timer == 450) {
+		EndMove++;
+		endframe = 0.0f;
+	}
+
+	switch (EndMove) {
+	case 1:
+		AfterScale = {
+						0.2f,
+						0.2f,
+						0.2f,
+		};
+
+		if (endframe < 1.0f) {
+			endframe += 0.005f;
+			break;
+		}
+		else {
+			endframe = 1.0f;
+			RotPower = 0.0f;
+			EndMove++;
+			break;
+		}
+
+	case 2:
+		if (rot.x <= 90) {
+			rot.x += 2.0f;
+		}
+
+		//case 2:
+		//	AfterPos = {
+		//				pos.x,
+		//				1,
+		//				pos.z,
+		//	};
+
+		//	if (frame < 1.0f) {
+		//		frame += 0.08f;
+		//		break;
+		//	}
+		//	else {
+		//		frame = 1.0f;
+		//		break;
+		//	}
+	}
+
+	RotPower = Ease(In, Cubic, endframe, RotPower, 20.0f);
+	if (EndMove == 1) {
+		rot.y += RotPower;
+	}
+
+	scale = {
+	Ease(In,Cubic,endframe,scale.x,0.2f),
+	Ease(In,Cubic,endframe,scale.y,0.2f),
+	Ease(In,Cubic,endframe,scale.z,0.2f),
+	};
+
+	enemyobj->SetScale(scale);
+	enemyobj->SetPosition(pos);
+	enemyobj->SetRotation(rot);
 }
 
 void Pastel::MillUpdate() {
@@ -449,13 +519,15 @@ void Pastel::MillUpdate() {
 }
 
 void Pastel::specialDraw() {
-	Millobj->Draw();
-	Mottiobj->Draw();
-	for (std::size_t i = 0; i < Platformobj.size(); i++) {
-		Platformobj[i]->Draw();
-		Texture::PreDraw();
-		if (SetPlatform[i] && Plapos[i].y <= -1.0f) {
-			Plattexture[i]->Draw();
+	if (BossHP > 0) {
+		Millobj->Draw();
+		Mottiobj->Draw();
+		for (std::size_t i = 0; i < Platformobj.size(); i++) {
+			Platformobj[i]->Draw();
+			Texture::PreDraw();
+			if (SetPlatform[i] && Plapos[i].y <= -1.0f) {
+				Plattexture[i]->Draw();
+			}
 		}
 	}
 }

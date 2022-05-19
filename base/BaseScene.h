@@ -74,6 +74,10 @@ protected:
 	float nameframe = 0.0f;
 	Sprite* WhiteFilter = nullptr;
 	XMFLOAT4 WhiteColor = { 1.0f,1.0f,1.0f,0.0f };
+	Sprite* BlackFilter = nullptr;
+	XMFLOAT4 BlackColor = { 0.0f,0.0f,0.0f,1.0f };
+	Sprite* bossName = nullptr;
+	XMFLOAT2 namePos = { 0.0f,0.0f };
 	//Ç±ÇÃïœêîÇÕê\ÇµñÛÇ»Ç¢
 	float cameraMoveX = 0.0f;
 public:

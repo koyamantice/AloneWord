@@ -25,6 +25,8 @@ void ModelManager::Initialize() {
 	LoadModel(Piyopiyo, "Piyopiyo");
 	LoadModel(skydome, "skydome");
 	LoadModel(Particle, "Particle");
+	LoadModel(Mill, "Usu");
+	LoadModel(SiroMotti, "Siromoti");
 	LoadFBXModel(MottiMove, "Motti_moveF");
 }
 

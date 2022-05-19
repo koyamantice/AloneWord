@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include "SceneManager.h"
 #include "BossEnemy.h"
-#include "ExpandChange.h"
 #include "UI.h"
 #include <array>       // ヘッダファイルインクルード
 using namespace std;         //  名前空間指定
@@ -55,9 +54,6 @@ private:
 	array<Effect*,40> effect;
 	array<Rice*,6> enemy;
 	InterBoss* bossenemy = nullptr;
-	Sprite* bossName = nullptr;
-	XMFLOAT2 namePos = { 0.0f,0.0f };
-	//std::array<std::array<Exp*, 10>, 5> exp;
 	float weight = 0;
 	UI* ui=nullptr;
 	CollisionManager* collisionManager = nullptr;

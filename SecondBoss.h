@@ -47,8 +47,6 @@ private:
 	DebugCamera* camera = { nullptr };
 	Texture* limit = nullptr;
 	Player* player = nullptr;
-	Sprite* bossName = nullptr;
-	Sprite* BlackFilter = nullptr;
 	array<Effect*, 40> effect;
 	array<InterEnemy*, 10> enemy;
 	LeftShose* leftshose = nullptr;
@@ -58,5 +56,6 @@ private:
 	UI* ui = nullptr;
 	CollisionManager* collisionManager = nullptr;
 	ParticleManager* particleMan = nullptr;
+	ExpandChange* expandchange = nullptr;
 };
 
