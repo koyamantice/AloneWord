@@ -67,6 +67,7 @@ bool InterBoss::collideAttackArm() {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 1.3f, Armpos.x, Armpos.y, Armpos.z, 1.3f) == true && BossHP > 0) {
 			player->SetAttackFlag(false);
 			player->SetCharge(0);
+			player->SetRotCount(0);
 			if (weight != 0.0f) {
 				BossHit = true;
 				//ついてる敵の数で音が変わる
