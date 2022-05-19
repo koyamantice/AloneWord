@@ -10,7 +10,7 @@ public:
 	void Spec() override;
 	void App(int Timer) override{};
 	void specialDraw() override;
-
+	void End(int Timer) override {};
 private:
 	Texture* net[2] = { nullptr };
 	Texture* texture = nullptr;

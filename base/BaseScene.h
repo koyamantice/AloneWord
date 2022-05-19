@@ -69,7 +69,11 @@ protected:
 	float frame = 0.0f;
 	int Interval = 0;
 	bool end = false;
+	int EndNumber = 0;
+	int EndTimer = 0;
 	float nameframe = 0.0f;
+	Sprite* WhiteFilter = nullptr;
+	XMFLOAT4 WhiteColor = { 1.0f,1.0f,1.0f,0.0f };
 public:
 
 	virtual ~BaseScene()=default;

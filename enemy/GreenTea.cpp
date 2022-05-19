@@ -368,6 +368,7 @@ void GreenTea::App(int Timer) {
 		}
 
 		if (Attack) {
+			rot.y += (rand() % 10) + 1;
 			//プレイヤーにスピード加算
 			pos.x += (float)speedX;
 			pos.z += (float)speedZ;
@@ -433,6 +434,11 @@ void GreenTea::App(int Timer) {
 			pos.y,
 			0,
 		};
+		Afterrot = {
+			rot.x,
+			900,
+			rot.z,
+		};
 		if (frame < 1.0f) {
 			frame += 0.01f;
 		}
@@ -451,8 +457,18 @@ void GreenTea::App(int Timer) {
 	Ease(In,Cubic,frame,pos.z,AfterPos.z)
 	};
 
+	rot = {
+	Ease(In,Cubic,frame,rot.x,Afterrot.x),
+	Ease(In,Cubic,frame,rot.y,Afterrot.y),
+	Ease(In,Cubic,frame,rot.z,Afterrot.z)
+	};
+
 	enemyobj->SetPosition(pos);
 	enemyobj->SetRotation(rot);
+}
+
+void GreenTea::End(int Timer) {
+	//ボスを倒したあとの挙動(後で記述)
 }
 
 void GreenTea::specialDraw() {

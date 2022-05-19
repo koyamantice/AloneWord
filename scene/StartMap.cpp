@@ -128,14 +128,18 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		int a = 0;
 		a++;
 	}
-
 	objBossMap->Update();
+	player->Update();
+	ui->Update();
 	objFloor->Update();
 	objSkydome->Update();
 	lightGroup->Update();
-	player->Update();
 	bossenemy->Update();
-	for (std::size_t i = 0; i < enemy.size(); i++) {
+	camera->Update();
+	particleMan->Update();
+	expandchange->Update();
+	shrinkchange->Update();
+	for (int i = 0; i < enemy.size() - 1; i++) {
 		enemy[i]->Demo(i);
 		enemy[i]->SetEnemy();
 		player->ResetWeight(enemy[i]);

@@ -95,7 +95,11 @@ public:
 
 	void AppeaMovie(int Timer);
 
+	void EndMovie(int Timer);
+
 	virtual void App(int Timer)=0;//ボス出現モーション
+
+	virtual void End(int Timer) = 0;//ボス出現モーション
 
 	virtual void Spec()=0;//ボス特有の処理
 	virtual void specialDraw()=0;//ボス特有の描画

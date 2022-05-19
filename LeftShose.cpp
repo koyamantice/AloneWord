@@ -278,5 +278,9 @@ void LeftShose::App(int Timer) {
 	enemyobj->SetRotation(rot);
 }
 
+void LeftShose::End(int Timer) {
+	//ボスを倒したあとの挙動(後で記述)
+}
+
 void LeftShose::specialDraw() {
 }
