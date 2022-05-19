@@ -138,5 +138,7 @@ bool InterEnemy::CollidePos(XMFLOAT3 pos, float radius) {
 		this->pos = this->pos;
 		NextP = pos;
 		return true;
+	} else {
+		return false;
 	}
 }
