@@ -53,6 +53,7 @@ private:
 	UI* ui = nullptr;
 	CollisionManager* collisionManager = nullptr;
 	ParticleManager* particleMan = nullptr;
+	ExpandChange* expandchange = nullptr;
 };
 
 

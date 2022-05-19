@@ -551,9 +551,10 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	//}
 	if (bossstart && !end) {
 		ui->Draw();
+		// パーティクルの描画
+		particleMan->Draw(dxCommon->GetCmdList());
 	}
-	// パーティクルの描画
-	particleMan->Draw(dxCommon->GetCmdList());
+	
 	Sprite::PreDraw();
 	if (!bossstart) {
 		BlackFilter->Draw();

@@ -29,6 +29,8 @@ public:
 		skydome,
 		Piyopiyo,
 		Particle,
+		Mill,
+		SiroMotti
 	};
 	enum FBXName {
 		MottiMove,

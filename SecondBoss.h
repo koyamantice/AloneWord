@@ -2,7 +2,6 @@
 #include "BaseScene.h"
 #include "LeftShose.h"
 #include "RightShose.h"
-#include "ExpandChange.h"
 #include "UI.h"
 #include <array>       // ヘッダファイルインクルード
 using namespace std;         //  名前空間指定

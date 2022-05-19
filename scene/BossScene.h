@@ -1,7 +1,6 @@
 ﻿#pragma once
 #include "SceneManager.h"
 #include "BossEnemy.h"
-#include "ExpandChange.h"
 #include "UI.h"
 #include <array>       // ヘッダファイルインクルード
 using namespace std;         //  名前空間指定
