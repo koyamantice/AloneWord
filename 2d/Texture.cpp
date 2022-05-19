@@ -663,6 +663,11 @@ void Texture::Draw()
 	cmdList->DrawIndexedInstanced(_countof(indices), 1, 0, 0, 0);
 }
 
+void Texture::SetIsBillboard(const bool& isBillboard) { 
+	this->isBillboard = isBillboard; 
+	UpdateViewMatrix();
+}
+
 void Texture::SetColor(XMFLOAT4 color)
 {
 	this->color = color;

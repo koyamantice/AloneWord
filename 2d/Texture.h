@@ -169,7 +169,7 @@ public: // ƒƒ“ƒoŠÖ”
 	this->position.y = y;
 	this->position.z = z;
 	}
-
+	void SetIsBillboard(const bool& isBillboard);
 	void Texture::SetColor(XMFLOAT4 color);
 	void SetRotation(XMFLOAT3 rotation) { this->rotation = rotation; }
 	void SetScale(XMFLOAT3 scale) { this->scale = scale; }

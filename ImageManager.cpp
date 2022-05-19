@@ -65,5 +65,5 @@ void ImageManager::LoadTex2D() {
 	Texture::LoadTexture(water, L"Resources/2d/puddle.png");
 	Texture::LoadTexture(Charge, L"Resources/2d/Charge.png");
 	Texture::LoadTexture(ChargeEffect, L"Resources/2d/ChargeEffect.png");
-	//Texture::LoadTexture(hit, L"Resources/2d/hit.png");
+	Texture::LoadTexture(spawnhp, L"Resources/2d/EHubHP.png");
 }
