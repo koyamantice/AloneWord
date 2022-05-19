@@ -23,10 +23,11 @@ class StageSelect :
 	/// </summary>
 	void Draw(DirectXCommon* dxCommon)override;
 private:
-	Sprite* BackGround = nullptr;
+	Texture* BackGround = nullptr;
 	Sprite* select[5]{};
 	XMFLOAT2 selectP[4]{};
 	Sprite* plane[5]{};
+	Sprite* BlackFilter = nullptr;
 	float frame=0;
 	Input* input = Input::GetInstance();
 	DebugCamera* camera = { nullptr };
@@ -34,8 +35,13 @@ private:
 	ExpandChange* expandchange = false;
 	ShrinkChange* shrinkchange = false;
 	enum stage {
+		No,
 		fork,
+		Tea,
+		Pastel,
 		boots,
 	};
+	int StageSelectNumber = 0;
+	float selectframe = 0.0f;
 	bool UICheck();
 };
