@@ -71,6 +71,12 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 		enemy[i]->Initialize();
 		enemy[i]->SetLimit({ 21.0f,-17.0f,19.0f,-19.0f });
 	}
+	//当たり判定確認用です
+	modelSphere = Model::CreateFromOBJ("sphere");
+	objSphere = TouchableObject::Create(modelSphere);
+	objSphere->SetScale({ 2.0f, 2.0f, 2.0f });
+	objSphere->SetPosition({ 0.0f,0.0f,1.0f });
+
 	// パーティクルマネージャ生成
 	particleMan = ParticleManager::GetInstance();
 	particleMan->SetCamera(camera);
@@ -104,6 +110,7 @@ void StartMap::Finalize() {
 	bossenemy->Finalize();
 	delete objBossMap;
 	delete objFloor;
+	delete objSphere;
 	delete modelBossMap;
 	delete modelFloor;
 	delete objSkydome;
@@ -167,6 +174,7 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	objBossMap->Draw();
 	objFloor->Draw();
 	objSkydome->Draw();
+	objSphere->Draw();
 
 	for (int i = 0; i < enemy.size() - 1; i++) {
 		enemy[i]->Draw();

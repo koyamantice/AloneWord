@@ -77,6 +77,7 @@ void Spawning::Spec() {
 			BossHp[i]->SetScale({ (float)BossHP * 0.05f,0.1f,0.05f });
 			BossHp[i]->Update();
 		}
+		BossHp[0]->SetPosition({ pos.x,pos.y + 4.5f,pos.z });
 		net[0]->Update();
 		net[0]->SetPosition({ pos.x + 0.2f,pos.y + 3.0f,pos.z - 0.1f });
 		net[0]->SetRotation({ 90,0,0 });

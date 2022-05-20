@@ -20,6 +20,9 @@ public:
 	void Rebound();
 private:
 	Object3d* Piyopiyo;
+	Texture* net[2] = { nullptr };
+	XMFLOAT3 smooth{ pos.x, pos.y,pos.z };
+
 	bool collidePlayer() override;
 	bool collideAttackArm() override;
 	bool collideArm();

@@ -39,12 +39,25 @@ void Rice::Initialize() {
 	Restexture->SetPosition(pos);
 	Restexture->SetRotation({ 90,0,0 });
 	Restexture->SetScale({ 0.2f,0.2f,0.2f });
+	net[0] = Texture::Create(ImageManager::net, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	net[0]->TextureCreate();
+	net[1] = Texture::Create(ImageManager::effect3, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	net[1]->TextureCreate();
+	net[0]->SetPosition(pos);
+	net[0]->SetRotation({ 90,0,0 });
+	net[0]->SetScale({ 0.2f,0.2f,0.2f });
+
+	net[1]->SetPosition(pos);
+	net[1]->SetRotation({ 90,0,0 });
+	net[1]->SetScale({ 0.15f,0.15f,0.15f });
+
 }
 
 void Rice::Finalize() {
 	delete enemyobj;
 	delete texture;
-	//delete model;
+	delete net[0];
+	delete net[1];
 	delete Restexture;
 }
 
@@ -320,7 +333,16 @@ void Rice::Demo(int num) {
 	enemyobj->SetScale(enescale);
 	enemyobj->Update();
 	texture->Update();
-	Restexture->Update();
+	net[0]->Update();
+	net[0]->SetPosition(pos);
+	net[1]->Update();
+	net[1]->SetPosition(smooth);
+	smooth.x = pos.x;
+	smooth.y = smooth.y + 0.1f;
+	smooth.z = pos.z;
+	if (smooth.y > 4.0f||IsAlive) {
+		smooth.y =0;
+	}
 }
 
 //描画
@@ -334,7 +356,10 @@ void Rice::Draw() {
 	if (IsAlive && !EnemyCatch && !add) {
 		texture->Draw();
 	} else if (!IsAlive && IsTimer <= 100 && IsTimer != 0) {
+		Texture::PreDraw();
 		Restexture->Draw();
+		net[0]->Draw();
+		net[1]->Draw();
 	}
 }
 
@@ -380,6 +405,7 @@ bool Rice::collideArm() {
 		}
 	}
 	if (EnemyCatch == true) {
+		rot.y -= (rand()%3)+1;
 		//enescale = { 0.4f,0.4f,0.4f };
 		speed = armspeed + savespeed;
 		scale = armscale + savesacale;
