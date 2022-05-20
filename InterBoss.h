@@ -169,7 +169,7 @@ protected:
 	bool pause = false;
 	bool respawn = false;
 	//
-	float BossHP = 4;
+	float BossHP = 40;
 	bool BossHit = false;
 	bool Effect = false;
 	//

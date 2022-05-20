@@ -48,7 +48,7 @@ private:
 	Texture* limit = nullptr;
 	Player* player = nullptr;
 	array<Effect*, 40> effect;
-	array<InterEnemy*, 10> enemy;
+	array<InterEnemy*, 6> enemy;
 	Pastel* pastel = nullptr;
 	ShockWave* shockwave = nullptr;
 	std::array<std::array<Exp*, 10>, 5> exp;
