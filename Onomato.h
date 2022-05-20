@@ -1,21 +1,21 @@
 #pragma once
 #include "Texture.h"
 class Onomato {
-	static Onomato* GetInstance() {
-		static Onomato instance;
-		return &instance;
-	};
-
+	//static Onomato* GetInstance() {
+	//	static Onomato instance;
+	//	return &instance;
+	//};
+public:
 	void Init();
-
-	void Run(const int& num);
+	void Update();
+	void Run();
 
 	void Draw();
 	enum tex2D {
 		punyu,
 		doka,
 	};
-
+private:
 	Texture* onomato;
 
 };
