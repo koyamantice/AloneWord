@@ -94,6 +94,8 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	//model1 =ModelManager::GetIns()->GetFBXModel(ModelManager::MottiMove);
 
 	ui = new UI(player);
+	
+	Ok = Sprite::Create(ImageManager::ok, { 0.0f,0.0f });
 
 	shrinkchange = new ShrinkChange();
 	shrinkchange->SetEndChange(true);

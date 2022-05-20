@@ -58,6 +58,8 @@ private:
 	ParticleManager* particleMan = nullptr;
 	ExpandChange* expandchange = false;
 	ShrinkChange* shrinkchange = false;
+
+	Sprite* Ok;
 	int	tutorial =0;
 	bool Clear = false;
 	bool pause = false;

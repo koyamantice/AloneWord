@@ -30,6 +30,7 @@ void RightShose::Initialize(bool shadow) {
 	texture->SetPosition(pos.x, -100, pos.z);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.3f,0.3f,0.3f });
+	shadow = false;
 }
 
 void RightShose::Finalize() {
@@ -341,7 +342,7 @@ void RightShose::App(int Timer) {
 	XMFLOAT3 AfterPos{};
 	XMFLOAT3 AfterRot{};
 
-	if (Timer == 1) {
+	if (Timer == 0) {
 		pos = { 13.0f,0.0f,18.0f };
 		rot = { 0.0f,315.0f,0.0f };
 	}
@@ -392,6 +393,76 @@ void RightShose::App(int Timer) {
 
 void RightShose::End(int Timer) {
 	//ボスを倒したあとの挙動(後で記述)
+	XMFLOAT3 scale = { 0.8f,0.8f,0.8f };
+	float RotPower = 0.0f;
+	XMFLOAT3 AfterScale{};
+	//float endframe = 0.0f;
+	//ボスを倒したあとの挙動(後で記述)
+	if (Timer == 300) {
+		pos = { 5.0f,0.0f,0.0f };
+		rot = { 0,270,0 };
+	}
+
+	if (Timer == 450) {
+		EndMove++;
+		endframe = 0.0f;
+	}
+
+	switch (EndMove) {
+	case 1:
+		AfterScale = {
+						0.2f,
+						0.2f,
+						0.2f,
+		};
+
+		if (endframe < 1.0f) {
+			endframe += 0.005f;
+			break;
+		}
+		else {
+			endframe = 1.0f;
+			RotPower = 0.0f;
+			EndMove++;
+			break;
+		}
+
+	case 2:
+		if (rot.x >= -90) {
+			rot.x -= 2.0f;
+		}
+
+		//case 2:
+		//	AfterPos = {
+		//				pos.x,
+		//				1,
+		//				pos.z,
+		//	};
+
+		//	if (frame < 1.0f) {
+		//		frame += 0.08f;
+		//		break;
+		//	}
+		//	else {
+		//		frame = 1.0f;
+		//		break;
+		//	}
+	}
+
+	RotPower = Ease(In, Cubic, endframe, RotPower, 20.0f);
+	if (EndMove == 1) {
+		rot.y -= RotPower;
+	}
+
+	scale = {
+	Ease(In,Cubic,endframe,scale.x,0.2f),
+	Ease(In,Cubic,endframe,scale.y,0.2f),
+	Ease(In,Cubic,endframe,scale.z,0.2f),
+	};
+
+	enemyobj->SetScale(scale);
+	enemyobj->SetPosition(pos);
+	enemyobj->SetRotation(rot);
 }
 void RightShose::specialDraw() {
 }
