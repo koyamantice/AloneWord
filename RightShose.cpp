@@ -52,15 +52,16 @@ void RightShose::Spec() {
 	else {
 		if (!active) {
 			AttackCount++;
-			angle += 2.0f;
+			/*angle += 2.0f;
 			angle2 = angle * (3.14f / 180.0f);
 			pos.y = sin(angle2) * 0.5f + 0.5f;
-			enemyobj->SetPosition(pos);
+			enemyobj->SetPosition(pos);*/
 		}
 	}
 
 	if (active) {
 		if ((action % 2) == 0) {
+			Afterrot.x = 0.0f;
 			if (!stun) {
 				//3回突進する
 				if (AttackC < 100) {
@@ -231,14 +232,13 @@ void RightShose::Spec() {
 			enemyobj->SetPosition(pos);
 		}
 		if ((action % 2) == 1) {
-
 			if (AttackC < 3) {
 				Afterrot.x = 270.0f;
 				switch (pat) {
 				case 1:
 					AfterPos = {
 						player->GetPosition().x + 5,
-						pos.y,
+						5,
 						player->GetPosition().z
 					};
 					if (aiming < 180) {
@@ -248,12 +248,27 @@ void RightShose::Spec() {
 					}
 					else {
 						frame = 0;
-						targetpos.x = player->GetPosition().x;
+						targetpos.x = player->GetPosition().x + 1;
 						aiming = 0;
 						pat++;
 						break;
 					}
 				case 2:
+					AfterPos = {
+						pos.x,
+						0,
+						pos.z,
+					};
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						break;
+					}
+					else {
+						frame = 0;
+						pat++;
+						break;
+					}
+				case 3:
 					AfterPos = {
 						targetpos.x,
 						0,
@@ -347,7 +362,7 @@ void RightShose::App(int Timer) {
 		rot = { 0.0f,315.0f,0.0f };
 	}
 	
-	if (Timer == 150 || Timer == 280){
+	if (Timer == 150 || Timer == 280 || Timer == 300){
 		appearMove++;
 		frame = 0.0f;
 		frame2 = 0.0f;
@@ -373,7 +388,14 @@ void RightShose::App(int Timer) {
 	case 2:
 		pos = { 10.0f,0.0f,0.0f };
 		rot = { 0,270,0 };
-	
+	case 3:
+		if (rot.y >= -90) {
+			rot.y -= 2.0f;
+		}
+		else {
+			appearMove = 0;
+			rot.y = 270;
+		}
 	}
 
 	pos = {
@@ -393,7 +415,7 @@ void RightShose::App(int Timer) {
 
 void RightShose::End(int Timer) {
 	//ボスを倒したあとの挙動(後で記述)
-	XMFLOAT3 scale = { 0.8f,0.8f,0.8f };
+	XMFLOAT3 scale = {0.8f,0.8f,0.8f};
 	float RotPower = 0.0f;
 	XMFLOAT3 AfterScale{};
 	//float endframe = 0.0f;
@@ -472,7 +494,9 @@ void RightShose::SetAct(LeftShose* leftshose) {
 	int AttackCount = leftshose->GetAttackCount();
 	int pat = leftshose->GetPat();
 	this->action = action;
-	this->AttackCount = AttackCount;
+	if (leftshose->GetHP() > 0) {
+		this->AttackCount = AttackCount;
+	}
 	if (pat == 5 && pos.y == 0.0f) {
 		AttackC = 101;
 	}

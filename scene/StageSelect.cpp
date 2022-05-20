@@ -307,7 +307,7 @@ Ease(In,Cubic,selectframe,cameratargetPos.z,Aftertargetpos.z)
 	}
 
 	//ƒV[ƒ“‚ª‚±‚±‚Å•Ï‚í‚é
-	if (cameraPos.y <= 0.3f) {
+	if (cameraPos.y <= 0.4f) {
 		frame = 0.0f;
 		selectframe = 0.0f;
 		cameraPos = { 0.0f,0.0f,0.0f };

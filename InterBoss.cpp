@@ -11,7 +11,13 @@ void InterBoss::Update() {
 
 	collideAttackArm();
 	collidePlayer();
-	Spec();
+	if (BossHP > 0) {
+		Spec();
+	}
+
+	if (BossHP <= 0) {
+		BossHP = 0;
+	}
 	player->SetInterval(Interval);
 
 	enemyobj->Update();
@@ -24,19 +30,20 @@ void InterBoss::Update() {
 void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
 
-	//ImGui::Begin("test");
+	ImGui::Begin("test");
 	//ImGui::SliderFloat("endframe", &endframe, 1, 0.0f);
 	//ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
-	///*ImGui::SliderFloat("pos.x", &pos.x, 1, 0.0f);
-	//ImGui::Text("Move:%d", appearMove);*/
-	////ImGui::SliderFloat("angle", &angle, 360, -360);
-	////ImGui::Text("%d", haveTimer);
-	//ImGui::End();
+	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	/*ImGui::SliderFloat("pos.x", &pos.x, 1, 0.0f);
+	ImGui::Text("Move:%d", appearMove);*/
+	//ImGui::SliderFloat("angle", &angle, 360, -360);
+	ImGui::Text("Attack::%d", AttackCount);
+	ImGui::End();
 	//if (BossHP >= 1) {
 		Object3d::PreDraw();
 		enemyobj->Draw();
 		Texture::PreDraw();
-		if (shadow && BossHP >= 1) {
+		if (shadow && BossHP > 0) {
 			texture->Draw();
 		}
 	//}
@@ -46,7 +53,7 @@ void InterBoss::Draw() {
 bool InterBoss::collidePlayer() {
 	XMFLOAT3 playerpos = player->GetPosition();
 	float playerhp = player->GetHp();
-	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) && FlashCount == 0 && Interval == 0 && BossHP >= 1) {
+	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) && FlashCount == 0 && Interval == 0 && BossHP > 0) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 		player->SetHp(playerhp - 1);
 		Interval = 100;
