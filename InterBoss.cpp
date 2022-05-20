@@ -24,14 +24,14 @@ void InterBoss::Update() {
 void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
 
-	ImGui::Begin("test");
-	ImGui::SliderFloat("endframe", &endframe, 1, 0.0f);
-	ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
-	/*ImGui::SliderFloat("pos.x", &pos.x, 1, 0.0f);
-	ImGui::Text("Move:%d", appearMove);*/
-	//ImGui::SliderFloat("angle", &angle, 360, -360);
-	//ImGui::Text("%d", haveTimer);
-	ImGui::End();
+	//ImGui::Begin("test");
+	//ImGui::SliderFloat("endframe", &endframe, 1, 0.0f);
+	//ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
+	///*ImGui::SliderFloat("pos.x", &pos.x, 1, 0.0f);
+	//ImGui::Text("Move:%d", appearMove);*/
+	////ImGui::SliderFloat("angle", &angle, 360, -360);
+	////ImGui::Text("%d", haveTimer);
+	//ImGui::End();
 	//if (BossHP >= 1) {
 		Object3d::PreDraw();
 		enemyobj->Draw();

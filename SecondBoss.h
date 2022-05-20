@@ -51,7 +51,7 @@ private:
 	array<InterEnemy*, 6> enemy;
 	LeftShose* leftshose = nullptr;
 	RightShose* rightshose = nullptr;
-	std::array<std::array<Exp*, 10>, 5> exp;
+	//std::array<std::array<Exp*, 6>, 5> exp;
 	float weight = 0;
 	UI* ui = nullptr;
 	CollisionManager* collisionManager = nullptr;

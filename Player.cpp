@@ -553,14 +553,13 @@ void Player::TitleUp() {
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
 
-	//ImGui::Begin("test");
-	///*ImGui::SliderFloat("pso.x", &position.x, 50, -50);
-	//ImGui::SliderFloat("pso.y", &position.y, 50, -50);
-	//ImGui::SliderFloat("pso.z", &position.z, 50, -50);
-	//ImGui::SliderInt("boundpower.x", &chargeTimer, 50, -50);*/
-	////ImGui::("boundpower.x %d", &AttackFlag, 50, -50);
+	ImGui::Begin("test");
+	ImGui::SliderFloat("pos.x", &position.x, 50, -50);
+	ImGui::SliderFloat("pos.y", &position.y, 50, -50);
+	ImGui::SliderFloat("pos.z", &position.z, 50, -50);
+	//ImGui::("boundpower.x %d", &AttackFlag, 50, -50);
 	//ImGui::Text("RotC:%d", AttackFlag);
-	//ImGui::End();
+	ImGui::End();
 	Texture::PreDraw();
 	if (chargeTimer!=0&&!AttackFlag) {
 		Charge->Draw();
