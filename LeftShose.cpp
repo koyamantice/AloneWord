@@ -127,7 +127,7 @@ void LeftShose::Spec() {
 				case 1:
 					AfterPos = {
 						player->GetPosition().x - 5,
-						pos.y,
+						5,
 						player->GetPosition().z
 					};
 					if (aiming < 180) {
@@ -137,12 +137,27 @@ void LeftShose::Spec() {
 					}
 					else {
 						frame = 0;
-						targetpos.x = player->GetPosition().x;
+						targetpos.x = player->GetPosition().x - 1;
 						aiming = 0;
 						pat++;
 						break;
 					}
 				case 2:
+					AfterPos = {
+						pos.x,
+						0,
+						pos.z,
+					};
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						break;
+					}
+					else {
+						frame = 0;
+						pat++;
+						break;
+					}
+				case 3:
 					AfterPos = {
 						targetpos.x,
 						0,
@@ -235,7 +250,7 @@ void LeftShose::App(int Timer) {
 		rot = { 0.0f,225.0f,0.0f };
 	}
 	
-	if (Timer == 150 || Timer == 280) {
+	if (Timer == 150 || Timer == 280 || Timer == 300) {
 		appearMove++;
 		frame = 0.0f;
 		frame2 = 0.0f;
@@ -261,6 +276,14 @@ void LeftShose::App(int Timer) {
 	case 2:
 		pos = { -10.0f,0.0f,0.0f };
 		rot = { 0,270,0 };
+	case 3:
+		if (rot.y <= 630.0f) {
+			rot.y += 2.0f;
+		}
+		else {
+			appearMove = 0;
+			rot.y = 270.0f;
+		}
 	}
 
 	pos = {

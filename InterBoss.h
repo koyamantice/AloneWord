@@ -31,7 +31,7 @@ public:
 	/// 座標・回転の設定
 	void SetPosition(XMFLOAT3 position) { enemyobj->SetPosition(position); }
 	void SetRotation(XMFLOAT3 rotation) { enemyobj->SetRotation(rotation); }
-
+	void SetScale(XMFLOAT3 scale) { enemyobj->SetScale(scale); }
 	//ゲッター
 	const bool& GetEnemyCatch() { return EnemyCatch; }
 	const XMFLOAT3& GetBoundPower() { return boundpower; }
