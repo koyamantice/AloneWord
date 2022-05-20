@@ -61,6 +61,7 @@ private:
 
 	Sprite* Ok;
 	Sprite* OkSheet;
+	Sprite* comment[5];
 	bool check = false;
 	float frame=0;
 	XMFLOAT2 sca{};
@@ -70,6 +71,7 @@ private:
 		chage,
 		get,
 		Attack,
+		Perfect,
 
 	};
 	bool Clear = false;

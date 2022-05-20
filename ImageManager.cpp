@@ -52,6 +52,11 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(ground, L"Resources/2d/ground.png");
 	Sprite::LoadTexture(ok, L"Resources/2d/Ok.png");
 	Sprite::LoadTexture(okSheet, L"Resources/2d/OkShit.png");
+	Sprite::LoadTexture(move,  L"Resources/2d/comment1.png");	
+	Sprite::LoadTexture(chage, L"Resources/2d/comment2.png");	
+	Sprite::LoadTexture(get,   L"Resources/2d/comment3.png");
+	Sprite::LoadTexture(Attack,L"Resources/2d/comment4.png");
+	Sprite::LoadTexture(Perfect, L"Resources/2d/comment5.png");
 }
 
 void ImageManager::LoadTex2D() {
