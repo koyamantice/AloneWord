@@ -191,7 +191,7 @@ void Rice::Update() {
 	}
 	collideArm();
 	
-	//collidePlayer();
+	collidePlayer();
 	//collideAttackArm();
 	SetEnemy();
 	if (Exp == true) {
@@ -315,7 +315,7 @@ void Rice::Demo(int num) {
 		pos.y = 0.0f;
 	}
 	collideArm();
-	//collidePlayer();
+	collidePlayer();
 	//collideAttackArm();
 	SetEnemy();
 	if (Exp == true) {
@@ -374,31 +374,29 @@ bool Rice::collideArm() {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.8f, Armpos.x, Armpos.y, Armpos.z, 0.8f) == true) {
 			EnemyCatch = true;
 			armweight += 1.0f;
+			pos.y = 0.0f;
 			player->SetAddSpeed(1.0f);
 			if (armweight == 1) {
-				savespeed = 5.0;
+				savespeed = 35.0;
 				savesacale = 1.0f;
 			} else if (armweight == 2.0f) {
-				savespeed = -5.0;
+				savespeed = 90.0;
 				savesacale = 1.0f;
 			} else if (armweight == 3.0f) {
-				savespeed = 5.0;
-				savesacale = 1.5f;
+				savespeed = 145.0;
+				savesacale = 1.0f;
 			} else if (armweight == 4.0f) {
-				savespeed = -5.0;
-				savesacale = 1.5f;
+				savespeed = 200.0;
+				savesacale = 1.0f;
 			} else if (armweight == 5.0f) {
-				savespeed = 9.0;
-				savesacale = 1.25f;
-				pos.y = 0.5f;
+				savespeed = 250.0;
+				savesacale = 1.0f;
 			} else if (armweight == 6.0f) {
-				savespeed = -9.0;
-				savesacale = 1.25f;
-				pos.y = 0.5f;
+				savespeed = 300.0;
+				savesacale = 1.0f;
 			} else if (armweight == 7.0f) {
-				savespeed = 0.0;
-				savesacale = 1.25f;
-				pos.y = 1.0f;
+				savespeed = 350.0;
+				savesacale = 1.0f;
 			}
 			player->SetArmWeight(armweight);
 			
@@ -467,7 +465,8 @@ void Rice::Rebound() {
 
 //プレイヤーがダメージを食らう
 bool Rice::collidePlayer() {
-	if (IsAlive && !EnemyCatch && FlashCount == 0 && add == false && !Exp && Interval == 0) {
+	bool AttackFlag = player->GetAttackFlag();
+	if (IsAlive && !EnemyCatch && FlashCount == 0 && add == false && !Exp && Interval == 0 && !AttackFlag) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true) {
 			IsAlive = 0;
 			player->SetHp(player->GetHp() - 1);
