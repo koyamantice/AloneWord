@@ -764,7 +764,7 @@ void Player::End() {
 
 void Player::ChargeEffectMove() {
 	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
-		array<XMFLOAT3,20> chargeposition{};
+		array<XMFLOAT3,40> chargeposition{};
 		
 		if (ChargeAlive[i] == false) {
 			if (EffectTimer[i] == 0) {

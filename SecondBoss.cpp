@@ -262,8 +262,9 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 		else {
 			player->Update();
 			leftshose->Update();
-			if (rightshose->GetHP() >= 1) {
+			if (rightshose->GetHP() > 0) {
 				rightshose->SetAct(leftshose);
+				rightshose->HitShose(leftshose);
 			}
 			rightshose->Update();
 			for (std::size_t i = 0; i < enemy.size(); i++) {
@@ -438,8 +439,15 @@ void SecondBoss::Draw(DirectXCommon* dxCommon) {
 	if (EndNumber <= 1) {
 		player->Draw(dxCommon);
 	}
-	leftshose->Draw();
-	rightshose->Draw();
+
+	if (rightshose->GetHP() > 0 || end) {
+		rightshose->Draw();
+	}
+
+	if (leftshose->GetHP() > 0 || end) {
+		leftshose->Draw();
+	}
+
 
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Draw();
