@@ -214,6 +214,12 @@ void Player::Update() {
 				}*/
 			}
 			else {
+				plasca = {
+				0.007f,
+				0.007f,
+				0.007f,
+				};
+
 				for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
 					EffectTimer[i] = 0;
 					Chargeframe[i] = 0.0f;
@@ -227,11 +233,6 @@ void Player::Update() {
 					RotTimer = 200 * (int)RotCount;
 					RotPower = 10.0f;
 					ChangeScale = true;
-					plasca = {
-					0.007f,
-					0.007f,
-					0.007f,
-					};
 				}
 				else {
 					for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
