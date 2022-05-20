@@ -50,7 +50,8 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(Tselect, L"Resources/2d/TitleParts/menu.png");
 	Sprite::LoadTexture(sky, L"Resources/2d/sky.png");
 	Sprite::LoadTexture(ground, L"Resources/2d/ground.png");
-
+	Sprite::LoadTexture(ok, L"Resources/2d/Ok.png");
+	Sprite::LoadTexture(okSheet, L"Resources/2d/OkShit.png");
 }
 
 void ImageManager::LoadTex2D() {

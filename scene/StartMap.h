@@ -60,7 +60,18 @@ private:
 	ShrinkChange* shrinkchange = false;
 
 	Sprite* Ok;
+	Sprite* OkSheet;
+	bool check = false;
+	float frame=0;
+	XMFLOAT2 sca{};
 	int	tutorial =0;
+	enum {
+		move,
+		chage,
+		get,
+		Attack,
+
+	};
 	bool Clear = false;
 	bool pause = false;
 	int wait = 0;

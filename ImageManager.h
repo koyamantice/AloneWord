@@ -57,7 +57,8 @@ public:
 		Tselect,
 		sky,
 		ground,
-		
+		ok,
+		okSheet,
 	};
 	enum tex2dName {
 	enemy,//Texture::LoadTexture(0, L"Resources/2d/enemy.png");

@@ -94,8 +94,13 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	//model1 =ModelManager::GetIns()->GetFBXModel(ModelManager::MottiMove);
 
 	ui = new UI(player);
-	
-	Ok = Sprite::Create(ImageManager::ok, { 0.0f,0.0f });
+
+	Ok = Sprite::Create(ImageManager::ok, { 570.0f,500.0f });
+	Ok->SetAnchorPoint({0.5f, 0.5f});
+	//Ok->SetScale(3.0f);
+	OkSheet = Sprite::Create(ImageManager::okSheet, { 570.0f,500.0f });
+	OkSheet->SetAnchorPoint({ 0.5f, 0.5f });
+	OkSheet->SetScale(1.0f);
 
 	shrinkchange = new ShrinkChange();
 	shrinkchange->SetEndChange(true);
@@ -134,8 +139,53 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		hit = false;
 	}
 	if (input->PushButton(input->Select)) {
-		int a = 0;
-		a++;
+		check = true;
+	}
+	if (tutorial==move) {
+		if (input->LeftTriggerStick(input->Right) ||
+			input->LeftTriggerStick(input->Left) ||
+			input->LeftTriggerStick(input->Up) ||
+			input->LeftTriggerStick(input->Down)) {
+			tutorial++;
+			check = true;
+		}
+	}
+	if (tutorial==chage) {
+		if (input->PushButton(input->Button_RB)) {
+			tutorial++;
+			if (!check) {
+				check = true;
+			}
+		}
+	}
+	if (tutorial == get) {
+		if (player->GetArmWeight()) {
+			tutorial++;
+			if (!check) {
+				check = true;
+			}
+		}
+	}
+	if (tutorial == Attack) {
+		if (bossenemy->GetHP()<10) {
+			tutorial++;
+			if (!check) {
+				check = true;
+			}
+		}
+	}
+	if (check) {
+		sca = {
+Ease(In,Quad,frame,256,128),
+Ease(In,Quad,frame,256,128),
+		};
+		if (frame < 1.0f) {
+			frame += 0.05f;
+		} else {
+			frame = 0.0f;
+			check = false;
+		}
+		Ok->SetSize(sca);
 	}
 	objBossMap->Update();
 	player->Update();
@@ -187,6 +237,8 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	particleMan->Draw(dxCommon->GetCmdList());
 	ui->Draw();
 	Sprite::PreDraw();
+	OkSheet->Draw();
+	Ok->Draw();
 	expandchange->Draw();
 	shrinkchange->Draw();
 }
