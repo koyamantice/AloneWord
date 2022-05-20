@@ -189,20 +189,19 @@ const void UI::Draw() {
 	//ImGui::End();
 	Sprite::PreDraw();
 	//Vignette->Draw();
-	if (boss->GetHP() > 0) {
-		if (boss) {
-			BossHp[max]->Draw();
-			BossHp[damage]->Draw();
-			BossHp[now]->Draw();
-		}
+	
+	if (boss) {
+		BossHp[max]->Draw();
+		BossHp[damage]->Draw();
+		BossHp[now]->Draw();
 	}
-	if (boss2->GetHP() > 0) {
-		if (boss2) {
-			BossHp2[max]->Draw();
-			BossHp2[damage]->Draw();
-			BossHp2[now]->Draw();
-		}
+	
+	if (boss2) {
+		BossHp2[max]->Draw();
+		BossHp2[damage]->Draw();
+		BossHp2[now]->Draw();
 	}
+	
 	HpGauge->Draw();
 	if (player->GetHp()>7) {
 		Mark[energy]->Draw();

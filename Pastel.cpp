@@ -220,7 +220,8 @@ void Pastel::Spec() {
 					else {
 						coolT = 0;
 						frame = 0;
-						if (BossHP >= 20) {
+						action++;
+						/*if (BossHP >= 20) {
 							action++;
 						}
 						else {
@@ -237,7 +238,7 @@ void Pastel::Spec() {
 								AttackC = 0;
 								action++;
 							}
-						}
+						}*/
 						break;
 					}
 				}
@@ -280,7 +281,12 @@ void Pastel::Spec() {
 						frame = 0;
 						action = 0;
 						active = false;
-						AttackCount = 0;
+						if (BossHP >= 20) {
+							AttackCount = 0;
+						}
+						else {
+							AttackCount = 150;
+						}
 						break;
 					}
 			}
