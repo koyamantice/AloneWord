@@ -46,7 +46,7 @@ private:
 	Texture* limit = nullptr;
 	Player* player = nullptr;
 	array<Effect*, 40> effect;
-	array<InterEnemy*, 5> enemy;
+	array<InterEnemy*, 6> enemy;
 	InterBoss* bossenemy = nullptr;
 	std::array<std::array<Exp*, 5>, 5> exp;
 	float weight = 0;
