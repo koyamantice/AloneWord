@@ -142,11 +142,11 @@ void ThirdBoss::Finalize() {
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Finalize();
 	}
-	for (std::size_t i = 0; i < exp.size(); i++) {
+	/*for (std::size_t i = 0; i < exp.size(); i++) {
 		for (std::size_t j = 0; j < exp[i].size(); j++) {
 			exp[i][j]->Finalize();
 		}
-	}
+	}*/
 	delete camera;
 	ui->Finalize();
 }
@@ -392,8 +392,8 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 
 	//敵同士の当たり判定
 	if (sizeof(enemy) > 2) {//配列のサイズ確認
-		for (int colA = 0; colA < ThirdEnemyMax; colA++) {
-			for (int colB = 1; colB < ThirdEnemyMax; colB++) {
+		for (int colA = 0; colA < enemy.size(); colA++) {
+			for (int colB = 1; colB < enemy.size(); colB++) {
 				if (Collision::CircleCollision(enemy[colA]->GetPosition().x, enemy[colA]->GetPosition().z, 3.0f, enemy[colB]->GetPosition().x, enemy[colB]->GetPosition().z, 3.0f) == true && colA != colB) {//蠖薙◆繧雁愛螳壹→閾ｪ讖溷酔螢ｫ縺ｮ蠖薙◆繧雁愛螳壹・蜑企勁
 					//DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
 					enemy[colA]->SetHit(true);

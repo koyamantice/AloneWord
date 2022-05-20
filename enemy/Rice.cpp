@@ -391,7 +391,6 @@ bool Rice::collideArm() {
 			} else if (armweight == 5.0f) {
 				savespeed = 250.0;
 				savesacale = 1.0f;
-				pos.y = 0.5f;
 			} else if (armweight == 6.0f) {
 				savespeed = 300.0;
 				savesacale = 1.0f;
