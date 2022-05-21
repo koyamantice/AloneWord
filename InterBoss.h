@@ -125,11 +125,6 @@ protected:
 	XMFLOAT3 Afterrot = { 0.0f,90.0f,0.0f };
 	XMFLOAT3 playerpos{};
 	XMFLOAT3 targetpos{};
-	XMFLOAT3 Afterrot = {0.0f,90.0f,0.0f};
-	XMFLOAT3 StartPos{};
-	XMFLOAT3 EndPos{};
-	XMFLOAT3 EndRot{};
-	XMFLOAT3 basePos{};
 	//敵関係変数
 	float radius = 0.0f;
 	float speed = 0.0f;
@@ -195,7 +190,6 @@ protected:
 	//靴のボス
 	bool stun = false;
 	int stunTimer = 0;
-	XMFLOAT3 targetpos{};
 	//杵のボス
 	bool Off = false;
 	int haveTimer = 0;
