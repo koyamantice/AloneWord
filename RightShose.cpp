@@ -6,15 +6,18 @@
 #include"ImageManager.h"
 using namespace DirectX;
 
+//こんすとらくた
 RightShose::RightShose() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::RightShoes);
 	enemyobj = new Object3d();
 }
 
+//初期化
 void RightShose::Initialize(bool shadow) {
 	assert(player);
 	this->shadow = shadow;
 	IsAlive = 0;
+	//敵
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
 	pos = { 10.0f,0.0f,0.0f };
@@ -24,6 +27,7 @@ void RightShose::Initialize(bool shadow) {
 	Afterrot.y = rot.y;
 	enemyobj->SetRotation(rot);
 	enemyobj->SetScale({ 0.3f,0.3f,0.3f });
+	//影(今回は使わない)
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	//texture->SetColor({ 1,1,1,1 });
@@ -31,11 +35,12 @@ void RightShose::Initialize(bool shadow) {
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.3f,0.3f,0.3f });
 
+	//ぴよぴよ
 	for (std::size_t i = 0; i < Stuntexture.size(); i++) {
 		Stuntexture[i] = Texture::Create(ImageManager::Stun, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 		Stuntexture[i]->TextureCreate();
 		Stuntexture[i]->SetRotation({ 0,0,0 });
-		Stuntexture[i]->SetScale({ 0.1f,0.1f,0.1f });
+		Stuntexture[i]->SetScale({ 0.05f,0.05f,0.05f });
 		Stunscale[i] = 1.0f;
 		StunSpeed[0] = 0.0f;
 		StunSpeed[1] = 90.0f;
@@ -52,6 +57,7 @@ void RightShose::Initialize(bool shadow) {
 	}
 }
 
+//開放
 void RightShose::Finalize() {
 	//delete enemyobj;
 	delete texture;
@@ -60,6 +66,7 @@ void RightShose::Finalize() {
 //ボスの行動
 void RightShose::Spec() {
 	XMFLOAT3 AfterPos{};
+	//ここで行動を決める
 	if (AttackCount > 180 && pos.y <= 0.1f) {
 		if (!active) {
 			action = (rand() % 2);
@@ -68,6 +75,7 @@ void RightShose::Spec() {
 			active = true;
 		}
 	}
+	//攻撃をするまでのインターバル
 	else {
 		if (!active) {
 			AttackCount++;
@@ -78,7 +86,9 @@ void RightShose::Spec() {
 		}
 	}
 
+	//行動開始
 	if (active) {
+		//突進攻撃
 		if ((action % 2) == 0) {
 			Afterrot.x = 0.0f;
 			if (!stun) {
@@ -110,7 +120,7 @@ void RightShose::Spec() {
 					Ease(In,Cubic,frame,pos.z,AfterPos.z),
 					};
 				}
-
+				//プレイヤーーの位置に向かって回転する
 				if (MoveCount == 80) {
 					XMFLOAT3 position{};
 					position.x = (player->GetPosition().x - pos.x);
@@ -157,7 +167,6 @@ void RightShose::Spec() {
 				}
 
 			}
-
 
 			if (Attack) {
 				//プレイヤーにスピード加算
@@ -266,6 +275,7 @@ void RightShose::Spec() {
 			}
 			enemyobj->SetPosition(pos);
 		}
+		//プレイヤーを挟むような攻撃
 		if ((action % 2) == 1) {
 			if (AttackC < 3) {
 				Afterrot.x = 270.0f;
@@ -387,7 +397,7 @@ void RightShose::Spec() {
 	rot.x = Ease(In, Quint, 0.7f, rot.x, Afterrot.x);
 	enemyobj->SetRotation(rot);
 }
-
+//導入
 void RightShose::App(int Timer) {
 
 	XMFLOAT3 AfterPos{};
@@ -465,6 +475,7 @@ void RightShose::App(int Timer) {
 	enemyobj->SetRotation(rot);
 }
 
+//撃破
 void RightShose::End(int Timer) {
 	//ボスを倒したあとの挙動(後で記述)
 	XMFLOAT3 scale = {0.8f,0.8f,0.8f};
@@ -538,6 +549,7 @@ void RightShose::End(int Timer) {
 	enemyobj->SetPosition(pos);
 	enemyobj->SetRotation(rot);
 }
+//特別な描画(今回の場合ぴよぴよ)
 void RightShose::specialDraw() {
 	if (stun) {
 		for (std::size_t i = 0; i < Stuntexture.size(); i++) {
@@ -546,6 +558,7 @@ void RightShose::specialDraw() {
 	}
 }
 
+//左足と行動を合わせる
 void RightShose::SetAct(LeftShose* leftshose) {
 	int action = leftshose->GetAction();
 	int AttackCount = leftshose->GetAttackCount();
@@ -561,6 +574,7 @@ void RightShose::SetAct(LeftShose* leftshose) {
 	LeftAct = leftshose->GetActive();
 }
 
+//左足との当たり判定
 bool RightShose::HitShose(LeftShose* leftshose) {
 	XMFLOAT3 leftpos = leftshose->GetPosition();
 	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 1.5f, leftpos.x, leftpos.y, leftpos.z, 1.5f) && (action % 2) == 0) {

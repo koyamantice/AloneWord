@@ -33,22 +33,18 @@ public:
 	void Draw(DirectXCommon* dxCommon) override;
 
 private:
-	XMFLOAT3 cameraPos = { 0.0f,0.0f,0.0f };
+	//オブジェクトやテクスチャ
 	Model* modelFloor = nullptr;
 	Object3d* objFloor;
-
 	Model* modelBossMap = nullptr;
 	TouchableObject* objBossMap;
-
 	Model* modelSphere = nullptr;
 	Object3d* objSphere;
-
 	Model* modelSkydome = nullptr;
 	Object3d* objSkydome;
-
-	/*FBXModel* model1 = nullptr;
-	FBXObject3d* object1 = nullptr;*/
+	//カメラ関係
 	DebugCamera* camera = { nullptr };
+	//それぞれのクラスのもの
 	Texture* limit = nullptr;
 	Player* player = nullptr;
 	array<Effect*,40> effect;

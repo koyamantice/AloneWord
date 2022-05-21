@@ -23,17 +23,23 @@ class StageSelect :
 	/// </summary>
 	void Draw(DirectXCommon* dxCommon)override;
 private:
+	bool UICheck();
+private:
+	//メンバ変数
+	//テクスチャやモデル
 	Texture* BackGround = nullptr;
 	Sprite* select[5]{};
-	XMFLOAT2 selectP[4]{};
 	Sprite* plane[5]{};
 	Sprite* BlackFilter = nullptr;
-	float frame=0;
+	Player* player = nullptr;
+	//各ポジション
+	XMFLOAT2 selectP[4]{};
 	Input* input = Input::GetInstance();
 	DebugCamera* camera = { nullptr };
-	Player* player=nullptr;
+	//演出のためのもの
 	ExpandChange* expandchange = false;
 	ShrinkChange* shrinkchange = false;
+	//どのステージを選択したか
 	enum stage {
 		No,
 		fork,
@@ -42,6 +48,8 @@ private:
 		boots,
 	};
 	int StageSelectNumber = 0;
+	//イージングのためのもの
+	float frame = 0;
 	float selectframe = 0.0f;
-	bool UICheck();
+
 };

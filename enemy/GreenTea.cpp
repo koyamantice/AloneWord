@@ -5,7 +5,7 @@
 #include <Easing.h>
 #include"ImageManager.h"
 using namespace DirectX;
-
+//こんすとらくた
 GreenTea::GreenTea() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::Kyusu);
 	enemyobj = new Object3d();
@@ -15,18 +15,20 @@ GreenTea::GreenTea() {
 	}
 }
 
+//初期化
 void GreenTea::Initialize(bool shadow) {
 	assert(player);
 	this->shadow = shadow;
 	pos = { 0.0f,0.0f,0.0f };
 	rot = { 0,0,0 };
 	IsAlive = true;
+	//敵
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
 	enemyobj->SetPosition(pos);
 	enemyobj->SetRotation(rot);
 	enemyobj->SetScale({ 0.5f,0.5f,0.5f });
-
+	//影(今回は使わない)
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	//texture->SetColor({ 1,1,1,1 });
@@ -36,7 +38,7 @@ void GreenTea::Initialize(bool shadow) {
 	degree = 0.0f;
 	scale = 0.0f;
 }
-
+//開放
 void GreenTea::Finalize() {
 	for (int i = 0; i < 50; i++) {
 		hotWater[i]->Final();
@@ -52,6 +54,7 @@ void GreenTea::Spec() {
 		hotWater[i]->Upda();
 		hotWater[i]->SetPlayer(player);
 	}
+	//ここで行動を決める
 	if (AttackCount > 180) {
 		if (!active) {
 			pos.y = 0.0f;
@@ -63,6 +66,7 @@ void GreenTea::Spec() {
 			active = true;
 		}
 	} else {
+		//インターバル
 		if (!active) {
 			AttackCount++;
 			angle += 2.0f;
@@ -75,6 +79,7 @@ void GreenTea::Spec() {
 			enemyobj->SetPosition(pos);
 		}
 	}
+	//行動開始
 	if (active) {
 		count++;
 		if (count % 15 == 0) {
@@ -315,6 +320,7 @@ Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 	}
 }
 
+//導入
 void GreenTea::App(int Timer) {
 	//後に記入
 	hotWater[0]->Upda();
@@ -472,6 +478,7 @@ void GreenTea::App(int Timer) {
 	enemyobj->SetRotation(rot);
 }
 
+//撃破
 void GreenTea::End(int Timer) {
 	//ボスを倒したあとの挙動(後で記述)
 	XMFLOAT3 scale = { 0.8f,0.8f,0.8f };

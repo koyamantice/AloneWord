@@ -149,8 +149,8 @@ void Player::Update() {
 				ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
 			}
 		}
-
-
+		
+		//的とあたったときに加速する
 		if (AddSpeed != 0.0f) {
 			Speedframe += 0.02f;
 			AddSpeed = Ease(Out, Cubic, Speedframe, AddSpeed, 0.0f);
@@ -160,7 +160,7 @@ void Player::Update() {
 		}
 		PlayerSpeed = 0.3f + AddSpeed;
 
-		//腕振り回す系
+		//攻撃関係
 		if (AttackFlag == false) {
 			//if (input->TriggerButton(input->Button_RB)) {
 			//	RotCount = 0;
@@ -248,6 +248,7 @@ void Player::Update() {
 		}
 	}
 
+	//チャージのエフェクト
 	if (ReleaseStart == true) {
 		ChargeRelease();
 	}
@@ -401,6 +402,7 @@ void Player::Update() {
 		}
 	}
 
+	//プレイヤーが行ける限界
 	if (position.y <= 0.0f) {
 		position.y = 0.0f;
 		onGround = true;
@@ -479,6 +481,7 @@ void Player::SelectUp() {
 			position.z -= cos(atan2(StickrotX, StickrotY)) * PlayerSpeed;
 		}
 	}
+	//プレイヤーが行ける限界
 	if (position.x > 13) {
 		position.x = 13;
 	}

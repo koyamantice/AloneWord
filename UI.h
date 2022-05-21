@@ -24,9 +24,9 @@ private:
 	Player* player = nullptr;
 	InterBoss* boss = nullptr;
 	InterBoss* boss2 = nullptr;
-	Sprite* BossHp[3]{};
-	Sprite* BossHp2[3]{};
-	Sprite* PlaHp[3]{};
+	Sprite* BossHp[3]{};//敵のHP
+	Sprite* BossHp2[3]{};//敵のHP
+	Sprite* PlaHp[3]{};//プレイヤーのHP
 	enum {
 		max,
 		damage,
@@ -40,11 +40,14 @@ private:
 		weak
 	};
 	Sprite* Life = nullptr;
+	//敵がどの位置にいるか
 	Sprite* Arrow = nullptr;
 	Sprite* Arrow2 = nullptr;
 	Sprite* Vignette = nullptr;
+	//数
 	Sprite* number[2][10]{};
 	Sprite* bairitu = nullptr;
+	//スプライトの位置
 	XMFLOAT2 bossPos[2]{};
 	XMFLOAT2 bossPos2[2]{};
 	XMFLOAT2 plaPos[2]{};
@@ -52,6 +55,7 @@ private:
 	XMFLOAT2 ArrowPos2{};
 	XMFLOAT2 AfterPos[2]{};
 	XMFLOAT2 AfterPos2[2]{};
+	//敵の位置のUIのいちを求めるための変数
 	const float PI = 3.145265f;
 	std::vector<int> power;
 	float strong = 20.0f;

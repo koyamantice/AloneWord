@@ -74,7 +74,7 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	//スプライト生成
 	expandchange = new ExpandChange();
 }
-
+//開放
 void StageSelect::Finalize() {
 	delete BackGround;
 	delete camera;
@@ -88,6 +88,7 @@ void StageSelect::Finalize() {
 	expandchange->Finalize();
 	shrinkchange->Finalize();
 }
+//どのマップに行くかを決める
 bool StageSelect::UICheck() {
 	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 7.0f, -5.0f, 2.0f)) { return false; }
 	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 7.0f, 3.0f, 2.0f)) { return false; }
@@ -96,6 +97,7 @@ bool StageSelect::UICheck() {
 	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -2.0f, -4.0f, 2.0f)) { return false; }
 	return true;
 }
+//更新
 void StageSelect::Update(DirectXCommon* dxCommon) {
 	input = Input::GetInstance();
 	lightGroup->Update();
@@ -104,6 +106,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 	expandchange->Update();
 	shrinkchange->Update();
 	ParticleManager::GetInstance()->Update();
+	//選ばれる場所によってカメラが寄る場所が変わる
 	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 7.0f, -5.0f, 2.0f)) {
 		if (frame >= 1.0f) {
 			frame = 1.0f;
@@ -265,6 +268,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		}
 	}
 
+	//選択した場合カメラが寄る
 	if (StageSelectNumber != No) {
 		if (selectframe <= 1.0f) {
 			selectframe += 0.005f;
@@ -308,7 +312,7 @@ Ease(In,Cubic,selectframe,cameratargetPos.z,Aftertargetpos.z)
 	}
 
 	//シーンがここで変わる
-	if (cameraPos.y <= 0.6f) {
+	if (cameraPos.y <= 2.6f) {
 		frame = 0.0f;
 		selectframe = 0.0f;
 		cameraPos = { 0.0f,0.0f,0.0f };
@@ -329,6 +333,7 @@ Ease(In,Cubic,selectframe,cameratargetPos.z,Aftertargetpos.z)
 	camera->Update();
 }
 
+//描画
 void StageSelect::Draw(DirectXCommon* dxCommon) {
 	ImGui::Begin("test");
 	ImGui::SliderFloat("cameraPos.y", &cameraPos.y, 30, 0);

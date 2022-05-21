@@ -4,6 +4,7 @@
 #include "Collision.h"
 #include <Easing.h>
 
+//初期化
 void HotWater::Init() {
 	water = new Object3d();
 	water = Object3d::Create();
@@ -18,6 +19,7 @@ void HotWater::Init() {
 	hot->SetScale({ 0.1f,0.1f,0.1f });
 }
 
+//更新
 void HotWater::Upda() {
 	water->Update();
 	hot->Update();
@@ -72,6 +74,7 @@ void HotWater::Upda() {
 	}
 }
 
+//描画
 void HotWater::Draw() {
 	if (IsAlive) {
 		Object3d::PreDraw();
@@ -83,6 +86,7 @@ void HotWater::Draw() {
 	}
 }
 
+//プレイヤーとの当たり判定
 void HotWater::Collide() {
 	if (!player->GetWet()) {
 		if (Collision::CircleCollision(pos.x, pos.z, radius, player->GetPosition().x, player->GetPosition().z, 1.0f)) {
@@ -92,6 +96,7 @@ void HotWater::Collide() {
 	}
 }
 
+//お湯を飛ばす
 void HotWater::Set(const XMFLOAT3& pos) {
 	this->pos = pos;
 	water->SetPosition(this->pos);
@@ -104,6 +109,7 @@ void HotWater::Set(const XMFLOAT3& pos) {
 	}
 }
 
+//導入の水
 void HotWater::AppeaSet(const XMFLOAT3& pos) {
 	this->pos = pos;
 	water->SetPosition(this->pos);
@@ -116,6 +122,7 @@ void HotWater::AppeaSet(const XMFLOAT3& pos) {
 	}
 }
 
+//開放処理
 void HotWater::Final() {
 	delete hot;
 }

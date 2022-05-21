@@ -126,9 +126,8 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	expandchange = new ExpandChange();
 	//ui->Initialize();
 }
-
+//開放処理
 void SecondBoss::Finalize() {
-
 	//3dのモデルのデリート
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i]->Finalize();
@@ -176,6 +175,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 			rightshose->Begin();
 			rightshose->AppeaMovie(appearanceTimer);
 			leftshose->AppeaMovie(appearanceTimer);
+			//カメラの位置をそれぞれ変更していく
 			if (appearanceNumber == 0) {
 				cameraPos.x = rightshose->GetPosition().x + 5;
 				cameraPos.y = rightshose->GetPosition().y + 2;
@@ -211,7 +211,6 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 					Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 				}
 			}
-
 
 			else if (appearanceNumber == 3) {
 				if (appearanceTimer == 300) {
@@ -266,7 +265,6 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 		}
 		//戦闘開始
 		else {
-
 			player->Update();
 			leftshose->Update();
 			if (rightshose->GetHP() > 0) {
@@ -274,7 +272,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 				rightshose->HitShose(leftshose);
 			}
 			rightshose->Update();
-			
+		/*	
 			if (rightshose->GetHP() <= 0) {
 				DeadRight++;
 				leftshose->SetPosition({ 0.0f,-20.8f,0.0f });
@@ -283,7 +281,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 			if (leftshose->GetHP() <= 0) {
 				DeadLeft++;
 				rightshose->SetPosition({ 0.0f,-20.8f,0.0f });
-			}
+			}*/
 			for (std::size_t i = 0; i < enemy.size(); i++) {
 				enemy[i]->Update();
 				enemy[i]->SetEnemy();
@@ -432,6 +430,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 	//DebugText::GetInstance()->Print("PUSH to A!!", 1040, 660, 2.0f);
 }
 
+//描画
 void SecondBoss::Draw(DirectXCommon* dxCommon) {
 	ImGui::Begin("test");
 	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);

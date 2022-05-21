@@ -114,6 +114,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	expandchange = new ExpandChange();
 }
 
+//開放処理
 void StartMap::Finalize() {
 	//3dのモデルのデリート
 	for (std::size_t i = 0; i < enemy.size(); i++) {
@@ -137,6 +138,7 @@ void StartMap::Finalize() {
 	shrinkchange->Finalize();
 }
 
+//更新処理
 void StartMap::Update(DirectXCommon* dxCommon) {
 	if (pause) {
 		Pause(set);
@@ -147,6 +149,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	if (input->PushButton(input->Select)) {
 		check = true;
 	}
+	//行動により次のチュートリアルに移る
 	if (tutorial==move) {
 		if (input->LeftTriggerStick(input->Right) ||
 			input->LeftTriggerStick(input->Left) ||
@@ -179,6 +182,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 			}
 		}
 	}
+	//チュートリアルが終わるとシーン遷移に移る
 	if (tutorial == Perfect) {
 		if (input->TriggerButton(input->Select)) {
 			expandchange->SetStartChange(true);
@@ -235,6 +239,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	}
 }
 
+//描画
 void StartMap::Draw(DirectXCommon* dxCommon) {
 	Object3d::PreDraw();
 	objBossMap->Draw();
@@ -264,6 +269,7 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	shrinkchange->Draw();
 }
 
+//ポーズ関係
 void StartMap::Pause(const int& Timer) {
 	wait++;
 	if (wait >= Timer) {

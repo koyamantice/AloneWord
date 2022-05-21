@@ -2,7 +2,7 @@
 #include <Easing.h>
 #include <ImageManager.h>
 #include"Collision.h"
-
+//コンストラクタ
 UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	this->player = player;
 	this->boss = boss;
@@ -109,6 +109,7 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 		}
 	}
 }
+//開放
 void UI::Update() {
 	{//HP
 		AfterPos[1] = { (float)(player->GetHp() * 43),55 };
@@ -163,6 +164,7 @@ void UI::Update() {
 	}
 }
 
+//開放
 void UI::Finalize() {
 	for (int i = 0; i < 3;i++) {
 		delete BossHp[i];
@@ -175,6 +177,7 @@ void UI::Finalize() {
 	delete Arrow2;
 }
 
+//描画
 const void UI::Draw() {
 	//ImGui::Begin("test");
 	//ImGui::SliderFloat("rot.x", &AfterPos[0].x, 270, -90);

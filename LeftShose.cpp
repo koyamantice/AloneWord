@@ -6,21 +6,25 @@
 using namespace DirectX;
 #include"ImageManager.h"
 
+//コンストラクタ
 LeftShose::LeftShose() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::LeftShoes);
 	enemyobj = new Object3d();
 }
 
+//初期化
 void LeftShose::Initialize(bool shadow) {
 	assert(player);
 	this->shadow = shadow;
 	IsAlive = 0;
+	//敵
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
 	pos = { -10.0f,0.0f,0.0f };
 	enemyobj->SetPosition(pos);
 	rot = { 0,270,0 };
 	Afterrot.y = rot.y;
+	//影(このオブジェクトでは使わない)
 	enemyobj->SetRotation(rot);
 	enemyobj->SetScale({ 0.3f,0.3f,0.3f });
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
@@ -30,11 +34,12 @@ void LeftShose::Initialize(bool shadow) {
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.3f,0.3f,0.3f });
 
+	//スタン時のぴよぴよ
 	for (std::size_t i = 0; i < Stuntexture.size(); i++) {
 		Stuntexture[i] = Texture::Create(ImageManager::Stun, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 		Stuntexture[i]->TextureCreate();
 		Stuntexture[i]->SetRotation({ 0,0,0 });
-		Stuntexture[i]->SetScale({ 0.1f,0.1f,0.1f });
+		Stuntexture[i]->SetScale({ 0.05f,0.05f,0.05f });
 		Stunscale[i] = 1.0f;
 		StunSpeed[0] = 0.0f;
 		StunSpeed[1] = 90.0f;
@@ -51,6 +56,7 @@ void LeftShose::Initialize(bool shadow) {
 	}
 }
 
+//開放
 void LeftShose::Finalize() {
 	//delete enemyobj;
 	delete texture;
@@ -59,6 +65,7 @@ void LeftShose::Finalize() {
 //ボスの行動
 void LeftShose::Spec() {
 	XMFLOAT3 AfterPos{};
+	//ここで行動を決める
 	if (AttackCount > 180 && pos.y <= 0.1f) {
 		if (!active) {
 			action = (rand() % 2);
@@ -67,6 +74,7 @@ void LeftShose::Spec() {
 			active = true;
 		}
 	}
+	//攻撃をするまでのインターバル
 	else {
 		if (!active) {
 			AttackCount++;
@@ -77,7 +85,9 @@ void LeftShose::Spec() {
 		}
 	}
 
+	//行動開始
 	if (active) {
+		//スタージを外周する
 		if ((action % 2) == 0) {
 			if (!stun) {
 				if (frame < 0.45f) {
@@ -154,8 +164,8 @@ void LeftShose::Spec() {
 
 			}
 		}
+		//プレイヤーを挟む処理
 		else if ((action % 2) == 1) {
-
 			if (AttackC < 3) {
 				Afterrot.x = 90.0f;
 				switch (pat) {
@@ -276,6 +286,7 @@ void LeftShose::Spec() {
 	enemyobj->SetRotation(rot);
 }
 
+//導入
 void LeftShose::App(int Timer) {
 
 	XMFLOAT3 AfterPos{};
@@ -352,6 +363,7 @@ void LeftShose::App(int Timer) {
 	enemyobj->SetRotation(rot);
 }
 
+//撃破
 void LeftShose::End(int Timer) {
 	//ボスを倒したあとの挙動(後で記述)
 	XMFLOAT3 scale = { 0.8f,0.8f,0.8f };
@@ -426,6 +438,7 @@ void LeftShose::End(int Timer) {
 	enemyobj->SetRotation(rot);
 }
 
+//特別な描画(この場合ぴよぴよ)
 void LeftShose::specialDraw() {
 	if (stun) {
 		for (std::size_t i = 0; i < Stuntexture.size(); i++) {
