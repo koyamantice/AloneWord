@@ -66,7 +66,9 @@ public:
 		Perfect,
 		Enemyhp,
 		Enemyhp2,
-		Enemyhp3
+		Enemyhp3,
+		SpinGauge,
+		SpinBar,
 	};
 	enum tex2dName {
 	enemy,//Texture::LoadTexture(0, L"Resources/2d/enemy.png");

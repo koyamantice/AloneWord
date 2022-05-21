@@ -252,6 +252,15 @@
     <ClCompile Include="ShrinkChange.cpp">
       <Filter>effect</Filter>
     </ClCompile>
+    <ClCompile Include="Human.cpp">
+      <Filter>stage\プレイマップ\人間</Filter>
+    </ClCompile>
+    <ClCompile Include="LeftHand.cpp">
+      <Filter>stage\プレイマップ\人間</Filter>
+    </ClCompile>
+    <ClCompile Include="RightHand.cpp">
+      <Filter>stage\プレイマップ\人間</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2d\Sprite.h">
@@ -476,9 +485,6 @@
     <ClInclude Include="scene\TisGame.h">
       <Filter>scene</Filter>
     </ClInclude>
-    <ClInclude Include="UI.h">
-      <Filter>ui</Filter>
-    </ClInclude>
     <ClInclude Include="Warp.h">
       <Filter>warp</Filter>
     </ClInclude>
@@ -496,6 +502,18 @@
     </ClInclude>
     <ClInclude Include="InterBoss.h">
       <Filter>enemy\ボス</Filter>
+    </ClInclude>
+    <ClInclude Include="Human.h">
+      <Filter>stage\プレイマップ\人間</Filter>
+    </ClInclude>
+    <ClInclude Include="LeftHand.h">
+      <Filter>stage\プレイマップ\人間</Filter>
+    </ClInclude>
+    <ClInclude Include="RightHand.h">
+      <Filter>stage\プレイマップ\人間</Filter>
+    </ClInclude>
+    <ClInclude Include="UI.h">
+      <Filter>ui</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -605,6 +623,9 @@
     </Filter>
     <Filter Include="シェーダーファイル">
       <UniqueIdentifier>{78a9d76b-31b8-4f30-82fc-5ff98a372aab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="stage\プレイマップ\人間">
+      <UniqueIdentifier>{ca4880a4-8cda-4ecd-ae06-24e1c26470bd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -66,6 +66,7 @@ public:
 
 	const float& GetPower() { return power; }
 
+	const int& GetRotTimer() { return RotTimer; }
 	/// <summary>
 	/// 座標の設定
 	/// </summary>
