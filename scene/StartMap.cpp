@@ -180,9 +180,12 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		}
 	}
 	if (tutorial == Perfect) {
-		if (input->PushButton(input->Select)) {
-			SceneManager::GetInstance()->ChangeScene("StageSelect");
+		if (input->TriggerButton(input->Select)) {
+			expandchange->SetStartChange(true);
 		}
+	}
+	if (expandchange->GetTimer() >= 58) {
+		SceneManager::GetInstance()->ChangeScene("StageSelect");
 	}
 	if (check) {
 		sca = {
@@ -230,8 +233,6 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	if (player->GetHp() <= 0) {
 		player->SetHp(10);
 	}
-	expandchange->Update();
-	shrinkchange->Update();
 }
 
 void StartMap::Draw(DirectXCommon* dxCommon) {

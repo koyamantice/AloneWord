@@ -13,6 +13,7 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	BackGround->SetRotation({ 90,0,0 });
 	BackGround->SetPosition({ 0.0f,0.0f,0.5f });
 	BackGround->SetScale({ 3.2f,1.8f,1.0f });
+	BackGround->Update();
 	select[0] = Sprite::Create(ImageManager::select1, selectP[0]);
 	select[0]->SetAnchorPoint({ 1.0f,0.0f });
 	select[1] = Sprite::Create(ImageManager::select2, selectP[0]);
@@ -307,7 +308,7 @@ Ease(In,Cubic,selectframe,cameratargetPos.z,Aftertargetpos.z)
 	}
 
 	//ƒV[ƒ“‚ª‚±‚±‚Å•Ï‚í‚é
-	if (cameraPos.y <= 0.4f) {
+	if (cameraPos.y <= 0.6f) {
 		frame = 0.0f;
 		selectframe = 0.0f;
 		cameraPos = { 0.0f,0.0f,0.0f };

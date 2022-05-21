@@ -221,7 +221,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 			}
 
 			else if (appearanceNumber == 4) {
-				if (appearanceTimer == 400) {
+				if (appearanceTimer == 500) {
 					appearanceNumber++;
 				}
 			}
@@ -365,11 +365,6 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 	BlackFilter->SetColor(BlackColor);
 	camera->Update();
 	expandchange->Update();
-
-	for (std::size_t i = 0; i < effect.size(); i++) {
-		effect[i]->Update(leftshose);
-		effect[i]->Update(rightshose);
-	}
 
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Update(leftshose);
