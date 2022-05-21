@@ -5,15 +5,16 @@
 #include <Easing.h>
 using namespace DirectX;
 
+//更新処理
 void InterBoss::Update() {
 	Interval = player->GetInterval();
 	FlashCount = player->GetFlashCount();
-
+	//各当たり判定
 	collideAttackArm();
 	collidePlayer();
-	//if (BossHP > 0) {
-		Spec();
-	//}
+	//各ボスの行動
+	Spec();
+	//HPをマイナスにしない
 	if (BossHP <= 0) {
 		BossHP = 0;
 	}
@@ -25,18 +26,19 @@ void InterBoss::Update() {
 	}
 }
 
+//描画
 void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
 
-	ImGui::Begin("test");
-	ImGui::SliderFloat("endframe", &StunPos[0].x, 30, -30);
-	//ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
-	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
-	/*ImGui::SliderFloat("pos.x", &pos.x, 1, 0.0f);
-	ImGui::Text("Move:%d", appearMove);*/
-	//ImGui::SliderFloat("angle", &angle, 360, -360);
-	ImGui::Text("Stun::%d", stun);
-	ImGui::End();
+	//ImGui::Begin("test");
+	//ImGui::SliderFloat("endframe", &StunPos[0].x, 30, -30);
+	////ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
+	////ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	///*ImGui::SliderFloat("pos.x", &pos.x, 1, 0.0f);
+	//ImGui::Text("Move:%d", appearMove);*/
+	////ImGui::SliderFloat("angle", &angle, 360, -360);
+	//ImGui::Text("Stun::%d", stun);
+	//ImGui::End();
 	//if (BossHP >= 1) {
 		Object3d::PreDraw();
 		enemyobj->Draw();
@@ -45,6 +47,7 @@ void InterBoss::Draw() {
 			texture->Draw();
 		}
 	//}
+	//それぞれのマップごとの描画
 	specialDraw();
 }
 //プレイヤーがダメージを食らう
@@ -117,15 +120,18 @@ bool InterBoss::collideAttackArm() {
 	}
 }
 
+//導入
 void InterBoss::Begin() {
 	enemyobj->Update();
 }
 
+//導入ムービーのボスの行動
 void InterBoss::AppeaMovie(int Timer) {
 	App(Timer);
 	enemyobj->Update();
 }
 
+//撃破ムービーのボスの行動
 void InterBoss::EndMovie(int Timer) {
 	End(Timer);
 	enemyobj->Update();

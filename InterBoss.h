@@ -91,11 +91,11 @@ public:
 	/// 描画
 	/// </summary>
 	void Draw();
-
+	//導入
 	void Begin();
-
+	//導入ムービー(動き)
 	void AppeaMovie(int Timer);
-
+	//撃破ムービー
 	void EndMovie(int Timer);
 
 	virtual void App(int Timer)=0;//ボス出現モーション
@@ -105,35 +105,25 @@ public:
 	virtual void Spec()=0;//ボス特有の処理
 	virtual void specialDraw()=0;//ボス特有の描画
 
-	bool collidePlayer();
-	bool collideAttackArm();
+	bool collidePlayer();//プレイヤーとの当たり判定
+	bool collideAttackArm();//攻撃判定
 
 	void Pause(const int& Timer);
 protected:
 	const float PI = 3.14f;
-
+	//テクスチャやオブジェクト
 	Object3d* enemyobj = nullptr;
 	Model* model = nullptr;
-
 	Texture* texture = nullptr;
 	Texture* Restexture = nullptr;
+	Player* player = nullptr;
+	//座標や回転
 	XMFLOAT3 pos = { 0,0,0 };
 	XMFLOAT3 oldpos = { 0,0,0 };
 	XMFLOAT3 rot = { 0,0,0 };
-	XMFLOAT3 boundpower{};
-	XMFLOAT3 Deadbound = {};
 	XMFLOAT3 enescale{ 0.4f,0.4f,0.4f };
-	XMFLOAT3 shosepos;
-	Player* player = nullptr;
+	XMFLOAT3 Afterrot = { 0.0f,90.0f,0.0f };
 	XMFLOAT3 playerpos{};
-	
-	XMFLOAT3 targetpos{};
-	XMFLOAT3 Afterrot = {0.0f,90.0f,0.0f};
-	XMFLOAT3 StartPos{};
-	XMFLOAT3 EndPos{};
-	XMFLOAT3 EndRot{};
-	XMFLOAT3 basePos{};
-
 	//敵関係変数
 	float radius = 0.0f;
 	float speed = 0.0f;
@@ -175,9 +165,7 @@ protected:
 	float BossHP = 10;
 	bool BossHit = false;
 	bool Effect = false;
-	//
-	bool already = false;
-	//
+	//ボスのAI関係(共通)
 	int hitpoint = 0;
 	bool active = false;//行動開始
 	int action = 0;//攻撃の種類
@@ -188,18 +176,20 @@ protected:
 	bool finish = false;//フィニッシュ
 	int State = 0;
 	int AttackCount = 0;
-	float y = 0.0f;
 	float angle = 0.0f;
 	float angle2 = 0.0f;
 	bool shadow=false;
-	//待機モーションのためのやつ
-	enum Motion {
-		Up,
-		Down
-	};
+	//急須ボス
+	XMFLOAT3 boundpower{};
+	XMFLOAT3 Deadbound = {};
+	XMFLOAT3 StartPos{};
+	XMFLOAT3 EndPos{};
+	XMFLOAT3 EndRot{};
+	XMFLOAT3 basePos{};
 	//靴のボス
 	bool stun = false;
 	int stunTimer = 0;
+	XMFLOAT3 targetpos{};
 	//杵のボス
 	bool Off = false;
 	int haveTimer = 0;

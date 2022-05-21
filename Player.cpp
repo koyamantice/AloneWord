@@ -37,13 +37,14 @@ Player::Player() {
 
 bool Player::Initialize() {
 	//各モデルの初期化
+	//プレイヤー
 	object3d = Object3d::Create();
 	object3d->SetModel(model);
 	position = { 0,0,0 };
 	object3d->SetPosition(position);
 	object3d->SetRotation({ 0,270,0 });
 	object3d->SetScale(plasca);
-
+	//腕
 	Armobj = Object3d::Create();
 	Armobj->SetModel(Armmodel);
 	Armradius = ArmSpeed * PI / 180.0f;
@@ -55,12 +56,14 @@ bool Player::Initialize() {
 	Armobj->SetScale({ 1.4f,1.4f,1.4f });
 	Armobj->Update();
 
+	//FBX
 	move_object1->Initialize();
 	move_object1->SetModel(move_model1);
 	move_object1->SetScale(plasca);
 	move_object1->SetPosition(position);
 	move_object1->SetRotation(rot);
 
+	//チャージ時のサークル
 	Charge = Texture::Create(ImageManager::Charge, { 0,0,0 }, { 1,1,1 }, { 1,1,1,1 });
 	Charge->TextureCreate();
 	Charge->SetPosition(position);
@@ -68,6 +71,7 @@ bool Player::Initialize() {
 	Charge->SetScale(sca);
 	Charge->Update();
 
+	//チャージ時に出る周りの弾
 	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
 		ChargeEffect[i] = Texture::Create(ImageManager::ChargeEffect, { 0,0,0 }, { 1,1,1 }, { 1,1,1,1 });
 		ChargeEffect[i]->TextureCreate();
@@ -90,13 +94,14 @@ bool Player::Initialize() {
 	//targetpos = position;
 	return true;
 }
-
+//開放
 void Player::Finalize() {
 	delete object3d;
 	delete Armobj;
 	delete Charge;
 }
 
+//更新
 void Player::Update() {
 	if (pause) {
 		return;
@@ -403,6 +408,9 @@ void Player::Update() {
 	if (position.z< -17) {
 		position.z = -17;
 	}
+	if (position.z > 22) {
+		position.z = 22;
+	}
 	Armradius = ArmSpeed * PI / 180.0f;
 	ArmCircleX = cosf(Armradius) * Armscale;
 	ArmCircleZ = sinf(Armradius) * Armscale;
@@ -434,6 +442,7 @@ void Player::Update() {
 	move_object1->Update();
 }
 
+//セレクト画面でのアップデート
 void Player::SelectUp() {
 	if (pause) {
 		return;
@@ -519,6 +528,7 @@ void Player::SelectUp() {
 	//BirthParticle();
 }
 
+//タイトル画面でのアップデート
 void Player::TitleUp() {
 	if (pause) {
 		return;
@@ -581,6 +591,7 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	//have_object1->Draw(dxCommon->GetCmdList());
 }
 
+//ポーズ
 void Player::Pause(const int& Timer) {
 	wait++;
 	if (wait >= Timer) {
@@ -647,6 +658,7 @@ void Player::Rebound() {
 	object3d->SetPosition(position);
 }
 
+//パーティクルが出てくる
 void Player::BirthParticle() {
 
 	if (AttackMoveNumber == 0 && AttackFlag == false&& Interval <= 80) {
@@ -680,10 +692,13 @@ void Player::BirthParticle() {
 	}
 
 }
+
+//元の位置に戻る
 void Player::BackPos() {
 	position = oldPos;
 }
 
+//導入
 void Player::Begin() {
 	if (pause) {
 		return;
@@ -719,6 +734,7 @@ void Player::Begin() {
 	move_object1->Update();
 }
 
+//撃破
 void Player::End() {
 	if (pause) {
 		return;
@@ -762,6 +778,7 @@ void Player::End() {
 	move_object1->Update();
 }
 
+//チャージ時のエフェクトの動き(吸収)
 void Player::ChargeEffectMove() {
 	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
 		array<XMFLOAT3,40> chargeposition{};
@@ -808,6 +825,7 @@ void Player::ChargeEffectMove() {
 	}
 }
 
+//チャージ時のエフェクトの動き(開放)
 void Player::ChargeRelease() {
 	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
 			if (EffectRelease[i] == false) {

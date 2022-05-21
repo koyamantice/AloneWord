@@ -59,6 +59,7 @@ private:
 	using XMMATRIX = DirectX::XMMATRIX;
 
 private:
+	//ƒV[ƒ“Ø‚è‘Ö‚¦(k¬‚Ì•û)
 	Sprite* change = nullptr;
 	XMFLOAT2 pos = { 640.0f,360.0f, };
 	float scale = 1.0f;

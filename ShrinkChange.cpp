@@ -13,7 +13,7 @@ ShrinkChange::ShrinkChange() {
 
 void ShrinkChange::Update() {
 
-	
+	//フラグが立つと縮小が始まる
 	if (endchange) {
 		Shrink();
 	}
@@ -56,9 +56,12 @@ void ShrinkChange::Finalize() {
 	delete change;
 }
 
+//シーン切り替え
 void ShrinkChange::Shrink() {
+	//通常サイズにscaleをかけ続ける
 	scale = 0.9f;
 	timer++;
+	//一定のサイズ(消えるまで)まで行くと縮小が消える
 	if (timer >= 70) {
 		timer = 0;
 		endchange = false;
