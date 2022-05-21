@@ -11,7 +11,8 @@
 #include"ModelManager.h"
 #include "TouchableObject.h"
 
-
+#include <array>       // ヘッダファイルインクルード
+using namespace std;         //  名前空間指定
 #define DIRECTINPUT_VERSION 0x0800
 
 class InterBoss {
@@ -133,6 +134,7 @@ protected:
 	XMFLOAT3 EndRot{};
 	XMFLOAT3 basePos{};
 
+	//敵関係変数
 	float radius = 0.0f;
 	float speed = 0.0f;
 	float savespeed = 0.0f;
@@ -158,6 +160,7 @@ protected:
 	double Check;
 	double Check2;
 
+	//イージングのためのやつ
 	float frame = 0;
 	float frame2 = 0.0f;
 	int Interval = 0;
@@ -207,5 +210,13 @@ protected:
 	//倒したあとのシーン
 	int EndMove = 0;
 	float endframe = 0.0f;
+	//靴専用のテクスチャ用変数
+	array<Texture*,4> Stuntexture;
+	array<float, 4> Stunradius;
+	array<float, 4> StunSpeed;
+	array<float, 4> Stunscale;
+	array<float, 4> StunCircleX;
+	array<float, 4> StunCircleZ;
+	array<XMFLOAT3, 4> StunPos;
 };
 

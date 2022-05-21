@@ -73,4 +73,5 @@ void ImageManager::LoadTex2D() {
 	Texture::LoadTexture(ChargeEffect, L"Resources/2d/ChargeEffect.png");
 	Texture::LoadTexture(spawnhp, L"Resources/2d/EHubHP.png");
 	Texture::LoadTexture(SELECTTex, L"Resources/2d/kariSelect.png");
+	Texture::LoadTexture(Stun, L"Resources/2d/stun.png");
 }

@@ -30,7 +30,26 @@ void RightShose::Initialize(bool shadow) {
 	texture->SetPosition(pos.x, -100, pos.z);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.3f,0.3f,0.3f });
-	shadow = false;
+
+	for (std::size_t i = 0; i < Stuntexture.size(); i++) {
+		Stuntexture[i] = Texture::Create(ImageManager::Stun, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+		Stuntexture[i]->TextureCreate();
+		Stuntexture[i]->SetRotation({ 0,0,0 });
+		Stuntexture[i]->SetScale({ 0.1f,0.1f,0.1f });
+		Stunscale[i] = 1.0f;
+		StunSpeed[0] = 0.0f;
+		StunSpeed[1] = 90.0f;
+		StunSpeed[2] = 180.0f;
+		StunSpeed[3] = 270.0f;
+		Stunradius[i] = StunSpeed[i] * PI / 180.0f;
+		StunCircleX[i] = cosf(Stunradius[i]) * Stunscale[i];
+		StunCircleZ[i] = sinf(Stunradius[i]) * Stunscale[i];
+		StunPos[i].x = StunCircleX[i] + pos.x;
+		StunPos[i].z = StunCircleZ[i] + pos.z;
+		StunPos[i].y = pos.y + 3;
+		Stuntexture[i]->SetPosition(StunPos[i]);
+		Stuntexture[i]->Update();
+	}
 }
 
 void RightShose::Finalize() {
@@ -114,6 +133,9 @@ void RightShose::Spec() {
 				}
 			}
 			else {
+				for (std::size_t i = 0; i < Stuntexture.size(); i++) {
+					StunSpeed[i] += 2.0f;
+				}
 				if (stunTimer < 200) {
 					stunTimer++;
 				}
@@ -121,6 +143,19 @@ void RightShose::Spec() {
 					stunTimer = 0;
 					stun = false;
 				}
+
+				//ƒXƒ^ƒ“Žž‚Ì‚Ò‚æ‚Ò‚æ
+				for (std::size_t i = 0; i < Stuntexture.size(); i++) {
+					Stunradius[i] = StunSpeed[i] * PI / 180.0f;
+					StunCircleX[i] = cosf(Stunradius[i]) * Stunscale[i];
+					StunCircleZ[i] = sinf(Stunradius[i]) * Stunscale[i];
+					StunPos[i].x = StunCircleX[i] + pos.x;
+					StunPos[i].z = StunCircleZ[i] + pos.z;
+					StunPos[i].y = pos.y + 2;
+					Stuntexture[i]->SetPosition(StunPos[i]);
+					Stuntexture[i]->Update();
+				}
+
 			}
 
 
@@ -248,7 +283,7 @@ void RightShose::Spec() {
 					}
 					else {
 						frame = 0;
-						targetpos.x = player->GetPosition().x + 1;
+						targetpos.x = player->GetPosition().x + 0.2;
 						aiming = 0;
 						pat++;
 						break;
@@ -260,7 +295,7 @@ void RightShose::Spec() {
 						pos.z,
 					};
 					if (frame < 1.0f) {
-						frame += 0.01f;
+						frame += 0.02f;
 						break;
 					}
 					else {
@@ -280,7 +315,7 @@ void RightShose::Spec() {
 					}
 					if (frame >= 1.0f) {
 						frame = 1.0f;
-						if (coolT < 90) {
+						if (coolT < 50) {
 							coolT++;
 							break;
 						}
@@ -347,6 +382,7 @@ void RightShose::Spec() {
 			enemyobj->SetPosition(pos);
 		}
 	}
+
 	rot.y = Ease(In, Quint, 0.7f, rot.y, Afterrot.y);
 	rot.x = Ease(In, Quint, 0.7f, rot.x, Afterrot.x);
 	enemyobj->SetRotation(rot);
@@ -389,13 +425,29 @@ void RightShose::App(int Timer) {
 		pos = { 10.0f,0.0f,0.0f };
 		rot = { 0,270,0 };
 	case 3:
-		if (rot.y >= -90) {
-			rot.y -= 2.0f;
+		//‚Ò‚æ‚Ò‚æ‚ª•‚‚©‚Ô
+		stun = true;
+		if (stun) {
+			for (std::size_t i = 0; i < Stuntexture.size(); i++) {
+				StunSpeed[i] += 2.0f;
+			}
 		}
-		else {
+
+		if (Timer == 500) {
 			appearMove = 0;
-			rot.y = 270;
+			stun = false;
 		}
+	}
+
+	for (std::size_t i = 0; i < Stuntexture.size(); i++) {
+		Stunradius[i] = StunSpeed[i] * PI / 180.0f;
+		StunCircleX[i] = cosf(Stunradius[i]) * Stunscale[i];
+		StunCircleZ[i] = sinf(Stunradius[i]) * Stunscale[i];
+		StunPos[i].x = StunCircleX[i] + pos.x;
+		StunPos[i].z = StunCircleZ[i] + pos.z;
+		StunPos[i].y = pos.y + 2;
+		Stuntexture[i]->SetPosition(StunPos[i]);
+		Stuntexture[i]->Update();
 	}
 
 	pos = {
@@ -487,6 +539,11 @@ void RightShose::End(int Timer) {
 	enemyobj->SetRotation(rot);
 }
 void RightShose::specialDraw() {
+	if (stun) {
+		for (std::size_t i = 0; i < Stuntexture.size(); i++) {
+			Stuntexture[i]->Draw();
+		}
+	}
 }
 
 void RightShose::SetAct(LeftShose* leftshose) {

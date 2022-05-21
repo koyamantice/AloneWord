@@ -59,7 +59,7 @@ void ShrinkChange::Finalize() {
 void ShrinkChange::Shrink() {
 	scale = 0.9f;
 	timer++;
-	if (timer >= 60) {
+	if (timer >= 70) {
 		timer = 0;
 		endchange = false;
 	}

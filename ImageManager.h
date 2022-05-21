@@ -80,6 +80,7 @@ public:
 	ChargeEffect,
 	spawnhp,
 	SELECTTex,
+	Stun,
 	};
 public:
 	static ImageManager* GetIns();		//Žæ“¾—p
