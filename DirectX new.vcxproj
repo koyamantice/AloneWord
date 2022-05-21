@@ -270,6 +270,7 @@
     <ClCompile Include="enemy\Rice.cpp" />
     <ClCompile Include="enemy\Spawning.cpp" />
     <ClCompile Include="Exp.cpp" />
+    <ClCompile Include="FifthBoss.cpp" />
     <ClCompile Include="FourthBoss.cpp" />
     <ClCompile Include="FPSManager\FPSManager.cpp" />
     <ClCompile Include="HotWater.cpp" />
@@ -328,6 +329,7 @@
     <ClInclude Include="3d\Model.h" />
     <ClInclude Include="3d\Object3d.h" />
     <ClInclude Include="ExpandChange.h" />
+    <ClInclude Include="FifthBoss.h" />
     <ClInclude Include="Human.h" />
     <ClInclude Include="LeftHand.h" />
     <ClInclude Include="RightHand.h" />

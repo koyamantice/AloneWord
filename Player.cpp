@@ -99,6 +99,9 @@ void Player::Finalize() {
 	delete object3d;
 	delete Armobj;
 	delete Charge;
+	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
+		delete ChargeEffect[i];
+	}
 }
 
 //更新
@@ -166,7 +169,7 @@ void Player::Update() {
 			//	RotCount = 0;
 			//}
 			//ため時間
-			if (input->PushButton(input->Button_RB)) {
+			if (input->PushButton(input->Button_A)) {
 				move_count = 0;
 				ChargeEffectMove();
 				chargeTimer++;

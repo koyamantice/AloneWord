@@ -61,6 +61,9 @@ void LeftShose::Initialize(bool shadow) {
 void LeftShose::Finalize() {
 	//delete enemyobj;
 	delete texture;
+	for (std::size_t i = 0; i < Stuntexture.size(); i++) {
+		delete Stuntexture[i];
+	}
 }
 
 //ボスの行動
