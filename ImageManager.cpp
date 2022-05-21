@@ -57,6 +57,10 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(get,   L"Resources/2d/comment3.png");
 	Sprite::LoadTexture(Attack,L"Resources/2d/comment4.png");
 	Sprite::LoadTexture(Perfect, L"Resources/2d/comment5.png");
+	Sprite::LoadTexture(Enemyhp,  L"Resources/2d/EnemyHPBar.png");
+	Sprite::LoadTexture(Enemyhp2, L"Resources/2d/EnemyHPDownBar.png");
+	Sprite::LoadTexture(Enemyhp3, L"Resources/2d/EnemyHPGauge.png");
+
 }
 
 void ImageManager::LoadTex2D() {

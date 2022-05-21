@@ -7,30 +7,30 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	this->player = player;
 	this->boss = boss;
 	this->boss2 = boss2;
-	BossHp[max] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
+	BossHp[max] = Sprite::Create(ImageManager::Enemyhp3, { 0.0f,0.0f });
 	BossHp[max]->SetPosition({ 260.0f,20.0f });
-	BossHp[max]->SetColor({ 1.0f,0.0f,0.0f,1.0f });
-	BossHp[damage] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
+	//BossHp[max]->SetColor({ 1.0f,0.0f,0.0f,1.0f });
+	BossHp[damage] = Sprite::Create(ImageManager::Enemyhp2, { 0.0f,0.0f });
 	BossHp[damage]->SetPosition({ 260.0f,20.0f });
-	BossHp[damage]->SetColor({ 1.0f,1.0f,0.0f,1.0f });
-	BossHp[now] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
+	//BossHp[damage]->SetColor({ 1.0f,1.0f,0.0f,1.0f });
+	BossHp[now] = Sprite::Create(ImageManager::Enemyhp, { 0.0f,0.0f });
 	BossHp[now]->SetPosition({ 260.0f,20.0f });
-	BossHp[now]->SetColor({ 0.0f,1.0f,0.0f,1.0f });
+	//BossHp[now]->SetColor({ 0.0f,1.0f,0.0f,1.0f });
 	if (boss) {
 		AfterPos[0] = { (float)(boss->GetHP() * 20),30 };
 	}
 	BossHp[max]->SetSize(AfterPos[0]);
 	BossHp[damage]->SetSize(AfterPos[0]);
 	BossHp[now]->SetSize(AfterPos[0]);
-	BossHp2[max] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
+	BossHp2[max] = Sprite::Create(ImageManager::Enemyhp3, { 0.0f,0.0f });
 	BossHp2[max]->SetPosition({ 260.0f,70.0f });
-	BossHp2[max]->SetColor({ 1.0f,0.0f,0.0f,1.0f });
-	BossHp2[damage] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
+	//BossHp2[max]->SetColor({ 1.0f,0.0f,0.0f,1.0f });
+	BossHp2[damage] = Sprite::Create(ImageManager::Enemyhp2, { 0.0f,0.0f });
 	BossHp2[damage]->SetPosition({ 260.0f,70.0f });
-	BossHp2[damage]->SetColor({ 1.0f,1.0f,0.0f,1.0f });
-	BossHp2[now] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
+	//BossHp2[damage]->SetColor({ 1.0f,1.0f,0.0f,1.0f });
+	BossHp2[now] = Sprite::Create(ImageManager::Enemyhp, { 0.0f,0.0f });
 	BossHp2[now]->SetPosition({ 260.0f,70.0f });
-	BossHp2[now]->SetColor({ 0.0f,1.0f,0.0f,1.0f });
+	//BossHp2[now]->SetColor({ 0.0f,1.0f,0.0f,1.0f });
 	if (boss2) {
 		AfterPos2[0] = { (float)(boss->GetHP() * 20),30 };
 	}
