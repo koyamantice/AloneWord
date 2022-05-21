@@ -75,6 +75,11 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	bairitu = Sprite::Create(ImageManager::bairitu, { 1240.0f,10.0f });
 	bairitu->SetAnchorPoint({ 1.0f,0.0f });
 	bairitu->SetScale(0.7f);
+	SpinGauge = Sprite::Create(ImageManager::SpinGauge, { 0.0f,0.0f });
+	SpinBar = Sprite::Create(ImageManager::SpinBar, { 0.0f,0.0f });
+	SpinBar->SetAnchorPoint({ 0.0f,1.0f });
+	Arrow = Sprite::Create(ImageManager::arrow, { 0.0f,0.0f });
+	Arrow->SetAnchorPoint({ 0.5f,0.5f });
 	const int w = 54;
 	const int h = 60;
 	const int l = 10;
@@ -109,7 +114,7 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 		}
 	}
 }
-//開放
+//更新
 void UI::Update() {
 	{//HP
 		AfterPos[1] = { (float)(player->GetHp() * 43),55 };
@@ -162,6 +167,13 @@ void UI::Update() {
 		BossHp2[now]->SetSize(bossPos2[0]);
 		SeachBoss2();
 	}
+
+	//後々変更ポイント
+	//スタミナ的なやつ
+	SpinPos = { 700.0f,300.0f };
+	SpinGauge->SetPosition(SpinPos);
+	SpinBar->SetPosition(SpinPos);
+	SpinBar->SetSize({ 30.0f,(float)player->GetRotTimer() * 0.5f });//プレイヤーの回る時間に応じてのサイズ変更
 }
 
 //開放
@@ -179,17 +191,17 @@ void UI::Finalize() {
 
 //描画
 const void UI::Draw() {
-	//ImGui::Begin("test");
-	//ImGui::SliderFloat("rot.x", &AfterPos[0].x, 270, -90);
-	//ImGui::SliderFloat("rot.y", &pos.y, 270, -90);
-	////ImGui::SliderInt("dir", &dir, 360, -360);
-	//////ImGui::SliderFloat("speed_y", &speed_y, 360, 0);
-	//ImGui::SliderFloat("scale", &vel, 360, 0);
-	//////ImGui::Text("Count::%d", moveCount);
-	//////ImGui::Text("Move::%d", isMove);
-	//////ImGui::Text("Hit::%d", hit);
-	//////ImGui::Unindent();
-	//ImGui::End();
+	ImGui::Begin("test");
+	ImGui::SliderFloat("Spin.x", &SpinPos.x, 1000, 0);
+	ImGui::SliderFloat("Spin.y", &SpinPos.y, 1000, 0);
+	//ImGui::SliderInt("dir", &dir, 360, -360);
+	////ImGui::SliderFloat("speed_y", &speed_y, 360, 0);
+	ImGui::SliderFloat("scale", &vel, 360, 0);
+	////ImGui::Text("Count::%d", moveCount);
+	////ImGui::Text("Move::%d", isMove);
+	////ImGui::Text("Hit::%d", hit);
+	////ImGui::Unindent();
+	ImGui::End();
 	Sprite::PreDraw();
 	//Vignette->Draw();
 	
@@ -233,7 +245,14 @@ const void UI::Draw() {
 				number[i][power[i]]->Draw();
 			}
 		}
+
+		//プレイヤーのスタミナ(一旦コメントアウト)
+		if (player->GetRotTimer() > 0) {
+			/*SpinGauge->Draw();
+			SpinBar->Draw();*/
+		}
 	}
+	
 }
 
 void UI::EaseScale() {

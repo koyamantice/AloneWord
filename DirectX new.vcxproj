@@ -273,6 +273,7 @@
     <ClCompile Include="FourthBoss.cpp" />
     <ClCompile Include="FPSManager\FPSManager.cpp" />
     <ClCompile Include="HotWater.cpp" />
+    <ClCompile Include="Human.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
@@ -281,6 +282,7 @@
     <ClCompile Include="imgui\imgui_impl_win32.cpp" />
     <ClCompile Include="imgui\imgui_widgets.cpp" />
     <ClCompile Include="InterBoss.cpp" />
+    <ClCompile Include="LeftHand.cpp" />
     <ClCompile Include="light\LightGroup.cpp" />
     <ClCompile Include="light\PointLight.cpp" />
     <ClCompile Include="light\SpotLight.cpp" />
@@ -291,6 +293,7 @@
     <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="Pastel.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="RightHand.cpp" />
     <ClCompile Include="RightShose.cpp" />
     <ClCompile Include="ExpandChange.cpp" />
     <ClCompile Include="scene\BossScene.cpp" />
@@ -325,6 +328,9 @@
     <ClInclude Include="3d\Model.h" />
     <ClInclude Include="3d\Object3d.h" />
     <ClInclude Include="ExpandChange.h" />
+    <ClInclude Include="Human.h" />
+    <ClInclude Include="LeftHand.h" />
+    <ClInclude Include="RightHand.h" />
     <ClInclude Include="ShockWave.h" />
     <ClInclude Include="base\AbstractSceneFactory.h" />
     <ClInclude Include="base\Audio.h" />

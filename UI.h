@@ -47,6 +47,8 @@ private:
 	//数
 	Sprite* number[2][10]{};
 	Sprite* bairitu = nullptr;
+	Sprite* SpinGauge = nullptr;
+	Sprite* SpinBar = nullptr;
 	//スプライトの位置
 	XMFLOAT2 bossPos[2]{};
 	XMFLOAT2 bossPos2[2]{};
@@ -55,6 +57,7 @@ private:
 	XMFLOAT2 ArrowPos2{};
 	XMFLOAT2 AfterPos[2]{};
 	XMFLOAT2 AfterPos2[2]{};
+	XMFLOAT2 SpinPos{};
 	//敵の位置のUIのいちを求めるための変数
 	const float PI = 3.145265f;
 	std::vector<int> power;
