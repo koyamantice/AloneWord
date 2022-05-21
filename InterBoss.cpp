@@ -11,15 +11,13 @@ void InterBoss::Update() {
 
 	collideAttackArm();
 	collidePlayer();
-	if (BossHP > 0) {
+	//if (BossHP > 0) {
 		Spec();
-	}
-
+	//}
 	if (BossHP <= 0) {
 		BossHP = 0;
 	}
 	player->SetInterval(Interval);
-
 	enemyobj->Update();
 	if (shadow) {
 		texture->SetPosition(pos.x, 0, pos.z);
