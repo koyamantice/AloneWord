@@ -67,24 +67,23 @@ void RightHand::Finalize() {
 void RightHand::Spec() {
 	XMFLOAT3 AfterPos{};
 	//ここで行動を決める
-	if (AttackCount > 180 && pos.y <= 0.1f) {
+	if (AttackCount > 180) {
 		if (!active) {
-			action = (rand() % 2);
 			frame = 0;
 			pat = 1;
 			active = true;
 		}
 	}
-	////攻撃をするまでのインターバル
-	//else {
-	//	if (!active) {
-	//		AttackCount++;
-	//		/*angle += 2.0f;
-	//		angle2 = angle * (3.14f / 180.0f);
-	//		pos.y = sin(angle2) * 0.5f + 0.5f;
-	//		enemyobj->SetPosition(pos);*/
-	//	}
-	//}
+	//攻撃をするまでのインターバル
+	else {
+		//if (!active) {
+		//	AttackCount++;
+		//	/*angle += 2.0f;
+		//	angle2 = angle * (3.14f / 180.0f);
+		//	pos.y = sin(angle2) * 0.5f + 0.5f;
+		//	enemyobj->SetPosition(pos);*/
+		//}
+	}
 
 	//行動開始
 	if (active) {
@@ -447,7 +446,7 @@ void RightHand::App(int Timer) {
 		}
 	}
 
-	for (std::size_t i = 0; i < Stuntexture.size(); i++) {
+	/*for (std::size_t i = 0; i < Stuntexture.size(); i++) {
 		Stunradius[i] = StunSpeed[i] * PI / 180.0f;
 		StunCircleX[i] = cosf(Stunradius[i]) * Stunscale[i];
 		StunCircleZ[i] = sinf(Stunradius[i]) * Stunscale[i];
@@ -456,7 +455,7 @@ void RightHand::App(int Timer) {
 		StunPos[i].y = pos.y + 2;
 		Stuntexture[i]->SetPosition(StunPos[i]);
 		Stuntexture[i]->Update();
-	}
+	}*/
 
 	pos = {
 	Ease(In,Cubic,frame,pos.x,AfterPos.x),

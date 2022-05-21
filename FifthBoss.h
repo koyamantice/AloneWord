@@ -58,8 +58,6 @@ private:
 	CollisionManager* collisionManager = nullptr;
 	ParticleManager* particleMan = nullptr;
 	ExpandChange* expandchange = nullptr;
-	/*int DeadLeft = 0;
-	int DeadRight = 0;
-	float weight = 0;*/
+	bool act = false;
 };
 

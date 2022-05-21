@@ -124,6 +124,7 @@ void FifthBoss::Initialize(DirectXCommon* dxCommon) {
 	camera->SetEye(cameraPos);
 	ui = new UI(player, lefthand, righthand);
 	expandchange = new ExpandChange();
+	human = new Human();
 	//ui->Initialize();
 }
 //ŠJ•úˆ—
@@ -266,11 +267,27 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 		//í“¬ŠJŽn
 		else {
 			player->Update();
-			human->SetAttack();
 			lefthand->Update();
 			righthand->Update();
+			/*if ((lefthand->GetActive() == false) && (righthand->GetActive() == false)) {
+				act = true;
+			}
+			else {
+				act = false;
+			}*/
+			human->SetAttack();
 			lefthand->SetAct(human);
 			righthand->SetAct(human);
+			/*
+				if (righthand->GetHP() <= 0) {
+					DeadRight++;
+					lefthand->SetPosition({ 0.0f,-20.8f,0.0f });
+				}
+
+				if (lefthand->GetHP() <= 0) {
+					DeadLeft++;
+					righthand->SetPosition({ 0.0f,-20.8f,0.0f });
+				}*/
 			for (std::size_t i = 0; i < enemy.size(); i++) {
 				enemy[i]->Update();
 				enemy[i]->SetEnemy();
@@ -427,7 +444,7 @@ void FifthBoss::Draw(DirectXCommon* dxCommon) {
 	//ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
 	//ImGui::SliderFloat("pos.y", &distanceY, 30, 0);
 	//ImGui::SliderFloat("pos.z", &distanceZ, 30, 0);
-	ImGui::Text("appearanceTimer::%d", appearanceTimer);
+	ImGui::Text("act::%d", act);
 	ImGui::Text("appearanceNumber::%d", appearanceNumber);
 	ImGui::Unindent();
 	ImGui::End();

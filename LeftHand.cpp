@@ -69,22 +69,22 @@ void LeftHand::Spec() {
 	//ここで行動を決める
 	if (AttackCount > 180 && pos.y <= 0.1f) {
 		if (!active) {
-			action = (rand() % 2);
+			//action = (rand() % 2);
 			frame = 0;
 			pat = 1;
 			active = true;
 		}
 	}
 	//攻撃をするまでのインターバル
-	//else {
-	//	if (!active) {
-	//		AttackCount++;
-	//		/*angle += 2.0f;
-	//		angle2 = angle * (3.14f / 180.0f);
-	//		pos.y = sin(angle2) * 0.5f + 0.5f;
-	//		enemyobj->SetPosition(pos);*/
-	//	}
-	//}
+	else {
+		//if (!active) {
+		//	AttackCount++;
+		//	/*angle += 2.0f;
+		//	angle2 = angle * (3.14f / 180.0f);
+		//	pos.y = sin(angle2) * 0.5f + 0.5f;
+		//	enemyobj->SetPosition(pos);*/
+		//}
+	}
 
 	//行動開始
 	if (active) {
@@ -337,16 +337,16 @@ void LeftHand::App(int Timer) {
 		}
 	}
 
-	for (std::size_t i = 0; i < Stuntexture.size(); i++) {
-		Stunradius[i] = StunSpeed[i] * PI / 180.0f;
-		StunCircleX[i] = cosf(Stunradius[i]) * Stunscale[i];
-		StunCircleZ[i] = sinf(Stunradius[i]) * Stunscale[i];
-		StunPos[i].x = StunCircleX[i] + pos.x;
-		StunPos[i].z = StunCircleZ[i] + pos.z;
-		StunPos[i].y = pos.y + 2;
-		Stuntexture[i]->SetPosition(StunPos[i]);
-		Stuntexture[i]->Update();
-	}
+	//for (std::size_t i = 0; i < Stuntexture.size(); i++) {
+	//	Stunradius[i] = StunSpeed[i] * PI / 180.0f;
+	//	StunCircleX[i] = cosf(Stunradius[i]) * Stunscale[i];
+	//	StunCircleZ[i] = sinf(Stunradius[i]) * Stunscale[i];
+	//	StunPos[i].x = StunCircleX[i] + pos.x;
+	//	StunPos[i].z = StunCircleZ[i] + pos.z;
+	//	StunPos[i].y = pos.y + 2;
+	//	Stuntexture[i]->SetPosition(StunPos[i]);
+	//	Stuntexture[i]->Update();
+	//}
 
 	pos = {
 	Ease(In,Cubic,frame,pos.x,AfterPos.x),
@@ -452,6 +452,7 @@ void LeftHand::specialDraw() {
 void LeftHand::SetAct(Human* human) {
 	int action = human->GetAction();
 	int AttackCount = human->GetAttackCount();
+
 	this->action = action;
 	this->AttackCount = AttackCount;
 }

@@ -7,9 +7,10 @@ public:
 	const int& GetAttackCount() { return AttackCount; }
 	const bool& GetActive() { return active; }
 public:
+	Human();
 	void SetAttack();
 
-private:
+public:
 	int AttackCount = 0;
 	int action = 0;
 	bool active = false;

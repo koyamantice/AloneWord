@@ -1,6 +1,7 @@
 #pragma once
 #include "InterBoss.h"
 #include "Human.h"
+
 class LeftHand :public InterBoss {
 public:
 	LeftHand();//コンストラクタ
