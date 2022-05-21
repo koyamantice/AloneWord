@@ -6,25 +6,25 @@
 using namespace DirectX;
 #include"ImageManager.h"
 
-//�R���X�g���N�^
+//コンストラクタ
 LeftShose::LeftShose() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::LeftShoes);
 	enemyobj = new Object3d();
 }
 
-//������
+//初期化
 void LeftShose::Initialize(bool shadow) {
 	assert(player);
 	this->shadow = shadow;
 	IsAlive = 0;
-	//�G
+	//敵
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
 	pos = { -10.0f,0.0f,0.0f };
 	enemyobj->SetPosition(pos);
 	rot = { 0,270,0 };
 	Afterrot.y = rot.y;
-	//�e(���̃I�u�W�F�N�g�ł͎g��Ȃ�)
+	//影(このオブジェクトでは使わない)
 	enemyobj->SetRotation(rot);
 	enemyobj->SetScale({ 0.3f,0.3f,0.3f });
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
@@ -34,7 +34,8 @@ void LeftShose::Initialize(bool shadow) {
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.3f,0.3f,0.3f });
 
-	//�X�^�����̂҂�҂�
+	//スタン時のぴよぴよ
+
 	for (std::size_t i = 0; i < Stuntexture.size(); i++) {
 		Stuntexture[i] = Texture::Create(ImageManager::Stun, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 		Stuntexture[i]->TextureCreate();
@@ -56,16 +57,16 @@ void LeftShose::Initialize(bool shadow) {
 	}
 }
 
-//�J��
+//開放
 void LeftShose::Finalize() {
 	//delete enemyobj;
 	delete texture;
 }
 
-//�{�X�̍s��
+//ボスの行動
 void LeftShose::Spec() {
 	XMFLOAT3 AfterPos{};
-	//�����ōs�������߂�
+	//ここで行動を決める
 	if (AttackCount > 180 && pos.y <= 0.1f) {
 		if (!active) {
 			action = (rand() % 2);
@@ -74,7 +75,7 @@ void LeftShose::Spec() {
 			active = true;
 		}
 	}
-	//�U��������܂ł̃C���^�[�o��
+	//攻撃をするまでのインターバル
 	else {
 		if (!active) {
 			AttackCount++;
@@ -85,9 +86,9 @@ void LeftShose::Spec() {
 		}
 	}
 
-	//�s���J�n
+	//行動開始
 	if (active) {
-		//�X�^�[�W���O������
+		//スタージを外周する
 		if ((action % 2) == 0) {
 			if (!stun) {
 				if (frame < 0.45f) {
@@ -150,7 +151,7 @@ void LeftShose::Spec() {
 					stun = false;
 				}
 
-				//�X�^�����̂҂�҂�
+				//スタン時のぴよぴよ
 				for (std::size_t i = 0; i < Stuntexture.size(); i++) {
 					Stunradius[i] = StunSpeed[i] * PI / 180.0f;
 					StunCircleX[i] = cosf(Stunradius[i]) * Stunscale[i];
@@ -164,7 +165,7 @@ void LeftShose::Spec() {
 
 			}
 		}
-		//�v���C���[�����ޏ���
+		//プレイヤーを挟む処理
 		else if ((action % 2) == 1) {
 			if (AttackC < 3) {
 				Afterrot.x = 90.0f;
@@ -286,7 +287,7 @@ void LeftShose::Spec() {
 	enemyobj->SetRotation(rot);
 }
 
-//����
+//導入
 void LeftShose::App(int Timer) {
 
 	XMFLOAT3 AfterPos{};
@@ -302,7 +303,7 @@ void LeftShose::App(int Timer) {
 		frame2 = 0.0f;
 	}
 
-	//�����V�[���ɂ����ăt���[�����ɂ���čs�������߂�
+	//導入シーンにおいてフレーム数によって行動を決める
 	switch (appearMove) {
 	case 1:
 		AfterPos = {
@@ -363,14 +364,14 @@ void LeftShose::App(int Timer) {
 	enemyobj->SetRotation(rot);
 }
 
-//���j
+//撃破
 void LeftShose::End(int Timer) {
-	//�{�X��|�������Ƃ̋���(��ŋL�q)
+	//ボスを倒したあとの挙動(後で記述)
 	XMFLOAT3 scale = { 0.8f,0.8f,0.8f };
 	float RotPower = 0.0f;
 	XMFLOAT3 AfterScale{};
 	//float endframe = 0.0f;
-	//�{�X��|�������Ƃ̋���(��ŋL�q)
+	//ボスを倒したあとの挙動(後で記述)
 	if (Timer == 300) {
 		pos = { -5.0f,0.0f,0.0f };
 		rot = { 0,270,0 };
@@ -438,7 +439,7 @@ void LeftShose::End(int Timer) {
 	enemyobj->SetRotation(rot);
 }
 
-//���ʂȕ`��(���̏ꍇ�҂�҂�)
+//特別な描画(この場合ぴよぴよ)
 void LeftShose::specialDraw() {
 	if (stun) {
 		for (std::size_t i = 0; i < Stuntexture.size(); i++) {

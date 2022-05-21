@@ -30,15 +30,16 @@ void InterBoss::Update() {
 void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
 
-	//ImGui::Begin("test");
-	//ImGui::SliderFloat("endframe", &StunPos[0].x, 30, -30);
-	////ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
-	////ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
-	///*ImGui::SliderFloat("pos.x", &pos.x, 1, 0.0f);
-	//ImGui::Text("Move:%d", appearMove);*/
-	////ImGui::SliderFloat("angle", &angle, 360, -360);
-	//ImGui::Text("Stun::%d", stun);
-	//ImGui::End();
+
+	ImGui::Begin("test");
+	ImGui::SliderFloat("endframe", &StunPos[0].x, 30, -30);
+	//ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
+	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	/*ImGui::SliderFloat("pos.x", &pos.x, 1, 0.0f);
+	ImGui::Text("Move:%d", appearMove);*/
+	//ImGui::SliderFloat("angle", &angle, 360, -360);
+	ImGui::Text("Stun::%d", stun);
+	ImGui::End();
 	//if (BossHP >= 1) {
 		Object3d::PreDraw();
 		enemyobj->Draw();

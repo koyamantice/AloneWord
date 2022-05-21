@@ -7,7 +7,7 @@
 #include <Easing.h>
 
 void StageSelect::Initialize(DirectXCommon* dxCommon) {
-	//”wŒiƒXƒvƒ‰ƒCƒg¶¬
+	//èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	BackGround = Texture::Create(ImageManager::SELECTTex, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	BackGround->TextureCreate();
 	BackGround->SetRotation({ 90,0,0 });
@@ -30,25 +30,25 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	plane[2] = Sprite::Create(ImageManager::niwa, selectP[1]);
 	plane[3] = Sprite::Create(ImageManager::washitu, selectP[1]);
 	plane[4] = Sprite::Create(ImageManager::wait, selectP[1]);
-	// ƒJƒƒ‰¶¬
+	// ã‚«ãƒ¡ãƒ©ç”Ÿæˆ
 	//srand(NULL);
-	// ƒ‰ƒCƒg¶¬
+	// ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	lightGroup = LightGroup::Create();
-	// 3DƒIƒuƒWƒFƒNƒg‚Éƒ‰ƒCƒg‚ğƒZƒbƒg
+	// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ãƒ©ã‚¤ãƒˆã‚’ã‚»ãƒƒãƒˆ
 	Object3d::SetLightGroup(lightGroup);
 
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
-	// 3DƒIƒuƒWƒFƒNƒg‚ÉƒJƒƒ‰‚ğƒZƒbƒg
+	// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‚«ãƒ¡ãƒ©ã‚’ã‚»ãƒƒãƒˆ
 	Object3d::SetCamera(camera);
-	// ƒfƒoƒCƒX‚ğƒZƒbƒg
+	// ãƒ‡ãƒã‚¤ã‚¹ã‚’ã‚»ãƒƒãƒˆ
 	FBXObject3d::SetDevice(dxCommon->GetDev());
-	// ƒJƒƒ‰‚ğƒZƒbƒg
+	// ã‚«ãƒ¡ãƒ©ã‚’ã‚»ãƒƒãƒˆ
 	FBXObject3d::SetCamera(camera);
-	// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“¶¬
+	// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	FBXObject3d::CreateGraphicsPipeline();
-	//ŠeƒIƒuƒWƒFƒNƒg‚Ì‰Šú‰»
-	//ƒvƒŒƒCƒ„[
+	//å„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åˆæœŸåŒ–
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	player = new Player();
 	player->Initialize();
 	player->SetRotation({ 0.0f,0.0f,0.0f });
@@ -61,20 +61,20 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	//camera->SetDistance(200.0f);
 	ParticleManager::GetInstance()->SetCamera(camera);
 
-	//ƒJƒƒ‰ƒ|ƒWƒVƒ‡ƒ“
+	//ã‚«ãƒ¡ãƒ©ãƒã‚¸ã‚·ãƒ§ãƒ³
 	cameraPos.x = 0;
 	cameraPos.y = 15;
 	cameraPos.z = -0.5f;
-	// ƒJƒƒ‰’‹“_‚ğƒZƒbƒg
+	// ã‚«ãƒ¡ãƒ©æ³¨è¦–ç‚¹ã‚’ã‚»ãƒƒãƒˆ
 	cameratargetPos = { 0.0f,0.0f,0.0f };
 	camera->SetTarget(cameratargetPos);
 	camera->SetEye(cameraPos);
 	shrinkchange = new ShrinkChange();
 	shrinkchange->SetEndChange(true);
-	//ƒXƒvƒ‰ƒCƒg¶¬
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	expandchange = new ExpandChange();
 }
-//ŠJ•ú
+//é–‹æ”¾
 void StageSelect::Finalize() {
 	delete BackGround;
 	delete camera;
@@ -88,7 +88,7 @@ void StageSelect::Finalize() {
 	expandchange->Finalize();
 	shrinkchange->Finalize();
 }
-//‚Ç‚Ìƒ}ƒbƒv‚És‚­‚©‚ğŒˆ‚ß‚é
+//ã©ã®ãƒãƒƒãƒ—ã«è¡Œãã‹ã‚’æ±ºã‚ã‚‹
 bool StageSelect::UICheck() {
 	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 7.0f, -5.0f, 2.0f)) { return false; }
 	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 7.0f, 3.0f, 2.0f)) { return false; }
@@ -97,7 +97,7 @@ bool StageSelect::UICheck() {
 	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -2.0f, -4.0f, 2.0f)) { return false; }
 	return true;
 }
-//XV
+//æ›´æ–°
 void StageSelect::Update(DirectXCommon* dxCommon) {
 	input = Input::GetInstance();
 	lightGroup->Update();
@@ -106,7 +106,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 	expandchange->Update();
 	shrinkchange->Update();
 	ParticleManager::GetInstance()->Update();
-	//‘I‚Î‚ê‚éêŠ‚É‚æ‚Á‚ÄƒJƒƒ‰‚ªŠñ‚éêŠ‚ª•Ï‚í‚é
+	//é¸ã°ã‚Œã‚‹å ´æ‰€ã«ã‚ˆã£ã¦ã‚«ãƒ¡ãƒ©ãŒå¯„ã‚‹å ´æ‰€ãŒå¤‰ã‚ã‚‹
 	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 7.0f, -5.0f, 2.0f)) {
 		if (frame >= 1.0f) {
 			frame = 1.0f;
@@ -268,7 +268,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		}
 	}
 
-	//‘I‘ğ‚µ‚½ê‡ƒJƒƒ‰‚ªŠñ‚é
+	//é¸æŠã—ãŸå ´åˆã‚«ãƒ¡ãƒ©ãŒå¯„ã‚‹
 	if (StageSelectNumber != No) {
 		if (selectframe <= 1.0f) {
 			selectframe += 0.005f;
@@ -311,7 +311,7 @@ Ease(In,Cubic,selectframe,cameratargetPos.z,Aftertargetpos.z)
 		}
 	}
 
-	//ƒV[ƒ“‚ª‚±‚±‚Å•Ï‚í‚é
+	//ã‚·ãƒ¼ãƒ³ãŒã“ã“ã§å¤‰ã‚ã‚‹
 	if (cameraPos.y <= 2.6f) {
 		frame = 0.0f;
 		selectframe = 0.0f;
@@ -333,7 +333,7 @@ Ease(In,Cubic,selectframe,cameratargetPos.z,Aftertargetpos.z)
 	camera->Update();
 }
 
-//•`‰æ
+//æç”»
 void StageSelect::Draw(DirectXCommon* dxCommon) {
 	ImGui::Begin("test");
 	ImGui::SliderFloat("cameraPos.y", &cameraPos.y, 30, 0);

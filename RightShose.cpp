@@ -6,18 +6,18 @@
 #include"ImageManager.h"
 using namespace DirectX;
 
-//‚±‚ñ‚·‚Æ‚ç‚­‚½
+//ã“ã‚“ã™ã¨ã‚‰ããŸ
 RightShose::RightShose() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::RightShoes);
 	enemyobj = new Object3d();
 }
 
-//‰Šú‰»
+//åˆæœŸåŒ–
 void RightShose::Initialize(bool shadow) {
 	assert(player);
 	this->shadow = shadow;
 	IsAlive = 0;
-	//“G
+	//æ•µ
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
 	pos = { 10.0f,0.0f,0.0f };
@@ -27,15 +27,15 @@ void RightShose::Initialize(bool shadow) {
 	Afterrot.y = rot.y;
 	enemyobj->SetRotation(rot);
 	enemyobj->SetScale({ 0.3f,0.3f,0.3f });
-	//‰e(¡‰ñ‚Íg‚í‚È‚¢)
+	//å½±(ä»Šå›ã¯ä½¿ã‚ãªã„)
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	//texture->SetColor({ 1,1,1,1 });
 	texture->SetPosition(pos.x, -100, pos.z);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.3f,0.3f,0.3f });
+	//ã´ã‚ˆã´ã‚ˆ
 
-	//‚Ò‚æ‚Ò‚æ
 	for (std::size_t i = 0; i < Stuntexture.size(); i++) {
 		Stuntexture[i] = Texture::Create(ImageManager::Stun, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 		Stuntexture[i]->TextureCreate();
@@ -57,16 +57,16 @@ void RightShose::Initialize(bool shadow) {
 	}
 }
 
-//ŠJ•ú
+//é–‹æ”¾
 void RightShose::Finalize() {
 	//delete enemyobj;
 	delete texture;
 }
 
-//ƒ{ƒX‚Ìs“®
+//ãƒœã‚¹ã®è¡Œå‹•
 void RightShose::Spec() {
 	XMFLOAT3 AfterPos{};
-	//‚±‚±‚Ås“®‚ğŒˆ‚ß‚é
+	//ã“ã“ã§è¡Œå‹•ã‚’æ±ºã‚ã‚‹
 	if (AttackCount > 180 && pos.y <= 0.1f) {
 		if (!active) {
 			action = (rand() % 2);
@@ -75,7 +75,7 @@ void RightShose::Spec() {
 			active = true;
 		}
 	}
-	//UŒ‚‚ğ‚·‚é‚Ü‚Å‚ÌƒCƒ“ƒ^[ƒoƒ‹
+	//æ”»æ’ƒã‚’ã™ã‚‹ã¾ã§ã®ã‚¤ãƒ³ã‚¿ãƒ¼ãƒãƒ«
 	else {
 		if (!active) {
 			AttackCount++;
@@ -86,17 +86,17 @@ void RightShose::Spec() {
 		}
 	}
 
-	//s“®ŠJn
+	//è¡Œå‹•é–‹å§‹
 	if (active) {
-		//“ËiUŒ‚
+		//çªé€²æ”»æ’ƒ
 		if ((action % 2) == 0) {
 			Afterrot.x = 0.0f;
 			if (!stun) {
-				//3‰ñ“Ëi‚·‚é
+				//3å›çªé€²ã™ã‚‹
 				if (AttackC < 100) {
 					MoveCount++;
 				}
-				//¶‘«‚ª–ß‚Á‚½‚çŒ³‚ÌˆÊ’u‚É–ß‚é
+				//å·¦è¶³ãŒæˆ»ã£ãŸã‚‰å…ƒã®ä½ç½®ã«æˆ»ã‚‹
 				else {
 					AfterPos = {
 					10,
@@ -120,14 +120,14 @@ void RightShose::Spec() {
 					Ease(In,Cubic,frame,pos.z,AfterPos.z),
 					};
 				}
-				//ƒvƒŒƒCƒ„[[‚ÌˆÊ’u‚ÉŒü‚©‚Á‚Ä‰ñ“]‚·‚é
+				//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ãƒ¼ã®ä½ç½®ã«å‘ã‹ã£ã¦å›è»¢ã™ã‚‹
 				if (MoveCount == 80) {
 					XMFLOAT3 position{};
 					position.x = (player->GetPosition().x - pos.x);
 					position.z = (player->GetPosition().z - pos.z);
 					Afterrot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 270;// *(XM_PI / 180.0f);
 				}
-				//ƒvƒŒƒCƒ„[‚ÌˆÊ’u‚ğƒƒbƒNƒIƒ“‚³‚¹‚é
+				//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã®ä½ç½®ã‚’ãƒ­ãƒƒã‚¯ã‚ªãƒ³ã•ã›ã‚‹
 				if (MoveCount == 100) {
 					double sb, sbx, sbz;
 					if (!Attack) {
@@ -153,8 +153,7 @@ void RightShose::Spec() {
 					stunTimer = 0;
 					stun = false;
 				}
-
-				//ƒXƒ^ƒ“‚Ì‚Ò‚æ‚Ò‚æ
+				//ã‚¹ã‚¿ãƒ³æ™‚ã®ã´ã‚ˆã´ã‚ˆ
 				for (std::size_t i = 0; i < Stuntexture.size(); i++) {
 					Stunradius[i] = StunSpeed[i] * PI / 180.0f;
 					StunCircleX[i] = cosf(Stunradius[i]) * Stunscale[i];
@@ -169,11 +168,11 @@ void RightShose::Spec() {
 			}
 
 			if (Attack) {
-				//ƒvƒŒƒCƒ„[‚ÉƒXƒs[ƒh‰ÁZ
+				//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã«ã‚¹ãƒ”ãƒ¼ãƒ‰åŠ ç®—
 				pos.x += (float)speedX;
 				pos.z += (float)speedZ;
 				
-				//“G‚ÌˆÊ’u‚ª•Ç‚Ü‚Ås‚Á‚½‚ç–ß‚é
+				//æ•µã®ä½ç½®ãŒå£ã¾ã§è¡Œã£ãŸã‚‰æˆ»ã‚‹
 				if (pos.x >= x_max) {
 					hitpoint = HitRight;
 					Deadbound.y = 0.5f;
@@ -203,7 +202,7 @@ void RightShose::Spec() {
 					speedZ = 0.0f;
 				}
 
-				//’µ‚Ë‚é‚æ‚¤‚ÈŠ´‚¶‚Å–ß‚é(–ß‚è‚«‚Á‚½‚çUŒ‚‰ñ”‚ª‰ÁZ‚³‚ê‚é)
+				//è·³ã­ã‚‹ã‚ˆã†ãªæ„Ÿã˜ã§æˆ»ã‚‹(æˆ»ã‚Šãã£ãŸã‚‰æ”»æ’ƒå›æ•°ãŒåŠ ç®—ã•ã‚Œã‚‹)
 				if (hitpoint == HitRight) {
 					Deadbound.y -= 0.02f;
 					pos.y += Deadbound.y;
@@ -275,7 +274,7 @@ void RightShose::Spec() {
 			}
 			enemyobj->SetPosition(pos);
 		}
-		//ƒvƒŒƒCƒ„[‚ğ‹²‚Ş‚æ‚¤‚ÈUŒ‚
+		//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã‚’æŒŸã‚€ã‚ˆã†ãªæ”»æ’ƒ
 		if ((action % 2) == 1) {
 			if (AttackC < 3) {
 				Afterrot.x = 270.0f;
@@ -397,7 +396,7 @@ void RightShose::Spec() {
 	rot.x = Ease(In, Quint, 0.7f, rot.x, Afterrot.x);
 	enemyobj->SetRotation(rot);
 }
-//“±“ü
+//å°å…¥
 void RightShose::App(int Timer) {
 
 	XMFLOAT3 AfterPos{};
@@ -414,7 +413,7 @@ void RightShose::App(int Timer) {
 		frame2 = 0.0f;
 	}
 
-	//“±“üƒV[ƒ“‚É‚¨‚¢‚ÄƒtƒŒ[ƒ€”‚É‚æ‚Á‚Äs“®‚ğŒˆ‚ß‚é
+	//å°å…¥ã‚·ãƒ¼ãƒ³ã«ãŠã„ã¦ãƒ•ãƒ¬ãƒ¼ãƒ æ•°ã«ã‚ˆã£ã¦è¡Œå‹•ã‚’æ±ºã‚ã‚‹
 	switch (appearMove) {
 	case 1:
 		AfterPos = {
@@ -435,7 +434,7 @@ void RightShose::App(int Timer) {
 		pos = { 10.0f,0.0f,0.0f };
 		rot = { 0,270,0 };
 	case 3:
-		//‚Ò‚æ‚Ò‚æ‚ª•‚‚©‚Ô
+		//ã´ã‚ˆã´ã‚ˆãŒæµ®ã‹ã¶
 		stun = true;
 		if (stun) {
 			for (std::size_t i = 0; i < Stuntexture.size(); i++) {
@@ -475,14 +474,14 @@ void RightShose::App(int Timer) {
 	enemyobj->SetRotation(rot);
 }
 
-//Œ‚”j
+//æ’ƒç ´
 void RightShose::End(int Timer) {
-	//ƒ{ƒX‚ğ“|‚µ‚½‚ ‚Æ‚Ì‹““®(Œã‚Å‹Lq)
+	//ãƒœã‚¹ã‚’å€’ã—ãŸã‚ã¨ã®æŒ™å‹•(å¾Œã§è¨˜è¿°)
 	XMFLOAT3 scale = {0.8f,0.8f,0.8f};
 	float RotPower = 0.0f;
 	XMFLOAT3 AfterScale{};
 	//float endframe = 0.0f;
-	//ƒ{ƒX‚ğ“|‚µ‚½‚ ‚Æ‚Ì‹““®(Œã‚Å‹Lq)
+	//ãƒœã‚¹ã‚’å€’ã—ãŸã‚ã¨ã®æŒ™å‹•(å¾Œã§è¨˜è¿°)
 	if (Timer == 300) {
 		pos = { 5.0f,0.0f,0.0f };
 		rot = { 0,270,0 };
@@ -549,7 +548,7 @@ void RightShose::End(int Timer) {
 	enemyobj->SetPosition(pos);
 	enemyobj->SetRotation(rot);
 }
-//“Á•Ê‚È•`‰æ(¡‰ñ‚Ìê‡‚Ò‚æ‚Ò‚æ)
+//ç‰¹åˆ¥ãªæç”»(ä»Šå›ã®å ´åˆã´ã‚ˆã´ã‚ˆ)
 void RightShose::specialDraw() {
 	if (stun) {
 		for (std::size_t i = 0; i < Stuntexture.size(); i++) {
@@ -558,7 +557,7 @@ void RightShose::specialDraw() {
 	}
 }
 
-//¶‘«‚Æs“®‚ğ‡‚í‚¹‚é
+//å·¦è¶³ã¨è¡Œå‹•ã‚’åˆã‚ã›ã‚‹
 void RightShose::SetAct(LeftShose* leftshose) {
 	int action = leftshose->GetAction();
 	int AttackCount = leftshose->GetAttackCount();
@@ -574,7 +573,7 @@ void RightShose::SetAct(LeftShose* leftshose) {
 	LeftAct = leftshose->GetActive();
 }
 
-//¶‘«‚Æ‚Ì“–‚½‚è”»’è
+//å·¦è¶³ã¨ã®å½“ãŸã‚Šåˆ¤å®š
 bool RightShose::HitShose(LeftShose* leftshose) {
 	XMFLOAT3 leftpos = leftshose->GetPosition();
 	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 1.5f, leftpos.x, leftpos.y, leftpos.z, 1.5f) && (action % 2) == 0) {

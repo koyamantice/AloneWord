@@ -13,7 +13,7 @@ ShrinkChange::ShrinkChange() {
 
 void ShrinkChange::Update() {
 
-	//ƒtƒ‰ƒO‚ª—§‚Â‚Æk¬‚ªŽn‚Ü‚é
+	//ï¿½tï¿½ï¿½ï¿½Oï¿½ï¿½ï¿½ï¿½ï¿½Â‚Ækï¿½ï¿½ï¿½ï¿½ï¿½nï¿½Ü‚ï¿½
 	if (endchange) {
 		Shrink();
 	}
@@ -56,12 +56,12 @@ void ShrinkChange::Finalize() {
 	delete change;
 }
 
-//ƒV[ƒ“Ø‚è‘Ö‚¦
+//ï¿½Vï¿½[ï¿½ï¿½ï¿½Ø‚ï¿½Ö‚ï¿½
 void ShrinkChange::Shrink() {
-	//’ÊíƒTƒCƒY‚Éscale‚ð‚©‚¯‘±‚¯‚é
+	//ï¿½Êï¿½Tï¿½Cï¿½Yï¿½ï¿½scaleï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	scale = 0.9f;
 	timer++;
-	//ˆê’è‚ÌƒTƒCƒY(Á‚¦‚é‚Ü‚Å)‚Ü‚Ås‚­‚Æk¬‚ªÁ‚¦‚é
+	//ï¿½ï¿½ï¿½ÌƒTï¿½Cï¿½Y(ï¿½ï¿½ï¿½ï¿½ï¿½Ü‚ï¿½)ï¿½Ü‚Åsï¿½ï¿½ï¿½Ækï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	if (timer >= 70) {
 		timer = 0;
 		endchange = false;
