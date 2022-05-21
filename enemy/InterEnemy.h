@@ -31,6 +31,7 @@ public:
 	/// 座標・回転の設定
 	void SetPosition(const XMFLOAT3& position) { enemyobj->SetPosition(position); }
 	void SetRotation(const XMFLOAT3& rotation) { enemyobj->SetRotation(rotation); }
+	//このクラスで使うもののゲッター : セッター
 	const int& GetIsTimer() { return IsTimer; };
 	const bool& GetEnemyCatch() { return EnemyCatch; }
 	const XMFLOAT3& GetBoundPower() { return boundpower; }
@@ -38,6 +39,8 @@ public:
 	const int& GetBound() { return bound; }
 	const bool& GetIsAlive() { return IsAlive; }
 	const int& GetDrawExp() { return DrawExp; }
+	const bool& GetFollowed() { return followed; }
+	const bool& GetEnemyCatcth() { return EnemyCatch; }
 	//bool Collision(XMFLOAT3 position, float radius);
 	void SetIsAlive(const int& IsAlive) { this->IsAlive = IsAlive; }
 	void SetEnemyCatch(const bool& EnemyCatch) { this->EnemyCatch = EnemyCatch; }
@@ -45,7 +48,6 @@ public:
 	void SetScale(const float& Scale) { this->scale=Scale; }
 	void SetSpeed(const float& speed) { this->speed = speed; }
 	void SetHit(const bool& hit) { this->hit = hit; }
-	void Back();
 	void SetDrawExp(const int& DrawExp) { this->DrawExp = DrawExp; }
 	void Setboundpower(const XMFLOAT3& boundpower) { this->boundpower = boundpower; }
 	void SetLimit(const XMFLOAT4& limit) {
@@ -54,32 +56,35 @@ public:
 		this->x_max = limit.z;
 		this->x_min = limit.w;
 	}
+	//メンバ関数
+	void SetBasePos(XMFLOAT3 basePos) { this->basePos = basePos; }
+	void Back();
 	void Stop();
 	void SetEnemy();
 	void DeadEnemy();
 	void RandDeadPower();
-	void SetBasePos(XMFLOAT3 basePos) { this->basePos = basePos; }
 	void Respawn(float speed);
 	void Follow();
 	void Reborn();
 	bool CollidePos(XMFLOAT3 pos,float radius);
-	const bool& GetFollowed() { return followed; }
-	const bool& GetEnemyCatcth() { return EnemyCatch; }
+
 protected:
+///メンバ変数
+	//円周率(円運動のためのやつ)
 	const float PI = 3.14f;
 
+	//モデルやテクスチャー
 	Object3d* enemyobj = nullptr;
 	Model* model = nullptr;
 	Texture* texture = nullptr;
 	Texture* Restexture = nullptr;
+	Player* player = nullptr;
+
+	//各座標や回転やサイズ
 	XMFLOAT3 pos = { 0,0,0 };
 	XMFLOAT3 oldpos = { 0,0,0 };
 	XMFLOAT3 rot = { 0,0,0 };
-	XMFLOAT3 boundpower{};
-	XMFLOAT3 Deadbound = {};
-	XMFLOAT3 enescale{0.4f,0.4f,0.4f};
-
-	Player* player=nullptr;
+	XMFLOAT3 enescale{ 0.4f,0.4f,0.4f };
 	XMFLOAT3 playerpos{};
 	XMFLOAT3 NextP{};
 	XMFLOAT3 StartPos{};
@@ -87,6 +92,10 @@ protected:
 	XMFLOAT3 EndRot{};
 	XMFLOAT3 basePos{};
 
+	//死んだときの変数
+	XMFLOAT3 boundpower{};
+	XMFLOAT3 Deadbound = {};
+	//円運動に使う変数
 	float radius = 0.0f;
 	float speed = 0.0f;
 	float savespeed = 0.0f;
@@ -94,32 +103,34 @@ protected:
 	float savesacale = 0.0f;
 	float circleX = 0.0f;
 	float circleZ = 0.0f;
-	float EnemyWeight = 0.0f;
+	
+	//リスポーン関係
 	bool IsAlive = 0;
 	int IsTimer = 200;
+	//フラグ関係
 	bool EnemyCatch = false;
 	bool isMove = false;
 	bool hit = false;
-	int moveCount = 30;
-	int CheckCount = 0;
-	//{
-		bool lost = false;
-		bool followed = false;
-		int count = 0;
-		int dir = 180;
-		int dirVel = 2;
-		int dirMin = dir - 90;
-		int dirMax = dir + 90;
-	//}
+	bool lost = false;
+	bool followed = false;
 	bool bound = false;
 	bool add = false;
 	bool appearance = false;
 	bool Exp = false;
 	int DrawExp = false;
+	bool pause = false;
+	bool respawn = false;
+	//敵のAI関係
+	int moveCount = 30;
+	int CheckCount = 0;
+	int count = 0;
+	int dir = 180;
+	int dirVel = 2;
+	int dirMin = dir - 90;
+	int dirMax = dir + 90;
 	double posR;
 	double Check;
 	double Check2;
-
 	float frame = 0;
 	int Interval = 0;
 	int FlashCount = 0;
@@ -128,8 +139,7 @@ protected:
 	float z_min = -20;
 	float z_max = 20;
 	XMFLOAT2 vel{};
-	bool pause = false;
-	bool respawn = false;
+
 public:
 	virtual ~InterEnemy() = default;
 

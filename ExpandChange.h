@@ -59,10 +59,11 @@ private:
 	using XMVECTOR = DirectX::XMVECTOR;
 	using XMMATRIX = DirectX::XMMATRIX;
 private:
-		Sprite* change = nullptr;
-		XMFLOAT2 pos = { 640.0f,360.0f, };
-		float scale = 1.0f;
-		bool startchange = false;
-		int timer = 0;
+	//ÉVÅ[ÉìêÿÇËë÷Ç¶(èkè¨ÇÃï˚)
+	Sprite* change = nullptr;
+	XMFLOAT2 pos = { 640.0f,360.0f, };
+	float scale = 1.0f;
+	bool startchange = false;
+	int timer = 0;
 };
 

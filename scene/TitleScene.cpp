@@ -44,17 +44,17 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 	//スプライト生成
 	expandchange = new ExpandChange();
 }
-
+//開放処理
 void TitleScene::Finalize() {
 	//３ｄのモデルのデリート
 	delete player;
 	delete sprite[0];
 	expandchange->Finalize();
 }
-
+//更新
 void TitleScene::Update(DirectXCommon* dxCommon) {
 	Input* input = Input::GetInstance();
-	
+	//どの選択をするかでどのシーンに行くか変わる
 	if (input->LeftTriggerStick(input->Down)) {
 		SelectNumber++;
 	}
@@ -113,7 +113,7 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 	camera->SetTarget({0,0,0});
 	camera->SetEye(cameraPos);
 }
-
+//描画
 void TitleScene::Draw(DirectXCommon* dxCommon) {
 	
 	Sprite::PreDraw();

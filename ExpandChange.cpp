@@ -12,7 +12,7 @@ ExpandChange::ExpandChange() {
 }
 
 void ExpandChange::Update() {
-
+	//フラグが立つと拡大が始まる
 	if (startchange) {
 		Expand();
 	}
@@ -57,8 +57,10 @@ void ExpandChange::Finalize() {
 
 //シーン切り替え
 void ExpandChange::Expand() {
+	//通常サイズにscaleをかけ続ける
 	scale = 1.1f;
 	timer++;
+	//一定のサイズ(画面が埋まる)まで行くと拡大が消える
 	if (timer >= 60) {
 		timer = 0;
 		startchange = false;

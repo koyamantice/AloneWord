@@ -13,7 +13,7 @@ ShrinkChange::ShrinkChange() {
 
 void ShrinkChange::Update() {
 
-	
+	//�t���O�����Ək�����n�܂�
 	if (endchange) {
 		Shrink();
 	}
@@ -56,9 +56,12 @@ void ShrinkChange::Finalize() {
 	delete change;
 }
 
+//�V�[���؂�ւ�
 void ShrinkChange::Shrink() {
+	//�ʏ�T�C�Y��scale���������
 	scale = 0.9f;
 	timer++;
+	//���̃T�C�Y(�����܂�)�܂ōs���Ək���������
 	if (timer >= 70) {
 		timer = 0;
 		endchange = false;

@@ -7,6 +7,7 @@
 #include "TouchableObject.h"
 using namespace DirectX;
 
+//コンストラクタ
 Pastel::Pastel() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::Pastel);
 	enemyobj = new Object3d();
@@ -22,10 +23,12 @@ Pastel::Pastel() {
 	}
 }
 
+//初期化
 void Pastel::Initialize(bool shadow) {
 	assert(player);
 	this->shadow = shadow;
 	IsAlive = 0;
+	//敵
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
 	pos = { 0.0f,5.0f,7.5f };
@@ -33,6 +36,7 @@ void Pastel::Initialize(bool shadow) {
 	rot = { 0,270,0 };
 	enemyobj->SetRotation(rot);
 	enemyobj->SetScale({ 2.0f,2.0f,2.0f });
+	//ステージのオブジェクト
 	Millobj = Object3d::Create();
 	Millobj->SetModel(Millmodel);
 	Millpos = { 0.0f,-2.0f,0.0f };
@@ -50,6 +54,7 @@ void Pastel::Initialize(bool shadow) {
 		Platformobj[i]->SetScale({ 1.2f,1.2f,1.2f });
 		Platformobj[i]->SetPosition(Plapos[i]);
 	}
+	//影(今回は使う)
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	//texture->SetColor({ 1,1,1,1 });
@@ -65,6 +70,7 @@ void Pastel::Initialize(bool shadow) {
 	}
 }
 
+//開放
 void Pastel::Finalize() {
 	//delete enemyobj;
 	delete texture;
@@ -76,6 +82,7 @@ void Pastel::Finalize() {
 //ボスの行動
 void Pastel::Spec() {
 	XMFLOAT3 AfterPos{};
+	//行動を決める
 	if (AttackCount > 180) {
 		if (!active) {
 			pat = (rand() % 3);
@@ -84,6 +91,7 @@ void Pastel::Spec() {
 			action = 1;
 		}
 	}
+	//インターバル
 	else {
 		if (!active && !Off) {
 			AttackCount++;
@@ -110,6 +118,7 @@ void Pastel::Spec() {
 		}
 	}
 
+	//行動開始
 	if (Off == false) {
 		if (active) {
 			switch (action) {
@@ -281,6 +290,7 @@ void Pastel::Spec() {
 						frame = 0;
 						action = 0;
 						active = false;
+						//HPによってインターバルが決まる
 						if (BossHP >= 20) {
 							AttackCount = 0;
 						}
@@ -306,6 +316,7 @@ Ease(In,Cubic,frame,rot.z,Afterrot.z)
 		enemyobj->SetRotation(rot);
 	}
 	
+	//餅が集まったら餅を付き始める
 	if (Off == true && !active) {
 		AfterPos.y = 2.0f;
 		AfterPos.z = 7.5f;
@@ -356,6 +367,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 
 	MillUpdate();
 	
+	//回避場所が出現する
 	for (std::size_t i = 0; i < Platformobj.size(); i++) {
 		if (SetPlatform[i] == true) {
 			if (BirthNumber[i] == 0) {
@@ -397,6 +409,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 	}
 }
 
+//導入
 void Pastel::App(int Timer) {
 
 	XMFLOAT3 AfterPos{};
@@ -446,6 +459,7 @@ Ease(In,Cubic,frame,rot.z,AfterRot.z)
 	enemyobj->SetRotation(rot);
 }
 
+//撃破
 void Pastel::End(int Timer) {
 	//ボスを倒したあとの挙動(後で記述)
 	XMFLOAT3 scale = { 0.8f,0.8f,0.8f };
@@ -520,10 +534,12 @@ void Pastel::End(int Timer) {
 	enemyobj->SetRotation(rot);
 }
 
+//臼の更新
 void Pastel::MillUpdate() {
 	Millobj->Update();
 }
 
+//特別な描画(うすと回避のものと影)
 void Pastel::specialDraw() {
 	if (BossHP > 0) {
 		Millobj->Draw();

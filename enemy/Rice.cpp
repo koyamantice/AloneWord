@@ -7,12 +7,13 @@
 #include"ImageManager.h"
 using namespace DirectX;
 
+//コンストラクタ
 Rice::Rice() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::Enemy);
 	enemyobj = new Object3d();
 	Piyopiyo = new Object3d();
 }
-
+//初期化
 void Rice::Initialize() {
 	//敵
 	IsAlive = false;
@@ -22,23 +23,27 @@ void Rice::Initialize() {
 	rot = { 0,90,0 };
 	enemyobj->SetPosition(pos);
 	enemyobj->SetScale(enescale);
+	//テクスチャ
 	texture = Texture::Create(ImageManager::enemy, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	texture->SetPosition(pos);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.2f,0.2f,0.2f });
 	oldpos = pos;
+	//ぴよぴよ
 	Piyopiyo = Object3d::Create();
 	Piyopiyo->SetModel(ModelManager::GetIns()->GetModel(ModelManager::Piyopiyo));
 	Piyopiyo->SetPosition({ pos.x,pos.y + 2.0f,pos.z });
 	Piyopiyo->SetScale({1.0f, 2.0f, 2.0f});
 	Piyopiyo->SetRotation({ 60,0,0 });
 	//texture->SetColor({ 1.0f,0.0,0.0,1.0f });
+	//リスポーン
 	Restexture = Texture::Create(ImageManager::Resporn, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	Restexture->TextureCreate();
 	Restexture->SetPosition(pos);
 	Restexture->SetRotation({ 90,0,0 });
 	Restexture->SetScale({ 0.2f,0.2f,0.2f });
+	//拠点
 	net[0] = Texture::Create(ImageManager::net, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	net[0]->TextureCreate();
 	net[1] = Texture::Create(ImageManager::effect3, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
@@ -52,7 +57,7 @@ void Rice::Initialize() {
 	net[1]->SetScale({ 0.15f,0.15f,0.15f });
 
 }
-
+//開放
 void Rice::Finalize() {
 	delete enemyobj;
 	delete texture;
@@ -60,7 +65,7 @@ void Rice::Finalize() {
 	delete net[1];
 	delete Restexture;
 }
-
+//アップデート
 void Rice::Update() {
 	assert(player);
 	playerpos = player->GetPosition();
@@ -214,6 +219,7 @@ void Rice::Update() {
 	Restexture->Update();
 }
 
+//チュートリアルアップデート
 void Rice::Demo(int num) {
 	assert(player);
 	Piyopiyo->SetPosition({ pos.x,pos.y + 2.0f,pos.z });
@@ -413,6 +419,7 @@ bool Rice::collideArm() {
 	}
 }
 
+//敵同士がぶつかったとき(多分)
 void Rice::Rebound() {
 	XMFLOAT3 enepos = exP;
 	XMFLOAT3 distance{};
@@ -494,6 +501,7 @@ bool Rice::collideAttackArm() {
 			Exp = true;
 			RandDeadPower();
 			player->SetAttackFlag(false);
+			//ダメージ量に応じて音が変わる
 			if (armweight <= 3) {
 				Audio::GetInstance()->PlayWave("Resources/Sound/strongL1.wav", 0.4f);
 			} else if (armweight > 3 && armweight <= 6) {

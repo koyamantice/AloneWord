@@ -11,13 +11,13 @@
 #include"ModelManager.h"
 #include "TouchableObject.h"
 
-#include <array>       // ƒwƒbƒ_ƒtƒ@ƒCƒ‹ƒCƒ“ƒNƒ‹[ƒh
-using namespace std;         //  –¼‘O‹óŠÔw’è
+#include <array>       // ãƒ˜ãƒƒãƒ€ãƒ•ã‚¡ã‚¤ãƒ«ã‚¤ãƒ³ã‚¯ãƒ«ãƒ¼ãƒ‰
+using namespace std;         //  åå‰ç©ºé–“æŒ‡å®š
 #define DIRECTINPUT_VERSION 0x0800
 
 class InterBoss {
 protected:
-	// DirectX::‚ğÈ—ª
+	// DirectX::ã‚’çœç•¥
 	using XMFLOAT2 = DirectX::XMFLOAT2;
 	using XMFLOAT3 = DirectX::XMFLOAT3;
 	using XMFLOAT4 = DirectX::XMFLOAT4;
@@ -25,15 +25,15 @@ protected:
 	using XMMATRIX = DirectX::XMMATRIX;
 public:
 	void SetPlayer(Player* player) { this->player = player; }
-	/// À•WE‰ñ“]‚Ìæ“¾
+	/// åº§æ¨™ãƒ»å›è»¢ã®å–å¾—
 	const XMFLOAT3& GetPosition() { return  enemyobj->GetPosition(); }
 	const XMFLOAT3& GetRotation() { return enemyobj->GetRotation(); }
 
-	/// À•WE‰ñ“]‚Ìİ’è
+	/// åº§æ¨™ãƒ»å›è»¢ã®è¨­å®š
 	void SetPosition(XMFLOAT3 position) { enemyobj->SetPosition(position); }
 	void SetRotation(XMFLOAT3 rotation) { enemyobj->SetRotation(rotation); }
 	void SetScale(XMFLOAT3 scale) { enemyobj->SetScale(scale); }
-	//ƒQƒbƒ^[
+	//ã‚²ãƒƒã‚¿ãƒ¼
 	const bool& GetEnemyCatch() { return EnemyCatch; }
 	const XMFLOAT3& GetBoundPower() { return boundpower; }
 	const bool& GetHit() { return hit; }
@@ -47,7 +47,7 @@ public:
 	const bool& GetStun() { return stun; }
 	const bool& GetAppearanceEnd() { return appearanceEnd; }
 	//bool Collision(XMFLOAT3 position, float radius);
-	//ƒZƒbƒ^[
+	//ã‚»ãƒƒã‚¿ãƒ¼
 	void SetIsAlive(int IsAlive) { this->IsAlive = IsAlive; }
 	void SetEnemyCatch(bool EnemyCatch) { this->EnemyCatch = EnemyCatch; }
 	void SetBound(bool bound) { this->bound = bound; }
@@ -57,7 +57,7 @@ public:
 	void Setboundpower(XMFLOAT3 boundpower) { this->boundpower = boundpower; }
 	void SetStun(bool stun) { this->stun = stun; }
 	void SetAppearanceEnd(bool appearanceEnd) { this->appearanceEnd = appearanceEnd; }
-	//ŠÖ”
+	//é–¢æ•°
 	void SetEnemy();
 	void DeadEnemy();
 	void RandDeadPower();
@@ -76,65 +76,61 @@ public:
 	void SetEffect(bool Effect) { this->Effect = Effect; }
 
 /// <summary>
-/// ‰Šú‰»
+/// åˆæœŸåŒ–
 /// </summary>
 	virtual void Initialize(bool shadow=true) = 0;
 	/// <summary>
-	/// I—¹
+	/// çµ‚äº†
 	/// </summary>
 	virtual void Finalize() = 0;
 	/// <summary>
-	/// –ˆƒtƒŒ[ƒ€XV
+	/// æ¯ãƒ•ãƒ¬ãƒ¼ãƒ æ›´æ–°
 	/// </summary>
 	void Update();
 	/// <summary>
-	/// •`‰æ
+	/// æç”»
 	/// </summary>
 	void Draw();
-
+	//å°å…¥
 	void Begin();
-
+	//å°å…¥ãƒ ãƒ¼ãƒ“ãƒ¼(å‹•ã)
 	void AppeaMovie(int Timer);
-
+	//æ’ƒç ´ãƒ ãƒ¼ãƒ“ãƒ¼
 	void EndMovie(int Timer);
 
-	virtual void App(int Timer)=0;//ƒ{ƒXoŒ»ƒ‚[ƒVƒ‡ƒ“
+	virtual void App(int Timer)=0;//ãƒœã‚¹å‡ºç¾ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³
 
-	virtual void End(int Timer) = 0;//ƒ{ƒXoŒ»ƒ‚[ƒVƒ‡ƒ“
+	virtual void End(int Timer) = 0;//ãƒœã‚¹å‡ºç¾ãƒ¢ãƒ¼ã‚·ãƒ§ãƒ³
 
-	virtual void Spec()=0;//ƒ{ƒX“Á—L‚Ìˆ—
-	virtual void specialDraw()=0;//ƒ{ƒX“Á—L‚Ì•`‰æ
+	virtual void Spec()=0;//ãƒœã‚¹ç‰¹æœ‰ã®å‡¦ç†
+	virtual void specialDraw()=0;//ãƒœã‚¹ç‰¹æœ‰ã®æç”»
 
-	bool collidePlayer();
-	bool collideAttackArm();
+	bool collidePlayer();//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼ã¨ã®å½“ãŸã‚Šåˆ¤å®š
+	bool collideAttackArm();//æ”»æ’ƒåˆ¤å®š
 
 	void Pause(const int& Timer);
 protected:
 	const float PI = 3.14f;
-
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
 	Object3d* enemyobj = nullptr;
 	Model* model = nullptr;
-
 	Texture* texture = nullptr;
 	Texture* Restexture = nullptr;
+	Player* player = nullptr;
+	//åº§æ¨™ã‚„å›è»¢
 	XMFLOAT3 pos = { 0,0,0 };
 	XMFLOAT3 oldpos = { 0,0,0 };
 	XMFLOAT3 rot = { 0,0,0 };
-	XMFLOAT3 boundpower{};
-	XMFLOAT3 Deadbound = {};
 	XMFLOAT3 enescale{ 0.4f,0.4f,0.4f };
-	XMFLOAT3 shosepos;
-	Player* player = nullptr;
+	XMFLOAT3 Afterrot = { 0.0f,90.0f,0.0f };
 	XMFLOAT3 playerpos{};
-	
 	XMFLOAT3 targetpos{};
 	XMFLOAT3 Afterrot = {0.0f,90.0f,0.0f};
 	XMFLOAT3 StartPos{};
 	XMFLOAT3 EndPos{};
 	XMFLOAT3 EndRot{};
 	XMFLOAT3 basePos{};
-
-	//“GŠÖŒW•Ï”
+	//æ•µé–¢ä¿‚å¤‰æ•°
 	float radius = 0.0f;
 	float speed = 0.0f;
 	float savespeed = 0.0f;
@@ -160,7 +156,7 @@ protected:
 	double Check;
 	double Check2;
 
-	//ƒC[ƒWƒ“ƒO‚Ì‚½‚ß‚Ì‚â‚Â
+	//ã‚¤ãƒ¼ã‚¸ãƒ³ã‚°ã®ãŸã‚ã®ã‚„ã¤
 	float frame = 0;
 	float frame2 = 0.0f;
 	int Interval = 0;
@@ -175,42 +171,42 @@ protected:
 	float BossHP = 10;
 	bool BossHit = false;
 	bool Effect = false;
-	//
-	bool already = false;
-	//
+	//ãƒœã‚¹ã®AIé–¢ä¿‚(å…±é€š)
 	int hitpoint = 0;
-	bool active = false;//s“®ŠJn
-	int action = 0;//UŒ‚‚Ìí—Ş
-	int pat = 0;//ƒpƒ^[ƒ“
-	int aiming = 0;//“G’Ç]
-	int coolT = 0;//ƒN[ƒ‹ƒ^ƒCƒ€
-	int AttackC = 0;//‰½‰ñUŒ‚‚µ‚½‚©
-	bool finish = false;//ƒtƒBƒjƒbƒVƒ…
+	bool active = false;//è¡Œå‹•é–‹å§‹
+	int action = 0;//æ”»æ’ƒã®ç¨®é¡
+	int pat = 0;//ãƒ‘ã‚¿ãƒ¼ãƒ³
+	int aiming = 0;//æ•µè¿½å¾“
+	int coolT = 0;//ã‚¯ãƒ¼ãƒ«ã‚¿ã‚¤ãƒ 
+	int AttackC = 0;//ä½•å›æ”»æ’ƒã—ãŸã‹
+	bool finish = false;//ãƒ•ã‚£ãƒ‹ãƒƒã‚·ãƒ¥
 	int State = 0;
 	int AttackCount = 0;
-	float y = 0.0f;
 	float angle = 0.0f;
 	float angle2 = 0.0f;
 	bool shadow=false;
-	//‘Ò‹@ƒ‚[ƒVƒ‡ƒ“‚Ì‚½‚ß‚Ì‚â‚Â
-	enum Motion {
-		Up,
-		Down
-	};
-	//ŒC‚Ìƒ{ƒX
+	//æ€¥é ˆãƒœã‚¹
+	XMFLOAT3 boundpower{};
+	XMFLOAT3 Deadbound = {};
+	XMFLOAT3 StartPos{};
+	XMFLOAT3 EndPos{};
+	XMFLOAT3 EndRot{};
+	XMFLOAT3 basePos{};
+	//é´ã®ãƒœã‚¹
 	bool stun = false;
 	int stunTimer = 0;
-	//‹n‚Ìƒ{ƒX
+	XMFLOAT3 targetpos{};
+	//æµã®ãƒœã‚¹
 	bool Off = false;
 	int haveTimer = 0;
 	float haveEnemy = 0.0f;
-	//“oêƒV[ƒ“
+	//ç™»å ´ã‚·ãƒ¼ãƒ³
 	bool appearanceEnd = false;
 	int appearMove = 0;
-	//“|‚µ‚½‚ ‚Æ‚ÌƒV[ƒ“
+	//å€’ã—ãŸã‚ã¨ã®ã‚·ãƒ¼ãƒ³
 	int EndMove = 0;
 	float endframe = 0.0f;
-	//ŒCê—p‚ÌƒeƒNƒXƒ`ƒƒ—p•Ï”
+	//é´å°‚ç”¨ã®ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”¨å¤‰æ•°
 	array<Texture*,4> Stuntexture;
 	array<float, 4> Stunradius;
 	array<float, 4> StunSpeed;

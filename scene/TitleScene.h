@@ -6,49 +6,51 @@
 /// </summary>
 
 class TitleScene : public BaseScene {
-	public:
+public:
 
-		/// <summary>
-		/// 初期化
-		/// </summary>
-		void Initialize(DirectXCommon* dxCommon) override;
-		/// <summary>
-		/// 終了
-		/// </summary>
-		void Finalize() override;
+	/// <summary>
+	/// 初期化
+	/// </summary>
+	void Initialize(DirectXCommon* dxCommon) override;
+	/// <summary>
+	/// 終了
+	/// </summary>
+	void Finalize() override;
 
-		/// <summary>
-		/// 毎フレーム更新
-		/// </summary>
-		void Update(DirectXCommon* dxCommon) override;
-		/// <summary>
-		/// 描画
-		/// </summary>
-		void Draw(DirectXCommon* dxCommon) override;
+	/// <summary>
+	/// 毎フレーム更新
+	/// </summary>
+	void Update(DirectXCommon* dxCommon) override;
+	/// <summary>
+	/// 描画
+	/// </summary>
+	void Draw(DirectXCommon* dxCommon) override;
 
-	private:
-		Sprite* sprite[10]{};
-		enum {
-			back,
-			button1,
-			button2,
-			select ,
-			ground,
-			tutorial,
-			//select,
-		};
-		ExpandChange* expandchange = nullptr;
-		DebugCamera* camera = { nullptr };
-		Player* player = nullptr;
-		enum Select {
-			Start,
-			Select,
-			Exit,
-		};
-		XMFLOAT2 buttonPos[2]{
-			{ 160.0f,600.0f },
-			{ 440.0f,600.0f }
-		};
-		int SelectNumber = 0;
+private:
+	//メンバ変数
+	Sprite* sprite[10]{};
+	enum {
+		back,
+		button1,
+		button2,
+		select,
+		ground,
+		tutorial,
+		//select,
+	};
+	//各クラスのもの
+	ExpandChange* expandchange = nullptr;
+	DebugCamera* camera = { nullptr };
+	Player* player = nullptr;
+	enum Select {
+		Start,
+		Select,
+		Exit,
+	};
+	XMFLOAT2 buttonPos[2]{
+		{ 160.0f,600.0f },
+		{ 440.0f,600.0f }
+	};
+	int SelectNumber = 0;
 };
 

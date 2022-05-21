@@ -33,19 +33,19 @@ public:
 	void Draw(DirectXCommon* dxCommon) override;
 
 private:
-
+	//オブジェクトやテクスチャ
 	Model* modelFloor = nullptr;
 	Object3d* objFloor;
-
 	Model* modelBossMap = nullptr;
 	TouchableObject* objBossMap;
-
 	Model* modelSphere = nullptr;
 	TouchableObject* objSphere;
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;
-	DebugCamera* camera = { nullptr };
 	Texture* limit = nullptr;
+	//カメラ関係
+	DebugCamera* camera = { nullptr };
+	//それぞれのクラスのもの
 	Player* player = nullptr;
 	array<Effect*, 40> effect;
 	array<InterEnemy*, 6> enemy;

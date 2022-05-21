@@ -8,12 +8,12 @@ class Pastel :public InterBoss {
 public:
 	Pastel();
 
-	void Initialize(bool shadow = true) override;
-	void Finalize() override;
-	void Spec() override;
-	void App(int Timer) override;
-	void End(int Timer) override;
-	void specialDraw() override;
+	void Initialize(bool shadow = true) override;//初期化
+	void Finalize() override;//開放
+	void Spec() override;//ボスの行動
+	void App(int Timer) override;//導入
+	void End(int Timer) override;//撃破
+	void specialDraw() override;//このシーンのみの描画
 	void MillUpdate();
 	bool collideAttackArm(Player* player);
 

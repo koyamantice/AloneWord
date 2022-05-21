@@ -2,6 +2,7 @@
 #include "Collision.h"
 #include <XorShift.h>
 
+//ポーズが入ったら止まる
 void InterEnemy::Pause(const int& Timer) {
 	int wait = 0;
 	if (wait>=Timer) {
@@ -11,6 +12,7 @@ void InterEnemy::Pause(const int& Timer) {
 		wait++;
 	}
 }
+//hitした場合元の場所に戻る
 void InterEnemy::Back() {
 	if (hit) {
 		XMFLOAT3 setpos{};
@@ -70,6 +72,7 @@ void InterEnemy::DeadEnemy() {
 	}
 }
 
+//ここで死んだときに加算する力を決める
 void InterEnemy::RandDeadPower() {
 	Deadbound.x = (float)((int)XorShift::GetInstance()->xor128() % 4 - 2);
 	Deadbound.y = 5;
@@ -79,6 +82,7 @@ void InterEnemy::RandDeadPower() {
 	Deadbound.z = Deadbound.z / 10;
 }
 
+//リスポーン
 void InterEnemy::Respawn(float speed) {
 	if (speed!=0.0f) {
 		respawn = true;
@@ -99,6 +103,7 @@ void InterEnemy::Follow() {
 	pos.z += vel.y;
 }
 
+//リスポーンしたときの場所ぎめ
 void InterEnemy::Reborn() {
 	if (!IsAlive) {
 		IsTimer--;
@@ -133,6 +138,7 @@ void InterEnemy::Reborn() {
 
 }
 
+//あたってるかどうかの判定(よくわからない)
 bool InterEnemy::CollidePos(XMFLOAT3 pos, float radius) {
 	if (Collision::SphereCollision(pos.x, pos.y, pos.z, radius, NextP.x, NextP.y, NextP.z, radius)) {
 		this->pos = this->pos;

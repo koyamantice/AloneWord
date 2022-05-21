@@ -176,6 +176,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 			pastel->Begin();
 			pastel->MillUpdate();
 			pastel->AppeaMovie(appearanceTimer);
+			//ƒJƒƒ‰‚ÌˆÊ’u‚ð‚»‚ê‚¼‚ê‡‚í‚¹‚é
 			if (appearanceNumber == 0) {
 				cameraPos.x = -7;
 				cameraPos.y = 9;
@@ -480,6 +481,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 	//DebugText::GetInstance()->Print("PUSH to A!!", 1040, 660, 2.0f);
 }
 
+//•`‰æ
 void FourthBoss::Draw(DirectXCommon* dxCommon) {
 	//ImGui::Begin("test");
 	////ImGui::SliderFloat("pos.z", &pos.z, 50, 0);

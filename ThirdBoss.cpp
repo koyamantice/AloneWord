@@ -10,7 +10,7 @@
 #include "CollisionManager.h"
 #include "ImageManager.h"
 #include <Easing.h>
-
+//初期化
 void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	//インスタンス取得
 	collisionManager = CollisionManager::GetInstance();
@@ -126,7 +126,7 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	expandchange = new ExpandChange();
 	//ui->Initialize();
 }
-
+//開放
 void ThirdBoss::Finalize() {
 
 	//3dのモデルのデリート
@@ -150,7 +150,7 @@ void ThirdBoss::Finalize() {
 	delete camera;
 	ui->Finalize();
 }
-
+//更新
 void ThirdBoss::Update(DirectXCommon* dxCommon) {
 	//objBossMap->Update();
 	//各オブジェクトの更新
@@ -171,6 +171,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 			player->Begin();
 			bossenemy->Begin();
 			bossenemy->AppeaMovie(appearanceTimer);
+			//カメラの位置をそれぞれ合わせる
 			if (appearanceNumber == 0) {
 				cameraPos.x = player->GetPosition().x;
 				cameraPos.y = player->GetPosition().y + 6;
@@ -448,6 +449,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 	//DebugText::GetInstance()->Print("PUSH to A!!", 1040, 660, 2.0f);
 }
 
+//描画
 void ThirdBoss::Draw(DirectXCommon* dxCommon) {
 	//ImGui::Begin("test");
 	////ImGui::SliderFloat("pos.z", &pos.z, 50, 0);

@@ -34,21 +34,24 @@ public:
 	void Draw(DirectXCommon* dxCommon) override;
 	void Pause(const int& Timer);
 private:
-	XMFLOAT3 cameraPos = { 0.0f,0.0f,0.0f };
+	//メンバ変数
+	//オブジェクトやテクスチャ
 	Model* modelFloor = nullptr;
 	Object3d* objFloor;
-
 	Model* modelBossMap = nullptr;
 	TouchableObject* objBossMap;
-
 	Model* modelSphere = nullptr;
 	Object3d* objSphere;
-
 	Model* modelSkydome = nullptr;
 	Object3d* objSkydome;
-
 	Sprite* button = nullptr;
+	Sprite* Ok;
+	Sprite* OkSheet;
+	Sprite* comment[5];
+	//カメラ関係
+	XMFLOAT3 cameraPos = { 0.0f,0.0f,0.0f };
 	DebugCamera* camera = { nullptr };
+	//それぞれのクラスのもの
 	Player* player = nullptr;
 	array<Effect*, 40> effect;
 	array<Rice*, 7> enemy;
@@ -59,9 +62,7 @@ private:
 	ExpandChange* expandchange = false;
 	ShrinkChange* shrinkchange = false;
 
-	Sprite* Ok;
-	Sprite* OkSheet;
-	Sprite* comment[5];
+	//チュートリアルのためのもの
 	bool check = false;
 	float frame=0;
 	XMFLOAT2 sca{};

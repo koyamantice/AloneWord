@@ -179,6 +179,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 			}
 			player->Begin();
 			bossenemy->Begin();
+			//カメラの位置をそれぞれを変える
 			if (appearanceNumber == 0) {
 				if (appearanceTimer == 1) {
 					cameraPos.x = bossenemy->GetPosition().x + 5;
@@ -511,6 +512,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	//DebugText::GetInstance()->Print("PUSH to A!!", 1040, 660, 2.0f);
 }
 
+//描画
 void BossScene::Draw(DirectXCommon* dxCommon) {
 	ImGui::Begin("test");
 	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
