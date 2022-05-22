@@ -47,7 +47,7 @@ private:
 	//‚»‚ê‚¼‚ê‚ÌƒNƒ‰ƒX‚Ì‚à‚Ì
 	Player* player = nullptr;
 	array<Effect*, 40> effect;
-	array<InterEnemy*, 6> enemy;
+	array<Rice*, 6> enemy;
 	InterBoss* bossenemy = nullptr;
 	//std::array<std::array<Exp*, 5>, 5> exp;
 	float weight = 0;

@@ -354,11 +354,11 @@ Ease(In,Cubic,selectframe,cameratargetPos.z,Aftertargetpos.z)
 
 //描画
 void StageSelect::Draw(DirectXCommon* dxCommon) {
-	ImGui::Begin("test");
-	ImGui::SliderFloat("cameraPos.y", &cameraPos.y, 30, 0);
-	//ImGui::Text("endT::%d", EndTimer);
-	ImGui::Unindent();
-	ImGui::End();
+	//ImGui::Begin("test");
+	//ImGui::SliderFloat("cameraPos.y", &cameraPos.y, 30, 0);
+	////ImGui::Text("endT::%d", EndTimer);
+	//ImGui::Unindent();
+	//ImGui::End();
 
 	Texture::PreDraw();
 	BackGround->Draw();
