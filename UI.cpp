@@ -113,6 +113,12 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 			number[i][0]->SetScale(0.3f);
 		}
 	}
+	SpinPos[0] = {1150.0f,200.0f};
+	SpinBar->SetAnchorPoint({ 0.5f,1.0f });
+	SpinPos[1] = { 1150.0f,500.0f };
+	SpinGauge->SetPosition(SpinPos[0]);
+	SpinBar->  SetPosition(SpinPos[1]);
+
 }
 //更新
 void UI::Update() {
@@ -129,7 +135,7 @@ void UI::Update() {
 		PlaHp[now]->SetSize(plaPos[0]);
 		PlaHp[damage]->SetSize(plaPos[1]);
 	}
-	if (strong!= player->GetArmWeight()) {
+	if (strong != player->GetArmWeight()) {
 		if (!Up) {
 			Up = true;
 		}
@@ -170,10 +176,13 @@ void UI::Update() {
 
 	//後々変更ポイント
 	//スタミナ的なやつ
-	SpinPos = { 700.0f,300.0f };
-	SpinGauge->SetPosition(SpinPos);
-	SpinBar->SetPosition(SpinPos);
-	SpinBar->SetSize({ 30.0f,(float)player->GetRotTimer() * 0.5f });//プレイヤーの回る時間に応じてのサイズ変更
+	AfterPos3 = { 60,(float)(player->GetRotTimer() * 0.5f)};
+
+	SpinPos[1] = {
+	Ease(In,Quint,0.7f,SpinBar->GetSize().x,AfterPos3.x),
+	Ease(In,Quint,0.7f,SpinBar->GetSize().y,AfterPos3.y),};
+	//SpinGauge->SetSize(SpinPos[0]);
+	SpinBar->SetSize(SpinPos[1]);
 }
 
 //開放
@@ -192,8 +201,10 @@ void UI::Finalize() {
 //描画
 const void UI::Draw() {
 	ImGui::Begin("test");
-	ImGui::SliderFloat("Spin.x", &SpinPos.x, 1000, 0);
-	ImGui::SliderFloat("Spin.y", &SpinPos.y, 1000, 0);
+	ImGui::SliderFloat("Spin.x", &SpinPos[0].x, 1000, 0);
+	ImGui::SliderFloat("Spin.y", &SpinPos[0].y, 1000, 0);
+	ImGui::SliderFloat("Spin1.x", &SpinPos[1].x, 1000, 0);
+	ImGui::SliderFloat("Spin1.y", &SpinPos[1].y, 1000, 0);
 	//ImGui::SliderInt("dir", &dir, 360, -360);
 	////ImGui::SliderFloat("speed_y", &speed_y, 360, 0);
 	ImGui::SliderFloat("scale", &vel, 360, 0);
@@ -247,10 +258,10 @@ const void UI::Draw() {
 		}
 
 		//プレイヤーのスタミナ(一旦コメントアウト)
-		if (player->GetRotTimer() > 0) {
-			/*SpinGauge->Draw();
-			SpinBar->Draw();*/
-		}
+		//if (player->GetRotTimer() > 0) {
+			SpinGauge->Draw();
+			SpinBar->Draw();
+		//}
 	}
 	
 }
