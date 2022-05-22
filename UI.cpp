@@ -243,18 +243,19 @@ const void UI::Draw() {
 		BossHp2[now]->Draw();
 	}
 	
-	HpGauge->Draw();
-	if (player->GetHp()>7) {
-		Mark[energy]->Draw();
-	} else if(player->GetHp() >3) {
-		Mark[pinch]->Draw();
-	} else {
-		Mark[weak]->Draw();
+	if (!isInvisible) {
+		HpGauge->Draw();
+		if (player->GetHp() > 7) {
+			Mark[energy]->Draw();
+		} else if (player->GetHp() > 3) {
+			Mark[pinch]->Draw();
+		} else {
+			Mark[weak]->Draw();
+		}
+		PlaHp[max]->Draw();
+		PlaHp[damage]->Draw();
+		PlaHp[now]->Draw();
 	}
-	PlaHp[max]->Draw();
-	PlaHp[damage]->Draw();
-	PlaHp[now]->Draw();
-
 	//Life->Draw();
 
 	if (boss && invisible[0] && boss->GetHP() >= 1) {

@@ -17,7 +17,6 @@ void ShrinkChange::Update() {
 	if (endchange) {
 		Shrink();
 	}
-
 	else {
 		scale = 1.0f;
 	}
@@ -47,6 +46,7 @@ const void ShrinkChange::Draw() {
 	//
 	//}
 	if (endchange) {
+		Sprite::PreDraw();
 		change->Draw();
 	}
 

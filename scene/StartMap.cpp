@@ -95,15 +95,14 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 
 	ui = new UI(player);
 
-	Ok = Sprite::Create(ImageManager::ok, { 570.0f,500.0f });
+	Ok = Sprite::Create(ImageManager::ok, { 314.0f,600.0f });
 	Ok->SetAnchorPoint({ 0.5f, 0.5f });
 	//Ok->SetScale(3.0f);
 	OkSheet = Sprite::Create(ImageManager::okSheet, { 570.0f,500.0f });
 	OkSheet->SetAnchorPoint({ 0.5f, 0.5f });
 	OkSheet->SetScale(1.0f);
 
-	comment[text1] = Sprite::Create(ImageManager::text1, { 570.0f,450.0f });
-	comment[text1]->SetAnchorPoint({0.5f, 0.5f});
+	comment[text1] = Sprite::Create(ImageManager::text1, { 640.0f,360.0f });
 	comment[text2] =Sprite::Create(ImageManager::text2, { 570.0f,450.0f });
 	comment[text3] =Sprite::Create(ImageManager::text3, { 570.0f,450.0f });
 	comment[text4] =Sprite::Create(ImageManager::text4, { 570.0f,450.0f });
@@ -114,6 +113,12 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	comment[text9] =Sprite::Create(ImageManager::text9, { 570.0f,450.0f });
 	comment[text10] =Sprite::Create(ImageManager::text10, { 570.0f,450.0f });
 	comment[text11] =Sprite::Create(ImageManager::text11, { 570.0f,450.0f });
+
+	for (int i = 0; i < text11 + 1; i++) {
+		comment[i]->SetAnchorPoint({ 0.5f, 0.5f });
+		comment[i]->SetPosition({ 640.0f,600.0f });
+		comment[i]->SetSize({ 0,0 });
+	}
 
 	shrinkchange = new ShrinkChange();
 	shrinkchange->SetEndChange(true);
@@ -153,26 +158,387 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	} else {
 		hit = false;
 	}
-	if (input->PushButton(input->Select)) {
-		check = true;
-	}
 	//行動により次のチュートリアルに移る
-
-	//チュートリアルが終わるとシーン遷移に移る
-
-	if (check) {
-		sca = {
-		Ease(In,Quad,frame,0,816),
-		Ease(In,Quad,frame,0,160),
+	nowTimer++;
+	switch (nowText) {
+	case text1:
+		if(nowTimer<61){
+			if (!open && !openT) {
+				open = true;
+			}
+		}
+		if (nowTimer >180) {
+			if (!close && !closeT) {
+				close = true;
+			}
+		}
+		if (closeT) {
+			if (nowTimer>120) {
+				openT = false;
+				closeT = false;
+				nowTimer = 0;
+				nowText = text2;
+			}
+		}
+	break;
+	case text2:
+		if (!open) {
+			if (!openT) {
+				open = true;
+			}
+		}
+		if (nowTimer > 180) {
+			if (!close && !closeT) {
+				close = true;
+			}
+		}
+		if (closeT) {
+			if (nowTimer > 120) {
+				openT = false;
+				closeT = false;
+				nowTimer = 0;
+				nowText = text3;
+			}
+		}
+		break;
+	case text3:
+		if (!open) {
+			if (!openT) {
+				open = true;
+			}
+		}
+		if (nowTimer > 180) {
+			if (!close && !closeT) {
+				close = true;
+			}
+		}
+		if (closeT) {
+			if (nowTimer > 120) {
+				openT = false;
+				closeT = false;
+				nowTimer = 0;
+				nowText = text4;
+			}
+		}
+		break;
+	case text4:
+		if (!open) {
+			if (!openT) {
+				open = true;
+			}
+		}
+		if(openT){
+			if ((input->LeftTiltStick(input->Right)) || (input->LeftTiltStick(input->Left))
+				|| (input->LeftTiltStick(input->Up)) || (input->LeftTiltStick(input->Down))) {
+				if (!checkZ && !close&&! closeT) {
+					check = true;
+					nowTimer = 0;
+				}
+			}
+		}
+		if (check) {
+			scaOk={
+			Ease(Out, Quad, frame, 128,64),
+			Ease(Out, Quad, frame, 128,64),
 		};
 		if (frame < 1.0f) {
-			frame += 0.025f;
+			frame += 0.05f;
 		} else {
 			frame = 0.0f;
 			check = false;
+			checkZ = true;
 		}
-		comment[0]->SetSize(sca);
+		Ok->SetSize(scaOk);
+		}
+		if (nowTimer > 200&& checkZ) {
+			if (!close && !closeT) {
+				close = true;
+			}
+		}
+		
+		if (closeT) {
+			check = false;
+			checkZ = false;
+			if (nowTimer > 120) {
+				openT = false;
+				closeT = false;
+				nowTimer = 0;
+				nowText = text5;
+			}
+		}
+		break;
+	case text5:
+		if (!open) {
+			if (!openT) {
+				open = true;
+			}
+		}
+		if (openT) {
+			if (input->PushButton(input->Button_A)) {
+				if (!checkZ && !close && !closeT) {
+					check = true;
+					nowTimer = 0;
+				}
+			}
+		}
+		if (check) {
+			scaOk = {
+			Ease(Out, Quad, frame, 128,64),
+			Ease(Out, Quad, frame, 128,64),
+			};
+			if (frame < 1.0f) {
+				frame += 0.05f;
+			} else {
+				frame = 0.0f;
+				check = false;
+				checkZ = true;
+			}
+			Ok->SetSize(scaOk);
+		}
+		if (nowTimer > 200 && checkZ) {
+			if (!close && !closeT) {
+				close = true;
+			}
+		}
+
+		if (closeT) {
+			check = false;
+			checkZ = false;
+			if (nowTimer > 120) {
+				openT = false;
+				closeT = false;
+				nowTimer = 0;
+				nowText = text6;
+			}
+		}
+		break;
+	case text6:
+		if (!open) {
+			if (!openT) {
+				open = true;
+			}
+		}
+		if (openT) {
+			if (player->GetArmWeight()) {
+				if (!checkZ && !close && !closeT) {
+					check = true;
+					nowTimer = 0;
+				}
+			}
+		}
+		if (check) {
+			scaOk = {
+			Ease(Out, Quad, frame, 128,64),
+			Ease(Out, Quad, frame, 128,64),
+			};
+			if (frame < 1.0f) {
+				frame += 0.05f;
+			} else {
+				frame = 0.0f;
+				check = false;
+				checkZ = true;
+			}
+			Ok->SetSize(scaOk);
+		}
+		if (nowTimer > 200 && checkZ) {
+			if (!close && !closeT) {
+				close = true;
+			}
+		}
+
+		if (closeT) {
+			if (nowTimer > 120) {
+				openT = false;
+				closeT = false;
+				bossenemy->SetHP(15);
+				nowTimer = 0;
+				nowText = text7;
+			}
+		}
+		break;
+	case text7:
+		if (!open) {
+			if (!openT) {
+				open = true;
+			}
+		}
+		if (openT) {
+			if (bossenemy->GetHP()<15) {
+				if (!checkZ && !close && !closeT) {
+					check = true;
+					nowTimer = 0;
+				}
+			}
+		}
+		if (check) {
+			scaOk = {
+			Ease(Out, Quad, frame, 128,64),
+			Ease(Out, Quad, frame, 128,64),
+			};
+			if (frame < 1.0f) {
+				frame += 0.05f;
+			} else {
+				frame = 0.0f;
+				check = false;
+				checkZ = true;
+			}
+			Ok->SetSize(scaOk);
+		}
+		if (nowTimer > 200 && checkZ) {
+			if (!close && !closeT) {
+				close = true;
+			}
+		}
+
+		if (closeT) {
+			if (nowTimer > 120) {
+				openT = false;
+				closeT = false;
+				nowTimer = 0;
+				bossenemy->SetHP(15);
+				nowText = text8;
+			}
+		}
+		break;
+	case text8:
+		if (!open) {
+			if (!openT) {
+				open = true;
+			}
+		}
+		if (openT) {
+			if (player->GetOldArm()>5.5f&&bossenemy->GetHP() < 15) {
+				if (!checkZ && !close && !closeT) {
+					check = true;
+					nowTimer = 0;
+				}
+			}
+		}
+		if (check) {
+			scaOk = {
+			Ease(Out, Quad, frame, 128,64),
+			Ease(Out, Quad, frame, 128,64),
+			};
+			if (frame < 1.0f) {
+				frame += 0.05f;
+			} else {
+				frame = 0.0f;
+				check = false;
+				checkZ = true;
+			}
+			Ok->SetSize(scaOk);
+		}
+		if (nowTimer > 200 && checkZ) {
+			if (!close && !closeT) {
+				close = true;
+			}
+		}
+
+		if (closeT) {
+			if (nowTimer > 120) {
+				openT = false;
+				closeT = false;
+				nowTimer = 0;
+				nowText = text9;
+			}
+		}
+		break;
+	case text9:
+		if (!open) {
+			if (!openT) {
+				open = true;
+			}
+		}
+		if (nowTimer > 180) {
+			if (!close && !closeT) {
+				close = true;
+			}
+		}
+		if (closeT) {
+			if (nowTimer > 120) {
+				openT = false;
+				closeT = false;
+				nowTimer = 0;
+				nowText = text10;
+			}
+		}
+		break;
+	case text10:
+		if (!open) {
+			if (!openT) {
+				open = true;
+			}
+		}
+		if (nowTimer > 180) {
+			if (!close && !closeT) {
+				close = true;
+			}
+		}
+		if (closeT) {
+			if (nowTimer > 120) {
+				openT = false;
+				closeT = false;
+				nowTimer = 0;
+				nowText = text11;
+			}
+		}
+		break;
+		//チュートリアルが終わるとシーン遷移に移る
+	case text11:
+		if (!open) {
+			if (!openT) {
+				open = true;
+			}
+		}
+		if (input->PushButton(input->Select)) {
+			SceneManager::GetInstance()->ChangeScene("StageSelect");
+
+		}
+		break;
+
+	default:
+		break;
 	}
+	if (open) {
+		sca = {
+		Ease(Out,Quad,frame,816,816),
+		Ease(Out,Quad,frame,0,160),
+		};
+		if (frame < 1.0f) {
+			frame += 0.05f;
+		} else {
+			frame = 0.0f;
+			open = false;
+			openT = true;
+		}
+		comment[nowText]->SetSize(sca);
+	}
+	if (close) {
+		sca = {
+		Ease(Out,Quad,frame,816,816),
+		Ease(Out,Quad,frame,160,0),
+		};
+		if (checkZ) {
+			scaOk = {
+			Ease(Out, Quad, frame, 64, 64),
+			Ease(Out, Quad, frame, 64, 0), };
+			Ok->SetSize(scaOk);
+		}
+		if (frame < 1.0f) {
+			frame += 0.05f;
+		} else {
+			frame = 0.0f;
+			close = false;
+			closeT = true;
+			//if (checkZ) {
+				checkZ = false;
+			//}
+			nowTimer = 0;
+		}
+		comment[nowText]->SetSize(sca);
+		
+	}
+
 	if (expandchange->GetTimer() >= 58) {
 		SceneManager::GetInstance()->ChangeScene("StageSelect");
 	}
@@ -210,6 +576,13 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 
 //描画
 void StartMap::Draw(DirectXCommon* dxCommon) {
+	ImGui::Begin("test");
+	ImGui::SliderInt("nowTimer", &nowTimer, 500, 0);
+	ImGui::SliderFloat("frame", &frame, 1, 0);
+	ImGui::SliderInt("nowText", &nowText, 11, 0);
+	//ImGui::("boundpower.x %d", &AttackFlag, 50, -50);
+	//ImGui::Text("RotC:%d", AttackFlag);
+	ImGui::End();
 	Object3d::PreDraw();
 	objBossMap->Draw();
 	objFloor->Draw();
@@ -225,15 +598,10 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	particleMan->Draw(dxCommon->GetCmdList());
 	ui->Draw();
 	Sprite::PreDraw();
-	OkSheet->Draw();
-	if (check) {
+	comment[nowText]->Draw();
+	if (check||checkZ) {
 		Ok->Draw();
 	}
-	//for (int i = 0; i < text11; i++) {
-	//	if (tutorial==i) {
-			comment[0]->Draw();
-	//	}
-	//}
 	expandchange->Draw();
 	shrinkchange->Draw();
 }

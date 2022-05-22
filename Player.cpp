@@ -283,6 +283,7 @@ void Player::Update() {
 			chargeTimer = 0;
 			RotCount = 0;
 			RotTimer = 0;
+			OldArm = ArmWeight;
 			ArmWeight = 0.0f;
 			AttackFlag = false;
 		}
@@ -568,7 +569,6 @@ void Player::TitleUp() {
 
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
-
 	//ImGui::Begin("test");
 	////ImGui::SliderFloat("pos.x", &position.x, 50, -50);
 	//ImGui::SliderFloat("rot.y", &rot.y, 50, -50);

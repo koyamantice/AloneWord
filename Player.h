@@ -96,6 +96,8 @@ public:
 	void SetDamageFlag(bool DamageFlag) { this->DamageFlag = DamageFlag; }
 
 	void SetArmWeight(float ArmWeight) { this->ArmWeight = ArmWeight; }
+	void SetOldArm(float OldArm) { this->OldArm = OldArm; }
+	const float& GetOldArm() { return OldArm; }
 
 	void SetAddSpeed(float AddSpeed) { this->AddSpeed = AddSpeed; }
 
@@ -176,6 +178,7 @@ private:
 	float ArmCircleX = 0.0f;
 	float ArmCircleZ = 0.0f;
 	float ArmWeight = 0.0f;
+	float OldArm = 0.0f;
 	float power = 0.0f;
 	//いろいろなフラグ
 	bool AttackFlag = false;

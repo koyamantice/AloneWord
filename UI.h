@@ -6,11 +6,12 @@
 
 class UI {
 public:
-	UI(Player* player, InterBoss* boss = nullptr, InterBoss* boss2 = nullptr);
+	UI(Player* player = nullptr, InterBoss* boss = nullptr, InterBoss* boss2 = nullptr);
 	void Update();
 	void Finalize();
 	const void Draw();
 
+	void SetIsInvisible(const bool isInvisible) { this->isInvisible = isInvisible; }
 	void SetUp(const bool& Up) { this->Up = Up; }
 	void EaseScale();
 private:
@@ -80,6 +81,8 @@ private:
 	float Check;
 	float Check2;
 	int invisible[2]{};
+
+	bool isInvisible=false;
 private:
 	void SeachBoss();
 	void SeachBoss2();

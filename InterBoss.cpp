@@ -112,6 +112,7 @@ bool InterBoss::collideAttackArm() {
 				//boundpower.x = (float)(rand() % 4 - 2);
 				//boundpower.y = (float)(rand() % 6);
 				//boundpower.z = (float)(rand() % 4 - 2);
+				player->SetOldArm(player->GetArmWeight());
 				player->SetArmWeight(weight);
 				BossHit = false;
 			}

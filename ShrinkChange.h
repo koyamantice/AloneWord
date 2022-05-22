@@ -49,6 +49,7 @@ public:
 
 	const int& GetTimer() { return timer; }
 
+	const bool& GetEndChange() { return endchange; }
 	void SetEndChange(bool endchange) { this->endchange = endchange; }
 private:
 	// DirectX::‚ğÈ—ª

@@ -578,6 +578,7 @@ bool Pastel::collideAttackArm(Player* player) {
 					MottiScale = {1.0f,1.0f,1.0f};
 				}
 				weight = 0.0f;
+				player->SetOldArm(player->GetArmWeight());
 				player->SetArmWeight(weight);
 				BossHit = false;
 			}
