@@ -63,7 +63,7 @@ private:
 	float frame=0;
 	XMFLOAT2 sca{};
 	int	tutorial =0;
-	Sprite* comment[5];
+	Sprite* comment[11];
 	Sprite* Ok;
 	Sprite* OkSheet;
 	enum {

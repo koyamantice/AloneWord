@@ -96,13 +96,14 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	ui = new UI(player);
 
 	Ok = Sprite::Create(ImageManager::ok, { 570.0f,500.0f });
-	Ok->SetAnchorPoint({0.5f, 0.5f});
+	Ok->SetAnchorPoint({ 0.5f, 0.5f });
 	//Ok->SetScale(3.0f);
 	OkSheet = Sprite::Create(ImageManager::okSheet, { 570.0f,500.0f });
 	OkSheet->SetAnchorPoint({ 0.5f, 0.5f });
 	OkSheet->SetScale(1.0f);
 
-	comment[text1] =Sprite::Create(ImageManager::text1, { 570.0f,450.0f });
+	comment[text1] = Sprite::Create(ImageManager::text1, { 570.0f,450.0f });
+	comment[text1]->SetAnchorPoint({0.5f, 0.5f});
 	comment[text2] =Sprite::Create(ImageManager::text2, { 570.0f,450.0f });
 	comment[text3] =Sprite::Create(ImageManager::text3, { 570.0f,450.0f });
 	comment[text4] =Sprite::Create(ImageManager::text4, { 570.0f,450.0f });
@@ -156,62 +157,24 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		check = true;
 	}
 	//行動により次のチュートリアルに移る
-	if (tutorial==move) {
-		if (input->LeftTriggerStick(input->Right) ||
-			input->LeftTriggerStick(input->Left) ||
-			input->LeftTriggerStick(input->Up) ||
-			input->LeftTriggerStick(input->Down)) {
-			check = true;
-		}
-	}
-	if (tutorial==chage) {
-		if (input->PushButton(input->Button_RB)) {
-			//tutorial++;
-			if (!check) {
-				check = true;
-			}
-		}
-	}
-	if (tutorial == get) {
-		if (player->GetArmWeight()) {
-			//tutorial++;
-			if (!check) {
-				check = true;
-			}
-		}
-	}
-	if (tutorial == Attack) {
-		if (bossenemy->GetHP()<10) {
-			//tutorial++;
-			if (!check) {
-				check = true;
-			}
-		}
-	}
+
 	//チュートリアルが終わるとシーン遷移に移る
-	if (tutorial == Perfect) {
-		if (input->TriggerButton(input->Select)) {
-			expandchange->SetStartChange(true);
-		}
-	}
-	if (expandchange->GetTimer() >= 58) {
-		SceneManager::GetInstance()->ChangeScene("StageSelect");
-	}
+
 	if (check) {
 		sca = {
-		Ease(In,Quad,frame,256,128),
-		Ease(In,Quad,frame,256,128),
+		Ease(In,Quad,frame,0,816),
+		Ease(In,Quad,frame,0,160),
 		};
 		if (frame < 1.0f) {
 			frame += 0.025f;
 		} else {
 			frame = 0.0f;
-			if (tutorial != Perfect) {
-				tutorial++;
-			}
 			check = false;
 		}
-		Ok->SetSize(sca);
+		comment[0]->SetSize(sca);
+	}
+	if (expandchange->GetTimer() >= 58) {
+		SceneManager::GetInstance()->ChangeScene("StageSelect");
 	}
 	objBossMap->Update();
 	player->Update();
@@ -266,11 +229,11 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	if (check) {
 		Ok->Draw();
 	}
-	for (int i = 0; i < Perfect + 1; i++) {
-		if (tutorial==i) {
-			comment[i]->Draw();
-		}
-	}
+	//for (int i = 0; i < text11; i++) {
+	//	if (tutorial==i) {
+			comment[0]->Draw();
+	//	}
+	//}
 	expandchange->Draw();
 	shrinkchange->Draw();
 }
