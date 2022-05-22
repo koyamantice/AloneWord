@@ -37,9 +37,10 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	//ステージマップ
 	modelBossMap = Model::CreateFromOBJ("BossMap");
 	objBossMap = TouchableObject::Create(modelBossMap);
-	objBossMap->SetPosition({ 0,-1,2 });
+	objBossMap->SetPosition({ 0,0,4 });
 	objBossMap->SetRotation({ 0, 90, 0 });
 	objBossMap->SetScale({ 3.0f, 1.5f, 3.0f });
+	
 	/*
 	objBossMap->SetModel(modelBossMap);
 	objBossMap->SetPosition({ 0,-1,2 });
