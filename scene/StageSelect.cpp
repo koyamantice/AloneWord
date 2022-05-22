@@ -35,7 +35,7 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	plane[1] = Sprite::Create(ImageManager::genkan, selectP[1]);
 	plane[2] = Sprite::Create(ImageManager::niwa, selectP[1]);
 	plane[3] = Sprite::Create(ImageManager::washitu, selectP[1]);
-	plane[4] = Sprite::Create(ImageManager::wait, selectP[1]);
+	plane[4] = Sprite::Create(ImageManager::shinshitu, selectP[1]);
 	// カメラ生成
 	//srand(NULL);
 	// ライト生成

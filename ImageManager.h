@@ -43,7 +43,7 @@ public:
 		genkan,
 		niwa,
 		washitu,
-		wait,
+		shinshitu,
 		meter,
 		meterbar,
 		button,

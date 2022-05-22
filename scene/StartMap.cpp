@@ -576,13 +576,13 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 
 //描画
 void StartMap::Draw(DirectXCommon* dxCommon) {
-	ImGui::Begin("test");
-	ImGui::SliderInt("nowTimer", &nowTimer, 500, 0);
-	ImGui::SliderFloat("frame", &frame, 1, 0);
-	ImGui::SliderInt("nowText", &nowText, 11, 0);
-	//ImGui::("boundpower.x %d", &AttackFlag, 50, -50);
-	//ImGui::Text("RotC:%d", AttackFlag);
-	ImGui::End();
+	//ImGui::Begin("test");
+	//ImGui::SliderInt("nowTimer", &nowTimer, 500, 0);
+	//ImGui::SliderFloat("frame", &frame, 1, 0);
+	//ImGui::SliderInt("nowText", &nowText, 11, 0);
+	////ImGui::("boundpower.x %d", &AttackFlag, 50, -50);
+	////ImGui::Text("RotC:%d", AttackFlag);
+	//ImGui::End();
 	Object3d::PreDraw();
 	objBossMap->Draw();
 	objFloor->Draw();
