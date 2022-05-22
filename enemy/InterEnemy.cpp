@@ -46,6 +46,7 @@ void InterEnemy::SetEnemy() {
 		circleX = cosf(radius) * scale;
 		circleZ = sinf(radius) * scale;
 		pos.x = circleX + plapos.x;
+		pos.y = plapos.y;
 		pos.z = circleZ + plapos.z;
 	}
 }

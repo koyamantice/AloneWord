@@ -33,14 +33,14 @@ void InterBoss::Draw() {
 
 	ImGui::Begin("test");
 	//ImGui::SliderFloat("endframe", &StunPos[0].x, 30, -30);
-	//ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
+	ImGui::SliderFloat("HP", &BossHP, 360, -360);
 	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
 	/*ImGui::SliderFloat("pos.x", &pos.x, 1, 0.0f);
 	ImGui::Text("Move:%d", appearMove);*/
 	//ImGui::SliderFloat("angle", &angle, 360, -360);
-	ImGui::Text("AttackCount::%d", AttackCount);
+	/*ImGui::Text("AttackCount::%d", AttackCount);
 	ImGui::Text("Active::%d", active);
-	ImGui::Text("action::%d", action);
+	ImGui::Text("action::%d", action);*/
 	ImGui::End();
 	//if (BossHP >= 1) {
 		Object3d::PreDraw();
@@ -106,7 +106,7 @@ bool InterBoss::collideAttackArm() {
 			//ボスのHPをへらす
 			if (BossHit == true) {
 				Effect = true;
-				BossHP -= ((weight * 2) / 2);
+				BossHP -= ((weight * 1.2) * 2);
 				weight = 0.0f;
 				//boundpower.x = (float)(rand() % 4 - 2);
 				//boundpower.y = (float)(rand() % 6);

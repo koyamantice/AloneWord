@@ -20,7 +20,7 @@ void RightShose::Initialize(bool shadow) {
 	//敵
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
-	pos = { 10.0f,0.0f,0.0f };
+	pos = { 5.0f,0.0f,0.0f };
 	enemyobj->SetPosition(pos);
 	
 	rot = { 0,270,0 };
@@ -102,7 +102,7 @@ void RightShose::Spec() {
 				//左足が戻ったら元の位置に戻る
 				else {
 					AfterPos = {
-					10,
+					5,
 					0,
 					0
 					};
@@ -365,7 +365,7 @@ void RightShose::Spec() {
 				case 2:
 					Afterrot.x = 0.0f;
 					AfterPos = {
-					10,
+					5,
 					0,
 					0
 					};
@@ -434,7 +434,7 @@ void RightShose::App(int Timer) {
 		}
 
 	case 2:
-		pos = { 10.0f,0.0f,0.0f };
+		pos = { 5.0f,0.0f,0.0f };
 		rot = { 0,270,0 };
 	case 3:
 		//ぴよぴよが浮かぶ
