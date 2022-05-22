@@ -163,7 +163,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 	lightGroup->Update();
 	
 	//最初の演出(導入)
-	if (!end) {
+	if (!end && !gameover) {
 		if (!bossstart) {
 			if (BlackColor.w >= 0.0f) {
 				BlackColor.w -= 0.005f;
@@ -349,51 +349,107 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 		}
 
 		if (player->GetHp() <= 0) {
-			SceneManager::GetInstance()->ChangeScene("GAMEOVER");
+			gameover = true;
 		}
 	}//ボス撃破ムービー演出
 	else {
-		EndTimer++;
-		pastel->EndMovie(EndTimer);
-		player->End();
-		if (EndNumber == 0) {
-			/*if (EndTimer == 1) {
-				cameraPos.x = bossenemy->GetPosition().x;
-				cameraPos.y = bossenemy->GetPosition().y + 4;
-				cameraPos.z = bossenemy->GetPosition().z + 4;
-			}*/
+		if (end) {
+			EndTimer++;
+			pastel->EndMovie(EndTimer);
+			player->End();
+			if (EndNumber == 0) {
+				/*if (EndTimer == 1) {
+					cameraPos.x = bossenemy->GetPosition().x;
+					cameraPos.y = bossenemy->GetPosition().y + 4;
+					cameraPos.z = bossenemy->GetPosition().z + 4;
+				}*/
 
-			if (EndTimer == 50) {
-				EndNumber = 1;
+				if (EndTimer == 50) {
+					EndNumber = 1;
+				}
+			}
+			else if (EndNumber == 1) {
+				if (WhiteColor.w <= 1.0f) {
+					WhiteColor.w += 0.005f;
+				}
+
+				if (EndTimer == 300) {
+					EndNumber++;
+				}
+			}
+			else if (EndNumber == 2) {
+				if (WhiteColor.w >= 0.0f) {
+					WhiteColor.w -= 0.005f;
+				}
+				cameraPos.x = pastel->GetPosition().x;
+				cameraPos.y = pastel->GetPosition().y + 7;
+				cameraPos.z = pastel->GetPosition().z - 10;
+			}
+			WhiteFilter->SetColor(WhiteColor);
+			camera->SetTarget(pastel->GetPosition());
+			camera->SetEye(cameraPos);
+
+			if (EndTimer == 700) {
+				expandchange->SetStartChange(true);
+			}
+
+			if (expandchange->GetTimer() >= 58) {
+				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 		}
-		else if (EndNumber == 1) {
-			if (WhiteColor.w <= 1.0f) {
-				WhiteColor.w += 0.005f;
-			}
 
-			if (EndTimer == 300) {
-				EndNumber++;
-			}
-		}
-		else if (EndNumber == 2) {
-			if (WhiteColor.w >= 0.0f) {
-				WhiteColor.w -= 0.005f;
-			}
-			cameraPos.x = pastel->GetPosition().x;
-			cameraPos.y = pastel->GetPosition().y + 7;
-			cameraPos.z = pastel->GetPosition().z - 10;
-		}
-		WhiteFilter->SetColor(WhiteColor);
-		camera->SetTarget(pastel->GetPosition());
-		camera->SetEye(cameraPos);
+		if (gameover == true) {
+			overTimer++;
+			//player->Begin();
+			pastel->Begin();
+			player->gameover(overTimer);
+			if (overNumber == 0) {
+				if (BlackColor.w <= 1.0f) {
+					BlackColor.w += 0.005f;
+				}
 
-		if (EndTimer == 700) {
-			expandchange->SetStartChange(true);
-		}
+				if (overTimer == 1) {
+					Aftereyepos = {
+					player->GetPosition().x,
+					player->GetPosition().y + 5,
+					player->GetPosition().z - 7,
+					};
+					Aftertargetpos = {
+					player->GetPosition().x,
+					player->GetPosition().y,
+					player->GetPosition().z + 3,
+					};
+					cameraPos.x = player->GetPosition().x;
+					cameraPos.y = player->GetPosition().y + distanceY;
+					cameraPos.z = player->GetPosition().z - distanceZ;
+					cameratargetPos = player->GetPosition();
+				}
 
-		if (expandchange->GetTimer() >= 58) {
-			SceneManager::GetInstance()->ChangeScene("StageSelect");
+				if (overTimer >= 50) {
+
+					if (frame < 1.0f) {
+						frame += 0.015f;
+					}
+					else {
+						frame = 1.0f;
+					}
+
+				}
+				cameraPos = {
+			Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+			Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+			Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+				};
+
+				cameratargetPos = {
+			Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+			Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+			Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+				};
+
+			}
+			camera->SetTarget(cameratargetPos);
+			camera->SetEye(cameraPos);
 		}
 	}
 
@@ -504,39 +560,60 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 
 	Texture::PreDraw();
 	shockwave->Draw();
-	//limit->Draw();
-	//Sprite::PreDraw();
-	//sprite->Draw();
 
-	//object1->Draw(dxCommon->GetCmdList());
+	if (!gameover) {
+		pastel->Draw();
+	}
 
-	player->Draw(dxCommon);
-	pastel->Draw();
-	
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Draw();
 	}
 
-	XMFLOAT3 pos = player->GetPosition();
-	XMFLOAT3 enemypos = pastel->GetPosition();
-	
-	if (bossstart && !end) {
-		ui->Draw();
+	if (!gameover) {
+		Texture::PreDraw();
+		if (EndNumber <= 1) {
+			player->Draw(dxCommon);
+		}
+
+		Sprite::PreDraw();
+
+		if (!bossstart) {
+			BlackFilter->Draw();
+			bossName->Draw();
+		}
+
 	}
-	// パーティクルの描画
-	particleMan->Draw(dxCommon->GetCmdList());
-	Sprite::PreDraw();
-	if (!bossstart) {
+	else {
+		Sprite::PreDraw();
+
 		BlackFilter->Draw();
-		bossName->Draw();
+
+		Texture::PreDraw();
+		if (EndNumber <= 1) {
+			player->Draw(dxCommon);
+		}
 	}
+
+	//for (std::size_t i = 0; i < exp.size(); i++) {
+	//	for (std::size_t j = 0; j < exp[i].size(); j++) {
+	//		exp[i][j]->Draw();
+	//	}
+	//}
+	if (bossstart && !end && !gameover) {
+		ui->Draw();
+		// パーティクルの描画
+		particleMan->Draw(dxCommon->GetCmdList());
+	}
+
 
 	if (end) {
 		WhiteFilter->Draw();
 	}
 	else {
-		for (std::size_t i = 0; i < enemy.size(); i++) {
-			enemy[i]->Draw();
+		if (!gameover) {
+			for (std::size_t i = 0; i < enemy.size(); i++) {
+				enemy[i]->Draw();
+			}
 		}
 	}
 
@@ -544,5 +621,4 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 
 	//前面用
 	expandchange->Draw();
-
 }

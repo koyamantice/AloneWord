@@ -238,4 +238,8 @@ private:
 	array<float,40> ChargeCircleZ;
 	array<float,40> Chargeframe;
 	array<int, 40> EffectTimer;
+	//ゲームオーバー時変数
+	//倒したあとのシーン
+	int overMove = 0;
+	float overframe = 0.0f;
 };

@@ -445,7 +445,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 
 		if (gameover == true) {
 			overTimer++;
-			player->Begin();
+			//player->Begin();
 			bossenemy->Begin();
 			player->gameover(overTimer);
 			if (overNumber == 0) {
@@ -459,10 +459,15 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 					player->GetPosition().y + 5,
 					player->GetPosition().z - 7,
 					};
+					Aftertargetpos = {
+					player->GetPosition().x,
+					player->GetPosition().y,
+					player->GetPosition().z + 3,
+					};
 					cameraPos.x = player->GetPosition().x;
 					cameraPos.y = player->GetPosition().y + distanceY;
 					cameraPos.z = player->GetPosition().z - distanceZ;
-					
+					cameratargetPos = player->GetPosition();
 				}
 
 				if (overTimer >= 50) {
@@ -481,9 +486,15 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 			Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
 				};
 
+				cameratargetPos = {
+			Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+			Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+			Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+				};
+
 			}
 
-			camera->SetTarget(player->GetPosition());
+			camera->SetTarget(cameratargetPos);
 			camera->SetEye(cameraPos);
 		}
 	}
@@ -560,16 +571,16 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 
 //描画
 void BossScene::Draw(DirectXCommon* dxCommon) {
-	ImGui::Begin("test");
-	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
-	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
-	ImGui::SliderFloat("enemypos.z", &Aftereyepos.z, 50, 0);
-	ImGui::SliderFloat("frame.y", &frame, 30, 0);
-	ImGui::SliderFloat("color.w", &BlackColor.w, 30, 0);
-	ImGui::Text("overT::%d", overTimer);
-	ImGui::Text("overT::%d", overTimer);
-	ImGui::Unindent();
-	ImGui::End();
+	//ImGui::Begin("test");
+	////ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
+	////ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
+	///*ImGui::SliderFloat("enemypos.z", &Aftereyepos.z, 50, 0);
+	//ImGui::SliderFloat("frame.y", &frame, 30, 0);
+	//ImGui::SliderFloat("color.w", &BlackColor.w, 30, 0);
+	//ImGui::Text("overT::%d", overTimer);*/
+	//ImGui::Text("overT::%d", overTimer);
+	//ImGui::Unindent();
+	//ImGui::End();
 
 	//各オブジェクトの描画
 	Object3d::PreDraw();
@@ -626,8 +637,10 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 		WhiteFilter->Draw();
 	}
 	else {
-		for (std::size_t i = 0; i < enemy.size(); i++) {
-			enemy[i]->Draw();
+		if (!gameover) {
+			for (std::size_t i = 0; i < enemy.size(); i++) {
+				enemy[i]->Draw();
+			}
 		}
 	}
 
