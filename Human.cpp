@@ -8,12 +8,11 @@ Human::Human() {
 	righthand = new RightHand();
 }
 void Human::SetAttack() {
-	if ((lefthand->GetActive() == false) && (righthand->GetActive() == false)) {
+	if ((lefthand->GetActive() == true) && (righthand->GetActive() == true)) {
 		if (AttackCount < 181) {
 			AttackCount++;
 		}
 		else {
-			AttackCount = 0;
 			action = (rand() % 2);
 		}
 	}

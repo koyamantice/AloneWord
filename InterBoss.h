@@ -125,6 +125,7 @@ protected:
 	XMFLOAT3 Afterrot = { 0.0f,90.0f,0.0f };
 	XMFLOAT3 playerpos{};
 	XMFLOAT3 targetpos{};
+	XMFLOAT3 MottiScale = { 0.0f,0.0f,0.0f };
 	//敵関係変数
 	float radius = 0.0f;
 	float speed = 0.0f;

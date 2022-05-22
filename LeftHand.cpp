@@ -67,7 +67,7 @@ void LeftHand::Finalize() {
 void LeftHand::Spec() {
 	XMFLOAT3 AfterPos{};
 	//‚±‚±‚Ås“®‚ðŒˆ‚ß‚é
-	if (AttackCount > 180 && pos.y <= 0.1f) {
+	if (AttackCount == 180) {
 		if (!active) {
 			//action = (rand() % 2);
 			frame = 0;

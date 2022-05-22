@@ -269,15 +269,9 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 			player->Update();
 			lefthand->Update();
 			righthand->Update();
-			/*if ((lefthand->GetActive() == false) && (righthand->GetActive() == false)) {
-				act = true;
-			}
-			else {
-				act = false;
-			}*/
-			human->SetAttack();
 			lefthand->SetAct(human);
 			righthand->SetAct(human);
+			human->SetAttack();
 			/*
 				if (righthand->GetHP() <= 0) {
 					DeadRight++;

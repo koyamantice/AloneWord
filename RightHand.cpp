@@ -67,7 +67,7 @@ void RightHand::Finalize() {
 void RightHand::Spec() {
 	XMFLOAT3 AfterPos{};
 	//‚±‚±‚Ås“®‚ðŒˆ‚ß‚é
-	if (AttackCount > 180) {
+	if (AttackCount == 180) {
 		if (!active) {
 			frame = 0;
 			pat = 1;
