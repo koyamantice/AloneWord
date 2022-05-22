@@ -168,7 +168,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	lightGroup->Update();
 	ParticleManager::GetInstance()->Update();
 	//最初の演出(導入)
-	if (!end) {
+	if (!end && !gameover) {
 		if (!bossstart) {
 			if (BlackColor.w >= 0.0f) {
 				BlackColor.w -= 0.005f;
@@ -392,53 +392,61 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		}
 
 		if (player->GetHp() <= 0) {
-			SceneManager::GetInstance()->ChangeScene("GAMEOVER");
+			gameover = true;
 		}
 	}
 	//ボス撃破ムービー演出
 	else {
-		EndTimer++;
-		bossenemy->EndMovie(EndTimer);
-		player->End();
-		if (EndNumber == 0) {
-			/*if (EndTimer == 1) {
+		if (end) {
+			EndTimer++;
+			bossenemy->EndMovie(EndTimer);
+			player->End();
+			if (EndNumber == 0) {
+				/*if (EndTimer == 1) {
+					cameraPos.x = bossenemy->GetPosition().x;
+					cameraPos.y = bossenemy->GetPosition().y + 4;
+					cameraPos.z = bossenemy->GetPosition().z + 4;
+				}*/
+
+				if (EndTimer == 50) {
+					EndNumber = 1;
+				}
+			}
+			else if (EndNumber == 1) {
+				if (WhiteColor.w <= 1.0f) {
+					WhiteColor.w += 0.005f;
+				}
+
+				if (EndTimer == 300) {
+					EndNumber++;
+				}
+			}
+			else if (EndNumber == 2) {
+				if (WhiteColor.w >= 0.0f) {
+					WhiteColor.w -= 0.005f;
+				}
 				cameraPos.x = bossenemy->GetPosition().x;
-				cameraPos.y = bossenemy->GetPosition().y + 4;
-				cameraPos.z = bossenemy->GetPosition().z + 4;
-			}*/
+				cameraPos.y = bossenemy->GetPosition().y + 7;
+				cameraPos.z = bossenemy->GetPosition().z - 10;
+			}
+			WhiteFilter->SetColor(WhiteColor);
+			camera->SetTarget(bossenemy->GetPosition());
+			camera->SetEye(cameraPos);
 
-			if (EndTimer == 50) {
-				EndNumber = 1;
+			if (EndTimer == 700) {
+				expandchange->SetStartChange(true);
+			}
+
+			if (expandchange->GetTimer() >= 58) {
+				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 		}
-		else if (EndNumber == 1) {
-			if (WhiteColor.w <= 1.0f) {
-				WhiteColor.w += 0.005f;
-			}
-			
-			if (EndTimer == 300) {
-				EndNumber++;
-			}
-		}
-		else if (EndNumber == 2) {
-			if (WhiteColor.w >= 0.0f) {
-				WhiteColor.w -= 0.005f;
-			}
-			cameraPos.x = bossenemy->GetPosition().x;
-			cameraPos.y = bossenemy->GetPosition().y + 7;
-			cameraPos.z = bossenemy->GetPosition().z - 10;
-		}
-		WhiteFilter->SetColor(WhiteColor);
-		camera->SetTarget(bossenemy->GetPosition());
-		camera->SetEye(cameraPos);
 
-		if (EndTimer == 700) {
-			expandchange->SetStartChange(true);
-		}
+		if (gameover == true) {
+			player->Begin();
+			bossenemy->Begin();
 
-
-		if (expandchange->GetTimer() >= 58) {
-			SceneManager::GetInstance()->ChangeScene("StageSelect");
+			//SceneManager::GetInstance()->ChangeScene("GAMEOVER");
 		}
 	}
 
@@ -531,11 +539,6 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	objSkydome->Draw();
 
 	Texture::PreDraw();
-	//limit->Draw();
-	//Sprite::PreDraw();
-	//sprite->Draw();
-
-	//object1->Draw(dxCommon->GetCmdList());
 	if (EndNumber <= 1) {
 		player->Draw(dxCommon);
 	}
