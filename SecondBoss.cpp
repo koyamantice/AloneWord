@@ -24,7 +24,7 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	modelFloor = Model::CreateFromOBJ("floor");
 	objFloor->SetModel(modelFloor);
 	objFloor->SetPosition({ 0, -1, 0 });
-	objFloor->SetScale({ 8.0f,1.0f,6.0f });
+	objFloor->SetScale({ 12.0f,1.0f,6.0f });
 
 	//スカイドーム
 	objEntrance = Object3d::Create();
