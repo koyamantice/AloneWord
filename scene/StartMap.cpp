@@ -95,7 +95,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 
 	ui = new UI(player);
 
-	Ok = Sprite::Create(ImageManager::ok, { 314.0f,600.0f });
+	Ok = Sprite::Create(ImageManager::ok, { 314.0f,500.0f });
 	Ok->SetAnchorPoint({ 0.5f, 0.5f });
 	//Ok->SetScale(3.0f);
 	OkSheet = Sprite::Create(ImageManager::okSheet, { 570.0f,500.0f });
@@ -116,7 +116,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 
 	for (int i = 0; i < text11 + 1; i++) {
 		comment[i]->SetAnchorPoint({ 0.5f, 0.5f });
-		comment[i]->SetPosition({ 640.0f,600.0f });
+		comment[i]->SetPosition({ 640.0f,500.0f });
 		comment[i]->SetSize({ 0,0 });
 	}
 
