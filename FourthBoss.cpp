@@ -37,9 +37,10 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	//ステージマップ
 	modelBossMap = Model::CreateFromOBJ("BossMap");
 	objBossMap = TouchableObject::Create(modelBossMap);
-	objBossMap->SetPosition({ 0,-1,2 });
+	objBossMap->SetPosition({ 0,0,4 });
 	objBossMap->SetRotation({ 0, 90, 0 });
 	objBossMap->SetScale({ 3.0f, 1.5f, 3.0f });
+	
 	/*
 	objBossMap->SetModel(modelBossMap);
 	objBossMap->SetPosition({ 0,-1,2 });
@@ -97,7 +98,7 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	mill->Initialize();*/
 	//テクスチャ関係の初期化
 	//ボスの名前表記
-	bossName = Sprite::Create(ImageManager::select1, namePos);
+	bossName = Sprite::Create(ImageManager::select2, namePos);
 	bossName->SetAnchorPoint({ 1.0f,0.0f });
 
 	WhiteFilter = Sprite::Create(ImageManager::WhiteFilter, { 0.0f,0.0f });
@@ -116,10 +117,10 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	}
 
 	//当たり判定確認用です
-	modelSphere = Model::CreateFromOBJ("sphere");
-	objSphere = TouchableObject::Create(modelSphere);
-	objSphere->SetScale({ 2.0f, 2.0f, 2.0f });
-	objSphere->SetPosition({0.0f,0.0f,1.0f});
+	//modelSphere = Model::CreateFromOBJ("sphere");
+	//objSphere = TouchableObject::Create(modelSphere);
+	//objSphere->SetScale({ 2.0f, 2.0f, 2.0f });
+	//objSphere->SetPosition({0.0f,0.0f,1.0f});
 
 	//カメラポジション
 	cameraPos.x = player->GetPosition().x;
@@ -137,7 +138,6 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 }
 
 void FourthBoss::Finalize() {
-
 	//3dのモデルのデリート
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i]->Finalize();
@@ -510,42 +510,46 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 	if (sizeof(enemy) > 2) {//配列のサイズ確認
 		for (int colA = 0; colA < enemy.size(); colA++) {
 			for (int colB = 1; colB < enemy.size(); colB++) {
-				if (Collision::CircleCollision(enemy[colA]->GetPosition().x, enemy[colA]->GetPosition().z, 3.0f, enemy[colB]->GetPosition().x, enemy[colB]->GetPosition().z, 3.0f) == true && colA != colB) {//蠖薙◆繧雁愛螳壹→閾ｪ讖溷酔螢ｫ縺ｮ蠖薙◆繧雁愛螳壹・蜑企勁
-					//DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
-					enemy[colA]->SetHit(true);
-					enemy[colB]->SetHit(false);
-					break;
-				}
-				else {
-					enemy[colA]->SetHit(false);
+				if (!enemy[colA]->GetEnemyCatcth() && !enemy[colB]->GetEnemyCatcth()) {
+					if (Collision::CircleCollision(enemy[colA]->GetPosition().x, enemy[colA]->GetPosition().z, 1.0f, enemy[colB]->GetPosition().x, enemy[colB]->GetPosition().z, 1.0f) && colA != colB) {//当たり判定と自機同士の当たり判定の削除
+						if (!enemy[colA]->GetHit()) {
+							enemy[colA]->SetHit(true);
+							enemy[colA]->SetExP(enemy[colB]->GetPosition());
+						}
+						if (!enemy[colB]->GetHit()) {
+							enemy[colB]->SetHit(true);
+							enemy[colB]->SetExP(enemy[colA]->GetPosition());
+						}
+						break;
+					}
 				}
 			}
 		}
 	}
 
-	Ray ray;
-	ray.start = { player->GetPosition().x,player->GetPosition().y + 3,player->GetPosition().z,1 };
-	ray.dir = { 0.0f,0.025f,-1.0f };
-	RaycastHit raycastHit;
+	//Ray ray;
+	//ray.start = { player->GetPosition().x,player->GetPosition().y + 3,player->GetPosition().z,1 };
+	//ray.dir = { 0.0f,0.025f,-1.0f };
+	//RaycastHit raycastHit;
 
-	if (!collisionManager->Raycast(ray, &raycastHit)) {
-		if (distanceZ <= 10.0f) {
-			distanceZ += 0.25f;
-		}
+	//if (!collisionManager->Raycast(ray, &raycastHit)) {
+	//	if (distanceZ <= 10.0f) {
+	//		distanceZ += 0.25f;
+	//	}
 
-		if (distanceY >= 10.0f) {
-			distanceY -= 0.25f;
-		}
-	}
-	else {
-		if (distanceZ >= 6.0f) {
-			distanceZ -= 0.4f;
-		}
+	//	if (distanceY >= 10.0f) {
+	//		distanceY -= 0.25f;
+	//	}
+	//}
+	//else {
+	//	if (distanceZ >= 6.0f) {
+	//		distanceZ -= 0.4f;
+	//	}
 
-		if (distanceY <= 18.0f) {
-			distanceY += 0.25f;
-		}
-	}
+	//	if (distanceY <= 18.0f) {
+	//		distanceY += 0.25f;
+	//	}
+	//}
 
 	//その他シーン移行
 	/*if (pastel->GetHP() <= 0) {
@@ -584,13 +588,15 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 	//各オブジェクトの描画
 	Object3d::PreDraw();
 	//objBossMap->Draw();
-	objSphere->Draw();
+	//objSphere->Draw();
 	objBossMap->Draw();
 	objFloor->Draw();
 	objGarden->Draw();
 
 	Texture::PreDraw();
-	shockwave->Draw();
+	if (!end) {
+		shockwave->Draw();
+	}
 
 	if (!gameover) {
 		pastel->Draw();

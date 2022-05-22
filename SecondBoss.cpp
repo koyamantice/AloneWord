@@ -36,9 +36,11 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	//ステージマップ
 	modelBossMap = Model::CreateFromOBJ("BossMap");
 	objBossMap = TouchableObject::Create(modelBossMap);
-	objBossMap->SetPosition({ 0,-1,2 });
+	objBossMap->SetPosition({ 0,0,4 });
 	objBossMap->SetRotation({ 0, 90, 0 });
 	objBossMap->SetScale({ 3.0f, 1.5f, 3.0f });
+	
+	
 	/*
 	objBossMap->SetModel(modelBossMap);
 	objBossMap->SetPosition({ 0,-1,2 });
@@ -65,6 +67,9 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	limit->SetRotation({ 90.0f,0, 0 });
 	limit->SetScale({ 6,5,5 });*/
 	//テクスチャ関係の初期化
+	bossName = Sprite::Create(ImageManager::select3, namePos);
+	bossName->SetAnchorPoint({ 1.0f,0.0f });
+
 	WhiteFilter = Sprite::Create(ImageManager::WhiteFilter, { 0.0f,0.0f });
 	//WhiteFilter->SetAnchorPoint({ 1.0f,0.0f });
 	WhiteFilter->SetColor(WhiteColor);
@@ -227,16 +232,70 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 			else if (appearanceNumber == 3) {
 				if (appearanceTimer == 300) {
 					BlackColor.w = 0.0f;
+				}
+
+				if (appearanceTimer == 350) {
 					appearanceNumber++;
 				}
 			}
 
 			else if (appearanceNumber == 4) {
-				if (appearanceTimer == 500) {
+				Aftereyepos = {
+					0,
+					1,
+					-7,
+				};
+
+				Aftertargetpos = {
+					0,
+					1,
+					0
+				};
+
+				if (frame < 1.0f) {
+					frame += 0.015f;
+				}
+				else {
+					frame = 1.0f;
+				}
+
+				cameraPos = {
+			Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+			Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+			Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+				};
+
+				cameratargetPos = {
+	Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+	Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+	Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+				};
+
+				if (appearanceTimer == 450) {
+					appearanceNumber++;
+					frame = 0.0f;
+				}
+			}
+
+			else if (appearanceNumber == 5) {
+				if (nameframe >= 1.0f) {
+					nameframe = 1.0f;
+				}
+				else {
+					nameframe += 0.06f;
+				}
+				namePos = {
+				Ease(In,Quad,nameframe,2000,940),
+				480
+				};
+
+				bossName->SetPosition(namePos);
+				if (appearanceTimer == 550) {
+					nameframe = 0.0f;
 					appearanceNumber++;
 				}
 			}
-			else if (appearanceNumber == 5) {
+			else if (appearanceNumber == 6) {
 				Aftereyepos = {
 					player->GetPosition().x,
 					player->GetPosition().y + distanceY,
@@ -258,6 +317,19 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 					appearanceNumber = 0;
 					frame = 0;
 				}
+
+				if (nameframe >= 1.0f) {
+					nameframe = 1.0f;
+				}
+				else {
+					nameframe += 0.06f;
+				}
+				namePos = {
+				Ease(In,Quad,nameframe,940,2000),
+				480
+				};
+
+				bossName->SetPosition(namePos);
 
 				cameraPos = {
 	Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
@@ -464,14 +536,18 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 	if (sizeof(enemy) > 2) {//配列のサイズ確認
 		for (int colA = 0; colA < enemy.size(); colA++) {
 			for (int colB = 1; colB < enemy.size(); colB++) {
-				if (Collision::CircleCollision(enemy[colA]->GetPosition().x, enemy[colA]->GetPosition().z, 3.0f, enemy[colB]->GetPosition().x, enemy[colB]->GetPosition().z, 3.0f) == true && colA != colB) {//蠖薙◆繧雁愛螳壹→閾ｪ讖溷酔螢ｫ縺ｮ蠖薙◆繧雁愛螳壹・蜑企勁
-					//DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
-					enemy[colA]->SetHit(true);
-					enemy[colB]->SetHit(false);
-					break;
-				}
-				else {
-					enemy[colA]->SetHit(false);
+				if (!enemy[colA]->GetEnemyCatcth() && !enemy[colB]->GetEnemyCatcth()) {
+					if (Collision::CircleCollision(enemy[colA]->GetPosition().x, enemy[colA]->GetPosition().z, 1.0f, enemy[colB]->GetPosition().x, enemy[colB]->GetPosition().z, 1.0f) && colA != colB) {//当たり判定と自機同士の当たり判定の削除
+						if (!enemy[colA]->GetHit()) {
+							enemy[colA]->SetHit(true);
+							enemy[colA]->SetExP(enemy[colB]->GetPosition());
+						}
+						if (!enemy[colB]->GetHit()) {
+							enemy[colB]->SetHit(true);
+							enemy[colB]->SetExP(enemy[colA]->GetPosition());
+						}
+						break;
+					}
 				}
 			}
 		}
@@ -520,7 +596,8 @@ void SecondBoss::Draw(DirectXCommon* dxCommon) {
 	//ImGui::SliderFloat("frame.y", &frame, 30, 0);
 	//ImGui::SliderFloat("color.w", &BlackColor.w, 30, 0);
 	//ImGui::Text("overT::%d", overTimer);*/
-	//ImGui::Text("overT::%d", overTimer);
+	//ImGui::Text("apppear::%d", appearanceTimer);
+	//ImGui::Text("apppearNumber::%d", appearanceNumber);
 	//ImGui::Unindent();
 	//ImGui::End();
 
@@ -555,7 +632,7 @@ void SecondBoss::Draw(DirectXCommon* dxCommon) {
 
 		if (!bossstart) {
 			BlackFilter->Draw();
-			//bossName->Draw();
+			bossName->Draw();
 		}
 
 	}

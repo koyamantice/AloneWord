@@ -571,10 +571,10 @@ void Player::TitleUp() {
 void Player::Draw(DirectXCommon* dxCommon) {
 	//ImGui::Begin("test");
 	////ImGui::SliderFloat("pos.x", &position.x, 50, -50);
-	//ImGui::SliderFloat("rot.y", &rot.y, 50, -50);
+	//ImGui::SliderFloat("pos.z", &position.z, 50, -50);
 	//ImGui::SliderFloat("overframe", &overframe, 50, -50);
 	////ImGui::("boundpower.x %d", &AttackFlag, 50, -50);
-	//ImGui::Text("overMove:%d", overMove);
+	////ImGui::Text("overMove:%d", overMove);
 	//ImGui::End();
 	Texture::PreDraw();
 	if (chargeTimer!=0&&!AttackFlag) {

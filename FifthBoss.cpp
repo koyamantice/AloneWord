@@ -36,7 +36,7 @@ void FifthBoss::Initialize(DirectXCommon* dxCommon) {
 	//ステージマップ
 	modelBossMap = Model::CreateFromOBJ("BossMap");
 	objBossMap = TouchableObject::Create(modelBossMap);
-	objBossMap->SetPosition({ 0,-1,2 });
+	objBossMap->SetPosition({ 0,0,4 });
 	objBossMap->SetRotation({ 0, 90, 0 });
 	objBossMap->SetScale({ 3.0f, 1.5f, 3.0f });
 	/*
@@ -444,16 +444,16 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 
 //描画
 void FifthBoss::Draw(DirectXCommon* dxCommon) {
-	ImGui::Begin("test");
-	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
-	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
-	//ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
-	//ImGui::SliderFloat("pos.y", &distanceY, 30, 0);
-	//ImGui::SliderFloat("pos.z", &distanceZ, 30, 0);
-	ImGui::Text("act::%d", act);
-	ImGui::Text("appearanceNumber::%d", appearanceNumber);
-	ImGui::Unindent();
-	ImGui::End();
+	//ImGui::Begin("test");
+	////ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
+	////ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
+	////ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
+	////ImGui::SliderFloat("pos.y", &distanceY, 30, 0);
+	////ImGui::SliderFloat("pos.z", &distanceZ, 30, 0);
+	//ImGui::Text("act::%d", act);
+	//ImGui::Text("appearanceNumber::%d", appearanceNumber);
+	//ImGui::Unindent();
+	//ImGui::End();
 	//各オブジェクトの描画
 	Object3d::PreDraw();
 	//objBossMap->Draw();

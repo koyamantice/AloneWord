@@ -77,8 +77,6 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	bairitu->SetAnchorPoint({ 1.0f,0.0f });
 	bairitu->SetScale(0.7f);
 	SpinGauge = Sprite::Create(ImageManager::SpinGauge, { 0.0f,0.0f });
-	Arrow = Sprite::Create(ImageManager::arrow, { 0.0f,0.0f });
-	Arrow->SetAnchorPoint({ 0.5f,0.5f });
 	const int w = 54;
 	const int h = 60;
 	const int l = 10;
@@ -250,19 +248,19 @@ void UI::Finalize() {
 
 //描画
 const void UI::Draw() {
-	ImGui::Begin("test");
-	ImGui::SliderFloat("Spin.x", &SpinPos[0].x, 1000, 0);
-	ImGui::SliderFloat("Spin.y", &SpinPos[0].y, 1000, 0);
-	ImGui::SliderFloat("Spin1.x", &SpinPos[1].x, 1000, 0);
-	ImGui::SliderFloat("Spin1.y", &SpinPos[1].y, 1000, 0);
-	//ImGui::SliderInt("dir", &dir, 360, -360);
-	////ImGui::SliderFloat("speed_y", &speed_y, 360, 0);
-	ImGui::SliderFloat("scale", &vel, 360, 0);
-	////ImGui::Text("Count::%d", moveCount);
-	////ImGui::Text("Move::%d", isMove);
-	////ImGui::Text("Hit::%d", hit);
-	////ImGui::Unindent();
-	ImGui::End();
+	//ImGui::Begin("test");
+	//ImGui::SliderFloat("Spin.x", &SpinPos[0].x, 1000, 0);
+	//ImGui::SliderFloat("Spin.y", &SpinPos[0].y, 1000, 0);
+	//ImGui::SliderFloat("Spin1.x", &SpinPos[1].x, 1000, 0);
+	//ImGui::SliderFloat("Spin1.y", &SpinPos[1].y, 1000, 0);
+	////ImGui::SliderInt("dir", &dir, 360, -360);
+	//////ImGui::SliderFloat("speed_y", &speed_y, 360, 0);
+	//ImGui::SliderFloat("scale", &vel, 360, 0);
+	//////ImGui::Text("Count::%d", moveCount);
+	//////ImGui::Text("Move::%d", isMove);
+	//////ImGui::Text("Hit::%d", hit);
+	//////ImGui::Unindent();
+	//ImGui::End();
 	Sprite::PreDraw();
 	//Vignette->Draw();
 	

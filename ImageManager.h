@@ -43,7 +43,7 @@ public:
 		genkan,
 		niwa,
 		washitu,
-		wait,
+		shinshitu,
 		meter,
 		meterbar,
 		button,
@@ -92,6 +92,7 @@ public:
 	ChargeEffect,
 	spawnhp,
 	SELECTTex,
+	SELECTTex2,
 	Stun,
 	};
 public:
