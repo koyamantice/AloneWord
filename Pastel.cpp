@@ -73,10 +73,15 @@ void Pastel::Initialize(bool shadow) {
 
 //開放
 void Pastel::Finalize() {
-	//delete enemyobj;
+	delete enemyobj;
+	delete Mottiobj;
+	delete Millobj;
 	delete texture;
 	for (std::size_t i = 0; i < Platformobj.size(); i++) {
 		delete Plattexture[i];
+	}
+	for (std::size_t i = 0; i < Platformobj.size(); i++) {
+		delete Platformobj[i];
 	}
 }
 
@@ -469,7 +474,7 @@ void Pastel::End(int Timer) {
 	//float endframe = 0.0f;
 	//ボスを倒したあとの挙動(後で記述)
 	if (Timer == 300) {
-		pos = { 0.0f,0.0f,0.0f };
+		pos = { 0.0f,2.0f,0.0f };
 		rot = { 0,90,0 };
 	}
 
