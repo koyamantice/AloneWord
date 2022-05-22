@@ -77,7 +77,7 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	bairitu->SetScale(0.7f);
 	SpinGauge = Sprite::Create(ImageManager::SpinGauge, { 0.0f,0.0f });
 	SpinBar = Sprite::Create(ImageManager::SpinBar, { 0.0f,0.0f });
-	SpinBar->SetAnchorPoint({ 0.0f,1.0f });
+	SpinBar->SetAnchorPoint({ 0.5f,0.5f });
 	Arrow = Sprite::Create(ImageManager::arrow, { 0.0f,0.0f });
 	Arrow->SetAnchorPoint({ 0.5f,0.5f });
 	const int w = 54;
@@ -117,6 +117,7 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	SpinBar->SetAnchorPoint({ 0.5f,1.0f });
 	SpinPos[1] = { 1150.0f,500.0f };
 	SpinGauge->SetPosition(SpinPos[0]);
+	SpinGauge->SetSize({90,330});
 	SpinBar->  SetPosition(SpinPos[1]);
 
 }
