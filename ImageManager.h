@@ -92,6 +92,7 @@ public:
 	ChargeEffect,
 	spawnhp,
 	SELECTTex,
+	SELECTTex2,
 	Stun,
 	};
 public:
