@@ -65,6 +65,8 @@ void FifthBoss::Initialize(DirectXCommon* dxCommon) {
 	limit->SetRotation({ 90.0f,0, 0 });
 	limit->SetScale({ 6,5,5 });*/
 	//テクスチャ関係の初期化
+	bossName = Sprite::Create(ImageManager::select5, namePos);
+	bossName->SetAnchorPoint({ 1.0f,0.0f });
 	WhiteFilter = Sprite::Create(ImageManager::WhiteFilter, { 0.0f,0.0f });
 	//WhiteFilter->SetAnchorPoint({ 1.0f,0.0f });
 	WhiteFilter->SetColor(WhiteColor);
@@ -72,6 +74,8 @@ void FifthBoss::Initialize(DirectXCommon* dxCommon) {
 	BlackFilter = Sprite::Create(ImageManager::BlackFilter, { 0.0f,0.0f });
 	BlackFilter->SetColor(BlackColor);
 
+	GameOverSprite = Sprite::Create(ImageManager::GameOver, { 240.0f,100.0f });
+	GameOverSprite->SetColor(GameOverColor);
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i] = new Effect();
 		effect[i]->Initialize();
@@ -173,7 +177,7 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 	objBedroom->Update();
 
 	//最初の演出(導入)
-	if (!end) {
+	if (!end && !gameover) {
 		if (!bossstart) {
 			if (BlackColor.w >= 0.0f && appearanceNumber == 0) {
 				BlackColor.w -= 0.005f;
@@ -227,16 +231,70 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 			else if (appearanceNumber == 3) {
 				if (appearanceTimer == 300) {
 					BlackColor.w = 0.0f;
+				}
+
+				if (appearanceTimer == 350) {
 					appearanceNumber++;
 				}
 			}
 
 			else if (appearanceNumber == 4) {
-				if (appearanceTimer == 500) {
+				Aftereyepos = {
+					0,
+					1,
+					-7,
+				};
+
+				Aftertargetpos = {
+					0,
+					1,
+					0
+				};
+
+				if (frame < 1.0f) {
+					frame += 0.015f;
+				}
+				else {
+					frame = 1.0f;
+				}
+
+				cameraPos = {
+			Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+			Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+			Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+				};
+
+				cameratargetPos = {
+	Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+	Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+	Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+				};
+
+				if (appearanceTimer == 450) {
+					appearanceNumber++;
+					frame = 0.0f;
+				}
+			}
+
+			else if (appearanceNumber == 5) {
+				if (nameframe >= 1.0f) {
+					nameframe = 1.0f;
+				}
+				else {
+					nameframe += 0.06f;
+				}
+				namePos = {
+				Ease(In,Quad,nameframe,2000,940),
+				480
+				};
+
+				bossName->SetPosition(namePos);
+				if (appearanceTimer == 550) {
+					nameframe = 0.0f;
 					appearanceNumber++;
 				}
 			}
-			else if (appearanceNumber == 5) {
+			else if (appearanceNumber == 6) {
 				Aftereyepos = {
 					player->GetPosition().x,
 					player->GetPosition().y + distanceY,
@@ -258,6 +316,19 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 					appearanceNumber = 0;
 					frame = 0;
 				}
+
+				if (nameframe >= 1.0f) {
+					nameframe = 1.0f;
+				}
+				else {
+					nameframe += 0.06f;
+				}
+				namePos = {
+				Ease(In,Quad,nameframe,940,2000),
+				480
+				};
+
+				bossName->SetPosition(namePos);
 
 				cameraPos = {
 	Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
@@ -318,26 +389,21 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 		}
 
 		if (player->GetHp() <= 0) {
-			SceneManager::GetInstance()->ChangeScene("GAMEOVER");
+			gameover = true;
 		}
 	}//ボス撃破ムービー演出
 	else {
+	if (end) {
 		EndTimer++;
 		righthand->EndMovie(EndTimer);
 		lefthand->EndMovie(EndTimer);
 		player->End();
 		if (EndNumber == 0) {
-			/*	if (DeadLeft > DeadRight) {
-
-				}
-				else {
-
-				}*/
-				/*if (EndTimer == 1) {
-					cameraPos.x = 0;
-					cameraPos.y = 7;
-					cameraPos.z = -10;
-				}*/
+			/*if (EndTimer == 1) {
+				cameraPos.x = bossenemy->GetPosition().x;
+				cameraPos.y = bossenemy->GetPosition().y + 4;
+				cameraPos.z = bossenemy->GetPosition().z + 4;
+			}*/
 
 			if (EndTimer == 50) {
 				EndNumber = 1;
@@ -372,7 +438,81 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 			SceneManager::GetInstance()->ChangeScene("StageSelect");
 		}
 	}
+
+	if (gameover == true) {
+		overTimer++;
+		//player->Begin();
+		righthand->Begin();
+		lefthand->Begin();
+		player->gameover(overTimer);
+		if (overNumber == 0) {
+			if (BlackColor.w <= 1.0f) {
+				BlackColor.w += 0.01f;
+			}
+
+			if (overTimer == 1) {
+				Aftereyepos = {
+				player->GetPosition().x,
+				player->GetPosition().y + 5,
+				player->GetPosition().z - 7,
+				};
+				Aftertargetpos = {
+				player->GetPosition().x,
+				player->GetPosition().y,
+				player->GetPosition().z + 6,
+				};
+				cameraPos.x = player->GetPosition().x;
+				cameraPos.y = player->GetPosition().y + distanceY;
+				cameraPos.z = player->GetPosition().z - distanceZ;
+				cameratargetPos = player->GetPosition();
+			}
+
+			if (overTimer >= 50) {
+
+				if (frame < 1.0f) {
+					frame += 0.015f;
+				}
+				else {
+					frame = 1.0f;
+				}
+
+			}
+			cameraPos = {
+		Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+		Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+		Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+			};
+
+			cameratargetPos = {
+		Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+		Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+		Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+			};
+
+			if (overTimer == 420) {
+				overNumber++;
+			}
+		}
+		else if (overNumber == 1) {
+			if (GameOverColor.w <= 1.0f) {
+				GameOverColor.w += 0.01f;
+			}
+		}
+
+		if (overTimer == 650) {
+			expandchange->SetStartChange(true);
+		}
+
+		if (expandchange->GetTimer() >= 58) {
+			SceneManager::GetInstance()->ChangeScene("StageSelect");
+		}
+
+		camera->SetTarget(cameratargetPos);
+		camera->SetEye(cameraPos);
+	}
+	}
 	BlackFilter->SetColor(BlackColor);
+	GameOverSprite->SetColor(GameOverColor);
 	camera->Update();
 	expandchange->Update();
 
@@ -444,43 +584,51 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 
 //描画
 void FifthBoss::Draw(DirectXCommon* dxCommon) {
-	//ImGui::Begin("test");
-	////ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
-	////ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
-	////ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
-	////ImGui::SliderFloat("pos.y", &distanceY, 30, 0);
-	////ImGui::SliderFloat("pos.z", &distanceZ, 30, 0);
-	//ImGui::Text("act::%d", act);
-	//ImGui::Text("appearanceNumber::%d", appearanceNumber);
-	//ImGui::Unindent();
-	//ImGui::End();
+
 	//各オブジェクトの描画
 	Object3d::PreDraw();
-	//objBossMap->Draw();
-	//objSphere->Draw();
 	objBossMap->Draw();
 	objFloor->Draw();
 	objBedroom->Draw();
 
-	Texture::PreDraw();
-	//limit->Draw();
-	//Sprite::PreDraw();
-	//sprite->Draw();
-	if (EndNumber <= 1) {
-		player->Draw(dxCommon);
-	}
+	if (!gameover) {
+		//bossenemy->Draw();
+		if (righthand->GetHP() > 0 || end) {
+			righthand->Draw();
+		}
 
-	if (righthand->GetHP() > 0 || end) {
-		righthand->Draw();
+		if (lefthand->GetHP() > 0 || end) {
+			lefthand->Draw();
+		}
 	}
-
-	if (lefthand->GetHP() > 0 || end) {
-		lefthand->Draw();
-	}
-
 
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Draw();
+	}
+
+	if (!gameover) {
+		Texture::PreDraw();
+		if (EndNumber <= 1) {
+			player->Draw(dxCommon);
+		}
+
+		Sprite::PreDraw();
+
+		if (!bossstart) {
+			BlackFilter->Draw();
+			bossName->Draw();
+		}
+
+	}
+	else {
+		Sprite::PreDraw();
+
+		BlackFilter->Draw();
+		GameOverSprite->Draw();
+		Texture::PreDraw();
+		if (EndNumber <= 1) {
+			player->Draw(dxCommon);
+		}
 	}
 
 	//for (std::size_t i = 0; i < exp.size(); i++) {
@@ -488,25 +636,21 @@ void FifthBoss::Draw(DirectXCommon* dxCommon) {
 	//		exp[i][j]->Draw();
 	//	}
 	//}
-	if (bossstart && !end) {
+	if (bossstart && !end && !gameover) {
 		ui->Draw();
 		// パーティクルの描画
 		particleMan->Draw(dxCommon->GetCmdList());
 	}
 
 
-	Sprite::PreDraw();
-	if (!bossstart) {
-		BlackFilter->Draw();
-		//bossName->Draw();
-	}
-
 	if (end) {
 		WhiteFilter->Draw();
 	}
 	else {
-		for (std::size_t i = 0; i < enemy.size(); i++) {
-			enemy[i]->Draw();
+		if (!gameover) {
+			for (std::size_t i = 0; i < enemy.size(); i++) {
+				enemy[i]->Draw();
+			}
 		}
 	}
 
@@ -514,5 +658,6 @@ void FifthBoss::Draw(DirectXCommon* dxCommon) {
 
 	//前面用
 	expandchange->Draw();
+
 
 }
