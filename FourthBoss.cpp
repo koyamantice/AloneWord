@@ -117,10 +117,10 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	}
 
 	//当たり判定確認用です
-	modelSphere = Model::CreateFromOBJ("sphere");
-	objSphere = TouchableObject::Create(modelSphere);
-	objSphere->SetScale({ 2.0f, 2.0f, 2.0f });
-	objSphere->SetPosition({0.0f,0.0f,1.0f});
+	//modelSphere = Model::CreateFromOBJ("sphere");
+	//objSphere = TouchableObject::Create(modelSphere);
+	//objSphere->SetScale({ 2.0f, 2.0f, 2.0f });
+	//objSphere->SetPosition({0.0f,0.0f,1.0f});
 
 	//カメラポジション
 	cameraPos.x = player->GetPosition().x;
@@ -138,7 +138,6 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 }
 
 void FourthBoss::Finalize() {
-
 	//3dのモデルのデリート
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i]->Finalize();
@@ -528,29 +527,29 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 		}
 	}
 
-	Ray ray;
-	ray.start = { player->GetPosition().x,player->GetPosition().y + 3,player->GetPosition().z,1 };
-	ray.dir = { 0.0f,0.025f,-1.0f };
-	RaycastHit raycastHit;
+	//Ray ray;
+	//ray.start = { player->GetPosition().x,player->GetPosition().y + 3,player->GetPosition().z,1 };
+	//ray.dir = { 0.0f,0.025f,-1.0f };
+	//RaycastHit raycastHit;
 
-	if (!collisionManager->Raycast(ray, &raycastHit)) {
-		if (distanceZ <= 10.0f) {
-			distanceZ += 0.25f;
-		}
+	//if (!collisionManager->Raycast(ray, &raycastHit)) {
+	//	if (distanceZ <= 10.0f) {
+	//		distanceZ += 0.25f;
+	//	}
 
-		if (distanceY >= 10.0f) {
-			distanceY -= 0.25f;
-		}
-	}
-	else {
-		if (distanceZ >= 6.0f) {
-			distanceZ -= 0.4f;
-		}
+	//	if (distanceY >= 10.0f) {
+	//		distanceY -= 0.25f;
+	//	}
+	//}
+	//else {
+	//	if (distanceZ >= 6.0f) {
+	//		distanceZ -= 0.4f;
+	//	}
 
-		if (distanceY <= 18.0f) {
-			distanceY += 0.25f;
-		}
-	}
+	//	if (distanceY <= 18.0f) {
+	//		distanceY += 0.25f;
+	//	}
+	//}
 
 	//その他シーン移行
 	/*if (pastel->GetHP() <= 0) {
@@ -589,13 +588,15 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 	//各オブジェクトの描画
 	Object3d::PreDraw();
 	//objBossMap->Draw();
-	objSphere->Draw();
+	//objSphere->Draw();
 	objBossMap->Draw();
 	objFloor->Draw();
 	objGarden->Draw();
 
 	Texture::PreDraw();
-	shockwave->Draw();
+	if (!end) {
+		shockwave->Draw();
+	}
 
 	if (!gameover) {
 		pastel->Draw();

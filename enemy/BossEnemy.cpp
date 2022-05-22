@@ -35,7 +35,7 @@ void BossEnemy::Initialize(bool shadow) {
 }
 //開放
 void BossEnemy::Finalize() {
-	//delete enemyobj;
+	delete enemyobj;
 	delete texture;
 }
 
