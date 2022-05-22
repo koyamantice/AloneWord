@@ -26,6 +26,8 @@ public:
 	void Pause(const int& Timer);
 	void Begin();
 	void End();
+	void gameover(int Timer);
+	void gameoverMovie(int Timer);
 private:
 	// DirectX::を省略
 	using XMFLOAT2 = DirectX::XMFLOAT2;

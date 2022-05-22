@@ -81,8 +81,6 @@ protected:
 	XMFLOAT4 BlackColor = { 0.0f,0.0f,0.0f,1.0f };
 	Sprite* bossName = nullptr;
 	XMFLOAT2 namePos = { 0.0f,0.0f };
-	//‚±‚Ì•Ï”‚Í\‚µ–ó‚È‚¢
-	float cameraMoveX = 0.0f;
 public:
 
 	virtual ~BaseScene()=default;

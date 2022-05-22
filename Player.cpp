@@ -866,3 +866,12 @@ void Player::ChargeRelease() {
 		ChargeEffect[i]->SetPosition(chargepos[i]);
 	}
 }
+
+void Player::gameoverMovie(int Timer) {
+
+}
+
+void Player::gameover(int Timer) {
+	gameoverMovie(Timer);
+	move_object1->Update();
+}

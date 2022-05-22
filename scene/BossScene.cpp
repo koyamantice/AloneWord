@@ -443,10 +443,37 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		}
 
 		if (gameover == true) {
+			overTimer++;
 			player->Begin();
 			bossenemy->Begin();
+			player->gameover(overTimer);
+			if (overNumber == 0) {
+				if (overTimer == 50) {
+					Aftereyepos = {
+						player->GetPosition().x,
+						player->GetPosition().y + 3,
+						player->GetPosition().z - 4,
+					};
 
-			//SceneManager::GetInstance()->ChangeScene("GAMEOVER");
+				}
+
+				if (frame < 1.0f) {
+					frame += 0.015f;
+				}
+				else {
+					frame = 1.0f;
+				}
+
+				cameraPos = {
+			Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+			Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+			Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+				};
+
+			}
+
+			camera->SetTarget(player->GetPosition());
+			camera->SetEye(cameraPos);
 		}
 	}
 
