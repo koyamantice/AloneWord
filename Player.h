@@ -108,6 +108,8 @@ public:
 	void SetRotTimer(int RotTimer) { this->RotTimer = RotTimer; }
 
 	void SetChargeTimer(int chargeTimer) { this->chargeTimer = chargeTimer; }
+	const int& GetChargeTimer() { return chargeTimer; }
+	const int& GetRotCount() { return RotCount; }
 
 	void SetRotCount(int RotCount) { this->RotCount = RotCount; }
 

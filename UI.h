@@ -49,7 +49,7 @@ private:
 	Sprite* number[2][10]{};
 	Sprite* bairitu = nullptr;
 	Sprite* SpinGauge = nullptr;
-	Sprite* SpinBar = nullptr;
+	Sprite* SpinBar[3]{};
 	//スプライトの位置
 	XMFLOAT2 bossPos[2]{};
 	XMFLOAT2 bossPos2[2]{};
@@ -81,7 +81,8 @@ private:
 	float Check;
 	float Check2;
 	int invisible[2]{};
-
+	float convert;
+	int nowBar = 0;
 	bool isInvisible=false;
 private:
 	void SeachBoss();
