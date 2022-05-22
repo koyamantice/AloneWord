@@ -14,14 +14,6 @@ public:
 	void specialDraw() override;//このシーンのみの描画
 	void SetAct(Human* human);
 private:
-
-	float y = 0.0f;
-	//待機モーションのためのやつ
-	enum Motion {
-		Up,
-		Down
-	};
-
 	bool Attack = false;
 
 	enum Hit {
@@ -35,4 +27,13 @@ private:
 	double speedZ = 0.0f;
 	int MoveCount = 0;
 	bool LeftAct = false;
+
+	enum state {
+		Open,
+		Close,
+	};
+
+	int stateNumber = 0;
+	Object3d* hand_closeobj = nullptr;
+	Model* hand_closemodel = nullptr;
 };

@@ -8,7 +8,7 @@ using namespace DirectX;
 
 //‚±‚ñ‚·‚Æ‚ç‚­‚½
 RightHand::RightHand() {
-	model = ModelManager::GetIns()->GetModel(ModelManager::RightShoes);
+	model = ModelManager::GetIns()->GetModel(ModelManager::LeftHand_Open);
 	enemyobj = new Object3d();
 }
 
