@@ -68,10 +68,6 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(Enemyhp3, L"Resources/2d/EnemyHPGauge.png");
 	Sprite::LoadTexture(SpinGauge, L"Resources/2d/spinGauge.png");
 	Sprite::LoadTexture(SpinBar, L"Resources/2d/spinGaugeBar.png");
-
-
-
-
 }
 
 void ImageManager::LoadTex2D() {

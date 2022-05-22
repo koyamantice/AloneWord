@@ -102,11 +102,17 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	OkSheet->SetAnchorPoint({ 0.5f, 0.5f });
 	OkSheet->SetScale(1.0f);
 
-	comment[move] = Sprite::Create(ImageManager::move, { 570.0f,450.0f });
-	comment[chage] = Sprite::Create(ImageManager::chage, { 570.0f,450.0f });
-	comment[get] = Sprite::Create(ImageManager::get, { 570.0f,450.0f });
-	comment[Attack] = Sprite::Create(ImageManager::Attack, { 570.0f,450.0f });
-	comment[Perfect] = Sprite::Create(ImageManager::Perfect, { 570.0f,450.0f });
+	comment[text1] =Sprite::Create(ImageManager::text1, { 570.0f,450.0f });
+	comment[text2] =Sprite::Create(ImageManager::text2, { 570.0f,450.0f });
+	comment[text3] =Sprite::Create(ImageManager::text3, { 570.0f,450.0f });
+	comment[text4] =Sprite::Create(ImageManager::text4, { 570.0f,450.0f });
+	comment[text5] =Sprite::Create(ImageManager::text5, { 570.0f,450.0f });
+	comment[text6] =Sprite::Create(ImageManager::text6, { 570.0f,450.0f });
+	comment[text7] =Sprite::Create(ImageManager::text7, { 570.0f,450.0f });
+	comment[text8] =Sprite::Create(ImageManager::text8, { 570.0f,450.0f });
+	comment[text9] =Sprite::Create(ImageManager::text9, { 570.0f,450.0f });
+	comment[text10] =Sprite::Create(ImageManager::text10, { 570.0f,450.0f });
+	comment[text11] =Sprite::Create(ImageManager::text11, { 570.0f,450.0f });
 
 	shrinkchange = new ShrinkChange();
 	shrinkchange->SetEndChange(true);

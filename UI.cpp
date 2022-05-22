@@ -120,6 +120,20 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	SpinGauge->SetSize({90,330});
 	SpinBar->  SetPosition(SpinPos[1]);
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
 //更新
 void UI::Update() {

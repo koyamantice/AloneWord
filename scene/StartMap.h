@@ -44,10 +44,6 @@ private:
 	Object3d* objSphere;
 	Model* modelSkydome = nullptr;
 	Object3d* objSkydome;
-	Sprite* button = nullptr;
-	Sprite* Ok;
-	Sprite* OkSheet;
-	Sprite* comment[5];
 	//カメラ関係
 	XMFLOAT3 cameraPos = { 0.0f,0.0f,0.0f };
 	DebugCamera* camera = { nullptr };
@@ -67,13 +63,21 @@ private:
 	float frame=0;
 	XMFLOAT2 sca{};
 	int	tutorial =0;
+	Sprite* comment[5];
+	Sprite* Ok;
+	Sprite* OkSheet;
 	enum {
-		move,
-		chage,
-		get,
-		Attack,
-		Perfect,
-
+		text1,
+		text2,
+		text3,
+		text4,
+		text5,
+		text6,
+		text7,
+		text8,
+		text9,
+		text10,
+		text11,
 	};
 	bool Clear = false;
 	bool pause = false;
