@@ -26,6 +26,8 @@ public:
 	void Pause(const int& Timer);
 	void Begin();
 	void End();
+	void gameover(int Timer);
+	void gameoverMovie(int Timer);
 private:
 	// DirectX::を省略
 	using XMFLOAT2 = DirectX::XMFLOAT2;
@@ -236,4 +238,8 @@ private:
 	array<float,40> ChargeCircleZ;
 	array<float,40> Chargeframe;
 	array<int, 40> EffectTimer;
+	//ゲームオーバー時変数
+	//倒したあとのシーン
+	int overMove = 0;
+	float overframe = 0.0f;
 };
