@@ -42,6 +42,7 @@ void InterBoss::Draw() {
 	ImGui::Text("AttackCount::%d", AttackCount);
 	ImGui::Text("Active::%d", active);
 	ImGui::Text("action::%d", action);
+	ImGui::Text("AttackC::%d", AttackC);
 	//ImGui::Text("action::%d", haveTimer);
 	ImGui::End();
 	//if (BossHP >= 1) {

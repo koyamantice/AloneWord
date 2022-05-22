@@ -69,7 +69,8 @@ void LeftHand::Spec() {
 	//ここで行動を決める
 	if (AttackCount == 180) {
 		if (!active) {
-			//action = (rand() % 2);
+			action = (rand() % 2);
+			AttackCount = 0;
 			frame = 0;
 			pat = 1;
 			active = true;
@@ -77,13 +78,13 @@ void LeftHand::Spec() {
 	}
 	//攻撃をするまでのインターバル
 	else {
-		//if (!active) {
-		//	AttackCount++;
-		//	/*angle += 2.0f;
-		//	angle2 = angle * (3.14f / 180.0f);
-		//	pos.y = sin(angle2) * 0.5f + 0.5f;
-		//	enemyobj->SetPosition(pos);*/
-		//}
+		if (!active) {
+			//AttackCount++;
+			/*angle += 2.0f;
+			angle2 = angle * (3.14f / 180.0f);
+			pos.y = sin(angle2) * 0.5f + 0.5f;
+			enemyobj->SetPosition(pos);*/
+		}
 	}
 
 	//行動開始
@@ -127,7 +128,7 @@ void LeftHand::Spec() {
 				else {
 					Afterrot.y = 270;
 					pat = 0;
-					AttackCount = 30;
+					AttackCount = 0;
 					Effect = true;
 					active = false;
 					frame = 0;
@@ -265,7 +266,7 @@ void LeftHand::Spec() {
 						frame = 0;
 						pat = 0;
 						AttackC = 0;
-						AttackCount = 30;
+						AttackCount = 0;
 						Effect = true;
 						active = false;
 						break;

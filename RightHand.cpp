@@ -72,17 +72,18 @@ void RightHand::Spec() {
 			frame = 0;
 			pat = 1;
 			active = true;
+			AttackCount = 0;
 		}
 	}
 	//攻撃をするまでのインターバル
 	else {
-		//if (!active) {
-		//	AttackCount++;
-		//	/*angle += 2.0f;
-		//	angle2 = angle * (3.14f / 180.0f);
-		//	pos.y = sin(angle2) * 0.5f + 0.5f;
-		//	enemyobj->SetPosition(pos);*/
-		//}
+		if (!active) {
+			//AttackCount++;
+			/*angle += 2.0f;
+			angle2 = angle * (3.14f / 180.0f);
+			pos.y = sin(angle2) * 0.5f + 0.5f;
+			enemyobj->SetPosition(pos);*/
+		}
 	}
 
 	//行動開始
@@ -92,7 +93,7 @@ void RightHand::Spec() {
 			Afterrot.x = 0.0f;
 			if (!stun) {
 				//3回突進する
-				if (AttackC < 100) {
+				if (AttackC < 3) {
 					MoveCount++;
 				}
 				//左足が戻ったら元の位置に戻る
@@ -109,7 +110,7 @@ void RightHand::Spec() {
 					else {
 						frame = 0;
 						AttackC = 0;
-						AttackCount = 30;
+						AttackCount = 0;
 						active = false;
 					}
 
@@ -372,7 +373,7 @@ void RightHand::Spec() {
 						frame = 0;
 						pat = 0;
 						AttackC = 0;
-						AttackCount = 30;
+						AttackCount = 0;
 						Effect = true;
 						active = false;
 						break;

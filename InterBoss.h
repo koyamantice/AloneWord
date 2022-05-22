@@ -56,6 +56,7 @@ public:
 	void SetDrawExp(int DrawExp) { this->DrawExp = DrawExp; }
 	void Setboundpower(XMFLOAT3 boundpower) { this->boundpower = boundpower; }
 	void SetStun(bool stun) { this->stun = stun; }
+	void SetActive(bool active) { this->active = active; }
 	void SetAppearanceEnd(bool appearanceEnd) { this->appearanceEnd = appearanceEnd; }
 	//関数
 	void SetEnemy();
