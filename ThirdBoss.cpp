@@ -32,6 +32,7 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	player->SetPosition({ 0.0f,0.0f,-10.0f });
 	player->SetMove(250.0f, 200.0f);
 
+
 	//ボス
 	bossenemy = new GreenTea();
 	bossenemy->SetPlayer(player);
@@ -51,6 +52,13 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	objFloor->SetModel(modelFloor);
 	objFloor->SetPosition({ 0, -1, 0 });
 	objFloor->SetScale({ 8.0f,1.0f,8.0f });
+
+	//スカイドーム
+	objJstyle = Object3d::Create();
+	modelJstyle = Model::CreateFromOBJ("Jstyle");
+	objJstyle->SetModel(modelJstyle);
+	objJstyle->SetPosition({ 0, -1, 0 });
+	objJstyle->SetScale({ 1.0f,1.0f,1.0f });
 
 	//objSkydome = Object3d::Create();
 	//modelSkydome = Model::CreateFromOBJ("skydome");
@@ -141,6 +149,8 @@ void ThirdBoss::Finalize() {
 	delete objFloor;
 	delete modelBossMap;
 	delete modelFloor;
+	delete modelJstyle;
+	delete objJstyle;
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Finalize();
 	}
@@ -159,6 +169,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 	objBossMap->Update();
 	objFloor->Update();
 	lightGroup->Update();
+	objJstyle->Update();
 	
 	//最初の演出(導入)
 	if (!end && !gameover) {
@@ -544,6 +555,7 @@ void ThirdBoss::Draw(DirectXCommon* dxCommon) {
 	//objSphere->Draw();
 	objBossMap->Draw();
 	objFloor->Draw();
+	objJstyle->Draw();
 
 	if (!gameover) {
 		bossenemy->Draw();

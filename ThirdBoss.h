@@ -39,6 +39,8 @@ private:
 	TouchableObject* objBossMap;
 	Model* modelSphere = nullptr;
 	Object3d* objSphere;
+	Model* modelJstyle = nullptr;
+	Object3d* objJstyle;
 	Texture* limit = nullptr;
 	//ƒJƒƒ‰ŠÖŒW
 	DebugCamera* camera = { nullptr };

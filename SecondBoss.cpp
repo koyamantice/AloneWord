@@ -11,22 +11,29 @@
 #include "ImageManager.h"
 #include <Easing.h>
 void SecondBoss::Initialize(DirectXCommon* dxCommon) {
-	//ƒCƒ“ƒXƒ^ƒ“ƒXæ“¾
+	//ã‚¤ãƒ³ã‚¹ã‚¿ãƒ³ã‚¹å–å¾—
 	collisionManager = CollisionManager::GetInstance();
-	// ƒJƒƒ‰¶¬
+	// ã‚«ãƒ¡ãƒ©ç”Ÿæˆ
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
-	// 3DƒIƒuƒWƒFƒNƒg‚ÉƒJƒƒ‰‚ğƒZƒbƒg
+	// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ã‚«ãƒ¡ãƒ©ã‚’ã‚»ãƒƒãƒˆ
 	Object3d::SetCamera(camera);
 
-	//ƒXƒe[ƒW°
+	//ã‚¹ãƒ†ãƒ¼ã‚¸åºŠ
 	objFloor = Object3d::Create();
 	modelFloor = Model::CreateFromOBJ("floor");
 	objFloor->SetModel(modelFloor);
 	objFloor->SetPosition({ 0, -1, 0 });
 	objFloor->SetScale({ 8.0f,1.0f,6.0f });
 
-	//ƒXƒe[ƒWƒ}ƒbƒv
+	//ã‚¹ã‚«ã‚¤ãƒ‰ãƒ¼ãƒ 
+	objEntrance = Object3d::Create();
+	modelEntrance = Model::CreateFromOBJ("Entrance");
+	objEntrance->SetModel(modelEntrance);
+	objEntrance->SetPosition({ 0, -1, 0 });
+	objEntrance->SetScale({ 1.0f,1.0f,1.0f });
+
+	//ã‚¹ãƒ†ãƒ¼ã‚¸ãƒãƒƒãƒ—
 	modelBossMap = Model::CreateFromOBJ("BossMap");
 	objBossMap = TouchableObject::Create(modelBossMap);
 	objBossMap->SetPosition({ 0,-1,2 });
@@ -38,26 +45,26 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	objBossMap->SetRotation({ 0, 90, 0 });
 	objBossMap->SetScale({ 1.4f,1.5f,1.6f });
 	*/
-	//“–‚½‚è”»’èŠm”F—p‚Å‚·
+	//å½“ãŸã‚Šåˆ¤å®šç¢ºèªç”¨ã§ã™
 
 	objSphere = Object3d::Create();
 	modelSphere = Model::CreateFromOBJ("sphere");
 	objSphere->SetModel(modelSphere);
 	objSphere->SetPosition({ -10, 1, 0 });
-	// ƒRƒ‰ƒCƒ_[‚Ì’Ç‰Á
+	// ã‚³ãƒ©ã‚¤ãƒ€ãƒ¼ã®è¿½åŠ 
 	//objSphere->SetCollider(new SphereCollider);
 
-	//•’Ê‚ÌƒeƒNƒXƒ`ƒƒ(”Âƒ|ƒŠ)
+	//æ™®é€šã®ãƒ†ã‚¯ã‚¹ãƒãƒ£(æ¿ãƒãƒª)
 	/*limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
 	objBossMap->SetPosition({ 0,-1,10 });
 	objBossMap->SetScale({ 22,1,10 });
-	//æ™®é€šãEãƒE‚¯ã‚¹ãƒãƒ£(æ¿ãƒãƒª)
+	//è­ï½®é¨¾å£¹ãƒ»ç¹ãƒ»ã‘ç¹§ï½¹ç¹âˆšÎ•(è­šï½¿ç¹æ˜´Îœ)
 	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
 	limit->TextureCreate();
 	limit->SetPosition({ 0.0f,0.01f,0.0f });
 	limit->SetRotation({ 90.0f,0, 0 });
 	limit->SetScale({ 6,5,5 });*/
-	//ƒeƒNƒXƒ`ƒƒŠÖŒW‚Ì‰Šú‰»
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£é–¢ä¿‚ã®åˆæœŸåŒ–
 	WhiteFilter = Sprite::Create(ImageManager::WhiteFilter, { 0.0f,0.0f });
 	//WhiteFilter->SetAnchorPoint({ 1.0f,0.0f });
 	WhiteFilter->SetColor(WhiteColor);
@@ -81,28 +88,28 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
 	//srand(NULL);GetFBXModel(ModelManager::MottiMove);
-	// ƒ‰ƒCƒg¶¬
+	// ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	lightGroup = LightGroup::Create();
-	// 3DƒIƒuƒWƒFƒNƒg‚Éƒ‰ƒCƒg‚ğƒZƒbƒg
+	// 3Dã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã«ãƒ©ã‚¤ãƒˆã‚’ã‚»ãƒƒãƒˆ
 	Object3d::SetLightGroup(lightGroup);
 
-	// ƒfƒoƒCƒX‚ğƒZƒbƒg
+	// ãƒ‡ãƒã‚¤ã‚¹ã‚’ã‚»ãƒƒãƒˆ
 	FBXObject3d::SetDevice(dxCommon->GetDev());
-	// ƒJƒƒ‰‚ğƒZƒbƒg
+	// ã‚«ãƒ¡ãƒ©ã‚’ã‚»ãƒƒãƒˆ
 	FBXObject3d::SetCamera(camera);
-	// ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“¶¬
+	// ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ç”Ÿæˆ
 	FBXObject3d::CreateGraphicsPipeline();
-	// ƒp[ƒeƒBƒNƒ‹ƒ}ƒl[ƒWƒƒ¶¬
+	// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ãƒãƒãƒ¼ã‚¸ãƒ£ç”Ÿæˆ
 	particleMan = ParticleManager::GetInstance();
 	particleMan->SetCamera(camera);
-	//ŠeƒIƒuƒWƒFƒNƒg‚Ì‰Šú‰»
-	//ƒvƒŒƒCƒ„[
+	//å„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®åˆæœŸåŒ–
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	player = new Player();
 	player->Initialize();
 	player->SetPosition({ 0.0f,0.0f,-10.0f });
 	player->SetMove(250.0f, 200.0f);
 
-	//ƒ{ƒX
+	//ãƒœã‚¹
 	leftshose = new LeftShose();
 	leftshose->SetPlayer(player);
 	leftshose->Initialize(false);
@@ -111,7 +118,7 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	rightshose->SetPlayer(player);
 	rightshose->Initialize(false);
 
-	//“G
+	//æ•µ
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i] = new Rice();
 		enemy[i]->SetPlayer(player);
@@ -128,9 +135,9 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	expandchange = new ExpandChange();
 	//ui->Initialize();
 }
-//ŠJ•úˆ—
+//é–‹æ”¾å‡¦ç†
 void SecondBoss::Finalize() {
-	//3d‚Ìƒ‚ƒfƒ‹‚ÌƒfƒŠ[ƒg
+	//3dã®ãƒ¢ãƒ‡ãƒ«ã®ãƒ‡ãƒªãƒ¼ãƒˆ
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i]->Finalize();
 	}
@@ -141,6 +148,8 @@ void SecondBoss::Finalize() {
 	delete objFloor;
 	delete modelBossMap;
 	delete modelFloor;
+	delete objEntrance;
+	delete modelEntrance;
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Finalize();
 	}
@@ -157,12 +166,13 @@ void SecondBoss::Finalize() {
 
 void SecondBoss::Update(DirectXCommon* dxCommon) {
 	//objBossMap->Update();
-	//ŠeƒIƒuƒWƒFƒNƒg‚ÌXV
+	//å„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æ›´æ–°
 	objBossMap->Update();
 	objFloor->Update();
 	lightGroup->Update();
+	objEntrance->Update();
 
-	//Å‰‚Ì‰‰o(“±“ü)
+	//æœ€åˆã®æ¼”å‡º(å°å…¥)
 	if (!end && !gameover) {
 		if (!bossstart) {
 			if (BlackColor.w >= 0.0f && appearanceNumber == 0) {
@@ -177,7 +187,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 			rightshose->Begin();
 			rightshose->AppeaMovie(appearanceTimer);
 			leftshose->AppeaMovie(appearanceTimer);
-			//ƒJƒƒ‰‚ÌˆÊ’u‚ğ‚»‚ê‚¼‚ê•ÏX‚µ‚Ä‚¢‚­
+			//ã‚«ãƒ¡ãƒ©ã®ä½ç½®ã‚’ãã‚Œãã‚Œå¤‰æ›´ã—ã¦ã„ã
 			if (appearanceNumber == 0) {
 				cameraPos.x = rightshose->GetPosition().x + 5;
 				cameraPos.y = rightshose->GetPosition().y + 2;
@@ -209,7 +219,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 				if (appearanceTimer == 230) {
 					BlackColor.w = 1.0f;
 					appearanceNumber++;
-					//ŒÂX‚Ì‰¹•ÏXˆÄŒ
+					//å€‹ã€…ã®éŸ³å¤‰æ›´æ¡ˆä»¶
 					Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 				}
 			}
@@ -265,7 +275,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 			camera->SetTarget(cameratargetPos);
 			camera->SetEye(cameraPos);
 		}
-		//í“¬ŠJn
+		//æˆ¦é—˜é–‹å§‹
 		else {
 			player->Update();
 			leftshose->Update();
@@ -302,7 +312,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 			camera->SetEye(cameraPos);
 		}
 
-		//‚»‚Ì‘¼ƒV[ƒ“ˆÚs
+		//ãã®ä»–ã‚·ãƒ¼ãƒ³ç§»è¡Œ
 		if (leftshose->GetHP() <= 0 && rightshose->GetHP() <= 0) {
 			end = true;
 		}
@@ -310,7 +320,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 		if (player->GetHp() <= 0) {
 			gameover = true;
 		}
-	}//ƒ{ƒXŒ‚”jƒ€[ƒr[‰‰o
+	}//ãƒœã‚¹æ’ƒç ´ãƒ ãƒ¼ãƒ“ãƒ¼æ¼”å‡º
 	else {
 		if (end) {
 			EndTimer++;
@@ -450,11 +460,11 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 		a += 1;
 	}
 
-	//“G“¯m‚Ì“–‚½‚è”»’è
-	if (sizeof(enemy) > 2) {//”z—ñ‚ÌƒTƒCƒYŠm”F
+	//æ•µåŒå£«ã®å½“ãŸã‚Šåˆ¤å®š
+	if (sizeof(enemy) > 2) {//é…åˆ—ã®ã‚µã‚¤ã‚ºç¢ºèª
 		for (int colA = 0; colA < enemy.size(); colA++) {
 			for (int colB = 1; colB < enemy.size(); colB++) {
-				if (Collision::CircleCollision(enemy[colA]->GetPosition().x, enemy[colA]->GetPosition().z, 3.0f, enemy[colB]->GetPosition().x, enemy[colB]->GetPosition().z, 3.0f) == true && colA != colB) {//å½“ãŸã‚Šåˆ¤å®šã¨è‡ªæ©ŸåŒå£«ã®å½“ãŸã‚Šåˆ¤å®šãEå‰Šé™¤
+				if (Collision::CircleCollision(enemy[colA]->GetPosition().x, enemy[colA]->GetPosition().z, 3.0f, enemy[colB]->GetPosition().x, enemy[colB]->GetPosition().z, 3.0f) == true && colA != colB) {//è –è–™â—†ç¹§é›æ„›è³å£¹â†’é–¾ï½ªè®–æº·é…”è¢ï½«ç¸ºï½®è –è–™â—†ç¹§é›æ„›è³å£¹ãƒ»èœ‘ä¼å‹
 					//DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
 					enemy[colA]->SetHit(true);
 					enemy[colB]->SetHit(false);
@@ -491,7 +501,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 		}
 	}
 
-	// ‘S‚Ä‚ÌÕ“Ë‚ğƒ`ƒFƒbƒN
+	// å…¨ã¦ã®è¡çªã‚’ãƒã‚§ãƒƒã‚¯
 	//collsionManager->CheckAllCollisions();
 	/*DebugText::GetInstance()->Print("PUSH to RB!!",200, 100,1.0f);
 	DebugText::GetInstance()->Print("PUSH to A!!", 200, 115, 1.0f);*/
@@ -501,7 +511,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 	//DebugText::GetInstance()->Print("PUSH to A!!", 1040, 660, 2.0f);
 }
 
-//•`‰æ
+//æç”»
 void SecondBoss::Draw(DirectXCommon* dxCommon) {
 	//ImGui::Begin("test");
 	////ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
@@ -514,11 +524,11 @@ void SecondBoss::Draw(DirectXCommon* dxCommon) {
 	//ImGui::Unindent();
 	//ImGui::End();
 
-	//ŠeƒIƒuƒWƒFƒNƒg‚Ì•`‰æ
+	//å„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®æç”»
 	Object3d::PreDraw();
 	objBossMap->Draw();
 	objFloor->Draw();
-	//objSkydome->Draw();
+	objEntrance->Draw();
 
 	if (!gameover) {
 		//bossenemy->Draw();
@@ -567,7 +577,7 @@ void SecondBoss::Draw(DirectXCommon* dxCommon) {
 	//}
 	if (bossstart && !end && !gameover) {
 		ui->Draw();
-		// ƒp[ƒeƒBƒNƒ‹‚Ì•`‰æ
+		// ãƒ‘ãƒ¼ãƒ†ã‚£ã‚¯ãƒ«ã®æç”»
 		particleMan->Draw(dxCommon->GetCmdList());
 	}
 
@@ -585,7 +595,7 @@ void SecondBoss::Draw(DirectXCommon* dxCommon) {
 
 	Sprite::PreDraw();
 
-	//‘O–Ê—p
+	//å‰é¢ç”¨
 	expandchange->Draw();
 
 }
