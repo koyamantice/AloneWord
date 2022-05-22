@@ -93,7 +93,7 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	limit->SetScale({ 6,5,5 });*/
 
 	//テクスチャ関係の初期化
-	bossName = Sprite::Create(ImageManager::select1, namePos);
+	bossName = Sprite::Create(ImageManager::select4, namePos);
 	bossName->SetAnchorPoint({ 1.0f,0.0f });
 
 	WhiteFilter = Sprite::Create(ImageManager::WhiteFilter, { 0.0f,0.0f });
@@ -482,13 +482,18 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 	if (sizeof(enemy) > 2) {//配列のサイズ確認
 		for (int colA = 0; colA < enemy.size(); colA++) {
 			for (int colB = 1; colB < enemy.size(); colB++) {
-				if (Collision::CircleCollision(enemy[colA]->GetPosition().x, enemy[colA]->GetPosition().z, 3.0f, enemy[colB]->GetPosition().x, enemy[colB]->GetPosition().z, 3.0f) == true && colA != colB) {//蠖薙◆繧雁愛螳壹→閾ｪ讖溷酔螢ｫ縺ｮ蠖薙◆繧雁愛螳壹・蜑企勁
-					//DebugText::GetInstance()->Print("Hit", 0, 0, 5.0f);
-					enemy[colA]->SetHit(true);
-					enemy[colB]->SetHit(false);
-					break;
-				} else {
-					enemy[colA]->SetHit(false);
+				if (!enemy[colA]->GetEnemyCatcth() && !enemy[colB]->GetEnemyCatcth()) {
+					if (Collision::CircleCollision(enemy[colA]->GetPosition().x, enemy[colA]->GetPosition().z, 1.0f, enemy[colB]->GetPosition().x, enemy[colB]->GetPosition().z, 1.0f) && colA != colB) {//当たり判定と自機同士の当たり判定の削除
+						if (!enemy[colA]->GetHit()) {
+							enemy[colA]->SetHit(true);
+							enemy[colA]->SetExP(enemy[colB]->GetPosition());
+						}
+						if (!enemy[colB]->GetHit()) {
+							enemy[colB]->SetHit(true);
+							enemy[colB]->SetExP(enemy[colA]->GetPosition());
+						}
+						break;
+					}
 				}
 			}
 		}
