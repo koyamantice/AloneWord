@@ -170,6 +170,8 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	//最初の演出(導入)
 	if (!end && !gameover) {
 		if (!bossstart) {
+			player->Begin();
+			bossenemy->Begin();
 			if (BlackColor.w >= 0.0f) {
 				BlackColor.w -= 0.005f;
 				frame = 0.0f;
@@ -177,8 +179,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 			else {
 				appearanceTimer++;
 			}
-			player->Begin();
-			bossenemy->Begin();
+		
 			//カメラの位置をそれぞれを変える
 			if (appearanceNumber == 0) {
 				if (appearanceTimer == 1) {
@@ -448,22 +449,32 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 			bossenemy->Begin();
 			player->gameover(overTimer);
 			if (overNumber == 0) {
-				if (overTimer == 50) {
+				if (BlackColor.w <= 1.0f) {
+					BlackColor.w += 0.005f;
+				}
+
+				if (overTimer == 1) {
 					Aftereyepos = {
-						player->GetPosition().x,
-						player->GetPosition().y + 3,
-						player->GetPosition().z - 4,
+					player->GetPosition().x,
+					player->GetPosition().y + 5,
+					player->GetPosition().z - 7,
 					};
-
+					cameraPos.x = player->GetPosition().x;
+					cameraPos.y = player->GetPosition().y + distanceY;
+					cameraPos.z = player->GetPosition().z - distanceZ;
+					
 				}
 
-				if (frame < 1.0f) {
-					frame += 0.015f;
-				}
-				else {
-					frame = 1.0f;
-				}
+				if (overTimer >= 50) {
 
+					if (frame < 1.0f) {
+						frame += 0.015f;
+					}
+					else {
+						frame = 1.0f;
+					}
+
+				}
 				cameraPos = {
 			Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
 			Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
@@ -552,10 +563,11 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	ImGui::Begin("test");
 	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
 	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
-	//ImGui::SliderFloat("enemypos.z", &enemypos.z, 50, 0);
+	ImGui::SliderFloat("enemypos.z", &Aftereyepos.z, 50, 0);
 	ImGui::SliderFloat("frame.y", &frame, 30, 0);
 	ImGui::SliderFloat("color.w", &BlackColor.w, 30, 0);
-	ImGui::Text("AppeaT::%d", appearanceTimer);
+	ImGui::Text("overT::%d", overTimer);
+	ImGui::Text("overT::%d", overTimer);
 	ImGui::Unindent();
 	ImGui::End();
 
@@ -565,15 +577,37 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	objFloor->Draw();
 	objSkydome->Draw();
 
-	Texture::PreDraw();
-	if (EndNumber <= 1) {
-		player->Draw(dxCommon);
+	if (!gameover) {
+		bossenemy->Draw();
 	}
-
-	bossenemy->Draw();
 
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Draw();
+	}
+
+	if (!gameover) {
+		Texture::PreDraw();
+		if (EndNumber <= 1) {
+			player->Draw(dxCommon);
+		}
+
+		Sprite::PreDraw();
+
+		if (!bossstart) {
+			BlackFilter->Draw();
+			bossName->Draw();
+		}
+
+	}
+	else {
+		Sprite::PreDraw();
+
+		BlackFilter->Draw();
+	
+		Texture::PreDraw();
+		if (EndNumber <= 1) {
+			player->Draw(dxCommon);
+		}
 	}
 
 	//for (std::size_t i = 0; i < exp.size(); i++) {
@@ -581,17 +615,12 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	//		exp[i][j]->Draw();
 	//	}
 	//}
-	if (bossstart && !end) {
+	if (bossstart && !end && !gameover) {
 		ui->Draw();
 		// パーティクルの描画
 		particleMan->Draw(dxCommon->GetCmdList());
 	}
 	
-	Sprite::PreDraw();
-	if (!bossstart) {
-		BlackFilter->Draw();
-		bossName->Draw();
-	}
 	
 	if (end) {
 		WhiteFilter->Draw();
