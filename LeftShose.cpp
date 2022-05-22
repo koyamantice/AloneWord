@@ -370,7 +370,7 @@ void LeftShose::App(int Timer) {
 //撃破
 void LeftShose::End(int Timer) {
 	//ボスを倒したあとの挙動(後で記述)
-	XMFLOAT3 scale = { 0.8f,0.8f,0.8f };
+	XMFLOAT3 scale = { 0.5f,0.5f,0.5f };
 	float RotPower = 0.0f;
 	XMFLOAT3 AfterScale{};
 	//float endframe = 0.0f;
