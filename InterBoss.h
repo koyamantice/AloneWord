@@ -34,6 +34,7 @@ public:
 	void SetRotation(XMFLOAT3 rotation) { enemyobj->SetRotation(rotation); }
 	void SetScale(XMFLOAT3 scale) { enemyobj->SetScale(scale); }
 	//ゲッター
+	const bool& GetBossHit() { return BossHit; }
 	const bool& GetEnemyCatch() { return EnemyCatch; }
 	const XMFLOAT3& GetBoundPower() { return boundpower; }
 	const bool& GetHit() { return hit; }

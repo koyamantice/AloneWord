@@ -404,6 +404,7 @@ bool Rice::collideArm() {
 				savespeed = 350.0;
 				savesacale = 1.0f;
 			}
+			player->SetOldArm(player->GetArmWeight());
 			player->SetArmWeight(armweight);
 			
 		}
@@ -512,6 +513,7 @@ bool Rice::collideAttackArm() {
 			if (armweight != 0.0f) {//持ってる方
 				//enescale = { 0.4f,0.4f,0.4f };
 				armweight = 0.0f;
+				player->SetOldArm(player->GetArmWeight());
 				player->SetArmWeight(armweight);
 			}
 			return true;
@@ -534,6 +536,7 @@ bool Rice::BoundEnemy() {
 			if (armweight != 0.0f) {//持ってる方
 				//enescale = { 0.4f,0.4f,0.4f };
 				armweight = 0.0f;
+				player->SetOldArm(player->GetArmWeight());
 				player->SetArmWeight(armweight);
 			}
 			return true;

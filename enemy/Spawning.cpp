@@ -11,7 +11,7 @@ Spawning::Spawning() {
 	BossHp[now] = Texture::Create(ImageManager::spawnhp, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	BossHp[now]->TextureCreate();
 	BossHp[now]->SetColor({ 1.0f,1.0f,1.0f,1.0f });
-	BossHP = 10;
+	BossHP = 15;
 	for (int i = 0; i < 1; i++) {
 		BossHp[i]->SetPosition({ pos.x,pos.y + 4.5f,pos.z });
 		BossHp[i]->SetRotation({ 45,0,0 });

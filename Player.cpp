@@ -283,6 +283,7 @@ void Player::Update() {
 			chargeTimer = 0;
 			RotCount = 0;
 			RotTimer = 0;
+			OldArm = ArmWeight;
 			ArmWeight = 0.0f;
 			AttackFlag = false;
 		}
@@ -569,13 +570,13 @@ void Player::TitleUp() {
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
 
-	//ImGui::Begin("test");
-	//ImGui::SliderFloat("pos.x", &position.x, 50, -50);
+	ImGui::Begin("test");
+	ImGui::SliderFloat("pos.x", &OldArm, 50, -50);
 	//ImGui::SliderFloat("pos.y", &position.y, 50, -50);
 	//ImGui::SliderFloat("pos.z", &position.z, 50, -50);
-	////ImGui::("boundpower.x %d", &AttackFlag, 50, -50);
-	////ImGui::Text("RotC:%d", AttackFlag);
-	//ImGui::End();
+	//ImGui::("boundpower.x %d", &AttackFlag, 50, -50);
+	//ImGui::Text("RotC:%d", AttackFlag);
+	ImGui::End();
 	Texture::PreDraw();
 	if (chargeTimer!=0&&!AttackFlag) {
 		Charge->Draw();

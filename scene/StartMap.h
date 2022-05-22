@@ -60,12 +60,16 @@ private:
 
 	//チュートリアルのためのもの
 	bool check = false;
+	bool checkZ = false;
 	float frame=0;
 	XMFLOAT2 sca{};
+	XMFLOAT2 scaOk{};
 	int	tutorial =0;
 	Sprite* comment[11];
 	Sprite* Ok;
 	Sprite* OkSheet;
+	bool open = false;
+	bool close = false;
 	enum {
 		text1,
 		text2,
@@ -79,6 +83,10 @@ private:
 		text10,
 		text11,
 	};
+	int nowText=0;
+	int nowTimer = 0;
+	bool closeT = false;
+	bool openT = false;
 	bool Clear = false;
 	bool pause = false;
 	int wait = 0;
