@@ -99,6 +99,9 @@ void Player::Finalize() {
 	delete object3d;
 	delete Armobj;
 	delete Charge;
+	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
+		delete ChargeEffect[i];
+	}
 }
 
 //更新
@@ -166,7 +169,7 @@ void Player::Update() {
 			//	RotCount = 0;
 			//}
 			//ため時間
-			if (input->PushButton(input->Button_RB)) {
+			if (input->PushButton(input->Button_A)) {
 				move_count = 0;
 				ChargeEffectMove();
 				chargeTimer++;
@@ -566,13 +569,13 @@ void Player::TitleUp() {
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
 
-	ImGui::Begin("test");
-	ImGui::SliderFloat("pos.x", &position.x, 50, -50);
-	ImGui::SliderFloat("pos.y", &position.y, 50, -50);
-	ImGui::SliderFloat("pos.z", &position.z, 50, -50);
-	//ImGui::("boundpower.x %d", &AttackFlag, 50, -50);
-	//ImGui::Text("RotC:%d", AttackFlag);
-	ImGui::End();
+	//ImGui::Begin("test");
+	//ImGui::SliderFloat("pos.x", &position.x, 50, -50);
+	//ImGui::SliderFloat("pos.y", &position.y, 50, -50);
+	//ImGui::SliderFloat("pos.z", &position.z, 50, -50);
+	////ImGui::("boundpower.x %d", &AttackFlag, 50, -50);
+	////ImGui::Text("RotC:%d", AttackFlag);
+	//ImGui::End();
 	Texture::PreDraw();
 	if (chargeTimer!=0&&!AttackFlag) {
 		Charge->Draw();

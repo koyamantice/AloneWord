@@ -52,12 +52,12 @@ void ShockWave::SetWave(Pastel* pastel) {
 	//ÕŒ‚”g‚ÌˆÊ’u‚ðŒˆ‚ß‚é
 	if (action == 3 && pos.y == 2.0f && !expand) {
 		if (pat == 0 || pat == 1) {
-			this->pos.x = pos.x + 5;
+			this->pos.x = pos.x + 7;
 			this->pos.y = 0.0f;
 			this->pos.z = pos.z;
 		}
 		else {
-			this->pos.x = pos.x - 5;
+			this->pos.x = pos.x - 7;
 			this->pos.y = 0.0f;
 			this->pos.z = pos.z;
 		}

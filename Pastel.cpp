@@ -332,7 +332,7 @@ Ease(In,Cubic,frame,rot.z,Afterrot.z)
 			frame = 0.0f;
 			angle += 3.0f;
 			angle2 = angle * (3.14f / 180.0f);
-			rot.z = sin(angle2) * 45;
+			rot.z = sin(angle2) * 30;
 		}
 
 		pos = {

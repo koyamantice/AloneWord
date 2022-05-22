@@ -46,6 +46,7 @@ private:
 		Tea,
 		Pastel,
 		boots,
+		human,
 	};
 	int StageSelectNumber = 0;
 	//イージングのためのもの

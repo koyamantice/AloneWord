@@ -261,6 +261,9 @@
     <ClCompile Include="RightHand.cpp">
       <Filter>stage\プレイマップ\人間</Filter>
     </ClCompile>
+    <ClCompile Include="FifthBoss.cpp">
+      <Filter>stage\プレイマップ\人間</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2d\Sprite.h">
@@ -514,6 +517,9 @@
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>ui</Filter>
+    </ClInclude>
+    <ClInclude Include="FifthBoss.h">
+      <Filter>stage\プレイマップ\人間</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

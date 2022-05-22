@@ -27,6 +27,10 @@ void ModelManager::Initialize() {
 	LoadModel(Particle, "Particle");
 	LoadModel(Mill, "Usu");
 	LoadModel(SiroMotti, "Siromoti");
+	LoadModel(LeftHand_Open, "LeftHand");
+	LoadModel(LeftHand_Close, "LeftShoes");
+	LoadModel(RightHand_Open, "RightHand");
+	LoadModel(RightHand_Close, "RightShoes");
 	LoadFBXModel(MottiMove, "Motti_moveF");
 }
 

@@ -30,7 +30,11 @@ public:
 		Piyopiyo,
 		Particle,
 		Mill,
-		SiroMotti
+		SiroMotti,
+		LeftHand_Open,
+		LeftHand_Close,
+		RightHand_Open,
+		RightHand_Close,
 	};
 	enum FBXName {
 		MottiMove,

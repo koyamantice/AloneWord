@@ -20,7 +20,7 @@ void LeftShose::Initialize(bool shadow) {
 	//敵
 	enemyobj = Object3d::Create();
 	enemyobj->SetModel(model);
-	pos = { -10.0f,0.0f,0.0f };
+	pos = { -5.0f,0.0f,0.0f };
 	enemyobj->SetPosition(pos);
 	rot = { 0,270,0 };
 	Afterrot.y = rot.y;
@@ -61,6 +61,9 @@ void LeftShose::Initialize(bool shadow) {
 void LeftShose::Finalize() {
 	//delete enemyobj;
 	delete texture;
+	for (std::size_t i = 0; i < Stuntexture.size(); i++) {
+		delete Stuntexture[i];
+	}
 }
 
 //ボスの行動
@@ -121,7 +124,7 @@ void LeftShose::Spec() {
 				}
 				else if (pat == 5) {
 					Afterrot.y = 135;
-					AfterPos.x = -10.0f;
+					AfterPos.x = -5.0f;
 					AfterPos.z = 0.0f;
 				}
 				else {
@@ -253,7 +256,7 @@ void LeftShose::Spec() {
 				case 2:
 					Afterrot.x = 0.0f;
 					AfterPos = {
-					-10,
+					-5,
 					0,
 					0
 					};
@@ -321,7 +324,7 @@ void LeftShose::App(int Timer) {
 		}
 
 	case 2:
-		pos = { -10.0f,0.0f,0.0f };
+		pos = { -5.0f,0.0f,0.0f };
 		rot = { 0,270,0 };
 	case 3:
 		stun = true;
