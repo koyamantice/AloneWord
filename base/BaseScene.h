@@ -79,6 +79,8 @@ protected:
 	XMFLOAT4 WhiteColor = { 1.0f,1.0f,1.0f,0.0f };
 	Sprite* BlackFilter = nullptr;
 	XMFLOAT4 BlackColor = { 0.0f,0.0f,0.0f,1.0f };
+	Sprite* GameOverSprite = nullptr;
+	XMFLOAT4 GameOverColor = { 1.0f,1.0f,1.0f,0.0f };
 	Sprite* bossName = nullptr;
 	XMFLOAT2 namePos = { 0.0f,0.0f };
 public:

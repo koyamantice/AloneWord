@@ -869,7 +869,7 @@ void Player::ChargeRelease() {
 
 void Player::gameoverMovie(int Timer) {
 	float RotPower = 0.0f;
-	if (Timer == 250) {
+	if (Timer == 150) {
 		overMove++;
 	}
 
@@ -915,9 +915,9 @@ void Player::gameoverMovie(int Timer) {
 	}
 
 	plasca = {
-	Ease(In,Cubic,overframe,plasca.x,0.002f),
-	Ease(In,Cubic,overframe,plasca.y,0.002f),
-	Ease(In,Cubic,overframe,plasca.z,0.002f),
+	Ease(In,Cubic,overframe,plasca.x,0.004f),
+	Ease(In,Cubic,overframe,plasca.y,0.004f),
+	Ease(In,Cubic,overframe,plasca.z,0.004f),
 	};
 
 	move_object1->SetScale(plasca);

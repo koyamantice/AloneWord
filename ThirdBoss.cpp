@@ -94,6 +94,8 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 
 	BlackFilter = Sprite::Create(ImageManager::BlackFilter, { 0.0f,0.0f });
 	BlackFilter->SetColor(BlackColor);
+	GameOverSprite = Sprite::Create(ImageManager::GameOver, { 240.0f,100.0f });
+	GameOverSprite->SetColor(GameOverColor);
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i] = new Effect();
 		effect[i]->Initialize();
@@ -381,7 +383,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 			player->gameover(overTimer);
 			if (overNumber == 0) {
 				if (BlackColor.w <= 1.0f) {
-					BlackColor.w += 0.005f;
+					BlackColor.w += 0.01f;
 				}
 
 				if (overTimer == 1) {
@@ -393,7 +395,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 					Aftertargetpos = {
 					player->GetPosition().x,
 					player->GetPosition().y,
-					player->GetPosition().z + 3,
+					player->GetPosition().z + 6,
 					};
 					cameraPos.x = player->GetPosition().x;
 					cameraPos.y = player->GetPosition().y + distanceY;
@@ -423,6 +425,22 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 			Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 				};
 
+				if (overTimer == 420) {
+					overNumber++;
+				}
+			}
+			else if (overNumber == 1) {
+				if (GameOverColor.w <= 1.0f) {
+					GameOverColor.w += 0.01f;
+				}
+			}
+
+			if (overTimer == 650) {
+				expandchange->SetStartChange(true);
+			}
+
+			if (expandchange->GetTimer() >= 58) {
+				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 
 			camera->SetTarget(cameratargetPos);
@@ -431,6 +449,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 	}
 
 	BlackFilter->SetColor(BlackColor);
+	GameOverSprite->SetColor(GameOverColor);
 	camera->Update();
 	expandchange->Update();
 
@@ -552,7 +571,7 @@ void ThirdBoss::Draw(DirectXCommon* dxCommon) {
 		Sprite::PreDraw();
 
 		BlackFilter->Draw();
-
+		GameOverSprite->Draw();
 		Texture::PreDraw();
 		if (EndNumber <= 1) {
 			player->Draw(dxCommon);

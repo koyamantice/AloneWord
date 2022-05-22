@@ -75,6 +75,7 @@ public:
 		Enemyhp3,
 		SpinGauge,
 		SpinBar,
+		GameOver,
 	};
 	enum tex2dName {
 	enemy,//Texture::LoadTexture(0, L"Resources/2d/enemy.png");

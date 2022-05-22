@@ -98,6 +98,8 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	WhiteFilter->SetColor(WhiteColor);
 	BlackFilter = Sprite::Create(ImageManager::BlackFilter, { 0.0f,0.0f });
 	BlackFilter->SetColor(BlackColor);
+	GameOverSprite = Sprite::Create(ImageManager::GameOver, { 240.0f,100.0f });
+	GameOverSprite->SetColor(GameOverColor);
 	//“G
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i] = new Rice();
@@ -405,7 +407,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 			player->gameover(overTimer);
 			if (overNumber == 0) {
 				if (BlackColor.w <= 1.0f) {
-					BlackColor.w += 0.005f;
+					BlackColor.w += 0.01f;
 				}
 
 				if (overTimer == 1) {
@@ -417,7 +419,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 					Aftertargetpos = {
 					player->GetPosition().x,
 					player->GetPosition().y,
-					player->GetPosition().z + 3,
+					player->GetPosition().z + 6,
 					};
 					cameraPos.x = player->GetPosition().x;
 					cameraPos.y = player->GetPosition().y + distanceY;
@@ -447,7 +449,24 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 			Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 				};
 
+				if (overTimer == 420) {
+					overNumber++;
+				}
 			}
+			else if (overNumber == 1) {
+				if (GameOverColor.w <= 1.0f) {
+					GameOverColor.w += 0.01f;
+				}
+			}
+
+			if (overTimer == 650) {
+				expandchange->SetStartChange(true);
+			}
+
+			if (expandchange->GetTimer() >= 58) {
+				SceneManager::GetInstance()->ChangeScene("StageSelect");
+			}
+
 			camera->SetTarget(cameratargetPos);
 			camera->SetEye(cameraPos);
 		}
@@ -455,6 +474,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 
 	camera->Update();
 	BlackFilter->SetColor(BlackColor);
+	GameOverSprite->SetColor(GameOverColor);
 	expandchange->Update();
 	/*
 	for (std::size_t i = 0; i < exp.size(); i++) {
@@ -585,9 +605,9 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 	}
 	else {
 		Sprite::PreDraw();
-
+	
 		BlackFilter->Draw();
-
+		GameOverSprite->Draw();
 		Texture::PreDraw();
 		if (EndNumber <= 1) {
 			player->Draw(dxCommon);

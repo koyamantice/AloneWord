@@ -65,6 +65,8 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	BlackFilter = Sprite::Create(ImageManager::BlackFilter, { 0.0f,0.0f });
 	BlackFilter->SetColor(BlackColor);
 	
+	GameOverSprite = Sprite::Create(ImageManager::GameOver, { 240.0f,100.0f });
+	GameOverSprite->SetColor(GameOverColor);
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i] = new Effect();
 		effect[i]->Initialize();
@@ -364,7 +366,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 			player->gameover(overTimer);
 			if (overNumber == 0) {
 				if (BlackColor.w <= 1.0f) {
-					BlackColor.w += 0.005f;
+					BlackColor.w += 0.01f;
 				}
 
 				if (overTimer == 1) {
@@ -376,7 +378,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 					Aftertargetpos = {
 					player->GetPosition().x,
 					player->GetPosition().y,
-					player->GetPosition().z + 3,
+					player->GetPosition().z + 6,
 					};
 					cameraPos.x = player->GetPosition().x;
 					cameraPos.y = player->GetPosition().y + distanceY;
@@ -406,6 +408,22 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 			Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 				};
 
+				if (overTimer == 420) {
+					overNumber++;
+				}
+			}
+			else if (overNumber == 1) {
+				if (GameOverColor.w <= 1.0f) {
+					GameOverColor.w += 0.01f;
+				}
+			}
+
+			if (overTimer == 650) {
+				expandchange->SetStartChange(true);
+			}
+
+			if (expandchange->GetTimer() >= 58) {
+				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 
 			camera->SetTarget(cameratargetPos);
@@ -413,6 +431,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 		}
 	}
 	BlackFilter->SetColor(BlackColor);
+	GameOverSprite->SetColor(GameOverColor);
 	camera->Update();
 	expandchange->Update();
 
@@ -484,63 +503,83 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 
 //描画
 void SecondBoss::Draw(DirectXCommon* dxCommon) {
-	ImGui::Begin("test");
-	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
-	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
-	/*ImGui::SliderFloat("enemypos.z", &Aftereyepos.z, 50, 0);
-	ImGui::SliderFloat("frame.y", &frame, 30, 0);
-	ImGui::SliderFloat("color.w", &BlackColor.w, 30, 0);
-	ImGui::Text("overT::%d", overTimer);*/
-	ImGui::SliderFloat("color.w", &BlackColor.w, 30, 0);
-	ImGui::Text("overT::%d", overTimer);
-	ImGui::Unindent();
-	ImGui::End();
+	//ImGui::Begin("test");
+	////ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
+	////ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
+	///*ImGui::SliderFloat("enemypos.z", &Aftereyepos.z, 50, 0);
+	//ImGui::SliderFloat("frame.y", &frame, 30, 0);
+	//ImGui::SliderFloat("color.w", &BlackColor.w, 30, 0);
+	//ImGui::Text("overT::%d", overTimer);*/
+	//ImGui::Text("overT::%d", overTimer);
+	//ImGui::Unindent();
+	//ImGui::End();
+
 	//各オブジェクトの描画
 	Object3d::PreDraw();
-	//objBossMap->Draw();
-	//objSphere->Draw();
 	objBossMap->Draw();
 	objFloor->Draw();
-	Texture::PreDraw();
-	//limit->Draw();
-	//Sprite::PreDraw();
-	//sprite->Draw();
-	if (EndNumber <= 1) {
-		player->Draw(dxCommon);
-	}
+	//objSkydome->Draw();
 
-	if (rightshose->GetHP() > 0 || end) {
-		rightshose->Draw();
-	}
+	if (!gameover) {
+		//bossenemy->Draw();
+		if (rightshose->GetHP() > 0 || end) {
+			rightshose->Draw();
+		}
 
-	if (leftshose->GetHP() > 0 || end) {
-		leftshose->Draw();
+		if (leftshose->GetHP() > 0 || end) {
+			leftshose->Draw();
+		}
 	}
 
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Draw();
 	}
 
-	if (bossstart && !end) {
+	if (!gameover) {
+		Texture::PreDraw();
+		if (EndNumber <= 1) {
+			player->Draw(dxCommon);
+		}
+
+		Sprite::PreDraw();
+
+		if (!bossstart) {
+			BlackFilter->Draw();
+			//bossName->Draw();
+		}
+
+	}
+	else {
+		Sprite::PreDraw();
+
+		BlackFilter->Draw();
+		GameOverSprite->Draw();
+		Texture::PreDraw();
+		if (EndNumber <= 1) {
+			player->Draw(dxCommon);
+		}
+	}
+
+	//for (std::size_t i = 0; i < exp.size(); i++) {
+	//	for (std::size_t j = 0; j < exp[i].size(); j++) {
+	//		exp[i][j]->Draw();
+	//	}
+	//}
+	if (bossstart && !end && !gameover) {
 		ui->Draw();
 		// パーティクルの描画
 		particleMan->Draw(dxCommon->GetCmdList());
 	}
 
-	if (!gameover) {
-		Sprite::PreDraw();
-		if (!bossstart) {
-			BlackFilter->Draw();
-			//bossName->Draw();
-		}
-	}
 
 	if (end) {
 		WhiteFilter->Draw();
 	}
 	else {
-		for (std::size_t i = 0; i < enemy.size(); i++) {
-			enemy[i]->Draw();
+		if (!gameover) {
+			for (std::size_t i = 0; i < enemy.size(); i++) {
+				enemy[i]->Draw();
+			}
 		}
 	}
 
