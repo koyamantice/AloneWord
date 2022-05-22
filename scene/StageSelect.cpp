@@ -126,8 +126,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		select[0]->SetPosition(selectP[0]);
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
-			//SceneManager::GetInstance()->ChangeScene("BOSS");
-			//SceneManager::GetInstance()->ChangeScene("BOSS");
+
 			StageSelectNumber = fork;
 			/*Aftertargetpos = player->GetPosition();
 			Aftereyepos = player->GetPosition();*/
@@ -265,6 +264,22 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		plane[4]->SetPosition(selectP[1]);
 		select[4]->SetPosition(selectP[0]);
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
+			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
+			//SceneManager::GetInstance()->ChangeScene("FOURTHBOSS");
+			//StageSelectNumber = human;
+			/*Aftertargetpos = player->GetPosition();
+			Aftereyepos = player->GetPosition();*/
+			Aftereyepos = {
+					player->GetPosition().x,
+					player->GetPosition().y,
+					player->GetPosition().z,
+			};
+
+			Aftertargetpos = {
+				player->GetPosition().x,
+				player->GetPosition().y - 5,
+				player->GetPosition().z,
+			};
 		}
 	}
 
@@ -327,6 +342,10 @@ Ease(In,Cubic,selectframe,cameratargetPos.z,Aftertargetpos.z)
 		}
 		else if (StageSelectNumber == Pastel) {
 			SceneManager::GetInstance()->ChangeScene("FOURTHBOSS");
+		}
+		else if (StageSelectNumber == human) {
+
+			SceneManager::GetInstance()->ChangeScene("FIFTHBOSS");
 		}
 		StageSelectNumber = No;
 	}

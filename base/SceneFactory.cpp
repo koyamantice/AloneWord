@@ -6,6 +6,7 @@
 #include "SecondBoss.h"
 #include "ThirdBoss.h"
 #include "FourthBoss.h"
+#include "FifthBoss.h"
 #include "GameoverScene.h"
 #include "ClearScene.h"
 
@@ -33,6 +34,9 @@ BaseScene* SceneFactory::CreateScene(const std::string& sceneName) {
 	}
 	else if (sceneName == "FOURTHBOSS") {
 		newScene = new FourthBoss();
+	}
+	else if (sceneName == "FIFTHBOSS") {
+		newScene = new FifthBoss();
 	}
 	else if (sceneName == "GAMEOVER") {
 		newScene = new GameoverScene();
