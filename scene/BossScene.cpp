@@ -27,6 +27,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	objFloor->SetPosition({ 0, -1, 0 });
 	objFloor->SetScale({ 6.0f,1.0f,6.0f });
 
+	//スカイドーム
 	objSkydome = Object3d::Create();
 	modelSkydome = Model::CreateFromOBJ("skydome");
 	objSkydome->SetModel(modelSkydome);

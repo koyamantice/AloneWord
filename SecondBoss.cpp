@@ -26,6 +26,13 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	objFloor->SetPosition({ 0, -1, 0 });
 	objFloor->SetScale({ 8.0f,1.0f,6.0f });
 
+	//スカイドーム
+	objEntrance = Object3d::Create();
+	modelEntrance = Model::CreateFromOBJ("Entrance");
+	objEntrance->SetModel(modelEntrance);
+	objEntrance->SetPosition({ 0, -1, 0 });
+	objEntrance->SetScale({ 1.0f,1.0f,1.0f });
+
 	//ステージマップ
 	modelBossMap = Model::CreateFromOBJ("BossMap");
 	objBossMap = TouchableObject::Create(modelBossMap);
@@ -139,6 +146,8 @@ void SecondBoss::Finalize() {
 	delete objFloor;
 	delete modelBossMap;
 	delete modelFloor;
+	delete objEntrance;
+	delete modelEntrance;
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Finalize();
 	}
@@ -159,6 +168,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 	objBossMap->Update();
 	objFloor->Update();
 	lightGroup->Update();
+	objEntrance->Update();
 
 	//最初の演出(導入)
 	if (!end) {
@@ -448,6 +458,7 @@ void SecondBoss::Draw(DirectXCommon* dxCommon) {
 	//objSphere->Draw();
 	objBossMap->Draw();
 	objFloor->Draw();
+	objEntrance->Draw();
 
 	Texture::PreDraw();
 	//limit->Draw();

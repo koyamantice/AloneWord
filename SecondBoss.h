@@ -39,6 +39,8 @@ private:
 	TouchableObject* objBossMap;
 	Model* modelSphere = nullptr;
 	Object3d* objSphere;
+	Model* modelEntrance = nullptr;
+	Object3d* objEntrance;
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;
 	Texture* limit = nullptr;

@@ -27,6 +27,13 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	objFloor->SetPosition({ 0, -1, 0 });
 	objFloor->SetScale({ 8.0f,1.0f,6.0f });
 
+	//スカイドーム
+	objGarden = Object3d::Create();
+	modelGarden = Model::CreateFromOBJ("Garden");
+	objGarden->SetModel(modelGarden);
+	objGarden->SetPosition({ 0, -1, 0 });
+	objGarden->SetScale({ 1.0f,1.0f,1.0f });
+
 	//ステージマップ
 	modelBossMap = Model::CreateFromOBJ("BossMap");
 	objBossMap = TouchableObject::Create(modelBossMap);
@@ -143,6 +150,8 @@ void FourthBoss::Finalize() {
 	delete objFloor;
 	delete modelBossMap;
 	delete modelFloor;
+	delete objGarden;
+	delete modelGarden;
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Finalize();
 	}
@@ -161,6 +170,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 	objBossMap->Update();
 	objFloor->Update();
 	lightGroup->Update();
+	objGarden->Update();
 	
 	//最初の演出(導入)
 	if (!end) {
@@ -501,6 +511,7 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 	objSphere->Draw();
 	objBossMap->Draw();
 	objFloor->Draw();
+	objGarden->Draw();
 
 	Texture::PreDraw();
 	shockwave->Draw();
