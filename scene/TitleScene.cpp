@@ -89,7 +89,6 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 		expandchange->SetStartChange(true);
 	}
 
-
 	if (expandchange->GetTimer() >= 58) {
 		if (SelectNumber == Start) {
 			SceneManager::GetInstance()->ChangeScene("STARTMAP");

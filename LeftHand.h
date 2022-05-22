@@ -13,4 +13,13 @@ public:
 	void End(int Timer) override;//Œ‚”j
 	void specialDraw() override;//‚±‚ÌƒV[ƒ“‚Ì‚İ‚Ì•`‰æ
 	void SetAct(Human* human);
+private:
+	enum state {
+		Open,
+		Close,
+	};
+
+	int stateNumber = 0;
+
+	Model* hand_closemodel = nullptr;
 };
