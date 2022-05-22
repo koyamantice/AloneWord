@@ -266,7 +266,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			//SceneManager::GetInstance()->ChangeScene("FOURTHBOSS");
-			//StageSelectNumber = human;
+			StageSelectNumber = human;
 			/*Aftertargetpos = player->GetPosition();
 			Aftereyepos = player->GetPosition();*/
 			Aftereyepos = {

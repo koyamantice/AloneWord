@@ -56,6 +56,7 @@ public:
 	void SetDrawExp(int DrawExp) { this->DrawExp = DrawExp; }
 	void Setboundpower(XMFLOAT3 boundpower) { this->boundpower = boundpower; }
 	void SetStun(bool stun) { this->stun = stun; }
+	void SetActive(bool active) { this->active = active; }
 	void SetAppearanceEnd(bool appearanceEnd) { this->appearanceEnd = appearanceEnd; }
 	//関数
 	void SetEnemy();
@@ -125,6 +126,7 @@ protected:
 	XMFLOAT3 Afterrot = { 0.0f,90.0f,0.0f };
 	XMFLOAT3 playerpos{};
 	XMFLOAT3 targetpos{};
+	XMFLOAT3 MottiScale = { 0.0f,0.0f,0.0f };
 	//敵関係変数
 	float radius = 0.0f;
 	float speed = 0.0f;
