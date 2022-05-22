@@ -8,12 +8,18 @@
 
 void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	//背景スプライト生成
-	BackGround = Texture::Create(ImageManager::SELECTTex, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
-	BackGround->TextureCreate();
-	BackGround->SetRotation({ 90,0,0 });
-	BackGround->SetPosition({ 0.0f,0.0f,0.5f });
-	BackGround->SetScale({ 3.2f,1.8f,1.0f });
-	BackGround->Update();
+	DarkBackGround = Texture::Create(ImageManager::SELECTTex, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	DarkBackGround->TextureCreate();
+	DarkBackGround->SetRotation({ 90,0,0 });
+	DarkBackGround->SetPosition({ 0.0f,0.0f,0.5f });
+	DarkBackGround->SetScale({ 3.2f,1.8f,1.0f });
+	DarkBackGround->Update();
+	LightBackGround = Texture::Create(ImageManager::SELECTTex2, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	LightBackGround->TextureCreate();
+	LightBackGround->SetRotation({ 90,0,0 });
+	LightBackGround->SetPosition({ 0.0f,0.0f,0.5f });
+	LightBackGround->SetScale({ 3.2f,1.8f,1.0f });
+	LightBackGround->Update();
 	select[0] = Sprite::Create(ImageManager::select1, selectP[0]);
 	select[0]->SetAnchorPoint({ 1.0f,0.0f });
 	select[1] = Sprite::Create(ImageManager::select2, selectP[0]);
@@ -29,7 +35,7 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	plane[1] = Sprite::Create(ImageManager::genkan, selectP[1]);
 	plane[2] = Sprite::Create(ImageManager::niwa, selectP[1]);
 	plane[3] = Sprite::Create(ImageManager::washitu, selectP[1]);
-	plane[4] = Sprite::Create(ImageManager::wait, selectP[1]);
+	plane[4] = Sprite::Create(ImageManager::shinshitu, selectP[1]);
 	// カメラ生成
 	//srand(NULL);
 	// ライト生成
@@ -76,7 +82,8 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 }
 //開放
 void StageSelect::Finalize() {
-	delete BackGround;
+	delete DarkBackGround;
+	delete LightBackGround;
 	delete camera;
 	player->Finalize();
 	for (int i = 0; i < 3; i++) {
@@ -102,7 +109,8 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 	input = Input::GetInstance();
 	lightGroup->Update();
 	player->SelectUp();
-	BackGround->Update();
+	DarkBackGround->Update();
+	LightBackGround->Update();
 	expandchange->Update();
 	shrinkchange->Update();
 	ParticleManager::GetInstance()->Update();
@@ -310,6 +318,7 @@ Ease(In,Cubic,selectframe,cameratargetPos.z,Aftertargetpos.z)
 	}
 	
 	if (UICheck()) {
+		dark = false;
 		frame = 0.0f;
 		selectP[0] = {
 		Ease(In,Quad,frame,0,640),
@@ -324,6 +333,9 @@ Ease(In,Cubic,selectframe,cameratargetPos.z,Aftertargetpos.z)
 			select[i]->SetPosition(selectP[0]);
 			plane[i]->SetPosition(selectP[1]);
 		}
+	}
+	else {
+		dark = true;
 	}
 
 	//シーンがここで変わる
@@ -361,7 +373,12 @@ void StageSelect::Draw(DirectXCommon* dxCommon) {
 	//ImGui::End();
 
 	Texture::PreDraw();
-	BackGround->Draw();
+	if (dark) {
+		DarkBackGround->Draw();
+	}
+	else {
+		LightBackGround->Draw();
+	}
 	Sprite::PreDraw();
 	player->Draw(dxCommon);
 	Sprite::PreDraw();

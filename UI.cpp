@@ -78,8 +78,8 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	SpinGauge = Sprite::Create(ImageManager::SpinGauge, { 0.0f,0.0f });
 	SpinBar = Sprite::Create(ImageManager::SpinBar, { 0.0f,0.0f });
 	SpinBar->SetAnchorPoint({ 0.5f,0.5f });
-	Arrow = Sprite::Create(ImageManager::arrow, { 0.0f,0.0f });
-	Arrow->SetAnchorPoint({ 0.5f,0.5f });
+	/*Arrow = Sprite::Create(ImageManager::arrow, { 0.0f,0.0f });
+	Arrow->SetAnchorPoint({ 0.5f,0.5f });*/
 	const int w = 54;
 	const int h = 60;
 	const int l = 10;

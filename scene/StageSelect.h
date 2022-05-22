@@ -27,7 +27,8 @@ private:
 private:
 	//メンバ変数
 	//テクスチャやモデル
-	Texture* BackGround = nullptr;
+	Texture* DarkBackGround = nullptr;
+	Texture* LightBackGround = nullptr;
 	Sprite* select[5]{};
 	Sprite* plane[5]{};
 	Sprite* BlackFilter = nullptr;
@@ -52,5 +53,5 @@ private:
 	//イージングのためのもの
 	float frame = 0;
 	float selectframe = 0.0f;
-
+	bool dark = false;
 };
