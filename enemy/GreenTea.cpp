@@ -28,6 +28,7 @@ void GreenTea::Initialize(bool shadow) {
 	enemyobj->SetPosition(pos);
 	enemyobj->SetRotation(rot);
 	enemyobj->SetScale({ 0.5f,0.5f,0.5f });
+
 	//影(今回は使わない)
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();

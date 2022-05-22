@@ -26,6 +26,13 @@ void FifthBoss::Initialize(DirectXCommon* dxCommon) {
 	objFloor->SetPosition({ 0, -1, 0 });
 	objFloor->SetScale({ 8.0f,1.0f,6.0f });
 
+	//スカイドーム
+	objBedroom = Object3d::Create();
+	modelBedroom = Model::CreateFromOBJ("Bedroom");
+	objBedroom->SetModel(modelBedroom);
+	objBedroom->SetPosition({ 0, -1, 0 });
+	objBedroom->SetScale({ 1.0f,1.0f,1.0f });
+
 	//ステージマップ
 	modelBossMap = Model::CreateFromOBJ("BossMap");
 	objBossMap = TouchableObject::Create(modelBossMap);
@@ -141,6 +148,8 @@ void FifthBoss::Finalize() {
 	delete objFloor;
 	delete modelBossMap;
 	delete modelFloor;
+	delete objBedroom;
+	delete modelBedroom;
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Finalize();
 	}
@@ -161,6 +170,7 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 	objBossMap->Update();
 	objFloor->Update();
 	lightGroup->Update();
+	objBedroom->Update();
 
 	//最初の演出(導入)
 	if (!end) {
@@ -450,6 +460,7 @@ void FifthBoss::Draw(DirectXCommon* dxCommon) {
 	//objSphere->Draw();
 	objBossMap->Draw();
 	objFloor->Draw();
+	objBedroom->Draw();
 
 	Texture::PreDraw();
 	//limit->Draw();

@@ -569,14 +569,13 @@ void Player::TitleUp() {
 
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
-
-	ImGui::Begin("test");
-	ImGui::SliderFloat("pos.x", &OldArm, 50, -50);
-	//ImGui::SliderFloat("pos.y", &position.y, 50, -50);
-	//ImGui::SliderFloat("pos.z", &position.z, 50, -50);
-	//ImGui::("boundpower.x %d", &AttackFlag, 50, -50);
-	//ImGui::Text("RotC:%d", AttackFlag);
-	ImGui::End();
+	//ImGui::Begin("test");
+	////ImGui::SliderFloat("pos.x", &position.x, 50, -50);
+	//ImGui::SliderFloat("rot.y", &rot.y, 50, -50);
+	//ImGui::SliderFloat("overframe", &overframe, 50, -50);
+	////ImGui::("boundpower.x %d", &AttackFlag, 50, -50);
+	//ImGui::Text("overMove:%d", overMove);
+	//ImGui::End();
 	Texture::PreDraw();
 	if (chargeTimer!=0&&!AttackFlag) {
 		Charge->Draw();
@@ -866,4 +865,68 @@ void Player::ChargeRelease() {
 		ChargeEffect[i]->SetScale(chargesca[i]);
 		ChargeEffect[i]->SetPosition(chargepos[i]);
 	}
+}
+
+void Player::gameoverMovie(int Timer) {
+	float RotPower = 0.0f;
+	if (Timer == 150) {
+		overMove++;
+	}
+
+	switch (overMove) {
+	case 1:
+		
+		if (overframe < 1.0f) {
+			overframe += 0.005f;
+			break;
+		}
+		else {
+			overframe = 1.0f;
+			RotPower = 0.0f;
+			overMove++;
+			break;
+		}
+
+	case 2:
+		if (rot.x <= 90) {
+			rot.x += 2.0f;
+		}
+
+		//case 2:
+		//	AfterPos = {
+		//				pos.x,
+		//				1,
+		//				pos.z,
+		//	};
+
+		//	if (frame < 1.0f) {
+		//		frame += 0.08f;
+		//		break;
+		//	}
+		//	else {
+		//		frame = 1.0f;
+		//		break;
+		//	}
+	}
+
+	RotPower = Ease(In, Cubic, overframe, RotPower, 20.0f);
+	if (overMove == 1) {
+		rot.y += RotPower;
+	}
+
+	plasca = {
+	Ease(In,Cubic,overframe,plasca.x,0.004f),
+	Ease(In,Cubic,overframe,plasca.y,0.004f),
+	Ease(In,Cubic,overframe,plasca.z,0.004f),
+	};
+
+	move_object1->SetScale(plasca);
+	//move_object1->SetPosition(pos);
+	move_object1->SetRotation(rot);
+}
+
+void Player::gameover(int Timer) {
+	gameoverMovie(Timer);
+	move_object1->StopAnimation();
+	move_object1->Update();
 }
