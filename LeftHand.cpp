@@ -8,8 +8,9 @@ using namespace DirectX;
 
 //コンストラクタ
 LeftHand::LeftHand() {
-	model = ModelManager::GetIns()->GetModel(ModelManager::LeftShoes);
+	model = ModelManager::GetIns()->GetModel(ModelManager::LeftHand_Open);
 	enemyobj = new Object3d();
+	hand_closemodel = ModelManager::GetIns()->GetModel(ModelManager::LeftHand_Close);
 }
 
 //初期化
@@ -26,6 +27,7 @@ void LeftHand::Initialize(bool shadow) {
 	Afterrot.y = rot.y;
 	//影(このオブジェクトでは使わない)
 	enemyobj->SetRotation(rot);
+	//hand_closeobj->SetRotation(rot);
 	enemyobj->SetScale({ 0.3f,0.3f,0.3f });
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
@@ -66,10 +68,17 @@ void LeftHand::Finalize() {
 //ボスの行動
 void LeftHand::Spec() {
 	XMFLOAT3 AfterPos{};
+	if (stateNumber == Open) {
+		enemyobj->SetModel(model);
+	}
+	else if (stateNumber == Close) {
+		enemyobj->SetModel(hand_closemodel);
+	}
 	//ここで行動を決める
-	if (AttackCount > 180 && pos.y <= 0.1f) {
+	if (AttackCount == 180) {
 		if (!active) {
-			//action = (rand() % 2);
+			action = (rand() % 2);
+			AttackCount = 0;
 			frame = 0;
 			pat = 1;
 			active = true;
@@ -77,19 +86,20 @@ void LeftHand::Spec() {
 	}
 	//攻撃をするまでのインターバル
 	else {
-		//if (!active) {
-		//	AttackCount++;
-		//	/*angle += 2.0f;
-		//	angle2 = angle * (3.14f / 180.0f);
-		//	pos.y = sin(angle2) * 0.5f + 0.5f;
-		//	enemyobj->SetPosition(pos);*/
-		//}
+		if (!active) {
+			//AttackCount++;
+			/*angle += 2.0f;
+			angle2 = angle * (3.14f / 180.0f);
+			pos.y = sin(angle2) * 0.5f + 0.5f;
+			enemyobj->SetPosition(pos);*/
+		}
 	}
 
 	//行動開始
 	if (active) {
 		//スタージを外周する
 		if ((action % 2) == 0) {
+			stateNumber = Open;
 			if (!stun) {
 				if (frame < 0.45f) {
 					frame += 0.002f;
@@ -127,7 +137,7 @@ void LeftHand::Spec() {
 				else {
 					Afterrot.y = 270;
 					pat = 0;
-					AttackCount = 30;
+					AttackCount = 0;
 					Effect = true;
 					active = false;
 					frame = 0;
@@ -138,6 +148,7 @@ void LeftHand::Spec() {
 		Ease(In,Cubic,frame,pos.z,AfterPos.z),
 				};
 				enemyobj->SetPosition(pos);
+				//hand_closeobj->SetPosition(pos);
 			}
 			else {
 				for (std::size_t i = 0; i < Stuntexture.size(); i++) {
@@ -167,6 +178,7 @@ void LeftHand::Spec() {
 		}
 		//プレイヤーを挟む処理
 		else if ((action % 2) == 1) {
+			stateNumber = Close;
 			if (AttackC < 3) {
 				Afterrot.x = 90.0f;
 				switch (pat) {
@@ -265,7 +277,7 @@ void LeftHand::Spec() {
 						frame = 0;
 						pat = 0;
 						AttackC = 0;
-						AttackCount = 30;
+						AttackCount = 0;
 						Effect = true;
 						active = false;
 						break;
@@ -280,11 +292,13 @@ void LeftHand::Spec() {
 	Ease(In,Cubic,frame,pos.z,AfterPos.z)
 			};
 			enemyobj->SetPosition(pos);
+			//hand_closeobj->SetPosition(pos);
 		}
 	}
 	rot.y = Ease(In, Quint, 0.7f, rot.y, Afterrot.y);
 	rot.x = Ease(In, Quint, 0.7f, rot.x, Afterrot.x);
 	enemyobj->SetRotation(rot);
+	//hand_closeobj->SetRotation(rot);
 }
 
 //導入
@@ -361,7 +375,9 @@ void LeftHand::App(int Timer) {
 	Ease(In,Cubic,frame2,rot.z,AfterRot.z)
 	};
 	enemyobj->SetPosition(pos);
+	//hand_closeobj->SetPosition(pos);
 	enemyobj->SetRotation(rot);
+	//hand_closeobj->SetRotation(rot);
 }
 
 //撃破
@@ -436,7 +452,9 @@ void LeftHand::End(int Timer) {
 
 	enemyobj->SetScale(scale);
 	enemyobj->SetPosition(pos);
+	//hand_closeobj->SetPosition(pos);
 	enemyobj->SetRotation(rot);
+	//hand_closeobj->SetRotation(rot);
 }
 
 //特別な描画(この場合ぴよぴよ)
@@ -445,6 +463,9 @@ void LeftHand::specialDraw() {
 		for (std::size_t i = 0; i < Stuntexture.size(); i++) {
 			Stuntexture[i]->Draw();
 		}
+	}*/
+	/*if (stateNumber == Close) {
+		hand_closeobj->Draw();
 	}*/
 }
 

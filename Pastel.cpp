@@ -12,7 +12,7 @@ Pastel::Pastel() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::Pastel);
 	enemyobj = new Object3d();
 	Millmodel = ModelManager::GetIns()->GetModel(ModelManager::Mill);
-	Millobj = new Object3d();
+	Millobj = TouchableObject::Create(Millmodel);
 	Mottimodel = ModelManager::GetIns()->GetModel(ModelManager::SiroMotti);
 	Mottiobj = new Object3d();
 	Platformmodel = ModelManager::GetIns()->GetModel(ModelManager::Platform);
@@ -37,8 +37,9 @@ void Pastel::Initialize(bool shadow) {
 	enemyobj->SetRotation(rot);
 	enemyobj->SetScale({ 2.0f,2.0f,2.0f });
 	//ステージのオブジェクト
-	Millobj = Object3d::Create();
-	Millobj->SetModel(Millmodel);
+	//Millobj = Object3d::Create();
+	//Millobj->SetModel(Millmodel);
+	Millobj = TouchableObject::Create(Millmodel);
 	Millpos = { 0.0f,-2.0f,0.0f };
 	Millobj->SetPosition(Millpos);
 	Millobj->SetRotation({0,90,0});
@@ -222,7 +223,7 @@ void Pastel::Spec() {
 				if (frame >= 1.0f) {
 					frame = 1.0f;
 					
-					if (coolT < 350) {
+					if (coolT < 150) {
 						coolT++;
 						break;
 					}
@@ -275,7 +276,7 @@ void Pastel::Spec() {
 					AfterPos = {
 						0.0f,
 						5.0f,
-						7.5f,
+						8.5f,
 					};
 					Afterrot = {
 						0.0f,
@@ -319,7 +320,7 @@ Ease(In,Cubic,frame,rot.z,Afterrot.z)
 	//餅が集まったら餅を付き始める
 	if (Off == true && !active) {
 		AfterPos.y = 2.0f;
-		AfterPos.z = 7.5f;
+		AfterPos.z = 8.5f;
 		Afterrot = {
 			rot.x,
 			270.0f,
@@ -352,10 +353,10 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 	if (haveEnemy >= 10.0f && !active) {
 		haveTimer++;
 		Off = true;
-		if (haveTimer % 100 == 0) {
-			MottiScale.x -= 0.1f;
-			MottiScale.y -= 0.1f;
-			MottiScale.z -= 0.1f;
+		if (rot.z >= 29.900) {
+			MottiScale.x -= 0.03f;
+			MottiScale.y -= 0.03f;
+			MottiScale.z -= 0.03f;
 		}
 		if (haveTimer == 1000) {
 			Off = false;
@@ -388,7 +389,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 			}
 
 			if (Plapos[i].y <= 0.0f) {
-				Plapos[i].y += 0.10f;
+				Plapos[i].y += 0.20f;
 			}
 		}
 		else {
@@ -555,11 +556,11 @@ void Pastel::specialDraw() {
 }
 
 bool Pastel::collideAttackArm(Player* player) {
-	XMFLOAT3 Armpos = player->GetArmPosition();
+	XMFLOAT3 plapos = player->GetPosition();
 	bool attackflag = player->GetAttackFlag();
 	float weight = player->GetArmWeight();
 	if (attackflag && !BossHit) {
-		if (Collision::CircleCollision(Armpos.x, Armpos.z, 1.3f, Millpos.x, Millpos.z, 1.3f)) {
+		if (Collision::CircleCollision(plapos.x, plapos.z, 2.0f, Millpos.x, Millpos.z, 2.0f)) {
 			BossHit = true;
 			player->SetRotTimer(0);
 			player->SetRotCount(0);

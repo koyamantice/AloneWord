@@ -125,6 +125,7 @@ void FifthBoss::Initialize(DirectXCommon* dxCommon) {
 	ui = new UI(player, lefthand, righthand);
 	expandchange = new ExpandChange();
 	human = new Human();
+	human->init();
 	//ui->Initialize();
 }
 //ŠJ•úˆ—
@@ -267,17 +268,12 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 		//í“¬ŠJŽn
 		else {
 			player->Update();
+			human->SetAttack(lefthand, righthand);
 			lefthand->Update();
 			righthand->Update();
-			/*if ((lefthand->GetActive() == false) && (righthand->GetActive() == false)) {
-				act = true;
-			}
-			else {
-				act = false;
-			}*/
-			human->SetAttack();
 			lefthand->SetAct(human);
 			righthand->SetAct(human);
+		
 			/*
 				if (righthand->GetHP() <= 0) {
 					DeadRight++;
