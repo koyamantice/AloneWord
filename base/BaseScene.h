@@ -71,15 +71,18 @@ protected:
 	bool end = false;
 	int EndNumber = 0;
 	int EndTimer = 0;
+	bool gameover = false;
+	int overNumber = 0;
+	int overTimer = 0;
 	float nameframe = 0.0f;
 	Sprite* WhiteFilter = nullptr;
 	XMFLOAT4 WhiteColor = { 1.0f,1.0f,1.0f,0.0f };
 	Sprite* BlackFilter = nullptr;
 	XMFLOAT4 BlackColor = { 0.0f,0.0f,0.0f,1.0f };
+	Sprite* GameOverSprite = nullptr;
+	XMFLOAT4 GameOverColor = { 1.0f,1.0f,1.0f,0.0f };
 	Sprite* bossName = nullptr;
 	XMFLOAT2 namePos = { 0.0f,0.0f };
-	//Ç±ÇÃïœêîÇÕê\ÇµñÛÇ»Ç¢
-	float cameraMoveX = 0.0f;
 public:
 
 	virtual ~BaseScene()=default;
