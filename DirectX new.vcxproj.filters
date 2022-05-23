@@ -240,9 +240,6 @@
     <ClCompile Include="UI.cpp">
       <Filter>ui</Filter>
     </ClCompile>
-    <ClCompile Include="Warp.cpp">
-      <Filter>warp</Filter>
-    </ClCompile>
     <ClCompile Include="scene\StartMap.cpp">
       <Filter>stage\タイトル</Filter>
     </ClCompile>
@@ -488,9 +485,6 @@
     <ClInclude Include="scene\TisGame.h">
       <Filter>scene</Filter>
     </ClInclude>
-    <ClInclude Include="Warp.h">
-      <Filter>warp</Filter>
-    </ClInclude>
     <ClInclude Include="light\DirectionalLight.h">
       <Filter>light</Filter>
     </ClInclude>
@@ -623,9 +617,6 @@
     </Filter>
     <Filter Include="ui">
       <UniqueIdentifier>{5d86588e-f8ba-4987-a59e-204b2ca07f2f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="warp">
-      <UniqueIdentifier>{4bbf47fd-d6b1-4038-af23-72abb6883372}</UniqueIdentifier>
     </Filter>
     <Filter Include="シェーダーファイル">
       <UniqueIdentifier>{78a9d76b-31b8-4f30-82fc-5ff98a372aab}</UniqueIdentifier>

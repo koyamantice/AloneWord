@@ -1,4 +1,4 @@
-#include "RightShose.h"
+﻿#include "RightShose.h"
 #include"Collision.h"
 #include<sstream>
 #include<iomanip>

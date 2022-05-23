@@ -319,7 +319,6 @@ const void UI::Draw() {
 	//////ImGui::Unindent();
 	//ImGui::End();
 	Sprite::PreDraw();
-	//Vignette->Draw();
 	if (boss) {
 		BossHp[max]->Draw();
 		BossHp[damage]->Draw();

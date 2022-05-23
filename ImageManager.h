@@ -71,14 +71,10 @@ public:
 	enum tex2dName {
 	enemy,//Texture::LoadTexture(0, L"Resources/2d/enemy.png");
 	shadow,//Texture::LoadTexture(1, L"Resources/2d/shadow.png");
-	Resporn,//Texture::LoadTexture(2, L"Resources/2d/Resporn.png");
 	effect2,//Texture::LoadTexture(3, L"Resources/2d/effect2.png");
 	effect3,
-	playerhp,//Texture::LoadTexture(4, L"Resources/2d/PlayerHP.png");
-	magic,//Texture::LoadTexture(5, L"Resources/2d/magic2.png");
 	net,//Texture::LoadTexture(6, L"Resources/2d/Resporn.png");
 	water,
-	hit,
 	Charge,
 	ChargeEffect,
 	spawnhp,

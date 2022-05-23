@@ -67,7 +67,6 @@ void ImageManager::LoadTex2D() {
 	Texture::LoadTexture(shadow, L"Resources/2d/shadow.png");
 	Texture::LoadTexture(effect2, L"Resources/2d/effect2.png");
 	Texture::LoadTexture(effect3, L"Resources/2d/effect3.png");
-	Texture::LoadTexture(playerhp, L"Resources/2d/HPBar.png");
 	Texture::LoadTexture(net, L"Resources/2d/motiNet.png");
 	Texture::LoadTexture(water, L"Resources/2d/puddle.png");
 	Texture::LoadTexture(Charge, L"Resources/2d/Charge.png");

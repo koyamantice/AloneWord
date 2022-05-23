@@ -77,7 +77,6 @@ protected:
 	Object3d* enemyobj = nullptr;
 	Model* model = nullptr;
 	Texture* texture = nullptr;
-	Texture* Restexture = nullptr;
 	Player* player = nullptr;
 
 	//各座標や回転やサイズ

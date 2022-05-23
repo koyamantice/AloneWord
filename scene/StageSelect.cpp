@@ -1,4 +1,4 @@
-#include "StageSelect.h"
+﻿#include "StageSelect.h"
 #include "ImageManager.h"
 #include "Input.h"
 #include"SceneManager.h"

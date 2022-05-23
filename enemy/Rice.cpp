@@ -37,12 +37,6 @@ void Rice::Initialize() {
 	Piyopiyo->SetScale({1.0f, 2.0f, 2.0f});
 	Piyopiyo->SetRotation({ 60,0,0 });
 	//texture->SetColor({ 1.0f,0.0,0.0,1.0f });
-	//リスポーン
-	Restexture = Texture::Create(ImageManager::Resporn, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
-	Restexture->TextureCreate();
-	Restexture->SetPosition(pos);
-	Restexture->SetRotation({ 90,0,0 });
-	Restexture->SetScale({ 0.2f,0.2f,0.2f });
 	//拠点
 	net[0] = Texture::Create(ImageManager::net, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	net[0]->TextureCreate();
@@ -63,7 +57,6 @@ void Rice::Finalize() {
 	delete texture;
 	delete net[0];
 	delete net[1];
-	delete Restexture;
 }
 //アップデート
 void Rice::Update() {
@@ -208,7 +201,6 @@ void Rice::Update() {
 	if (pos.x < x_min) { pos.x = x_min; }
 	enemyobj->SetPosition(pos);
 	texture->SetPosition({ pos.x,0,pos.z });
-	Restexture->SetPosition(pos);
 	player->SetInterval(Interval);
 	//rot.y = Ease(In, Quad, 0.5f, rot.y, EndRot.y);
 	enemyobj->SetRotation(rot);
@@ -342,7 +334,6 @@ void Rice::Demo(int num) {
 	if (pos.x < x_min) { pos.x = x_min; }
 	enemyobj->SetPosition(pos);
 	texture->SetPosition({ pos.x,0,pos.z });
-	Restexture->SetPosition(pos);
 	player->SetInterval(Interval);
 	enemyobj->SetRotation(rot);
 	enemyobj->SetScale(enescale);
