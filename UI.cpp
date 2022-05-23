@@ -2,6 +2,7 @@
 #include <Easing.h>
 #include <ImageManager.h>
 #include"Collision.h"
+#include <Input.h>
 //コンストラクタ
 UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	this->player = player;
@@ -76,10 +77,6 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	bairitu->SetAnchorPoint({ 1.0f,0.0f });
 	bairitu->SetScale(0.7f);
 	SpinGauge = Sprite::Create(ImageManager::SpinGauge, { 0.0f,0.0f });
-	SpinBar = Sprite::Create(ImageManager::SpinBar, { 0.0f,0.0f });
-	SpinBar->SetAnchorPoint({ 0.5f,0.5f });
-	/*Arrow = Sprite::Create(ImageManager::arrow, { 0.0f,0.0f });
-	Arrow->SetAnchorPoint({ 0.5f,0.5f });*/
 	const int w = 54;
 	const int h = 60;
 	const int l = 10;
@@ -113,27 +110,22 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 			number[i][0]->SetScale(0.3f);
 		}
 	}
-	SpinPos[0] = {1150.0f,200.0f};
-	SpinBar->SetAnchorPoint({ 0.5f,1.0f });
-	SpinPos[1] = { 1150.0f,500.0f };
+	SpinPos[0] = {1200.0f,500.0f};
+	SpinPos[1] = {1200.0f,670.0f };
+	for (int i = 0; i < 3; i++) {
+		SpinBar[i] = Sprite::Create(ImageManager::SpinBar, {0.0f,0.0f});
+		SpinBar[i]->SetSize({0,0});
+		SpinBar[i]->SetAnchorPoint({ 0.5f,1.0f });
+		SpinBar[i]->SetScale(1.5f);
+		SpinBar[i]->SetPosition(SpinPos[1]);
+	}
+	SpinBar[0]->SetColor({1.0f,1.0f,1.0f,1.0f});
+	SpinBar[1]->SetColor({1.0f,1.0f,0.0f,1.0f});
+	SpinBar[2]->SetColor({1.0f,0.0f,0.0f,1.0f});
+
+	SpinGauge->SetScale(1.5f);
+	SpinGauge->SetAnchorPoint({ 0.5f,0.5f });
 	SpinGauge->SetPosition(SpinPos[0]);
-	SpinGauge->SetSize({90,330});
-	SpinBar->  SetPosition(SpinPos[1]);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 //更新
 void UI::Update() {
@@ -191,13 +183,54 @@ void UI::Update() {
 
 	//後々変更ポイント
 	//スタミナ的なやつ
-	AfterPos3 = { 60,(float)(player->GetRotTimer() * 0.5f)};
+	//if (Input::GetInstance()->PushButton(Input::GetInstance()->Button_A) {
+		//if (!player->GetAttackFlag()) {
+			if (player->GetChargeTimer() > 100) {
+				nowBar = 1;
+					if (player->GetChargeTimer() > 200) {
+						nowBar = 2;
+					}
+			} else {
+				nowBar = 0;
+			}
+			convert = (float)(player->GetChargeTimer() % 101) / 100.0f;
+				if (convert >= 1.0f) {
+					convert = 1.0f;
+				}
+			AfterPos3 = { 60,convert * 350.0f };
+			if (AfterPos3.y > 350.0f) {
+				AfterPos3.y = 350.0f;
+			}
+			SpinPos[1] = {
+			Ease(In,Quint,0.7f,SpinBar[nowBar]->GetSize().x,AfterPos3.x),
+			Ease(In,Quint,0.7f,SpinBar[nowBar]->GetSize().y,AfterPos3.y), };
+			SpinBar[nowBar]->SetSize(SpinPos[1]);
+		//}
+	//}
+	//{
+		if (!player->GetAttackFlag()) {
+			SpinBar[0]->SetSize({ 60,0 });
+			SpinBar[1]->SetSize({ 60,0 });
+			SpinBar[2]->SetSize({ 60,0 });
+		} else {
+			if (player->GetRotTimer() >= 200) {
+				if (player->GetRotTimer() >= 400) {
+					nowBar = 2;
+				} else {
+					nowBar = 1;
+				}
+			} else {
+				nowBar = 0;
+			}
+			convert = player->GetRotTimer() % 201;
+			AfterPos3 = { 60,(convert / 100) * 175 };
+			SpinPos[1] = {
+			Ease(In,Quint,0.7f,SpinBar[nowBar]->GetSize().x,AfterPos3.x),
+			Ease(In,Quint,0.7f,SpinBar[nowBar]->GetSize().y,AfterPos3.y), };
+			SpinBar[nowBar]->SetSize(SpinPos[1]);
 
-	SpinPos[1] = {
-	Ease(In,Quint,0.7f,SpinBar->GetSize().x,AfterPos3.x),
-	Ease(In,Quint,0.7f,SpinBar->GetSize().y,AfterPos3.y),};
-	//SpinGauge->SetSize(SpinPos[0]);
-	SpinBar->SetSize(SpinPos[1]);
+		}
+	//}
 }
 
 //開放
@@ -275,11 +308,13 @@ const void UI::Draw() {
 
 		//プレイヤーのスタミナ(一旦コメントアウト)
 		//if (player->GetRotTimer() > 0) {
-			SpinGauge->Draw();
-			SpinBar->Draw();
 		//}
 	}
-	
+	SpinGauge->Draw();
+	for (int i = 0; i < 3;i++) {
+		SpinBar[i]->Draw();
+	}
+	SpinBar[nowBar]->Draw();
 }
 
 void UI::EaseScale() {
