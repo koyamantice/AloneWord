@@ -30,7 +30,7 @@ void InterBoss::Update() {
 void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
 	ImGui::Begin("test");
-	ImGui::SliderFloat("frame", &frame, 30, -30);
+	ImGui::SliderFloat("rot.y", &rot.y, 30, -30);
 	//ImGui::SliderFloat("MottiScale", &MottiScale.x, 1, 0);
 	//ImGui::SliderFloat("HP", &BossHP, 360, -360);
 	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);

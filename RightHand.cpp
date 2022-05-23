@@ -126,7 +126,7 @@ void RightHand::Spec() {
 				Afterrot.x = 0.0f;
 				if (!stun) {
 					//3‰ñ“Ëi‚·‚é
-					if (AttackC < 3) {
+					if (AttackC < 5) {
 						MoveCount++;
 					}
 					//¶‘«‚ª–ß‚Á‚½‚çŒ³‚ÌˆÊ’u‚É–ß‚é
@@ -483,7 +483,8 @@ void RightHand::App(int Timer) {
 
 	case 2:
 		pos = { 10.0f,0.0f,0.0f };
-		rot = { 0,270,0 };
+		rot = { 0,90,0 };
+		AfterRot.y = 90.0f;
 	case 3:
 		//‚Ò‚æ‚Ò‚æ‚ª•‚‚©‚Ô
 		stun = true;
