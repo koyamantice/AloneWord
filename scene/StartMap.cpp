@@ -491,7 +491,8 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 			}
 		}
 		if (input->PushButton(input->Select)) {
-			SceneManager::GetInstance()->ChangeScene("StageSelect");
+			expandchange->SetStartChange(true);
+			//SceneManager::GetInstance()->ChangeScene("StageSelect");
 
 		}
 		break;
