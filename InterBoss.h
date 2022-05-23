@@ -161,7 +161,7 @@ protected:
 	int FlashCount = 0;
 	float x_min = -20;
 	float x_max = 22;
-	float z_min = -17;
+	float z_min = -16;
 	float z_max = 20;
 	bool pause = false;
 	bool respawn = false;

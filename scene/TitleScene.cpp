@@ -55,11 +55,13 @@ void TitleScene::Finalize() {
 void TitleScene::Update(DirectXCommon* dxCommon) {
 	Input* input = Input::GetInstance();
 	//どの選択をするかでどのシーンに行くか変わる
-	if (input->LeftTriggerStick(input->Down)) {
-		SelectNumber++;
-	}
-	if (input->LeftTriggerStick(input->Up)) {
-		SelectNumber--;
+	if (expandchange->GetScale() == 1.0f) {
+		if (input->LeftTriggerStick(input->Down)) {
+			SelectNumber++;
+		}
+		if (input->LeftTriggerStick(input->Up)) {
+			SelectNumber--;
+		}
 	}
 	switch (SelectNumber) {
 	case Start:
