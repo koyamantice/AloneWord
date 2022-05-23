@@ -58,8 +58,9 @@ private:
 	XMFLOAT2 ArrowPos2{};
 	XMFLOAT2 AfterPos[2]{};
 	XMFLOAT2 AfterPos2[2]{};
-	XMFLOAT2 AfterPos3{};
-	XMFLOAT2 SpinPos[4]{};
+	XMFLOAT2 AfterSpin[3]{};
+	XMFLOAT2 SpinPos[2]{};
+	XMFLOAT2 SpinSize[3]{};
 	//“G‚ÌˆÊ’u‚ÌUI‚Ì‚¢‚¿‚ğ‹‚ß‚é‚½‚ß‚Ì•Ï”
 	const float PI = 3.145265f;
 	std::vector<int> power;

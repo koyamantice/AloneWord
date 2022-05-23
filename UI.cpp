@@ -83,17 +83,16 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	const float onePos = WinApp::window_width - 208.0f;
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 10; j++) {
-			number[i][j] = Sprite::Create(ImageManager::GetIns()->num,{ 0,0});
+			number[i][j] = Sprite::Create(ImageManager::GetIns()->num, { 0,0 });
 			int number_index_y = j / l;
 			int number_index_x = j % l;
 			number[i][j]->SetTextureRect(
 				{ static_cast<float>(number_index_x) * w, static_cast<float>(number_index_y) * h },
 				{ static_cast<float>(w), static_cast<float>(h) });
 			number[i][j]->SetSize({ w,h });
-			if (i>0) {
+			if (i > 0) {
 				number[i][j]->SetScale(2.4f);
-			}
-			else {
+			} else {
 				number[i][j]->SetScale(1.6f);
 			}
 			number[i][j]->SetAnchorPoint({ 0,0 });
@@ -110,18 +109,18 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 			number[i][0]->SetScale(0.3f);
 		}
 	}
-	SpinPos[0] = {1200.0f,500.0f};
-	SpinPos[1] = {1200.0f,670.0f };
+	SpinPos[0] = { 1200.0f,500.0f };
+	SpinPos[1] = { 1200.0f,670.0f };
 	for (int i = 0; i < 3; i++) {
-		SpinBar[i] = Sprite::Create(ImageManager::SpinBar, {0.0f,0.0f});
-		SpinBar[i]->SetSize({0,0});
+		SpinBar[i] = Sprite::Create(ImageManager::SpinBar, { 0.0f,0.0f });
+		SpinBar[i]->SetSize({ 0,0 });
 		SpinBar[i]->SetAnchorPoint({ 0.5f,1.0f });
 		SpinBar[i]->SetScale(1.5f);
 		SpinBar[i]->SetPosition(SpinPos[1]);
 	}
-	SpinBar[0]->SetColor({1.0f,1.0f,1.0f,1.0f});
-	SpinBar[1]->SetColor({1.0f,1.0f,0.0f,1.0f});
-	SpinBar[2]->SetColor({1.0f,0.0f,0.0f,1.0f});
+	SpinBar[0]->SetColor({ 1.0f,1.0f,1.0f,1.0f });
+	SpinBar[1]->SetColor({ 1.0f,1.0f,0.0f,1.0f });
+	SpinBar[2]->SetColor({ 1.0f,0.0f,0.0f,1.0f });
 
 	SpinGauge->SetScale(1.5f);
 	SpinGauge->SetAnchorPoint({ 0.5f,0.5f });
@@ -183,59 +182,120 @@ void UI::Update() {
 
 	//後々変更ポイント
 	//スタミナ的なやつ
-	//if (Input::GetInstance()->PushButton(Input::GetInstance()->Button_A) {
 		//if (!player->GetAttackFlag()) {
-			if (player->GetChargeTimer() > 100) {
-				nowBar = 1;
-					if (player->GetChargeTimer() > 200) {
-						nowBar = 2;
-					}
-			} else {
-				nowBar = 0;
-			}
-			convert = (float)(player->GetChargeTimer() % 101) / 100.0f;
-				if (convert >= 1.0f) {
-					convert = 1.0f;
-				}
-			AfterPos3 = { 60,convert * 350.0f };
-			if (AfterPos3.y > 350.0f) {
-				AfterPos3.y = 350.0f;
-			}
-			SpinPos[1] = {
-			Ease(In,Quint,0.7f,SpinBar[nowBar]->GetSize().x,AfterPos3.x),
-			Ease(In,Quint,0.7f,SpinBar[nowBar]->GetSize().y,AfterPos3.y), };
-			SpinBar[nowBar]->SetSize(SpinPos[1]);
+			//if (player->GetChargeTimer() > 100) {
+			//	nowBar = 1;
+			//		if (player->GetChargeTimer() > 200) {
+			//			nowBar = 2;
+			//		}
+			//} else {
+			//	nowBar = 0;
+			//}
+			//convert = (float)(player->GetChargeTimer() % 101) / 100.0f;
+			//	if (convert >= 1.0f) {
+			//		convert = 1.0f;
+			//	}
+			//AfterPos3 = { 60,convert * 350.0f };
+			//if (AfterPos3.y > 350.0f) {
+			//	AfterPos3.y = 350.0f;
+			//}
+			//SpinPos[1] = {
+			//Ease(In,Quint,0.7f,SpinBar[nowBar]->GetSize().x,AfterPos3.x),
+			//Ease(In,Quint,0.7f,SpinBar[nowBar]->GetSize().y,AfterPos3.y), };
+			//SpinBar[nowBar]->SetSize(SpinPos[1]);
 		//}
-	//}
-	//{
-		if (!player->GetAttackFlag()) {
-			SpinBar[0]->SetSize({ 60,0 });
-			SpinBar[1]->SetSize({ 60,0 });
-			SpinBar[2]->SetSize({ 60,0 });
-		} else {
-			if (player->GetRotTimer() >= 200) {
-				if (player->GetRotTimer() >= 400) {
-					nowBar = 2;
-				} else {
-					nowBar = 1;
-				}
-			} else {
-				nowBar = 0;
-			}
-			convert = player->GetRotTimer() % 201;
-			AfterPos3 = { 60,(convert / 100) * 175 };
-			SpinPos[1+nowBar] = {
-			Ease(In,Quint,0.7f,SpinBar[nowBar]->GetSize().x,AfterPos3.x),
-			Ease(In,Quint,0.7f,SpinBar[nowBar]->GetSize().y,AfterPos3.y), };
-			SpinBar[nowBar]->SetSize(SpinPos[1]);
 
+	//{
+	if (!player->GetAttackFlag()) {
+		if (Input::GetInstance()->PushButton(Input::GetInstance()->Button_A)) {
+			if (player->GetChargeTimer() <= 100){ nowBar = 0; }
+			if (player->GetChargeTimer() > 100) { nowBar = 1; }
+			if (player->GetChargeTimer() > 200) { nowBar = 2; }
+			convert = player->GetChargeTimer();
+			switch (nowBar) {
+			case 0:
+				AfterSpin[0].y = (convert/100)* 350.0f;
+				SpinBar[1]->SetSize({ 60.0f,0.0f });
+				AfterSpin[1].y = 0.0f;
+				SpinBar[2]->SetSize({ 60.0f,0.0f });
+				AfterSpin[2].y = 0.0f;
+
+				break;
+			case 1:
+				SpinBar[0]->SetSize({ 60.0f,350.0f });
+				AfterSpin[0].y = 350.0f;
+				AfterSpin[1].y = ((float)((int)convert % 101) / 100) * 350.0f;
+				break;
+			case 2:
+				SpinBar[0]->SetSize({ 60.0f,350.0f });
+				AfterSpin[0].y = 350.0f;
+				SpinBar[1]->SetSize({ 60.0f,350.0f });
+				AfterSpin[1].y = 350.0f;
+				if (convert<300) {
+					AfterSpin[2].y = ((float)((int)convert % 101) / 100) * 350.0f;
+				} else {
+					AfterSpin[2].y = 350.0f;
+				}
+				break;
+			default:
+				assert("不正なエラー");
+				break;
+			}
+			for (int i = 0; i < nowBar + 1; i++) {
+				SpinSize[i] = {
+				60,
+				Ease(In,Quint,0.7f,SpinBar[i]->GetSize().y,AfterSpin[i].y) };
+				SpinBar[i]->SetSize(SpinSize[i]);
+			}
+		} else {
+			for (int i = 0; i < 3; i++) {
+				SpinSize[i] = {
+				60,
+				Ease(In,Quint,0.7f,SpinBar[i]->GetSize().y,0) };
+				SpinBar[i]->SetSize(SpinSize[i]);
+			}
 		}
-	//}
+	} else {
+		convert = player->GetRotTimer();
+		if (convert <= 600) { nowBar = 2; }
+		if (convert <= 400) { nowBar = 1; }
+		if (convert <= 200) { nowBar = 0; }
+		switch (nowBar) {
+		case 0:
+			AfterSpin[0].y = (convert / 200) * 350.0f;
+			SpinBar[1]->SetSize({ 60.0f,0.0f });
+			AfterSpin[1].y = 0.0f;
+			break;
+		case 1:
+			SpinBar[0]->SetSize({ 60.0f,350.0f });
+			AfterSpin[0].y = 350.0f;
+			AfterSpin[1].y = ((float)((int)convert % 201) / 200) * 350.0f;
+			SpinBar[2]->SetSize({ 60.0f,0.0f });
+			AfterSpin[2].y = 0.0f;
+			break;
+		case 2:
+			SpinBar[0]->SetSize({ 60.0f,350.0f });
+			AfterSpin[0].y = 350.0f;
+			SpinBar[1]->SetSize({ 60.0f,350.0f });
+			AfterSpin[1].y = 350.0f;
+			AfterSpin[2].y = ((float)((int)convert % 201) / 200) * 350.0f;
+			break;
+		default:
+			assert("不正なエラー");
+			break;
+		}
+		for (int i = 0; i < nowBar + 1; i++) {
+			SpinSize[i] = {
+			60,
+			Ease(In,Quint,0.7f,SpinBar[i]->GetSize().y,AfterSpin[i].y) };
+			SpinBar[i]->SetSize(SpinSize[i]);
+		}
+	}
 }
 
 //開放
 void UI::Finalize() {
-	for (int i = 0; i < 3;i++) {
+	for (int i = 0; i < 3; i++) {
 		delete BossHp[i];
 		delete BossHp2[i];
 		delete PlaHp[i];
@@ -263,19 +323,18 @@ const void UI::Draw() {
 	//ImGui::End();
 	Sprite::PreDraw();
 	//Vignette->Draw();
-	
 	if (boss) {
 		BossHp[max]->Draw();
 		BossHp[damage]->Draw();
 		BossHp[now]->Draw();
 	}
-	
+
 	if (boss2) {
 		BossHp2[max]->Draw();
 		BossHp2[damage]->Draw();
 		BossHp2[now]->Draw();
 	}
-	
+
 	if (!isInvisible) {
 		HpGauge->Draw();
 		if (player->GetHp() > 7) {
@@ -310,17 +369,17 @@ const void UI::Draw() {
 		//if (player->GetRotTimer() > 0) {
 		//}
 	}
-	SpinGauge->Draw();
-	for (int i = 0; i < 3;i++) {
+	for (int i = 0; i < 3; i++) {
 		SpinBar[i]->Draw();
 	}
 	SpinBar[nowBar]->Draw();
+	SpinGauge->Draw();
 }
 
 void UI::EaseScale() {
 	//strong = 2;
 	//strong *= 10;
-	strong = player->GetArmWeight()*5;
+	strong = player->GetArmWeight() * 5;
 	power.clear();
 	for (int tmp = (int)strong; tmp > 0;) {
 		power.push_back(tmp % 10);
@@ -363,9 +422,9 @@ void UI::SeachBoss() {
 	position.z = (pla.z - bos.z);
 
 	radius = atan2f(position.x, position.z);// *PI / 180.0f;
-	circle.x = (sin(-radius)*150.0f)+WinApp::window_width/2; //*0.2251f;
-	circle.y = (cos(-radius)*150.0f)+WinApp::window_height/2; //*0.2251f;
-	if (!Collision::CircleCollision(bos.x,bos.z,18.0f,pla.x,pla.z,1.0f)){
+	circle.x = (sin(-radius) * 150.0f) + WinApp::window_width / 2; //*0.2251f;
+	circle.y = (cos(-radius) * 150.0f) + WinApp::window_height / 2; //*0.2251f;
+	if (!Collision::CircleCollision(bos.x, bos.z, 18.0f, pla.x, pla.z, 1.0f)) {
 		invisible[0] = 1;
 	} else {
 		invisible[0] = 0;
@@ -389,8 +448,7 @@ void UI::SeachBoss2() {
 
 	if (!Collision::CircleCollision(bos.x, bos.z, 18.0f, pla.x, pla.z, 1.0f)) {
 		invisible[1] = 1;
-	}
-	else {
+	} else {
 		invisible[1] = 0;
 	}
 	Arrow2->SetRotation(radius * (180.0f / XM_PI));//-radius * PI / 180.0f);
