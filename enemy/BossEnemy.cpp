@@ -9,7 +9,6 @@ using namespace DirectX;
 //こんすとらくた
 BossEnemy::BossEnemy() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::Fork);
-	enemyobj = new Object3d();
 }
 
 //初期化
@@ -17,14 +16,16 @@ void BossEnemy::Initialize(bool shadow) {
 	assert(player);
 	this->shadow = shadow;
 	IsAlive = 0;
-	//敵
-	enemyobj = Object3d::Create();
-	enemyobj->SetModel(model);
 	pos = { 0.0f,10.0f,0.0f };
-	enemyobj->SetPosition(pos);
 	rot = { 0,90,0 };
-	enemyobj->SetRotation(rot);
-	enemyobj->SetScale({ 0.8f,0.8f,0.8f });
+	//敵
+	Object3d* enemyobj_ = new Object3d();
+	enemyobj_ = Object3d::Create();
+	enemyobj_->SetModel(model);
+	enemyobj_->SetPosition(pos);
+	enemyobj_->SetRotation(rot);
+	enemyobj_->SetScale({ 0.8f,0.8f,0.8f });
+	enemyobj.reset(enemyobj_);
 	//影(今回は使う)
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
@@ -35,7 +36,6 @@ void BossEnemy::Initialize(bool shadow) {
 }
 //開放
 void BossEnemy::Finalize() {
-	delete enemyobj;
 	delete texture;
 }
 

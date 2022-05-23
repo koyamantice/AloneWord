@@ -10,7 +10,6 @@ using namespace DirectX;
 //コンストラクタ
 Pastel::Pastel() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::Pastel);
-	enemyobj = new Object3d();
 	Millmodel = ModelManager::GetIns()->GetModel(ModelManager::Mill);
 	Millobj = TouchableObject::Create(Millmodel);
 	Mottimodel = ModelManager::GetIns()->GetModel(ModelManager::SiroMotti);
@@ -29,13 +28,15 @@ void Pastel::Initialize(bool shadow) {
 	this->shadow = shadow;
 	IsAlive = 0;
 	//敵
-	enemyobj = Object3d::Create();
-	enemyobj->SetModel(model);
 	pos = { 0.0f,5.0f,7.5f };
-	enemyobj->SetPosition(pos);
 	rot = { 0,270,0 };
-	enemyobj->SetRotation(rot);
-	enemyobj->SetScale({ 2.0f,2.0f,2.0f });
+	Object3d*enemyobj_ = new Object3d();
+	enemyobj_ = Object3d::Create();
+	enemyobj_->SetModel(model);
+	enemyobj_->SetPosition(pos);
+	enemyobj_->SetRotation(rot);
+	enemyobj_->SetScale({ 2.0f,2.0f,2.0f });
+	enemyobj.reset(enemyobj_);
 	//ステージのオブジェクト
 	//Millobj = Object3d::Create();
 	//Millobj->SetModel(Millmodel);
@@ -73,7 +74,6 @@ void Pastel::Initialize(bool shadow) {
 
 //開放
 void Pastel::Finalize() {
-	delete enemyobj;
 	delete Mottiobj;
 	delete Millobj;
 	delete texture;

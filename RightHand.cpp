@@ -10,7 +10,6 @@ using namespace DirectX;
 RightHand::RightHand() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::RightHand_Open);
 	hand_closemodel = ModelManager::GetIns()->GetModel(ModelManager::RightHand_Close);
-	enemyobj = new Object3d();
 }
 
 //‰Šú‰»
@@ -18,16 +17,18 @@ void RightHand::Initialize(bool shadow) {
 	assert(player);
 	this->shadow = shadow;
 	IsAlive = 0;
-	//“G
-	enemyobj = Object3d::Create();
-	enemyobj->SetModel(model);
 	pos = { 10.0f,0.0f,0.0f };
-	enemyobj->SetPosition(pos);
-
 	rot = { 0,270,0 };
 	Afterrot.y = rot.y;
-	enemyobj->SetRotation(rot);
-	enemyobj->SetScale({ 0.8f,0.8f,0.8f });
+
+	//“G
+	Object3d*enemyobj_ = new Object3d();
+	enemyobj_ = Object3d::Create();
+	enemyobj_->SetModel(model);
+	enemyobj_->SetPosition(pos);
+	enemyobj_->SetRotation(rot);
+	enemyobj_->SetScale({ 0.8f,0.8f,0.8f });
+	enemyobj.reset(enemyobj_);
 	//‰e(¡‰ñ‚Íg‚í‚È‚¢)
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();

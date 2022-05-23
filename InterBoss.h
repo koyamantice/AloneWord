@@ -24,7 +24,7 @@ protected:
 	using XMVECTOR = DirectX::XMVECTOR;
 	using XMMATRIX = DirectX::XMMATRIX;
 public:
-	void SetPlayer(Player* player) { this->player = player; }
+	void SetPlayer(Player* player) { this->player.reset(player); }
 	/// 座標・回転の取得
 	const XMFLOAT3& GetPosition() { return  enemyobj->GetPosition(); }
 	const XMFLOAT3& GetRotation() { return enemyobj->GetRotation(); }
@@ -114,10 +114,10 @@ public:
 protected:
 	const float PI = 3.14f;
 	//テクスチャやオブジェクト
-	Object3d* enemyobj = nullptr;
+	unique_ptr<Object3d> enemyobj = nullptr;
 	Model* model = nullptr;
 	Texture* texture = nullptr;
-	Player* player = nullptr;
+	unique_ptr<Player> player = nullptr;
 	//座標や回転
 	XMFLOAT3 pos = { 0,0,0 };
 	XMFLOAT3 oldpos = { 0,0,0 };

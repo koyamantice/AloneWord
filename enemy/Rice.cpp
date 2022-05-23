@@ -49,7 +49,6 @@ void Rice::Initialize() {
 }
 //開放
 void Rice::Finalize() {
-	delete player;
 }
 //アップデート
 void Rice::Update() {

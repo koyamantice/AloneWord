@@ -8,7 +8,6 @@ using namespace DirectX;
 //こんすとらくた
 GreenTea::GreenTea() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::Kyusu);
-	enemyobj = new Object3d();
 	for (int i = 0; i < 50; i++) {
 		hotWater[i] = new HotWater;
 		hotWater[i]->Init();
@@ -23,12 +22,13 @@ void GreenTea::Initialize(bool shadow) {
 	rot = { 0,0,0 };
 	IsAlive = true;
 	//敵
-	enemyobj = Object3d::Create();
-	enemyobj->SetModel(model);
-	enemyobj->SetPosition(pos);
-	enemyobj->SetRotation(rot);
-	enemyobj->SetScale({ 0.5f,0.5f,0.5f });
-
+	Object3d*enemyobj_ = new Object3d();
+	enemyobj_ = Object3d::Create();
+	enemyobj_->SetModel(model);
+	enemyobj_->SetPosition(pos);
+	enemyobj_->SetRotation(rot);
+	enemyobj_->SetScale({ 0.5f,0.5f,0.5f });
+	enemyobj.reset(enemyobj_);
 	//影(今回は使わない)
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
@@ -45,7 +45,6 @@ void GreenTea::Finalize() {
 		hotWater[i]->Final();
 	}
 	delete texture;
-	delete enemyobj;
 	//delete hotWater;
 }
 
@@ -53,7 +52,7 @@ void GreenTea::Finalize() {
 void GreenTea::Spec() {
 	for (int i = 0; i < 50; i++) {
 		hotWater[i]->Upda();
-		hotWater[i]->SetPlayer(player);
+		hotWater[i]->SetPlayer(player.get());
 	}
 	//ここで行動を決める
 	if (AttackCount > 180) {
@@ -325,7 +324,7 @@ Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 void GreenTea::App(int Timer) {
 	//後に記入
 	hotWater[0]->Upda();
-	hotWater[0]->SetPlayer(player);
+	hotWater[0]->SetPlayer(player.get());
 	if (Timer == 0) {
 		pos = { 13.0f,0.0f,18.0f };
 		//rot = { 0.0f,315.0f,0.0f };

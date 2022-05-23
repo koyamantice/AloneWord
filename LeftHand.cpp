@@ -9,7 +9,6 @@ using namespace DirectX;
 //コンストラクタ
 LeftHand::LeftHand() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::LeftHand_Open);
-	enemyobj = new Object3d();
 	hand_closemodel = ModelManager::GetIns()->GetModel(ModelManager::LeftHand_Close);
 }
 
@@ -18,17 +17,19 @@ void LeftHand::Initialize(bool shadow) {
 	assert(player);
 	this->shadow = shadow;
 	IsAlive = 0;
-	//敵
-	enemyobj = Object3d::Create();
-	enemyobj->SetModel(model);
 	pos = { -10.0f,0.0f,0.0f };
-	enemyobj->SetPosition(pos);
 	rot = { 0,270,0 };
 	Afterrot.y = rot.y;
+
+	//敵
+	Object3d*enemyobj_ = new Object3d();
+	enemyobj_ = Object3d::Create();
+	enemyobj_->SetModel(model);
+	enemyobj_->SetPosition(pos);
+	enemyobj_->SetRotation(rot);
+	enemyobj_->SetScale({ 0.8f,0.8f,0.8f });
+	enemyobj.reset(enemyobj_);
 	//影(このオブジェクトでは使わない)
-	enemyobj->SetRotation(rot);
-	//hand_closeobj->SetRotation(rot);
-	enemyobj->SetScale({ 0.8f,0.8f,0.8f });
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	//texture->SetColor({ 1,1,1,1 });

@@ -9,7 +9,6 @@ using namespace DirectX;
 //こんすとらくた
 RightShose::RightShose() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::RightShoes);
-	enemyobj = new Object3d();
 }
 
 //初期化
@@ -17,16 +16,18 @@ void RightShose::Initialize(bool shadow) {
 	assert(player);
 	this->shadow = shadow;
 	IsAlive = 0;
-	//敵
-	enemyobj = Object3d::Create();
-	enemyobj->SetModel(model);
 	pos = { 5.0f,0.0f,0.0f };
-	enemyobj->SetPosition(pos);
-	
 	rot = { 0,270,0 };
 	Afterrot.y = rot.y;
-	enemyobj->SetRotation(rot);
-	enemyobj->SetScale({ 0.3f,0.3f,0.3f });
+
+	//敵
+	Object3d*enemyobj_ = new Object3d();
+	enemyobj_ = Object3d::Create();
+	enemyobj_->SetModel(model);
+	enemyobj_->SetPosition(pos);
+	enemyobj_->SetRotation(rot);
+	enemyobj_->SetScale({ 0.3f,0.3f,0.3f });
+	enemyobj.reset(enemyobj_);
 	//影(今回は使わない)
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();

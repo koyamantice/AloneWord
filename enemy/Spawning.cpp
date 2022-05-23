@@ -7,7 +7,6 @@
 #include "TouchableObject.h"
 Spawning::Spawning() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::EHub);
-	enemyobj = TouchableObject::Create(model);
 	Texture* now_= Texture::Create(ImageManager::spawnhp, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	now_->TextureCreate();
 	now_->SetColor({ 1.0f,1.0f,1.0f,1.0f });
@@ -23,10 +22,11 @@ Spawning::Spawning() {
 }
 
 void Spawning::Initialize(bool shadow) {
-	enemyobj = TouchableObject::Create(model);
-	enemyobj->SetModel(model);
-	enemyobj->SetPosition(pos);
-	enemyobj->SetScale({ 3.9f,3.9f,3.9f });
+	Object3d* enemyobj_ = TouchableObject::Create(model);
+	enemyobj_->SetModel(model);
+	enemyobj_->SetPosition(pos);
+	enemyobj_->SetScale({ 3.9f,3.9f,3.9f });
+	enemyobj.reset(enemyobj_);
 	Texture* net_ = Texture::Create(ImageManager::net, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	net_->TextureCreate();
 	net_->SetPosition({ pos.x,pos.y + 1.0f,pos.z });
@@ -50,7 +50,6 @@ void Spawning::specialDraw() {
 	}
 }
 void Spawning::Finalize() {
-	delete enemyobj;
 }
 
 void Spawning::Spec() {
