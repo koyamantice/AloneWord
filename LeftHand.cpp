@@ -28,7 +28,7 @@ void LeftHand::Initialize(bool shadow) {
 	//影(このオブジェクトでは使わない)
 	enemyobj->SetRotation(rot);
 	//hand_closeobj->SetRotation(rot);
-	enemyobj->SetScale({ 0.3f,0.3f,0.3f });
+	enemyobj->SetScale({ 0.8f,0.8f,0.8f });
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	//texture->SetColor({ 1,1,1,1 });
@@ -77,7 +77,7 @@ void LeftHand::Spec() {
 	//ここで行動を決める
 	if (AttackCount == 180) {
 		if (!active) {
-			action = (rand() % 2);
+			//action = (rand() % 2);
 			AttackCount = 0;
 			frame = 0;
 			pat = 1;
@@ -99,7 +99,6 @@ void LeftHand::Spec() {
 	if (active) {
 		//スタージを外周する
 		if ((action % 2) == 0) {
-			stateNumber = Open;
 			if (!stun) {
 				if (frame < 0.45f) {
 					frame += 0.002f;
@@ -108,28 +107,40 @@ void LeftHand::Spec() {
 					frame = 0;
 					pat++;
 				}
+
 				if (pat == 1) {
+					AfterPos.y = 15.0f;
+					if (pos.y >= 14) {
+						stateNumber = Close;
+					}
+					pos.y = Ease(In, Cubic, frame, pos.y, AfterPos.y);
+				}
+				else if (pat == 2) {
+					AfterPos.y = 0.0f;
+					pos.y = Ease(In, Cubic, frame, pos.y, AfterPos.y);
+				}
+				else if (pat == 3) {
 					Afterrot.y = 225;
 					AfterPos.x = 19.0f;
 					AfterPos.z = -17.0f;
 				}
-				else if (pat == 2) {
+				else if (pat == 4) {
 					Afterrot.y = -270;
 					AfterPos.x = 19.0f;
 					AfterPos.z = 20.0f;
 
 				}
-				else if (pat == 3) {
+				else if (pat == 5) {
 					Afterrot.y = 0;
 					AfterPos.x = -19.0f;
 					AfterPos.z = 20.0f;
 				}
-				else if (pat == 4) {
+				else if (pat == 6) {
 					Afterrot.y = -90;
 					AfterPos.x = -19.0f;
 					AfterPos.z = -17.0f;
 				}
-				else if (pat == 5) {
+				else if (pat == 7) {
 					Afterrot.y = 135;
 					AfterPos.x = -10.0f;
 					AfterPos.z = 0.0f;
@@ -142,11 +153,13 @@ void LeftHand::Spec() {
 					active = false;
 					frame = 0;
 				}
-				pos = {
-		Ease(In,Cubic,frame,pos.x,AfterPos.x),
-		0,
-		Ease(In,Cubic,frame,pos.z,AfterPos.z),
-				};
+				if (pat >= 3) {
+					pos = {
+			Ease(In,Cubic,frame,pos.x,AfterPos.x),
+			0,
+			Ease(In,Cubic,frame,pos.z,AfterPos.z),
+					};
+				}
 				enemyobj->SetPosition(pos);
 				//hand_closeobj->SetPosition(pos);
 			}
@@ -178,11 +191,27 @@ void LeftHand::Spec() {
 		}
 		//プレイヤーを挟む処理
 		else if ((action % 2) == 1) {
-			stateNumber = Close;
 			if (AttackC < 3) {
-				Afterrot.x = 90.0f;
 				switch (pat) {
 				case 1:
+					AfterPos = {
+					pos.x,
+					15.0f,
+					pos.z
+					};
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						break;
+					}
+					else {
+						Afterrot.x = 270.0f;
+						Afterrot.y = 360.0f;
+						stateNumber = Open;
+						frame = 0;
+						pat++;
+						break;
+					}
+				case 2:
 					AfterPos = {
 						player->GetPosition().x - 5,
 						5,
@@ -200,7 +229,7 @@ void LeftHand::Spec() {
 						pat++;
 						break;
 					}
-				case 2:
+				case 3:
 					AfterPos = {
 						pos.x,
 						0,
@@ -215,7 +244,7 @@ void LeftHand::Spec() {
 						pat++;
 						break;
 					}
-				case 3:
+				case 4:
 					AfterPos = {
 						targetpos.x,
 						0,
@@ -234,7 +263,7 @@ void LeftHand::Spec() {
 						else {
 							coolT = 0;
 							frame = 0;
-							pat = 1;
+							pat = 2;
 							AttackC++;
 							break;
 						}
@@ -258,12 +287,14 @@ void LeftHand::Spec() {
 						break;
 					}
 					else {
+						stateNumber = Close;
 						frame = 0;
 						pat++;
 						break;
 					}
 				case 2:
 					Afterrot.x = 0.0f;
+					Afterrot.y = 90.0f;
 					AfterPos = {
 					-10,
 					0,

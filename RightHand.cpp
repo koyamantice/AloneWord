@@ -8,7 +8,8 @@ using namespace DirectX;
 
 //こんすとらくた
 RightHand::RightHand() {
-	model = ModelManager::GetIns()->GetModel(ModelManager::LeftHand_Open);
+	model = ModelManager::GetIns()->GetModel(ModelManager::RightHand_Open);
+	hand_closemodel = ModelManager::GetIns()->GetModel(ModelManager::RightHand_Close);
 	enemyobj = new Object3d();
 }
 
@@ -26,7 +27,7 @@ void RightHand::Initialize(bool shadow) {
 	rot = { 0,270,0 };
 	Afterrot.y = rot.y;
 	enemyobj->SetRotation(rot);
-	enemyobj->SetScale({ 0.3f,0.3f,0.3f });
+	enemyobj->SetScale({ 0.8f,0.8f,0.8f });
 	//影(今回は使わない)
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
@@ -66,6 +67,12 @@ void RightHand::Finalize() {
 //ボスの行動
 void RightHand::Spec() {
 	XMFLOAT3 AfterPos{};
+	if (stateNumber == Open) {
+		enemyobj->SetModel(model);
+	}
+	else if (stateNumber == Close) {
+		enemyobj->SetModel(hand_closemodel);
+	}
 	//ここで行動を決める
 	if (AttackCount == 180) {
 		if (!active) {
@@ -90,184 +97,211 @@ void RightHand::Spec() {
 	if (active) {
 		//突進攻撃
 		if ((action % 2) == 0) {
-			Afterrot.x = 0.0f;
-			if (!stun) {
-				//3回突進する
-				if (AttackC < 3) {
-					MoveCount++;
+			if (pat == 1) {
+				AfterPos.y = 15.0f;
+				if (pos.y >= 14) {
+					stateNumber = Close;
 				}
-				//左足が戻ったら元の位置に戻る
-				else {
-					AfterPos = {
-					10,
-					0,
-					0
-					};
-					Afterrot.y = 270;
-					if (frame < 0.45f) {
-						frame += 0.004f;
-					}
-					else {
-						frame = 0;
-						AttackC = 0;
-						AttackCount = 0;
-						active = false;
-					}
-
-					pos = {
-					Ease(In,Cubic,frame,pos.x,AfterPos.x),
-					0,
-					Ease(In,Cubic,frame,pos.z,AfterPos.z),
-					};
-				}
-				//プレイヤーーの位置に向かって回転する
-				if (MoveCount == 80) {
-					XMFLOAT3 position{};
-					position.x = (player->GetPosition().x - pos.x);
-					position.z = (player->GetPosition().z - pos.z);
-					Afterrot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 270;// *(XM_PI / 180.0f);
-				}
-				//プレイヤーの位置をロックオンさせる
-				if (MoveCount == 100) {
-					double sb, sbx, sbz;
-					if (!Attack) {
-						hitpoint = HitNot;
-						sbx = player->GetPosition().x - pos.x;
-						sbz = player->GetPosition().z - pos.z;
-
-						sb = sqrt(sbx * sbx + sbz * sbz);
-						speedX = sbx / sb * 0.5;
-						speedZ = sbz / sb * 0.5;
-						Attack = true;
-					}
-				}
-			}
-			else {
-				for (std::size_t i = 0; i < Stuntexture.size(); i++) {
-					StunSpeed[i] += 2.0f;
-				}
-				if (stunTimer < 200) {
-					stunTimer++;
+				if (frame < 0.45f) {
+					frame += 0.002f;
 				}
 				else {
-					stunTimer = 0;
-					stun = false;
+					frame = 0;
+					pat++;
 				}
-				////スタン時のぴよぴよ
-				//for (std::size_t i = 0; i < Stuntexture.size(); i++) {
-				//	Stunradius[i] = StunSpeed[i] * PI / 180.0f;
-				//	StunCircleX[i] = cosf(Stunradius[i]) * Stunscale[i];
-				//	StunCircleZ[i] = sinf(Stunradius[i]) * Stunscale[i];
-				//	StunPos[i].x = StunCircleX[i] + pos.x;
-				//	StunPos[i].z = StunCircleZ[i] + pos.z;
-				//	StunPos[i].y = pos.y + 2;
-				//	Stuntexture[i]->SetPosition(StunPos[i]);
-				//	Stuntexture[i]->Update();
-				//}
+				pos.y = Ease(In, Cubic, frame, pos.y, AfterPos.y);
 			}
+			else if (pat == 2) {
+				AfterPos.y = 0.0f;
+				if (frame < 0.45f) {
+					frame += 0.002f;
+				}
+				else {
+					frame = 0;
+					pat++;
+				}
+				pos.y = Ease(In, Cubic, frame, pos.y, AfterPos.y);
+			}
+			else if (pat == 3) {
+				Afterrot.x = 0.0f;
+				if (!stun) {
+					//3回突進する
+					if (AttackC < 3) {
+						MoveCount++;
+					}
+					//左足が戻ったら元の位置に戻る
+					else {
+						AfterPos = {
+						10,
+						0,
+						0
+						};
+						Afterrot.y = 270;
+						if (frame < 1.0f) {
+							frame += 0.01f;
+						}
+						else {
+							frame = 0;
+							AttackC = 0;
+							AttackCount = 0;
+							active = false;
+						}
 
-			if (Attack) {
-				//プレイヤーにスピード加算
-				pos.x += (float)speedX;
-				pos.z += (float)speedZ;
+						pos = {
+						Ease(In,Cubic,frame,pos.x,AfterPos.x),
+						0,
+						Ease(In,Cubic,frame,pos.z,AfterPos.z),
+						};
+					}
+					//プレイヤーーの位置に向かって回転する
+					if (MoveCount == 80) {
+						XMFLOAT3 position{};
+						position.x = (player->GetPosition().x - pos.x);
+						position.z = (player->GetPosition().z - pos.z);
+						Afterrot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 270;// *(XM_PI / 180.0f);
+					}
+					//プレイヤーの位置をロックオンさせる
+					if (MoveCount == 100) {
+						double sb, sbx, sbz;
+						if (!Attack) {
+							hitpoint = HitNot;
+							sbx = player->GetPosition().x - pos.x;
+							sbz = player->GetPosition().z - pos.z;
 
-				//敵の位置が壁まで行ったら戻る
-				if (pos.x >= x_max) {
-					hitpoint = HitRight;
-					Deadbound.y = 0.5f;
-					Deadbound.x = 0.2f;
-					speedX = 0.0f;
-					speedZ = 0.0f;
-				}
-				else if (pos.x <= x_min) {
-					hitpoint = HitLeft;
-					Deadbound.y = 0.5f;
-					Deadbound.x = 0.2f;
-					speedX = 0.0f;
-					speedZ = 0.0f;
-				}
-				else if (pos.z >= z_max) {
-					hitpoint = HitUp;
-					Deadbound.y = 0.5f;
-					Deadbound.z = 0.2f;
-					speedX = 0.0f;
-					speedZ = 0.0f;
-				}
-				else if (pos.z <= z_min) {
-					hitpoint = HitDown;
-					Deadbound.y = 0.5f;
-					Deadbound.z = 0.2f;
-					speedX = 0.0f;
-					speedZ = 0.0f;
-				}
-
-				//跳ねるような感じで戻る(戻りきったら攻撃回数が加算される)
-				if (hitpoint == HitRight) {
-					Deadbound.y -= 0.02f;
-					pos.y += Deadbound.y;
-					if (pos.y > 0.0f) {
-						pos.x -= Deadbound.x;
+							sb = sqrt(sbx * sbx + sbz * sbz);
+							speedX = sbx / sb * 0.5;
+							speedZ = sbz / sb * 0.5;
+							Attack = true;
+						}
 					}
 					else {
-						pos.y = 0.0f;
+						for (std::size_t i = 0; i < Stuntexture.size(); i++) {
+							StunSpeed[i] += 2.0f;
+						}
+						if (stunTimer < 200) {
+							stunTimer++;
+						}
+						else {
+							stunTimer = 0;
+							stun = false;
+						}
+						////スタン時のぴよぴよ
+						//for (std::size_t i = 0; i < Stuntexture.size(); i++) {
+						//	Stunradius[i] = StunSpeed[i] * PI / 180.0f;
+						//	StunCircleX[i] = cosf(Stunradius[i]) * Stunscale[i];
+						//	StunCircleZ[i] = sinf(Stunradius[i]) * Stunscale[i];
+						//	StunPos[i].x = StunCircleX[i] + pos.x;
+						//	StunPos[i].z = StunCircleZ[i] + pos.z;
+						//	StunPos[i].y = pos.y + 2;
+						//	Stuntexture[i]->SetPosition(StunPos[i]);
+						//	Stuntexture[i]->Update();
+						//}
 					}
 
-					if (pos.y == 0.0f) {
-						MoveCount = 0;
-						Attack = false;
-						hitpoint = HitNot;
-						AttackC++;
-					}
-				}
-				else if (hitpoint == HitLeft) {
-					Deadbound.y -= 0.02f;
-					pos.y += Deadbound.y;
-					if (pos.y > 0.0f) {
-						pos.x += Deadbound.x;
-					}
-					else {
-						pos.y = 0.0f;
-					}
+					if (Attack) {
+						//プレイヤーにスピード加算
+						pos.x += (float)speedX;
+						pos.z += (float)speedZ;
 
-					if (pos.y == 0.0f) {
-						MoveCount = 0;
-						Attack = false;
-						hitpoint = HitNot;
-						AttackC++;
-					}
-				}
-				else if (hitpoint == HitUp) {
-					Deadbound.y -= 0.02f;
-					pos.y += Deadbound.y;
-					if (pos.y > 0.0f) {
-						pos.z -= Deadbound.z;
-					}
-					else {
-						pos.y = 0.0f;
-					}
+						//敵の位置が壁まで行ったら戻る
+						if (pos.x >= x_max) {
+							hitpoint = HitRight;
+							Deadbound.y = 0.5f;
+							Deadbound.x = 0.2f;
+							speedX = 0.0f;
+							speedZ = 0.0f;
+						}
+						else if (pos.x <= x_min) {
+							hitpoint = HitLeft;
+							Deadbound.y = 0.5f;
+							Deadbound.x = 0.2f;
+							speedX = 0.0f;
+							speedZ = 0.0f;
+						}
+						else if (pos.z >= z_max) {
+							hitpoint = HitUp;
+							Deadbound.y = 0.5f;
+							Deadbound.z = 0.2f;
+							speedX = 0.0f;
+							speedZ = 0.0f;
+						}
+						else if (pos.z <= z_min) {
+							hitpoint = HitDown;
+							Deadbound.y = 0.5f;
+							Deadbound.z = 0.2f;
+							speedX = 0.0f;
+							speedZ = 0.0f;
+						}
 
-					if (pos.y == 0.0f) {
-						MoveCount = 0;
-						Attack = false;
-						hitpoint = HitNot;
-						AttackC++;
-					}
-				}
-				else if (hitpoint == HitDown) {
-					Deadbound.y -= 0.02f;
-					pos.y += Deadbound.y;
-					if (pos.y > 0.0f) {
-						pos.z += Deadbound.z;
-					}
-					else {
-						pos.y = 0.0f;
-					}
+						//跳ねるような感じで戻る(戻りきったら攻撃回数が加算される)
+						if (hitpoint == HitRight) {
+							Deadbound.y -= 0.02f;
+							pos.y += Deadbound.y;
+							if (pos.y > 0.0f) {
+								pos.x -= Deadbound.x;
+							}
+							else {
+								pos.y = 0.0f;
+							}
 
-					if (pos.y == 0.0f) {
-						MoveCount = 0;
-						Attack = false;
-						hitpoint = HitNot;
-						AttackC++;
+							if (pos.y == 0.0f) {
+								MoveCount = 0;
+								Attack = false;
+								hitpoint = HitNot;
+								AttackC++;
+							}
+						}
+						else if (hitpoint == HitLeft) {
+							Deadbound.y -= 0.02f;
+							pos.y += Deadbound.y;
+							if (pos.y > 0.0f) {
+								pos.x += Deadbound.x;
+							}
+							else {
+								pos.y = 0.0f;
+							}
+
+							if (pos.y == 0.0f) {
+								MoveCount = 0;
+								Attack = false;
+								hitpoint = HitNot;
+								AttackC++;
+							}
+						}
+						else if (hitpoint == HitUp) {
+							Deadbound.y -= 0.02f;
+							pos.y += Deadbound.y;
+							if (pos.y > 0.0f) {
+								pos.z -= Deadbound.z;
+							}
+							else {
+								pos.y = 0.0f;
+							}
+
+							if (pos.y == 0.0f) {
+								MoveCount = 0;
+								Attack = false;
+								hitpoint = HitNot;
+								AttackC++;
+							}
+						}
+						else if (hitpoint == HitDown) {
+							Deadbound.y -= 0.02f;
+							pos.y += Deadbound.y;
+							if (pos.y > 0.0f) {
+								pos.z += Deadbound.z;
+							}
+							else {
+								pos.y = 0.0f;
+							}
+
+							if (pos.y == 0.0f) {
+								MoveCount = 0;
+								Attack = false;
+								hitpoint = HitNot;
+								AttackC++;
+							}
+						}
 					}
 				}
 			}
@@ -276,9 +310,26 @@ void RightHand::Spec() {
 		//プレイヤーを挟むような攻撃
 		if ((action % 2) == 1) {
 			if (AttackC < 3) {
-				Afterrot.x = 270.0f;
 				switch (pat) {
 				case 1:
+					AfterPos = {
+					pos.x,
+					15.0f,
+					pos.z
+					};
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						break;
+					}
+					else {
+						Afterrot.x = 90.0f;
+						Afterrot.y = 180.0f;
+						stateNumber = Open;
+						frame = 0;
+						pat++;
+						break;
+					}
+				case 2:
 					AfterPos = {
 						player->GetPosition().x + 5,
 						5,
@@ -296,7 +347,7 @@ void RightHand::Spec() {
 						pat++;
 						break;
 					}
-				case 2:
+				case 3:
 					AfterPos = {
 						pos.x,
 						0,
@@ -311,7 +362,7 @@ void RightHand::Spec() {
 						pat++;
 						break;
 					}
-				case 3:
+				case 4:
 					AfterPos = {
 						targetpos.x,
 						0,
@@ -330,7 +381,7 @@ void RightHand::Spec() {
 						else {
 							coolT = 0;
 							frame = 0;
-							pat = 1;
+							pat = 2;
 							AttackC++;
 							break;
 						}
@@ -360,6 +411,7 @@ void RightHand::Spec() {
 					}
 				case 2:
 					Afterrot.x = 0.0f;
+					Afterrot.y = 90.0f;
 					AfterPos = {
 					10,
 					0,
@@ -416,9 +468,9 @@ void RightHand::App(int Timer) {
 	switch (appearMove) {
 	case 1:
 		AfterPos = {
-						0,
-						0,
-						-8,
+			0,
+			0,
+			-8,
 		};
 		if (frame < 1.0f) {
 			frame += 0.005f;
