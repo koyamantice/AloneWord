@@ -295,7 +295,7 @@ void RightShose::Spec() {
 					}
 					else {
 						frame = 0;
-						targetpos.x = player->GetPosition().x + 0.2;
+						targetpos.x = player->GetPosition().x + 0.2f;
 						aiming = 0;
 						pat++;
 						break;

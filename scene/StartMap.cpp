@@ -97,10 +97,6 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 
 	Ok = Sprite::Create(ImageManager::ok, { 314.0f,500.0f });
 	Ok->SetAnchorPoint({ 0.5f, 0.5f });
-	//Ok->SetScale(3.0f);
-	OkSheet = Sprite::Create(ImageManager::okSheet, { 570.0f,500.0f });
-	OkSheet->SetAnchorPoint({ 0.5f, 0.5f });
-	OkSheet->SetScale(1.0f);
 
 	comment[text1] = Sprite::Create(ImageManager::text1, { 640.0f,360.0f });
 	comment[text2] =Sprite::Create(ImageManager::text2, { 570.0f,450.0f });

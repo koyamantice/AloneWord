@@ -107,7 +107,7 @@ bool InterBoss::collideAttackArm() {
 			//ボスのHPをへらす
 			if (BossHit == true) {
 				Effect = true;
-				BossHP -= ((weight * 1.2) * 2);
+				BossHP -= ((weight * 1.2f) * 2.0f);
 				weight = 0.0f;
 				//boundpower.x = (float)(rand() % 4 - 2);
 				//boundpower.y = (float)(rand() % 6);

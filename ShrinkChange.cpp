@@ -1,4 +1,4 @@
-#include "ShrinkChange.h"
+﻿#include "ShrinkChange.h"
 #include "ImageManager.h"
 #include"Collision.h"
 #include "DebugText.h"

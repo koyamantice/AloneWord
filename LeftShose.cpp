@@ -1,4 +1,4 @@
-#include "LeftShose.h"
+﻿#include "LeftShose.h"
 #include"Collision.h"
 #include<sstream>
 #include<iomanip>
@@ -186,7 +186,7 @@ void LeftShose::Spec() {
 					}
 					else {
 						frame = 0;
-						targetpos.x = player->GetPosition().x - 0.2;
+						targetpos.x = player->GetPosition().x - 0.2f;
 						aiming = 0;
 						pat++;
 						break;

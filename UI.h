@@ -44,7 +44,6 @@ private:
 	//“G‚ª‚Ç‚ÌˆÊ’u‚É‚¢‚é‚©
 	Sprite* Arrow = nullptr;
 	Sprite* Arrow2 = nullptr;
-	Sprite* Vignette = nullptr;
 	//”
 	Sprite* number[2][10]{};
 	Sprite* bairitu = nullptr;

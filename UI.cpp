@@ -70,9 +70,6 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	Arrow2->SetAnchorPoint({ 0.5f,0.5f });
 	Arrow2->SetIsFlipY(true);
 	Arrow2->SetPosition({ 0,0 });
-	Vignette = Sprite::Create(ImageManager::vignette, { 0.0f,0.0f });
-	Vignette->SetPosition({ 0,0 });
-	Vignette->SetColor({ 255,255,255,0.75f });
 	bairitu = Sprite::Create(ImageManager::bairitu, { 1240.0f,10.0f });
 	bairitu->SetAnchorPoint({ 1.0f,0.0f });
 	bairitu->SetScale(0.7f);
@@ -211,7 +208,7 @@ void UI::Update() {
 			if (player->GetChargeTimer() <= 100){ nowBar = 0; }
 			if (player->GetChargeTimer() > 100) { nowBar = 1; }
 			if (player->GetChargeTimer() > 200) { nowBar = 2; }
-			convert = player->GetChargeTimer();
+			convert = (float)player->GetChargeTimer();
 			switch (nowBar) {
 			case 0:
 				AfterSpin[0].y = (convert/100)* 350.0f;
@@ -256,7 +253,7 @@ void UI::Update() {
 			}
 		}
 	} else {
-		convert = player->GetRotTimer();
+		convert =(float) player->GetRotTimer();
 		if (convert <= 600) { nowBar = 2; }
 		if (convert <= 400) { nowBar = 1; }
 		if (convert <= 200) { nowBar = 0; }

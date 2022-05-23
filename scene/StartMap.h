@@ -67,7 +67,6 @@ private:
 	int	tutorial =0;
 	Sprite* comment[11];
 	Sprite* Ok;
-	Sprite* OkSheet;
 	bool open = false;
 	bool close = false;
 	enum {

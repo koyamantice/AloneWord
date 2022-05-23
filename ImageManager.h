@@ -18,17 +18,9 @@ public:
 		arrow,//Sprite::LoadTexture(4, L"Resources/2d/Arrow.png");
 		arrow2,
 		life,//Sprite::LoadTexture(5, L"Resources/2d/Life.png");
-		vignette,//Sprite::LoadTexture(6, L"Resources/2d/Vignette.png");
-		concent,
-		concent2,
-		concent3,
-		concent4,
-		concent5,
-		punyu,
 		CLEAR,
 		OVER,
 		TITLE,
-		SELECT,
 		SELECT1,
 		hpGauge,
 		energy,
@@ -58,7 +50,6 @@ public:
 		sky,
 		ground,
 		ok,
-		okSheet,
 		text1,
 		text2,
 		text3,
