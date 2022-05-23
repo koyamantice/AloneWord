@@ -216,7 +216,16 @@ void Rice::Update() {
 	enemyobj->Update();
 	//texture->SetColor({ 1.0f,0.0,0.0,0.0 });
 	texture->Update();
-	Restexture->Update();
+	net[0]->Update();
+	net[0]->SetPosition(pos);
+	net[1]->Update();
+	net[1]->SetPosition(smooth);
+	smooth.x = pos.x;
+	smooth.y = smooth.y + 0.1f;
+	smooth.z = pos.z;
+	if (smooth.y > 4.0f || IsAlive) {
+		smooth.y = 0;
+	}
 }
 
 //チュートリアルアップデート
@@ -363,7 +372,6 @@ void Rice::Draw() {
 		texture->Draw();
 	} else if (!IsAlive && IsTimer <= 100 && IsTimer != 0) {
 		Texture::PreDraw();
-		Restexture->Draw();
 		net[0]->Draw();
 		net[1]->Draw();
 	}

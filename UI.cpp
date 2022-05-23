@@ -224,7 +224,7 @@ void UI::Update() {
 			}
 			convert = player->GetRotTimer() % 201;
 			AfterPos3 = { 60,(convert / 100) * 175 };
-			SpinPos[1] = {
+			SpinPos[1+nowBar] = {
 			Ease(In,Quint,0.7f,SpinBar[nowBar]->GetSize().x,AfterPos3.x),
 			Ease(In,Quint,0.7f,SpinBar[nowBar]->GetSize().y,AfterPos3.y), };
 			SpinBar[nowBar]->SetSize(SpinPos[1]);
