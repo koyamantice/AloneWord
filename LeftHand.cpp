@@ -28,7 +28,7 @@ void LeftHand::Initialize(bool shadow) {
 	//影(このオブジェクトでは使わない)
 	enemyobj->SetRotation(rot);
 	//hand_closeobj->SetRotation(rot);
-	enemyobj->SetScale({ 0.3f,0.3f,0.3f });
+	enemyobj->SetScale({ 0.8f,0.8f,0.8f });
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
 	//texture->SetColor({ 1,1,1,1 });
@@ -77,7 +77,7 @@ void LeftHand::Spec() {
 	//ここで行動を決める
 	if (AttackCount == 180) {
 		if (!active) {
-			action = (rand() % 2);
+			//action = (rand() % 2);
 			AttackCount = 0;
 			frame = 0;
 			pat = 1;
@@ -97,92 +97,198 @@ void LeftHand::Spec() {
 
 	//行動開始
 	if (active) {
-		//スタージを外周する
+		//突き刺し攻撃
 		if ((action % 2) == 0) {
-			stateNumber = Open;
-			if (!stun) {
-				if (frame < 0.45f) {
-					frame += 0.002f;
+			if (AttackC < 3) {
+				switch (pat) {
+				case 1:
+					AfterPos = {
+					pos.x,
+					15.0f,
+					pos.z
+					};
+					if (frame < 0.45f) {
+						frame += 0.002f;
+						break;
+					}
+					else {
+						Afterrot.x = 90.0f;
+						Afterrot.y = 180.0f;
+						stateNumber = Close;
+						frame = 0;
+						pat++;
+						break;
+					}
+				case 2:
+					AfterPos.y = 0.0f;
+					if (frame < 0.45f) {
+						frame += 0.002f;
+					}
+					else {
+						frame = 0;
+						pat++;
+					}
+					pos.y = Ease(In, Cubic, frame, pos.y, AfterPos.y);
+				case 3:
+					AfterPos = {
+					pos.x,
+					3.0f,
+					pos.z
+					};
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						break;
+					}
+					else {
+						frame = 0;
+						pat++;
+						break;
+					}
+				case 4:
+					AfterPos = {
+						player->GetPosition().x,
+					7.0f,
+						player->GetPosition().z
+					};
+					if (aiming < 180) {
+						frame = 0.5f;
+						aiming++;
+						break;
+					}
+					else {
+						frame = 0;
+						aiming = 0;
+						pat++;
+						break;
+					}
+				case 5:
+					AfterPos = {
+						pos.x,
+						0,
+						pos.z,
+					};
+					if (frame < 1.0f) {
+						frame += 0.08f;
+						//Afterrot.z += vel;
+						if (rot.z > 45) {
+							rot.z = 45;
+							//vel = -vel;
+						}
+						if (rot.z < -45) {
+							rot.z = -45;
+							//vel = -vel;
+						}
+						break;
+					}
+					else {
+						Afterrot.z = 0;
+						frame = 1.0f;
+						if (coolT < 90) {
+							coolT++;
+							break;
+						}
+						else {
+							coolT = 0;
+							frame = 0;
+							pat = 3;
+							AttackC++;
+							break;
+						}
+					}
+				default:
+					AttackC = 0;
+					pat = 1;
+					break;
 				}
-				else {
-					frame = 0;
-					pat++;
-				}
-				if (pat == 1) {
-					Afterrot.y = 225;
-					AfterPos.x = 19.0f;
-					AfterPos.z = -17.0f;
-				}
-				else if (pat == 2) {
-					Afterrot.y = -270;
-					AfterPos.x = 19.0f;
-					AfterPos.z = 20.0f;
-
-				}
-				else if (pat == 3) {
-					Afterrot.y = 0;
-					AfterPos.x = -19.0f;
-					AfterPos.z = 20.0f;
-				}
-				else if (pat == 4) {
-					Afterrot.y = -90;
-					AfterPos.x = -19.0f;
-					AfterPos.z = -17.0f;
-				}
-				else if (pat == 5) {
-					Afterrot.y = 135;
-					AfterPos.x = -10.0f;
-					AfterPos.z = 0.0f;
-				}
-				else {
-					Afterrot.y = 270;
-					pat = 0;
-					AttackCount = 0;
-					Effect = true;
-					active = false;
-					frame = 0;
-				}
-				pos = {
-		Ease(In,Cubic,frame,pos.x,AfterPos.x),
-		0,
-		Ease(In,Cubic,frame,pos.z,AfterPos.z),
-				};
-				enemyobj->SetPosition(pos);
-				//hand_closeobj->SetPosition(pos);
 			}
 			else {
-				for (std::size_t i = 0; i < Stuntexture.size(); i++) {
-					StunSpeed[i] += 2.0f;
-				}
-				if (stunTimer < 200) {
-					stunTimer++;
-				}
-				else {
-					stunTimer = 0;
-					stun = false;
-				}
+				switch (pat) {
+				case 1:
+					AfterPos = {
+					pos.x,
+					3.0f,
+					pos.z
+					};
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						break;
+					}
+					else {
+						frame = 0;
+						pat++;
+						break;
+					}
+				case 2:
+					AfterPos = {
+					0,
+					3.0f,
+					0
+					};
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						break;
+					}
+					else {
+						frame = 0;
+						pat++;
+						break;
+					}
+				case 3:
+					AfterPos = {
+					-10,
+					0,
+					0
+					};
 
-				////スタン時のぴよぴよ
-				//for (std::size_t i = 0; i < Stuntexture.size(); i++) {
-				//	Stunradius[i] = StunSpeed[i] * PI / 180.0f;
-				//	StunCircleX[i] = cosf(Stunradius[i]) * Stunscale[i];
-				//	StunCircleZ[i] = sinf(Stunradius[i]) * Stunscale[i];
-				//	StunPos[i].x = StunCircleX[i] + pos.x;
-				//	StunPos[i].z = StunCircleZ[i] + pos.z;
-				//	StunPos[i].y = pos.y + 2;
-				//	Stuntexture[i]->SetPosition(StunPos[i]);
-				//	Stuntexture[i]->Update();
-				//}
-
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						break;
+					}
+					else {
+						frame = 0;
+						pat = 0;
+						AttackC = 0;
+						AttackCount = 0;
+						Effect = true;
+						active = false;
+						break;
+					}
+				default:
+					break;
+				}
 			}
+			pos = {
+	Ease(In,Cubic,frame,pos.x,AfterPos.x),
+	Ease(In,Cubic,frame,pos.y,AfterPos.y),
+		Ease(In,Cubic,frame,pos.z,AfterPos.z)
+			};
+			enemyobj->SetPosition(pos);
+			rot.y = Ease(In, Quint, 0.7f, rot.y, Afterrot.y);
+			enemyobj->SetRotation(rot);
 		}
 		//プレイヤーを挟む処理
 		else if ((action % 2) == 1) {
-			stateNumber = Close;
 			if (AttackC < 3) {
-				Afterrot.x = 90.0f;
 				switch (pat) {
 				case 1:
+					AfterPos = {
+					pos.x,
+					15.0f,
+					pos.z
+					};
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						break;
+					}
+					else {
+						Afterrot.x = 270.0f;
+						Afterrot.y = 360.0f;
+						stateNumber = Open;
+						frame = 0;
+						pat++;
+						break;
+					}
+				case 2:
 					AfterPos = {
 						player->GetPosition().x - 5,
 						5,
@@ -200,7 +306,7 @@ void LeftHand::Spec() {
 						pat++;
 						break;
 					}
-				case 2:
+				case 3:
 					AfterPos = {
 						pos.x,
 						0,
@@ -215,7 +321,7 @@ void LeftHand::Spec() {
 						pat++;
 						break;
 					}
-				case 3:
+				case 4:
 					AfterPos = {
 						targetpos.x,
 						0,
@@ -234,7 +340,7 @@ void LeftHand::Spec() {
 						else {
 							coolT = 0;
 							frame = 0;
-							pat = 1;
+							pat = 2;
 							AttackC++;
 							break;
 						}
@@ -258,12 +364,14 @@ void LeftHand::Spec() {
 						break;
 					}
 					else {
+						stateNumber = Close;
 						frame = 0;
 						pat++;
 						break;
 					}
 				case 2:
 					Afterrot.x = 0.0f;
+					Afterrot.y = 90.0f;
 					AfterPos = {
 					-10,
 					0,
@@ -336,7 +444,8 @@ void LeftHand::App(int Timer) {
 
 	case 2:
 		pos = { -10.0f,0.0f,0.0f };
-		rot = { 0,270,0 };
+		rot = { 0,90,0 };
+		AfterRot.y = 90.0f;
 	case 3:
 		stun = true;
 		if (stun) {
