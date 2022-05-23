@@ -835,9 +835,9 @@ void Player::ChargeEffectMove() {
 void Player::ChargeRelease() {
 	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
 			if (EffectRelease[i] == false) {
-				boundpower[i].x = (float)((int)(XorShift::GetInstance()->xor128()) % 20 - 10);
-				boundpower[i].y = (float)((int)(XorShift::GetInstance()->xor128()) % 10 - 5);
-				boundpower[i].z = (float)((int)(XorShift::GetInstance()->xor128()) % 20 - 10);
+				boundpower[i].x = (float)((int)(XorShift::GetInstance()->xor128()) % 20 - 5);
+				boundpower[i].y = (float)((int)(XorShift::GetInstance()->xor128()) % 10 - 2);
+				boundpower[i].z = (float)((int)(XorShift::GetInstance()->xor128()) % 20 - 5);
 				boundpower[i].x = boundpower[i].x / 10;
 				boundpower[i].y = boundpower[i].y / 10;
 				boundpower[i].z = boundpower[i].z / 10;
