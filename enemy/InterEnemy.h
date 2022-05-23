@@ -74,9 +74,9 @@ protected:
 	const float PI = 3.14f;
 
 	//モデルやテクスチャー
-	Object3d* enemyobj = nullptr;
+	unique_ptr<Object3d> enemyobj = nullptr;
 	Model* model = nullptr;
-	Texture* texture = nullptr;
+	unique_ptr<Texture> texture = nullptr;
 	Player* player = nullptr;
 
 	//各座標や回転やサイズ

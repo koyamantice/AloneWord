@@ -28,8 +28,8 @@ private:
 	void Rebound();
 //メンバ変数
 	//オブジェクトやテクスチャ
-	Object3d* Piyopiyo;
-	Texture* net[2] = { nullptr };
+	unique_ptr<Object3d> Piyopiyo;
+	unique_ptr<Texture> net[2] = { nullptr };
 	//敵のAI関係
 	XMFLOAT3 smooth{ pos.x, pos.y,pos.z };
 	float speed_y = 3.0f/20.0f;

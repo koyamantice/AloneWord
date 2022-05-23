@@ -23,11 +23,7 @@ Input* input = Input::GetInstance();
 Player::Player() {
 	//モデル読み込み
 	model = ModelManager::GetIns()->GetModel(ModelManager::Player);
-	object3d = new Object3d();
 	move_model1 = ModelManager::GetIns()->GetFBXModel(ModelManager::MottiMove);
-	move_object1 = new FBXObject3d;
-	Charge = Texture::Create(ImageManager::Charge, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
-	
 	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
 		ChargeEffect[i] = Texture::Create(ImageManager::ChargeEffect, {0,0,0}, {0.5f,0.5f,0.5f}, {1,1,1,1});
 	}
@@ -35,28 +31,32 @@ Player::Player() {
 
 bool Player::Initialize() {
 	//各モデルの初期化
+	 position = { 0,0,0 };
 	//プレイヤー
-	object3d = Object3d::Create();
-	object3d->SetModel(model);
-	position = { 0,0,0 };
-	object3d->SetPosition(position);
-	object3d->SetRotation({ 0,270,0 });
-	object3d->SetScale(plasca);
+	Object3d*object3d_ = new Object3d();
+	object3d_ = Object3d::Create();
+	object3d_->SetModel(model);
+	object3d_->SetPosition(position);
+	object3d_->SetRotation({ 0,270,0 });
+	object3d_->SetScale(plasca);
+	object3d.reset(object3d_);
 	//FBX
-	move_object1->Initialize();
-	move_object1->SetModel(move_model1);
-	move_object1->SetScale(plasca);
-	move_object1->SetPosition(position);
-	move_object1->SetRotation(rot);
-
+	FBXObject3d* move_object_ = new FBXObject3d();
+	move_object_->Initialize();
+	move_object_->SetModel(move_model1);
+	move_object_->SetScale(plasca);
+	move_object_->SetPosition(position);
+	move_object_->SetRotation(rot);
+	move_object1.reset(move_object_);
 	//チャージ時のサークル
-	Charge = Texture::Create(ImageManager::Charge, { 0,0,0 }, { 1,1,1 }, { 1,1,1,1 });
-	Charge->TextureCreate();
-	Charge->SetPosition(position);
-	Charge->SetRotation({ 90.0f,0.0f,0.0f });
-	Charge->SetScale(sca);
-	Charge->Update();
-
+	Texture* Charge_= Texture::Create(ImageManager::Charge, { 0,0,0 }, { 1,1,1 }, { 1,1,1,1 });
+	Charge_ = Texture::Create(ImageManager::Charge, { 0,0,0 }, { 1,1,1 }, { 1,1,1,1 });
+	Charge_->TextureCreate();
+	Charge_->SetPosition(position);
+	Charge_->SetRotation({ 90.0f,0.0f,0.0f });
+	Charge_->SetScale(sca);
+	Charge_->Update();
+	Charge.reset(Charge_);
 	//チャージ時に出る周りの弾
 	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
 		ChargeEffect[i] = Texture::Create(ImageManager::ChargeEffect, { 0,0,0 }, { 1,1,1 }, { 1,1,1,1 });
@@ -82,8 +82,6 @@ bool Player::Initialize() {
 }
 //開放
 void Player::Finalize() {
-	delete object3d;
-	delete Charge;
 	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
 		delete ChargeEffect[i];
 	}

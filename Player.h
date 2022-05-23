@@ -9,7 +9,9 @@
 #include "DirectXCommon.h"
 #include "FBXModel.h"
 #include "FBXObject3d.h"
-#include <array>       // ヘッダファイルインクルード
+#include <array>   
+#include <memory> 
+#include <list> // ヘッダファイルインクルード
 using namespace std;         //  名前空間指定
 class InterBoss;
 class InterEnemy;
@@ -137,10 +139,13 @@ public:
 	const bool& GetWet() { return wet; }
 	void SetWet(bool wet) { this->wet = wet; }
 private:
-	Object3d* object3d;
+	unique_ptr <Object3d> object3d;
 	Model* model;
-	Texture* Charge=nullptr;
-	
+	unique_ptr<Texture> Charge;
+	//動いてるときのFBX
+	FBXModel* move_model1 = nullptr;
+	unique_ptr<FBXObject3d> move_object1 = nullptr;
+
 	XMFLOAT3 plasca = { 0.007f,0.007f,0.007f };
 	XMFLOAT3 Aftersca = { 0,0,0 };
 	XMFLOAT3 sca = { 0.7f,0.7f,0.7f };
@@ -210,12 +215,6 @@ private:
 	XMFLOAT3 rot;
 	bool pause = false;
 	int count = 0;
-	//動いてるときのFBX
-	FBXModel* move_model1 = nullptr;
-	FBXObject3d* move_object1 = nullptr;
-	//パワーを貯めているときのFBX
-	FBXModel* power_model1 = nullptr;
-	FBXObject3d* power_object1 = nullptr;
 	int move_count = 0;
 	//チャージ攻撃のための変数
 	float RotPower = 10.0f;

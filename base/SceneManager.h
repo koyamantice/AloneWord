@@ -1,6 +1,7 @@
 #pragma once
 #include "BaseScene.h"
 #include "AbstractSceneFactory.h"
+#include <memory> 
 
 /// <summary>
 /// シーンマネージャー

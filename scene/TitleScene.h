@@ -40,7 +40,7 @@ private:
 	//ŠeƒNƒ‰ƒX‚Ì‚à‚Ì
 	ExpandChange* expandchange = nullptr;
 	DebugCamera* camera = { nullptr };
-	Player* player = nullptr;
+	unique_ptr<Player> player = nullptr;
 	enum Select {
 		Start,
 		Select,

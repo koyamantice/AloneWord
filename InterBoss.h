@@ -117,7 +117,6 @@ protected:
 	Object3d* enemyobj = nullptr;
 	Model* model = nullptr;
 	Texture* texture = nullptr;
-	Texture* Restexture = nullptr;
 	Player* player = nullptr;
 	//座標や回転
 	XMFLOAT3 pos = { 0,0,0 };

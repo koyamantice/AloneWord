@@ -10,53 +10,46 @@ using namespace DirectX;
 //コンストラクタ
 Rice::Rice() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::Enemy);
-	enemyobj = new Object3d();
-	Piyopiyo = new Object3d();
 }
 //初期化
 void Rice::Initialize() {
 	//敵
 	IsAlive = false;
 	IsTimer = 200;
-	enemyobj = Object3d::Create();
-	enemyobj->SetModel(model);
 	rot = { 0,90,0 };
-	enemyobj->SetPosition(pos);
-	enemyobj->SetScale(enescale);
+	Object3d* object3d_ = new Object3d();
+	object3d_ = Object3d::Create();
+	object3d_->SetModel(model);
+	object3d_->SetPosition(pos);
+	object3d_->SetScale(enescale);
+	enemyobj.reset(object3d_);
 	//テクスチャ
-	texture = Texture::Create(ImageManager::enemy, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
-	texture->TextureCreate();
-	texture->SetPosition(pos);
-	texture->SetRotation({ 90,0,0 });
-	texture->SetScale({ 0.2f,0.2f,0.2f });
-	oldpos = pos;
-	//ぴよぴよ
-	Piyopiyo = Object3d::Create();
-	Piyopiyo->SetModel(ModelManager::GetIns()->GetModel(ModelManager::Piyopiyo));
-	Piyopiyo->SetPosition({ pos.x,pos.y + 2.0f,pos.z });
-	Piyopiyo->SetScale({1.0f, 2.0f, 2.0f});
-	Piyopiyo->SetRotation({ 60,0,0 });
-	//texture->SetColor({ 1.0f,0.0,0.0,1.0f });
+	Texture* texture_ = Texture::Create(ImageManager::enemy, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	texture_->TextureCreate();
+	texture_->SetPosition(pos);
+	texture_->SetRotation({ 90,0,0 });
+	texture_->SetScale({ 0.2f,0.2f,0.2f });
+	texture.reset(texture_);
 	//拠点
-	net[0] = Texture::Create(ImageManager::net, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
-	net[0]->TextureCreate();
-	net[1] = Texture::Create(ImageManager::effect3, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
-	net[1]->TextureCreate();
-	net[0]->SetPosition(pos);
-	net[0]->SetRotation({ 90,0,0 });
-	net[0]->SetScale({ 0.2f,0.2f,0.2f });
+	Texture* net_ = Texture::Create(ImageManager::net, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	net_->TextureCreate();
+	net_->SetPosition(pos);
+	net_->SetRotation({ 90,0,0 });
+	net_->SetScale({ 0.2f,0.2f,0.2f });
+	net[0].reset(net_);
 
-	net[1]->SetPosition(pos);
-	net[1]->SetRotation({ 90,0,0 });
-	net[1]->SetScale({ 0.15f,0.15f,0.15f });
+	Texture* Smoke = Texture::Create(ImageManager::effect3, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Smoke->TextureCreate();
+	Smoke->SetPosition(pos);
+	Smoke->SetRotation({ 90,0,0 });
+	Smoke->SetScale({ 0.15f,0.15f,0.15f });
+	net[1].reset(Smoke);
 
+	oldpos = pos;
 }
 //開放
 void Rice::Finalize() {
-	delete enemyobj;
-	delete texture;
-	delete net[0];
-	delete net[1];
+	delete player;
 }
 //アップデート
 void Rice::Update() {
@@ -223,8 +216,6 @@ void Rice::Update() {
 //チュートリアルアップデート
 void Rice::Demo(int num) {
 	assert(player);
-	Piyopiyo->SetPosition({ pos.x,pos.y + 2.0f,pos.z });
-	Piyopiyo->Update();
 	playerpos = player->GetPosition();
 	Interval = player->GetInterval();
 	FlashCount = player->GetFlashCount();

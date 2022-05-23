@@ -8,9 +8,10 @@
 Spawning::Spawning() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::EHub);
 	enemyobj = TouchableObject::Create(model);
-	BossHp[now] = Texture::Create(ImageManager::spawnhp, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
-	BossHp[now]->TextureCreate();
-	BossHp[now]->SetColor({ 1.0f,1.0f,1.0f,1.0f });
+	Texture* now_= Texture::Create(ImageManager::spawnhp, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	now_->TextureCreate();
+	now_->SetColor({ 1.0f,1.0f,1.0f,1.0f });
+	BossHp[now].reset(now_);
 	BossHP = 15;
 	for (int i = 0; i < 1; i++) {
 		BossHp[i]->SetPosition({ pos.x,pos.y + 4.5f,pos.z });
@@ -19,10 +20,6 @@ Spawning::Spawning() {
 		//BossHp[i]->SetIsBillboard(true);
 	}
 
-	net[0] = Texture::Create(ImageManager::net, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
-	net[0]->TextureCreate();
-	net[1] = Texture::Create(ImageManager::effect3, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
-	net[1]->TextureCreate();
 }
 
 void Spawning::Initialize(bool shadow) {
@@ -30,15 +27,18 @@ void Spawning::Initialize(bool shadow) {
 	enemyobj->SetModel(model);
 	enemyobj->SetPosition(pos);
 	enemyobj->SetScale({ 3.9f,3.9f,3.9f });
-	net[0]->SetPosition({ pos.x,pos.y + 1.0f,pos.z });
-	net[0]->SetRotation({ 90,0,0 });
-	net[0]->SetScale({ 0.4f,0.4f,0.0f });
-
-	net[1]->SetPosition({ pos.x,pos.y,pos.z });
-	net[1]->SetRotation({ 90,0,0 });
-	net[1]->SetScale({ 0.3f,0.3f,0.0f });
-
-
+	Texture* net_ = Texture::Create(ImageManager::net, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	net_->TextureCreate();
+	net_->SetPosition({ pos.x,pos.y + 1.0f,pos.z });
+	net_->SetRotation({ 90,0,0 });
+	net_->SetScale({ 0.4f,0.4f,0.0f });
+	net[0].reset(net_);
+	Texture* Smoke = Texture::Create(ImageManager::effect3, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Smoke->TextureCreate();
+	Smoke->SetPosition({ pos.x,pos.y,pos.z });
+	Smoke->SetRotation({ 90,0,0 });
+	Smoke->SetScale({ 0.3f,0.3f,0.0f });
+	net[1].reset(Smoke);
 }
 
 void Spawning::specialDraw() {
@@ -51,12 +51,6 @@ void Spawning::specialDraw() {
 }
 void Spawning::Finalize() {
 	delete enemyobj;
-
-	for (int i = 0; i < 1; i++) {
-		delete BossHp[i];
-	}
-	delete net[0];
-	delete net[1];
 }
 
 void Spawning::Spec() {

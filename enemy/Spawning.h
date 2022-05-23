@@ -12,8 +12,8 @@ public:
 	void specialDraw() override;
 	void End(int Timer) override {};
 private:
-	Texture* net[2] = { nullptr };
-	Texture* BossHp[1]{};
+	unique_ptr<Texture> net[2] = { nullptr };
+	unique_ptr<Texture> BossHp[1]{};
 	XMFLOAT2 AfterPos[2]{};
 	enum {
 		now,

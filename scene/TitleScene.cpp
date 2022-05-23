@@ -26,11 +26,11 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 	FBXObject3d::SetCamera(camera);
 	// グラフィックスパイプライン生成
 	FBXObject3d::CreateGraphicsPipeline();
-	player = new Player();
-	player->Initialize();
-	player->SetMove(50.0f, 50.0f);
-	player->SetPosition({ 0.0f,5.0f,-10.0f });
-
+	Player* player_ = new Player();
+	player_->Initialize();
+	player_->SetMove(50.0f, 50.0f);
+	player_->SetPosition({ 0.0f,5.0f,-10.0f });
+	player.reset(player_);
 	//背景スプライト生成
 	sprite[back] = Sprite::Create(ImageManager::TITLE, { 0.0f,0.0f });
 	sprite[button] = Sprite::Create(ImageManager::button, buttonPos[0]);
@@ -44,8 +44,9 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 //開放処理
 void TitleScene::Finalize() {
 	//３ｄのモデルのデリート
-	delete player;
-	delete sprite[0];
+	for (int i = 0; i < 10;i++) {
+		delete sprite[i];
+	}
 	expandchange->Finalize();
 }
 //更新
