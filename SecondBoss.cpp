@@ -77,7 +77,7 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	BlackFilter = Sprite::Create(ImageManager::BlackFilter, { 0.0f,0.0f });
 	BlackFilter->SetColor(BlackColor);
 	
-	GameOverSprite = Sprite::Create(ImageManager::GameOver, { 240.0f,100.0f });
+	GameOverSprite = Sprite::Create(ImageManager::GameOver, overPos);
 	GameOverSprite->SetColor(GameOverColor);
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i] = new Effect();
@@ -498,6 +498,21 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 				if (GameOverColor.w <= 1.0f) {
 					GameOverColor.w += 0.01f;
 				}
+
+
+				if (overframe >= 1.0f) {
+					overframe = 1.0f;
+				}
+				else {
+					overframe += 0.01f;
+				}
+
+				overPos = {
+			240,
+			Ease(In,Quad,overframe,overPos.y,100.0f)
+				};
+
+				GameOverSprite->SetPosition(overPos);
 			}
 
 			if (overTimer == 650) {

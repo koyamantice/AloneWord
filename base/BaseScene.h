@@ -74,7 +74,9 @@ protected:
 	bool gameover = false;
 	int overNumber = 0;
 	int overTimer = 0;
+	float overframe = 0.0f;
 	float nameframe = 0.0f;
+	//スプライトやテクスチャ
 	Sprite* WhiteFilter = nullptr;
 	XMFLOAT4 WhiteColor = { 1.0f,1.0f,1.0f,0.0f };
 	Sprite* BlackFilter = nullptr;
@@ -83,6 +85,7 @@ protected:
 	XMFLOAT4 GameOverColor = { 1.0f,1.0f,1.0f,0.0f };
 	Sprite* bossName = nullptr;
 	XMFLOAT2 namePos = { 0.0f,0.0f };
+	XMFLOAT2 overPos = { 240.0f,140.0f };
 public:
 
 	virtual ~BaseScene()=default;
