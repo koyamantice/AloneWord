@@ -11,16 +11,9 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(arrow, L"Resources/2d/Arrow.png");
 	Sprite::LoadTexture(arrow2, L"Resources/2d/Arrow2.png");
 	Sprite::LoadTexture(life, L"Resources/2d/Life.png");
-	Sprite::LoadTexture(concent, L"Resources/2d/concent.png");
-	Sprite::LoadTexture(concent2, L"Resources/2d/concent2.png");
-	Sprite::LoadTexture(concent3, L"Resources/2d/concent3.png");
-	Sprite::LoadTexture(concent4, L"Resources/2d/concent4.png");
-	Sprite::LoadTexture(concent5, L"Resources/2d/concent5.png");
-	Sprite::LoadTexture(vignette, L"Resources/2d/Vignette.png");
 	Sprite::LoadTexture(CLEAR, L"Resources/2d/GAMECLEAR.png");
 	Sprite::LoadTexture(OVER, L"Resources/2d/GAMEOVER.png");
 	Sprite::LoadTexture(TITLE, L"Resources/2d/TitleParts/layoutImage.png");
-	Sprite::LoadTexture(SELECT, L"Resources/2d/kariSelect.png");
 	Sprite::LoadTexture(SELECT1, L"Resources/2d/noSelect.png");
 	Sprite::LoadTexture(playerhp, L"Resources/2d/HPBar.png");
 	Sprite::LoadTexture(hpGauge, L"Resources/2d/HPGauge.png");
@@ -39,7 +32,7 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(shinshitu, L"Resources/2d/hand_Sname.png");
 	Sprite::LoadTexture(meter, L"Resources/2d/hotWaterGauge.png");
 	Sprite::LoadTexture(meterbar, L"Resources/2d/hotWaterBar.png");
-	Sprite::LoadTexture(button, L"Resources/2d/select.png");
+	Sprite::LoadTexture(button, L"Resources/2d/TitleParts/cursor2.png");
 	Sprite::LoadTexture(num, L"Resources/2d/Num.png");
 	Sprite::LoadTexture(bairitu, L"Resources/2d/Bairitu.png");
 	Sprite::LoadTexture(Change, L"Resources/2d/Change.png");
@@ -50,8 +43,7 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(Tselect, L"Resources/2d/TitleParts/menu.png");
 	Sprite::LoadTexture(sky, L"Resources/2d/sky.png");
 	Sprite::LoadTexture(ground, L"Resources/2d/ground.png");
-	Sprite::LoadTexture(ok, L"Resources/2d/Ok.png");
-	Sprite::LoadTexture(okSheet, L"Resources/2d/OkShit.png");
+	Sprite::LoadTexture(ok, L"Resources/2d/text/Ok.png");
 	Sprite::LoadTexture(text1, L"Resources/2d/text/text1.png");
 	Sprite::LoadTexture(text2, L"Resources/2d/text/text2.png");
 	Sprite::LoadTexture(text3, L"Resources/2d/text/text3.png");
@@ -74,11 +66,9 @@ void ImageManager::Load2D() {
 void ImageManager::LoadTex2D() {
 	Texture::LoadTexture(enemy, L"Resources/2d/enemy.png");
 	Texture::LoadTexture(shadow, L"Resources/2d/shadow.png");
-	Texture::LoadTexture(Resporn, L"Resources/2d/Resporn.png");
 	Texture::LoadTexture(effect2, L"Resources/2d/effect2.png");
 	Texture::LoadTexture(effect3, L"Resources/2d/effect3.png");
 	Texture::LoadTexture(playerhp, L"Resources/2d/HPBar.png");
-	Texture::LoadTexture(magic, L"Resources/2d/magic2.png");
 	Texture::LoadTexture(net, L"Resources/2d/motiNet.png");
 	Texture::LoadTexture(water, L"Resources/2d/puddle.png");
 	Texture::LoadTexture(Charge, L"Resources/2d/Charge.png");
