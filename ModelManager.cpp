@@ -11,8 +11,6 @@ ModelManager* ModelManager::GetIns() {
 
 void ModelManager::Initialize() {
 	LoadModel(Player, "Motti");
-	LoadModel(Demo, "chr_knight");
-	LoadModel(Arm, "Arm");
 	LoadModel(EHub, "EHub");
 	LoadModel(Enemy, "Enemy");
 	LoadModel(Fork, "Fork");
@@ -22,8 +20,8 @@ void ModelManager::Initialize() {
 	LoadModel(RightShoes,"RightShoes");
 	LoadModel(Pastel, "Pestle");
 	LoadModel(Platform, "Platform");
-	LoadModel(Piyopiyo, "Piyopiyo");
 	LoadModel(skydome, "skydome");
+	LoadModel(Piyopiyo, "Piyopiyo");
 	LoadModel(Particle, "Particle");
 	LoadModel(Mill, "Usu");
 	LoadModel(SiroMotti, "Siromoti");

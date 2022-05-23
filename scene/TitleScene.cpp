@@ -33,12 +33,9 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 
 	//背景スプライト生成
 	sprite[back] = Sprite::Create(ImageManager::TITLE, { 0.0f,0.0f });
-	sprite[button1] = Sprite::Create(ImageManager::Tbutton, buttonPos[0]);
-	sprite[button1]->SetAnchorPoint({ 0.5f,0.5f });
-	sprite[button1]->SetScale(0.4f);
-	sprite[button2] = Sprite::Create(ImageManager::Tbutton, buttonPos[1]);
-	sprite[button2]->SetAnchorPoint({ 0.5f,0.5f });
-	sprite[button2]->SetScale(0.4f);
+	sprite[button] = Sprite::Create(ImageManager::button, buttonPos[0]);
+	sprite[button]->SetAnchorPoint({ 0.5f,0.5f });
+	//sprite[button]->SetScale(0.4f);
 	sprite[select] = Sprite::Create(ImageManager::Tselect, { 76.0f,418.0f });
 	sprite[ground] = Sprite::Create(ImageManager::ground, { 0.0f,0.0f });
 	//スプライト生成
@@ -65,15 +62,15 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 	}
 	switch (SelectNumber) {
 	case Start:
-		buttonPos[0] = { 165.0f,470.0f };
+		buttonPos[0] = { 320.0f,470.0f };
 		buttonPos[1] = { 440.0f,470.0f };
 		break;
 	case Select:
-		buttonPos[0] = { 165.0f,550.0f };
+		buttonPos[0] = { 320.0f,550.0f };
 		buttonPos[1] = { 440.0f,550.0f };
 		break;
 	case Exit:
-		buttonPos[0] = { 165.0f,620.0f };
+		buttonPos[0] = { 320.0f,620.0f };
 		buttonPos[1] = { 440.0f,620.0f };
 
 		break;
@@ -102,8 +99,7 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 			SceneManager::GetInstance()->SetEnd(true);
 		}
 	}
-	sprite[button1]->SetPosition(buttonPos[0]);
-	sprite[button2]->SetPosition(buttonPos[1]);
+	sprite[button]->SetPosition(buttonPos[0]);
 
 	player->TitleUp();
 	expandchange->Update();
@@ -115,24 +111,18 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 	camera->SetEye(cameraPos);
 }
 //描画
-void TitleScene::Draw(DirectXCommon* dxCommon) {
-	
+void TitleScene::Draw(DirectXCommon* dxCommon) {	
 	Sprite::PreDraw();
-
 	//背景用
-	sprite[0]->Draw();
+	sprite[back]->Draw();
 	sprite[select]->Draw();
-	//sprite[3]->Draw();
-	sprite[1]->Draw();
-	sprite[2]->Draw();
-
+	sprite[select]->Draw();
+	sprite[button]->Draw();
 
 	player->Draw(dxCommon);
 
 	Sprite::PreDraw();
-	
 	//前面用
 	expandchange->Draw();
-
 }
 

@@ -15,8 +15,6 @@ public:
 
 	enum ModelName {
 		Player,
-		Demo,
-		Arm,
 		EHub,
 		Enemy,
 		Fork,

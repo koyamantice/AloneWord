@@ -45,7 +45,6 @@ public:
 		Change2,
 		BlackFilter,
 		WhiteFilter,
-		Tbutton,
 		Tselect,
 		sky,
 		ground,

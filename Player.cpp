@@ -23,9 +23,7 @@ Input* input = Input::GetInstance();
 Player::Player() {
 	//モデル読み込み
 	model = ModelManager::GetIns()->GetModel(ModelManager::Player);
-	Armmodel = ModelManager::GetIns()->GetModel(ModelManager::Arm);
 	object3d = new Object3d();
-	Armobj = new Object3d();
 	move_model1 = ModelManager::GetIns()->GetFBXModel(ModelManager::MottiMove);
 	move_object1 = new FBXObject3d;
 	Charge = Texture::Create(ImageManager::Charge, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
@@ -44,18 +42,6 @@ bool Player::Initialize() {
 	object3d->SetPosition(position);
 	object3d->SetRotation({ 0,270,0 });
 	object3d->SetScale(plasca);
-	//腕
-	Armobj = Object3d::Create();
-	Armobj->SetModel(Armmodel);
-	Armradius = ArmSpeed * PI / 180.0f;
-	ArmCircleX = cosf(Armradius) * Armscale;
-	ArmCircleZ = sinf(Armradius) * Armscale;
-	Armpos.x = ArmCircleX + pos.x;
-	Armpos.z = ArmCircleZ + pos.z;
-	Armobj->SetPosition(Armpos);
-	Armobj->SetScale({ 1.4f,1.4f,1.4f });
-	Armobj->Update();
-
 	//FBX
 	move_object1->Initialize();
 	move_object1->SetModel(move_model1);
@@ -97,7 +83,6 @@ bool Player::Initialize() {
 //開放
 void Player::Finalize() {
 	delete object3d;
-	delete Armobj;
 	delete Charge;
 	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
 		delete ChargeEffect[i];
@@ -120,7 +105,6 @@ void Player::Update() {
 		ChargeEffect[i]->SetScale({0.1f,0.1f,0.1f});
 	}
 	object3d->Update();
-	Armobj->Update();
 	StickrotX = input->GetPosX();
 	StickrotY = input->GetPosY();
 	//effecttexture->Update();
@@ -417,18 +401,10 @@ void Player::Update() {
 	if (position.z > 22) {
 		position.z = 22;
 	}
-	Armradius = ArmSpeed * PI / 180.0f;
-	ArmCircleX = cosf(Armradius) * Armscale;
-	ArmCircleZ = sinf(Armradius) * Armscale;
-	Armpos.x = ArmCircleX + position.x;
-	Armpos.y = position.y;
-	Armpos.z = ArmCircleZ + position.z;
-	Armobj->SetPosition(Armpos);
 	//各オブジェクトのアップデート
 	object3d->Update();
 	object3d->SetPosition(position);
 	object3d->SetRotation(rot);
-	Armobj->SetRotation(ArmRot);
 	//パーティクル発生
 	BirthParticle();
 	//カメラのためのポジション(更新)
@@ -466,7 +442,6 @@ void Player::SelectUp() {
 		move_object1->StopAnimation();
 	}
 	move_object1->Update();
-	Armobj->Update();
 	StickrotX = input->GetPosX();
 	StickrotY = input->GetPosY();
 	//effecttexture->Update();
@@ -522,10 +497,6 @@ void Player::SelectUp() {
 		position.y = 0.0f;
 		onGround = true;
 	}
-	//Armradius = ArmSpeed * PI / 180.0f;
-	//ArmCircleX = cosf(Armradius) * Armscale;
-	//ArmCircleZ = sinf(Armradius) * Armscale;
-	Armobj->SetPosition({0,-90,-100});
 	//移動
 	object3d->Update();
 	object3d->SetPosition(position);
@@ -712,25 +683,16 @@ void Player::Begin() {
 	oldPos = position;
 	rot = this->object3d->GetRotation();
 	object3d->Update();
-	Armobj->Update();
 	StickrotX = input->GetPosX();
 	StickrotY = input->GetPosY();
 	//effecttexture->Update();
 	// ワールド行列更新
 	UpdateWorldMatrix();
 	
-	Armradius = ArmSpeed * PI / 180.0f;
-	ArmCircleX = cosf(Armradius) * Armscale;
-	ArmCircleZ = sinf(Armradius) * Armscale;
-	Armpos.x = ArmCircleX + position.x;
-	Armpos.y = position.y;
-	Armpos.z = ArmCircleZ + position.z;
-	Armobj->SetPosition(Armpos);
 	//移動
 	object3d->Update();
 	object3d->SetPosition(position);
 	object3d->SetRotation(rot);
-	Armobj->SetRotation(ArmRot);
 	//パーティクル発生
 	BirthParticle();
 	
@@ -748,7 +710,6 @@ void Player::End() {
 	oldPos = position;
 	rot = this->object3d->GetRotation();
 	object3d->Update();
-	Armobj->Update();
 	StickrotX = input->GetPosX();
 	StickrotY = input->GetPosY();
 	//effecttexture->Update();
@@ -763,18 +724,10 @@ void Player::End() {
 	// ワールド行列更新
 	UpdateWorldMatrix();
 
-	Armradius = ArmSpeed * PI / 180.0f;
-	ArmCircleX = cosf(Armradius) * Armscale;
-	ArmCircleZ = sinf(Armradius) * Armscale;
-	Armpos.x = ArmCircleX + position.x;
-	Armpos.y = position.y;
-	Armpos.z = ArmCircleZ + position.z;
-	Armobj->SetPosition(Armpos);
 	//移動
 	object3d->Update();
 	object3d->SetPosition(position);
 	object3d->SetRotation(rot);
-	Armobj->SetRotation(ArmRot);
 	//パーティクル発生
 	BirthParticle();
 

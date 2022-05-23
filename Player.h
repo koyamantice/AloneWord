@@ -137,10 +137,8 @@ public:
 	const bool& GetWet() { return wet; }
 	void SetWet(bool wet) { this->wet = wet; }
 private:
-	Object3d* Armobj;
 	Object3d* object3d;
 	Model* model;
-	Model* Armmodel;
 	Texture* Charge=nullptr;
 	
 	XMFLOAT3 plasca = { 0.007f,0.007f,0.007f };

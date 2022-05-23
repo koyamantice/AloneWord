@@ -31,8 +31,7 @@ private:
 	Sprite* sprite[10]{};
 	enum {
 		back,
-		button1,
-		button2,
+		button,
 		select,
 		ground,
 		tutorial,
@@ -48,7 +47,7 @@ private:
 		Exit,
 	};
 	XMFLOAT2 buttonPos[2]{
-		{ 160.0f,600.0f },
+		{ 320.0f,600.0f },
 		{ 440.0f,600.0f }
 	};
 	int SelectNumber = 0;
