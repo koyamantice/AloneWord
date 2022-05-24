@@ -48,7 +48,7 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 
 	//ステージ床
 	objFloor = Object3d::Create();
-	modelFloor = Model::CreateFromOBJ("floor");
+	modelFloor = Model::CreateFromOBJ("JstyleFloor");
 	objFloor->SetModel(modelFloor);
 	objFloor->SetPosition({ 0, -1, 0 });
 	objFloor->SetScale({ 8.0f,1.0f,8.0f });
@@ -67,7 +67,7 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	//objSkydome->SetScale({ 1.0f,1.0f,1.0f });
 
 	//ステージマップ
-	modelBossMap = Model::CreateFromOBJ("BossMap");
+	modelBossMap = Model::CreateFromOBJ("JstyleMap");
 	objBossMap = TouchableObject::Create(modelBossMap);
 	objBossMap->SetPosition({ 0,0,4 });
 	objBossMap->SetRotation({ 0, 90, 0 });
