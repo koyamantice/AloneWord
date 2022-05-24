@@ -22,7 +22,7 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 
 	//ステージ床
 	objFloor = Object3d::Create();
-	modelFloor = Model::CreateFromOBJ("floor");
+	modelFloor = Model::CreateFromOBJ("GardenFloor");
 	objFloor->SetModel(modelFloor);
 	objFloor->SetPosition({ 0, -1, 0 });
 	objFloor->SetScale({ 8.0f,1.0f,6.0f });
@@ -35,7 +35,7 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	objGarden->SetScale({ 1.0f,1.0f,1.0f });
 
 	//ステージマップ
-	modelBossMap = Model::CreateFromOBJ("BossMap");
+	modelBossMap = Model::CreateFromOBJ("GardenMap");
 	objBossMap = TouchableObject::Create(modelBossMap);
 	objBossMap->SetPosition({ 0,0,4 });
 	objBossMap->SetRotation({ 0, 90, 0 });

@@ -21,7 +21,7 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 
 	//ステージ床
 	objFloor = Object3d::Create();
-	modelFloor = Model::CreateFromOBJ("floor");
+	modelFloor = Model::CreateFromOBJ("EntranceFloor");
 	objFloor->SetModel(modelFloor);
 	objFloor->SetPosition({ 0, -1, 0 });
 	objFloor->SetScale({ 12.0f,1.0f,6.0f });
@@ -34,7 +34,7 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	objEntrance->SetScale({ 1.0f,1.0f,1.0f });
 
 	//ステージマップ
-	modelBossMap = Model::CreateFromOBJ("BossMap");
+	modelBossMap = Model::CreateFromOBJ("EntranceMap");
 	objBossMap = TouchableObject::Create(modelBossMap);
 	objBossMap->SetPosition({ 0,0,4 });
 	objBossMap->SetRotation({ 0, 90, 0 });
