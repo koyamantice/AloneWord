@@ -399,12 +399,10 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 		lefthand->EndMovie(EndTimer);
 		player->End();
 		if (EndNumber == 0) {
-			/*if (EndTimer == 1) {
-				cameraPos.x = bossenemy->GetPosition().x;
-				cameraPos.y = bossenemy->GetPosition().y + 4;
-				cameraPos.z = bossenemy->GetPosition().z + 4;
-			}*/
-
+			cameraPos.x = player->GetPosition().x;
+			cameraPos.y = player->GetPosition().y + distanceY;
+			cameraPos.z = player->GetPosition().z - distanceZ;
+			camera->SetTarget(player->GetPosition());
 			if (EndTimer == 50) {
 				EndNumber = 1;
 			}
@@ -424,10 +422,10 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 			}
 			cameraPos.x = 0;
 			cameraPos.y = 7;
-			cameraPos.z = -10;
+			cameraPos.z = 10;
+			camera->SetTarget({ 0.0f,0.0f,0.0f });
 		}
 		WhiteFilter->SetColor(WhiteColor);
-		camera->SetTarget({ 0.0f,0.0f,0.0f });
 		camera->SetEye(cameraPos);
 
 		if (EndTimer == 700) {
