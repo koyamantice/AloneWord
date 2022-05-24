@@ -547,4 +547,62 @@ bool Input::TriggerCrossKey(int CrossKey)
 	return false;
 }
 
+bool Input::ReleaseButton(int Button) {
+	for (int i = 0; i < 32; i++) {
+		if (!(gamePadState.rgbButtons[i] & 0x80)) {
+			continue;
+		}
+		if (oldGamePadState.rgbButtons[i] & 0x80) {
+			continue;
+		}
+
+		switch (i) {
+		case 0:
+			is_push[ButtonKind::Button_A] = true;
+			break;
+		case 1:
+			is_push[ButtonKind::Button_B] = true;
+			break;
+		case 2:
+			is_push[ButtonKind::Button_X] = true;
+			break;
+		case 3:
+			is_push[ButtonKind::Button_Y] = true;
+			break;
+			is_push[ButtonKind::Button_Y] = true;
+			break;
+		case 4:
+			is_push[ButtonKind::Button_LB] = true;
+			break;
+		case 5:
+			is_push[ButtonKind::Button_RB] = true;
+			break;
+		case 6:
+			is_push[ButtonKind::Select] = true;
+			break;
+		case 7:
+			is_push[ButtonKind::Start] = true;
+			break;
+		case 8:
+			is_push[ButtonKind::Button_LS] = true;
+			break;
+		case 9:
+			is_push[ButtonKind::Button_RS] = true;
+			break;
+		default:
+			break;
+		}
+	}
+
+	for (int i = 0; i < Cross_Up; i++) {
+		if (is_push[i] == true) {
+			if (is_push[i] == is_push[Button]) {
+				return false;
+			}
+		}
+	}
+
+	return false;
+}
+
 
