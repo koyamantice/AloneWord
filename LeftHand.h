@@ -1,7 +1,9 @@
 #pragma once
 #include "InterBoss.h"
 #include "Human.h"
-
+#include "HumanWave.h"
+#include <array>   
+using namespace std;         //  名前空間指定
 class LeftHand :public InterBoss {
 public:
 	LeftHand();//コンストラクタ
@@ -18,8 +20,7 @@ private:
 		Open,
 		Close,
 	};
-
 	int stateNumber = 0;
-
 	Model* hand_closemodel = nullptr;
+	array<HumanWave*, 10> humanwave;
 };

@@ -539,13 +539,13 @@ void Player::TitleUp() {
 
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
-	//ImGui::Begin("test");
-	////ImGui::SliderFloat("pos.x", &position.x, 50, -50);
-	//ImGui::SliderFloat("pos.z", &position.z, 50, -50);
-	//ImGui::SliderFloat("overframe", &overframe, 50, -50);
-	////ImGui::("boundpower.x %d", &AttackFlag, 50, -50);
-	////ImGui::Text("overMove:%d", overMove);
-	//ImGui::End();
+	ImGui::Begin("test");
+	//ImGui::SliderFloat("pos.x", &position.x, 50, -50);
+	ImGui::SliderFloat("HP", &HP, 10, 0);
+	ImGui::SliderFloat("overframe", &overframe, 50, -50);
+	//ImGui::("boundpower.x %d", &AttackFlag, 50, -50);
+	ImGui::Text("Interval:%d", Interval);
+	ImGui::End();
 	Texture::PreDraw();
 	if (chargeTimer!=0&&!AttackFlag) {
 		Charge->Draw();
@@ -637,7 +637,7 @@ void Player::Rebound() {
 //パーティクルが出てくる
 void Player::BirthParticle() {
 
-	if (AttackMoveNumber == 0 && AttackFlag == false&& Interval <= 80) {
+	if (Interval <= 80) {
 		if (input->LeftTiltStick(input->Right) || input->LeftTiltStick(input->Left) || input->LeftTiltStick(input->Up) || input->LeftTiltStick(input->Down)) {
 			if (oldPos.x!= position.x) {
 				count++;
@@ -663,7 +663,7 @@ void Player::BirthParticle() {
 			vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 			vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 
-			ParticleManager::GetInstance()->Add(10, { Armpos.x,Armpos.y,Armpos.z }, vel, XMFLOAT3(), 1.0f, 0.0f);
+			ParticleManager::GetInstance()->Add(10, { oldPos.x + vel.x,oldPos.y,oldPos.z + vel.z }, vel, XMFLOAT3(), 1.0f, 0.0f);
 		}
 	}
 
