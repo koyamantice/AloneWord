@@ -82,7 +82,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	Hit_->TextureCreate();
 	Hit_->SetPosition(player->GetPosition());
 	Hit_->SetRotation({ 0.0f,0.0f,0.0f });
-	Hit_->SetScale({0.1f,0.1f,0.1f});
+	Hit_->SetScale({1.0f,1.0f,1.0f});
 	Hit_->Update();
 	Hit.reset(Hit_);
 

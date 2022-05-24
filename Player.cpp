@@ -793,9 +793,9 @@ void Player::ChargeRelease() {
 				boundpower[i].x = boundpower[i].x / 10;
 				boundpower[i].y = boundpower[i].y / 10;
 				boundpower[i].z = boundpower[i].z / 10;
-				chargesca[i].x = 0.5f;
-				chargesca[i].y = 0.5f;
-				chargesca[i].z = 0.5f;
+				chargesca[i].x = 0.02f;
+				chargesca[i].y = 0.02f;
+				chargesca[i].z = 0.02f;
 				chargepos[i] = position;
 				EffectRelease[i] = true;
 			}
