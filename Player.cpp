@@ -540,10 +540,13 @@ void Player::TitleUp() {
 void Player::Draw(DirectXCommon* dxCommon) {
 	ImGui::Begin("test");
 	//ImGui::SliderFloat("pos.x", &position.x, 50, -50);
-	ImGui::SliderFloat("HP", &HP, 10, 0);
-	ImGui::SliderFloat("overframe", &overframe, 50, -50);
-	//ImGui::("boundpower.x %d", &AttackFlag, 50, -50);
-	ImGui::Text("Interval:%d", Interval);
+	/*ImGui::SliderFloat("HP", &HP, 10, 0);
+	ImGui::SliderFloat("overframe", &overframe, 50, -50);*/
+	ImGui::SliderFloat("boundpower.x %d", &boundpower[0].x, 50, -50);
+	ImGui::SliderFloat("chargesca.x %d", &chargesca[0].x, 50, -50);
+	ImGui::SliderFloat("chargepos.x %d", &chargepos[0].x, 50, -50);
+	ImGui::Text("Cimer:%d", chargeTimer);
+	ImGui::Text("RotCount:%d", RotCount);
 	ImGui::End();
 	Texture::PreDraw();
 	if (chargeTimer!=0&&!AttackFlag) {
@@ -789,12 +792,12 @@ void Player::ChargeRelease() {
 				boundpower[i].x = (float)((int)(XorShift::GetInstance()->xor128()) % 20 - 5);
 				boundpower[i].y = (float)((int)(XorShift::GetInstance()->xor128()) % 10 - 2);
 				boundpower[i].z = (float)((int)(XorShift::GetInstance()->xor128()) % 20 - 5);
-				boundpower[i].x = boundpower[i].x / 10;
-				boundpower[i].y = boundpower[i].y / 10;
-				boundpower[i].z = boundpower[i].z / 10;
-				chargesca[i].x = 0.02f;
-				chargesca[i].y = 0.02f;
-				chargesca[i].z = 0.02f;
+				boundpower[i].x = boundpower[i].x / 20;
+				boundpower[i].y = boundpower[i].y / 20;
+				boundpower[i].z = boundpower[i].z / 20;
+				chargesca[i].x = 0.1f;
+				chargesca[i].y = 0.1f;
+				chargesca[i].z = 0.1f;
 				chargepos[i] = position;
 				EffectRelease[i] = true;
 			}

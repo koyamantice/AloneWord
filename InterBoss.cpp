@@ -61,6 +61,8 @@ bool InterBoss::collidePlayer() {
 	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) && FlashCount == 0 && Interval == 0 && BossHP > 0) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 		player->SetHp(playerhp - 1);
+		player->SetCharge(0);
+		player->SetRotCount(0);
 		Interval = 100;
 		return true;
 	} else {
@@ -86,6 +88,9 @@ bool InterBoss::collideAttackArm() {
 			player->SetDistance(distance);
 			player->SetJumpG(0.5f);
 			player->SetDamageFlag(true);
+			if (active) {
+				player->SetHp(playerhp - 1);
+			}
 			if (weight != 0.0f) {
 				BossHit = true;
 				//ついてる敵の数で音が変わる
