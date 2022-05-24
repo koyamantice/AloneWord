@@ -62,8 +62,9 @@ bool Player::Initialize() {
 		ChargeEffect[i] = Texture::Create(ImageManager::ChargeEffect, { 0,0,0 }, { 1,1,1 }, { 1,1,1,1 });
 		ChargeEffect[i]->TextureCreate();
 		//chargerot[i] = { 90.0f,0.0f,0.0f };
+		ChargeEffect[i]->SetColor({ 1.0f, 1.0f, 1.0f, 0.5f });
 		ChargeEffect[i]->SetRotation(chargerot[i]);
-		chargesca[i] = { 0.3f,0.3f,0.3f };
+		chargesca[i] = { 0.1f,0.1f,0.1f };
 		ChargeEffect[i]->SetScale(chargesca[i]);
 		ChargeEffect[i]->Update();
 	}

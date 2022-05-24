@@ -155,7 +155,7 @@ private:
 	XMFLOAT3 ArmRot = { 0,270,0 };
 	XMFLOAT3 distance{};
 	XMFLOAT3 rebound{};
-	bool state;
+	bool state=false;
 	enum state {
 		up,
 		down
@@ -206,13 +206,13 @@ private:
 	XMFLOAT3 angle = { 0,0,0 };
 	bool onGround = true;
 	// 落下ベクトル
-	DirectX::XMVECTOR fallV;
+	DirectX::XMVECTOR fallV{};
 	//カメラのためのやつ
-	double angleR;
-	float angleX;
-	float angleZ;
+	double angleR=0.0f;
+	float angleX=0.0f;
+	float angleZ=0.0f;
 	int wait = 0;
-	XMFLOAT3 rot;
+	XMFLOAT3 rot{};
 	bool pause = false;
 	int count = 0;
 	int move_count = 0;
@@ -226,20 +226,20 @@ private:
 	bool ChangeScale = false;
 	bool ReleaseStart = false;
 	//チャージ時エフェクトのパーティクル(配列可濃厚なのでこっちに書く)
-	array<Texture*,40> ChargeEffect;
-	array<XMFLOAT3, 40> chargepos;
-	array<XMFLOAT3, 40> boundpower;
-	array<XMFLOAT3, 40> chargerot;
-	array<XMFLOAT3, 40> chargesca;
-	array<bool ,40>ChargeAlive;
-	array<bool, 40>EffectRelease;
-	array<float,40> Chargeradius;
-	array<float,40> ChargeSpeed;
-	array<float,40> Chargescale;
-	array<float,40> ChargeCircleX;
-	array<float,40> ChargeCircleZ;
-	array<float,40> Chargeframe;
-	array<int, 40> EffectTimer;
+  array<Texture*,40> ChargeEffect{};
+	array<XMFLOAT3, 40> chargepos{};
+   array<XMFLOAT3, 40> boundpower{};
+	array<XMFLOAT3, 40> chargerot{};
+	array<XMFLOAT3, 40> chargesca{};
+	   array<bool ,40>ChargeAlive{};
+	 array<bool, 40>EffectRelease{};
+	 array<float,40> Chargeradius{};
+	  array<float,40> ChargeSpeed{};
+	  array<float,40> Chargescale{};
+	array<float,40> ChargeCircleX{};
+	array<float,40> ChargeCircleZ{};
+	  array<float,40> Chargeframe{};
+	   array<int, 40> EffectTimer{};
 	//ゲームオーバー時変数
 	//倒したあとのシーン
 	int overMove = 0;

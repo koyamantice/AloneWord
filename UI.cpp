@@ -176,33 +176,7 @@ void UI::Update() {
 		BossHp2[now]->SetSize(bossPos2[0]);
 		SeachBoss2();
 	}
-
-	//後々変更ポイント
 	//スタミナ的なやつ
-		//if (!player->GetAttackFlag()) {
-			//if (player->GetChargeTimer() > 100) {
-			//	nowBar = 1;
-			//		if (player->GetChargeTimer() > 200) {
-			//			nowBar = 2;
-			//		}
-			//} else {
-			//	nowBar = 0;
-			//}
-			//convert = (float)(player->GetChargeTimer() % 101) / 100.0f;
-			//	if (convert >= 1.0f) {
-			//		convert = 1.0f;
-			//	}
-			//AfterPos3 = { 60,convert * 350.0f };
-			//if (AfterPos3.y > 350.0f) {
-			//	AfterPos3.y = 350.0f;
-			//}
-			//SpinPos[1] = {
-			//Ease(In,Quint,0.7f,SpinBar[nowBar]->GetSize().x,AfterPos3.x),
-			//Ease(In,Quint,0.7f,SpinBar[nowBar]->GetSize().y,AfterPos3.y), };
-			//SpinBar[nowBar]->SetSize(SpinPos[1]);
-		//}
-
-	//{
 	if (!player->GetAttackFlag()) {
 		if (Input::GetInstance()->PushButton(Input::GetInstance()->Button_A)) {
 			if (player->GetChargeTimer() <= 100){ nowBar = 0; }
@@ -344,8 +318,6 @@ const void UI::Draw() {
 		PlaHp[damage]->Draw();
 		PlaHp[now]->Draw();
 	}
-	//Life->Draw();
-
 	if (boss && invisible[0] && boss->GetHP() >= 1) {
 		Arrow->Draw();
 	}
@@ -360,17 +332,24 @@ const void UI::Draw() {
 				number[i][power[i]]->Draw();
 			}
 		}
+		for (int i = 0; i < 3; i++) {
+			SpinBar[i]->Draw();
+		}
+		SpinBar[nowBar]->Draw();
+		SpinGauge->Draw();
+	}
+	if (!player->GetAttackFlag()) {
+		if (Input::GetInstance()->PushButton(Input::GetInstance()->Button_A)) {
+			for (int i = 0; i < 3; i++) {
+				SpinBar[i]->Draw();
+			}
+			SpinBar[nowBar]->Draw();
+			SpinGauge->Draw();
+		}
+	}
 
-		//プレイヤーのスタミナ(一旦コメントアウト)
-		//if (player->GetRotTimer() > 0) {
-		//}
-	}
-	for (int i = 0; i < 3; i++) {
-		SpinBar[i]->Draw();
-	}
-	SpinBar[nowBar]->Draw();
-	SpinGauge->Draw();
 }
+
 
 void UI::EaseScale() {
 	//strong = 2;
