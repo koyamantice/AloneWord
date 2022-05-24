@@ -1,16 +1,15 @@
 ﻿#pragma once
 #include <DirectXMath.h>
-#include"CollisionPrimitive.h"
+#include "CollisionPrimitive.h"
 #include "Object3d.h"
-#include"Model.h"
-#include"Sprite.h"
+#include "Model.h"
+#include "Sprite.h"
 #include "Player.h"
 #include "Texture.h"
 #include "Audio.h"
-#include"Rice.h"
-#include"ModelManager.h"
+#include "Rice.h"
+#include "ModelManager.h"
 #include "TouchableObject.h"
-
 #include <array>       // ヘッダファイルインクルード
 using namespace std;         //  名前空間指定
 #define DIRECTINPUT_VERSION 0x0800

@@ -77,6 +77,15 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	objSphere = TouchableObject::Create(modelSphere);
 	objSphere->SetScale({ 2.0f, 2.0f, 2.0f });
 	objSphere->SetPosition({ 0.0f,0.0f,1.0f });
+	//
+	Texture* Hit_ = Texture::Create(ImageManager::Hit, { 0,0,-10 }, { 0,0,0 }, { 1, 1, 1,1 });
+	Hit_->TextureCreate();
+	Hit_->SetPosition(player->GetPosition());
+	Hit_->SetRotation({ 0.0f,0.0f,0.0f });
+	Hit_->SetScale({0.1f,0.1f,0.1f});
+	Hit_->Update();
+	Hit.reset(Hit_);
+
 
 	// パーティクルマネージャ生成
 	particleMan = ParticleManager::GetInstance();
@@ -100,16 +109,16 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	Ok->SetAnchorPoint({ 0.5f, 0.5f });
 
 	comment[text1] = Sprite::Create(ImageManager::text1, { 640.0f,360.0f });
-	comment[text2] =Sprite::Create(ImageManager::text2, { 570.0f,450.0f });
-	comment[text3] =Sprite::Create(ImageManager::text3, { 570.0f,450.0f });
-	comment[text4] =Sprite::Create(ImageManager::text4, { 570.0f,450.0f });
-	comment[text5] =Sprite::Create(ImageManager::text5, { 570.0f,450.0f });
-	comment[text6] =Sprite::Create(ImageManager::text6, { 570.0f,450.0f });
-	comment[text7] =Sprite::Create(ImageManager::text7, { 570.0f,450.0f });
-	comment[text8] =Sprite::Create(ImageManager::text8, { 570.0f,450.0f });
-	comment[text9] =Sprite::Create(ImageManager::text9, { 570.0f,450.0f });
-	comment[text10] =Sprite::Create(ImageManager::text10, { 570.0f,450.0f });
-	comment[text11] =Sprite::Create(ImageManager::text11, { 570.0f,450.0f });
+	comment[text2] = Sprite::Create(ImageManager::text2, { 570.0f,450.0f });
+	comment[text3] = Sprite::Create(ImageManager::text3, { 570.0f,450.0f });
+	comment[text4] = Sprite::Create(ImageManager::text4, { 570.0f,450.0f });
+	comment[text5] = Sprite::Create(ImageManager::text5, { 570.0f,450.0f });
+	comment[text6] = Sprite::Create(ImageManager::text6, { 570.0f,450.0f });
+	comment[text7] = Sprite::Create(ImageManager::text7, { 570.0f,450.0f });
+	comment[text8] = Sprite::Create(ImageManager::text8, { 570.0f,450.0f });
+	comment[text9] = Sprite::Create(ImageManager::text9, { 570.0f,450.0f });
+	comment[text10] = Sprite::Create(ImageManager::text10, { 570.0f,450.0f });
+	comment[text11] = Sprite::Create(ImageManager::text11, { 570.0f,450.0f });
 
 	for (int i = 0; i < text11 + 1; i++) {
 		comment[i]->SetAnchorPoint({ 0.5f, 0.5f });
@@ -159,25 +168,25 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	nowTimer++;
 	switch (nowText) {
 	case text1:
-		if(nowTimer<61){
+		if (nowTimer < 61) {
 			if (!open && !openT) {
 				open = true;
 			}
 		}
-		if (nowTimer >180) {
+		if (nowTimer > 180) {
 			if (!close && !closeT) {
 				close = true;
 			}
 		}
 		if (closeT) {
-			if (nowTimer>120) {
+			if (nowTimer > 120) {
 				openT = false;
 				closeT = false;
 				nowTimer = 0;
 				nowText = text2;
 			}
 		}
-	break;
+		break;
 	case text2:
 		if (!open) {
 			if (!openT) {
@@ -224,35 +233,35 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 				open = true;
 			}
 		}
-		if(openT){
+		if (openT) {
 			if ((input->LeftTiltStick(input->Right)) || (input->LeftTiltStick(input->Left))
 				|| (input->LeftTiltStick(input->Up)) || (input->LeftTiltStick(input->Down))) {
-				if (!checkZ && !close&&! closeT) {
+				if (!checkZ && !close && !closeT) {
 					check = true;
 					nowTimer = 0;
 				}
 			}
 		}
 		if (check) {
-			scaOk={
+			scaOk = {
 			Ease(Out, Quad, frame, 128,64),
 			Ease(Out, Quad, frame, 128,64),
-		};
-		if (frame < 1.0f) {
-			frame += 0.05f;
-		} else {
-			frame = 0.0f;
-			check = false;
-			checkZ = true;
+			};
+			if (frame < 1.0f) {
+				frame += 0.05f;
+			} else {
+				frame = 0.0f;
+				check = false;
+				checkZ = true;
+			}
+			Ok->SetSize(scaOk);
 		}
-		Ok->SetSize(scaOk);
-		}
-		if (nowTimer > 200&& checkZ) {
+		if (nowTimer > 200 && checkZ) {
 			if (!close && !closeT) {
 				close = true;
 			}
 		}
-		
+
 		if (closeT) {
 			check = false;
 			checkZ = false;
@@ -360,7 +369,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 			}
 		}
 		if (openT) {
-			if (bossenemy->GetHP()<15) {
+			if (bossenemy->GetHP() < 15) {
 				if (!checkZ && !close && !closeT) {
 					check = true;
 					nowTimer = 0;
@@ -404,7 +413,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 			}
 		}
 		if (openT) {
-			if (player->GetOldArm()>5.5f&&bossenemy->GetHP() < 15) {
+			if (player->GetOldArm() > 5.5f && bossenemy->GetHP() < 15) {
 				if (!checkZ && !close && !closeT) {
 					check = true;
 					nowTimer = 0;
@@ -529,12 +538,12 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 			close = false;
 			closeT = true;
 			//if (checkZ) {
-				checkZ = false;
+			checkZ = false;
 			//}
 			nowTimer = 0;
 		}
 		comment[nowText]->SetSize(sca);
-		
+
 	}
 
 	if (expandchange->GetTimer() >= 58) {
@@ -547,6 +556,9 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	objSkydome->Update();
 	lightGroup->Update();
 	bossenemy->Update();
+	if (bossenemy->collideAttackArm()) {
+		Hit->Update();
+	}
 	camera->Update();
 	particleMan->Update();
 	expandchange->Update();
@@ -595,9 +607,13 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
 	ui->Draw();
+	Texture::PreDraw();
+	if (bossenemy->collideAttackArm()) {
+		Hit->Draw();
+	}
 	Sprite::PreDraw();
 	comment[nowText]->Draw();
-	if (check||checkZ) {
+	if (check || checkZ) {
 		Ok->Draw();
 	}
 	expandchange->Draw();
@@ -610,8 +626,7 @@ void StartMap::Pause(const int& Timer) {
 	if (wait >= Timer) {
 		pause = false;
 		wait = 0;
-	}
-	else {
+	} else {
 		pause = true;
 	}
 }

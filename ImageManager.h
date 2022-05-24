@@ -80,6 +80,7 @@ public:
 	SELECTTex,
 	SELECTTex2,
 	Stun,
+	Hit,
 	};
 public:
 	static ImageManager* GetIns();		//Žæ“¾—p

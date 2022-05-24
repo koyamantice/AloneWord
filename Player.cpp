@@ -64,7 +64,7 @@ bool Player::Initialize() {
 		//chargerot[i] = { 90.0f,0.0f,0.0f };
 		ChargeEffect[i]->SetColor({ 1.0f, 1.0f, 1.0f, 0.5f });
 		ChargeEffect[i]->SetRotation(chargerot[i]);
-		chargesca[i] = { 0.1f,0.1f,0.1f };
+		chargesca[i] = { 0.01f,0.01f,0.01f };
 		ChargeEffect[i]->SetScale(chargesca[i]);
 		ChargeEffect[i]->Update();
 	}

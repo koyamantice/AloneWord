@@ -36,6 +36,7 @@ public:
 private:
 	//メンバ変数
 	//オブジェクトやテクスチャ
+	unique_ptr<Texture> Hit=nullptr;
 	Model* modelFloor = nullptr;
 	Object3d* objFloor;
 	Model* modelBossMap = nullptr;
