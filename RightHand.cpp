@@ -96,8 +96,144 @@ void RightHand::Spec() {
 
 	//行動開始
 	if (active) {
+		
+		//プレイヤーを挟むような攻撃
+		if (action == 0) {
+			if (AttackC < 3) {
+				switch (pat) {
+				case 1:
+					AfterPos = {
+					pos.x,
+					15.0f,
+					pos.z
+					};
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						break;
+					}
+					else {
+						Afterrot.x = 90.0f;
+						Afterrot.y = 180.0f;
+						stateNumber = Open;
+						frame = 0;
+						pat++;
+						break;
+					}
+				case 2:
+					AfterPos = {
+						player->GetPosition().x + 5,
+						5,
+						player->GetPosition().z
+					};
+					if (aiming < 180) {
+						frame = 0.5f;
+						aiming++;
+						break;
+					}
+					else {
+						frame = 0;
+						targetpos.x = player->GetPosition().x + 0.2f;
+						aiming = 0;
+						pat++;
+						break;
+					}
+				case 3:
+					AfterPos = {
+						pos.x,
+						0,
+						pos.z,
+					};
+					if (frame < 1.0f) {
+						frame += 0.02f;
+						break;
+					}
+					else {
+						frame = 0;
+						pat++;
+						break;
+					}
+				case 4:
+					AfterPos = {
+						targetpos.x,
+						0,
+						pos.z,
+					};
+					if (frame < 1.0f) {
+						frame += 0.08f;
+						break;
+					}
+					if (frame >= 1.0f) {
+						frame = 1.0f;
+						if (coolT < 50) {
+							coolT++;
+							break;
+						}
+						else {
+							coolT = 0;
+							frame = 0;
+							pat = 2;
+							AttackC++;
+							break;
+						}
+					}
+				default:
+					AttackC = 0;
+					pat = 1;
+					break;
+				}
+			}
+			else {
+				switch (pat) {
+				case 1:
+					AfterPos = {
+					pos.x,
+					pos.y,
+					pos.z
+					};
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						break;
+					}
+					else {
+						frame = 0;
+						pat++;
+						break;
+					}
+				case 2:
+					Afterrot.x = 0.0f;
+					Afterrot.y = 90.0f;
+					AfterPos = {
+					10,
+					0,
+					0
+					};
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						break;
+					}
+					else {
+						frame = 0;
+						pat = 0;
+						AttackC = 0;
+						AttackCount = 0;
+						Effect = true;
+						active = false;
+						break;
+					}
+				default:
+					break;
+				}
+			}
+			pos = {
+	Ease(In,Cubic,frame,pos.x,AfterPos.x),
+	Ease(In,Cubic,frame,pos.y,AfterPos.y),
+	Ease(In,Cubic,frame,pos.z,AfterPos.z)
+			};
+			enemyobj->SetPosition(pos);
+		}
+
 		//突進攻撃
-		if ((action % 2) == 0) {
+		else if (action == 1) {
 			if (pat == 1) {
 				AfterPos.y = 15.0f;
 				if (pos.y >= 14) {
@@ -306,140 +442,6 @@ void RightHand::Spec() {
 					}
 				}
 			}
-			enemyobj->SetPosition(pos);
-		}
-		//プレイヤーを挟むような攻撃
-		if ((action % 2) == 1) {
-			if (AttackC < 3) {
-				switch (pat) {
-				case 1:
-					AfterPos = {
-					pos.x,
-					15.0f,
-					pos.z
-					};
-					if (frame < 1.0f) {
-						frame += 0.01f;
-						break;
-					}
-					else {
-						Afterrot.x = 90.0f;
-						Afterrot.y = 180.0f;
-						stateNumber = Open;
-						frame = 0;
-						pat++;
-						break;
-					}
-				case 2:
-					AfterPos = {
-						player->GetPosition().x + 5,
-						5,
-						player->GetPosition().z
-					};
-					if (aiming < 180) {
-						frame = 0.5f;
-						aiming++;
-						break;
-					}
-					else {
-						frame = 0;
-						targetpos.x = player->GetPosition().x + 0.2f;
-						aiming = 0;
-						pat++;
-						break;
-					}
-				case 3:
-					AfterPos = {
-						pos.x,
-						0,
-						pos.z,
-					};
-					if (frame < 1.0f) {
-						frame += 0.02f;
-						break;
-					}
-					else {
-						frame = 0;
-						pat++;
-						break;
-					}
-				case 4:
-					AfterPos = {
-						targetpos.x,
-						0,
-						pos.z,
-					};
-					if (frame < 1.0f) {
-						frame += 0.08f;
-						break;
-					}
-					if (frame >= 1.0f) {
-						frame = 1.0f;
-						if (coolT < 50) {
-							coolT++;
-							break;
-						}
-						else {
-							coolT = 0;
-							frame = 0;
-							pat = 2;
-							AttackC++;
-							break;
-						}
-					}
-				default:
-					AttackC = 0;
-					pat = 1;
-					break;
-				}
-			}
-			else {
-				switch (pat) {
-				case 1:
-					AfterPos = {
-					pos.x,
-					pos.y,
-					pos.z
-					};
-					if (frame < 1.0f) {
-						frame += 0.01f;
-						break;
-					}
-					else {
-						frame = 0;
-						pat++;
-						break;
-					}
-				case 2:
-					Afterrot.x = 0.0f;
-					Afterrot.y = 90.0f;
-					AfterPos = {
-					10,
-					0,
-					0
-					};
-					if (frame < 1.0f) {
-						frame += 0.01f;
-						break;
-					}
-					else {
-						frame = 0;
-						pat = 0;
-						AttackC = 0;
-						AttackCount = 0;
-						Effect = true;
-						active = false;
-						break;
-					}
-				default:
-					break;
-				}
-			}
-			pos = {
-	Ease(In,Cubic,frame,pos.x,AfterPos.x),
-	Ease(In,Cubic,frame,pos.y,AfterPos.y),
-	Ease(In,Cubic,frame,pos.z,AfterPos.z)
-			};
 			enemyobj->SetPosition(pos);
 		}
 	}

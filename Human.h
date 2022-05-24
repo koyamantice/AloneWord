@@ -1,6 +1,7 @@
 #pragma once
 class LeftHand;
 class RightHand;
+
 class Human {
 public:
 	const int& GetAction() { return action; }
