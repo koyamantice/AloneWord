@@ -33,9 +33,12 @@ private:
 	Model* Mottimodel = nullptr;
 	XMFLOAT3 Millpos = {0,0,0};
 	array<TouchableObject*, 4> Platformobj;
+	array<Texture*, 4>attensiontexture;
 	Model* Platformmodel = nullptr;
 	array<XMFLOAT3, 4> Plapos ={};
 	array<bool, 4>SetPlatform = { false };
 	array<int, 4> BirthNumber;
 	array<Texture*, 4> Plattexture;
+	int FlashTimer = 0;
+	int FlashCount = 0;
 };

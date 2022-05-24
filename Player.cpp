@@ -216,7 +216,6 @@ void Player::Update() {
 				}
 				//ため開放
 				if (chargeTimer >= 100) {
-
 					ReleaseStart = true;
 					AttackFlag = true;
 					AttackMoveNumber = 1;

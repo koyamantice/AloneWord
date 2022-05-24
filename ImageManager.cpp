@@ -75,4 +75,5 @@ void ImageManager::LoadTex2D() {
 	Texture::LoadTexture(SELECTTex2, L"Resources/2d/noSelect.png");
 	Texture::LoadTexture(Stun, L"Resources/2d/stun.png");
 	Texture::LoadTexture(Hit, L"Resources/2d/Attack.png");
+	Texture::LoadTexture(Attension, L"Resources/2d/Attension.png");
 }

@@ -19,6 +19,8 @@ Pastel::Pastel() {
 		Platformobj[i] = TouchableObject::Create(Platformmodel);
 		Plattexture[i] = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 		Plattexture[i]->TextureCreate();
+		attensiontexture[i] = Texture::Create(ImageManager::Attension, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+		attensiontexture[i]->TextureCreate();
 	}
 }
 
@@ -68,7 +70,8 @@ void Pastel::Initialize(bool shadow) {
 		//Plattexture[i] = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 		Plattexture[i]->SetRotation({90,0,0});
 		Plattexture[i]->SetScale({ 0.5f,0.5f,0.5f });
-		//Plattexture[i]->TextureCreate();
+		attensiontexture[i]->SetRotation({ 0,0,0 });
+		attensiontexture[i]->SetScale({ 0.2f,0.2f,0.2f });
 	}
 }
 
@@ -407,12 +410,28 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 		}
 		Plattexture[i]->Update();
 		Plattexture[i]->SetPosition({Plapos[i].x,0.0f,Plapos[i].z});
+		attensiontexture[i]->Update();
+		attensiontexture[i]->SetPosition({ Plapos[i].x,3.0f,Plapos[i].z });
 		//Plattexture[i]->SetScale({1.0f,1.0f,1.0f});
 		Platformobj[i]->SetPosition(Plapos[i]);
 		Platformobj[i]->Update();
 		Mottiobj->SetScale(MottiScale);
 		Mottiobj->Update();
+		if (SetPlatform[i] && Plapos[i].y <= -1.0f) {
+			FlashTimer++;
+
+			if (FlashTimer % 50) {
+				FlashCount++;
+			}
+		}
+		else {
+			FlashTimer = 0;
+			FlashCount = 0;
+		}
+
 	}
+
+
 }
 
 //“±“ü
@@ -555,6 +574,9 @@ void Pastel::specialDraw() {
 			Texture::PreDraw();
 			if (SetPlatform[i] && Plapos[i].y <= -1.0f) {
 				Plattexture[i]->Draw();
+				if (FlashCount % 2 == 0) {
+					attensiontexture[i]->Draw();
+				}
 			}
 		}
 	}
