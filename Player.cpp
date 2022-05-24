@@ -549,12 +549,12 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	ImGui::Text("RotCount:%d", RotCount);
 	ImGui::End();
 	Texture::PreDraw();
-	if (chargeTimer!=0&&!AttackFlag) {
+	if (chargeTimer!=0&&!AttackFlag && HP > 0) {
 		Charge->Draw();
 	}
 
 	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
-		if (ChargeAlive[i] == true) {
+		if (ChargeAlive[i] == true && HP > 0) {
 			ChargeEffect[i]->Draw();
 		}
 	}

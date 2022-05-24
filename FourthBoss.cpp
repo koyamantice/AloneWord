@@ -370,12 +370,10 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 			pastel->EndMovie(EndTimer);
 			player->End();
 			if (EndNumber == 0) {
-				/*if (EndTimer == 1) {
-					cameraPos.x = bossenemy->GetPosition().x;
-					cameraPos.y = bossenemy->GetPosition().y + 4;
-					cameraPos.z = bossenemy->GetPosition().z + 4;
-				}*/
-
+				cameraPos.x = player->GetPosition().x;
+				cameraPos.y = player->GetPosition().y + distanceY;
+				cameraPos.z = player->GetPosition().z - distanceZ;
+				camera->SetTarget(player->GetPosition());
 				if (EndTimer == 50) {
 					EndNumber = 1;
 				}
@@ -396,9 +394,9 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 				cameraPos.x = pastel->GetPosition().x;
 				cameraPos.y = pastel->GetPosition().y + 7;
 				cameraPos.z = pastel->GetPosition().z - 10;
+				camera->SetTarget(pastel->GetPosition());
 			}
 			WhiteFilter->SetColor(WhiteColor);
-			camera->SetTarget(pastel->GetPosition());
 			camera->SetEye(cameraPos);
 
 			if (EndTimer == 700) {
