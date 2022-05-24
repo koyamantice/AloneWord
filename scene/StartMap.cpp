@@ -59,6 +59,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	player = new Player();
 	player->Initialize();
 	player->SetPosition({ 0.0f,0.0f,-10.0f });
+	player->SetRotation({ 0.0f,90.0f,0.0f });
 	player->SetMove(250.0f, 200.0f);
 	//ボス
 	bossenemy = new Spawning();
