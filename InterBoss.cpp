@@ -81,6 +81,11 @@ bool InterBoss::collideAttackArm() {
 			player->SetAttackFlag(false);
 			player->SetCharge(0);
 			player->SetRotCount(0);
+			distance.x = plapos.x - pos.x;
+			distance.z = plapos.z - pos.z;
+			player->SetDistance(distance);
+			player->SetJumpG(0.5f);
+			player->SetDamageFlag(true);
 			if (weight != 0.0f) {
 				BossHit = true;
 				//ついてる敵の数で音が変わる
