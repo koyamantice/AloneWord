@@ -110,7 +110,7 @@ void LeftHand::Spec() {
 	//çsìÆäJén
 	if (active) {
 		if (action == 0) {
-			if (AttackC < 3) {
+			if (AttackC < 5) {
 				switch (pat) {
 				case 1:
 					AfterPos = {
@@ -180,7 +180,6 @@ void LeftHand::Spec() {
 					};
 					if (frame < 1.0f) {
 						frame += 0.08f;
-						//Afterrot.z += vel;
 						if (rot.z > 45) {
 							rot.z = 45;
 							//vel = -vel;
@@ -190,12 +189,17 @@ void LeftHand::Spec() {
 							//vel = -vel;
 						}
 						break;
+
 					}
 					else {
-						for (std::size_t i = 0; i < humanwave.size(); i++) {
-							if (!humanwave[i]->GetExpand()) {
-								humanwave[i]->Set(pos);
-								break;
+						damageCount++;
+						if (damageCount == 1) {
+							for (std::size_t i = 0; i < humanwave.size(); i++) {
+								if (!humanwave[i]->GetIsAlive()) {
+
+									humanwave[i]->Set(pos);
+									break;
+								}
 							}
 						}
 						Afterrot.z = 0;
@@ -205,6 +209,7 @@ void LeftHand::Spec() {
 							break;
 						}
 						else {
+							damageCount = 0;
 							coolT = 0;
 							frame = 0;
 							pat = 3;

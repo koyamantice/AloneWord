@@ -10,6 +10,10 @@ using namespace DirectX;
 RightHand::RightHand() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::RightHand_Open);
 	hand_closemodel = ModelManager::GetIns()->GetModel(ModelManager::RightHand_Close);
+	for (std::size_t i = 0; i < humanwave.size(); i++) {
+		humanwave[i] = new HumanWave;
+		humanwave[i]->Init();
+	}
 }
 
 //初期化
@@ -63,10 +67,17 @@ void RightHand::Initialize(bool shadow) {
 void RightHand::Finalize() {
 	//delete enemyobj;
 	delete texture;
+	for (std::size_t i = 0; i < humanwave.size(); i++) {
+		humanwave[i]->Final();
+	}
 }
 
 //ボスの行動
 void RightHand::Spec() {
+	for (std::size_t i = 0; i < humanwave.size(); i++) {
+		humanwave[i]->Upda();
+		humanwave[i]->SetPlayer(player.get());
+	}
 	XMFLOAT3 AfterPos{};
 	if (stateNumber == Open) {
 		enemyobj->SetModel(model);
@@ -96,9 +107,194 @@ void RightHand::Spec() {
 
 	//行動開始
 	if (active) {
-		
-		//プレイヤーを挟むような攻撃
 		if (action == 0) {
+			if (AttackC < 5) {
+				switch (pat) {
+				case 1:
+					AfterPos = {
+					pos.x,
+					15.0f,
+					pos.z
+					};
+					if (frame < 0.45f) {
+						frame += 0.002f;
+						break;
+					}
+					else {
+						Afterrot.x = 90.0f;
+						Afterrot.y = 180.0f;
+						stateNumber = Close;
+						frame = 0;
+						pat++;
+						break;
+					}
+				case 2:
+					AfterPos.y = 0.0f;
+					if (frame < 0.45f) {
+						frame += 0.002f;
+					}
+					else {
+						frame = 0.45;
+						count++;
+						if (count == 50) {
+							pat++;
+							count = 0;
+							frame = 0.0f;
+						}
+					}
+					pos.y = Ease(In, Cubic, frame, pos.y, AfterPos.y);
+				case 3:
+					AfterPos = {
+					pos.x,
+					3.0f,
+					pos.z
+					};
+				
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						break;
+					}
+					else {
+						frame = 0;
+						pat++;
+						break;
+					}
+				case 4:
+					AfterPos = {
+						player->GetPosition().x,
+					7.0f,
+						player->GetPosition().z
+					};
+					if (aiming < 20) {
+						frame = 0.5f;
+						aiming++;
+						break;
+					}
+					else {
+						frame = 0;
+						aiming = 0;
+						pat++;
+						break;
+					}
+				case 5:
+					AfterPos = {
+						pos.x,
+						0,
+						pos.z,
+					};
+					if (frame < 1.0f) {
+						frame += 0.08f;
+						if (rot.z > 45) {
+							rot.z = 45;
+							//vel = -vel;
+						}
+						if (rot.z < -45) {
+							rot.z = -45;
+							//vel = -vel;
+						}
+						break;
+
+					}
+					else {
+						damageCount++;
+						if (damageCount == 1) {
+							for (std::size_t i = 0; i < humanwave.size(); i++) {
+								if (!humanwave[i]->GetIsAlive()) {
+
+									humanwave[i]->Set(pos);
+									break;
+								}
+							}
+						}
+						Afterrot.z = 0;
+						frame = 1.0f;
+						if (coolT < 20) {
+							coolT++;
+							break;
+						}
+						else {
+							damageCount = 0;
+							coolT = 0;
+							frame = 0;
+							pat = 3;
+							AttackC++;
+							break;
+						}
+					}
+				default:
+					AttackC = 0;
+					pat = 1;
+					break;
+				}
+			}
+			else {
+				switch (pat) {
+				case 1:
+					AfterPos = {
+					pos.x,
+					3.0f,
+					pos.z
+					};
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						break;
+					}
+					else {
+						frame = 0;
+						pat++;
+						break;
+					}
+				case 2:
+					AfterPos = {
+					0,
+					3.0f,
+					0
+					};
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						break;
+					}
+					else {
+						frame = 0;
+						pat++;
+						break;
+					}
+				case 3:
+					AfterPos = {
+					10,
+					0,
+					0
+					};
+
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						break;
+					}
+					else {
+						frame = 0;
+						pat = 0;
+						AttackC = 0;
+						AttackCount = 0;
+						Effect = true;
+						active = false;
+						break;
+					}
+				default:
+					break;
+				}
+			}
+			pos = {
+	Ease(In,Cubic,frame,pos.x,AfterPos.x),
+	Ease(In,Cubic,frame,pos.y,AfterPos.y),
+		Ease(In,Cubic,frame,pos.z,AfterPos.z)
+			};
+			enemyobj->SetPosition(pos);
+			rot.y = Ease(In, Quint, 0.7f, rot.y, Afterrot.y);
+			enemyobj->SetRotation(rot);
+
+		}
+		//プレイヤーを挟むような攻撃
+		else if (action == 1) {
 			if (AttackC < 3) {
 				switch (pat) {
 				case 1:
@@ -233,7 +429,7 @@ void RightHand::Spec() {
 		}
 
 		//突進攻撃
-		else if (action == 1) {
+		else if (action == 2) {
 			if (pat == 1) {
 				AfterPos.y = 15.0f;
 				if (pos.y >= 14) {
@@ -605,11 +801,11 @@ void RightHand::End(int Timer) {
 }
 //特別な描画(今回の場合ぴよぴよ)
 void RightHand::specialDraw() {
-	/*if (stun) {
-		for (std::size_t i = 0; i < Stuntexture.size(); i++) {
-			Stuntexture[i]->Draw();
+	if (BossHP > 0) {
+		for (std::size_t i = 0; i < humanwave.size(); i++) {
+			humanwave[i]->Draw();
 		}
-	}*/
+	}
 }
 
 //左足と行動を合わせる

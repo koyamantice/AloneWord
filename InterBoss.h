@@ -196,6 +196,7 @@ protected:
 	bool Off = false;
 	int haveTimer = 0;
 	float haveEnemy = 0.0f;
+	int damageCount = 0;
 	//登場シーン
 	bool appearanceEnd = false;
 	int appearMove = 0;
