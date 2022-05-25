@@ -18,6 +18,8 @@ void ShockWave::Upda(Pastel* pastel,Player* player) {
 	if (CollideWave(player) && !CollideSafeWave(player) && Interval == 0 && player->GetPosition().y <= 1.0f) {
 		player->SetHp(player->GetHp() - 1);
 		Interval = 100;
+		player->SetCharge(0);
+		player->SetRotCount(0);
 	}
 	
 	player->SetInterval(Interval);

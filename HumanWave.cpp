@@ -37,6 +37,8 @@ void HumanWave::Upda() {
 
 		if (Collide() && (player->GetInterval() == 0)) {
 			player->SetHp(player->GetHp() - 0.1f);
+			player->SetCharge(0);
+			player->SetRotCount(0);
 			player->SetInterval(100);
 		}
 	}
