@@ -42,7 +42,10 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	objBossMap->SetRotation({ 0, 90, 0 });
 	objBossMap->SetScale({ 3.0f,1.5f,3.0f });
 
-	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
+	//sound宣言
+	//Audio::GetInstance()->LoadSound(2, "Resources/Sound/titleBGM.wav");
+	//Audio::GetInstance()->LoopWave(2, 0.1f);
+	
 	//srand(NULL);
 	// ライト生成
 	lightGroup = LightGroup::Create();
@@ -497,6 +500,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 			}
 		}
 		if (input->PushButton(input->Select)) {
+			//Audio::GetInstance()->StopWave(2);
 			expandchange->SetStartChange(true);
 			//SceneManager::GetInstance()->ChangeScene("StageSelect");
 
