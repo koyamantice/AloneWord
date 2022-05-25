@@ -12,7 +12,8 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 	// 3Dオブジェクトにカメラをセット
 	Object3d::SetCamera(camera);
 	// モデル読み込み
-	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
+	Audio::GetInstance()->LoadSound(1, "Resources/Sound/titleBGM.wav");
+	Audio::GetInstance()->LoopWave(1, 0.1f);
 	//srand(NULL);
 	// ライト生成
 	lightGroup = LightGroup::Create();
@@ -86,6 +87,7 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 	}
 	if (input->TriggerButton(input->Button_A)) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
+		Audio::GetInstance()->StopWave(1);
 		expandchange->SetStartChange(true);
 	}
 
