@@ -189,7 +189,7 @@ void Player::Update() {
 					RotCount++;
 					ChangeScale = true;
 					//Audio::GetInstance()->PlayWave("Resources/Sound/staminaUp.wav", 0.4f);
-					Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/staminaUp.wav", 0.4f);
+					Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/staminaUp.wav", 0.2f);
 				}
 				//チャージ時のエフェクト
 				if (RotCount<1) {
@@ -372,7 +372,7 @@ void Player::Update() {
 	}*/
 
 	if (chargeTimer % 40 == 0 && chargeTimer != 0 && !AttackFlag) {
-		Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/charge.wav", 0.4f);
+		Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/charge.wav", 0.2f);
 	}
 
 	// 接地状態

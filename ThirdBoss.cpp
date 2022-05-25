@@ -201,7 +201,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 			}
 		}
 		if (!bossstart) {
-			if (input->TriggerButton(input->Button_B)) {
+			if (input->TriggerButton(input->Select)) {
 				Skip = true;
 				Audio::GetInstance()->LoopWave(3, 0.05f);
 			}
@@ -643,6 +643,9 @@ void ThirdBoss::Draw(DirectXCommon* dxCommon) {
 				ui->Draw();
 				// パーティクルの描画
 				particleMan->Draw(dxCommon->GetCmdList());
+			}
+			else {
+				ui->SkipDraw();
 			}
 		}
 	}

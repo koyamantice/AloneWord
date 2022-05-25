@@ -616,6 +616,7 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
 	ui->Draw();
+	ui->SkipDraw();
 	Texture::PreDraw();
 	if (bossenemy->collideAttackArm()) {
 		Hit->Draw();

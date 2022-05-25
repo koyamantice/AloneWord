@@ -363,11 +363,11 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 		haveTimer++;
 		Off = true;
 		if (rot.z >= 29.900) {
-			MottiScale.x -= 0.03f;
-			MottiScale.y -= 0.03f;
-			MottiScale.z -= 0.03f;
+			MottiScale.x -= 0.06f;
+			MottiScale.y -= 0.06f;
+			MottiScale.z -= 0.06f;
 		}
-		if (haveTimer == 1000) {
+		if (haveTimer == 600) {
 			Off = false;
 			haveTimer = 0;
 			haveEnemy = 0.0f;
@@ -596,6 +596,7 @@ bool Pastel::collideAttackArm(Player* player) {
 			player->SetAttackFlag(false);
 			//–Ý‚ð‰P‚É“ü‚ê‚Ä‚¢‚é
 			if (BossHit == true) {
+				Audio::GetInstance()->PlayWave("Resources/Sound/strongL2.wav", 0.4f);
 				haveEnemy += weight;
 				if (haveEnemy < 11.0f) {
 					MottiScale.x += (weight / 10);

@@ -11,6 +11,8 @@ public:
 	void Finalize();
 	const void Draw();
 
+	const void SkipDraw();
+
 	void SetIsInvisible(const bool isInvisible) { this->isInvisible = isInvisible; }
 	void SetUp(const bool& Up) { this->Up = Up; }
 	void EaseScale();
