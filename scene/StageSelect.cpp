@@ -5,6 +5,7 @@
 #include "Collision.h"
 #include "imgui.h"
 #include <Easing.h>
+//静的メンバ変数の実態
 
 void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	//背景スプライト生成
@@ -366,11 +367,11 @@ Ease(In,Cubic,selectframe,cameratargetPos.z,Aftertargetpos.z)
 
 //描画
 void StageSelect::Draw(DirectXCommon* dxCommon) {
-	//ImGui::Begin("test");
+	ImGui::Begin("test");
 	//ImGui::SliderFloat("cameraPos.y", &cameraPos.y, 30, 0);
-	////ImGui::Text("endT::%d", EndTimer);
-	//ImGui::Unindent();
-	//ImGui::End();
+	ImGui::Text("clearCount::%d", ClearCount);
+	ImGui::Unindent();
+	ImGui::End();
 
 	Texture::PreDraw();
 	if (dark) {

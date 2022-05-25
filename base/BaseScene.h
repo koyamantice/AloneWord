@@ -92,6 +92,9 @@ protected:
 	XMFLOAT2 namePos = { 0.0f,0.0f };
 	XMFLOAT2 overPos = { 240.0f,140.0f };
 public:
+	//クリアカウント的なやつ
+	static int ClearCount;
+public:
 
 	virtual ~BaseScene()=default;
 

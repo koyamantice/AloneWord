@@ -10,6 +10,7 @@
 #include "CollisionManager.h"
 #include <Easing.h>
 #include "ImageManager.h"
+int BaseScene::ClearCount;
 void BossScene::Initialize(DirectXCommon* dxCommon) {
 	//インスタンス取得
 	collisionManager = CollisionManager::GetInstance();
@@ -456,6 +457,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 			}
 
 			if (expandchange->GetTimer() >= 58) {
+				
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 		}

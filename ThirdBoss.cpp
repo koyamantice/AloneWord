@@ -10,6 +10,7 @@
 #include "CollisionManager.h"
 #include "ImageManager.h"
 #include <Easing.h>
+//int BaseScene::ClearCount;
 //初期化
 void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	//インスタンス取得
