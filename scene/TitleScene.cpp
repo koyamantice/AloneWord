@@ -55,11 +55,11 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 	Input* input = Input::GetInstance();
 	//‚Ç‚Ì‘I‘ð‚ð‚·‚é‚©‚Å‚Ç‚ÌƒV[ƒ“‚És‚­‚©•Ï‚í‚é
 	if (expandchange->GetScale() == 1.0f) {
-		if (input->LeftTriggerStick(input->Down)) {
+		if (input->LeftTriggerStick(input->Down) && (SelectNumber <= 1)) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/cursorMove.wav", 0.2f);
 			SelectNumber++;
 		}
-		if (input->LeftTriggerStick(input->Up)) {
+		if (input->LeftTriggerStick(input->Up) && (SelectNumber >= 1)) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/cursorMove.wav", 0.2f);
 			SelectNumber--;
 		}
@@ -116,7 +116,12 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 	camera->SetEye(cameraPos);
 }
 //•`‰æ
-void TitleScene::Draw(DirectXCommon* dxCommon) {	
+void TitleScene::Draw(DirectXCommon* dxCommon) {
+	ImGui::Begin("test");
+	//ImGui::SliderFloat("cameraPos.y", &cameraPos.y, 30, 0);
+	ImGui::Text("clearCount::%d", SelectNumber);
+	ImGui::Unindent();
+	ImGui::End();
 	Sprite::PreDraw();
 	//”wŒi—p
 	sprite[back]->Draw();
