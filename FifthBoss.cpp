@@ -124,6 +124,13 @@ void FifthBoss::Initialize(DirectXCommon* dxCommon) {
 	righthand->SetPlayer(player);
 	righthand->Initialize(false);
 
+
+	rightwave = new RightHumanWave;
+	rightwave->Init();
+
+	leftwave = new LeftHumanWave;
+	leftwave->Init();
+
 	//“G
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i] = new Rice();
@@ -152,6 +159,8 @@ void FifthBoss::Finalize() {
 	player->Finalize();
 	lefthand->Finalize();
 	righthand->Finalize();
+	leftwave->Final();
+	rightwave->Final();
 	delete objBossMap;
 	delete objFloor;
 	delete modelBossMap;
@@ -379,7 +388,14 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 			righthand->Update();
 			lefthand->SetAct(human);
 			righthand->SetAct(human);
-		
+
+			if (righthand->GetHP() <= 0 && DethRight <= 50) {
+				DethRight++;
+			}
+
+			if (lefthand->GetHP() <= 0 && DethLeft <= 50) {
+				DethLeft++;
+			}
 			/*
 				if (righthand->GetHP() <= 0) {
 					DeadRight++;
@@ -400,6 +416,8 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 			}
 			ui->Update();
 			particleMan->Update();
+			rightwave->Upda(righthand, player);
+			leftwave->Upda(lefthand, player);
 			objSphere->Update();
 			cameraPos.x = player->GetPosition().x;
 			cameraPos.y = player->GetPosition().y + distanceY;
@@ -439,6 +457,8 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 
 			if (EndTimer == 300) {
 				EndNumber++;
+				DethLeft = 0;
+				DethRight = 0;
 			}
 		}
 		else if (EndNumber == 2) {
@@ -606,14 +626,19 @@ void FifthBoss::Draw(DirectXCommon* dxCommon) {
 	}
 	objFloor->Draw();
 	objBedroom->Draw();
+	Texture::PreDraw();
+	if (!end) {
+		leftwave->Draw();
+		rightwave->Draw();
+	}
 
 	if (!gameover) {
 		//bossenemy->Draw();
-		if (righthand->GetHP() > 0 || end) {
+		if (righthand->GetHP() > 0 || end && DethRight <= 2) {
 			righthand->Draw();
 		}
 
-		if (lefthand->GetHP() > 0 || end) {
+		if (lefthand->GetHP() > 0 || end && DethLeft <= 2) {
 			lefthand->Draw();
 		}
 	}

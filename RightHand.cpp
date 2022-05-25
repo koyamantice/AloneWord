@@ -10,10 +10,6 @@ using namespace DirectX;
 RightHand::RightHand() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::RightHand_Open);
 	hand_closemodel = ModelManager::GetIns()->GetModel(ModelManager::RightHand_Close);
-	for (std::size_t i = 0; i < humanwave.size(); i++) {
-		humanwave[i] = new HumanWave;
-		humanwave[i]->Init();
-	}
 }
 
 //初期化
@@ -67,17 +63,10 @@ void RightHand::Initialize(bool shadow) {
 void RightHand::Finalize() {
 	//delete enemyobj;
 	delete texture;
-	for (std::size_t i = 0; i < humanwave.size(); i++) {
-		humanwave[i]->Final();
-	}
 }
 
 //ボスの行動
 void RightHand::Spec() {
-	for (std::size_t i = 0; i < humanwave.size(); i++) {
-		humanwave[i]->Upda();
-		humanwave[i]->SetPlayer(player.get());
-	}
 	XMFLOAT3 AfterPos{};
 	if (stateNumber == Open) {
 		enemyobj->SetModel(model);
@@ -197,16 +186,6 @@ void RightHand::Spec() {
 
 					}
 					else {
-						damageCount++;
-						if (damageCount == 1) {
-							for (std::size_t i = 0; i < humanwave.size(); i++) {
-								if (!humanwave[i]->GetIsAlive()) {
-
-									humanwave[i]->Set(pos);
-									break;
-								}
-							}
-						}
 						Afterrot.z = 0;
 						frame = 1.0f;
 						if (coolT < 20) {
@@ -802,11 +781,7 @@ void RightHand::End(int Timer) {
 }
 //特別な描画(今回の場合ぴよぴよ)
 void RightHand::specialDraw() {
-	if (BossHP > 0) {
-		for (std::size_t i = 0; i < humanwave.size(); i++) {
-			humanwave[i]->Draw();
-		}
-	}
+
 }
 
 //左足と行動を合わせる

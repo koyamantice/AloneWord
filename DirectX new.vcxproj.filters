@@ -261,11 +261,14 @@
     <ClCompile Include="FifthBoss.cpp">
       <Filter>stage\プレイマップ\人間</Filter>
     </ClCompile>
-    <ClCompile Include="HumanWave.cpp">
+    <ClCompile Include="LeftHumanWave.cpp">
       <Filter>stage\プレイマップ\人間</Filter>
     </ClCompile>
     <ClCompile Include="Save.cpp">
       <Filter>stage\プレイマップ</Filter>
+    </ClCompile>
+    <ClCompile Include="RightHumanWave.cpp">
+      <Filter>stage\プレイマップ\人間</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -521,11 +524,14 @@
     <ClInclude Include="FifthBoss.h">
       <Filter>stage\プレイマップ\人間</Filter>
     </ClInclude>
-    <ClInclude Include="HumanWave.h">
+    <ClInclude Include="LeftHumanWave.h">
       <Filter>stage\プレイマップ\人間</Filter>
     </ClInclude>
     <ClInclude Include="Save.h">
       <Filter>stage\プレイマップ</Filter>
+    </ClInclude>
+    <ClInclude Include="RightHumanWave.h">
+      <Filter>stage\プレイマップ\人間</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
