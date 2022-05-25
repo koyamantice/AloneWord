@@ -575,55 +575,24 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 	if (sizeof(enemy) > 2) {//配列のサイズ確認
 		for (int colA = 0; colA < enemy.size(); colA++) {
 			for (int colB = 1; colB < enemy.size(); colB++) {
-				if (!enemy[colA]->GetEnemyCatcth() && !enemy[colB]->GetEnemyCatcth()) {
-					if (Collision::CircleCollision(enemy[colA]->GetPosition().x, enemy[colA]->GetPosition().z, 1.0f, enemy[colB]->GetPosition().x, enemy[colB]->GetPosition().z, 1.0f) && colA != colB) {//当たり判定と自機同士の当たり判定の削除
-						if (!enemy[colA]->GetHit()) {
-							enemy[colA]->SetHit(true);
-							enemy[colA]->SetExP(enemy[colB]->GetPosition());
+				if (enemy[colA]->GetIsAlive() && enemy[colB]->GetIsAlive()) {
+					if (!enemy[colA]->GetEnemyCatcth() && !enemy[colB]->GetEnemyCatcth()) {
+						if (Collision::CircleCollision(enemy[colA]->GetPosition().x, enemy[colA]->GetPosition().z, 1.0f, enemy[colB]->GetPosition().x, enemy[colB]->GetPosition().z, 1.0f) && colA != colB) {//当たり判定と自機同士の当たり判定の削除
+							if (!enemy[colA]->GetHit()) {
+								enemy[colA]->SetHit(true);
+								enemy[colA]->SetExP(enemy[colB]->GetPosition());
+							}
+							if (!enemy[colB]->GetHit()) {
+								enemy[colB]->SetHit(true);
+								enemy[colB]->SetExP(enemy[colA]->GetPosition());
+							}
+							break;
 						}
-						if (!enemy[colB]->GetHit()) {
-							enemy[colB]->SetHit(true);
-							enemy[colB]->SetExP(enemy[colA]->GetPosition());
-						}
-						break;
 					}
 				}
 			}
 		}
 	}
-
-	//Ray ray;
-	//ray.start = { player->GetPosition().x,player->GetPosition().y + 3,player->GetPosition().z,1 };
-	//ray.dir = { 0.0f,0.025f,-1.0f};
-	//RaycastHit raycastHit;
-
-	//if (!collisionManager->Raycast(ray, &raycastHit)) {
-	//	if (distanceZ <= 10.0f) {
-	//		distanceZ += 0.25f;
-	//	}
-
-	//	if (distanceY >= 10.0f) {
-	//		distanceY -= 0.25f;
-	//	}
-	//}
-	//else {
-	//	if (distanceZ >= 6.0f) {
-	//		distanceZ -= 0.4f;
-	//	}
-
-	//	if (distanceY <= 18.0f) {
-	//		distanceY += 0.25f;
-	//	}
-	//}
-
-	// 全ての衝突をチェック
-	//collsionManager->CheckAllCollisions();
-	/*DebugText::GetInstance()->Print("PUSH to RB!!",200, 100,1.0f);
-	DebugText::GetInstance()->Print("PUSH to A!!", 200, 115, 1.0f);*/
-	//DebugText::GetInstance()->Print("RB or LB :Rotate", 900, 620, 2.0f);
-	//DebugText::GetInstance()->Print("A         :Hand", 900, 650, 2.0f);
-	//DebugText::GetInstance()->Print("PUSH to RB!!", 1040, 620, 2.0f);
-	//DebugText::GetInstance()->Print("PUSH to A!!", 1040, 660, 2.0f);
 }
 
 //描画
@@ -697,24 +666,21 @@ void SecondBoss::Draw(DirectXCommon* dxCommon) {
 	//		exp[i][j]->Draw();
 	//	}
 	//}
-	if (bossstart && !end && !gameover) {
-		ui->Draw();
-		// パーティクルの描画
-		particleMan->Draw(dxCommon->GetCmdList());
-	}
-
-
 	if (end) {
 		WhiteFilter->Draw();
 	}
-	else {
+	if (!end) {
 		if (!gameover) {
 			for (std::size_t i = 0; i < enemy.size(); i++) {
 				enemy[i]->Draw();
 			}
+			if (bossstart) {
+				ui->Draw();
+				// パーティクルの描画
+				particleMan->Draw(dxCommon->GetCmdList());
+			}
 		}
 	}
-
 	Sprite::PreDraw();
 
 	//前面用

@@ -643,20 +643,18 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 	//		exp[i][j]->Draw();
 	//	}
 	//}
-	if (bossstart && !end && !gameover) {
-		ui->Draw();
-		// パーティクルの描画
-		particleMan->Draw(dxCommon->GetCmdList());
-	}
-
-
 	if (end) {
 		WhiteFilter->Draw();
 	}
-	else {
+	if (!end) {
 		if (!gameover) {
 			for (std::size_t i = 0; i < enemy.size(); i++) {
 				enemy[i]->Draw();
+			}
+			if (bossstart) {
+				ui->Draw();
+				// パーティクルの描画
+				particleMan->Draw(dxCommon->GetCmdList());
 			}
 		}
 	}

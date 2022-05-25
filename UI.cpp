@@ -110,7 +110,7 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	SpinPos[1] = { 1200.0f,670.0f };
 	for (int i = 0; i < 3; i++) {
 		SpinBar[i] = Sprite::Create(ImageManager::SpinBar, { 0.0f,0.0f });
-		SpinBar[i]->SetSize({ 0,0 });
+		SpinBar[i]->SetSize({ 60,0 });
 		SpinBar[i]->SetAnchorPoint({ 0.5f,1.0f });
 		SpinBar[i]->SetScale(1.5f);
 		SpinBar[i]->SetPosition(SpinPos[1]);
@@ -203,7 +203,7 @@ void UI::Update() {
 				SpinBar[1]->SetSize({ 60.0f,350.0f });
 				AfterSpin[1].y = 350.0f;
 				if (convert<300) {
-					AfterSpin[2].y = ((float)((int)convert % 101) / 100) * 350.0f;
+					AfterSpin[2].y = ((float)((int)convert % 100) / 100) * 350.0f;
 				} else {
 					AfterSpin[2].y = 350.0f;
 				}
