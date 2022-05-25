@@ -367,6 +367,7 @@ bool Rice::collideArm() {
 	bool AttackFlag = player->GetAttackFlag();
 	if (IsAlive && AttackFlag && !EnemyCatch && add == false && !Exp) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.8f, Armpos.x, Armpos.y, Armpos.z, 0.8f) == true) {
+			Audio::GetInstance()->PlayWave("Resources/Sound/catchEnemy.wav", 0.08f);
 			EnemyCatch = true;
 			armweight += 1.0f;
 			pos.y = 0.0f;
