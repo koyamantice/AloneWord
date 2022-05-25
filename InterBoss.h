@@ -166,7 +166,7 @@ protected:
 	bool pause = false;
 	bool respawn = false;
 	//
-	float BossHP = 40;
+	float BossHP = 1;
 	bool BossHit = false;
 	bool Effect = false;
 	//ボスのAI関係(共通)

@@ -76,7 +76,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	//}
 
 	//サウンド宣言&プレイ
-	Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
+	//Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
 
 	//srand(NULL);
 	// ライト生成
@@ -460,7 +460,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 
 			if (expandchange->GetTimer() >= 58) {
 				save->ClearSave();
-				Audio::GetInstance()->LoopWave(4, 0.2f);
+				//Audio::GetInstance()->LoopWave(4, 0.2f);
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 		}
@@ -543,7 +543,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 			}
 
 			if (expandchange->GetTimer() >= 58) {
-				Audio::GetInstance()->LoopWave(4, 0.2f);
+				//Audio::GetInstance()->LoopWave(4, 0.2f);
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 
@@ -560,11 +560,11 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		effect[i]->Update(bossenemy);
 	}
 
-	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
-		Audio::GetInstance()->StopWave(0);
-		Audio::GetInstance()->StopWave(1);
-		Audio::GetInstance()->LoopWave(1, 0.7f);
-	}
+	//if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
+	//	Audio::GetInstance()->StopWave(0);
+	//	Audio::GetInstance()->StopWave(1);
+	//	Audio::GetInstance()->LoopWave(1, 0.7f);
+	//}
 
 	//敵同士の当たり判定
 	if (sizeof(enemy) > 2) {//配列のサイズ確認
