@@ -25,6 +25,7 @@ private:
 	Player* player = nullptr;
 	InterBoss* boss = nullptr;
 	InterBoss* boss2 = nullptr;
+	Sprite* Skip=nullptr;//“G‚ÌHP
 	Sprite* BossHp[3]{};//“G‚ÌHP
 	Sprite* BossHp2[3]{};//“G‚ÌHP
 	Sprite* PlaHp[3]{};//ƒvƒŒƒCƒ„[‚ÌHP
