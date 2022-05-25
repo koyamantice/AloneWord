@@ -14,6 +14,8 @@ Pastel::Pastel() {
 	Millobj = TouchableObject::Create(Millmodel);
 	Mottimodel = ModelManager::GetIns()->GetModel(ModelManager::SiroMotti);
 	Mottiobj = new Object3d();
+	Mottiobj = Object3d::Create();
+	Mottiobj->SetModel(Mottimodel);
 	Platformmodel = ModelManager::GetIns()->GetModel(ModelManager::Platform);
 	for (std::size_t i = 0; i < Platformobj.size(); i++) {
 		Platformobj[i] = TouchableObject::Create(Platformmodel);
@@ -22,6 +24,10 @@ Pastel::Pastel() {
 		attensiontexture[i] = Texture::Create(ImageManager::Attension, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 		attensiontexture[i]->TextureCreate();
 	}
+
+	//影(今回は使う)
+	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	texture->TextureCreate();
 }
 
 //初期化
@@ -42,31 +48,26 @@ void Pastel::Initialize(bool shadow) {
 	//ステージのオブジェクト
 	//Millobj = Object3d::Create();
 	//Millobj->SetModel(Millmodel);
-	Millobj = TouchableObject::Create(Millmodel);
+	
 	Millpos = { 0.0f,-2.0f,0.0f };
 	Millobj->SetPosition(Millpos);
 	Millobj->SetRotation({0,90,0});
 	Millobj->SetScale({ 1.0f,1.0f,1.0f });
-	Mottiobj = Object3d::Create();
-	Mottiobj->SetModel(Mottimodel);
+	
 	Mottiobj->SetPosition({ 0.0f,1.0f,0.0f });
 	Mottiobj->SetScale(MottiScale);
 	for (std::size_t i = 0; i < Platformobj.size(); i++) {
-		Platformobj[i] = TouchableObject::Create(Platformmodel);
 		Platformobj[i]->SetModel(Platformmodel);
 		Plapos[i] = { 0.0f,-30.0f,0.0f };
 		Platformobj[i]->SetScale({ 1.2f,1.2f,1.2f });
 		Platformobj[i]->SetPosition(Plapos[i]);
 	}
-	//影(今回は使う)
-	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
-	texture->TextureCreate();
+
 	//texture->SetColor({ 1,1,1,1 });
 	texture->SetPosition(pos.x, -1, pos.z);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.3f,0.3f,0.3f });
 	for (std::size_t i = 0; i < Platformobj.size(); i++) {
-		Platformobj[i] = TouchableObject::Create(Platformmodel);
 		//Plattexture[i] = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 		Plattexture[i]->SetRotation({90,0,0});
 		Plattexture[i]->SetScale({ 0.5f,0.5f,0.5f });

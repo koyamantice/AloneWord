@@ -108,6 +108,10 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	BlackFilter->SetColor(BlackColor);
 	GameOverSprite = Sprite::Create(ImageManager::GameOver, overPos);
 	GameOverSprite->SetColor(GameOverColor);
+
+	SkipSprite = Sprite::Create(ImageManager::Change, { 0.0f,0.0f });
+	SkipSprite->SetPosition(Skippos);
+	SkipSprite->SetAnchorPoint({ 0.5f, 0.5f });
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i] = new Effect();
 		effect[i]->Initialize();
@@ -177,7 +181,28 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 	
 	//Å‰‚Ì‰‰o(“±“ü)
 	if (!end && !gameover) {
+		if (Skip == true) {
+			SkipTimer++;
+			if (SkipTimer <= 60) {
+				SkipSprite->SetScale(1.1f);
+			}
+			else {
+				bossenemy->Initialize();
+				bossstart = true;
+				SkipSprite->SetScale(0.9f);
+				if (SkipTimer == 140) {
+					Skip = false;
+					SkipTimer = 0;
+					SkipSprite->SetScale(1.0f);
+				}
+			}
+		}
 		if (!bossstart) {
+			if (input->TriggerButton(input->Button_B)) {
+				Skip = true;
+				Audio::GetInstance()->LoopWave(3, 0.05f);
+			}
+
 			if (BlackColor.w >= 0.0f) {
 				BlackColor.w -= 0.005f;
 				frame = 0.0f;
@@ -602,6 +627,11 @@ void ThirdBoss::Draw(DirectXCommon* dxCommon) {
 			BlackFilter->Draw();
 			bossName->Draw();
 		}
+
+		if (SkipTimer != 0) {
+			SkipSprite->Draw();
+		}
+
 
 	}
 	else {

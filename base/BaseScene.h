@@ -76,6 +76,9 @@ protected:
 	int overTimer = 0;
 	float overframe = 0.0f;
 	float nameframe = 0.0f;
+	//スキップのための演出
+	bool Skip = false;
+	int SkipTimer = 0;
 	//スプライトやテクスチャ
 	Sprite* WhiteFilter = nullptr;
 	XMFLOAT4 WhiteColor = { 1.0f,1.0f,1.0f,0.0f };
@@ -84,6 +87,8 @@ protected:
 	Sprite* GameOverSprite = nullptr;
 	XMFLOAT4 GameOverColor = { 1.0f,1.0f,1.0f,0.0f };
 	Sprite* bossName = nullptr;
+	Sprite* SkipSprite = nullptr;
+	XMFLOAT2 Skippos = { 640.0f,360.0f, };
 	XMFLOAT2 namePos = { 0.0f,0.0f };
 	XMFLOAT2 overPos = { 240.0f,140.0f };
 public:
