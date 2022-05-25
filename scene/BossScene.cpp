@@ -76,8 +76,8 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	//}
 
 	//サウンド宣言&プレイ
-	//Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
-
+	Audio::GetInstance()->LoadSound(5, "Resources/Sound/inBoss.wav");
+	Audio::GetInstance()->LoopWave(5, 0.3f);
 	//srand(NULL);
 	// ライト生成
 	lightGroup = LightGroup::Create();
@@ -187,6 +187,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		}
 		if (!bossstart) {
 			if (input->TriggerButton(input->Select)) {
+				Audio::GetInstance()->StopWave(5);
 				Skip = true;
 			}
 
@@ -390,6 +391,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		}
 		//戦闘開始
 		else {
+			Audio::GetInstance()->StopWave(5);
 			player->Update();
 			bossenemy->Update();
 			for (std::size_t i = 0; i < enemy.size(); i++) {

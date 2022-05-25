@@ -97,6 +97,8 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 
 	//サウンド宣言&プレイ
 	//Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
+	Audio::GetInstance()->LoadSound(5, "Resources/Sound/inBoss.wav");
+	Audio::GetInstance()->LoopWave(5, 0.3f);
 	
 	//srand(NULL);GetFBXModel(ModelManager::MottiMove);
 	// ライト生成
@@ -204,6 +206,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 		}
 		if (!bossstart) {
 			if (input->TriggerButton(input->Select)) {
+				Audio::GetInstance()->StopWave(5);
 				Skip = true;
 			}
 
@@ -376,6 +379,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 		}
 		//戦闘開始
 		else {
+			Audio::GetInstance()->StopWave(5);
 			player->Update();
 			leftshose->Update();
 			if (rightshose->GetHP() > 0) {

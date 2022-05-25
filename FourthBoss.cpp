@@ -65,7 +65,8 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 
 	//サウンド宣言&プレイ
 	//Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
-	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
+	Audio::GetInstance()->LoadSound(5, "Resources/Sound/inBoss.wav");
+	Audio::GetInstance()->LoopWave(5, 0.3f);
 	//srand(NULL);
 	// ライト生成
 	lightGroup = LightGroup::Create();
@@ -198,6 +199,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 		}
 		if (!bossstart) {
 			if (input->TriggerButton(input->Select)) {
+				Audio::GetInstance()->StopWave(5);
 				Skip = true;
 			}
 
@@ -357,6 +359,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 		}
 		//戦闘開始
 		else {
+			Audio::GetInstance()->StopWave(5);
 			player->Update();
 			pastel->Update();
 			pastel->collideAttackArm(player);
