@@ -2,6 +2,8 @@
 #include "BaseScene.h"
 #include "LeftHand.h"
 #include "RightHand.h"
+#include"LeftHumanWave.h"
+#include"RightHumanWave.h"
 #include "Human.h"
 #include "UI.h"
 #include <array>       // ヘッダファイルインクルード
@@ -53,6 +55,8 @@ private:
 	array<InterEnemy*, 6> enemy;
 	LeftHand* lefthand = nullptr;
 	RightHand* righthand = nullptr;
+	RightHumanWave* rightwave = nullptr;
+	LeftHumanWave* leftwave = nullptr;
 	Human* human = nullptr;
 	//std::array<std::array<Exp*, 6>, 5> exp;
 
@@ -61,5 +65,7 @@ private:
 	ParticleManager* particleMan = nullptr;
 	ExpandChange* expandchange = nullptr;
 	bool act = false;
+	int DethRight = 0;
+	int DethLeft = 0;
 };
 

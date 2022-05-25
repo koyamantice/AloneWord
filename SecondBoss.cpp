@@ -381,16 +381,14 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 				rightshose->HitShose(leftshose);
 			}
 			rightshose->Update();
-		/*	
-			if (rightshose->GetHP() <= 0) {
-				DeadRight++;
-				leftshose->SetPosition({ 0.0f,-20.8f,0.0f });
+			
+			if (rightshose->GetHP() <= 0 && DethRight <= 50) {
+				DethRight++;
 			}
 
-			if (leftshose->GetHP() <= 0) {
-				DeadLeft++;
-				rightshose->SetPosition({ 0.0f,-20.8f,0.0f });
-			}*/
+			if (leftshose->GetHP() <= 0 && DethLeft <= 50) {
+				DethLeft++;
+			}
 			for (std::size_t i = 0; i < enemy.size(); i++) {
 				enemy[i]->Update();
 				enemy[i]->SetEnemy();
@@ -439,6 +437,8 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 				}
 
 				if (EndTimer == 300) {
+					DethLeft = 0;
+					DethRight = 0;
 					EndNumber++;
 				}
 			}
@@ -597,6 +597,18 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 
 //描画
 void SecondBoss::Draw(DirectXCommon* dxCommon) {
+	ImGui::Begin("test");
+	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
+	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
+	/*ImGui::SliderFloat("enemypos.z", &Aftereyepos.z, 50, 0);
+	ImGui::SliderFloat("frame.y", &frame, 30, 0);
+	ImGui::SliderFloat("color.w", &BlackColor.w, 30, 0);
+	ImGui::Text("overT::%d", overTimer);*/
+	ImGui::Text("DethLeft::%d", DethLeft);
+	ImGui::Text("DethRight::%d", DethRight);
+	ImGui::Unindent();
+	ImGui::End();
+
 	//各オブジェクトの描画
 	Object3d::PreDraw();
 	if (!gameover) {
@@ -607,11 +619,11 @@ void SecondBoss::Draw(DirectXCommon* dxCommon) {
 
 	if (!gameover) {
 		//bossenemy->Draw();
-		if (rightshose->GetHP() > 0 || end) {
+		if (rightshose->GetHP() > 0 || end && DethRight <= 2) {
 			rightshose->Draw();
 		}
 
-		if (leftshose->GetHP() > 0 || end) {
+		if (leftshose->GetHP() > 0 || end && DethLeft <= 2) {
 			leftshose->Draw();
 		}
 	}

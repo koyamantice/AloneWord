@@ -275,7 +275,7 @@
     <ClCompile Include="FPSManager\FPSManager.cpp" />
     <ClCompile Include="HotWater.cpp" />
     <ClCompile Include="Human.cpp" />
-    <ClCompile Include="HumanWave.cpp" />
+    <ClCompile Include="LeftHumanWave.cpp" />
     <ClCompile Include="ImageManager.cpp" />
     <ClCompile Include="imgui\imgui.cpp" />
     <ClCompile Include="imgui\imgui_demo.cpp" />
@@ -296,8 +296,10 @@
     <ClCompile Include="Pastel.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="RightHand.cpp" />
+    <ClCompile Include="RightHumanWave.cpp" />
     <ClCompile Include="RightShose.cpp" />
     <ClCompile Include="ExpandChange.cpp" />
+    <ClCompile Include="Save.cpp" />
     <ClCompile Include="scene\BossScene.cpp" />
     <ClCompile Include="scene\ClearScene.cpp" />
     <ClCompile Include="scene\GameoverScene.cpp" />
@@ -331,9 +333,11 @@
     <ClInclude Include="ExpandChange.h" />
     <ClInclude Include="FifthBoss.h" />
     <ClInclude Include="Human.h" />
-    <ClInclude Include="HumanWave.h" />
+    <ClInclude Include="LeftHumanWave.h" />
     <ClInclude Include="LeftHand.h" />
     <ClInclude Include="RightHand.h" />
+    <ClInclude Include="RightHumanWave.h" />
+    <ClInclude Include="Save.h" />
     <ClInclude Include="ShockWave.h" />
     <ClInclude Include="base\AbstractSceneFactory.h" />
     <ClInclude Include="base\Audio.h" />

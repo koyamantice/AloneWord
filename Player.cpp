@@ -367,9 +367,9 @@ void Player::Update() {
 	RaycastHit raycastHit;
 
 	//ここで音楽を鳴らしている
-	if (move_count % 40 == 0 && move_count != 0) {
+	/*if (move_count % 40 == 0 && move_count != 0) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/walk.wav", 0.4f);
-	}
+	}*/
 
 	if (chargeTimer % 40 == 0 && chargeTimer != 0 && !AttackFlag) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/charge.wav", 0.4f);
@@ -491,9 +491,9 @@ void Player::SelectUp() {
 	}
 
 	//ここで音楽を鳴らしている
-	if (move_count % 40 == 0 && move_count != 0) {
-		Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/walk.wav", 0.4f);
-	}
+	//if (move_count % 40 == 0 && move_count != 0) {
+	//	Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/walk.wav", 0.4f);
+	//}
 
 	// 落下処理
 	if (!onGround) {
@@ -554,6 +554,7 @@ void Player::TitleUp() {
 
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
+
 	//ImGui::Begin("test");
 	////ImGui::SliderFloat("pos.x", &position.x, 50, -50);
 	///*ImGui::SliderFloat("HP", &HP, 10, 0);

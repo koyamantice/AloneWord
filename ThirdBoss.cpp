@@ -10,6 +10,7 @@
 #include "CollisionManager.h"
 #include "ImageManager.h"
 #include <Easing.h>
+//int BaseScene::ClearCount;
 //初期化
 void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	//インスタンス取得
@@ -142,6 +143,8 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	ui = new UI(player, bossenemy);
 	//スプライト生成
 	expandchange = new ExpandChange();
+
+	save = new Save();
 	//ui->Initialize();
 }
 //開放
@@ -412,6 +415,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 			}
 
 			if (expandchange->GetTimer() >= 58) {
+				save->ClearSave();
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 		}
@@ -543,29 +547,6 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 			}
 		}
 	}
-
-	//Ray ray;
-	//ray.start = { player->GetPosition().x,player->GetPosition().y + 3,player->GetPosition().z,1 };
-	//ray.dir = { 0,0.025f,-1,0 };
-	//RaycastHit raycastHit;
-
-	//if (!collisionManager->Raycast(ray, &raycastHit)) {
-	//	if (distanceZ <= 10.0f) {
-	//		distanceZ += 0.25f;
-	//	}
-
-	//	if (distanceY >= 10.0f) {
-	//		distanceY -= 0.25f;
-	//	}
-	//} else {
-	//	if (distanceZ >= 6.0f) {
-	//		distanceZ -= 0.4f;
-	//	}
-
-	//	if (distanceY <= 18.0f) {
-	//		distanceY += 0.25f;
-	//	}
-	//}
 
 	////その他シーン移行
 	//if (bossenemy->GetHP() <= 0) {
