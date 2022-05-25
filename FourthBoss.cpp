@@ -64,7 +64,7 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	//}
 
 	//サウンド宣言&プレイ
-	Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
+	//Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
 	//srand(NULL);
 	// ライト生成
@@ -428,7 +428,11 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 			}
 
 			if (expandchange->GetTimer() >= 58) {
-				Audio::GetInstance()->LoopWave(4, 0.2f);
+				//Audio::GetInstance()->LoopWave(4, 0.2f);
+				if (!save->GetFouthClear()) {
+					save->ClearSave();
+					save->FouthSave();
+				}
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 		}
@@ -512,7 +516,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 			}
 
 			if (expandchange->GetTimer() >= 58) {
-				Audio::GetInstance()->LoopWave(4, 0.2f);
+				//Audio::GetInstance()->LoopWave(4, 0.2f);
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 

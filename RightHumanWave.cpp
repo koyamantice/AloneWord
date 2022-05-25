@@ -53,8 +53,9 @@ void RightHumanWave::SetWave(RightHand* righthand) {
 	int action = righthand->GetAction();
 	XMFLOAT3 pos = righthand->GetPosition();
 	int pat = righthand->GetPat();
+	int HP = righthand->GetHP();
 	//ÕŒ‚”g‚ÌˆÊ’u‚ðŒˆ‚ß‚é
-	if (action == 0 && pos.y == 0.0f && pat == 5 && !expand) {
+	if (action == 0 && pos.y == 0.0f && pat == 5 && !expand && HP > 0) {
 		this->pos.x = pos.x;
 		this->pos.y = pos.y + 1.0f;
 		this->pos.z = pos.z;
