@@ -66,6 +66,7 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	//サウンド宣言&プレイ
 	//Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
 	Audio::GetInstance()->LoadSound(5, "Resources/Sound/inBoss.wav");
+	Audio::GetInstance()->LoadSound(7, "Resources/Sound/pestleBGM.wav");
 	Audio::GetInstance()->LoopWave(5, 0.3f);
 	//srand(NULL);
 	// ライト生成

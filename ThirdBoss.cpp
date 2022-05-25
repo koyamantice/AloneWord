@@ -27,12 +27,6 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	// グラフィックスパイプライン生成
 	FBXObject3d::CreateGraphicsPipeline();
 
-	//サウンド宣言&プレイ
-	Audio::GetInstance()->LoadSound(3, "Resources/Sound/greenTeaBGM.wav");
-	//Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
-	Audio::GetInstance()->LoopWave(3, 0.4f);
-
-	
 	//各オブジェクトの初期化
 	//プレイヤー
 	player = new Player();
@@ -130,7 +124,9 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	
 	//サウンド宣言&プレイ
 	Audio::GetInstance()->LoadSound(5, "Resources/Sound/inBoss.wav");
+	Audio::GetInstance()->LoadSound(3, "Resources/Sound/greenTeaBGM.wav");
 	Audio::GetInstance()->LoopWave(5, 0.3f);
+	
 	//srand(NULL);
 	// ライト生成
 	lightGroup = LightGroup::Create();
@@ -209,7 +205,6 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 			if (input->TriggerButton(input->Select)) {
 				Audio::GetInstance()->StopWave(5);
 				Skip = true;
-				Audio::GetInstance()->LoopWave(3, 0.05f);
 			}
 
 			if (BlackColor.w >= 0.0f) {
@@ -309,7 +304,6 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 				}
 				else {
 					bossstart = true;
-					Audio::GetInstance()->LoopWave(3, 0.05f);
 					appearanceTimer = 0;
 					appearanceNumber = 0;
 					frame = 0;

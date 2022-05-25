@@ -98,6 +98,7 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	//サウンド宣言&プレイ
 	//Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
 	Audio::GetInstance()->LoadSound(5, "Resources/Sound/inBoss.wav");
+	Audio::GetInstance()->LoadSound(8, "Resources/Sound/shoseBGM.wav");
 	Audio::GetInstance()->LoopWave(5, 0.3f);
 	
 	//srand(NULL);GetFBXModel(ModelManager::MottiMove);
