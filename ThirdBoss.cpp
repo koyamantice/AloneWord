@@ -27,8 +27,11 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	// グラフィックスパイプライン生成
 	FBXObject3d::CreateGraphicsPipeline();
 
-	//サウンド初期化andプレイ
+	//サウンド宣言&プレイ
 	Audio::GetInstance()->LoadSound(3, "Resources/Sound/greenTeaBGM.wav");
+	Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
+	Audio::GetInstance()->LoopWave(3, 0.4f);
+
 	
 	//各オブジェクトの初期化
 	//プレイヤー
@@ -416,6 +419,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 
 			if (expandchange->GetTimer() >= 58) {
 				save->ClearSave();
+				Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 		}
@@ -500,6 +504,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 			}
 
 			if (expandchange->GetTimer() >= 58) {
+				Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 

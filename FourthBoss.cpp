@@ -18,9 +18,6 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	Texture::SetCamera(camera);
 	// 3Dオブジェクトにカメラをセット
 	Object3d::SetCamera(camera);
-	//サウンド宣言&プレイ
-	Audio::GetInstance()->LoadSound(3, "Resources/Sound/selectBGM.wav");
-	Audio::GetInstance()->LoopWave(3, 0.2f);
 	//各オブジェクトの初期化
 
 	//ステージ床
@@ -66,6 +63,8 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	//	}
 	//}
 
+	//サウンド宣言&プレイ
+	Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
 	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
 	//srand(NULL);
 	// ライト生成
@@ -429,6 +428,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 			}
 
 			if (expandchange->GetTimer() >= 58) {
+				Audio::GetInstance()->LoopWave(4, 0.2f);
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 		}
@@ -512,6 +512,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 			}
 
 			if (expandchange->GetTimer() >= 58) {
+				Audio::GetInstance()->LoopWave(4, 0.2f);
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 

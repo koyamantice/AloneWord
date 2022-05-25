@@ -95,7 +95,9 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	//	}
 	//}
 
-	Audio::GetInstance()->LoadSound(1, "Resources/BGM/NewWorld.wav");
+	//サウンド宣言&プレイ
+	Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
+	
 	//srand(NULL);GetFBXModel(ModelManager::MottiMove);
 	// ライト生成
 	lightGroup = LightGroup::Create();
@@ -460,6 +462,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 			}
 
 			if (expandchange->GetTimer() >= 58) {
+				Audio::GetInstance()->LoopWave(4, 0.2f);
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 		}
@@ -544,6 +547,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 			}
 
 			if (expandchange->GetTimer() >= 58) {
+				Audio::GetInstance()->LoopWave(4, 0.2f);
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 
