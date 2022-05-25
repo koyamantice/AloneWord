@@ -56,7 +56,7 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 	//どの選択をするかでどのシーンに行くか変わる
 	if (expandchange->GetScale() == 1.0f) {
 		if (input->LeftTriggerStick(input->Down)) {
-			Audio::GetInstance()->PlayWave("Resources/Sound/cursorMove.wav", 0.4f);
+			Audio::GetInstance()->PlayWave("Resources/Sound/cursorMove.wav", 0.2f);
 			SelectNumber++;
 		}
 		if (input->LeftTriggerStick(input->Up)) {
