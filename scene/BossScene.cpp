@@ -46,16 +46,6 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	// コライダーの追加
 	//objSphere->SetCollider(new SphereCollider);
 
-	//普通のテクスチャ(板ポリ)
-	/*limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
-	objBossMap->SetPosition({ 0,-1,10 });
-	objBossMap->SetScale({ 22,1,10 });
-	//譎ｮ騾壹・繝・け繧ｹ繝√Ε(譚ｿ繝昴Μ)
-	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
-	limit->TextureCreate();
-	limit->SetPosition({ 0.0f,0.01f,0.0f });
-	limit->SetRotation({ 90.0f,0, 0 });
-	limit->SetScale({ 6,5,5 });*/
 	//テクスチャ関係の初期化
 	bossName = Sprite::Create(ImageManager::select1, namePos);
 	bossName->SetAnchorPoint({ 1.0f,0.0f });
@@ -69,6 +59,10 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 
 	GameOverSprite = Sprite::Create(ImageManager::GameOver, overPos);
 	GameOverSprite->SetColor(GameOverColor);
+
+	SkipSprite = Sprite::Create(ImageManager::Change, { 0.0f,0.0f });
+	SkipSprite->SetPosition(Skippos);
+	SkipSprite->SetAnchorPoint({ 0.5f, 0.5f });
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i] = new Effect();
 		effect[i]->Initialize();
@@ -173,9 +167,29 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	ParticleManager::GetInstance()->Update();
 	//最初の演出(導入)
 	if (!end && !gameover) {
+		if (Skip == true) {
+			SkipTimer++;
+			if (SkipTimer <= 60) {
+				SkipSprite->SetScale(1.1f);
+			}
+			else {
+				bossstart = true;
+				SkipSprite->SetScale(0.9f);
+				if (SkipTimer == 140) {
+					Skip = false;
+					SkipTimer = 0;
+					SkipSprite->SetScale(1.0f);
+				}
+			}
+		}
 		if (!bossstart) {
+			if (input->TriggerButton(input->Button_B)) {
+				Skip = true;
+			}
+
 			player->Begin();
 			bossenemy->Begin();
+			
 			if (BlackColor.w >= 0.0f) {
 				BlackColor.w -= 0.005f;
 				frame = 0.0f;
@@ -605,16 +619,16 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 
 //描画
 void BossScene::Draw(DirectXCommon* dxCommon) {
-	//ImGui::Begin("test");
-	////ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
-	////ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
-	///*ImGui::SliderFloat("enemypos.z", &Aftereyepos.z, 50, 0);
-	//ImGui::SliderFloat("frame.y", &frame, 30, 0);
-	//ImGui::SliderFloat("color.w", &BlackColor.w, 30, 0);
-	//ImGui::Text("overT::%d", overTimer);*/
-	//ImGui::Text("overT::%d", overTimer);
-	//ImGui::Unindent();
-	//ImGui::End();
+	ImGui::Begin("test");
+	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
+	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
+	/*ImGui::SliderFloat("enemypos.z", &Aftereyepos.z, 50, 0);
+	ImGui::SliderFloat("frame.y", &frame, 30, 0);
+	ImGui::SliderFloat("color.w", &BlackColor.w, 30, 0);
+	ImGui::Text("overT::%d", overTimer);*/
+	ImGui::Text("overT::%d", SkipTimer);
+	ImGui::Unindent();
+	ImGui::End();
 
 	//各オブジェクトの描画
 	Object3d::PreDraw();
@@ -641,6 +655,10 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 		if (!bossstart) {
 			BlackFilter->Draw();
 			bossName->Draw();
+		}
+
+		if (SkipTimer != 0) {
+			SkipSprite->Draw();
 		}
 
 	}
@@ -677,6 +695,7 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 			}
 		}
 	}
+
 
 	Sprite::PreDraw();
 
