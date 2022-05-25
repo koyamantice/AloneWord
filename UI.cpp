@@ -122,6 +122,9 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	SpinGauge->SetScale(1.5f);
 	SpinGauge->SetAnchorPoint({ 0.5f,0.5f });
 	SpinGauge->SetPosition(SpinPos[0]);
+	//
+	Skip = Sprite::Create(ImageManager::textSkip, { 0.0f,0.0f });
+
 }
 //更新
 void UI::Update() {
@@ -272,6 +275,7 @@ void UI::Finalize() {
 		delete PlaHp[i];
 		delete Mark[i];
 	}
+	delete Skip;
 	delete HpGauge;
 	delete Arrow;
 	delete Arrow2;
@@ -279,19 +283,7 @@ void UI::Finalize() {
 
 //描画
 const void UI::Draw() {
-	//ImGui::Begin("test");
-	//ImGui::SliderFloat("Spin.x", &SpinPos[0].x, 1000, 0);
-	//ImGui::SliderFloat("Spin.y", &SpinPos[0].y, 1000, 0);
-	//ImGui::SliderFloat("Spin1.x", &SpinPos[1].x, 1000, 0);
-	//ImGui::SliderFloat("Spin1.y", &SpinPos[1].y, 1000, 0);
-	////ImGui::SliderInt("dir", &dir, 360, -360);
-	//////ImGui::SliderFloat("speed_y", &speed_y, 360, 0);
-	//ImGui::SliderFloat("scale", &vel, 360, 0);
-	//////ImGui::Text("Count::%d", moveCount);
-	//////ImGui::Text("Move::%d", isMove);
-	//////ImGui::Text("Hit::%d", hit);
-	//////ImGui::Unindent();
-	//ImGui::End();
+
 	Sprite::PreDraw();
 	if (boss) {
 		BossHp[max]->Draw();
@@ -347,7 +339,7 @@ const void UI::Draw() {
 			SpinGauge->Draw();
 		}
 	}
-
+	Skip->Draw();
 }
 
 

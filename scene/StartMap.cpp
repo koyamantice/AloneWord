@@ -506,9 +506,14 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 
 		}
 		break;
-
 	default:
 		break;
+	}
+	if (input->PushButton(input->Select)) {
+		Audio::GetInstance()->StopWave(2);
+		expandchange->SetStartChange(true);
+		//SceneManager::GetInstance()->ChangeScene("StageSelect");
+
 	}
 	if (open) {
 		sca = {
