@@ -109,6 +109,7 @@ void LeftHand::Spec() {
 
 	//s“®ŠJn
 	if (active) {
+		//ÕŒ‚‚Í
 		if (action == 0) {
 			if (AttackC < 5) {
 				switch (pat) {

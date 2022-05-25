@@ -548,29 +548,6 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 		}
 	}
 
-	//Ray ray;
-	//ray.start = { player->GetPosition().x,player->GetPosition().y + 3,player->GetPosition().z,1 };
-	//ray.dir = { 0,0.025f,-1,0 };
-	//RaycastHit raycastHit;
-
-	//if (!collisionManager->Raycast(ray, &raycastHit)) {
-	//	if (distanceZ <= 10.0f) {
-	//		distanceZ += 0.25f;
-	//	}
-
-	//	if (distanceY >= 10.0f) {
-	//		distanceY -= 0.25f;
-	//	}
-	//} else {
-	//	if (distanceZ >= 6.0f) {
-	//		distanceZ -= 0.4f;
-	//	}
-
-	//	if (distanceY <= 18.0f) {
-	//		distanceY += 0.25f;
-	//	}
-	//}
-
 	////‚»‚Ì‘¼ƒV[ƒ“ˆÚs
 	//if (bossenemy->GetHP() <= 0) {
 	//	SceneManager::GetInstance()->ChangeScene("StageSelect");
