@@ -28,7 +28,7 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 
 	//サウンド初期化andプレイ
 	Audio::GetInstance()->LoadSound(3, "Resources/Sound/greenTeaBGM.wav");
-	Audio::GetInstance()->LoopWave(3, 0.05f);
+	
 	//各オブジェクトの初期化
 	//プレイヤー
 	player = new Player();
@@ -275,6 +275,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 				}
 				else {
 					bossstart = true;
+					Audio::GetInstance()->LoopWave(3, 0.05f);
 					appearanceTimer = 0;
 					appearanceNumber = 0;
 					frame = 0;
