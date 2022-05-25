@@ -283,7 +283,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 			}
 		}
 		if (openT) {
-			if (input->PushButton(input->Button_A)) {
+			if (input->ReleaseButton(input->Button_A)||player->GetChargeTimer()>100) {
 				if (!checkZ && !close && !closeT) {
 					check = true;
 					nowTimer = 0;
