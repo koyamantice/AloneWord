@@ -64,7 +64,7 @@ bool Player::Initialize() {
 		//chargerot[i] = { 90.0f,0.0f,0.0f };
 		ChargeEffect[i]->SetColor({ 1.0f, 1.0f, 1.0f, 0.5f });
 		ChargeEffect[i]->SetRotation(chargerot[i]);
-		chargesca[i] = { 0.01f,0.01f,0.01f };
+		chargesca[i] = { 0.08f,0.08f,0.08f };
 		ChargeEffect[i]->SetScale(chargesca[i]);
 		ChargeEffect[i]->Update();
 	}
@@ -766,6 +766,9 @@ void Player::ChargeEffectMove() {
 				chargeposition[i].x = (position.x - chargepos[i].x);
 				chargeposition[i].y = (position.y - chargepos[i].y);
 				chargeposition[i].z = (position.z - chargepos[i].z);
+				chargesca[i].x = 0.05f;
+				chargesca[i].y = 0.05f;
+				chargesca[i].z = 0.05f;
 				chargerot[i].z = (atan2f(chargeposition[i].x, chargeposition[i].y) * (180.0f / XM_PI)) - 90;// *(XM_PI / 180.0f);
 				chargerot[i].y = (atan2f(chargeposition[i].x, chargeposition[i].z) * (180.0f / XM_PI)) - 90;// *(XM_PI / 180.0f);
 			}
@@ -778,6 +781,7 @@ void Player::ChargeEffectMove() {
 				chargepos[i].y = (float)(rand() % 2 + 2);
 				ChargeAlive[i] = true;
 				EffectTimer[i] = 0;
+				
 			}
 		}
 		else {
@@ -799,6 +803,7 @@ void Player::ChargeEffectMove() {
 		chargepos[i].z = ChargeCircleZ[i] + position.z;
 		//ChargeEffect[i]->SetRotation(chargerot[i]);
 		ChargeEffect[i]->SetPosition(chargepos[i]);
+		ChargeEffect[i]->SetScale(chargesca[i]);
 	}
 }
 
