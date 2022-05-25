@@ -459,7 +459,10 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 			}
 
 			if (expandchange->GetTimer() >= 58) {
-				save->ClearSave();
+				if (!save->GetFirstClear()) {
+					save->ClearSave();
+					save->FirstSave();
+				}
 				//Audio::GetInstance()->LoopWave(4, 0.2f);
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}

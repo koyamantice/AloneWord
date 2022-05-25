@@ -51,9 +51,10 @@ void LeftHumanWave::Final() {
 void LeftHumanWave::SetWave(LeftHand* lefthand) {
 	int action = lefthand->GetAction();
 	int pat = lefthand->GetPat();
+	int HP = lefthand->GetHP();
 	XMFLOAT3 pos = lefthand->GetPosition();
 	//ÕŒ‚”g‚ÌˆÊ’u‚ðŒˆ‚ß‚é
-	if (action == 0 && pos.y == 0.0f && pat == 5 && !expand) {
+	if (action == 0 && pos.y == 0.0f && pat == 5 && !expand && HP > 0) {
 		this->pos.x = pos.x;
 		this->pos.y = pos.y + 1.0f;
 		this->pos.z = pos.z;

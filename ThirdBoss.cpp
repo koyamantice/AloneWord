@@ -29,7 +29,7 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 
 	//サウンド宣言&プレイ
 	Audio::GetInstance()->LoadSound(3, "Resources/Sound/greenTeaBGM.wav");
-	Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
+	//Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
 	Audio::GetInstance()->LoopWave(3, 0.4f);
 
 	
@@ -418,8 +418,11 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 			}
 
 			if (expandchange->GetTimer() >= 58) {
-				save->ClearSave();
-				Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
+				if (!save->GetThirdClear()) {
+					save->ClearSave();
+					save->ThirdSave();
+				}
+				//Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 		}
@@ -504,7 +507,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 			}
 
 			if (expandchange->GetTimer() >= 58) {
-				Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
+				//Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 

@@ -69,7 +69,7 @@ void FifthBoss::Initialize(DirectXCommon* dxCommon) {
 	//}
 
 	//サウンド宣言&プレイ
-	Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
+	//Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
 	
 
 	//srand(NULL);GetFBXModel(ModelManager::MottiMove);
@@ -456,7 +456,11 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 		}
 
 		if (expandchange->GetTimer() >= 58) {
-			Audio::GetInstance()->LoopWave(4, 0.2f);
+			if (!save->GetFifthClear()) {
+				save->ClearSave();
+				save->FifthSave();
+			}
+			//Audio::GetInstance()->LoopWave(4, 0.2f);
 			SceneManager::GetInstance()->ChangeScene("StageSelect");
 		}
 	}
@@ -541,7 +545,7 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 		}
 
 		if (expandchange->GetTimer() >= 58) {
-			Audio::GetInstance()->LoopWave(4, 0.2f);
+			//Audio::GetInstance()->LoopWave(4, 0.2f);
 			SceneManager::GetInstance()->ChangeScene("StageSelect");
 		}
 
