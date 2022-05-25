@@ -359,7 +359,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 			if (nowTimer > 120) {
 				openT = false;
 				closeT = false;
-				bossenemy->SetHP(15);
+				//bossenemy->SetHP(15);
 				nowTimer = 0;
 				nowText = text7;
 			}
@@ -372,7 +372,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 			}
 		}
 		if (openT) {
-			if (bossenemy->GetHP() < 15) {
+			if (input->ReleaseButton(input->Button_A) || player->GetChargeTimer() >= 300) {
 				if (!checkZ && !close && !closeT) {
 					check = true;
 					nowTimer = 0;
