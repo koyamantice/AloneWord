@@ -13,6 +13,10 @@ LeftShose::LeftShose() {
 
 //初期化
 void LeftShose::Initialize(bool shadow) {
+	//サウンド宣言&プレイ
+	Audio::GetInstance()->LoadSound(3, "Resources/Sound/selectBGM.wav");
+	Audio::GetInstance()->LoopWave(3, 0.2f);
+
 	assert(player);
 	this->shadow = shadow;
 	IsAlive = 0;

@@ -18,6 +18,9 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	Texture::SetCamera(camera);
 	// 3Dオブジェクトにカメラをセット
 	Object3d::SetCamera(camera);
+	//サウンド宣言&プレイ
+	Audio::GetInstance()->LoadSound(3, "Resources/Sound/selectBGM.wav");
+	Audio::GetInstance()->LoopWave(3, 0.2f);
 	//各オブジェクトの初期化
 
 	//ステージ床
