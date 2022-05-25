@@ -252,7 +252,7 @@ void UI::Update() {
 			AfterSpin[0].y = 350.0f;
 			SpinBar[1]->SetSize({ 60.0f,350.0f });
 			AfterSpin[1].y = 350.0f;
-			AfterSpin[2].y = ((float)((int)convert % 201) / 200) * 350.0f;
+			AfterSpin[2].y = ((float)((int)convert % 200) / 200) * 350.0f;
 			break;
 		default:
 			assert("不正なエラー");
