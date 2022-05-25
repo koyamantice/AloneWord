@@ -64,7 +64,7 @@ bool Player::Initialize() {
 		//chargerot[i] = { 90.0f,0.0f,0.0f };
 		ChargeEffect[i]->SetColor({ 1.0f, 1.0f, 1.0f, 0.5f });
 		ChargeEffect[i]->SetRotation(chargerot[i]);
-		chargesca[i] = { 0.08f,0.08f,0.08f };
+		chargesca[i] = { 0.05f,0.05f,0.05f };
 		ChargeEffect[i]->SetScale(chargesca[i]);
 		ChargeEffect[i]->Update();
 	}
@@ -101,7 +101,7 @@ void Player::Update() {
 	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
 		ChargeEffect[i]->Update();
 		ChargeEffect[i]->SetPosition(chargepos[i]);
-		ChargeEffect[i]->SetScale({0.1f,0.1f,0.1f});
+		ChargeEffect[i]->SetScale({0.05f,0.05f,0.05f});
 	}
 	object3d->Update();
 	StickrotX = input->GetPosX();
@@ -572,7 +572,7 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	}
 
 	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
-		if (ChargeAlive[i] == true && HP > 0) {
+		if (ChargeAlive[i] == true && HP > 0 && Interval <= 80) {
 			ChargeEffect[i]->Draw();
 		}
 	}
