@@ -10,7 +10,6 @@
 #include "CollisionManager.h"
 #include <Easing.h>
 #include "ImageManager.h"
-int BaseScene::ClearCount;
 void BossScene::Initialize(DirectXCommon* dxCommon) {
 	//インスタンス取得
 	collisionManager = CollisionManager::GetInstance();
@@ -127,6 +126,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	ui = new UI(player, bossenemy);
 	//スプライト生成
 	expandchange = new ExpandChange();
+	save = new Save();
 	//ui->Initialize();
 }
 
@@ -457,7 +457,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 			}
 
 			if (expandchange->GetTimer() >= 58) {
-				
+				save->ClearSave();
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 		}

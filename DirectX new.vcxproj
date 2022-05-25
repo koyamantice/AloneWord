@@ -298,6 +298,7 @@
     <ClCompile Include="RightHand.cpp" />
     <ClCompile Include="RightShose.cpp" />
     <ClCompile Include="ExpandChange.cpp" />
+    <ClCompile Include="Save.cpp" />
     <ClCompile Include="scene\BossScene.cpp" />
     <ClCompile Include="scene\ClearScene.cpp" />
     <ClCompile Include="scene\GameoverScene.cpp" />
@@ -334,6 +335,7 @@
     <ClInclude Include="HumanWave.h" />
     <ClInclude Include="LeftHand.h" />
     <ClInclude Include="RightHand.h" />
+    <ClInclude Include="Save.h" />
     <ClInclude Include="ShockWave.h" />
     <ClInclude Include="base\AbstractSceneFactory.h" />
     <ClInclude Include="base\Audio.h" />

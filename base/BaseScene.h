@@ -21,6 +21,7 @@ class SceneManager;
 #include "FPSManager.h"
 #include "ExpandChange.h"
 #include "ShrinkChange.h"
+#include"Save.h"
 #include<memory>
 
 /// <summary>
@@ -91,9 +92,8 @@ protected:
 	XMFLOAT2 Skippos = { 640.0f,360.0f, };
 	XMFLOAT2 namePos = { 0.0f,0.0f };
 	XMFLOAT2 overPos = { 240.0f,140.0f };
-public:
-	//クリアカウント的なやつ
-	static int ClearCount;
+	//値保存用変数
+	Save* save = nullptr;
 public:
 
 	virtual ~BaseScene()=default;

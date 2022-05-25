@@ -264,6 +264,9 @@
     <ClCompile Include="HumanWave.cpp">
       <Filter>stage\プレイマップ\人間</Filter>
     </ClCompile>
+    <ClCompile Include="Save.cpp">
+      <Filter>stage\プレイマップ</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2d\Sprite.h">
@@ -520,6 +523,9 @@
     </ClInclude>
     <ClInclude Include="HumanWave.h">
       <Filter>stage\プレイマップ\人間</Filter>
+    </ClInclude>
+    <ClInclude Include="Save.h">
+      <Filter>stage\プレイマップ</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

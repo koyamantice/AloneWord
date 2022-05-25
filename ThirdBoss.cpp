@@ -143,6 +143,8 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	ui = new UI(player, bossenemy);
 	//スプライト生成
 	expandchange = new ExpandChange();
+
+	save = new Save();
 	//ui->Initialize();
 }
 //開放
@@ -413,6 +415,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 			}
 
 			if (expandchange->GetTimer() >= 58) {
+				save->ClearSave();
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 		}
