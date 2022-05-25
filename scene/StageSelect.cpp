@@ -41,6 +41,9 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	//srand(NULL);
 	// ライト生成
 	lightGroup = LightGroup::Create();
+	//サウンド宣言&プレイ
+	Audio::GetInstance()->LoadSound(3, "Resources/Sound/selectBGM.wav");
+	Audio::GetInstance()->LoopWave(3, 0.2f);
 	// 3Dオブジェクトにライトをセット
 	Object3d::SetLightGroup(lightGroup);
 
@@ -347,19 +350,23 @@ Ease(In,Cubic,selectframe,cameratargetPos.z,Aftertargetpos.z)
 		selectframe = 0.0f;
 		cameraPos = { 0.0f,0.0f,0.0f };
 		if (StageSelectNumber == fork) {
+			Audio::GetInstance()->StopWave(3);
 			SceneManager::GetInstance()->ChangeScene("BOSS");
 		}
 		else if (StageSelectNumber == boots) {
+			Audio::GetInstance()->StopWave(3);
 			SceneManager::GetInstance()->ChangeScene("SECONDBOSS");
 		}
 		else if (StageSelectNumber == Tea) {
+			Audio::GetInstance()->StopWave(3);
 			SceneManager::GetInstance()->ChangeScene("THIRDBOSS");
 		}
 		else if (StageSelectNumber == Pastel) {
+			Audio::GetInstance()->StopWave(3);
 			SceneManager::GetInstance()->ChangeScene("FOURTHBOSS");
 		}
 		else if (StageSelectNumber == human) {
-
+			Audio::GetInstance()->StopWave(3);
 			SceneManager::GetInstance()->ChangeScene("FIFTHBOSS");
 		}
 		StageSelectNumber = No;
