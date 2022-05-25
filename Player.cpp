@@ -188,6 +188,8 @@ void Player::Update() {
 				if ((chargeTimer % 100 == 0) && (RotCount <= 2)) {
 					RotCount++;
 					ChangeScale = true;
+					//Audio::GetInstance()->PlayWave("Resources/Sound/staminaUp.wav", 0.4f);
+					Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/staminaUp.wav", 0.4f);
 				}
 				//チャージ時のエフェクト
 				if (RotCount<1) {
@@ -364,6 +366,15 @@ void Player::Update() {
 	ray.dir = { 0,-1,0,0 };
 	RaycastHit raycastHit;
 
+	//ここで音楽を鳴らしている
+	if (move_count % 40 == 0 && move_count != 0) {
+		Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/walk.wav", 0.4f);
+	}
+
+	if (chargeTimer % 40 == 0 && chargeTimer != 0 && !AttackFlag) {
+		Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/charge.wav", 0.4f);
+	}
+
 	// 接地状態
 	if (onGround) {
 		// スムーズに坂を下る為の吸着距離
@@ -479,6 +490,11 @@ void Player::SelectUp() {
 		move_count = 0;
 	}
 
+	//ここで音楽を鳴らしている
+	if (move_count % 40 == 0 && move_count != 0) {
+		Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/walk.wav", 0.4f);
+	}
+
 	// 落下処理
 	if (!onGround) {
 		// 下向き加速度
@@ -542,10 +558,10 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	//ImGui::SliderFloat("pos.x", &position.x, 50, -50);
 	/*ImGui::SliderFloat("HP", &HP, 10, 0);
 	ImGui::SliderFloat("overframe", &overframe, 50, -50);*/
-	ImGui::SliderFloat("boundpower.x %d", &boundpower[0].x, 50, -50);
+	/*ImGui::SliderFloat("boundpower.x %d", &boundpower[0].x, 50, -50);
 	ImGui::SliderFloat("chargesca.x %d", &chargesca[0].x, 50, -50);
-	ImGui::SliderFloat("chargepos.x %d", &chargepos[0].x, 50, -50);
-	ImGui::Text("Cimer:%d", chargeTimer);
+	ImGui::SliderFloat("chargepos.x %d", &chargepos[0].x, 50, -50);*/
+	ImGui::Text("moveCount:%d", move_count);
 	ImGui::Text("RotCount:%d", RotCount);
 	ImGui::End();
 	Texture::PreDraw();

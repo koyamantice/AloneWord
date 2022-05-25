@@ -22,7 +22,7 @@ void InterBoss::Update() {
 	if (color && BossHP > 0) {
 		enemyobj->SetColor({ 0.0f,1.0f,0.0f,0.0f });
 		colorTimer++;
-		if (colorTimer == 20) {
+		if (colorTimer == 10) {
 			color = false;
 			colorTimer = 0;
 		}
@@ -41,20 +41,20 @@ void InterBoss::Update() {
 //描画
 void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
-	ImGui::Begin("test");
-	ImGui::SliderFloat("rot.y", &rot.y, 30, -30);
-	//ImGui::SliderFloat("MottiScale", &MottiScale.x, 1, 0);
-	//ImGui::SliderFloat("HP", &BossHP, 360, -360);
-	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
-	/*ImGui::SliderFloat("pos.x", &pos.x, 1, 0.0f);
-	ImGui::Text("Move:%d", appearMove);*/
-	//ImGui::SliderFloat("angle", &angle, 360, -360);
-	ImGui::Text("AttackCount::%d", AttackCount);
-	ImGui::Text("color::%d", color);
-	ImGui::Text("colorTimer::%d", colorTimer);
-	ImGui::Text("pat::%d", pat);
-	//ImGui::Text("action::%d", haveTimer);
-	ImGui::End();
+	//ImGui::Begin("test");
+	//ImGui::SliderFloat("rot.y", &rot.y, 30, -30);
+	////ImGui::SliderFloat("MottiScale", &MottiScale.x, 1, 0);
+	////ImGui::SliderFloat("HP", &BossHP, 360, -360);
+	////ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	///*ImGui::SliderFloat("pos.x", &pos.x, 1, 0.0f);
+	//ImGui::Text("Move:%d", appearMove);*/
+	////ImGui::SliderFloat("angle", &angle, 360, -360);
+	//ImGui::Text("AttackCount::%d", AttackCount);
+	//ImGui::Text("color::%d", color);
+	//ImGui::Text("colorTimer::%d", colorTimer);
+	//ImGui::Text("pat::%d", pat);
+	////ImGui::Text("action::%d", haveTimer);
+	//ImGui::End();
 	//if (BossHP >= 1) {
 		Object3d::PreDraw();
 		enemyobj->Draw();
@@ -121,7 +121,7 @@ bool InterBoss::collideAttackArm() {
 				distance.z = plapos.z - pos.z;
 				player->SetDistance(distance);
 				player->SetJumpG(0.5f);
-				Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
+				Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/noDamage.wav", 0.4f);
 				player->SetDamageFlag(true);
 				player->SetHp(playerhp - 1);
 			}
