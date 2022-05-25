@@ -601,9 +601,9 @@ void ThirdBoss::Draw(DirectXCommon* dxCommon) {
 	//ImGui::End();
 	//各オブジェクトの描画
 	Object3d::PreDraw();
-	//objBossMap->Draw();
-	//objSphere->Draw();
-	objBossMap->Draw();
+	if (!gameover) {
+		objBossMap->Draw();
+	}
 	objFloor->Draw();
 	objJstyle->Draw();
 

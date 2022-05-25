@@ -92,6 +92,8 @@ void HotWater::Collide() {
 		if (Collision::CircleCollision(pos.x, pos.z, radius, player->GetPosition().x, player->GetPosition().z, 1.0f)) {
 			player->SetHp(player->GetHp() - 0.5f);
 			player->SetWet(true);
+			player->SetCharge(0);
+			player->SetRotCount(0);
 		}
 	}
 }

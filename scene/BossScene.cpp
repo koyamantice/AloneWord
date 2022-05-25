@@ -619,20 +619,22 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 
 //描画
 void BossScene::Draw(DirectXCommon* dxCommon) {
-	ImGui::Begin("test");
-	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
-	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
-	/*ImGui::SliderFloat("enemypos.z", &Aftereyepos.z, 50, 0);
-	ImGui::SliderFloat("frame.y", &frame, 30, 0);
-	ImGui::SliderFloat("color.w", &BlackColor.w, 30, 0);
-	ImGui::Text("overT::%d", overTimer);*/
-	ImGui::Text("overT::%d", SkipTimer);
-	ImGui::Unindent();
-	ImGui::End();
+	//ImGui::Begin("test");
+	////ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
+	////ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
+	///*ImGui::SliderFloat("enemypos.z", &Aftereyepos.z, 50, 0);
+	//ImGui::SliderFloat("frame.y", &frame, 30, 0);
+	//ImGui::SliderFloat("color.w", &BlackColor.w, 30, 0);
+	//ImGui::Text("overT::%d", overTimer);*/
+	//ImGui::Text("overT::%d", SkipTimer);
+	//ImGui::Unindent();
+	//ImGui::End();
 
 	//各オブジェクトの描画
 	Object3d::PreDraw();
-	objBossMap->Draw();
+	if (!gameover) {
+		objBossMap->Draw();
+	}
 	objFloor->Draw();
 	objSkydome->Draw();
 

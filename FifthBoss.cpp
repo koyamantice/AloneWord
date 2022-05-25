@@ -625,7 +625,9 @@ void FifthBoss::Draw(DirectXCommon* dxCommon) {
 
 	//各オブジェクトの描画
 	Object3d::PreDraw();
-	objBossMap->Draw();
+	if (!gameover) {
+		objBossMap->Draw();
+	}
 	objFloor->Draw();
 	objBedroom->Draw();
 
