@@ -42,6 +42,7 @@ public: // サブクラス
 		XMMATRIX viewproj;    // ビュープロジェクション行列
 		XMMATRIX world; // ワールド行列
 		XMFLOAT3 cameraPos; // カメラ座標（ワールド座標）
+		XMFLOAT4 color;	// 色 (RGBA)
 	};
 
 private: // 定数
@@ -224,6 +225,7 @@ public: // メンバ関数
 
 	void SetRotation(XMFLOAT3 rotation) { this->rotation = rotation; }
 
+	void SetColor(XMFLOAT4 color) { this->color = color; }
 	/// <summary>
 	/// スケールの設定
 	/// </summary>

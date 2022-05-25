@@ -18,6 +18,18 @@ void InterBoss::Update() {
 	if (BossHP <= 0) {
 		BossHP = 0;
 	}
+	//ダメージ時色変更
+	if (color && BossHP > 0) {
+		enemyobj->SetColor({ 0.0f,1.0f,0.0f,0.0f });
+		colorTimer++;
+		if (colorTimer == 20) {
+			color = false;
+			colorTimer = 0;
+		}
+	}
+	else {
+		enemyobj->SetColor({ 1.5f,1.0f,1.0f,1.0f });
+	}
 	player->SetInterval(Interval);
 	enemyobj->Update();
 	if (shadow) {
@@ -38,8 +50,8 @@ void InterBoss::Draw() {
 	ImGui::Text("Move:%d", appearMove);*/
 	//ImGui::SliderFloat("angle", &angle, 360, -360);
 	ImGui::Text("AttackCount::%d", AttackCount);
-	ImGui::Text("action::%d", action);
-	ImGui::Text("aiming::%d", aiming);
+	ImGui::Text("color::%d", color);
+	ImGui::Text("colorTimer::%d", colorTimer);
 	ImGui::Text("pat::%d", pat);
 	//ImGui::Text("action::%d", haveTimer);
 	ImGui::End();
@@ -119,6 +131,7 @@ bool InterBoss::collideAttackArm() {
 				Effect = true;
 				//enemyobj->SetCollider();
 				BossHP -= ((weight * 1.2f) * 2.0f);
+				color = true;
 				weight = 0.0f;
 				//boundpower.x = (float)(rand() % 4 - 2);
 				//boundpower.y = (float)(rand() % 6);

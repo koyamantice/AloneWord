@@ -17,7 +17,7 @@ float4 main(VSOutput input) : SV_TARGET
 	float3 ambient = m_ambient;
 
 	// シェーディングによる色
-	float4 shadecolor = float4(ambientColor * ambient, m_alpha);
+	float4 shadecolor = float4(ambientColor * ambient * color, m_alpha);
 
 	for (int i = 0; i < DIRLIGHT_NUM; i++) {
 		if (dirLights[i].active) {

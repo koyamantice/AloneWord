@@ -151,6 +151,8 @@ protected:
 	double posR;
 	double Check;
 	double Check2;
+	bool color = false;
+	int colorTimer = 0;
 
 	//イージングのためのやつ
 	float frame = 0;
@@ -185,6 +187,7 @@ protected:
 	XMFLOAT3 boundpower{};
 	XMFLOAT3 Deadbound = {};
 	XMFLOAT3 StartPos{};
+	XMFLOAT4 bosscolor = { 1.0f,1.0f,1.0f,1.0f };
 	XMFLOAT3 EndPos{};
 	XMFLOAT3 EndRot{};
 	XMFLOAT3 basePos{};
