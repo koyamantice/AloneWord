@@ -43,8 +43,8 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	objBossMap->SetScale({ 3.0f,1.5f,3.0f });
 
 	//sound宣言
-	//Audio::GetInstance()->LoadSound(2, "Resources/Sound/titleBGM.wav");
-	//Audio::GetInstance()->LoopWave(2, 0.1f);
+	Audio::GetInstance()->LoadSound(2, "Resources/Sound/tutorialBGM.wav");
+	Audio::GetInstance()->LoopWave(2, 0.08f);
 	
 	//srand(NULL);
 	// ライト生成
@@ -500,7 +500,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 			}
 		}
 		if (input->PushButton(input->Select)) {
-			//Audio::GetInstance()->StopWave(2);
+			Audio::GetInstance()->StopWave(2);
 			expandchange->SetStartChange(true);
 			//SceneManager::GetInstance()->ChangeScene("StageSelect");
 
