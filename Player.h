@@ -200,7 +200,7 @@ private:
 	bool wet = false;
 	int wetC = 0;
 	//ステータス的なやつ
-	float HP = 1;
+	float HP = 10;
 	float StickrotX = 0;
 	float StickrotY = 0;
 	XMFLOAT3 angle = { 0,0,0 };
