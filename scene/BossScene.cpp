@@ -184,7 +184,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 			}
 		}
 		if (!bossstart) {
-			if (input->TriggerButton(input->Button_B)) {
+			if (input->TriggerButton(input->Select)) {
 				Skip = true;
 			}
 
@@ -684,6 +684,9 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 				ui->Draw();
 				// パーティクルの描画
 				particleMan->Draw(dxCommon->GetCmdList());
+			}
+			else {
+				ui->SkipDraw();
 			}
 		}
 	}

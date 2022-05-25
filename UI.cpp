@@ -339,6 +339,10 @@ const void UI::Draw() {
 			SpinGauge->Draw();
 		}
 	}
+}
+
+const void UI::SkipDraw() {
+	Sprite::PreDraw();
 	Skip->Draw();
 }
 

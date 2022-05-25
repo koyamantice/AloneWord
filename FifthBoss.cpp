@@ -39,31 +39,7 @@ void FifthBoss::Initialize(DirectXCommon* dxCommon) {
 	objBossMap->SetPosition({ 0,0,4 });
 	objBossMap->SetRotation({ 0, 90, 0 });
 	objBossMap->SetScale({ 3.0f, 1.5f, 3.0f });
-	/*
-	objBossMap->SetModel(modelBossMap);
-	objBossMap->SetPosition({ 0,-1,2 });
-	objBossMap->SetRotation({ 0, 90, 0 });
-	objBossMap->SetScale({ 1.4f,1.5f,1.6f });
-	*/
-	//当たり判定確認用です
-
-	objSphere = Object3d::Create();
-	modelSphere = Model::CreateFromOBJ("sphere");
-	objSphere->SetModel(modelSphere);
-	objSphere->SetPosition({ -10, 1, 0 });
-	// コライダーの追加
-	//objSphere->SetCollider(new SphereCollider);
-
-	//普通のテクスチャ(板ポリ)
-	/*limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
-	objBossMap->SetPosition({ 0,-1,10 });
-	objBossMap->SetScale({ 22,1,10 });
-	//譎ｮ騾壹・繝・け繧ｹ繝√Ε(譚ｿ繝昴Μ)
-	limit = Texture::Create(1, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
-	limit->TextureCreate();
-	limit->SetPosition({ 0.0f,0.01f,0.0f });
-	limit->SetRotation({ 90.0f,0, 0 });
-	limit->SetScale({ 6,5,5 });*/
+	
 	//テクスチャ関係の初期化
 	bossName = Sprite::Create(ImageManager::select5, namePos);
 	bossName->SetAnchorPoint({ 1.0f,0.0f });
@@ -209,7 +185,7 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 			}
 		}
 		if (!bossstart) {
-			if (input->TriggerButton(input->Button_B)) {
+			if (input->TriggerButton(input->Select)) {
 				Skip = true;
 			}
 
@@ -418,7 +394,6 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 			particleMan->Update();
 			rightwave->Upda(righthand, player);
 			leftwave->Upda(lefthand, player);
-			objSphere->Update();
 			cameraPos.x = player->GetPosition().x;
 			cameraPos.y = player->GetPosition().y + distanceY;
 			cameraPos.z = player->GetPosition().z - distanceZ;
@@ -693,6 +668,9 @@ void FifthBoss::Draw(DirectXCommon* dxCommon) {
 				ui->Draw();
 				// パーティクルの描画
 				particleMan->Draw(dxCommon->GetCmdList());
+			}
+			else {
+				ui->SkipDraw();
 			}
 		}
 	}

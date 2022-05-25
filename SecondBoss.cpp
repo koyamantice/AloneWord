@@ -201,7 +201,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 			}
 		}
 		if (!bossstart) {
-			if (input->TriggerButton(input->Button_B)) {
+			if (input->TriggerButton(input->Select)) {
 				Skip = true;
 			}
 
@@ -597,17 +597,17 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 
 //描画
 void SecondBoss::Draw(DirectXCommon* dxCommon) {
-	ImGui::Begin("test");
-	//ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
-	//ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
-	/*ImGui::SliderFloat("enemypos.z", &Aftereyepos.z, 50, 0);
-	ImGui::SliderFloat("frame.y", &frame, 30, 0);
-	ImGui::SliderFloat("color.w", &BlackColor.w, 30, 0);
-	ImGui::Text("overT::%d", overTimer);*/
-	ImGui::Text("DethLeft::%d", DethLeft);
-	ImGui::Text("DethRight::%d", DethRight);
-	ImGui::Unindent();
-	ImGui::End();
+	//ImGui::Begin("test");
+	////ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
+	////ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
+	///*ImGui::SliderFloat("enemypos.z", &Aftereyepos.z, 50, 0);
+	//ImGui::SliderFloat("frame.y", &frame, 30, 0);
+	//ImGui::SliderFloat("color.w", &BlackColor.w, 30, 0);
+	//ImGui::Text("overT::%d", overTimer);*/
+	//ImGui::Text("DethLeft::%d", DethLeft);
+	//ImGui::Text("DethRight::%d", DethRight);
+	//ImGui::Unindent();
+	//ImGui::End();
 
 	//各オブジェクトの描画
 	Object3d::PreDraw();
@@ -678,6 +678,9 @@ void SecondBoss::Draw(DirectXCommon* dxCommon) {
 				ui->Draw();
 				// パーティクルの描画
 				particleMan->Draw(dxCommon->GetCmdList());
+			}
+			else {
+				ui->SkipDraw();
 			}
 		}
 	}
