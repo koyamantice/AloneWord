@@ -619,17 +619,6 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 
 //描画
 void BossScene::Draw(DirectXCommon* dxCommon) {
-	//ImGui::Begin("test");
-	////ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
-	////ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
-	///*ImGui::SliderFloat("enemypos.z", &Aftereyepos.z, 50, 0);
-	//ImGui::SliderFloat("frame.y", &frame, 30, 0);
-	//ImGui::SliderFloat("color.w", &BlackColor.w, 30, 0);
-	//ImGui::Text("overT::%d", overTimer);*/
-	//ImGui::Text("overT::%d", SkipTimer);
-	//ImGui::Unindent();
-	//ImGui::End();
-
 	//各オブジェクトの描画
 	Object3d::PreDraw();
 	if (!gameover) {
@@ -679,26 +668,23 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	//	for (std::size_t j = 0; j < exp[i].size(); j++) {
 	//		exp[i][j]->Draw();
 	//	}
-	//}
-	if (bossstart && !end && !gameover) {
-		ui->Draw();
-		// パーティクルの描画
-		particleMan->Draw(dxCommon->GetCmdList());
-	}
-	
+	//}	
 	
 	if (end) {
 		WhiteFilter->Draw();
 	}
-	else {
+	if(!end) {
 		if (!gameover) {
 			for (std::size_t i = 0; i < enemy.size(); i++) {
 				enemy[i]->Draw();
 			}
+			if (bossstart) {
+				ui->Draw();
+				// パーティクルの描画
+				particleMan->Draw(dxCommon->GetCmdList());
+			}
 		}
 	}
-
-
 	Sprite::PreDraw();
 
 	//前面用

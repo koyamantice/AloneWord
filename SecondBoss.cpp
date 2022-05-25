@@ -591,55 +591,10 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 			}
 		}
 	}
-
-	Ray ray;
-	ray.start = { player->GetPosition().x,player->GetPosition().y + 3,player->GetPosition().z,1 };
-	ray.dir = { 0.0f,0.025f,-1.0f};
-	RaycastHit raycastHit;
-
-	if (!collisionManager->Raycast(ray, &raycastHit)) {
-		if (distanceZ <= 10.0f) {
-			distanceZ += 0.25f;
-		}
-
-		if (distanceY >= 10.0f) {
-			distanceY -= 0.25f;
-		}
-	}
-	else {
-		if (distanceZ >= 6.0f) {
-			distanceZ -= 0.4f;
-		}
-
-		if (distanceY <= 18.0f) {
-			distanceY += 0.25f;
-		}
-	}
-
-	// 全ての衝突をチェック
-	//collsionManager->CheckAllCollisions();
-	/*DebugText::GetInstance()->Print("PUSH to RB!!",200, 100,1.0f);
-	DebugText::GetInstance()->Print("PUSH to A!!", 200, 115, 1.0f);*/
-	//DebugText::GetInstance()->Print("RB or LB :Rotate", 900, 620, 2.0f);
-	//DebugText::GetInstance()->Print("A         :Hand", 900, 650, 2.0f);
-	//DebugText::GetInstance()->Print("PUSH to RB!!", 1040, 620, 2.0f);
-	//DebugText::GetInstance()->Print("PUSH to A!!", 1040, 660, 2.0f);
 }
 
 //描画
 void SecondBoss::Draw(DirectXCommon* dxCommon) {
-	//ImGui::Begin("test");
-	////ImGui::SliderFloat("pos.z", &pos.z, 50, 0);
-	////ImGui::SliderFloat("pos.y", &pos.y, 50, 0);
-	///*ImGui::SliderFloat("enemypos.z", &Aftereyepos.z, 50, 0);
-	//ImGui::SliderFloat("frame.y", &frame, 30, 0);
-	//ImGui::SliderFloat("color.w", &BlackColor.w, 30, 0);
-	//ImGui::Text("overT::%d", overTimer);*/
-	//ImGui::Text("apppear::%d", appearanceTimer);
-	//ImGui::Text("apppearNumber::%d", appearanceNumber);
-	//ImGui::Unindent();
-	//ImGui::End();
-
 	//各オブジェクトの描画
 	Object3d::PreDraw();
 	if (!gameover) {
@@ -697,24 +652,21 @@ void SecondBoss::Draw(DirectXCommon* dxCommon) {
 	//		exp[i][j]->Draw();
 	//	}
 	//}
-	if (bossstart && !end && !gameover) {
-		ui->Draw();
-		// パーティクルの描画
-		particleMan->Draw(dxCommon->GetCmdList());
-	}
-
-
 	if (end) {
 		WhiteFilter->Draw();
 	}
-	else {
+	if (!end) {
 		if (!gameover) {
 			for (std::size_t i = 0; i < enemy.size(); i++) {
 				enemy[i]->Draw();
 			}
+			if (bossstart) {
+				ui->Draw();
+				// パーティクルの描画
+				particleMan->Draw(dxCommon->GetCmdList());
+			}
 		}
 	}
-
 	Sprite::PreDraw();
 
 	//前面用
