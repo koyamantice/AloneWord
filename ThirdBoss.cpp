@@ -25,6 +25,10 @@ void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	FBXObject3d::SetCamera(camera);
 	// グラフィックスパイプライン生成
 	FBXObject3d::CreateGraphicsPipeline();
+
+	//サウンド初期化andプレイ
+	Audio::GetInstance()->LoadSound(3, "Resources/Sound/greenTeaBGM.wav");
+	Audio::GetInstance()->LoopWave(3, 0.05f);
 	//各オブジェクトの初期化
 	//プレイヤー
 	player = new Player();
@@ -334,6 +338,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 		//その他シーン移行
 		if (bossenemy->GetHP() <= 0) {
 			end = true;
+			Audio::GetInstance()->StopWave(3);
 			//SceneManager::GetInstance()->ChangeScene("StageSelect");
 		}
 
@@ -386,6 +391,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 		}
 
 		if (gameover == true) {
+			Audio::GetInstance()->StopWave(3);
 			overTimer++;
 			//player->Begin();
 			bossenemy->Begin();

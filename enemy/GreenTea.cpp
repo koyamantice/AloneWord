@@ -38,6 +38,8 @@ void GreenTea::Initialize(bool shadow) {
 	texture->SetScale({ 0.3f,0.3f,0.3f });
 	degree = 0.0f;
 	scale = 0.0f;
+
+	
 }
 //開放
 void GreenTea::Finalize() {
