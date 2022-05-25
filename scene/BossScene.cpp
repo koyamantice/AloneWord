@@ -126,6 +126,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	ui = new UI(player, bossenemy);
 	//スプライト生成
 	expandchange = new ExpandChange();
+	save = new Save();
 	//ui->Initialize();
 }
 
@@ -456,6 +457,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 			}
 
 			if (expandchange->GetTimer() >= 58) {
+				save->ClearSave();
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 		}
@@ -581,10 +583,10 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		}
 	}
 
-	Ray ray;
-	ray.start = { player->GetPosition().x,player->GetPosition().y + 3,player->GetPosition().z,1 };
-	ray.dir = { 0,0.025f,-1.0f,0.0f };
-	RaycastHit raycastHit;
+	//Ray ray;
+	//ray.start = { player->GetPosition().x,player->GetPosition().y + 3,player->GetPosition().z,1 };
+	//ray.dir = { 0,0.025f,-1.0f,0.0f };
+	//RaycastHit raycastHit;
 
 	//if (!collisionManager->Raycast(ray, &raycastHit)) {
 	//	if (distanceZ <= 10.0f) {

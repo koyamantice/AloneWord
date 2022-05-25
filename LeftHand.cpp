@@ -10,10 +10,6 @@ using namespace DirectX;
 LeftHand::LeftHand() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::LeftHand_Open);
 	hand_closemodel = ModelManager::GetIns()->GetModel(ModelManager::LeftHand_Close);
-	for (std::size_t i = 0; i < humanwave.size(); i++) {
-		humanwave[i] = new HumanWave;
-		humanwave[i]->Init();
-	}
 }
 
 //初期化
@@ -67,18 +63,11 @@ void LeftHand::Initialize(bool shadow) {
 //開放
 void LeftHand::Finalize() {
 	//delete enemyobj;
-	for (std::size_t i = 0; i < humanwave.size(); i++) {
-		humanwave[i]->Final();
-	}
 	delete texture;
 }
 
 //ボスの行動
 void LeftHand::Spec() {
-	for (std::size_t i = 0; i < humanwave.size(); i++) {
-		humanwave[i]->Upda();
-		humanwave[i]->SetPlayer(player.get());
-	}
 	XMFLOAT3 AfterPos{};
 	if (stateNumber == Open) {
 		enemyobj->SetModel(model);
@@ -109,6 +98,7 @@ void LeftHand::Spec() {
 
 	//行動開始
 	if (active) {
+		//衝撃は
 		if (action == 0) {
 			if (AttackC < 5) {
 				switch (pat) {
@@ -192,16 +182,6 @@ void LeftHand::Spec() {
 
 					}
 					else {
-						damageCount++;
-						if (damageCount == 1) {
-							for (std::size_t i = 0; i < humanwave.size(); i++) {
-								if (!humanwave[i]->GetIsAlive()) {
-
-									humanwave[i]->Set(pos);
-									break;
-								}
-							}
-						}
 						Afterrot.z = 0;
 						frame = 1.0f;
 						if (coolT < 20) {
@@ -762,11 +742,6 @@ void LeftHand::End(int Timer) {
 
 //特別な描画(この場合ぴよぴよ)
 void LeftHand::specialDraw() {
-	if (BossHP > 0) {
-		for (std::size_t i = 0; i < humanwave.size(); i++) {
-			humanwave[i]->Draw();
-		}
-	}
 }
 
 

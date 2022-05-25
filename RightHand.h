@@ -1,7 +1,6 @@
 #pragma once
 #include "InterBoss.h"
 #include "Human.h"
-#include "HumanWave.h"
 #include <array>   
 using namespace std;         //  –¼‘O‹óŠÔŽw’è
 class RightHand :public InterBoss {
@@ -38,6 +37,5 @@ private:
 	int stateNumber = 0;
 	Object3d* hand_closeobj = nullptr;
 	Model* hand_closemodel = nullptr;
-	array<HumanWave*, 10> humanwave;
 	int count = 0;
 };

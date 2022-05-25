@@ -5,6 +5,7 @@
 #include "Collision.h"
 #include "imgui.h"
 #include <Easing.h>
+//静的メンバ変数の実態
 
 void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	//背景スプライト生成
@@ -79,6 +80,7 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	shrinkchange->SetEndChange(true);
 	//スプライト生成
 	expandchange = new ExpandChange();
+	save = new Save();
 }
 //開放
 void StageSelect::Finalize() {
@@ -106,6 +108,7 @@ bool StageSelect::UICheck() {
 }
 //更新
 void StageSelect::Update(DirectXCommon* dxCommon) {
+	int ClearCount = save->GetClearCount();
 	input = Input::GetInstance();
 	lightGroup->Update();
 	player->SelectUp();
@@ -167,7 +170,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		};
 		plane[1]->SetPosition(selectP[1]);
 		select[2]->SetPosition(selectP[0]);
-		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A) /*&& (ClearCount <= 2)*/) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			//SceneManager::GetInstance()->ChangeScene("SECONDBOSS");
 			StageSelectNumber = boots;
@@ -201,7 +204,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		};
 		plane[3]->SetPosition(selectP[1]);
 		select[3]->SetPosition(selectP[0]);
-		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount <= 1)*/) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			//SceneManager::GetInstance()->ChangeScene("THIRDBOSS");
 			StageSelectNumber = Tea;
@@ -236,7 +239,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		};
 		plane[2]->SetPosition(selectP[1]);
 		select[1]->SetPosition(selectP[0]);
-		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount <= 3)*/) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			//SceneManager::GetInstance()->ChangeScene("FOURTHBOSS");
 			StageSelectNumber = Pastel;
@@ -271,7 +274,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		};
 		plane[4]->SetPosition(selectP[1]);
 		select[4]->SetPosition(selectP[0]);
-		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount <= 4)*/) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			//SceneManager::GetInstance()->ChangeScene("FOURTHBOSS");
 			StageSelectNumber = human;
@@ -366,11 +369,12 @@ Ease(In,Cubic,selectframe,cameratargetPos.z,Aftertargetpos.z)
 
 //描画
 void StageSelect::Draw(DirectXCommon* dxCommon) {
-	//ImGui::Begin("test");
+	int ClearCount = save->GetClearCount();
+	ImGui::Begin("test");
 	//ImGui::SliderFloat("cameraPos.y", &cameraPos.y, 30, 0);
-	////ImGui::Text("endT::%d", EndTimer);
-	//ImGui::Unindent();
-	//ImGui::End();
+	ImGui::Text("clearCount::%d", ClearCount);
+	ImGui::Unindent();
+	ImGui::End();
 
 	Texture::PreDraw();
 	if (dark) {
