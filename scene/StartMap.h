@@ -42,7 +42,7 @@ private:
 	Model* modelBossMap = nullptr;
 	TouchableObject* objBossMap;
 	Model* modelSphere = nullptr;
-	unique_ptr<Object3d> objSphere = nullptr;
+	unique_ptr<TouchableObject> objSphere = nullptr;
 	Model* modelSkydome = nullptr;
 	Object3d* objSkydome;
 	//カメラ関係
@@ -82,7 +82,6 @@ private:
 		text9,
 		text10,
 		text11,
-		text12
 	};
 	float angle = 0;
 	XMFLOAT2 pos12{ 570.0f,450.0f };
