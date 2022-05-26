@@ -189,7 +189,11 @@ void Player::Update() {
 					RotCount++;
 					ChangeScale = true;
 					//Audio::GetInstance()->PlayWave("Resources/Sound/staminaUp.wav", 0.4f);
-					Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/staminaUp.wav", 0.2f);
+					if (RotCount <= 2) {
+						Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/staminaUp.wav", 0.2f);
+					} else {
+						Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/staminaUp4.wav", 0.2f);
+					}
 				}
 				//チャージ時のエフェクト
 				if (RotCount<1) {
