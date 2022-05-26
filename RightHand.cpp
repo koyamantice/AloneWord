@@ -57,6 +57,7 @@ void RightHand::Initialize(bool shadow) {
 	//	Stuntexture[i]->SetPosition(StunPos[i]);
 	//	Stuntexture[i]->Update();
 	//}
+	InitCommon();
 }
 
 //ŠJ•ú
