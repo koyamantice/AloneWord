@@ -53,6 +53,7 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(text9, L"Resources/2d/text/text9.png");
 	Sprite::LoadTexture(text10,L"Resources/2d/text/text10.png");
 	Sprite::LoadTexture(text11,L"Resources/2d/text/text11.png");
+
 	Sprite::LoadTexture(textSkip, L"Resources/2d/text/textSkip.png");
 	Sprite::LoadTexture(Enemyhp,  L"Resources/2d/EnemyHPBar.png");
 	Sprite::LoadTexture(Enemyhp2, L"Resources/2d/EnemyHPDownBar.png");

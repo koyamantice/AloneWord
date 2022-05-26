@@ -42,7 +42,7 @@ private:
 	Model* modelBossMap = nullptr;
 	TouchableObject* objBossMap;
 	Model* modelSphere = nullptr;
-	unique_ptr<Object3d> objSphere = nullptr;
+	unique_ptr<TouchableObject> objSphere = nullptr;
 	Model* modelSkydome = nullptr;
 	Object3d* objSkydome;
 	//カメラ関係
@@ -66,7 +66,7 @@ private:
 	XMFLOAT2 sca{};
 	XMFLOAT2 scaOk{};
 	int	tutorial =0;
-	Sprite* comment[11];
+	Sprite* comment[12];
 	Sprite* Ok;
 	bool open = false;
 	bool close = false;
@@ -83,6 +83,8 @@ private:
 		text10,
 		text11,
 	};
+	float angle = 0;
+	XMFLOAT2 pos12{ 570.0f,450.0f };
 	int nowText=0;
 	int nowTimer = 0;
 	bool closeT = false;

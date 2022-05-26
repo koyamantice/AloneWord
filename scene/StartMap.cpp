@@ -77,7 +77,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	}
 	//当たり判定確認用です
 	modelSphere = Model::CreateFromOBJ("sphere");
-	Object3d* enemyobj_ = TouchableObject::Create(modelSphere);
+	TouchableObject* enemyobj_ = TouchableObject::Create(modelSphere);
 	enemyobj_->SetModel(modelSphere);
 	enemyobj_->SetPosition({0.0f,-1.0f,0.0f});
 	enemyobj_->SetScale({ 2.3f,2.3f,2.3f });
@@ -172,6 +172,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	} else {
 		hit = false;
 	}
+	ui->SkipUpda();
 	//行動により次のチュートリアルに移る
 	nowTimer++;
 	switch (nowText) {

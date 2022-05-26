@@ -117,6 +117,7 @@ public: // ƒƒ“ƒoŠÖ”
 	bool TriggerCrossKey(int CrossKey);
 	bool ReleaseButton(int Button);
 
+	bool AllNoPush();
 public:
 	const float& GetPosX() { return posX; }
 	const float& GetPosY() { return posY; }
