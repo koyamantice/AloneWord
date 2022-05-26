@@ -9,7 +9,7 @@ using namespace DirectX;
 //‚±‚ñ‚·‚Æ‚ç‚­‚½
 RightHand::RightHand() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::RightHand_Open);
-	hand_closemodel = ModelManager::GetIns()->GetModel(ModelManager::RightHand_Close);
+	hand_closemodel = ModelManager::GetIns()->GetModel(ModelManager::LeftHand_Close);
 }
 
 //‰Šú‰»
@@ -168,7 +168,7 @@ void RightHand::Spec() {
 				case 5:
 					AfterPos = {
 						pos.x,
-						1,
+						1.5,
 						pos.z,
 					};
 					if (frame < 1.0f) {

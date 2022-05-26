@@ -99,6 +99,7 @@ void LeftHand::Spec() {
 	//s“®ŠJn
 	if (active) {
 		//ÕŒ‚‚Í
+			//ÕŒ‚”g
 		if (action == 0) {
 			if (AttackC < 5) {
 				switch (pat) {
@@ -125,8 +126,8 @@ void LeftHand::Spec() {
 						frame += 0.002f;
 					}
 					else {
-						frame = 0;
-						pat++;
+					pat++;
+					frame = 0.0f;
 					}
 					pos.y = Ease(In, Cubic, frame, pos.y, AfterPos.y);
 				case 3:
@@ -135,6 +136,7 @@ void LeftHand::Spec() {
 					3.0f,
 					pos.z
 					};
+
 					if (frame < 1.0f) {
 						frame += 0.01f;
 						break;
@@ -164,7 +166,7 @@ void LeftHand::Spec() {
 				case 5:
 					AfterPos = {
 						pos.x,
-						1,
+						1.5,
 						pos.z,
 					};
 					if (frame < 1.0f) {
@@ -236,7 +238,7 @@ void LeftHand::Spec() {
 					}
 				case 3:
 					AfterPos = {
-					-10,
+					10,
 					1,
 					0
 					};
@@ -264,7 +266,11 @@ void LeftHand::Spec() {
 		Ease(In,Cubic,frame,pos.z,AfterPos.z)
 			};
 			enemyobj->SetPosition(pos);
-			rot.y = Ease(In, Quint, 0.7f, rot.y, Afterrot.y);
+			rot = {
+				Ease(In,Cubic,frame,rot.x,Afterrot.x),
+				Ease(In,Cubic,frame,rot.y,Afterrot.y),
+				Ease(In,Cubic,frame,rot.z,Afterrot.z)
+			};
 			enemyobj->SetRotation(rot);
 
 		}
