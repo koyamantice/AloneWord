@@ -41,8 +41,8 @@ private:
 	Object3d* objFloor;
 	Model* modelBossMap = nullptr;
 	TouchableObject* objBossMap;
-	Model* modelSphere = nullptr;
-	Object3d* objSphere;
+	//Model* modelSphere = nullptr;
+	//Object3d* objSphere;
 	Model* modelSkydome = nullptr;
 	Object3d* objSkydome;
 	//カメラ関係

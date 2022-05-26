@@ -73,13 +73,13 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 		enemy[i] = new Rice();
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
-		enemy[i]->SetLimit({ 21.0f,-17.0f,19.0f,-19.0f });
+		enemy[i]->SetLimit({ 22.0f,-17.0f, 21.0f,-20.5f });
 	}
 	//当たり判定確認用です
-	modelSphere = Model::CreateFromOBJ("sphere");
-	objSphere = TouchableObject::Create(modelSphere);
-	objSphere->SetScale({ 2.0f, 2.0f, 2.0f });
-	objSphere->SetPosition({ 0.0f,0.0f,1.0f });
+	//modelSphere = Model::CreateFromOBJ("sphere");
+	//objSphere = TouchableObject::Create(modelSphere);
+	//objSphere->SetScale({ 2.0f, 2.0f, 2.0f });
+	//objSphere->SetPosition({ 0.0f,0.0f,1.0f });
 	//
 	Texture* Hit_ = Texture::Create(ImageManager::Hit, { 0,0,-10 }, { 0,0,0 }, { 1, 1, 1,1 });
 	Hit_->TextureCreate();
@@ -145,7 +145,7 @@ void StartMap::Finalize() {
 	bossenemy->Finalize();
 	delete objBossMap;
 	delete objFloor;
-	delete objSphere;
+	//delete objSphere;
 	delete modelBossMap;
 	delete modelFloor;
 	delete objSkydome;
@@ -606,7 +606,7 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	objBossMap->Draw();
 	objFloor->Draw();
 	objSkydome->Draw();
-	objSphere->Draw();
+	//objSphere->Draw();
 
 	for (int i = 0; i < enemy.size() - 1; i++) {
 		enemy[i]->Draw();
