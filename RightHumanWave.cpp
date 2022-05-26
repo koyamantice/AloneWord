@@ -29,15 +29,15 @@ void RightHumanWave::Upda(RightHand* righthand, Player* player) {
 }
 
 void RightHumanWave::Draw() {
-	ImGui::Begin("test");
-	/*ImGui::SliderFloat("frame", &frame, 1, 0.0f);
-	ImGui::SliderFloat("frame2", &frame2, 1, 0.0f);
-	ImGui::Text("Move:%d", appearMove);*/
-	ImGui::SliderFloat("damage", &damegeArea, 360, -360);
-	ImGui::SliderFloat("pos.x", &pos.x, 360, -360);
-	ImGui::SliderFloat("pos.y", &pos.y, 360, -360);
-	ImGui::SliderFloat("pos.z", &pos.z, 360, -360);
-	ImGui::End();
+	//ImGui::Begin("test");
+	///*ImGui::SliderFloat("frame", &frame, 1, 0.0f);
+	//ImGui::SliderFloat("frame2", &frame2, 1, 0.0f);
+	//ImGui::Text("Move:%d", appearMove);*/
+	//ImGui::SliderFloat("damage", &damegeArea, 360, -360);
+	//ImGui::SliderFloat("pos.x", &pos.x, 360, -360);
+	//ImGui::SliderFloat("pos.y", &pos.y, 360, -360);
+	//ImGui::SliderFloat("pos.z", &pos.z, 360, -360);
+	//ImGui::End();
 
 	if (expand) {
 		wave->Draw();

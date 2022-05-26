@@ -17,9 +17,9 @@ void LeftHand::Initialize(bool shadow) {
 	assert(player);
 	this->shadow = shadow;
 	IsAlive = 0;
-	pos = { -10.0f,0.0f,0.0f };
-	rot = { 0,270,0 };
-	Afterrot.y = rot.y;
+	pos = { -10.0f,1.0f,0.0f };
+	rot = { 0,0,0 };
+	//Afterrot.y = rot.y;
 
 	//“G
 	Object3d*enemyobj_ = new Object3d();
@@ -113,15 +113,14 @@ void LeftHand::Spec() {
 						break;
 					}
 					else {
-						Afterrot.x = 90.0f;
-						Afterrot.y = 180.0f;
 						stateNumber = Close;
 						frame = 0;
 						pat++;
 						break;
 					}
 				case 2:
-					AfterPos.y = 0.0f;
+					Afterrot.z = 90;
+					AfterPos.y = 1.0f;
 					if (frame < 0.45f) {
 						frame += 0.002f;
 					}
@@ -165,7 +164,7 @@ void LeftHand::Spec() {
 				case 5:
 					AfterPos = {
 						pos.x,
-						0,
+						1,
 						pos.z,
 					};
 					if (frame < 1.0f) {
@@ -182,7 +181,7 @@ void LeftHand::Spec() {
 
 					}
 					else {
-						Afterrot.z = 0;
+						//Afterrot.z = 0;
 						frame = 1.0f;
 						if (coolT < 20) {
 							coolT++;
@@ -238,7 +237,7 @@ void LeftHand::Spec() {
 				case 3:
 					AfterPos = {
 					-10,
-					0,
+					1,
 					0
 					};
 

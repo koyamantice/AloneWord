@@ -17,9 +17,9 @@ void RightHand::Initialize(bool shadow) {
 	assert(player);
 	this->shadow = shadow;
 	IsAlive = 0;
-	pos = { 10.0f,0.0f,0.0f };
-	rot = { 0,270,0 };
-	Afterrot.y = rot.y;
+	pos = { 10.0f,1.0f,0.0f };
+	rot = { 0,0,0 };
+	//Afterrot.y = rot.y;
 
 	//“G
 	Object3d*enemyobj_ = new Object3d();
@@ -111,15 +111,14 @@ void RightHand::Spec() {
 						break;
 					}
 					else {
-						Afterrot.x = 90.0f;
-						Afterrot.y = 180.0f;
 						stateNumber = Close;
 						frame = 0;
 						pat++;
 						break;
 					}
 				case 2:
-					AfterPos.y = 0.0f;
+					Afterrot.z = 90;
+					AfterPos.y = 1.0f;
 					if (frame < 0.45f) {
 						frame += 0.002f;
 					}
@@ -169,7 +168,7 @@ void RightHand::Spec() {
 				case 5:
 					AfterPos = {
 						pos.x,
-						0,
+						1,
 						pos.z,
 					};
 					if (frame < 1.0f) {
@@ -186,7 +185,7 @@ void RightHand::Spec() {
 
 					}
 					else {
-						Afterrot.z = 0;
+						//Afterrot.z = 0;
 						frame = 1.0f;
 						if (coolT < 20) {
 							coolT++;
@@ -242,7 +241,7 @@ void RightHand::Spec() {
 				case 3:
 					AfterPos = {
 					10,
-					0,
+					1,
 					0
 					};
 
@@ -269,7 +268,11 @@ void RightHand::Spec() {
 		Ease(In,Cubic,frame,pos.z,AfterPos.z)
 			};
 			enemyobj->SetPosition(pos);
-			rot.y = Ease(In, Quint, 0.7f, rot.y, Afterrot.y);
+			rot = {
+				Ease(In,Cubic,frame,rot.x,Afterrot.x),
+				Ease(In,Cubic,frame,rot.y,Afterrot.y),
+				Ease(In,Cubic,frame,rot.z,Afterrot.z)
+			};
 			enemyobj->SetRotation(rot);
 
 		}
@@ -425,7 +428,7 @@ void RightHand::Spec() {
 				pos.y = Ease(In, Cubic, frame, pos.y, AfterPos.y);
 			}
 			else if (pat == 2) {
-				AfterPos.y = 0.0f;
+				AfterPos.y = 1.0f;
 				if (frame < 0.45f) {
 					frame += 0.002f;
 				}
@@ -550,14 +553,14 @@ void RightHand::Spec() {
 						if (hitpoint == HitRight) {
 							Deadbound.y -= 0.02f;
 							pos.y += Deadbound.y;
-							if (pos.y > 0.0f) {
+							if (pos.y > 1.0f) {
 								pos.x -= Deadbound.x;
 							}
 							else {
-								pos.y = 0.0f;
+								pos.y = 1.0f;
 							}
 
-							if (pos.y == 0.0f) {
+							if (pos.y == 1.0f) {
 								MoveCount = 0;
 								Attack = false;
 								hitpoint = HitNot;
@@ -567,14 +570,14 @@ void RightHand::Spec() {
 						else if (hitpoint == HitLeft) {
 							Deadbound.y -= 0.02f;
 							pos.y += Deadbound.y;
-							if (pos.y > 0.0f) {
+							if (pos.y > 1.0f) {
 								pos.x += Deadbound.x;
 							}
 							else {
-								pos.y = 0.0f;
+								pos.y = 1.0f;
 							}
 
-							if (pos.y == 0.0f) {
+							if (pos.y == 1.0f) {
 								MoveCount = 0;
 								Attack = false;
 								hitpoint = HitNot;
@@ -584,14 +587,14 @@ void RightHand::Spec() {
 						else if (hitpoint == HitUp) {
 							Deadbound.y -= 0.02f;
 							pos.y += Deadbound.y;
-							if (pos.y > 0.0f) {
+							if (pos.y > 1.0f) {
 								pos.z -= Deadbound.z;
 							}
 							else {
-								pos.y = 0.0f;
+								pos.y = 1.0f;
 							}
 
-							if (pos.y == 0.0f) {
+							if (pos.y == 1.0f) {
 								MoveCount = 0;
 								Attack = false;
 								hitpoint = HitNot;
@@ -601,14 +604,14 @@ void RightHand::Spec() {
 						else if (hitpoint == HitDown) {
 							Deadbound.y -= 0.02f;
 							pos.y += Deadbound.y;
-							if (pos.y > 0.0f) {
+							if (pos.y > 1.0f) {
 								pos.z += Deadbound.z;
 							}
 							else {
-								pos.y = 0.0f;
+								pos.y = 1.0f;
 							}
 
-							if (pos.y == 0.0f) {
+							if (pos.y == 1.0f) {
 								MoveCount = 0;
 								Attack = false;
 								hitpoint = HitNot;
