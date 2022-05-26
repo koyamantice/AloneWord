@@ -133,6 +133,7 @@ protected:
 	XMFLOAT3 MottiScale = { 0.0f,0.0f,0.0f };
 	bool attach = false;
 	XMFLOAT3 Hitsca = { 0.5f,0.5f,0.5f };
+	XMFLOAT3 Maxsca{};
 	//敵関係変数
 	float radius = 0.0f;
 	float speed = 0.0f;
@@ -173,7 +174,7 @@ protected:
 	bool pause = false;
 	bool respawn = false;
 	//
-	float BossHP = 1;
+	float BossHP = 40;
 	bool BossHit = false;
 	bool Effect = false;
 	bool Effect2 = false;

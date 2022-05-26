@@ -23,7 +23,7 @@ void InterBoss::Update() {
 	FlashCount = player->GetFlashCount();
 	//
 	if (attach) {
-		if (Hitsca.x < 2.0f) {
+		if (Hitsca.x < Maxsca.x) {
 			Hitsca.x *= 1.1f;
 			Hitsca.y *= 1.1f;
 			Hitsca.z *= 1.1f;
@@ -87,7 +87,7 @@ void InterBoss::Draw() {
 		if (shadow && BossHP > 0) {
 			texture->Draw();
 		}
-		if (attach) {
+		if (attach&&BossHP>0) {
 			Hit->Draw();
 		}
 	//}
@@ -137,14 +137,17 @@ bool InterBoss::collideAttackArm() {
 				//Hit->SetRotation(player->GetRotation());
 				Hit->SetPosition(player->GetPosition());
 				//ついてる敵の数で音が変わる
-				if (weight <= 3) {
+				if (weight <= 2) {
 					Audio::GetInstance()->PlayWave("Resources/Sound/strongL1.wav", 0.4f);
+					Maxsca = { 1.5f,1.5f,1.5f };
 				}
-				else if (weight > 3 && weight <= 6) {
+				else if (weight > 2 && weight <= 5) {
 					Audio::GetInstance()->PlayWave("Resources/Sound/strongL2.wav", 0.4f);
+					Maxsca = { 2.0f,2.0f,2.0f };
 				}
-				else if (weight >= 7) {
+				else if (weight >= 6) {
 					Audio::GetInstance()->PlayWave("Resources/Sound/strongL3.wav", 0.4f);
+					Maxsca = {2.5f,2.5f,2.5f};
 				}
 			}
 			else {
