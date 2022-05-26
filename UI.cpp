@@ -180,7 +180,7 @@ void UI::Update() {
 		BossHp[damage]->SetSize(bossPos[1]);
 		BossHp[now]->SetSize(bossPos[0]);
 		for (int i = 0; i < now + 1; i++) {
-			BossHp[i]->SetPosition({70.0f,20.0f });
+			BossHp[i]->SetPosition({90.0f,20.0f });
 		}
 		bossPos2[0] = {
 		Ease(In,Quint,0.7f,BossHp2[now]->GetSize().x,AfterPos2[0].x),
