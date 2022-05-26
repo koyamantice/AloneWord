@@ -43,6 +43,7 @@ public:
 	const int& GetAction() { return action; }
 	const int& GetAttackCount() { return AttackCount; }
 	const int& GetPat() { return pat; }
+	const int& GetAttackPoint() { return AttackPoint; }
 	const bool& GetActive() { return active; }
 	const bool& GetStun() { return stun; }
 	const bool& GetAppearanceEnd() { return appearanceEnd; }
@@ -135,6 +136,7 @@ protected:
 	XMFLOAT3 Hitsca = { 0.5f,0.5f,0.5f };
 	XMFLOAT3 Maxsca{};
 	//敵関係変数
+	float hitradius = 0.0f;
 	float radius = 0.0f;
 	float speed = 0.0f;
 	float savespeed = 0.0f;
@@ -206,6 +208,7 @@ protected:
 	//杵のボス
 	bool Off = false;
 	int haveTimer = 0;
+	int AttackPoint = 0;
 	float haveEnemy = 0.0f;
 	int damageCount = 0;
 	//登場シーン

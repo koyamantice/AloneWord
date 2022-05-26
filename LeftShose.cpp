@@ -58,7 +58,8 @@ void LeftShose::Initialize(bool shadow) {
 		Stuntexture[i]->Update();
 	}
 	InitCommon();
-
+	//当たり判定の大きさ
+	hitradius = 0.6f;
 }
 
 //開放
