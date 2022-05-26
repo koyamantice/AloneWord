@@ -75,6 +75,8 @@ void Pastel::Initialize(bool shadow) {
 		attensiontexture[i]->SetScale({ 0.2f,0.2f,0.2f });
 	}
 	InitCommon();
+	//当たり判定の大きさ
+	hitradius = 0.6f;
 }
 
 //開放
@@ -96,10 +98,12 @@ void Pastel::Spec() {
 	//行動を決める
 	if (AttackCount > 180) {
 		if (!active) {
-			pat = (rand() % 3);
+			hitradius = 0.6f;
+			AttackPoint = (rand() % 3);
 			frame = 0;
 			active = true;
-			action = 1;
+			action = (rand() % 2);
+			pat = 1;
 		}
 	}
 	//インターバル
@@ -132,157 +136,160 @@ void Pastel::Spec() {
 	//行動開始
 	if (Off == false) {
 		if (active) {
-			switch (action) {
-			//その場所まで行く
-			case 1:
-				if (pat == 0) {
-					AfterPos = {
-					10.0f,
-					5.0f,
-					-15.0f
-					};
-					Afterrot = {
+			//衝撃は
+			if ((action % 2) == 0) {
+				hitradius = 0.6f;
+				switch (pat) {
+					//その場所まで行く
+				case 1:
+					if (AttackPoint == 0) {
+						AfterPos = {
+						10.0f,
+						5.0f,
+						-15.0f
+						};
+						Afterrot = {
+							rot.x,
+							180.0f,
+							-45.0f,
+						};
+					}
+					else if (AttackPoint == 1) {
+						AfterPos = {
+						10.0f,
+						5.0f,
+						15.0f
+						};
+						Afterrot = {
 						rot.x,
 						180.0f,
 						-45.0f,
-					};
-				}
-				else if (pat == 1) {
-					AfterPos = {
-					10.0f,
-					5.0f,
-					15.0f
-					};
-					Afterrot = {
-					rot.x,
-					180.0f,
-					-45.0f,
-					};
-				}
-				else if (pat == 2) {
-					AfterPos = {
-					-10.0f,
-					5.0f,
-					15.0f
-					};
-					Afterrot = {
-					rot.x,
-					360.0f,
-					-45.0f,
-					};
-				}
-				else if (pat == 3) {
-					AfterPos = {
-					-10.0f,
-					5.0f,
-					-15.0f
-					};
-					Afterrot = {
-					rot.x,
-					360.0f,
-					-45.0f,
-					};
-				}
-
-				if (frame < 1.0f) {
-					frame += 0.01f;
-					break;
-				}
-				else {
-					//回避ポイントの場所をランダムで決める
-					for (std::size_t i = 0; i < Platformobj.size(); i++) {
-						//for (std::size_t j = 1; j < Platformobj.size(); j++) {
-							//if ((BirthNumber[i] == BirthNumber[j]) && i != j) {
-								SetPlatform[i] = true;
-								BirthNumber[i] = rand() % 3;
-							//}
-						//}
+						};
 					}
-					frame = 0;
-					action++;
-					break;
-				}
-			case 2:
-				//攻撃までの間
-				if (aiming < 200) {
-					aiming++;
-					break;
-				}
-				else {
-					frame = 0;
-					aiming = 0;
-					action++;
-					break;
-				}
-			case 3:
-				//攻撃
-				AfterPos = {
-					pos.x,
-					2,
-					pos.z,
-				};
-				Afterrot = {
-					rot.x,
-					rot.y,
-					45,
-				};
-				if (frame < 1.0f) {
-					frame += 0.08f;
-					break;
-				}
-				if (frame >= 1.0f) {
-					frame = 1.0f;
-					
-					if (coolT < 150) {
-						coolT++;
+					else if (AttackPoint == 2) {
+						AfterPos = {
+						-10.0f,
+						5.0f,
+						15.0f
+						};
+						Afterrot = {
+						rot.x,
+						360.0f,
+						-45.0f,
+						};
+					}
+					else if (AttackPoint == 3) {
+						AfterPos = {
+						-10.0f,
+						5.0f,
+						-15.0f
+						};
+						Afterrot = {
+						rot.x,
+						360.0f,
+						-45.0f,
+						};
+					}
+
+					if (frame < 1.0f) {
+						frame += 0.01f;
 						break;
 					}
 					else {
-						coolT = 0;
-						frame = 0;
-						action++;
-						/*if (BossHP >= 20) {
-							action++;
+						//回避ポイントの場所をランダムで決める
+						for (std::size_t i = 0; i < Platformobj.size(); i++) {
+							//for (std::size_t j = 1; j < Platformobj.size(); j++) {
+								//if ((BirthNumber[i] == BirthNumber[j]) && i != j) {
+							SetPlatform[i] = true;
+							BirthNumber[i] = rand() % 3;
+							//}
+						//}
 						}
-						else {
-							AttackC++;
-							oldpat = pat;
-							if (AttackC < 2) {
-								AttackC++;
-								if (oldpat == pat) {
-									pat = (rand() % 3);
-								}
-								action = 1;
-							}
-							else {
-								AttackC = 0;
-								action++;
-							}
-						}*/
+						frame = 0;
+						pat++;
 						break;
 					}
-				}
-			case 4:
-				for (std::size_t i = 0; i < Platformobj.size(); i++) {
-					SetPlatform[i] = false;
-				}
-				//空に戻ります
-				AfterPos = {
-					pos.x,
-					5.0f,
-					pos.z,
-				};
-				if (frame < 1.0f) {
-					frame += 0.01f;
-					break;
-				}
-				else {
-					frame = 0;
-					action++;
-					break;
-				}
-			case 5:
-				//元の位置に戻ります
+				case 2:
+					//攻撃までの間
+					if (aiming < 200) {
+						aiming++;
+						break;
+					}
+					else {
+						frame = 0;
+						aiming = 0;
+						pat++;
+						break;
+					}
+				case 3:
+					//攻撃
+					AfterPos = {
+						pos.x,
+						2,
+						pos.z,
+					};
+					Afterrot = {
+						rot.x,
+						rot.y,
+						45,
+					};
+					if (frame < 1.0f) {
+						frame += 0.08f;
+						break;
+					}
+					if (frame >= 1.0f) {
+						frame = 1.0f;
+
+						if (coolT < 150) {
+							coolT++;
+							break;
+						}
+						else {
+							coolT = 0;
+							frame = 0;
+							pat++;
+							/*if (BossHP >= 20) {
+								action++;
+							}
+							else {
+								AttackC++;
+								oldAttackPoint = AttackPoint;
+								if (AttackC < 2) {
+									AttackC++;
+									if (oldAttackPoint == AttackPoint) {
+										AttackPoint = (rand() % 3);
+									}
+									action = 1;
+								}
+								else {
+									AttackC = 0;
+									action++;
+								}
+							}*/
+							break;
+						}
+					}
+				case 4:
+					for (std::size_t i = 0; i < Platformobj.size(); i++) {
+						SetPlatform[i] = false;
+					}
+					//空に戻ります
+					AfterPos = {
+						pos.x,
+						5.0f,
+						pos.z,
+					};
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						break;
+					}
+					else {
+						frame = 0;
+						pat++;
+						break;
+					}
+				case 5:
+					//元の位置に戻ります
 					AfterPos = {
 						0.0f,
 						5.0f,
@@ -299,7 +306,7 @@ void Pastel::Spec() {
 					}
 					else {
 						frame = 0;
-						action = 0;
+						pat = 0;
 						active = false;
 						//HPによってインターバルが決まる
 						if (BossHP >= 20) {
@@ -310,27 +317,189 @@ void Pastel::Spec() {
 						}
 						break;
 					}
-			}
-		}
-		pos = {
+				}
+				pos = {
 Ease(In,Cubic,frame,pos.x,AfterPos.x),
 Ease(In,Cubic,frame,pos.y,AfterPos.y),
 Ease(In,Cubic,frame,pos.z,AfterPos.z)
-		};
+				};
 
-		rot = {
-Ease(In,Cubic,frame,rot.x,Afterrot.x),
-Ease(In,Cubic,frame,rot.y,Afterrot.y),
-Ease(In,Cubic,frame,rot.z,Afterrot.z)
-		};
-		enemyobj->SetPosition(pos);
-		enemyobj->SetRotation(rot);
+				rot = {
+		Ease(In,Cubic,frame,rot.x,Afterrot.x),
+		Ease(In,Cubic,frame,rot.y,Afterrot.y),
+		Ease(In,Cubic,frame,rot.z,Afterrot.z)
+				};
+				enemyobj->SetPosition(pos);
+				enemyobj->SetRotation(rot);
+			}
+			//回転攻撃
+			else if ((action % 2) == 1) {
+				switch (pat) {
+					//その場所まで行く
+				case 1:
+					AfterPos = {
+					14.0f,
+					2.0f,
+					12.0f
+					};
+					Afterrot = {
+						90.0f,
+						rot.y,
+						45.0f,
+					};
+
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						break;
+					}
+					else {
+						frame = 0;
+						pat++;
+						break;
+					}
+				case 2:
+					AfterPos = {
+					14.0f,
+					2.0f,
+					-12.0f
+					};
+					Afterrot = {
+						90.0f,
+						rot.y,
+						1125.0f,
+					};
+
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						hitradius = 8.0f;
+						break;
+					}
+					else {
+						frame = 0;
+						hitradius = 1.0f;
+						pat++;
+						rot.z = 45.0f;
+						break;
+					}
+				case 3:
+					AfterPos = {
+						-14.0f,
+						2.0f,
+						-12.0f
+					};
+					Afterrot = {
+						90.0f,
+						rot.y,
+						1125.0f,
+					};
+
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						hitradius = 8.0f;
+						break;
+					}
+					else {
+						hitradius = 1.0f;
+						frame = 0;
+						pat++;
+						rot.z = 45.0f;
+						break;
+					}
+				case 4:
+					AfterPos = {
+					-14.0f,
+					2.0f,
+					12.0f
+					};
+					Afterrot = {
+						90.0f,
+						rot.y,
+						1125.0f,
+					};
+
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						hitradius = 8.0f;
+						break;
+					}
+					else {
+						hitradius = 1.0f;
+						frame = 0;
+						pat++;
+						rot.z = 45.0f;
+						break;
+					}
+				case 5:
+					AfterPos = {
+					14.0f,
+					2.0f,
+					12.0f
+					};
+					Afterrot = {
+						90.0f,
+						rot.y,
+						1125.0f,
+					};
+
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						hitradius = 8.0f;
+						break;
+					}
+					else {
+						hitradius = 1.0f;
+						frame = 0;
+						pat++;
+						rot.z = 45.0f;
+						break;
+					}
+					
+				case 6:
+					//元の位置に戻ります
+					AfterPos = {
+						0.0f,
+						5.0f,
+						8.5f,
+					};
+					Afterrot = {
+						0.0f,
+						90.0f,
+						0.0f,
+					};
+					if (frame < 1.0f) {
+						frame += 0.01f;
+						break;
+					}
+					else {
+						hitradius = 0.6f;
+						frame = 0;
+						pat = 0;
+						AttackCount = 0;
+						active = false;
+					}
+				}
+				pos = {
+	Ease(In,Cubic,frame,pos.x,AfterPos.x),
+	Ease(In,Cubic,frame,pos.y,AfterPos.y),
+	Ease(In,Cubic,frame,pos.z,AfterPos.z)
+				};
+
+				rot = {
+		Ease(In,Cubic,frame,rot.x,Afterrot.x),
+		Ease(In,Cubic,frame,rot.y,Afterrot.y),
+		Ease(In,Cubic,frame,rot.z,Afterrot.z)
+				};
+				enemyobj->SetPosition(pos);
+				enemyobj->SetRotation(rot);
+			}
+		}
 	}
 	
 	//餅が集まったら餅を付き始める
 	if (Off == true && !active) {
 		AfterPos.y = 2.0f;
 		AfterPos.z = 8.5f;
+		hitradius = 0.6f;
 		Afterrot = {
 			rot.x,
 			270.0f,

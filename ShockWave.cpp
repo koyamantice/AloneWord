@@ -49,12 +49,13 @@ void ShockWave::Final() {
 
 //ƒ{ƒX‚É‚æ‚Á‚ÄÕŒ‚”g‚ª‘–‚é
 void ShockWave::SetWave(Pastel* pastel) {
-	int action = pastel->GetAction();
 	int pat = pastel->GetPat();
+	int AttackPoint = pastel->GetAttackPoint();
+	int action = pastel->GetAction();
 	XMFLOAT3 pos = pastel->GetPosition();
 	//ÕŒ‚”g‚ÌˆÊ’u‚ðŒˆ‚ß‚é
-	if (action == 3 && pos.y == 2.0f && !expand) {
-		if (pat == 0 || pat == 1) {
+	if (pat == 3 && pos.y == 2.0f && !expand && action == 0) {
+		if (AttackPoint == 0 || AttackPoint == 1) {
 			this->pos.x = pos.x + 7;
 			this->pos.y = 0.0f;
 			this->pos.z = pos.z;

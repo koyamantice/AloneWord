@@ -70,7 +70,8 @@ void InterBoss::Draw() {
 	ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
 	ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
 	ImGui::SliderFloat("rot.z", &rot.z, 360, -360);
-	ImGui::SliderFloat("pos.y", &pos.y, 30, -30);
+	//ImGui::SliderFloat("radius", &hitradius, 360, -360);
+	//ImGui::SliderFloat("pos.y", &pos.y, 30, -30);
 	//ImGui::SliderFloat("MottiScale", &MottiScale.x, 1, 0);
 	//ImGui::SliderFloat("HP", &BossHP, 360, -360);
 	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
@@ -90,7 +91,7 @@ void InterBoss::Draw() {
 		if (shadow && BossHP > 0) {
 			texture->Draw();
 		}
-		if (attach&&BossHP>0) {
+		if (attach/*&&BossHP>0*/) {
 			Hit->Draw();
 		}
 	//}
@@ -101,12 +102,24 @@ void InterBoss::Draw() {
 bool InterBoss::collidePlayer() {
 	XMFLOAT3 playerpos = player->GetPosition();
 	float playerhp = player->GetHp();
-	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) && FlashCount == 0 && Interval == 0 && BossHP > 0) {
+	XMFLOAT3 distance = player->GetDistance();
+	float weight = player->GetArmWeight();
+	if (Collision::SphereCollision(pos.x, pos.y, pos.z, hitradius, playerpos.x, playerpos.y, playerpos.z, hitradius) && FlashCount == 0 && Interval == 0 && BossHP > 0) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 		player->SetHp(playerhp - 1);
 		player->SetCharge(0);
 		player->SetRotCount(0);
 		Interval = 100;
+		distance.x = playerpos.x - pos.x;
+		distance.z = playerpos.z - pos.z;
+		player->SetDistance(distance);
+		player->SetJumpG(0.5f);
+		player->SetDamageFlag(true);
+		player->SetAttackFlag(false);
+		if (weight != 0.0f) {
+			weight = 0.0f;
+			player->SetArmWeight(weight);
+		}
 		return true;
 	} else {
 		return false;
@@ -202,5 +215,18 @@ void InterBoss::AppeaMovie(int Timer) {
 void InterBoss::EndMovie(int Timer) {
 	End(Timer);
 	enemyobj->Update();
+	if (attach) {
+		if (Hitsca.x < Maxsca.x) {
+			Hitsca.x *= 1.1f;
+			Hitsca.y *= 1.1f;
+			Hitsca.z *= 1.1f;
+		}
+		else {
+			Hitsca = { 0.5f,0.5f,0.5f };
+			attach = false;
+		}
+		Hit->SetScale(Hitsca);
+	}
+	Hit->Update();
 }
 

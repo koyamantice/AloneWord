@@ -413,6 +413,7 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 		if (lefthand->GetHP() <= 0 && righthand->GetHP() <= 0) {
 			Audio::GetInstance()->StopWave(9);
 			end = true;
+			player->SetFlash(0);
 		}
 
 		if (player->GetHp() <= 0) {

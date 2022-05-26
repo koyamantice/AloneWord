@@ -237,7 +237,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		};
 		plane[1]->SetPosition(selectP[1]);
 		select[2]->SetPosition(selectP[0]);
-		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A) && (ClearCount >= 2)) {
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount >= 2)*/) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			//SceneManager::GetInstance()->ChangeScene("SECONDBOSS");
 			StageSelectNumber = boots;
@@ -271,7 +271,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		};
 		plane[3]->SetPosition(selectP[1]);
 		select[3]->SetPosition(selectP[0]);
-		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A) && (ClearCount >= 1)) {
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount >= 1)*/) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			//SceneManager::GetInstance()->ChangeScene("THIRDBOSS");
 			StageSelectNumber = Tea;
@@ -306,7 +306,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		};
 		plane[2]->SetPosition(selectP[1]);
 		select[1]->SetPosition(selectP[0]);
-		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A) && (ClearCount >= 3)) {
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount >= 3)*/) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			//SceneManager::GetInstance()->ChangeScene("FOURTHBOSS");
 			StageSelectNumber = Pastel;
@@ -341,7 +341,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		};
 		plane[4]->SetPosition(selectP[1]);
 		select[4]->SetPosition(selectP[0]);
-		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A) && (ClearCount >= 4)) {
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount >= 4)*/) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			//SceneManager::GetInstance()->ChangeScene("FOURTHBOSS");
 			StageSelectNumber = human;

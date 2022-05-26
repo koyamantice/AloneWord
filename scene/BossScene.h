@@ -47,7 +47,7 @@ private:
 	//それぞれのクラスのもの
 	Texture* limit = nullptr;
 	Player* player = nullptr;
-	array<Effect*,40> effect;
+	array<Effect*,60> effect;
 	array<Rice*,6> enemy;
 	InterBoss* bossenemy = nullptr;
 	float weight = 0;

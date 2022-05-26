@@ -39,6 +39,8 @@ void GreenTea::Initialize(bool shadow) {
 	degree = 0.0f;
 	scale = 0.0f;
 	InitCommon();
+	//当たり判定の大きさ
+	hitradius = 0.6f;
 }
 //開放
 void GreenTea::Finalize() {

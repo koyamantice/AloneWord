@@ -59,6 +59,8 @@ void LeftHand::Initialize(bool shadow) {
 	//	Stuntexture[i]->Update();
 	//}
 	InitCommon();
+	//“–‚½‚è”»’è‚Ì‘å‚«‚³
+	hitradius = 0.6f;
 }
 
 //ŠJ•ú
