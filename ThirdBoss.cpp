@@ -419,9 +419,9 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 			}
 
 			if (expandchange->GetTimer() >= 58) {
-				if (!save->GetThirdClear()) {
+				if (!save->GetSecondClear()) {
 					save->ClearSave();
-					save->ThirdSave();
+					save->SecondSave();
 				}
 				//Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
 				SceneManager::GetInstance()->ChangeScene("StageSelect");

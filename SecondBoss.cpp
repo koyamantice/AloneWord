@@ -471,9 +471,9 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 			}
 
 			if (expandchange->GetTimer() >= 58) {
-				if (!save->GetSecondClear()) {
+				if (!save->GetThirdClear()) {
 					save->ClearSave();
-					save->SecondSave();
+					save->ThirdSave();
 				}
 				//Audio::GetInstance()->LoopWave(4, 0.2f);
 				SceneManager::GetInstance()->ChangeScene("StageSelect");

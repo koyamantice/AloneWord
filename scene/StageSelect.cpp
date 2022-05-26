@@ -147,9 +147,9 @@ void StageSelect::Finalize() {
 }
 //どのマップに行くかを決める
 bool StageSelect::UICheck() {
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -6.2f, 0.0f, 1.5f)) { return false; }
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 1.3f, 0.0f, 1.5f)) { return false; }
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 8.1f, 0.0f, 1.5f)) { return false; }
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -6.2f, 3.0f, 1.5f)) { return false; }
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 1.3f, 3.0f, 1.5f)) { return false; }
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 8.1f, 3.0f, 1.5f)) { return false; }
 	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -6.2f, -3.2f, 1.5f)) { return false; }
 	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 1.0f, -3.2f, 1.5f)) { return false; }
 	return true;
@@ -185,7 +185,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 	shrinkchange->Update();
 	ParticleManager::GetInstance()->Update();
 	//選ばれる場所によってカメラが寄る場所が変わる
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -6.2f, 0.0f, 1.5f)) {
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -6.2f, 3.0f, 1.5f)) {
 		if (frame >= 1.0f) {
 			frame = 1.0f;
 		} else {
@@ -221,7 +221,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 			};
 		}
 	}
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 8.2f, 0.0f, 1.5f)) {
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 8.2f, 3.0f, 1.5f)) {
 		if (frame >= 1.0f) {
 			frame = 1.0f;
 		} else {
@@ -237,7 +237,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		};
 		plane[1]->SetPosition(selectP[1]);
 		select[2]->SetPosition(selectP[0]);
-		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A) /*&& (ClearCount <= 2)*/) {
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A) && (ClearCount >= 2)) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			//SceneManager::GetInstance()->ChangeScene("SECONDBOSS");
 			StageSelectNumber = boots;
@@ -255,7 +255,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 			//Aftereyepos = player->GetPosition();
 		}
 	}
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 1.3f, 8.2f, 1.5f)) {
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 1.3f, 3.0f, 1.5f)) {
 		if (frame >= 1.0f) {
 			frame = 1.0f;
 		} else {
@@ -271,7 +271,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		};
 		plane[3]->SetPosition(selectP[1]);
 		select[3]->SetPosition(selectP[0]);
-		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount <= 1)*/) {
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A) && (ClearCount >= 1)) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			//SceneManager::GetInstance()->ChangeScene("THIRDBOSS");
 			StageSelectNumber = Tea;
@@ -306,7 +306,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		};
 		plane[2]->SetPosition(selectP[1]);
 		select[1]->SetPosition(selectP[0]);
-		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount <= 3)*/) {
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A) && (ClearCount >= 3)) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			//SceneManager::GetInstance()->ChangeScene("FOURTHBOSS");
 			StageSelectNumber = Pastel;
@@ -341,7 +341,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		};
 		plane[4]->SetPosition(selectP[1]);
 		select[4]->SetPosition(selectP[0]);
-		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount <= 4)*/) {
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A) && (ClearCount >= 4)) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			//SceneManager::GetInstance()->ChangeScene("FOURTHBOSS");
 			StageSelectNumber = human;
@@ -466,74 +466,68 @@ void StageSelect::Draw(DirectXCommon* dxCommon) {
 	else {
 		LightBackGround->Draw();
 	}
-	Stage1[0]->Draw();
-	Stage2[0]->Draw();
-	Stage3[0]->Draw();
-	Stage4[0]->Draw();
-	Stage5[0]->Draw();
-	Sprite::PreDraw();
 	//クリア状況ごとにマップの色が変わる
 	//一ステージ目
-	//if (save->GetFirstClear()) {
-	//	
-	//}
-	//else {
-	//	Stage1[2]->Draw();
-	//}
+	if (save->GetFirstClear()) {
+		Stage1[0]->Draw();
+	}
+	else {
+		Stage1[1]->Draw();
+	}
 
-	////2ステージ目
-	//if (save->GetSecondClear()) {
-	//	Stage2[0]->Draw();
-	//}
-	//else {
-	//	if (save->GetClearCount() == 1) {
-	//		Stage2[2]->Draw();
-	//	}
-	//	else {
-	//		Stage2[1]->Draw();
-	//	}
-	//}
+	//2ステージ目
+	if (save->GetSecondClear()) {
+		Stage2[0]->Draw();
+	}
+	else {
+		if (save->GetClearCount() == 1) {
+			Stage2[1]->Draw();
+		}
+		else {
+			Stage2[2]->Draw();
+		}
+	}
 
-	////3ステージ目
-	//if (save->GetThirdClear()) {
-	//	Stage3[0]->Draw();
-	//}
-	//else {
-	//	if (save->GetClearCount() == 2) {
-	//		Stage3[2]->Draw();
-	//	}
-	//	else {
-	//		Stage3[1]->Draw();
-	//	}
-	//}
+	//3ステージ目
+	if (save->GetThirdClear()) {
+		Stage3[0]->Draw();
+	}
+	else {
+		if (save->GetClearCount() == 2) {
+			Stage3[1]->Draw();
+		}
+		else {
+			Stage3[2]->Draw();
+		}
+	}
 
-	////4ステージ目
-	//if (save->GetFouthClear()) {
-	//	Stage4[0]->Draw();
-	//}
-	//else {
-	//	if (save->GetClearCount() == 3) {
-	//		Stage4[2]->Draw();
-	//	}
-	//	else {
-	//		Stage4[1]->Draw();
-	//	}
-	//}
+	//4ステージ目
+	if (save->GetFouthClear()) {
+		Stage4[0]->Draw();
+	}
+	else {
+		if (save->GetClearCount() == 3) {
+			Stage4[1]->Draw();
+		}
+		else {
+			Stage4[2]->Draw();
+		}
+	}
 
-	////5ステージ目
-	//if (save->GetFifthClear()) {
-	//	Stage5[0]->Draw();
-	//}
-	//else {
-	//	if (save->GetClearCount() == 4) {
-	//		Stage5[2]->Draw();
-	//	}
-	//	else {
-	//		Stage5[1]->Draw();
-	//	}
-	//}
-	//
-
+	//5ステージ目
+	if (save->GetFifthClear()) {
+		Stage5[0]->Draw();
+	}
+	else {
+		if (save->GetClearCount() == 4) {
+			Stage5[1]->Draw();
+		}
+		else {
+			Stage5[2]->Draw();
+		}
+	}
+	
+	
 	Sprite::PreDraw();
 	player->Draw(dxCommon);
 	Sprite::PreDraw();
