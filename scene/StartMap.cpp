@@ -116,8 +116,9 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	comment[text9] = Sprite::Create(ImageManager::text9, { 570.0f,450.0f });
 	comment[text10] = Sprite::Create(ImageManager::text10, { 570.0f,450.0f });
 	comment[text11] = Sprite::Create(ImageManager::text11, { 570.0f,450.0f });
+	comment[text12] = Sprite::Create(ImageManager::text12, { 570.0f,450.0f });
 
-	for (int i = 0; i < text11 + 1; i++) {
+	for (int i = 0; i < text12 + 1; i++) {
 		comment[i]->SetAnchorPoint({ 0.5f, 0.5f });
 		comment[i]->SetPosition({ 640.0f,500.0f });
 		comment[i]->SetSize({ 0,0 });
@@ -167,6 +168,10 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	} else {
 		hit = false;
 	}
+	angle += 1.0f;
+	pos12.y = (sin(angle * (3.14f / 180.0f)) * 100) + 450;
+	comment[text12]->SetPosition(pos12);
+	ui->SkipUpda();
 	//行動により次のチュートリアルに移る
 	nowTimer++;
 	switch (nowText) {
@@ -630,6 +635,7 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	}
 	Sprite::PreDraw();
 	comment[nowText]->Draw();
+	comment[text12]->Draw();
 	if (check || checkZ) {
 		Ok->Draw();
 	}

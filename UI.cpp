@@ -356,6 +356,35 @@ const void UI::Draw() {
 	}
 }
 
+void UI::SkipUpda() {
+	if (Input::GetInstance()->AllNoPush()) {
+		count++;
+		if (count>100) {
+			Skipframe += 0.03f;
+		}
+	} else {
+		if (!back) {
+			back = true;
+		}
+	}
+	if (back) {
+		if (Skipframe > 0.0f) {
+			Skipframe -= 0.05f;
+		} else {
+			back = false;
+		}
+	}
+	if (Skipframe>1.0f) {
+		Skipframe = 1.0f;
+		count = 0;
+	}
+	if (Skipframe < 0.0f) {
+		Skipframe = 0.0f;
+	}
+	SkipPos.x = Ease(In,Quad,Skipframe,-408,0);
+	Skip->SetPosition(SkipPos);
+}
+
 const void UI::SkipDraw() {
 	Sprite::PreDraw();
 	Skip->Draw();

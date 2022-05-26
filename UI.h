@@ -11,6 +11,7 @@ public:
 	void Finalize();
 	const void Draw();
 
+	void SkipUpda();
 	const void SkipDraw();
 
 	void SetIsInvisible(const bool isInvisible) { this->isInvisible = isInvisible; }
@@ -64,6 +65,8 @@ private:
 	XMFLOAT2 AfterSpin[3]{};
 	XMFLOAT2 SpinPos[2]{};
 	XMFLOAT2 SpinSize[3]{};
+	XMFLOAT2 SkipPos{};
+	bool back=false;
 	//“G‚ÌˆÊ’u‚ÌUI‚Ì‚¢‚¿‚ğ‹‚ß‚é‚½‚ß‚Ì•Ï”
 	const float PI = 3.145265f;
 	std::vector<int> power;
@@ -74,7 +77,9 @@ private:
 	bool Up = false;
 	float vel = 2.0f;
 	float frame = 0.0f;
+	float Skipframe = 0.0f;
 	float scale = 50;
+	float count;
 	double a;
 	double b;
 	XMFLOAT2 basePos = { 1280 / 2,720 / 2 };

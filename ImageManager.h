@@ -60,6 +60,7 @@ public:
 		text9,
 		text10,
 		text11,
+		text12,
 		textSkip,
 		Enemyhp,
 		Enemyhp2,
