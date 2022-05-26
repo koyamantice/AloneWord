@@ -330,6 +330,7 @@ void Player::Update() {
 			const float threshold = cosf(XMConvertToRadians(30.0f));
 
 			if (-threshold < cos && cos < threshold) {
+
 				sphere->center += info.reject;
 				move += info.reject;
 			}

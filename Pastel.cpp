@@ -102,7 +102,7 @@ void Pastel::Spec() {
 			AttackPoint = (rand() % 3);
 			frame = 0;
 			active = true;
-			action = 1;
+			action = (rand() % 2);
 			pat = 1;
 		}
 	}
