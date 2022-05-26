@@ -73,21 +73,15 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 		enemy[i] = new Rice();
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
-		enemy[i]->SetLimit({ 21.0f,-17.0f,19.0f,-19.0f });
+		enemy[i]->SetLimit({ 22.0f,-17.0f, 21.0f,-20.5f });
 	}
 	//当たり判定確認用です
-	modelSphere = Model::CreateFromOBJ("sphere");
-	objSphere = TouchableObject::Create(modelSphere);
-	objSphere->SetScale({ 2.0f, 2.0f, 2.0f });
-	objSphere->SetPosition({ 0.0f,0.0f,1.0f });
+	//modelSphere = Model::CreateFromOBJ("sphere");
+	//objSphere = TouchableObject::Create(modelSphere);
+	//objSphere->SetScale({ 2.0f, 2.0f, 2.0f });
+	//objSphere->SetPosition({ 0.0f,0.0f,1.0f });
 	//
-	Texture* Hit_ = Texture::Create(ImageManager::Hit, { 0,0,-10 }, { 0,0,0 }, { 1, 1, 1,1 });
-	Hit_->TextureCreate();
-	Hit_->SetPosition(player->GetPosition());
-	Hit_->SetRotation({ 0.0f,0.0f,0.0f });
-	Hit_->SetScale({1.0f,1.0f,1.0f});
-	Hit_->Update();
-	Hit.reset(Hit_);
+
 
 
 	// パーティクルマネージャ生成
@@ -131,6 +125,12 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 
 	shrinkchange = new ShrinkChange();
 	shrinkchange->SetEndChange(true);
+	//
+	for (std::size_t i = 0; i < effect.size(); i++) {
+		effect[i] = new Effect();
+		effect[i]->Initialize();
+	}
+
 	//スプライト生成
 	expandchange = new ExpandChange();
 }
@@ -145,7 +145,7 @@ void StartMap::Finalize() {
 	bossenemy->Finalize();
 	delete objBossMap;
 	delete objFloor;
-	delete objSphere;
+	//delete objSphere;
 	delete modelBossMap;
 	delete modelFloor;
 	delete objSkydome;
@@ -571,6 +571,9 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	camera->Update();
 	particleMan->Update();
 	expandchange->Update();
+	for (std::size_t i = 0; i < effect.size(); i++) {
+		effect[i]->Update(bossenemy);
+	}
 	shrinkchange->Update();
 	for (int i = 0; i < enemy.size() - 1; i++) {
 		enemy[i]->Demo(i);
@@ -606,7 +609,7 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	objBossMap->Draw();
 	objFloor->Draw();
 	objSkydome->Draw();
-	objSphere->Draw();
+	//objSphere->Draw();
 
 	for (int i = 0; i < enemy.size() - 1; i++) {
 		enemy[i]->Draw();
@@ -615,6 +618,10 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	bossenemy->Draw();
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
+	for (std::size_t i = 0; i < effect.size(); i++) {
+		effect[i]->Draw();
+	}
+
 	ui->Draw();
 	ui->SkipDraw();
 	Texture::PreDraw();

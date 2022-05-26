@@ -57,6 +57,8 @@ void LeftShose::Initialize(bool shadow) {
 		Stuntexture[i]->SetPosition(StunPos[i]);
 		Stuntexture[i]->Update();
 	}
+	InitCommon();
+
 }
 
 //開放

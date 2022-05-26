@@ -398,6 +398,12 @@ void Player::Update() {
 		position.y = 0.0f;
 		onGround = true;
 	}
+	if (position.x< -20.5) {
+		position.x = -20.5;
+	}
+	if (position.x > 21) {
+		position.x = 21;
+	}
 	if (position.z< -17) {
 		position.z = -17;
 	}
@@ -671,10 +677,10 @@ void Player::BirthParticle() {
 			vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 			vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 			vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-			const float rnd_sca = 0.7f;
-			float sca{};
-			sca = (float)rand() / RAND_MAX*rnd_sca;
-			ParticleManager::GetInstance()->Add(20, { oldPos.x + vel.x,oldPos.y,oldPos.z + vel.z }, vel, XMFLOAT3(), 1.3f, sca);
+			//const float rnd_sca = 0.1f;
+			//float sca{};
+			//sca = (float)rand() / RAND_MAX*rnd_sca;
+			ParticleManager::GetInstance()->Add(30, { oldPos.x + vel.x,oldPos.y,oldPos.z + vel.z }, vel, XMFLOAT3(), 1.2f, 0.6f);
 		}
 		count = 0;
 	}

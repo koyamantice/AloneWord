@@ -74,6 +74,7 @@ void Pastel::Initialize(bool shadow) {
 		attensiontexture[i]->SetRotation({ 0,0,0 });
 		attensiontexture[i]->SetScale({ 0.2f,0.2f,0.2f });
 	}
+	InitCommon();
 }
 
 //ŠJ•ú

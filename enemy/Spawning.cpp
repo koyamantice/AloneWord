@@ -39,6 +39,7 @@ void Spawning::Initialize(bool shadow) {
 	Smoke->SetRotation({ 90,0,0 });
 	Smoke->SetScale({ 0.3f,0.3f,0.0f });
 	net[1].reset(Smoke);
+	InitCommon();
 }
 
 void Spawning::specialDraw() {

@@ -31,6 +31,7 @@ private:
 	Sprite* BossHp[3]{};//“G‚ÌHP
 	Sprite* BossHp2[3]{};//“G‚ÌHP
 	Sprite* PlaHp[3]{};//ƒvƒŒƒCƒ„[‚ÌHP
+	float BossMaxHp[2];
 	enum {
 		max,
 		damage,

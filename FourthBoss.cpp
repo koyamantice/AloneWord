@@ -121,7 +121,7 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 		enemy[i] = new Rice();
 		enemy[i]->SetPlayer(player);
 		enemy[i]->Initialize();
-		enemy[i]->SetLimit({ 21.0f,-17.0f,19.0f,-19.0f });
+		enemy[i]->SetLimit({ 22.0f,-17.0f, 21.0f,-20.5f });
 	}
 
 	//“–‚½‚è”»’èŠm”F—p‚Å‚·
@@ -375,7 +375,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 				player->Rebound();
 			}
 			ui->Update();
-			particleMan->Update();
+			ParticleManager::GetInstance()->Update();
 			//objSphere->Update();
 			shockwave->Upda(pastel, player);
 			cameraPos.x = player->GetPosition().x;

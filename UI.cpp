@@ -19,7 +19,8 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	BossHp[now]->SetPosition({ 260.0f,20.0f });
 	//BossHp[now]->SetColor({ 0.0f,1.0f,0.0f,1.0f });
 	if (boss) {
-		AfterPos[0] = { (float)(boss->GetHP() * (800 / boss->GetHP())),75 };
+		BossMaxHp[0] = boss->GetHP();
+		AfterPos[0] = { (float)(boss->GetHP() * (800 / BossMaxHp[0])),75 };
 	}
 	BossHp[max]->SetSize(AfterPos[0]);
 	BossHp[damage]->SetSize(AfterPos[0]);
@@ -34,7 +35,8 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	BossHp2[now]->SetPosition({ 260.0f,70.0f });
 	//BossHp2[now]->SetColor({ 0.0f,1.0f,0.0f,1.0f });
 	if (boss2) {
-		AfterPos2[0] = { (float)(boss2->GetHP() * (800/ boss2->GetHP())),75 };
+		BossMaxHp[1] = boss2->GetHP();
+		AfterPos2[0] = { (float)(boss2->GetHP() * (800/ BossMaxHp[1])),75 };
 	}
 	BossHp2[max]->SetSize(AfterPos2[0]);
 	BossHp2[damage]->SetSize(AfterPos2[0]);
@@ -151,8 +153,7 @@ void UI::Update() {
 		EaseScale();
 	}
 	if (boss&&!boss2) {
-		AfterPos[0] = { (float)(boss->GetHP() * (800 / boss->GetHP())),75 };
-
+		AfterPos[0] = { (float)(boss->GetHP() * (800 / BossMaxHp[0])),75 };
 		bossPos[0] = {
 		Ease(In,Quint,0.7f,BossHp[now]->GetSize().x,AfterPos[0].x),
 		75,
@@ -166,18 +167,31 @@ void UI::Update() {
 		SeachBoss();
 	}
 	if (boss2&&boss) {
-		AfterPos2[0] = { (float)(boss->GetHP() * (800 / boss->GetHP())),75 };
-
+		AfterPos[0] = { (float)(boss->GetHP() * (800 / BossMaxHp[0])),75 };
+		AfterPos2[0] = { (float)(boss2->GetHP() * (800 / BossMaxHp[1])),75 };
+		bossPos[0] = {Ease(In,Quint,0.7f,BossHp[now]->GetSize().x,AfterPos[0].x),75,};
+		bossPos[1] = {Ease(In,Quint,0.5f,BossHp[damage]->GetSize().x,AfterPos[0].x),75,};
+		BossHp[max]->SetSize({ 400,75 });
+		BossHp[damage]->SetSize(bossPos[1]);
+		BossHp[now]->SetSize(bossPos[0]);
+		for (int i = 0; i < now + 1; i++) {
+			BossHp[i]->SetPosition({90.0f,20.0f });
+		}
 		bossPos2[0] = {
 		Ease(In,Quint,0.7f,BossHp2[now]->GetSize().x,AfterPos2[0].x),
-		Ease(In,Quint,0.7f,BossHp2[now]->GetSize().y,AfterPos2[0].y),
+		75,
 		};
 		bossPos2[1] = {
 		Ease(In,Quint,0.5f,BossHp2[damage]->GetSize().x,AfterPos2[0].x),
-		Ease(In,Quint,0.5f,BossHp2[damage]->GetSize().y,AfterPos2[0].y),
+		75,
 		};
+		for (int i = 0; i < now + 1; i++) {
+			BossHp2[i]->SetPosition({ 800.0f,20.0f });
+		}
+		BossHp2[max]->SetSize({ 400,75 });
 		BossHp2[damage]->SetSize(bossPos2[1]);
 		BossHp2[now]->SetSize(bossPos2[0]);
+		SeachBoss();
 		SeachBoss2();
 	}
 	//スタミナ的なやつ
