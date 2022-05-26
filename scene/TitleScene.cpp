@@ -45,7 +45,7 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 //開放処理
 void TitleScene::Finalize() {
 	//３ｄのモデルのデリート
-	for (int i = 0; i < 10;i++) {
+	for (int i = 0; i < 4;i++) {
 		delete sprite[i];
 	}
 	expandchange->Finalize();
@@ -117,11 +117,11 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 }
 //描画
 void TitleScene::Draw(DirectXCommon* dxCommon) {
-	ImGui::Begin("test");
-	//ImGui::SliderFloat("cameraPos.y", &cameraPos.y, 30, 0);
-	ImGui::Text("clearCount::%d", SelectNumber);
-	ImGui::Unindent();
-	ImGui::End();
+	//ImGui::Begin("test");
+	////ImGui::SliderFloat("cameraPos.y", &cameraPos.y, 30, 0);
+	//ImGui::Text("clearCount::%d", SelectNumber);
+	//ImGui::Unindent();
+	//ImGui::End();
 	Sprite::PreDraw();
 	//背景用
 	sprite[back]->Draw();
