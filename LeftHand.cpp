@@ -18,7 +18,7 @@ void LeftHand::Initialize(bool shadow) {
 	this->shadow = shadow;
 	IsAlive = 0;
 	pos = { -10.0f,1.0f,0.0f };
-	rot = { 0,0,0 };
+	rot = { 0,90,0 };
 	//Afterrot.y = rot.y;
 
 	//“G
@@ -240,8 +240,13 @@ void LeftHand::Spec() {
 						break;
 					}
 				case 3:
+					Afterrot = {
+						0,
+						0,
+						0
+					};
 					AfterPos = {
-					10,
+					-10,
 					1,
 					0
 					};
@@ -320,7 +325,7 @@ void LeftHand::Spec() {
 				case 3:
 					AfterPos = {
 						pos.x,
-						0,
+						1,
 						pos.z,
 					};
 					if (frame < 1.0f) {
@@ -335,7 +340,7 @@ void LeftHand::Spec() {
 				case 4:
 					AfterPos = {
 						targetpos.x,
-						0,
+						1,
 						pos.z,
 					};
 					if (frame < 1.0f) {
