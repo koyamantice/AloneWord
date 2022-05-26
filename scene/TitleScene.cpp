@@ -66,12 +66,12 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 	}
 	switch (SelectNumber) {
 	case Start:
-		buttonPos[0] = { 320.0f,470.0f };
-		buttonPos[1] = { 440.0f,470.0f };
+		buttonPos[0] = { 320.0f,465.0f };
+		buttonPos[1] = { 440.0f,465.0f };
 		break;
 	case Select:
-		buttonPos[0] = { 320.0f,550.0f };
-		buttonPos[1] = { 440.0f,550.0f };
+		buttonPos[0] = { 320.0f,543.0f };
+		buttonPos[1] = { 440.0f,543.0f };
 		break;
 	case Exit:
 		buttonPos[0] = { 320.0f,620.0f };
