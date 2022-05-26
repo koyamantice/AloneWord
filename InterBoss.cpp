@@ -3,12 +3,36 @@
 #include<iomanip>
 #include"Collision.h"
 #include <Easing.h>
+#include"ImageManager.h"
+
 using namespace DirectX;
+
+void InterBoss::InitCommon() {
+	Texture* Hit_ = Texture::Create(ImageManager::Hit, { 0,0,-10 }, { 0,0,0 }, { 1, 1, 1,0.5f });
+	Hit_->TextureCreate();
+	Hit_->SetRotation({ 30.0f,0.0f,0.0f });
+	Hit_->SetScale(Hitsca);
+	Hit_->SetPosition({ 1.0f,1.0f,1.0f });
+	Hit_->Update();
+	Hit.reset(Hit_);
+}
 
 //更新処理
 void InterBoss::Update() {
 	Interval = player->GetInterval();
 	FlashCount = player->GetFlashCount();
+	//
+	if (attach) {
+		if (Hitsca.x < Maxsca.x) {
+			Hitsca.x *= 1.1f;
+			Hitsca.y *= 1.1f;
+			Hitsca.z *= 1.1f;
+		} else {
+			Hitsca = { 0.5f,0.5f,0.5f };
+			attach = false;
+		}
+		Hit->SetScale(Hitsca);
+	}
 	//各当たり判定
 	collideAttackArm();
 	collidePlayer();
@@ -36,6 +60,7 @@ void InterBoss::Update() {
 		texture->SetPosition(pos.x, 0, pos.z);
 		texture->Update();
 	}
+	Hit->Update();
 }
 
 //描画
@@ -64,6 +89,9 @@ void InterBoss::Draw() {
 		Texture::PreDraw();
 		if (shadow && BossHP > 0) {
 			texture->Draw();
+		}
+		if (attach&&BossHP>0) {
+			Hit->Draw();
 		}
 	//}
 	//それぞれのマップごとの描画
@@ -108,15 +136,21 @@ bool InterBoss::collideAttackArm() {
 			}*/
 			if (weight != 0.0f) {
 				BossHit = true;
+				attach = true;
+				//Hit->SetRotation(player->GetRotation());
+				Hit->SetPosition(player->GetPosition());
 				//ついてる敵の数で音が変わる
-				if (weight <= 3) {
+				if (weight <= 2) {
 					Audio::GetInstance()->PlayWave("Resources/Sound/strongL1.wav", 0.4f);
+					Maxsca = { 1.5f,1.5f,1.5f };
 				}
-				else if (weight > 3 && weight <= 6) {
+				else if (weight > 2 && weight <= 5) {
 					Audio::GetInstance()->PlayWave("Resources/Sound/strongL2.wav", 0.4f);
+					Maxsca = { 2.0f,2.0f,2.0f };
 				}
-				else if (weight >= 7) {
+				else if (weight >= 6) {
 					Audio::GetInstance()->PlayWave("Resources/Sound/strongL3.wav", 0.4f);
+					Maxsca = {2.5f,2.5f,2.5f};
 				}
 			}
 			else {
@@ -132,6 +166,7 @@ bool InterBoss::collideAttackArm() {
 			//ボスのHPをへらす
 			if (BossHit == true) {
 				Effect = true;
+				Effect2 = true;
 				//enemyobj->SetCollider();
 				BossHP -= ((weight * 1.2f) * 2.0f);
 				color = true;
