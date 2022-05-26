@@ -31,10 +31,16 @@ private:
 	Texture* LightBackGround = nullptr;
 	Sprite* select[5]{};
 	Sprite* plane[5]{};
+	Sprite* Stage1[3]{};
+	Sprite* Stage2[3]{};
+	Sprite* Stage3[3]{};
+	Sprite* Stage4[3]{};
+	Sprite* Stage5[3]{};
 	Sprite* BlackFilter = nullptr;
 	Player* player = nullptr;
 	//各ポジション
 	XMFLOAT2 selectP[4]{};
+	XMFLOAT2 StageP[5]{};
 	Input* input = Input::GetInstance();
 	DebugCamera* camera = { nullptr };
 	//演出のためのもの

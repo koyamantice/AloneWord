@@ -21,6 +21,14 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	LightBackGround->SetPosition({ 0.0f,0.0f,0.5f });
 	LightBackGround->SetScale({ 3.2f,1.8f,1.0f });
 	LightBackGround->Update();
+	//マップのUI的なやつの場所
+	StageP[0] = { 330.0f,190.0f };
+	StageP[1] = { 650.0f,190.0f };
+	StageP[2] = { 940.0f,190.0f };
+	StageP[3] = { 650.0f,445.0f };
+	StageP[4] = { 330.0f,445.0f };
+
+	//各スプライトの宣言
 	select[0] = Sprite::Create(ImageManager::select1, selectP[0]);
 	select[0]->SetAnchorPoint({ 1.0f,0.0f });
 	select[1] = Sprite::Create(ImageManager::select2, selectP[0]);
@@ -37,6 +45,27 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	plane[2] = Sprite::Create(ImageManager::niwa, selectP[1]);
 	plane[3] = Sprite::Create(ImageManager::washitu, selectP[1]);
 	plane[4] = Sprite::Create(ImageManager::shinshitu, selectP[1]);
+
+	//クリアした時
+	Stage1[0] = Sprite::Create(ImageManager::clearStage1, StageP[0]);
+	Stage2[0] = Sprite::Create(ImageManager::clearStage2, StageP[1]);
+	Stage3[0] = Sprite::Create(ImageManager::clearStage3, StageP[2]);
+	Stage4[0] = Sprite::Create(ImageManager::clearStage4, StageP[3]);
+	Stage5[0] = Sprite::Create(ImageManager::clearStage5, StageP[4]);
+
+	//開放していない時
+	Stage1[1] = Sprite::Create(ImageManager::offStage1, StageP[0]);
+	Stage2[1] = Sprite::Create(ImageManager::offStage2, StageP[1]);
+	Stage3[1] = Sprite::Create(ImageManager::offStage3, StageP[2]);
+	Stage4[1] = Sprite::Create(ImageManager::offStage4, StageP[3]);
+	Stage5[1] = Sprite::Create(ImageManager::offStage5, StageP[4]);
+
+	//クリアしていない時
+	Stage1[2] = Sprite::Create(ImageManager::onStage1, StageP[0]);
+	Stage2[2] = Sprite::Create(ImageManager::onStage2, StageP[1]);
+	Stage3[2] = Sprite::Create(ImageManager::onStage3, StageP[2]);
+	Stage4[2] = Sprite::Create(ImageManager::onStage4, StageP[3]);
+	Stage5[2] = Sprite::Create(ImageManager::onStage5, StageP[4]);
 	// カメラ生成
 	//srand(NULL);
 	// ライト生成
@@ -372,13 +401,21 @@ Ease(In,Cubic,selectframe,cameratargetPos.z,Aftertargetpos.z)
 		StageSelectNumber = No;
 	}
 	camera->Update();
+	for (int i = 0; i < 3; i++) {
+		Stage1[i]->SetPosition(StageP[0]);
+		Stage2[i]->SetPosition(StageP[1]);
+		Stage3[i]->SetPosition(StageP[2]);
+		Stage4[i]->SetPosition(StageP[3]);
+		Stage5[i]->SetPosition(StageP[4]);
+	}
 }
 
 //描画
 void StageSelect::Draw(DirectXCommon* dxCommon) {
 	int ClearCount = save->GetClearCount();
 	ImGui::Begin("test");
-	//ImGui::SliderFloat("cameraPos.y", &cameraPos.y, 30, 0);
+	ImGui::SliderFloat("StagePos[0].x", &StageP[1].x, 700, 0);
+	ImGui::SliderFloat("StagePos[0].y", &StageP[1].y, 700, 0);
 	ImGui::Text("clearCount::%d", ClearCount);
 	ImGui::Unindent();
 	ImGui::End();
@@ -390,9 +427,15 @@ void StageSelect::Draw(DirectXCommon* dxCommon) {
 	else {
 		LightBackGround->Draw();
 	}
+
+	Sprite::PreDraw();
+	Stage1[0]->Draw();
+	Stage2[0]->Draw();
+	Stage3[0]->Draw();
+	Stage4[0]->Draw();
+	Stage5[0]->Draw();
 	Sprite::PreDraw();
 	player->Draw(dxCommon);
-	Sprite::PreDraw();
 	for (int i = 0; i < 5;i++) {
 		select[i]->Draw();
 		plane[i]->Draw();
