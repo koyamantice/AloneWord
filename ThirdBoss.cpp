@@ -203,6 +203,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 		}
 		if (!bossstart) {
 			if (input->TriggerButton(input->Select)) {
+				Audio::GetInstance()->LoopWave(3, 0.3f);
 				Audio::GetInstance()->StopWave(5);
 				Skip = true;
 			}
@@ -304,6 +305,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 				}
 				else {
 					bossstart = true;
+					Audio::GetInstance()->LoopWave(3, 0.3f);
 					appearanceTimer = 0;
 					appearanceNumber = 0;
 					frame = 0;
@@ -367,12 +369,13 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 		}
 		//その他シーン移行
 		if (bossenemy->GetHP() <= 0) {
-			end = true;
 			Audio::GetInstance()->StopWave(3);
+			end = true;
 			//SceneManager::GetInstance()->ChangeScene("StageSelect");
 		}
 
 		if (player->GetHp() <= 0) {
+			Audio::GetInstance()->StopWave(3);
 			gameover = true;
 		}
 	}//ボス撃破ムービー演出
@@ -505,7 +508,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 			}
 
 			if (expandchange->GetTimer() >= 58) {
-				//Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");
+				//Audio::GetInstance()->LoadSound(4, "Resources/Sound/selectBGM.wav");	
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 

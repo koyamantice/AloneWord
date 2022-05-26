@@ -71,7 +71,7 @@ void RightShose::Finalize() {
 void RightShose::Spec() {
 	XMFLOAT3 AfterPos{};
 	//ここで行動を決める
-	if (AttackCount > 180 && pos.y <= 0.1f) {
+	if (AttackCount > 150 && pos.y <= 0.1f) {
 		if (!active) {
 			action = (rand() % 2);
 			frame = 0;
@@ -114,7 +114,7 @@ void RightShose::Spec() {
 					else {
 						frame = 0;
 						AttackC = 0;
-						AttackCount = 30;
+						AttackCount = 0;
 						active = false;
 					}
 
@@ -378,7 +378,7 @@ void RightShose::Spec() {
 						frame = 0;
 						pat = 0;
 						AttackC = 0;
-						AttackCount = 30;
+						AttackCount = 0;
 						Effect = true;
 						active = false;
 						break;

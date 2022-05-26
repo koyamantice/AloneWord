@@ -28,14 +28,13 @@ public:
 
 private:
 	//メンバ変数
-	Sprite* sprite[10]{};
+	Sprite* sprite[4]{};
 	enum {
 		back,
 		button,
 		select,
 		ground,
 		tutorial,
-		//select,
 	};
 	//各クラスのもの
 	ExpandChange* expandchange = nullptr;

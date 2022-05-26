@@ -248,12 +248,6 @@ void Player::Update() {
 		else {
 			scaleframe += 0.1f;
 		}
-
-		//plasca = {
-		//Ease(In,Cubic,scaleframe,plasca.x,Aftersca.x),
-		//Ease(In,Cubic,scaleframe,plasca.y,Aftersca.y),
-		//Ease(In,Cubic,scaleframe,plasca.z,Aftersca.z)
-		//};
 	}
 	//振り回している
 	if (AttackFlag == true) {
@@ -529,6 +523,9 @@ void Player::TitleUp() {
 	//アニメーション用のキー入力
 	rot.y = 45.0f;
 	move_count++;
+	if (move_count>100) {
+		move_count = 0;
+	}
 	//position = { 2.0f,-4.0f ,0};
 	onGround = true;
 	position = {4.0f,-1.0f,-5.0f};
@@ -662,16 +659,22 @@ void Player::BirthParticle() {
 			if (oldPos.x!= position.x) {
 				count++;
 			}
+			if (oldPos.z != position.z) {
+				count++;
+			}
 		}
 	}
-	if (count >= 12) {
-		for (int i = 0; i < 6; ++i) {
+	if (count >= 15) {
+		for (int i = 0; i < 3; ++i) {
 			const float rnd_vel = 0.1f;
 			XMFLOAT3 vel{};
 			vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 			vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
 			vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
-			ParticleManager::GetInstance()->Add(30, { oldPos.x + vel.x,oldPos.y,oldPos.z + vel.z }, vel, XMFLOAT3(), 0.7f, 0.1f);
+			const float rnd_sca = 0.7f;
+			float sca{};
+			sca = (float)rand() / RAND_MAX*rnd_sca;
+			ParticleManager::GetInstance()->Add(20, { oldPos.x + vel.x,oldPos.y,oldPos.z + vel.z }, vel, XMFLOAT3(), 1.3f, sca);
 		}
 		count = 0;
 	}

@@ -188,6 +188,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		}
 		if (!bossstart) {
 			if (input->TriggerButton(input->Select)) {
+				Audio::GetInstance()->LoopWave(6, 0.3f);
 				Audio::GetInstance()->StopWave(5);
 				Skip = true;
 			}
@@ -354,6 +355,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 					frame += 0.01f;
 				}
 				else {
+					Audio::GetInstance()->LoopWave(6, 0.3f);
 					bossstart = true;
 					appearanceTimer = 0;
 					appearanceNumber = 0;
@@ -412,11 +414,13 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		}
 		//その他シーン移行
 		if (bossenemy->GetHP() <= 0) {
+			Audio::GetInstance()->StopWave(6);
 			end = true;
 			//SceneManager::GetInstance()->ChangeScene("StageSelect");
 		}
 
 		if (player->GetHp() <= 0) {
+			Audio::GetInstance()->StopWave(6);
 			gameover = true;
 		}
 	}

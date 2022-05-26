@@ -10,6 +10,7 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	this->boss2 = boss2;
 	BossHp[max] = Sprite::Create(ImageManager::Enemyhp3, { 0.0f,0.0f });
 	BossHp[max]->SetPosition({ 260.0f,20.0f });
+
 	//BossHp[max]->SetColor({ 1.0f,0.0f,0.0f,1.0f });
 	BossHp[damage] = Sprite::Create(ImageManager::Enemyhp2, { 0.0f,0.0f });
 	BossHp[damage]->SetPosition({ 260.0f,20.0f });
@@ -18,7 +19,7 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	BossHp[now]->SetPosition({ 260.0f,20.0f });
 	//BossHp[now]->SetColor({ 0.0f,1.0f,0.0f,1.0f });
 	if (boss) {
-		AfterPos[0] = { (float)(boss->GetHP() * 20),30 };
+		AfterPos[0] = { (float)(boss->GetHP() * (800 / boss->GetHP())),75 };
 	}
 	BossHp[max]->SetSize(AfterPos[0]);
 	BossHp[damage]->SetSize(AfterPos[0]);
@@ -33,7 +34,7 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	BossHp2[now]->SetPosition({ 260.0f,70.0f });
 	//BossHp2[now]->SetColor({ 0.0f,1.0f,0.0f,1.0f });
 	if (boss2) {
-		AfterPos2[0] = { (float)(boss->GetHP() * 20),30 };
+		AfterPos2[0] = { (float)(boss2->GetHP() * (800/ boss2->GetHP())),75 };
 	}
 	BossHp2[max]->SetSize(AfterPos2[0]);
 	BossHp2[damage]->SetSize(AfterPos2[0]);
@@ -149,23 +150,23 @@ void UI::Update() {
 	if (Up) {
 		EaseScale();
 	}
-	if (boss) {
-		AfterPos[0] = { (float)(boss->GetHP() * 20),30 };
+	if (boss&&!boss2) {
+		AfterPos[0] = { (float)(boss->GetHP() * (800 / boss->GetHP())),75 };
 
 		bossPos[0] = {
 		Ease(In,Quint,0.7f,BossHp[now]->GetSize().x,AfterPos[0].x),
-		Ease(In,Quint,0.7f,BossHp[now]->GetSize().y,AfterPos[0].y),
+		75,
 		};
 		bossPos[1] = {
 		Ease(In,Quint,0.5f,BossHp[damage]->GetSize().x,AfterPos[0].x),
-		Ease(In,Quint,0.5f,BossHp[damage]->GetSize().y,AfterPos[0].y),
+		75,
 		};
 		BossHp[damage]->SetSize(bossPos[1]);
 		BossHp[now]->SetSize(bossPos[0]);
 		SeachBoss();
 	}
-	if (boss2) {
-		AfterPos2[0] = { (float)(boss2->GetHP() * 20),30 };
+	if (boss2&&boss) {
+		AfterPos2[0] = { (float)(boss->GetHP() * (800 / boss->GetHP())),75 };
 
 		bossPos2[0] = {
 		Ease(In,Quint,0.7f,BossHp2[now]->GetSize().x,AfterPos2[0].x),

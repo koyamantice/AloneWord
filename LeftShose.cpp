@@ -61,7 +61,6 @@ void LeftShose::Initialize(bool shadow) {
 
 //開放
 void LeftShose::Finalize() {
-	//delete enemyobj;
 	delete texture;
 	for (std::size_t i = 0; i < Stuntexture.size(); i++) {
 		delete Stuntexture[i];
@@ -72,7 +71,7 @@ void LeftShose::Finalize() {
 void LeftShose::Spec() {
 	XMFLOAT3 AfterPos{};
 	//ここで行動を決める
-	if (AttackCount > 180 && pos.y <= 0.1f) {
+	if (AttackCount > 150 && pos.y <= 0.1f) {
 		if (!active) {
 			action = (rand() % 2);
 			frame = 0;
@@ -132,7 +131,7 @@ void LeftShose::Spec() {
 				else {
 					Afterrot.y = 270;
 					pat = 0;
-					AttackCount = 30;
+					AttackCount = 0;
 					Effect = true;
 					active = false;
 					frame = 0;
@@ -270,7 +269,7 @@ void LeftShose::Spec() {
 						frame = 0;
 						pat = 0;
 						AttackC = 0;
-						AttackCount = 30;
+						AttackCount = 0;
 						Effect = true;
 						active = false;
 						break;
