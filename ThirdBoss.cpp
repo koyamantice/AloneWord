@@ -359,7 +359,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 				player->Rebound();
 			}
 			ui->Update();
-			particleMan->Update();
+			ParticleManager::GetInstance()->Update();
 			objSphere->Update();
 			cameraPos.x = player->GetPosition().x;
 			cameraPos.y = player->GetPosition().y + distanceY;
@@ -370,6 +370,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 		//‚»‚Ì‘¼ƒV[ƒ“ˆÚs
 		if (bossenemy->GetHP() <= 0) {
 			Audio::GetInstance()->StopWave(3);
+			player->SetFlash(0);
 			end = true;
 			//SceneManager::GetInstance()->ChangeScene("StageSelect");
 		}

@@ -168,7 +168,6 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	objFloor->Update();
 	objSkydome->Update();
 	lightGroup->Update();
-	ParticleManager::GetInstance()->Update();
 	//最初の演出(導入)
 	if (!end && !gameover) {
 		if (Skip == true) {
@@ -397,6 +396,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 			Audio::GetInstance()->StopWave(5);
 			player->Update();
 			bossenemy->Update();
+			ParticleManager::GetInstance()->Update();
 			for (std::size_t i = 0; i < enemy.size(); i++) {
 				enemy[i]->Update();
 				enemy[i]->SetEnemy();
@@ -416,6 +416,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		if (bossenemy->GetHP() <= 0) {
 			Audio::GetInstance()->StopWave(6);
 			end = true;
+			player->SetFlash(0);
 			//SceneManager::GetInstance()->ChangeScene("StageSelect");
 		}
 

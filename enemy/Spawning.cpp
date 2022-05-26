@@ -22,7 +22,8 @@ Spawning::Spawning() {
 }
 
 void Spawning::Initialize(bool shadow) {
-	Object3d* enemyobj_ = TouchableObject::Create(model);
+	Object3d* enemyobj_ = new Object3d();
+	enemyobj_ = Object3d::Create();
 	enemyobj_->SetModel(model);
 	enemyobj_->SetPosition(pos);
 	enemyobj_->SetScale({ 3.9f,3.9f,3.9f });
@@ -51,6 +52,7 @@ void Spawning::specialDraw() {
 	}
 }
 void Spawning::Finalize() {
+	delete model;
 }
 
 void Spawning::Spec() {

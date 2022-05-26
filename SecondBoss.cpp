@@ -407,7 +407,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 				player->Rebound();
 			}
 			ui->Update();
-			particleMan->Update();
+			ParticleManager::GetInstance()->Update();
 			objSphere->Update();
 			cameraPos.x = player->GetPosition().x;
 			cameraPos.y = player->GetPosition().y + distanceY;
@@ -420,6 +420,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 		if (leftshose->GetHP() <= 0 && rightshose->GetHP() <= 0) {
 			Audio::GetInstance()->StopWave(8);
 			end = true;
+			player->SetFlash(0);
 		}
 
 		if (player->GetHp() <= 0) {

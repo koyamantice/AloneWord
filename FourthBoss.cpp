@@ -388,6 +388,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 		if (pastel->GetHP() <= 0) {
 			Audio::GetInstance()->StopWave(7);
 			end = true;
+			player->SetFlash(0);
 			//SceneManager::GetInstance()->ChangeScene("StageSelect");
 		}
 

@@ -76,7 +76,12 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 		enemy[i]->SetLimit({ 22.0f,-17.0f, 21.0f,-20.5f });
 	}
 	//当たり判定確認用です
-	//modelSphere = Model::CreateFromOBJ("sphere");
+	modelSphere = Model::CreateFromOBJ("sphere");
+	Object3d* enemyobj_ = TouchableObject::Create(modelSphere);
+	enemyobj_->SetModel(modelSphere);
+	enemyobj_->SetPosition({0.0f,-1.0f,0.0f});
+	enemyobj_->SetScale({ 2.3f,2.3f,2.3f });
+	objSphere.reset(enemyobj_);
 	//objSphere = TouchableObject::Create(modelSphere);
 	//objSphere->SetScale({ 2.0f, 2.0f, 2.0f });
 	//objSphere->SetPosition({ 0.0f,0.0f,1.0f });
@@ -563,6 +568,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	if (expandchange->GetTimer() >= 58) {
 		SceneManager::GetInstance()->ChangeScene("StageSelect");
 	}
+	objSphere->Update();
 	objBossMap->Update();
 	player->Update();
 	ui->Update();
