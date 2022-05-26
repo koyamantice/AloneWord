@@ -190,6 +190,7 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 		}
 		if (!bossstart) {
 			if (input->TriggerButton(input->Select)) {
+				Audio::GetInstance()->LoopWave(9, 0.3f);
 				Audio::GetInstance()->StopWave(5);
 				Skip = true;
 			}
@@ -326,6 +327,7 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 					frame += 0.01f;
 				}
 				else {
+					Audio::GetInstance()->LoopWave(9, 0.3f);
 					bossstart = true;
 					appearanceTimer = 0;
 					appearanceNumber = 0;
@@ -409,10 +411,12 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 
 		//その他シーン移行
 		if (lefthand->GetHP() <= 0 && righthand->GetHP() <= 0) {
+			Audio::GetInstance()->StopWave(9);
 			end = true;
 		}
 
 		if (player->GetHp() <= 0) {
+			Audio::GetInstance()->StopWave(9);
 			gameover = true;
 		}
 	}//ボス撃破ムービー演出

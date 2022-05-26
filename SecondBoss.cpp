@@ -207,6 +207,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 		}
 		if (!bossstart) {
 			if (input->TriggerButton(input->Select)) {
+				Audio::GetInstance()->LoopWave(8, 0.3f);
 				Audio::GetInstance()->StopWave(5);
 				Skip = true;
 			}
@@ -343,6 +344,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 					frame += 0.01f;
 				}
 				else {
+					Audio::GetInstance()->LoopWave(8, 0.3f);
 					bossstart = true;
 					appearanceTimer = 0;
 					appearanceNumber = 0;
@@ -416,10 +418,12 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 
 		//その他シーン移行
 		if (leftshose->GetHP() <= 0 && rightshose->GetHP() <= 0) {
+			Audio::GetInstance()->StopWave(8);
 			end = true;
 		}
 
 		if (player->GetHp() <= 0) {
+			Audio::GetInstance()->StopWave(8);
 			gameover = true;
 		}
 	}//ボス撃破ムービー演出
