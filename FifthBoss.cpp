@@ -399,7 +399,7 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 				player->Rebound();
 			}
 			ui->Update();
-			//particleMan->Update();
+			ParticleManager::GetInstance()->Update();
 			rightwave->Upda(righthand, player);
 			leftwave->Upda(lefthand, player);
 			cameraPos.x = player->GetPosition().x;

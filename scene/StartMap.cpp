@@ -81,13 +81,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 	//objSphere->SetScale({ 2.0f, 2.0f, 2.0f });
 	//objSphere->SetPosition({ 0.0f,0.0f,1.0f });
 	//
-	Texture* Hit_ = Texture::Create(ImageManager::Hit, { 0,0,-10 }, { 0,0,0 }, { 1, 1, 1,1 });
-	Hit_->TextureCreate();
-	Hit_->SetPosition(player->GetPosition());
-	Hit_->SetRotation({ 0.0f,0.0f,0.0f });
-	Hit_->SetScale({1.0f,1.0f,1.0f});
-	Hit_->Update();
-	Hit.reset(Hit_);
+
 
 
 	// パーティクルマネージャ生成
@@ -131,6 +125,12 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 
 	shrinkchange = new ShrinkChange();
 	shrinkchange->SetEndChange(true);
+	//
+	for (std::size_t i = 0; i < effect.size(); i++) {
+		effect[i] = new Effect();
+		effect[i]->Initialize();
+	}
+
 	//スプライト生成
 	expandchange = new ExpandChange();
 }
@@ -571,6 +571,9 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 	camera->Update();
 	particleMan->Update();
 	expandchange->Update();
+	for (std::size_t i = 0; i < effect.size(); i++) {
+		effect[i]->Update(bossenemy);
+	}
 	shrinkchange->Update();
 	for (int i = 0; i < enemy.size() - 1; i++) {
 		enemy[i]->Demo(i);
@@ -615,6 +618,10 @@ void StartMap::Draw(DirectXCommon* dxCommon) {
 	bossenemy->Draw();
 	// パーティクルの描画
 	particleMan->Draw(dxCommon->GetCmdList());
+	for (std::size_t i = 0; i < effect.size(); i++) {
+		effect[i]->Draw();
+	}
+
 	ui->Draw();
 	ui->SkipDraw();
 	Texture::PreDraw();

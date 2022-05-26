@@ -33,6 +33,7 @@ void BossEnemy::Initialize(bool shadow) {
 	texture->SetPosition(pos.x, -1, pos.z);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.3f,0.3f,0.3f });
+	InitCommon();
 }
 //開放
 void BossEnemy::Finalize() {

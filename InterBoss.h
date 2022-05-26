@@ -73,13 +73,17 @@ public:
 public:
 	const float& GetHP() { return BossHP; }
 	const bool& GetEffect() { return Effect; }
+	const bool& GetEffect2() { return Effect2; }
 	void SetHP(float BossHP) { this->BossHP = BossHP; }
 	void SetEffect(bool Effect) { this->Effect = Effect; }
+	void SetEffect2(bool Effect) { this->Effect2 = Effect; }
 
 /// <summary>
 /// 初期化
 /// </summary>
 	virtual void Initialize(bool shadow=true) = 0;
+	
+	void InitCommon();
 	/// <summary>
 	/// 終了
 	/// </summary>
@@ -116,6 +120,7 @@ protected:
 	unique_ptr<Object3d> enemyobj = nullptr;
 	Model* model = nullptr;
 	Texture* texture = nullptr;
+	unique_ptr<Texture> Hit = nullptr;
 	unique_ptr<Player> player = nullptr;
 	//座標や回転
 	XMFLOAT3 pos = { 0,0,0 };
@@ -126,6 +131,8 @@ protected:
 	XMFLOAT3 playerpos{};
 	XMFLOAT3 targetpos{};
 	XMFLOAT3 MottiScale = { 0.0f,0.0f,0.0f };
+	bool attach = false;
+	XMFLOAT3 Hitsca = { 0.5f,0.5f,0.5f };
 	//敵関係変数
 	float radius = 0.0f;
 	float speed = 0.0f;
@@ -169,6 +176,7 @@ protected:
 	float BossHP = 1;
 	bool BossHit = false;
 	bool Effect = false;
+	bool Effect2 = false;
 	//ボスのAI関係(共通)
 	int hitpoint = 0;
 	bool active = false;//行動開始

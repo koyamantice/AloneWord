@@ -375,7 +375,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 				player->Rebound();
 			}
 			ui->Update();
-			//particleMan->Update();
+			ParticleManager::GetInstance()->Update();
 			//objSphere->Update();
 			shockwave->Upda(pastel, player);
 			cameraPos.x = player->GetPosition().x;

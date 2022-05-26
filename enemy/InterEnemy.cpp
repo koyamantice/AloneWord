@@ -110,8 +110,8 @@ void InterEnemy::Reborn() {
 		IsTimer--;
 		if (IsTimer == 100) {
 			if (!respawn) {
-				speed = (float)((int)(XorShift::GetInstance()->xor128())% 360);
-				scale = (float)((int)(XorShift::GetInstance()->xor128())% 10 + 10);
+				speed = (float)((int)rand()% 360);
+				scale = (float)((int)rand()% 10 + 10);
 			} else {
 				scale = 10.0f;
 			}

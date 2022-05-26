@@ -36,6 +36,7 @@ void Effect::Finalize() {
 void Effect::Update(InterBoss* bossenemy) {
 	Input* input = Input::GetInstance();
 	bool effect = bossenemy->GetEffect();
+	bool effect2 = bossenemy->GetEffect2();
 	//エフェクトの発生
 	if (effect == true && effectAlive == false) {
 		effectscale = { 0.3f,0.3f,0.3f };
@@ -45,7 +46,7 @@ void Effect::Update(InterBoss* bossenemy) {
 		effectcolor.w = 0.8f;
 		effectcolor.x = 1.0f;
 		effectcolor.y = 1.0f;
-		effectcolor.z = 0.0f;
+		effectcolor.z = 0.8f;
 		//effectcolor.w = (float)(rand() % 10);
 		if (boundpower.x == 0.0f) {
 			boundpower.x = 1.0f;
@@ -64,6 +65,34 @@ void Effect::Update(InterBoss* bossenemy) {
 		effectpos = bossenemy->GetPosition();
 		effectAlive = true;
 	}
+	if (effect2 == true && effectAlive == false) {
+		effectscale = { 0.3f,0.3f,0.3f };
+		boundpower.x = (float)((int)(XorShift::GetInstance()->xor128()) % 20 - 5);
+		boundpower.y = (float)((int)(XorShift::GetInstance()->xor128()) % 10 - 5);
+		boundpower.z = (float)((int)(XorShift::GetInstance()->xor128()) % 20 - 5);
+		effectcolor.w = 0.8f;
+		effectcolor.x = 1.0f;
+		effectcolor.y = 0.0f;
+		effectcolor.z = 0.0f;
+		//effectcolor.w = (float)(rand() % 10);
+		if (boundpower.x == 0.0f) {
+			boundpower.x = 1.0f;
+		}
+
+		if (boundpower.z == 0.0f) {
+			boundpower.z = 1.0f;
+		}
+		boundpower.x = boundpower.x / 10;
+		boundpower.y = boundpower.y / 10;
+		boundpower.z = boundpower.z / 10;
+		/*	effectcolor.x = effectcolor.x / 10;
+			effectcolor.y = effectcolor.y / 10;
+			effectcolor.z = effectcolor.z / 10;*/
+			//effectcolor.w = effectcolor.w / 100;
+		effectpos = bossenemy->GetPosition();
+		effectAlive = true;
+	}
+
 	if (effectAlive == true) {
 		boundpower.y -= 0.02f;
 		effectpos.x += boundpower.x;
@@ -76,6 +105,8 @@ void Effect::Update(InterBoss* bossenemy) {
 		if (effectscale.x <= 0.0f) {
 			effectAlive = false;
 			bossenemy->SetEffect(false);
+			bossenemy->SetEffect2(false);
+
 		}
 	}
 	effecttexture->Update();
