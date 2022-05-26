@@ -56,8 +56,12 @@ private:
 		human,
 	};
 	int StageSelectNumber = 0;
+
 	//イージングのためのもの
 	float frame = 0;
+	float sinFrame = 0;
+	void SinMove(int selectNum,int planeNum);
+	float vel = 0.02f;
 	float selectframe = 0.0f;
 	bool dark = false;
 };
