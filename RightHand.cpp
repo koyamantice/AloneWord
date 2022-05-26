@@ -80,6 +80,7 @@ void RightHand::Spec() {
 	//ここで行動を決める
 	if (AttackCount == 180) {
 		if (!active) {
+			hitradius = 0.6f;
 			frame = 0;
 			pat = 1;
 			active = true;
@@ -101,6 +102,7 @@ void RightHand::Spec() {
 	if (active) {
 		//衝撃波
 		if (action == 0) {
+			hitradius = 0.6f;
 			if (AttackC < 5) {
 				switch (pat) {
 				case 1:
@@ -286,6 +288,7 @@ void RightHand::Spec() {
 		}
 		//プレイヤーを挟むような攻撃
 		else if (action == 1) {
+		hitradius = 1.5f;
 			if (AttackC < 3) {
 				switch (pat) {
 				case 1:
@@ -327,7 +330,7 @@ void RightHand::Spec() {
 				case 3:
 					AfterPos = {
 						pos.x,
-						1,
+						2,
 						pos.z,
 					};
 					if (frame < 1.0f) {
@@ -342,7 +345,7 @@ void RightHand::Spec() {
 				case 4:
 					AfterPos = {
 						targetpos.x,
-						1,
+						2,
 						pos.z,
 					};
 					if (frame < 1.0f) {
@@ -391,7 +394,7 @@ void RightHand::Spec() {
 					Afterrot.y = 90.0f;
 					AfterPos = {
 					10,
-					0,
+					1,
 					0
 					};
 					if (frame < 1.0f) {
@@ -421,6 +424,7 @@ void RightHand::Spec() {
 
 		//突進攻撃
 		else if (action == 2) {
+		hitradius = 0.6f;
 			if (pat == 1) {
 				AfterPos.y = 15.0f;
 				if (pos.y >= 14) {
