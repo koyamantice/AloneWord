@@ -66,24 +66,24 @@ void InterBoss::Update() {
 //描画
 void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
-	ImGui::Begin("test");
-	ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
-	ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
-	ImGui::SliderFloat("rot.z", &rot.z, 360, -360);
-	ImGui::SliderFloat("radius", &hitradius, 360, -360);
-	//ImGui::SliderFloat("pos.y", &pos.y, 30, -30);
-	//ImGui::SliderFloat("MottiScale", &MottiScale.x, 1, 0);
-	//ImGui::SliderFloat("HP", &BossHP, 360, -360);
+	//ImGui::Begin("test");
 	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
-	/*ImGui::SliderFloat("pos.x", &pos.x, 1, 0.0f);
-	ImGui::Text("Move:%d", appearMove);*/
-	//ImGui::SliderFloat("angle", &angle, 360, -360);
-	//ImGui::Text("AttackCount::%d", AttackCount);
-	//ImGui::Text("color::%d", color);
-	/*ImGui::Text("action::%d", action);
-	ImGui::Text("pat::%d", pat);*/
-	//ImGui::Text("action::%d", haveTimer);
-	ImGui::End();
+	//ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
+	//ImGui::SliderFloat("rot.z", &rot.z, 360, -360);
+	//ImGui::SliderFloat("radius", &hitradius, 360, -360);
+	////ImGui::SliderFloat("pos.y", &pos.y, 30, -30);
+	////ImGui::SliderFloat("MottiScale", &MottiScale.x, 1, 0);
+	////ImGui::SliderFloat("HP", &BossHP, 360, -360);
+	////ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	///*ImGui::SliderFloat("pos.x", &pos.x, 1, 0.0f);
+	//ImGui::Text("Move:%d", appearMove);*/
+	////ImGui::SliderFloat("angle", &angle, 360, -360);
+	////ImGui::Text("AttackCount::%d", AttackCount);
+	////ImGui::Text("color::%d", color);
+	///*ImGui::Text("action::%d", action);
+	//ImGui::Text("pat::%d", pat);*/
+	////ImGui::Text("action::%d", haveTimer);
+	//ImGui::End();
 	//if (BossHP >= 1) {
 		Object3d::PreDraw();
 		enemyobj->Draw();
@@ -91,7 +91,7 @@ void InterBoss::Draw() {
 		if (shadow && BossHP > 0) {
 			texture->Draw();
 		}
-		if (attach&&BossHP>0) {
+		if (attach/*&&BossHP>0*/) {
 			Hit->Draw();
 		}
 	//}
@@ -215,5 +215,18 @@ void InterBoss::AppeaMovie(int Timer) {
 void InterBoss::EndMovie(int Timer) {
 	End(Timer);
 	enemyobj->Update();
+	if (attach) {
+		if (Hitsca.x < Maxsca.x) {
+			Hitsca.x *= 1.1f;
+			Hitsca.y *= 1.1f;
+			Hitsca.z *= 1.1f;
+		}
+		else {
+			Hitsca = { 0.5f,0.5f,0.5f };
+			attach = false;
+		}
+		Hit->SetScale(Hitsca);
+	}
+	Hit->Update();
 }
 
