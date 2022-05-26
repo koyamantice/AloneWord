@@ -76,7 +76,7 @@ void Pastel::Initialize(bool shadow) {
 	}
 	InitCommon();
 	//当たり判定の大きさ
-	hitradius = 1.5f;
+	hitradius = 0.6f;
 }
 
 //開放
@@ -98,6 +98,7 @@ void Pastel::Spec() {
 	//行動を決める
 	if (AttackCount > 180) {
 		if (!active) {
+			hitradius = 0.6f;
 			AttackPoint = (rand() % 3);
 			frame = 0;
 			active = true;
@@ -135,7 +136,9 @@ void Pastel::Spec() {
 	//行動開始
 	if (Off == false) {
 		if (active) {
+			//衝撃は
 			if ((action % 2) == 0) {
+				hitradius = 0.6f;
 				switch (pat) {
 					//その場所まで行く
 				case 1:
@@ -342,7 +345,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 					Afterrot = {
 						90.0f,
 						rot.y,
-						-45.0f,
+						45.0f,
 					};
 
 					if (frame < 1.0f) {
@@ -363,16 +366,19 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 					Afterrot = {
 						90.0f,
 						rot.y,
-						-45.0f,
+						1125.0f,
 					};
 
 					if (frame < 1.0f) {
 						frame += 0.01f;
+						hitradius = 8.0f;
 						break;
 					}
 					else {
 						frame = 0;
+						hitradius = 1.0f;
 						pat++;
+						rot.z = 45.0f;
 						break;
 					}
 				case 3:
@@ -384,16 +390,19 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 					Afterrot = {
 						90.0f,
 						rot.y,
-						-45.0f,
+						1125.0f,
 					};
 
 					if (frame < 1.0f) {
 						frame += 0.01f;
+						hitradius = 8.0f;
 						break;
 					}
 					else {
+						hitradius = 1.0f;
 						frame = 0;
 						pat++;
+						rot.z = 45.0f;
 						break;
 					}
 				case 4:
@@ -405,16 +414,19 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 					Afterrot = {
 						90.0f,
 						rot.y,
-						-45.0f,
+						1125.0f,
 					};
 
 					if (frame < 1.0f) {
 						frame += 0.01f;
+						hitradius = 8.0f;
 						break;
 					}
 					else {
+						hitradius = 1.0f;
 						frame = 0;
 						pat++;
+						rot.z = 45.0f;
 						break;
 					}
 				case 5:
@@ -426,16 +438,19 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 					Afterrot = {
 						90.0f,
 						rot.y,
-						-45.0f,
+						1125.0f,
 					};
 
 					if (frame < 1.0f) {
 						frame += 0.01f;
+						hitradius = 8.0f;
 						break;
 					}
 					else {
+						hitradius = 1.0f;
 						frame = 0;
 						pat++;
+						rot.z = 45.0f;
 						break;
 					}
 					
@@ -456,6 +471,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 						break;
 					}
 					else {
+						hitradius = 0.6f;
 						frame = 0;
 						pat = 0;
 						AttackCount = 0;
@@ -483,6 +499,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 	if (Off == true && !active) {
 		AfterPos.y = 2.0f;
 		AfterPos.z = 8.5f;
+		hitradius = 0.6f;
 		Afterrot = {
 			rot.x,
 			270.0f,
