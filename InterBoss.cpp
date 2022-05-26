@@ -66,20 +66,23 @@ void InterBoss::Update() {
 //描画
 void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
-	//ImGui::Begin("test");
-	//ImGui::SliderFloat("rot.y", &rot.y, 30, -30);
-	////ImGui::SliderFloat("MottiScale", &MottiScale.x, 1, 0);
-	////ImGui::SliderFloat("HP", &BossHP, 360, -360);
-	////ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
-	///*ImGui::SliderFloat("pos.x", &pos.x, 1, 0.0f);
-	//ImGui::Text("Move:%d", appearMove);*/
-	////ImGui::SliderFloat("angle", &angle, 360, -360);
-	////ImGui::Text("AttackCount::%d", AttackCount);
-	////ImGui::Text("color::%d", color);
-	///*ImGui::Text("action::%d", action);
-	//ImGui::Text("pat::%d", pat);*/
+	ImGui::Begin("test");
+	ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
+	ImGui::SliderFloat("rot.z", &rot.z, 360, -360);
+	ImGui::SliderFloat("pos.y", &pos.y, 30, -30);
+	//ImGui::SliderFloat("MottiScale", &MottiScale.x, 1, 0);
+	//ImGui::SliderFloat("HP", &BossHP, 360, -360);
+	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	/*ImGui::SliderFloat("pos.x", &pos.x, 1, 0.0f);
+	ImGui::Text("Move:%d", appearMove);*/
+	//ImGui::SliderFloat("angle", &angle, 360, -360);
+	//ImGui::Text("AttackCount::%d", AttackCount);
+	//ImGui::Text("color::%d", color);
+	/*ImGui::Text("action::%d", action);
+	ImGui::Text("pat::%d", pat);*/
 	//ImGui::Text("action::%d", haveTimer);
-	//ImGui::End();
+	ImGui::End();
 	//if (BossHP >= 1) {
 		Object3d::PreDraw();
 		enemyobj->Draw();
@@ -119,7 +122,7 @@ bool InterBoss::collideAttackArm() {
 	float playerhp = player->GetHp();
 	XMFLOAT3 distance = player->GetDistance();
 	if (attackflag && !BossHit) {
-		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 1.3f, plapos.x, plapos.y,plapos.z, 1.3f) == true && BossHP > 0) {
+		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 1.5f, plapos.x, plapos.y,plapos.z, 1.5f) == true && BossHP > 0) {
 			player->SetAttackFlag(false);
 			player->SetCharge(0);
 			player->SetRotCount(0);

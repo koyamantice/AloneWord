@@ -59,7 +59,6 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(Enemyhp3, L"Resources/2d/EnemyHPGauge.png");
 	Sprite::LoadTexture(SpinGauge, L"Resources/2d/spinGauge.png");
 	Sprite::LoadTexture(SpinBar, L"Resources/2d/spinGaugeBar.png");
-	Sprite::LoadTexture(GameOver, L"Resources/2d/GameOverLogo.png");
 }
 
 void ImageManager::LoadTex2D() {
@@ -77,4 +76,19 @@ void ImageManager::LoadTex2D() {
 	Texture::LoadTexture(Stun, L"Resources/2d/stun.png");
 	Texture::LoadTexture(Hit, L"Resources/2d/Attack.png");
 	Texture::LoadTexture(Attension, L"Resources/2d/Attension.png");
+	Texture::LoadTexture(clearStage1, L"Resources/2d/stageMark/clearStage1.png");
+	Texture::LoadTexture(clearStage2, L"Resources/2d/stageMark/clearStage2.png");
+	Texture::LoadTexture(clearStage3, L"Resources/2d/stageMark/clearStage3.png");
+	Texture::LoadTexture(clearStage4, L"Resources/2d/stageMark/clearStage4.png");
+	Texture::LoadTexture(clearStage5, L"Resources/2d/stageMark/clearStage5.png");
+	Texture::LoadTexture(offStage1, L"Resources/2d/stageMark/offStage1.png");
+	Texture::LoadTexture(offStage2, L"Resources/2d/stageMark/offStage2.png");
+	Texture::LoadTexture(offStage3, L"Resources/2d/stageMark/offStage3.png");
+	Texture::LoadTexture(offStage4, L"Resources/2d/stageMark/offStage4.png");
+	Texture::LoadTexture(offStage5, L"Resources/2d/stageMark/offStage5.png");
+	Texture::LoadTexture(onStage1, L"Resources/2d/stageMark/onStage1.png");
+	Texture::LoadTexture(onStage2, L"Resources/2d/stageMark/onStage2.png");
+	Texture::LoadTexture(onStage3, L"Resources/2d/stageMark/onStage3.png");
+	Texture::LoadTexture(onStage4, L"Resources/2d/stageMark/onStage4.png");
+	Texture::LoadTexture(onStage5, L"Resources/2d/stageMark/onStage5.png");
 }

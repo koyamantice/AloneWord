@@ -558,17 +558,17 @@ void Player::TitleUp() {
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
 
-	ImGui::Begin("test");
-	//ImGui::SliderFloat("pos.x", &position.x, 50, -50);
-	/*ImGui::SliderFloat("HP", &HP, 10, 0);
-	ImGui::SliderFloat("overframe", &overframe, 50, -50);*/
-	/*ImGui::SliderFloat("boundpower.x %d", &boundpower[0].x, 50, -50);
-	
-	ImGui::SliderFloat("chargepos.x %d", &chargepos[0].x, 50, -50);*/
-	/*ImGui::Text("moveCount:%d", move_count);
-	ImGui::Text("RotCount:%d", RotCount);*/
-	ImGui::SliderFloat("chargesca.x %d", &chargesca[0].x, 50, -50);
-	ImGui::End();
+	//ImGui::Begin("test");
+	////ImGui::SliderFloat("pos.x", &position.x, 50, -50);
+	///*ImGui::SliderFloat("HP", &HP, 10, 0);
+	//ImGui::SliderFloat("overframe", &overframe, 50, -50);*/
+	///*ImGui::SliderFloat("boundpower.x %d", &boundpower[0].x, 50, -50);
+	//
+	//ImGui::SliderFloat("chargepos.x %d", &chargepos[0].x, 50, -50);*/
+	///*ImGui::Text("moveCount:%d", move_count);
+	//ImGui::Text("RotCount:%d", RotCount);*/
+	//ImGui::SliderFloat("chargesca.x %d", &chargesca[0].x, 50, -50);
+	//ImGui::End();
 	Texture::PreDraw();
 	if (chargeTimer!=0&&!AttackFlag && HP > 0) {
 		Charge->Draw();

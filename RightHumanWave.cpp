@@ -29,15 +29,15 @@ void RightHumanWave::Upda(RightHand* righthand, Player* player) {
 }
 
 void RightHumanWave::Draw() {
-	ImGui::Begin("test");
-	/*ImGui::SliderFloat("frame", &frame, 1, 0.0f);
-	ImGui::SliderFloat("frame2", &frame2, 1, 0.0f);
-	ImGui::Text("Move:%d", appearMove);*/
-	ImGui::SliderFloat("damage", &damegeArea, 360, -360);
-	ImGui::SliderFloat("pos.x", &pos.x, 360, -360);
-	ImGui::SliderFloat("pos.y", &pos.y, 360, -360);
-	ImGui::SliderFloat("pos.z", &pos.z, 360, -360);
-	ImGui::End();
+	//ImGui::Begin("test");
+	///*ImGui::SliderFloat("frame", &frame, 1, 0.0f);
+	//ImGui::SliderFloat("frame2", &frame2, 1, 0.0f);
+	//ImGui::Text("Move:%d", appearMove);*/
+	//ImGui::SliderFloat("damage", &damegeArea, 360, -360);
+	//ImGui::SliderFloat("pos.x", &pos.x, 360, -360);
+	//ImGui::SliderFloat("pos.y", &pos.y, 360, -360);
+	//ImGui::SliderFloat("pos.z", &pos.z, 360, -360);
+	//ImGui::End();
 
 	if (expand) {
 		wave->Draw();
@@ -55,7 +55,7 @@ void RightHumanWave::SetWave(RightHand* righthand) {
 	int pat = righthand->GetPat();
 	int HP = (int)righthand->GetHP();
 	//ÕŒ‚”g‚ÌˆÊ’u‚ðŒˆ‚ß‚é
-	if (action == 0 && pos.y == 0.0f && pat == 5 && !expand && HP > 0) {
+	if (action == 0 && pos.y == 1.5f && pat == 5 && !expand && HP > 0) {
 		this->pos.x = pos.x;
 		this->pos.y = pos.y + 1.0f;
 		this->pos.z = pos.z;

@@ -21,6 +21,14 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	LightBackGround->SetPosition({ 0.0f,0.0f,0.5f });
 	LightBackGround->SetScale({ 3.2f,1.8f,1.0f });
 	LightBackGround->Update();
+	//マップのUI的なやつの場所
+	StageP[0] = { -6.2f,0.0f,3.0f };
+	StageP[1] = { 1.3f,0.0f,3.0f };
+	StageP[2] = { 8.1f,0.0f,3.0f };
+	StageP[3] = { -6.2f,0.0f,-3.2f };
+	StageP[4] = { 1.3f,0.0f,-3.2f };
+
+	//各スプライトの宣言
 	select[0] = Sprite::Create(ImageManager::select1, selectP[0]);
 	select[0]->SetAnchorPoint({ 1.0f,0.0f });
 	select[1] = Sprite::Create(ImageManager::select2, selectP[0]);
@@ -37,6 +45,43 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	plane[2] = Sprite::Create(ImageManager::niwa, selectP[1]);
 	plane[3] = Sprite::Create(ImageManager::washitu, selectP[1]);
 	plane[4] = Sprite::Create(ImageManager::shinshitu, selectP[1]);
+
+	//クリアした時
+	Stage1[0] = Texture::Create(ImageManager::clearStage1, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Stage1[0]->TextureCreate();
+	Stage2[0] = Texture::Create(ImageManager::clearStage2, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Stage2[0]->TextureCreate();
+	Stage3[0] = Texture::Create(ImageManager::clearStage3, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Stage3[0]->TextureCreate();
+	Stage4[0] = Texture::Create(ImageManager::clearStage4, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Stage4[0]->TextureCreate();
+	Stage5[0] = Texture::Create(ImageManager::clearStage5, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Stage5[0]->TextureCreate();
+	
+	//開放していない時
+	Stage1[1] = Texture::Create(ImageManager::onStage1, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Stage1[1]->TextureCreate();
+	Stage2[1] = Texture::Create(ImageManager::onStage2, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Stage2[1]->TextureCreate();
+	Stage3[1] = Texture::Create(ImageManager::onStage3, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Stage3[1]->TextureCreate();
+	Stage4[1] = Texture::Create(ImageManager::onStage4, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Stage4[1]->TextureCreate();
+	Stage5[1] = Texture::Create(ImageManager::onStage5, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Stage5[1]->TextureCreate();
+
+	//クリアしていない時
+	Stage1[2] = Texture::Create(ImageManager::offStage1, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Stage1[2]->TextureCreate();
+	Stage2[2] = Texture::Create(ImageManager::offStage2, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Stage2[2]->TextureCreate();
+	Stage3[2] = Texture::Create(ImageManager::offStage3, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Stage3[2]->TextureCreate();
+	Stage4[2] = Texture::Create(ImageManager::offStage4, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Stage4[2]->TextureCreate();
+	Stage5[2] = Texture::Create(ImageManager::offStage5, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Stage5[2]->TextureCreate();
+
 	// カメラ生成
 	//srand(NULL);
 	// ライト生成
@@ -102,11 +147,11 @@ void StageSelect::Finalize() {
 }
 //どのマップに行くかを決める
 bool StageSelect::UICheck() {
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 7.0f, -5.0f, 2.0f)) { return false; }
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 7.0f, 3.0f, 2.0f)) { return false; }
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -1.5f, 3.0f, 2.0f)) { return false; }
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -11.0f, 0.0f, 2.0f)) { return false; }
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -2.0f, -4.0f, 2.0f)) { return false; }
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -6.2f, 3.0f, 1.5f)) { return false; }
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 1.3f, 3.0f, 1.5f)) { return false; }
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 8.1f, 3.0f, 1.5f)) { return false; }
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -6.2f, -3.2f, 1.5f)) { return false; }
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 1.0f, -3.2f, 1.5f)) { return false; }
 	return true;
 }
 //更新
@@ -117,11 +162,30 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 	player->SelectUp();
 	DarkBackGround->Update();
 	LightBackGround->Update();
+	for (int i = 0; i < 3; i++) {
+		Stage1[i]->Update();
+		Stage2[i]->Update();
+		Stage3[i]->Update();
+		Stage4[i]->Update();
+		Stage5[i]->Update();
+		//
+		Stage1[i]->SetRotation({90,0,0});
+		Stage2[i]->SetRotation({ 90,0,0 });
+		Stage3[i]->SetRotation({ 90,0,0 });
+		Stage4[i]->SetRotation({ 90,0,0 });
+		Stage5[i]->SetRotation({ 90,0,0 });
+		//
+		Stage1[i]->SetScale({ 0.2f,0.2f,0.2f });
+		Stage2[i]->SetScale({ 0.2f,0.2f,0.2f });
+		Stage3[i]->SetScale({ 0.2f,0.2f,0.2f });
+		Stage4[i]->SetScale({ 0.2f,0.2f,0.2f });
+		Stage5[i]->SetScale({ 0.2f,0.2f,0.2f });
+	}
 	expandchange->Update();
 	shrinkchange->Update();
 	ParticleManager::GetInstance()->Update();
 	//選ばれる場所によってカメラが寄る場所が変わる
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 7.0f, -5.0f, 2.0f)) {
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -6.2f, 3.0f, 1.5f)) {
 		if (frame >= 1.0f) {
 			frame = 1.0f;
 		} else {
@@ -157,7 +221,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 			};
 		}
 	}
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 7.0f, 3.0f, 2.0f)) {
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 8.2f, 3.0f, 1.5f)) {
 		if (frame >= 1.0f) {
 			frame = 1.0f;
 		} else {
@@ -173,7 +237,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		};
 		plane[1]->SetPosition(selectP[1]);
 		select[2]->SetPosition(selectP[0]);
-		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A) /*&& (ClearCount <= 2)*/) {
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A) && (ClearCount >= 2)) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			//SceneManager::GetInstance()->ChangeScene("SECONDBOSS");
 			StageSelectNumber = boots;
@@ -191,7 +255,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 			//Aftereyepos = player->GetPosition();
 		}
 	}
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -1.5f, 3.0f, 2.0f)) {
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 1.3f, 3.0f, 1.5f)) {
 		if (frame >= 1.0f) {
 			frame = 1.0f;
 		} else {
@@ -207,7 +271,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		};
 		plane[3]->SetPosition(selectP[1]);
 		select[3]->SetPosition(selectP[0]);
-		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount <= 1)*/) {
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A) && (ClearCount >= 1)) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			//SceneManager::GetInstance()->ChangeScene("THIRDBOSS");
 			StageSelectNumber = Tea;
@@ -226,7 +290,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 			};
 		}
 	}
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -11.0f, 0.0f, 2.0f)) {
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -6.2f, -3.2f, 1.5f)) {
 		if (frame >= 1.0f) {
 			frame = 1.0f;
 		} else {
@@ -242,7 +306,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		};
 		plane[2]->SetPosition(selectP[1]);
 		select[1]->SetPosition(selectP[0]);
-		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount <= 3)*/) {
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A) && (ClearCount >= 3)) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			//SceneManager::GetInstance()->ChangeScene("FOURTHBOSS");
 			StageSelectNumber = Pastel;
@@ -261,7 +325,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 			};
 		}
 	}
-	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, -2.0f, -4.0f, 2.0f)) {
+	if (Collision::CircleCollision(player->GetPosition().x, player->GetPosition().z, 1.0f, 1.3f, -3.2f, 1.5f)) {
 		if (frame >= 1.0f) {
 			frame = 1.0f;
 		} else {
@@ -277,7 +341,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		};
 		plane[4]->SetPosition(selectP[1]);
 		select[4]->SetPosition(selectP[0]);
-		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount <= 4)*/) {
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A) && (ClearCount >= 4)) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			//SceneManager::GetInstance()->ChangeScene("FOURTHBOSS");
 			StageSelectNumber = human;
@@ -372,14 +436,26 @@ Ease(In,Cubic,selectframe,cameratargetPos.z,Aftertargetpos.z)
 		StageSelectNumber = No;
 	}
 	camera->Update();
+	for (int i = 0; i < 3; i++) {
+		Stage1[i]->SetPosition(StageP[0]);
+		Stage2[i]->SetPosition(StageP[1]);
+		Stage3[i]->SetPosition(StageP[2]);
+		Stage4[i]->SetPosition(StageP[3]);
+		Stage5[i]->SetPosition(StageP[4]);
+	}
 }
 
 //描画
 void StageSelect::Draw(DirectXCommon* dxCommon) {
 	int ClearCount = save->GetClearCount();
+	XMFLOAT3 pos = player->GetPosition();
+	bool SecondClear = save->GetSecondClear();
 	ImGui::Begin("test");
-	//ImGui::SliderFloat("cameraPos.y", &cameraPos.y, 30, 0);
+	ImGui::SliderFloat("position.x", &pos.x, 100, -100);
+	ImGui::SliderFloat("position.y", &pos.y, 100, -100);
+	ImGui::SliderFloat("position.z", &pos.z, 100, -100);
 	ImGui::Text("clearCount::%d", ClearCount);
+	ImGui::Text("Second::%d", SecondClear);
 	ImGui::Unindent();
 	ImGui::End();
 
@@ -390,6 +466,68 @@ void StageSelect::Draw(DirectXCommon* dxCommon) {
 	else {
 		LightBackGround->Draw();
 	}
+	//クリア状況ごとにマップの色が変わる
+	//一ステージ目
+	if (save->GetFirstClear()) {
+		Stage1[0]->Draw();
+	}
+	else {
+		Stage1[1]->Draw();
+	}
+
+	//2ステージ目
+	if (save->GetSecondClear()) {
+		Stage2[0]->Draw();
+	}
+	else {
+		if (save->GetClearCount() == 1) {
+			Stage2[1]->Draw();
+		}
+		else {
+			Stage2[2]->Draw();
+		}
+	}
+
+	//3ステージ目
+	if (save->GetThirdClear()) {
+		Stage3[0]->Draw();
+	}
+	else {
+		if (save->GetClearCount() == 2) {
+			Stage3[1]->Draw();
+		}
+		else {
+			Stage3[2]->Draw();
+		}
+	}
+
+	//4ステージ目
+	if (save->GetFouthClear()) {
+		Stage4[0]->Draw();
+	}
+	else {
+		if (save->GetClearCount() == 3) {
+			Stage4[1]->Draw();
+		}
+		else {
+			Stage4[2]->Draw();
+		}
+	}
+
+	//5ステージ目
+	if (save->GetFifthClear()) {
+		Stage5[0]->Draw();
+	}
+	else {
+		if (save->GetClearCount() == 4) {
+			Stage5[1]->Draw();
+		}
+		else {
+			Stage5[2]->Draw();
+		}
+	}
+	
+	
 	Sprite::PreDraw();
 	player->Draw(dxCommon);
 	Sprite::PreDraw();

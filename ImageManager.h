@@ -83,6 +83,21 @@ public:
 	Stun,
 	Hit,
 	Attension,
+	clearStage1,
+	clearStage2,
+	clearStage3,
+	clearStage4,
+	clearStage5,
+	offStage1,
+	offStage2,
+	offStage3,
+	offStage4,
+	offStage5,
+	onStage1,
+	onStage2,
+	onStage3,
+	onStage4,
+	onStage5,
 	};
 public:
 	static ImageManager* GetIns();		//Žæ“¾—p
