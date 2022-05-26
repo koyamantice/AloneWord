@@ -371,7 +371,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 
 					if (frame < 1.0f) {
 						frame += 0.01f;
-						hitradius = 8.0f;
+						hitradius = 6.0f;
 						break;
 					}
 					else {
@@ -395,7 +395,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 
 					if (frame < 1.0f) {
 						frame += 0.01f;
-						hitradius = 8.0f;
+						hitradius = 6.0f;
 						break;
 					}
 					else {
@@ -419,7 +419,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 
 					if (frame < 1.0f) {
 						frame += 0.01f;
-						hitradius = 8.0f;
+						hitradius = 6.0f;
 						break;
 					}
 					else {
@@ -443,7 +443,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 
 					if (frame < 1.0f) {
 						frame += 0.01f;
-						hitradius = 8.0f;
+						hitradius = 6.0f;
 						break;
 					}
 					else {

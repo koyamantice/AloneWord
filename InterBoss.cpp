@@ -70,6 +70,7 @@ void InterBoss::Draw() {
 	ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
 	ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
 	ImGui::SliderFloat("rot.z", &rot.z, 360, -360);
+	ImGui::SliderFloat("pos.y", &pos.y, 360, -360);
 	//ImGui::SliderFloat("radius", &hitradius, 360, -360);
 	//ImGui::SliderFloat("pos.y", &pos.y, 30, -30);
 	//ImGui::SliderFloat("MottiScale", &MottiScale.x, 1, 0);

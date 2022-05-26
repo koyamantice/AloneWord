@@ -18,7 +18,7 @@ void LeftHand::Initialize(bool shadow) {
 	this->shadow = shadow;
 	IsAlive = 0;
 	pos = { -10.0f,1.0f,0.0f };
-	rot = { 0,0,0 };
+	rot = { 0,90,0 };
 	//Afterrot.y = rot.y;
 
 	//ìG
@@ -81,6 +81,7 @@ void LeftHand::Spec() {
 	//Ç±Ç±Ç≈çsìÆÇåàÇﬂÇÈ
 	if (AttackCount == 180) {
 		if (!active) {
+			hitradius = 0.6f;
 			//action = (rand() % 2);
 			AttackCount = 0;
 			frame = 0;
@@ -104,6 +105,7 @@ void LeftHand::Spec() {
 		//è’åÇÇÕ
 			//è’åÇîg
 		if (action == 0) {
+			hitradius = 0.6f;
 			if (AttackC < 5) {
 				switch (pat) {
 				case 1:
@@ -240,8 +242,13 @@ void LeftHand::Spec() {
 						break;
 					}
 				case 3:
+					Afterrot = {
+						0,
+						0,
+						0
+					};
 					AfterPos = {
-					10,
+					-10,
 					1,
 					0
 					};
@@ -279,6 +286,7 @@ void LeftHand::Spec() {
 		}
 		//ÉvÉåÉCÉÑÅ[Çã≤Çﬁèàóù
 		else if (action == 1) {
+		hitradius = 1.5f;
 			if (AttackC < 3) {
 				switch (pat) {
 				case 1:
@@ -320,7 +328,7 @@ void LeftHand::Spec() {
 				case 3:
 					AfterPos = {
 						pos.x,
-						0,
+						2,
 						pos.z,
 					};
 					if (frame < 1.0f) {
@@ -335,7 +343,7 @@ void LeftHand::Spec() {
 				case 4:
 					AfterPos = {
 						targetpos.x,
-						0,
+						2,
 						pos.z,
 					};
 					if (frame < 1.0f) {
@@ -385,7 +393,7 @@ void LeftHand::Spec() {
 					Afterrot.y = 90.0f;
 					AfterPos = {
 					-10,
-					0,
+					1,
 					0
 					};
 					if (frame < 1.0f) {
@@ -416,6 +424,7 @@ void LeftHand::Spec() {
 
 		//ìÀÇ´éhÇµçUåÇ
 		else if (action == 2) {
+		hitradius = 1.5f;
 			if (AttackC < 3) {
 				switch (pat) {
 				case 1:
@@ -429,9 +438,9 @@ void LeftHand::Spec() {
 						break;
 					}
 					else {
-						Afterrot.x = 90.0f;
-						Afterrot.y = 180.0f;
-						stateNumber = Close;
+						Afterrot.y = 90.0f;
+						Afterrot.z = 180;
+						stateNumber = Open;
 						frame = 0;
 						pat++;
 						break;
@@ -551,6 +560,11 @@ void LeftHand::Spec() {
 						break;
 					}
 				case 3:
+					Afterrot = {
+						0,
+						90,
+						0
+					};
 					AfterPos = {
 					-10,
 					0,
