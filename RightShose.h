@@ -15,6 +15,8 @@ public:
 	void specialDraw() override;//このシーンのみの描画
 	void SetAct(Foot* foot);
 	bool HitShose(LeftShose* leftshose);
+	//足元にパーティクル
+	void BirthParticle();
 private:
 
 	float y = 0.0f;
