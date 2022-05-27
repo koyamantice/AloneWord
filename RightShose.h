@@ -15,6 +15,7 @@ public:
 	void specialDraw() override;//このシーンのみの描画
 	void SetAct(Foot* foot);
 	bool HitShose(LeftShose* leftshose);
+	void Follow();
 	//足元にパーティクル
 	void BirthParticle();
 private:
@@ -39,4 +40,6 @@ private:
 	double speedZ = 0.0f;
 	int MoveCount = 0;
 	bool LeftAct = false;
+	int FollowTimer = 0;
+	XMFLOAT2 vel{};
 };

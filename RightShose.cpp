@@ -36,6 +36,7 @@ void RightShose::Initialize(bool shadow) {
 	texture->SetPosition(pos.x, -100, pos.z);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.3f,0.3f,0.3f });
+	shadow = false;
 	//ぴよぴよ
 
 	for (std::size_t i = 0; i < Stuntexture.size(); i++) {
@@ -99,7 +100,7 @@ void RightShose::Spec() {
 	//行動開始
 	if (active) {
 		//突進攻撃
-		if ((action % 2) == 0) {
+		if (action == 0) {
 			Afterrot.x = 0.0f;
 			if (!stun) {
 				//3回突進する
@@ -114,7 +115,7 @@ void RightShose::Spec() {
 					0
 					};
 					Afterrot.y = 270;
-					if (frame < 0.45f) {
+					if (frame < 0.60f) {
 						frame += 0.004f;
 					}
 					else {
@@ -290,7 +291,7 @@ void RightShose::Spec() {
 			enemyobj->SetPosition(pos);
 		}
 		//プレイヤーを挟むような攻撃
-		if ((action % 2) == 1) {
+		else if (action == 1) {
 			if (AttackC < 3) {
 				Afterrot.x = 270.0f;
 				switch (pat) {
@@ -402,6 +403,58 @@ void RightShose::Spec() {
 	Ease(In,Cubic,frame,pos.x,AfterPos.x),
 	Ease(In,Cubic,frame,pos.y,AfterPos.y),
 	Ease(In,Cubic,frame,pos.z,AfterPos.z)
+			};
+			enemyobj->SetPosition(pos);
+		}
+		//歩いて攻撃してきます
+		else if (action == 2) {
+			if (pat == 1) {
+				AfterPos = {
+					1,
+					0,
+					0
+				};
+				if (frame < 1.0f) {
+					frame += 0.01f;
+				}
+				else {
+					frame = 0;
+					pat++;
+				}
+			}
+			else if (pat == 2) {
+				FollowTimer++;
+				if (FollowTimer >= 600) {
+					frame = 0;
+					FollowTimer = 0;
+					pat++;
+				}
+				else {
+					Follow();
+				}
+			}
+			else if (pat == 3) {
+				AfterPos = {
+				5,
+				0,
+				0
+				};
+				Afterrot.y = 270;
+				if (frame < 0.45f) {
+					frame += 0.004f;
+				}
+				else {
+					frame = 0;
+					AttackC = 0;
+					AttackCount = 0;
+					active = false;
+					Effect = true;
+				}
+			}
+			pos = {
+Ease(In,Cubic,frame,pos.x,AfterPos.x),
+Ease(In,Cubic,frame,pos.y,AfterPos.y),
+Ease(In,Cubic,frame,pos.z,AfterPos.z)
 			};
 			enemyobj->SetPosition(pos);
 		}
@@ -609,7 +662,7 @@ bool RightShose::HitShose(LeftShose* leftshose) {
 
 //パーティクルが出てくる
 void RightShose::BirthParticle() {
-	if(action == 0 && Attack){
+	if(action == 2){
 		for (int i = 0; i < 3; ++i) {
 			const float rnd_vel = 0.1f;
 			XMFLOAT3 vel{};
@@ -622,4 +675,19 @@ void RightShose::BirthParticle() {
 			ParticleManager::GetInstance()->Add(30, { pos.x + vel.x,pos.y,pos.z + vel.z }, vel, XMFLOAT3(), 1.2f, 0.6f);
 		}
 	}
+}
+
+//敵追従
+void RightShose::Follow() {
+	XMFLOAT3 plapos = player->GetPosition();
+	XMFLOAT3 position{};
+	position.x = ((plapos.x + 1) - pos.x);
+	position.z = (plapos.z - pos.z);
+	rot.y = (atan2f(position.x, position.z) * (180.0f / XM_PI));// *(XM_PI / 180.0f);
+	//NextP.x -= sin(-atan2f(position.x, position.z)) * 0.2251f;
+	//NextP.z += cos(-atan2f(position.x, position.z)) * 0.2251f;
+	vel.x = sin(-atan2f(position.x, position.z)) * 0.2f;
+	vel.y = cos(-atan2f(position.x, position.z)) * 0.2f;
+	pos.x -= vel.x;
+	pos.z += vel.y;
 }
