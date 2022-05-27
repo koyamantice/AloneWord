@@ -5,6 +5,7 @@
 #include <Easing.h>
 #include"ImageManager.h"
 #include "TouchableObject.h"
+#include "ParticleManager.h"
 using namespace DirectX;
 
 //コンストラクタ
@@ -602,7 +603,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 
 	}
 
-
+	BirthParticle();
 }
 
 //導入
@@ -789,5 +790,22 @@ bool Pastel::collideAttackArm(Player* player) {
 	}
 	else {
 		return false;
+	}
+}
+
+//パーティクルが出てくる
+void Pastel::BirthParticle() {
+	if (action == 1 && (pat == 2 || pat == 3 || pat == 4 || pat == 5)) {
+		for (int i = 0; i < 3; ++i) {
+			const float rnd_vel = 0.1f;
+			XMFLOAT3 vel{};
+			vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			//const float rnd_sca = 0.1f;
+			//float sca{};
+			//sca = (float)rand() / RAND_MAX*rnd_sca;
+			ParticleManager::GetInstance()->Add(30, { pos.x + vel.x,pos.y,pos.z + vel.z }, vel, XMFLOAT3(), 1.2f, 0.6f);
+		}
 	}
 }
