@@ -294,7 +294,7 @@ void LeftShose::Spec() {
 		else if (action == 2) {
 		if (pat == 1) {
 			AfterPos = {
-				-1,
+				-2,
 				0,
 				0
 			};
@@ -540,9 +540,9 @@ void LeftShose::BirthParticle() {
 void LeftShose::Follow() {
 	XMFLOAT3 plapos = player->GetPosition();
 	XMFLOAT3 position{};
-	position.x = ((plapos.x-1) - pos.x);
+	position.x = ((plapos.x - 2) - pos.x);
 	position.z = (plapos.z - pos.z);
-	rot.y = (atan2f(position.x, position.z) * (180.0f / XM_PI)) - 180;// *(XM_PI / 180.0f);
+	rot.y = (atan2f(position.x, position.z) * (180.0f / XM_PI));// *(XM_PI / 180.0f);
 	//NextP.x -= sin(-atan2f(position.x, position.z)) * 0.2251f;
 	//NextP.z += cos(-atan2f(position.x, position.z)) * 0.2251f;
 	vel.x = sin(-atan2f(position.x, position.z)) * 0.2f;
