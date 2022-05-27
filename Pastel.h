@@ -30,8 +30,6 @@ private:
 	//ボスではないオブジェクト用
 	TouchableObject* Millobj = nullptr;
 	Model* Millmodel = nullptr;
-	Object3d* Mottiobj = nullptr;
-	Model* Mottimodel = nullptr;
 	XMFLOAT3 Millpos = {0,0,0};
 	array<TouchableObject*, 4> Platformobj;
 	array<Texture*, 4>attensiontexture;

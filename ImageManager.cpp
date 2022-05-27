@@ -79,6 +79,11 @@ void ImageManager::LoadTex2D() {
 	Texture::LoadTexture(spawnhp, L"Resources/2d/EHubHP.png");
 	Texture::LoadTexture(SELECTTex, L"Resources/2d/kariSelect.png");
 	Texture::LoadTexture(SELECTTex2, L"Resources/2d/noSelect.png");
+	Texture::LoadTexture(kitchenSelect, L"Resources/2d/kitchenSelect.png");
+	Texture::LoadTexture(JstyleSelect, L"Resources/2d/JstyleSelect.png");
+	Texture::LoadTexture(EntranceSelect, L"Resources/2d/EntranceSelect.png");
+	Texture::LoadTexture(GardenSelect, L"Resources/2d/GardenSelect.png");
+	Texture::LoadTexture(BedroomSelect, L"Resources/2d/BedroomSelect.png");
 	Texture::LoadTexture(Stun, L"Resources/2d/stun.png");
 	Texture::LoadTexture(Hit, L"Resources/2d/Attack.png");
 	Texture::LoadTexture(Attension, L"Resources/2d/Attension.png");

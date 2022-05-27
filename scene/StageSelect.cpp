@@ -9,18 +9,19 @@
 
 void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	//背景スプライト生成
-	DarkBackGround = Texture::Create(ImageManager::SELECTTex, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
-	DarkBackGround->TextureCreate();
-	DarkBackGround->SetRotation({ 90,0,0 });
-	DarkBackGround->SetPosition({ 0.0f,0.0f,0.5f });
-	DarkBackGround->SetScale({ 3.2f,1.8f,1.0f });
-	DarkBackGround->Update();
-	LightBackGround = Texture::Create(ImageManager::SELECTTex2, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
-	LightBackGround->TextureCreate();
-	LightBackGround->SetRotation({ 90,0,0 });
-	LightBackGround->SetPosition({ 0.0f,0.0f,0.5f });
-	LightBackGround->SetScale({ 3.2f,1.8f,1.0f });
-	LightBackGround->Update();
+	BackGround[0] = Texture::Create(ImageManager::SELECTTex, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	BackGround[1] = Texture::Create(ImageManager::kitchenSelect, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	BackGround[2] = Texture::Create(ImageManager::JstyleSelect, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	BackGround[3] = Texture::Create(ImageManager::EntranceSelect, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	BackGround[4] = Texture::Create(ImageManager::GardenSelect, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	BackGround[5] = Texture::Create(ImageManager::BedroomSelect, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	for (int i = 0; i < 6; i++) {
+		BackGround[i]->TextureCreate();
+		BackGround[i]->SetRotation({ 90,0,0 });
+		BackGround[i]->SetPosition({ 0.0f,0.0f,0.5f });
+		BackGround[i]->SetScale({ 3.2f,1.8f,1.0f });
+		BackGround[i]->Update();
+	}
 	//マップのUI的なやつの場所
 	StageP[0] = { -6.2f,0.0f,3.0f };
 	StageP[1] = { 1.3f,0.0f,3.0f };
@@ -136,8 +137,9 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 }
 //開放
 void StageSelect::Finalize() {
-	delete DarkBackGround;
-	delete LightBackGround;
+	for (int i = 0; i < 6; i++) {
+		delete BackGround[i];
+	}
 	delete camera;
 	player->Finalize();
 	for (int i = 0; i < 3; i++) {
@@ -194,8 +196,9 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 	input = Input::GetInstance();
 	lightGroup->Update();
 	player->SelectUp();
-	DarkBackGround->Update();
-	LightBackGround->Update();
+	for (int i = 0; i < 6; i++) {
+		BackGround[i]->Update();
+	}
 	for (int i = 0; i < 3; i++) {
 		Stage1[i]->Update();
 		Stage2[i]->Update();
@@ -237,6 +240,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		select[0]->SetPosition(selectP[0]);
 		no_select[0]->SetPosition(selectP[0]);
 		no_plane[0]->SetPosition(selectP[1]);
+		OnStageNumber = Onfork;
 		SinMove(0, 0);
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
@@ -275,6 +279,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		select[1]->SetPosition(selectP[0]);
 		no_select[1]->SetPosition(selectP[0]);
 		no_plane[1]->SetPosition(selectP[1]);
+		OnStageNumber = Onboots;
 		SinMove(1, 1);
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount >= 2)*/) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
@@ -311,6 +316,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		plane[3]->SetPosition(selectP[1]);
 		select[3]->SetPosition(selectP[0]);
 		no_select[3]->SetPosition(selectP[0]);
+		OnStageNumber = OnTea;
 		no_plane[3]->SetPosition(selectP[1]);
 		SinMove(3, 3);
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount >= 1)*/) {
@@ -350,6 +356,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		select[2]->SetPosition(selectP[0]);
 		no_select[3]->SetPosition(selectP[0]);
 		no_plane[3]->SetPosition(selectP[1]);
+		OnStageNumber = OnPastel;
 		SinMove(2, 2);
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount >= 3)*/) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
@@ -388,6 +395,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		select[4]->SetPosition(selectP[0]);
 		no_select[4]->SetPosition(selectP[0]);
 		no_plane[4]->SetPosition(selectP[1]);
+		OnStageNumber = Onhuman;
 		SinMove(4, 4);
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount >= 4)*/) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
@@ -436,6 +444,7 @@ Ease(In,Cubic,selectframe,cameratargetPos.z,Aftertargetpos.z)
 	}
 	
 	if (UICheck()) {
+		OnStageNumber = OnNo;
 		dark = false;
 		frame = 0.0f;
 		selectP[0] = {
@@ -458,6 +467,7 @@ Ease(In,Cubic,selectframe,cameratargetPos.z,Aftertargetpos.z)
 	}
 	else {
 		dark = true;
+		//OnStageNumber = OnNo;
 	}
 
 	//シーンがここで変わる
@@ -503,21 +513,12 @@ void StageSelect::Draw(DirectXCommon* dxCommon) {
 	XMFLOAT3 pos = player->GetPosition();
 	bool SecondClear = save->GetSecondClear();
 	ImGui::Begin("test");
-	ImGui::SliderFloat("position.x", &pos.x, 100, -100);
-	ImGui::SliderFloat("position.y", &pos.y, 100, -100);
-	ImGui::SliderFloat("position.z", &pos.z, 100, -100);
-	ImGui::Text("clearCount::%d", ClearCount);
-	ImGui::Text("Second::%d", SecondClear);
+	ImGui::Text("clearCount::%d", OnStageNumber);
 	ImGui::Unindent();
 	ImGui::End();
 
 	Texture::PreDraw();
-	if (dark) {
-		DarkBackGround->Draw();
-	}
-	else {
-		LightBackGround->Draw();
-	}
+	BackGround[OnStageNumber]->Draw();
 	//クリア状況ごとにマップの色が変わる
 	//一ステージ目
 	if (save->GetFirstClear()) {

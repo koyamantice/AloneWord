@@ -14,11 +14,25 @@ public:
 	void End(int Timer) override;//Œ‚”j
 	void specialDraw() override;//‚±‚ÌƒV[ƒ“‚Ì‚İ‚Ì•`‰æ
 	void SetAct(Human* human);
+	bool collideMottiPlayer(Player* player);
 private:
+
+	enum Hit {
+		HitNot,
+		HitUp,
+		HitDown,
+		HitRight,
+		HitLeft
+	};
 	enum state {
 		Open,
 		Close,
 	};
 	int stateNumber = 1;
 	Model* hand_closemodel = nullptr;
+	double speedX = 0.0f;
+	double speedZ = 0.0f;
+	int MoveCount = 0;
+	bool Attack = false;
+
 };

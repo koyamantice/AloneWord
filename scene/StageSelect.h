@@ -27,8 +27,9 @@ private:
 private:
 	//メンバ変数
 	//テクスチャやモデル
-	Texture* DarkBackGround = nullptr;
-	Texture* LightBackGround = nullptr;
+	/*Texture* DarkBackGround = nullptr;
+	Texture* LightBackGround = nullptr;*/
+	Texture* BackGround[6]{};
 	Sprite* select[5]{};
 	Sprite* plane[5]{};
 	Sprite* no_select[5]{};
@@ -59,6 +60,16 @@ private:
 	};
 	int StageSelectNumber = 0;
 
+	//どのステージに乗ってるか
+	enum Onstage {
+		OnNo,
+		Onfork,
+		OnTea,
+		Onboots,
+		OnPastel,
+		Onhuman,
+	};
+	int OnStageNumber = 0;
 	//イージングのためのもの
 	float frame = 0;
 	float sinFrame = 0;
