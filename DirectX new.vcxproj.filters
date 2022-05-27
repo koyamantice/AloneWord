@@ -270,6 +270,9 @@
     <ClCompile Include="RightHumanWave.cpp">
       <Filter>stage\プレイマップ\人間</Filter>
     </ClCompile>
+    <ClCompile Include="Foot.cpp">
+      <Filter>stage\プレイマップ\シューズ</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2d\Sprite.h">
@@ -532,6 +535,9 @@
     </ClInclude>
     <ClInclude Include="RightHumanWave.h">
       <Filter>stage\プレイマップ\人間</Filter>
+    </ClInclude>
+    <ClInclude Include="Foot.h">
+      <Filter>stage\プレイマップ\シューズ</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

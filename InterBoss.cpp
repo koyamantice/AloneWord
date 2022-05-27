@@ -67,10 +67,10 @@ void InterBoss::Update() {
 void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
 	ImGui::Begin("test");
-	ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
-	ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
-	ImGui::SliderFloat("rot.z", &rot.z, 360, -360);
-	ImGui::SliderFloat("pos.y", &pos.y, 360, -360);
+	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	//ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
+	//ImGui::SliderFloat("rot.z", &rot.z, 360, -360);
+	//ImGui::SliderFloat("pos.y", &pos.y, 360, -360);
 	//ImGui::SliderFloat("radius", &hitradius, 360, -360);
 	//ImGui::SliderFloat("pos.y", &pos.y, 30, -30);
 	//ImGui::SliderFloat("MottiScale", &MottiScale.x, 1, 0);
@@ -79,9 +79,11 @@ void InterBoss::Draw() {
 	/*ImGui::SliderFloat("pos.x", &pos.x, 1, 0.0f);
 	ImGui::Text("Move:%d", appearMove);*/
 	//ImGui::SliderFloat("angle", &angle, 360, -360);
-	//ImGui::Text("AttackCount::%d", AttackCount);
+	ImGui::Text("AttackCount::%d", AttackCount);
+	ImGui::Text("action::%d", action);
+	ImGui::Text("active::%d", active);
 	//ImGui::Text("color::%d", color);
-	/*ImGui::Text("action::%d", action);
+	/*
 	ImGui::Text("pat::%d", pat);*/
 	//ImGui::Text("action::%d", haveTimer);
 	ImGui::End();

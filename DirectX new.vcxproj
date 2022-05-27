@@ -271,6 +271,7 @@
     <ClCompile Include="enemy\Spawning.cpp" />
     <ClCompile Include="Exp.cpp" />
     <ClCompile Include="FifthBoss.cpp" />
+    <ClCompile Include="Foot.cpp" />
     <ClCompile Include="FourthBoss.cpp" />
     <ClCompile Include="FPSManager\FPSManager.cpp" />
     <ClCompile Include="HotWater.cpp" />
@@ -332,6 +333,7 @@
     <ClInclude Include="3d\Object3d.h" />
     <ClInclude Include="ExpandChange.h" />
     <ClInclude Include="FifthBoss.h" />
+    <ClInclude Include="Foot.h" />
     <ClInclude Include="Human.h" />
     <ClInclude Include="LeftHumanWave.h" />
     <ClInclude Include="LeftHand.h" />

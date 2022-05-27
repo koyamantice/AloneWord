@@ -74,9 +74,12 @@ void LeftShose::Finalize() {
 void LeftShose::Spec() {
 	XMFLOAT3 AfterPos{};
 	//ここで行動を決める
-	if (AttackCount > 150 && pos.y <= 0.1f) {
+	//ここで行動を決める
+	if (AttackCount == 150) {
 		if (!active) {
-			action = (rand() % 2);
+			hitradius = 0.6f;
+			//action = (rand() % 2);
+			AttackCount = 0;
 			frame = 0;
 			pat = 1;
 			active = true;
@@ -84,13 +87,13 @@ void LeftShose::Spec() {
 	}
 	//攻撃をするまでのインターバル
 	else {
-		if (!active) {
-			AttackCount++;
-			/*angle += 2.0f;
-			angle2 = angle * (3.14f / 180.0f);
-			pos.y = sin(angle2) * 0.5f + 0.5f;
-			enemyobj->SetPosition(pos);*/
-		}
+		//if (!active) {
+		//	AttackCount++;
+		//	/*angle += 2.0f;
+		//	angle2 = angle * (3.14f / 180.0f);
+		//	pos.y = sin(angle2) * 0.5f + 0.5f;
+		//	enemyobj->SetPosition(pos);*/
+		//}
 	}
 
 	//行動開始
@@ -454,3 +457,13 @@ void LeftShose::specialDraw() {
 		}
 	}
 }
+
+//行動が送られる
+void LeftShose::SetAct(Foot* foot) {
+	int action = foot->GetAction();
+	int AttackCount = foot->GetAttackCount();
+
+	this->action = action;
+	this->AttackCount = AttackCount;
+}
+
