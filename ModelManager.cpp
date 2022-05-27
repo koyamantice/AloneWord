@@ -29,6 +29,7 @@ void ModelManager::Initialize() {
 	LoadModel(LeftHand_Close, "LeftHandClose");
 	LoadModel(RightHand_Open, "RightHandOpen");
 	LoadModel(RightHand_Close, "RightHandClose");
+	LoadModel(Motti_Bullet, "Nagemoti");
 	LoadFBXModel(MottiMove, "Motti_moveF");
 }
 

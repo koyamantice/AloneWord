@@ -33,6 +33,7 @@ public:
 		LeftHand_Close,
 		RightHand_Open,
 		RightHand_Close,
+		Motti_Bullet
 	};
 	enum FBXName {
 		MottiMove,
