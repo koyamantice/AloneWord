@@ -63,6 +63,8 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(GameOver, L"Resources/2d/GameOverLogo.png");
 	Sprite::LoadTexture(noBoss_Select, L"Resources/2d/noBoss_Select.png");
 	Sprite::LoadTexture(noBoss_Sname, L"Resources/2d/noBoss_Sname.png");
+	Sprite::LoadTexture(hit, L"Resources/2d/particleD.png");
+	Sprite::LoadTexture(SPD, L"Resources/2d/SPD.png");
 }
 
 void ImageManager::LoadTex2D() {

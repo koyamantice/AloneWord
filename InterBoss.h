@@ -122,6 +122,7 @@ protected:
 	Model* model = nullptr;
 	Texture* texture = nullptr;
 	unique_ptr<Texture> Hit = nullptr;
+	unique_ptr<Sprite> hit_S = nullptr;
 	unique_ptr<Player> player = nullptr;
 	//座標や回転
 	XMFLOAT3 pos = { 0,0,0 };

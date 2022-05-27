@@ -3,6 +3,7 @@
 #include "ModelManager.h"
 #include "Collision.h"
 #include <Easing.h>
+#include <Audio.h>
 
 //‰Šú‰»
 void HotWater::Init() {
@@ -57,6 +58,7 @@ void HotWater::Upda() {
 			vel.y -= 0.01f;
 			water->SetPosition(pos);
 			if (pos.y < -0.2f) {
+				//Audio::GetInstance()->PlayWave("Resources/Sound/GreenTea.wav", 0.2f);
 				onGround = true;
 				hot->SetPosition(pos);
 			}
@@ -90,6 +92,7 @@ void HotWater::Draw() {
 void HotWater::Collide() {
 	if (!player->GetWet()) {
 		if (Collision::CircleCollision(pos.x, pos.z, radius, player->GetPosition().x, player->GetPosition().z, 1.0f)) {
+			Audio::GetInstance()->PlayWave("Resources/Sound/wet.wav", 0.2f);
 			player->SetHp(player->GetHp() - 0.5f);
 			player->SetWet(true);
 			player->SetCharge(0);

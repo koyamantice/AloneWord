@@ -69,7 +69,9 @@ public:
 		SpinBar,
 		GameOver,
 		noBoss_Select,
-		noBoss_Sname
+		noBoss_Sname,
+		hit,
+		SPD
 	};
 	enum tex2dName {
 	enemy,//Texture::LoadTexture(0, L"Resources/2d/enemy.png");

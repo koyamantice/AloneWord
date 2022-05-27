@@ -36,7 +36,7 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	//BossHp2[now]->SetColor({ 0.0f,1.0f,0.0f,1.0f });
 	if (boss2) {
 		BossMaxHp[1] = boss2->GetHP();
-		AfterPos2[0] = { (float)(boss2->GetHP() * (800/ BossMaxHp[1])),75 };
+		AfterPos2[0] = { (float)(boss2->GetHP() * (400/ BossMaxHp[1])),75 };
 	}
 	BossHp2[max]->SetSize(AfterPos2[0]);
 	BossHp2[damage]->SetSize(AfterPos2[0]);
@@ -61,6 +61,13 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	PlaHp[now] = Sprite::Create(ImageManager::playerHp, { 0.0f,0.0f });
 	PlaHp[now]->SetPosition({ 163.0f,632.0f });
 	PlaHp[now]->SetColor({ 0.0f,1.0f,0.0f,1.0f });
+	
+	
+	Sprite*SPD_ = Sprite::Create(ImageManager::SPD, { 0.0f,0.0f });
+	SPD_->SetPosition({ 30.0f,576.0f });
+	SPD_->SetScale(1.3f);
+	SPD.reset(SPD_);
+
 
 	//背景スプライト生成
 	Life = Sprite::Create(ImageManager::life, { 0.0f,0.0f });
@@ -167,8 +174,8 @@ void UI::Update() {
 		SeachBoss();
 	}
 	if (boss2&&boss) {
-		AfterPos[0] = { (float)(boss->GetHP() * (800 / BossMaxHp[0])),75 };
-		AfterPos2[0] = { (float)(boss2->GetHP() * (800 / BossMaxHp[1])),75 };
+		AfterPos[0] = { (float)(boss->GetHP() * (400 / BossMaxHp[0])),75 };
+		AfterPos2[0] = { (float)(boss2->GetHP() * (400 / BossMaxHp[1])),75 };
 		bossPos[0] = {Ease(In,Quint,0.7f,BossHp[now]->GetSize().x,AfterPos[0].x),75,};
 		bossPos[1] = {Ease(In,Quint,0.5f,BossHp[damage]->GetSize().x,AfterPos[0].x),75,};
 		BossHp[max]->SetSize({ 400,75 });
@@ -321,6 +328,7 @@ const void UI::Draw() {
 		} else {
 			Mark[weak]->Draw();
 		}
+		SPD->Draw();
 		PlaHp[max]->Draw();
 		PlaHp[damage]->Draw();
 		PlaHp[now]->Draw();

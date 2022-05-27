@@ -724,7 +724,7 @@ void RightShose::BirthParticle() {
 void RightShose::Follow() {
 	XMFLOAT3 plapos = player->GetPosition();
 	XMFLOAT3 position{};
-	position.x = ((plapos.x + 1.5) - pos.x);
+	position.x = ((plapos.x + 1.5f) - pos.x);
 	position.z = (plapos.z - pos.z);
 	rot.y = (atan2f(position.x, position.z) * (180.0f / XM_PI));// *(XM_PI / 180.0f);
 	//NextP.x -= sin(-atan2f(position.x, position.z)) * 0.2251f;

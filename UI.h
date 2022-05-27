@@ -40,6 +40,7 @@ private:
 	};
 	Sprite* HpGauge = nullptr;
 	Sprite* Mark[3]{};
+	unique_ptr<Sprite> SPD=nullptr;
 	enum  {
 		energy,
 		pinch,

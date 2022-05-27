@@ -15,6 +15,8 @@ void InterBoss::InitCommon() {
 	Hit_->SetPosition({ 1.0f,1.0f,1.0f });
 	Hit_->Update();
 	Hit.reset(Hit_);
+	Sprite* hit_ = Sprite::Create(ImageManager::hit,{640,360},{1.0f,1.0f,0.5f,0.5f},{0.5f,0.5f});
+	hit_S.reset(hit_);
 }
 
 //更新処理
@@ -24,11 +26,13 @@ void InterBoss::Update() {
 	//
 	if (attach) {
 		if (Hitsca.x < Maxsca.x) {
+			hit_S->SetSize({ hit_S-> GetSize().x*1.1f,hit_S->GetSize().y*1.1f});
 			Hitsca.x *= 1.1f;
 			Hitsca.y *= 1.1f;
 			Hitsca.z *= 1.1f;
 		} else {
 			Hitsca = { 0.5f,0.5f,0.5f };
+			hit_S->SetSize({1280, 720});
 			attach = false;
 		}
 		Hit->SetScale(Hitsca);
@@ -98,6 +102,8 @@ void InterBoss::Draw() {
 		}
 		if (attach/*&&BossHP>0*/) {
 			Hit->Draw();
+			Sprite::PreDraw();
+			hit_S->Draw();
 		}
 	//}
 	//それぞれのマップごとの描画
