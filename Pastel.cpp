@@ -367,12 +367,12 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 					Afterrot = {
 						90.0f,
 						rot.y,
-						1125.0f,
+						1845.0f,
 					};
 
 					if (frame < 1.0f) {
 						frame += 0.01f;
-						hitradius = 6.0f;
+						hitradius = 4.0f;
 						break;
 					}
 					else {
@@ -391,12 +391,12 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 					Afterrot = {
 						90.0f,
 						rot.y,
-						1125.0f,
+						1845.0f
 					};
 
 					if (frame < 1.0f) {
 						frame += 0.01f;
-						hitradius = 6.0f;
+						hitradius = 4.0f;
 						break;
 					}
 					else {
@@ -415,12 +415,12 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 					Afterrot = {
 						90.0f,
 						rot.y,
-						1125.0f,
+						1845.0f
 					};
 
 					if (frame < 1.0f) {
 						frame += 0.01f;
-						hitradius = 6.0f;
+						hitradius = 4.0f;
 						break;
 					}
 					else {
@@ -439,12 +439,12 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 					Afterrot = {
 						90.0f,
 						rot.y,
-						1125.0f,
+						1845.0f
 					};
 
 					if (frame < 1.0f) {
 						frame += 0.01f;
-						hitradius = 6.0f;
+						hitradius = 4.0f;
 						break;
 					}
 					else {

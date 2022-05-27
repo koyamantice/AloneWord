@@ -9,7 +9,7 @@
 
 void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	//背景スプライト生成
-	BackGround[0] = Texture::Create(ImageManager::SELECTTex, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	BackGround[0] = Texture::Create(ImageManager::SELECTTex2, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	BackGround[1] = Texture::Create(ImageManager::kitchenSelect, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	BackGround[2] = Texture::Create(ImageManager::JstyleSelect, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	BackGround[3] = Texture::Create(ImageManager::EntranceSelect, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
