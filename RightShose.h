@@ -15,15 +15,15 @@ public:
 	void specialDraw() override;//このシーンのみの描画
 	void SetAct(Foot* foot);
 	bool HitShose(LeftShose* leftshose);
+	void Follow();
+	//足元にパーティクル
+	void BirthParticle();
 private:
 
 	float y = 0.0f;
 	//待機モーションのためのやつ
-	enum Motion {
-		Up,
-		Down
-	};
 
+	//突進攻撃のためのもの
 	bool Attack = false;
 	
 	enum Hit {
@@ -37,4 +37,13 @@ private:
 	double speedZ = 0.0f;
 	int MoveCount = 0;
 	bool LeftAct = false;
+	//追従のためのやつ
+	int FollowTimer = 0;
+	XMFLOAT2 vel{};
+
+	enum State {
+		Down,
+		Up,
+	};
+	int StateNumber = 1;
 };

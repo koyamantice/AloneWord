@@ -181,7 +181,7 @@ void Rice::Update() {
 	}
 	collideArm();
 	
-	//collidePlayer();
+	collidePlayer();
 	//collideAttackArm();
 	SetEnemy();
 	if (Exp == true) {

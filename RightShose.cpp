@@ -4,6 +4,7 @@
 #include<iomanip>
 #include <Easing.h>
 #include"ImageManager.h"
+#include "ParticleManager.h"
 using namespace DirectX;
 
 //こんすとらくた
@@ -72,6 +73,7 @@ void RightShose::Finalize() {
 
 //ボスの行動
 void RightShose::Spec() {
+	shadow = false;
 	XMFLOAT3 AfterPos{};
 	//ここで行動を決める
 	if (AttackCount == 150) {
@@ -98,7 +100,7 @@ void RightShose::Spec() {
 	//行動開始
 	if (active) {
 		//突進攻撃
-		if ((action % 2) == 0) {
+		if (action == 0) {
 			Afterrot.x = 0.0f;
 			if (!stun) {
 				//3回突進する
@@ -113,7 +115,7 @@ void RightShose::Spec() {
 					0
 					};
 					Afterrot.y = 270;
-					if (frame < 0.45f) {
+					if (frame < 0.60f) {
 						frame += 0.004f;
 					}
 					else {
@@ -227,6 +229,7 @@ void RightShose::Spec() {
 					}
 
 					if (pos.y == 0.0f) {
+						Deadbound = {0.0f,0.0f,0.0f};
 						MoveCount = 0;
 						Attack = false;
 						hitpoint = HitNot;
@@ -244,6 +247,7 @@ void RightShose::Spec() {
 					}
 
 					if (pos.y == 0.0f) {
+						Deadbound = { 0.0f,0.0f,0.0f };
 						MoveCount = 0;
 						Attack = false;
 						hitpoint = HitNot;
@@ -261,6 +265,7 @@ void RightShose::Spec() {
 					}
 
 					if (pos.y == 0.0f) {
+						Deadbound = { 0.0f,0.0f,0.0f };
 						MoveCount = 0;
 						Attack = false;
 						hitpoint = HitNot;
@@ -278,6 +283,7 @@ void RightShose::Spec() {
 					}
 
 					if (pos.y == 0.0f) {
+						Deadbound = { 0.0f,0.0f,0.0f };
 						MoveCount = 0;
 						Attack = false;
 						hitpoint = HitNot;
@@ -288,7 +294,7 @@ void RightShose::Spec() {
 			enemyobj->SetPosition(pos);
 		}
 		//プレイヤーを挟むような攻撃
-		if ((action % 2) == 1) {
+		else if (action == 1) {
 			if (AttackC < 3) {
 				Afterrot.x = 270.0f;
 				switch (pat) {
@@ -403,8 +409,99 @@ void RightShose::Spec() {
 			};
 			enemyobj->SetPosition(pos);
 		}
+		//歩いて攻撃してきます
+		else if (action == 2) {
+		if (pat == 2) {
+			hitradius = 1.6f;
+		}
+		else {
+			hitradius = 0.6f;
+		}
+			if (pat == 1) {
+				AfterPos = {
+					1.5,
+					0,
+					0
+				};
+				if (frame < 1.0f) {
+					frame += 0.01f;
+				}
+				else {
+					frame = 0;
+					pat++;
+				}
+			}
+			else if (pat == 2) {
+				FollowTimer++;
+				if (FollowTimer >= 600 && StateNumber == Up) {
+					frame = 0;
+					FollowTimer = 0;
+					pat++;
+				}
+				else {
+					Follow();
+					if (FollowTimer == 1) {
+						StateNumber = Down;
+					}
+					if (StateNumber == Up) {
+						AfterPos = {
+						pos.x,
+						3,
+						pos.z
+						};
+						if (frame < 1.00f) {
+							frame += 0.05f;
+						}
+						else {
+							frame = 0;
+							StateNumber = Down;
+						}
+					}
+					else if (StateNumber == Down) {
+						AfterPos = {
+						pos.x,
+						0,
+						pos.z
+						};
+						if (frame < 1.00f) {
+							frame += 0.05f;
+						}
+						else {
+							frame = 0;
+							StateNumber = Up;
+						}
+					}
+				}
+			}
+			else if (pat == 3) {
+				AfterPos = {
+				5,
+				0,
+				0
+				};
+				Afterrot.y = 270;
+				if (frame < 0.45f) {
+					frame += 0.004f;
+				}
+				else {
+					frame = 0;
+					action = 0;
+					AttackC = 0;
+					AttackCount = 0;
+					active = false;
+					Effect = true;
+				}
+			}
+			pos = {
+Ease(In,Cubic,frame,pos.x,AfterPos.x),
+Ease(In,Cubic,frame,pos.y,AfterPos.y),
+Ease(In,Cubic,frame,pos.z,AfterPos.z)
+			};
+			enemyobj->SetPosition(pos);
+		}
 	}
 
+	BirthParticle();
 	rot.y = Ease(In, Quint, 0.7f, rot.y, Afterrot.y);
 	rot.x = Ease(In, Quint, 0.7f, rot.x, Afterrot.x);
 	enemyobj->SetRotation(rot);
@@ -583,7 +680,7 @@ void RightShose::SetAct(Foot* foot) {
 //左足との当たり判定
 bool RightShose::HitShose(LeftShose* leftshose) {
 	XMFLOAT3 leftpos = leftshose->GetPosition();
-	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 1.5f, leftpos.x, leftpos.y, leftpos.z, 1.5f) && (action % 2) == 0
+	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 1.5f, leftpos.x, leftpos.y, leftpos.z, 1.5f) && (action == 0)
 		&& (leftshose->GetHP() > 0) && this->stun == false) {
 		//個々の音変更案件
 		Audio::GetInstance()->PlayWave("Resources/Sound/accident.wav", 0.4f);
@@ -604,4 +701,36 @@ bool RightShose::HitShose(LeftShose* leftshose) {
 	else {
 		return false;
 	}
+}
+
+//パーティクルが出てくる
+void RightShose::BirthParticle() {
+	if(action == 2 && active){
+		for (int i = 0; i < 3; ++i) {
+			const float rnd_vel = 0.1f;
+			XMFLOAT3 vel{};
+			vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			//const float rnd_sca = 0.1f;
+			//float sca{};
+			//sca = (float)rand() / RAND_MAX*rnd_sca;
+			ParticleManager::GetInstance()->Add(30, { pos.x + vel.x,pos.y,pos.z + vel.z }, vel, XMFLOAT3(), 1.2f, 0.6f);
+		}
+	}
+}
+
+//敵追従
+void RightShose::Follow() {
+	XMFLOAT3 plapos = player->GetPosition();
+	XMFLOAT3 position{};
+	position.x = ((plapos.x + 1.5) - pos.x);
+	position.z = (plapos.z - pos.z);
+	rot.y = (atan2f(position.x, position.z) * (180.0f / XM_PI));// *(XM_PI / 180.0f);
+	//NextP.x -= sin(-atan2f(position.x, position.z)) * 0.2251f;
+	//NextP.z += cos(-atan2f(position.x, position.z)) * 0.2251f;
+	vel.x = sin(-atan2f(position.x, position.z)) * 0.2f;
+	vel.y = cos(-atan2f(position.x, position.z)) * 0.2f;
+	pos.x -= vel.x;
+	pos.z += vel.y;
 }

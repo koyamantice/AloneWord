@@ -13,4 +13,16 @@ public:
 	void End(int Timer) override;//撃破
 	void specialDraw() override;//このシーンのみの描画
 	void SetAct(Foot* foot);
+	void Follow();
+	//足元にパーティクル
+	void BirthParticle();
+public:
+	//追従のためのやつ
+	int FollowTimer = 0;
+	XMFLOAT2 vel{};
+	enum State {
+		Down,
+		Up,
+	};
+	int StateNumber = 0;
 };

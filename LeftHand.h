@@ -19,6 +19,6 @@ private:
 		Open,
 		Close,
 	};
-	int stateNumber = 0;
+	int stateNumber = 1;
 	Model* hand_closemodel = nullptr;
 };

@@ -5,7 +5,7 @@
 #include <Easing.h>
 using namespace DirectX;
 #include"ImageManager.h"
-
+#include "ParticleManager.h"
 //コンストラクタ
 LeftShose::LeftShose() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::LeftShoes);
@@ -35,7 +35,6 @@ void LeftShose::Initialize(bool shadow) {
 	texture->SetPosition(pos.x, -100, pos.z);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.3f,0.3f,0.3f });
-
 	//スタン時のぴよぴよ
 
 	for (std::size_t i = 0; i < Stuntexture.size(); i++) {
@@ -72,6 +71,7 @@ void LeftShose::Finalize() {
 
 //ボスの行動
 void LeftShose::Spec() {
+	shadow = false;
 	XMFLOAT3 AfterPos{};
 	//ここで行動を決める
 	//ここで行動を決める
@@ -99,7 +99,7 @@ void LeftShose::Spec() {
 	//行動開始
 	if (active) {
 		//スタージを外周する
-		if ((action % 2) == 0) {
+		if (action == 0) {
 			if (!stun) {
 				if (frame < 0.45f) {
 					frame += 0.002f;
@@ -290,8 +290,98 @@ void LeftShose::Spec() {
 	Ease(In,Cubic,frame,pos.z,AfterPos.z)
 			};
 			enemyobj->SetPosition(pos);
+		}	//歩いて攻撃してきます
+		else if (action == 2) {
+		if (pat == 2) {
+			hitradius = 1.6f;
+		}
+		else {
+			hitradius = 0.6f;
+		}
+		if (pat == 1) {
+			AfterPos = {
+				-1.5,
+				0,
+				0
+			};
+			if (frame < 1.0f) {
+				frame += 0.01f;
+			}
+			else {
+				frame = 0;
+				pat++;
+			}
+		}
+		else if (pat == 2) {
+			FollowTimer++;
+			if (FollowTimer >= 600 && StateNumber == Up) {
+				frame = 0;
+				FollowTimer = 0;
+				pat++;
+			}
+			else {
+				Follow();
+				if (FollowTimer == 1) {
+					StateNumber = Up;
+				}
+				if (StateNumber == Up) {
+					AfterPos = {
+					pos.x,
+					3,
+					pos.z
+					};
+					if (frame < 1.00f) {
+						frame += 0.05f;
+					}
+					else {
+						frame = 0;
+						StateNumber = Down;
+					}
+				}
+				else if (StateNumber == Down) {
+					AfterPos = {
+					pos.x,
+					0,
+					pos.z
+					};
+					if (frame < 1.00f) {
+						frame += 0.05f;
+					}
+					else {
+						frame = 0;
+						StateNumber = Up;
+					}
+				}
+			}
+		}
+		else if (pat == 3) {
+			AfterPos = {
+			-5,
+			0,
+			0
+			};
+			Afterrot.y = 270;
+			if (frame < 0.45f) {
+				frame += 0.004f;
+			}
+			else {
+				frame = 0;
+				action = 0;
+				AttackC = 0;
+				AttackCount = 0;
+				active = false;
+				Effect = true;
+			}
+		}
+		pos = {
+Ease(In,Cubic,frame,pos.x,AfterPos.x),
+Ease(In,Cubic,frame,pos.y,AfterPos.y),
+Ease(In,Cubic,frame,pos.z,AfterPos.z)
+		};
+		enemyobj->SetPosition(pos);
 		}
 	}
+	BirthParticle();
 	rot.y = Ease(In, Quint, 0.7f, rot.y, Afterrot.y);
 	rot.x = Ease(In, Quint, 0.7f, rot.x, Afterrot.x);
 	enemyobj->SetRotation(rot);
@@ -465,5 +555,37 @@ void LeftShose::SetAct(Foot* foot) {
 
 	this->action = action;
 	this->AttackCount = AttackCount;
+}
+
+//パーティクルが出てくる
+void LeftShose::BirthParticle() {
+	if (action == 2 && active) {
+		for (int i = 0; i < 3; ++i) {
+			const float rnd_vel = 0.1f;
+			XMFLOAT3 vel{};
+			vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			//const float rnd_sca = 0.1f;
+			//float sca{};
+			//sca = (float)rand() / RAND_MAX*rnd_sca;
+			ParticleManager::GetInstance()->Add(30, { pos.x + vel.x,pos.y,pos.z + vel.z }, vel, XMFLOAT3(), 1.2f, 0.6f);
+		}
+	}
+}
+
+//敵追従
+void LeftShose::Follow() {
+	XMFLOAT3 plapos = player->GetPosition();
+	XMFLOAT3 position{};
+	position.x = ((plapos.x - 1.5) - pos.x);
+	position.z = (plapos.z - pos.z);
+	rot.y = (atan2f(position.x, position.z) * (180.0f / XM_PI));// *(XM_PI / 180.0f);
+	//NextP.x -= sin(-atan2f(position.x, position.z)) * 0.2251f;
+	//NextP.z += cos(-atan2f(position.x, position.z)) * 0.2251f;
+	vel.x = sin(-atan2f(position.x, position.z)) * 0.2f;
+	vel.y = cos(-atan2f(position.x, position.z)) * 0.2f;
+	pos.x -= vel.x;
+	pos.z += vel.y;
 }
 
