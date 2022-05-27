@@ -138,6 +138,9 @@ public:
 
 	const bool& GetWet() { return wet; }
 	void SetWet(bool wet) { this->wet = wet; }
+
+	const bool& GetBubble() { return bubble; }
+	void SetBubble(bool bubble) { this->bubble = bubble; }
 private:
 	unique_ptr <Object3d> object3d;
 	Model* model;
@@ -199,6 +202,9 @@ private:
 	float scaleframe = 0.0f;
 	bool wet = false;
 	int wetC = 0;
+
+	bool bubble = false;
+	int bubbleC = 0;
 	//ステータス的なやつ
 	float HP = 10;
 	float StickrotX = 0;

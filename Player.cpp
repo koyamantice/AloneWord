@@ -115,6 +115,14 @@ void Player::Update() {
 		}
 	}
 
+	if (bubble) {
+		bubbleC++;
+		if (bubbleC > 100) {
+			bubble = false;
+			bubbleC = 0;
+		}
+	}
+
 	//プレイヤーの動き系
 	if (Interval <= 80) {
 		//プレイヤーの移動
@@ -288,7 +296,7 @@ void Player::Update() {
 		Interval--;
 	}
 
-	if (Interval != 100 && Interval != 0 && Interval % 20 == 0) {
+	if ((Interval != 100) && Interval != 0 && Interval % 20 == 0) {
 		FlashCount++;
 	}
 
@@ -564,6 +572,7 @@ void Player::TitleUp() {
 void Player::Draw(DirectXCommon* dxCommon) {
 
 	//ImGui::Begin("test");
+	//ImGui::Text("RotCount:%d", bubbleC);
 	////ImGui::SliderFloat("pos.x", &position.x, 50, -50);
 	///*ImGui::SliderFloat("HP", &HP, 10, 0);
 	//ImGui::SliderFloat("overframe", &overframe, 50, -50);*/
@@ -571,8 +580,8 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	//
 	//ImGui::SliderFloat("chargepos.x %d", &chargepos[0].x, 50, -50);*/
 	///*ImGui::Text("moveCount:%d", move_count);
-	//ImGui::Text("RotCount:%d", RotCount);*/
-	//ImGui::SliderFloat("chargesca.x %d", &chargesca[0].x, 50, -50);
+	//;*/
+	////ImGui::SliderFloat("chargesca.x %d", &chargesca[0].x, 50, -50);
 	//ImGui::End();
 	Texture::PreDraw();
 	if (chargeTimer!=0&&!AttackFlag && HP > 0) {

@@ -9,7 +9,7 @@
 
 void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	//背景スプライト生成
-	BackGround[0] = Texture::Create(ImageManager::SELECTTex, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	BackGround[0] = Texture::Create(ImageManager::SELECTTex2, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	BackGround[1] = Texture::Create(ImageManager::kitchenSelect, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	BackGround[2] = Texture::Create(ImageManager::JstyleSelect, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	BackGround[3] = Texture::Create(ImageManager::EntranceSelect, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
@@ -512,10 +512,10 @@ void StageSelect::Draw(DirectXCommon* dxCommon) {
 	int ClearCount = save->GetClearCount();
 	XMFLOAT3 pos = player->GetPosition();
 	bool SecondClear = save->GetSecondClear();
-	ImGui::Begin("test");
+	/*ImGui::Begin("test");
 	ImGui::Text("clearCount::%d", OnStageNumber);
 	ImGui::Unindent();
-	ImGui::End();
+	ImGui::End();*/
 
 	Texture::PreDraw();
 	BackGround[OnStageNumber]->Draw();

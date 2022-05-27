@@ -10,7 +10,7 @@ using namespace DirectX;
 RightHand::RightHand() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::RightHand_Open);
 	hand_closemodel = ModelManager::GetIns()->GetModel(ModelManager::LeftHand_Close);
-	Mottimodel = ModelManager::GetIns()->GetModel(ModelManager::SiroMotti);
+	Mottimodel = ModelManager::GetIns()->GetModel(ModelManager::Motti_Bullet);
 	Mottiobj = new Object3d();
 	Mottiobj = Object3d::Create();
 	Mottiobj->SetModel(Mottimodel);

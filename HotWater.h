@@ -15,7 +15,9 @@ public:
 	void Draw();
 	void SetPlayer(Player* player) { this->player = player; }
 	void Collide();
+	void FollowCollide();
 	void Set(const XMFLOAT3& pos);
+	void Follow(const XMFLOAT3& pos);
 	void AppeaSet(const XMFLOAT3& pos);
 	void Final();
 	const bool& GetIsAlive() { return IsAlive; };
@@ -33,6 +35,8 @@ private:
 	bool onGround=false;
 	bool IsAlive = false;
 	bool hit;
+	int action = 0;
+	int followTimer = 0;
 	
 };
 
