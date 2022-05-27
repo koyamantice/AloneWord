@@ -351,7 +351,7 @@ void Rice::Draw() {
 	Texture::PreDraw();
 	if (IsAlive && !EnemyCatch && !add) {
 		texture->Draw();
-	} else if (!IsAlive && IsTimer <= 100 && IsTimer != 0) {
+	} else if (!IsAlive && IsTimer < 100 && IsTimer != 0) {
 		Texture::PreDraw();
 		net[0]->Draw();
 		net[1]->Draw();
