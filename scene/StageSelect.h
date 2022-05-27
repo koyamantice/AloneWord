@@ -31,6 +31,8 @@ private:
 	Texture* LightBackGround = nullptr;
 	Sprite* select[5]{};
 	Sprite* plane[5]{};
+	Sprite* no_select = nullptr;
+	Sprite* no_plane = nullptr;
 	Texture* Stage1[3]{};
 	Texture* Stage2[3]{};
 	Texture* Stage3[3]{};

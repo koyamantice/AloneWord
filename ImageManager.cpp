@@ -61,6 +61,8 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(SpinGauge, L"Resources/2d/spinGauge.png");
 	Sprite::LoadTexture(SpinBar, L"Resources/2d/spinGaugeBar.png");
 	Sprite::LoadTexture(GameOver, L"Resources/2d/GameOverLogo.png");
+	Sprite::LoadTexture(noBoss_Select, L"Resources/2d/noBoss_Select.png");
+	Sprite::LoadTexture(noBoss_Sname, L"Resources/2d/noBoss_Sname.png");
 }
 
 void ImageManager::LoadTex2D() {

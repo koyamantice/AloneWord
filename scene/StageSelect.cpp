@@ -29,23 +29,24 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	StageP[4] = { 1.3f,0.0f,-3.2f };
 
 	//各スプライトの宣言
-	select[0] = Sprite::Create(ImageManager::select2, selectP[0]);
+	select[0] = Sprite::Create(ImageManager::select1, selectP[0]);
 	select[0]->SetAnchorPoint({ 1.0f,0.0f });
-	select[1] = Sprite::Create(ImageManager::select1, selectP[0]);
+	select[1] = Sprite::Create(ImageManager::select4, selectP[0]);
 	select[1]->SetAnchorPoint({ 1.0f,0.0f });
 	select[2] = Sprite::Create(ImageManager::select3, selectP[0]);
 	select[2]->SetAnchorPoint({ 1.0f,0.0f });
-	select[3] = Sprite::Create(ImageManager::select4, selectP[0]);
+	select[3] = Sprite::Create(ImageManager::select2, selectP[0]);
 	select[3]->SetAnchorPoint({ 1.0f,0.0f });
 	select[4] = Sprite::Create(ImageManager::select5, selectP[0]);
 	select[4]->SetAnchorPoint({ 1.0f,0.0f });
 	BlackFilter = Sprite::Create(ImageManager::BlackFilter, { 0.0f,0.0f });
 	plane[0] = Sprite::Create(ImageManager::kitchen, selectP[1]);
-	plane[1] = Sprite::Create(ImageManager::genkan, selectP[1]);
-	plane[2] = Sprite::Create(ImageManager::niwa, selectP[1]);
-	plane[3] = Sprite::Create(ImageManager::washitu, selectP[1]);
+	plane[1] = Sprite::Create(ImageManager::washitu, selectP[1]);
+	plane[2] = Sprite::Create(ImageManager::genkan, selectP[1]);
+	plane[3] = Sprite::Create(ImageManager::niwa, selectP[1]);
 	plane[4] = Sprite::Create(ImageManager::shinshitu, selectP[1]);
-
+	no_select = Sprite::Create(ImageManager::noBoss_Select, selectP[1]);
+	no_plane = Sprite::Create(ImageManager::noBoss_Sname, selectP[1]);
 	//クリアした時
 	Stage1[0] = Texture::Create(ImageManager::clearStage1, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	Stage1[0]->TextureCreate();
@@ -142,6 +143,8 @@ void StageSelect::Finalize() {
 	for (int i = 0; i < 4; i++) {
 		delete  plane[i];
 	}
+	delete no_plane;
+	delete no_select;
 	expandchange->Finalize();
 	shrinkchange->Finalize();
 }
@@ -175,6 +178,8 @@ void StageSelect::SinMove(int selectNum, int planeNum) {
 		};
 		select[selectNum]->SetPosition(selectP[0]);
 		plane[planeNum]->SetPosition(selectP[1]);
+		no_select->SetPosition(selectP[0]);
+		no_plane->SetPosition(selectP[1]);
 	}
 
 }
@@ -225,6 +230,8 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		};
 		plane[0]->SetPosition(selectP[1]);
 		select[0]->SetPosition(selectP[0]);
+		no_select->SetPosition(selectP[0]);
+		no_plane->SetPosition(selectP[1]);
 		SinMove(0, 0);
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
@@ -261,6 +268,8 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		};
 		plane[1]->SetPosition(selectP[1]);
 		select[1]->SetPosition(selectP[0]);
+		no_select->SetPosition(selectP[0]);
+		no_plane->SetPosition(selectP[1]);
 		SinMove(1, 1);
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount >= 2)*/) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
@@ -296,6 +305,8 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		};
 		plane[3]->SetPosition(selectP[1]);
 		select[3]->SetPosition(selectP[0]);
+		no_select->SetPosition(selectP[0]);
+		no_plane->SetPosition(selectP[1]);
 		SinMove(3, 3);
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount >= 1)*/) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
@@ -332,6 +343,8 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		};
 		plane[2]->SetPosition(selectP[1]);
 		select[2]->SetPosition(selectP[0]);
+		no_select->SetPosition(selectP[0]);
+		no_plane->SetPosition(selectP[1]);
 		SinMove(2, 2);
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount >= 3)*/) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
@@ -368,6 +381,8 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		};
 		plane[4]->SetPosition(selectP[1]);
 		select[4]->SetPosition(selectP[0]);
+		no_select->SetPosition(selectP[0]);
+		no_plane->SetPosition(selectP[1]);
 		SinMove(4, 4);
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount >= 4)*/) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
@@ -431,11 +446,12 @@ Ease(In,Cubic,selectframe,cameratargetPos.z,Aftertargetpos.z)
 			select[i]->SetPosition(selectP[0]);
 			plane[i]->SetPosition(selectP[1]);
 		}
+		no_select->SetPosition(selectP[0]);
+		no_plane->SetPosition(selectP[1]);
 	}
 	else {
 		dark = true;
 	}
-
 
 	//シーンがここで変わる
 	if (cameraPos.y <= 2.6f) {
@@ -561,6 +577,7 @@ void StageSelect::Draw(DirectXCommon* dxCommon) {
 	player->Draw(dxCommon);
 	Sprite::PreDraw();
 	for (int i = 0; i < 5;i++) {
+		if(ClearCount )
 		select[i]->Draw();
 		plane[i]->Draw();
 	}
