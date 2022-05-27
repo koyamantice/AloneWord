@@ -78,10 +78,12 @@ void InterBoss::Draw() {
 	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
 	/*ImGui::SliderFloat("pos.x", &pos.x, 1, 0.0f);
 	ImGui::Text("Move:%d", appearMove);*/
-	//ImGui::SliderFloat("angle", &angle, 360, -360);
-	ImGui::Text("AttackCount::%d", AttackCount);
-	ImGui::Text("action::%d", action);
-	ImGui::Text("active::%d", active);
+	////ImGui::SliderFloat("angle", &angle, 360, -360);
+	//ImGui::Text("AttackCount::%d", AttackCount);
+	//ImGui::Text("action::%d", action);
+	//ImGui::Text("active::%d", active);
+	ImGui::Text("shadow::%d", shadow);
+	ImGui::SliderFloat("hit", &hitradius, 1, 0);
 	//ImGui::Text("color::%d", color);
 	/*
 	ImGui::Text("pat::%d", pat);*/

@@ -35,7 +35,6 @@ void LeftShose::Initialize(bool shadow) {
 	texture->SetPosition(pos.x, -100, pos.z);
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.3f,0.3f,0.3f });
-	shadow = false;
 	//スタン時のぴよぴよ
 
 	for (std::size_t i = 0; i < Stuntexture.size(); i++) {
@@ -72,6 +71,7 @@ void LeftShose::Finalize() {
 
 //ボスの行動
 void LeftShose::Spec() {
+	shadow = false;
 	XMFLOAT3 AfterPos{};
 	//ここで行動を決める
 	//ここで行動を決める
@@ -292,9 +292,15 @@ void LeftShose::Spec() {
 			enemyobj->SetPosition(pos);
 		}	//歩いて攻撃してきます
 		else if (action == 2) {
+		if (pat == 2) {
+			hitradius = 1.6f;
+		}
+		else {
+			hitradius = 0.6f;
+		}
 		if (pat == 1) {
 			AfterPos = {
-				-2,
+				-1.5,
 				0,
 				0
 			};
@@ -308,13 +314,44 @@ void LeftShose::Spec() {
 		}
 		else if (pat == 2) {
 			FollowTimer++;
-			if (FollowTimer >= 600) {
+			if (FollowTimer >= 600 && StateNumber == Up) {
 				frame = 0;
 				FollowTimer = 0;
 				pat++;
 			}
 			else {
 				Follow();
+				if (FollowTimer == 1) {
+					StateNumber = Up;
+				}
+				if (StateNumber == Up) {
+					AfterPos = {
+					pos.x,
+					3,
+					pos.z
+					};
+					if (frame < 1.00f) {
+						frame += 0.05f;
+					}
+					else {
+						frame = 0;
+						StateNumber = Down;
+					}
+				}
+				else if (StateNumber == Down) {
+					AfterPos = {
+					pos.x,
+					0,
+					pos.z
+					};
+					if (frame < 1.00f) {
+						frame += 0.05f;
+					}
+					else {
+						frame = 0;
+						StateNumber = Up;
+					}
+				}
 			}
 		}
 		else if (pat == 3) {
@@ -329,6 +366,7 @@ void LeftShose::Spec() {
 			}
 			else {
 				frame = 0;
+				action = 0;
 				AttackC = 0;
 				AttackCount = 0;
 				active = false;
@@ -521,7 +559,7 @@ void LeftShose::SetAct(Foot* foot) {
 
 //パーティクルが出てくる
 void LeftShose::BirthParticle() {
-	if (action == 2) {
+	if (action == 2 && active) {
 		for (int i = 0; i < 3; ++i) {
 			const float rnd_vel = 0.1f;
 			XMFLOAT3 vel{};
@@ -540,7 +578,7 @@ void LeftShose::BirthParticle() {
 void LeftShose::Follow() {
 	XMFLOAT3 plapos = player->GetPosition();
 	XMFLOAT3 position{};
-	position.x = ((plapos.x - 2) - pos.x);
+	position.x = ((plapos.x - 1.5) - pos.x);
 	position.z = (plapos.z - pos.z);
 	rot.y = (atan2f(position.x, position.z) * (180.0f / XM_PI));// *(XM_PI / 180.0f);
 	//NextP.x -= sin(-atan2f(position.x, position.z)) * 0.2251f;

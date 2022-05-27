@@ -22,11 +22,8 @@ private:
 
 	float y = 0.0f;
 	//待機モーションのためのやつ
-	enum Motion {
-		Up,
-		Down
-	};
 
+	//突進攻撃のためのもの
 	bool Attack = false;
 	
 	enum Hit {
@@ -40,6 +37,13 @@ private:
 	double speedZ = 0.0f;
 	int MoveCount = 0;
 	bool LeftAct = false;
+	//追従のためのやつ
 	int FollowTimer = 0;
 	XMFLOAT2 vel{};
+
+	enum State {
+		Down,
+		Up,
+	};
+	int StateNumber = 1;
 };

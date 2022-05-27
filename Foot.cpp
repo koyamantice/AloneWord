@@ -21,7 +21,7 @@ void Foot::SetAttack(LeftShose* leftshose, RightShose* rightshose) {
 		}
 		else {
 			AttackCount = 0;
-			action = 2;
+			action = (rand() % 3);
 			if ((leftshose->GetHP() <= 0) || (rightshose->GetHP() <= 0) && action == 1) {
 				action = 0;
 			}

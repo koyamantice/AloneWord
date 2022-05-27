@@ -17,6 +17,12 @@ public:
 	//足元にパーティクル
 	void BirthParticle();
 public:
+	//追従のためのやつ
 	int FollowTimer = 0;
 	XMFLOAT2 vel{};
+	enum State {
+		Down,
+		Up,
+	};
+	int StateNumber = 0;
 };
