@@ -1,6 +1,7 @@
 #pragma once
 #include "InterBoss.h"
 #include "LeftShose.h"
+#include "Foot.h"
 
 class RightShose :public InterBoss{
 public:
@@ -12,7 +13,7 @@ public:
 	void App(int Timer) override;//“±“ü
 	void End(int Timer) override;//Œ‚”j
 	void specialDraw() override;//‚±‚ÌƒV[ƒ“‚Ì‚İ‚Ì•`‰æ
-	void SetAct(LeftShose* leftshose);
+	void SetAct(Foot* foot);
 	bool HitShose(LeftShose* leftshose);
 private:
 

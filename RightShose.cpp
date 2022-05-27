@@ -74,9 +74,11 @@ void RightShose::Finalize() {
 void RightShose::Spec() {
 	XMFLOAT3 AfterPos{};
 	//ここで行動を決める
-	if (AttackCount > 150 && pos.y <= 0.1f) {
+	if (AttackCount == 150) {
 		if (!active) {
-			action = (rand() % 2);
+			hitradius = 0.6f;
+			//action = (rand() % 2);
+			AttackCount = 0;
 			frame = 0;
 			pat = 1;
 			active = true;
@@ -84,13 +86,13 @@ void RightShose::Spec() {
 	}
 	//攻撃をするまでのインターバル
 	else {
-		if (!active) {
-			AttackCount++;
-			/*angle += 2.0f;
-			angle2 = angle * (3.14f / 180.0f);
-			pos.y = sin(angle2) * 0.5f + 0.5f;
-			enemyobj->SetPosition(pos);*/
-		}
+		//if (!active) {
+		//	AttackCount++;
+		//	/*angle += 2.0f;
+		//	angle2 = angle * (3.14f / 180.0f);
+		//	pos.y = sin(angle2) * 0.5f + 0.5f;
+		//	enemyobj->SetPosition(pos);*/
+		//}
 	}
 
 	//行動開始
@@ -100,7 +102,7 @@ void RightShose::Spec() {
 			Afterrot.x = 0.0f;
 			if (!stun) {
 				//3回突進する
-				if (AttackC < 100) {
+				if (AttackC < 5) {
 					MoveCount++;
 				}
 				//左足が戻ったら元の位置に戻る
@@ -119,6 +121,7 @@ void RightShose::Spec() {
 						AttackC = 0;
 						AttackCount = 0;
 						active = false;
+						Effect = true;
 					}
 
 					pos = {
@@ -564,21 +567,15 @@ void RightShose::specialDraw() {
 	}
 }
 
-//左足と行動を合わせる
-void RightShose::SetAct(LeftShose* leftshose) {
-	int action = leftshose->GetAction();
-	int AttackCount = leftshose->GetAttackCount();
-	int pat = leftshose->GetPat();
-	this->action = action;
-	if (leftshose->GetHP() > 0) {
-		this->AttackCount = AttackCount;
-	}
-	if (pat == 5 && pos.y == 0.0f) {
-		AttackC = 101;
-	}
+//行動が送られる
+void RightShose::SetAct(Foot* foot) {
+	int action = foot->GetAction();
+	int AttackCount = foot->GetAttackCount();
 
-	LeftAct = leftshose->GetActive();
+	this->action = action;
+	this->AttackCount = AttackCount;
 }
+
 
 //左足との当たり判定
 bool RightShose::HitShose(LeftShose* leftshose) {

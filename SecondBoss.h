@@ -3,6 +3,7 @@
 #include "LeftShose.h"
 #include "RightShose.h"
 #include "UI.h"
+#include "Foot.h"
 #include <array>       // ヘッダファイルインクルード
 using namespace std;         //  名前空間指定
 /// <summary>
@@ -52,6 +53,7 @@ private:
 	array<Rice*, 6> enemy;
 	LeftShose* leftshose = nullptr;
 	RightShose* rightshose = nullptr;
+	Foot* foot = nullptr;
 	//std::array<std::array<Exp*, 6>, 5> exp;
 	
 	UI* ui = nullptr;

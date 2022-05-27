@@ -1,5 +1,6 @@
 #pragma once
 #include "InterBoss.h"
+#include "Foot.h"
 
 class LeftShose :public InterBoss {
 public:
@@ -11,4 +12,5 @@ public:
 	void App(int Timer) override;//“±“ü
 	void End(int Timer) override;//Œ‚”j
 	void specialDraw() override;//‚±‚ÌƒV[ƒ“‚Ì‚İ‚Ì•`‰æ
+	void SetAct(Foot* foot);
 };

@@ -147,6 +147,8 @@ void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	camera->SetEye(cameraPos);
 	ui = new UI(player, leftshose, rightshose);
 	expandchange = new ExpandChange();
+	foot = new Foot();
+	foot->init();
 	//ui->Initialize();
 }
 //開放処理
@@ -384,12 +386,15 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 		else {
 			Audio::GetInstance()->StopWave(5);
 			player->Update();
+			foot->SetAttack(leftshose, rightshose);
 			leftshose->Update();
+			rightshose->Update();
+			leftshose->SetAct(foot);
+			rightshose->SetAct(foot);
+
 			if (rightshose->GetHP() > 0) {
-				rightshose->SetAct(leftshose);
 				rightshose->HitShose(leftshose);
 			}
-			rightshose->Update();
 			
 			if (rightshose->GetHP() <= 0 && DethRight <= 50) {
 				DethRight++;
