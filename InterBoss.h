@@ -225,5 +225,10 @@ protected:
 	array<float, 4> StunCircleX;
 	array<float, 4> StunCircleZ;
 	array<XMFLOAT3, 4> StunPos;
+	//投げ攻撃用の挙動
+	Object3d* Mottiobj = nullptr;
+	Model* Mottimodel = nullptr;
+	XMFLOAT3 Mottipos{};
+	XMFLOAT3 AfterMottipos{};
 };
 

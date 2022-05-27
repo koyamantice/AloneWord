@@ -10,6 +10,10 @@ using namespace DirectX;
 LeftHand::LeftHand() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::LeftHand_Open);
 	hand_closemodel = ModelManager::GetIns()->GetModel(ModelManager::LeftHand_Close);
+	Mottimodel = ModelManager::GetIns()->GetModel(ModelManager::SiroMotti);
+	Mottiobj = new Object3d();
+	Mottiobj = Object3d::Create();
+	Mottiobj->SetModel(Mottimodel);
 }
 
 //初期化
@@ -27,7 +31,7 @@ void LeftHand::Initialize(bool shadow) {
 	enemyobj_->SetModel(model);
 	enemyobj_->SetPosition(pos);
 	enemyobj_->SetRotation(rot);
-	enemyobj_->SetScale({ 0.8f,0.8f,0.8f });
+	enemyobj_->SetScale({ 1.2f,1.2f,1.2f });
 	enemyobj.reset(enemyobj_);
 	//影(このオブジェクトでは使わない)
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
@@ -103,7 +107,7 @@ void LeftHand::Spec() {
 	//行動開始
 	if (active) {
 		//衝撃は
-			//衝撃波
+		//衝撃波
 		if (action == 0) {
 			hitradius = 0.6f;
 			if (AttackC < 5) {
@@ -131,8 +135,8 @@ void LeftHand::Spec() {
 						frame += 0.002f;
 					}
 					else {
-					pat++;
-					frame = 0.0f;
+						pat++;
+						frame = 0.0f;
 					}
 					pos.y = Ease(In, Cubic, frame, pos.y, AfterPos.y);
 				case 3:
@@ -286,7 +290,7 @@ void LeftHand::Spec() {
 		}
 		//プレイヤーを挟む処理
 		else if (action == 1) {
-		hitradius = 1.5f;
+			hitradius = 1.5f;
 			if (AttackC < 3) {
 				switch (pat) {
 				case 1:
@@ -424,7 +428,7 @@ void LeftHand::Spec() {
 
 		//突き刺し攻撃
 		else if (action == 2) {
-		hitradius = 1.5f;
+			hitradius = 1.5f;
 			if (AttackC < 3) {
 				switch (pat) {
 				case 1:
@@ -439,7 +443,7 @@ void LeftHand::Spec() {
 					}
 					else {
 						Afterrot.y = 90.0f;
-						Afterrot.z = 180;
+						Afterrot.z = 180.0f;
 						stateNumber = Open;
 						frame = 0;
 						pat++;
@@ -597,7 +601,282 @@ void LeftHand::Spec() {
 			rot.y = Ease(In, Quint, 0.7f, rot.y, Afterrot.y);
 			enemyobj->SetRotation(rot);
 		}
-		
+		//投げる攻撃
+		else if (action == 3) {
+			hitradius = 0.6f;
+			if (pat == 1) {
+				AfterPos.y = 15.0f;
+				if (pos.y >= 14) {
+					stateNumber = Open;
+				}
+				if (frame < 0.45f) {
+					frame += 0.002f;
+				}
+				else {
+					frame = 0;
+					pat++;
+				}
+				pos.y = Ease(In, Cubic, frame, pos.y, AfterPos.y);
+			}
+			else if (pat == 2) {
+				AfterPos.y = 1.0f;
+				if (frame < 0.45f) {
+					frame += 0.002f;
+				}
+				else {
+					frame = 0;
+					pat++;
+				}
+				pos.y = Ease(In, Cubic, frame, pos.y, AfterPos.y);
+			}
+
+			else if (pat == 3) {
+				AfterPos = {
+				-19,
+				pos.y,
+				21
+				};
+				if (frame < 1.0f) {
+					frame += 0.01f;
+				}
+				else {
+					frame = 0;
+					pat++;
+				}
+
+				pos = {
+				Ease(In,Cubic,frame,pos.x,AfterPos.x),
+				0,
+				Ease(In,Cubic,frame,pos.z,AfterPos.z),
+				};
+			}
+			else if (pat == 4) {
+				Afterrot = {
+					rot.x,
+					90,
+					90
+				};
+
+				if (frame < 1.0f) {
+					frame += 0.01f;
+				}
+				else {
+					frame = 0;
+					pat++;
+				}
+
+				rot = {
+				Ease(In,Cubic,frame,rot.x,Afterrot.x),
+				Ease(In,Cubic,frame,rot.y,Afterrot.y),
+				Ease(In,Cubic,frame,rot.z,Afterrot.z),
+				};
+			}
+			else if (pat == 5) {
+				Afterrot = {
+					rot.x,
+					90,
+					-90
+				};
+
+				if (frame < 1.0f) {
+					frame += 0.01f;
+				}
+				else {
+					frame = 0;
+					pat++;
+				}
+
+				rot = {
+				Ease(In,Cubic,frame,rot.x,Afterrot.x),
+				Ease(In,Cubic,frame,rot.y,Afterrot.y),
+				Ease(In,Cubic,frame,rot.z,Afterrot.z),
+				};
+			}
+			//else if (pat == 3) {
+			//	Afterrot.x = 0.0f;
+			//	if (!stun) {
+			//		//3回突進する
+			//		if (AttackC < 5) {
+			//			MoveCount++;
+			//		}
+			//		//左足が戻ったら元の位置に戻る
+			//		else {
+			//			AfterPos = {
+			//			10,
+			//			0,
+			//			0
+			//			};
+			//			Afterrot.y = 270;
+			//			if (frame < 1.0f) {
+			//				frame += 0.01f;
+			//			}
+			//			else {
+			//				frame = 0;
+			//				AttackC = 0;
+			//				AttackCount = 0;
+			//				active = false;
+			//			}
+
+			//			pos = {
+			//			Ease(In,Cubic,frame,pos.x,AfterPos.x),
+			//			0,
+			//			Ease(In,Cubic,frame,pos.z,AfterPos.z),
+			//			};
+			//		}
+			//		//プレイヤーーの位置に向かって回転する
+			//		if (MoveCount == 80) {
+			//			XMFLOAT3 position{};
+			//			position.x = (player->GetPosition().x - pos.x);
+			//			position.z = (player->GetPosition().z - pos.z);
+			//			Afterrot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 270;// *(XM_PI / 180.0f);
+			//		}
+			//		//プレイヤーの位置をロックオンさせる
+			//		if (MoveCount == 100) {
+			//			double sb, sbx, sbz;
+			//			if (!Attack) {
+			//				hitpoint = HitNot;
+			//				sbx = player->GetPosition().x - pos.x;
+			//				sbz = player->GetPosition().z - pos.z;
+
+			//				sb = sqrt(sbx * sbx + sbz * sbz);
+			//				speedX = sbx / sb * 0.5;
+			//				speedZ = sbz / sb * 0.5;
+			//				Attack = true;
+			//			}
+			//		}
+			//		else {
+			//			for (std::size_t i = 0; i < Stuntexture.size(); i++) {
+			//				StunSpeed[i] += 2.0f;
+			//			}
+			//			if (stunTimer < 200) {
+			//				stunTimer++;
+			//			}
+			//			else {
+			//				stunTimer = 0;
+			//				stun = false;
+			//			}
+			//			////スタン時のぴよぴよ
+			//			//for (std::size_t i = 0; i < Stuntexture.size(); i++) {
+			//			//	Stunradius[i] = StunSpeed[i] * PI / 180.0f;
+			//			//	StunCircleX[i] = cosf(Stunradius[i]) * Stunscale[i];
+			//			//	StunCircleZ[i] = sinf(Stunradius[i]) * Stunscale[i];
+			//			//	StunPos[i].x = StunCircleX[i] + pos.x;
+			//			//	StunPos[i].z = StunCircleZ[i] + pos.z;
+			//			//	StunPos[i].y = pos.y + 2;
+			//			//	Stuntexture[i]->SetPosition(StunPos[i]);
+			//			//	Stuntexture[i]->Update();
+			//			//}
+			//		}
+
+			//		if (Attack) {
+			//			//プレイヤーにスピード加算
+			//			pos.x += (float)speedX;
+			//			pos.z += (float)speedZ;
+
+			//			//敵の位置が壁まで行ったら戻る
+			//			if (pos.x >= x_max) {
+			//				hitpoint = HitRight;
+			//				Deadbound.y = 0.5f;
+			//				Deadbound.x = 0.2f;
+			//				speedX = 0.0f;
+			//				speedZ = 0.0f;
+			//			}
+			//			else if (pos.x <= x_min) {
+			//				hitpoint = HitLeft;
+			//				Deadbound.y = 0.5f;
+			//				Deadbound.x = 0.2f;
+			//				speedX = 0.0f;
+			//				speedZ = 0.0f;
+			//			}
+			//			else if (pos.z >= z_max) {
+			//				hitpoint = HitUp;
+			//				Deadbound.y = 0.5f;
+			//				Deadbound.z = 0.2f;
+			//				speedX = 0.0f;
+			//				speedZ = 0.0f;
+			//			}
+			//			else if (pos.z <= z_min) {
+			//				hitpoint = HitDown;
+			//				Deadbound.y = 0.5f;
+			//				Deadbound.z = 0.2f;
+			//				speedX = 0.0f;
+			//				speedZ = 0.0f;
+			//			}
+
+			//			//跳ねるような感じで戻る(戻りきったら攻撃回数が加算される)
+			//			if (hitpoint == HitRight) {
+			//				Deadbound.y -= 0.02f;
+			//				pos.y += Deadbound.y;
+			//				if (pos.y > 1.0f) {
+			//					pos.x -= Deadbound.x;
+			//				}
+			//				else {
+			//					pos.y = 1.0f;
+			//				}
+
+			//				if (pos.y == 1.0f) {
+			//					MoveCount = 0;
+			//					Attack = false;
+			//					hitpoint = HitNot;
+			//					AttackC++;
+			//				}
+			//			}
+			//			else if (hitpoint == HitLeft) {
+			//				Deadbound.y -= 0.02f;
+			//				pos.y += Deadbound.y;
+			//				if (pos.y > 1.0f) {
+			//					pos.x += Deadbound.x;
+			//				}
+			//				else {
+			//					pos.y = 1.0f;
+			//				}
+
+			//				if (pos.y == 1.0f) {
+			//					MoveCount = 0;
+			//					Attack = false;
+			//					hitpoint = HitNot;
+			//					AttackC++;
+			//				}
+			//			}
+			//			else if (hitpoint == HitUp) {
+			//				Deadbound.y -= 0.02f;
+			//				pos.y += Deadbound.y;
+			//				if (pos.y > 1.0f) {
+			//					pos.z -= Deadbound.z;
+			//				}
+			//				else {
+			//					pos.y = 1.0f;
+			//				}
+
+			//				if (pos.y == 1.0f) {
+			//					MoveCount = 0;
+			//					Attack = false;
+			//					hitpoint = HitNot;
+			//					AttackC++;
+			//				}
+			//			}
+			//			else if (hitpoint == HitDown) {
+			//				Deadbound.y -= 0.02f;
+			//				pos.y += Deadbound.y;
+			//				if (pos.y > 1.0f) {
+			//					pos.z += Deadbound.z;
+			//				}
+			//				else {
+			//					pos.y = 1.0f;
+			//				}
+
+			//				if (pos.y == 1.0f) {
+			//					MoveCount = 0;
+			//					Attack = false;
+			//					hitpoint = HitNot;
+			//					AttackC++;
+			//				}
+			//			}
+			//		}
+			//	}
+			//}
+			enemyobj->SetPosition(pos);
+		}
 	}
 	rot.y = Ease(In, Quint, 0.7f, rot.y, Afterrot.y);
 	rot.x = Ease(In, Quint, 0.7f, rot.x, Afterrot.x);

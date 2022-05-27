@@ -10,6 +10,10 @@ using namespace DirectX;
 RightHand::RightHand() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::RightHand_Open);
 	hand_closemodel = ModelManager::GetIns()->GetModel(ModelManager::LeftHand_Close);
+	Mottimodel = ModelManager::GetIns()->GetModel(ModelManager::SiroMotti);
+	Mottiobj = new Object3d();
+	Mottiobj = Object3d::Create();
+	Mottiobj->SetModel(Mottimodel);
 }
 
 //‰Šú‰»
@@ -634,6 +638,151 @@ void RightHand::Spec() {
 				}
 			}
 			enemyobj->SetPosition(pos);
+		}//“Š‚°‚éUŒ‚
+		else if (action == 3) {
+		hitradius = 0.6f;
+		if (AttackC < 3) {
+			switch (pat) {
+			case 1:
+				AfterPos = {
+				pos.x,
+				15.0f,
+				pos.z
+				};
+				if (frame < 0.45f) {
+					frame += 0.002f;
+					break;
+				}
+				else {
+					stateNumber = Open;
+					frame = 0;
+					pat++;
+					break;
+				}
+			case 2:
+				AfterPos.y = 0.0f;
+				if (frame < 0.45f) {
+					frame += 0.002f;
+				}
+				else {
+					frame = 0;
+					pat++;
+				}
+				pos.y = Ease(In, Cubic, frame, pos.y, AfterPos.y);
+			case 3:
+				AfterPos = {
+				19,
+				pos.y,
+				21
+				};
+				if (frame < 1.0f) {
+					frame += 0.01f;
+					break;
+				}
+				else {
+					frame = 0;
+					pat++;
+					break;
+				}
+			case 4:
+				Afterrot.y = 90.0f;
+				Afterrot.z = 180;
+				if (frame < 1.0f) {
+					frame += 0.01f;
+					break;
+				}
+				else {
+					frame = 0;
+					pat++;
+					break;
+				}
+			case 5:
+				Afterrot.y = 90.0f;
+				Afterrot.z = 0;
+				if (frame < 1.0f) {
+					frame += 0.01f;
+					break;
+				}
+				else {
+					frame = 0;
+					pat = 4;
+					break;
+				}
+			default:
+				AttackC = 0;
+				pat = 1;
+				break;
+			}
+		}
+		else {
+			switch (pat) {
+			case 1:
+				AfterPos = {
+				pos.x,
+				3.0f,
+				pos.z
+				};
+				if (frame < 1.0f) {
+					frame += 0.01f;
+					break;
+				}
+				else {
+					frame = 0;
+					pat++;
+					break;
+				}
+			case 2:
+				AfterPos = {
+				0,
+				3.0f,
+				0
+				};
+				if (frame < 1.0f) {
+					frame += 0.01f;
+					break;
+				}
+				else {
+					frame = 0;
+					pat++;
+					break;
+				}
+			case 3:
+				Afterrot = {
+					0,
+					90,
+					0
+				};
+				AfterPos = {
+				-10,
+				0,
+				0
+				};
+
+				if (frame < 1.0f) {
+					frame += 0.01f;
+					break;
+				}
+				else {
+					frame = 0;
+					pat = 0;
+					AttackC = 0;
+					AttackCount = 0;
+					Effect = true;
+					active = false;
+					break;
+				}
+			default:
+				break;
+			}
+		}
+		pos = {
+Ease(In,Cubic,frame,pos.x,AfterPos.x),
+Ease(In,Cubic,frame,pos.y,AfterPos.y),
+	Ease(In,Cubic,frame,pos.z,AfterPos.z)
+		};
+		enemyobj->SetPosition(pos);
+		rot.y = Ease(In, Quint, 0.7f, rot.y, Afterrot.y);
+		enemyobj->SetRotation(rot);
 		}
 	}
 
