@@ -259,7 +259,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 					BlackColor.w = 1.0f;
 					appearanceNumber++;
 					//個々の音変更案件
-					Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
+					Audio::GetInstance()->PlayWave("Resources/Sound/accident.wav", 0.4f);
 				}
 			}
 
