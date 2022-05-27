@@ -372,7 +372,8 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 			righthand->Update();
 			lefthand->SetAct(human);
 			righthand->SetAct(human);
-
+			righthand->collideMottiPlayer(player);
+			lefthand->collideMottiPlayer(player);
 			if (righthand->GetHP() <= 0 && DethRight <= 50) {
 				DethRight++;
 			}

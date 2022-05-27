@@ -14,6 +14,7 @@ public:
 	void End(int Timer) override;//Œ‚”j
 	void specialDraw() override;//‚±‚ÌƒV[ƒ“‚Ì‚İ‚Ì•`‰æ
 	void SetAct(Human* human);
+	bool collideMottiPlayer(Player* player);
 private:
 
 	enum Hit {
