@@ -40,7 +40,6 @@ private:
 	};
 	Sprite* HpGauge = nullptr;
 	Sprite* Mark[3]{};
-	unique_ptr<Sprite> SPD=nullptr;
 	enum  {
 		energy,
 		pinch,
@@ -94,6 +93,10 @@ private:
 	float convert;
 	int nowBar = 0;
 	bool isInvisible=false;
+	unique_ptr<Sprite> SPD{};
+	bool slive = false;
+	XMFLOAT2 speedP{ 45.0f,576.0f };
+ 	void SpeedDown();
 private:
 	void SeachBoss();
 	void SeachBoss2();

@@ -68,7 +68,6 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	SPD_->SetScale(1.3f);
 	SPD.reset(SPD_);
 
-
 	//背景スプライト生成
 	Life = Sprite::Create(ImageManager::life, { 0.0f,0.0f });
 	Life->SetPosition({ 20.0f,620.0f });
@@ -150,6 +149,7 @@ void UI::Update() {
 		};
 		PlaHp[now]->SetSize(plaPos[0]);
 		PlaHp[damage]->SetSize(plaPos[1]);
+		SpeedDown();
 	}
 	if (strong != player->GetArmWeight()) {
 		if (!Up) {
@@ -328,7 +328,9 @@ const void UI::Draw() {
 		} else {
 			Mark[weak]->Draw();
 		}
-		SPD->Draw();
+		if (slive) {
+			SPD->Draw();
+		}
 		PlaHp[max]->Draw();
 		PlaHp[damage]->Draw();
 		PlaHp[now]->Draw();
@@ -434,6 +436,30 @@ void UI::EaseScale() {
 		number[i][power[i]]->SetScale(vel);
 	}
 }
+
+void UI::SpeedDown() {
+	XMFLOAT2 randSPD{};
+	if (Input::GetInstance()->PushButton(Input::GetInstance()->Button_A)) {
+		if (!player->GetAttackFlag()) {
+			if (slive == false) {
+				slive = true;
+			}
+		}
+	} else {
+		if (slive) {
+			slive = false;
+		}
+
+	}
+	if (slive == true) {
+		speedP.y++;
+		if (speedP.y>690) {
+			slive = false;
+			speedP = {45.0f,570.0f};
+		}
+	}
+	SPD->SetPosition(speedP);
+	}
 
 void UI::SeachBoss() {
 	XMFLOAT3 pla = player->GetPosition();
