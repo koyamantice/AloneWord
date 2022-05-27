@@ -158,6 +158,9 @@ void RightShose::Spec() {
 				}
 				if (stunTimer < 200) {
 					stunTimer++;
+					if (stunTimer % 80 == 0) {
+						Audio::GetInstance()->PlayWave("Resources/Sound/piyopiyo.wav", 0.4f);
+					}
 				}
 				else {
 					stunTimer = 0;
@@ -581,7 +584,9 @@ void RightShose::SetAct(Foot* foot) {
 bool RightShose::HitShose(LeftShose* leftshose) {
 	XMFLOAT3 leftpos = leftshose->GetPosition();
 	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 1.5f, leftpos.x, leftpos.y, leftpos.z, 1.5f) && (action % 2) == 0
-		&& (leftshose->GetHP() > 0)) {
+		&& (leftshose->GetHP() > 0) && this->stun == false) {
+		//個々の音変更案件
+		Audio::GetInstance()->PlayWave("Resources/Sound/accident.wav", 0.4f);
 		this->stun = true;
 		leftshose->SetStun(true);
 		if (pos.z >= leftpos.z) {
