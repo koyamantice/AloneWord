@@ -744,7 +744,6 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 	}
 	else {
 		Sprite::PreDraw();
-
 		BlackFilter->Draw();
 		GameOverSprite->Draw();
 		Texture::PreDraw();

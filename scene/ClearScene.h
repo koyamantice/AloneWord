@@ -16,5 +16,8 @@ public:
 
 private://ƒƒ“ƒo•Ï”
 	Sprite* sprite = { nullptr };
+	Player* player = nullptr;
+	DebugCamera* camera = { nullptr };
+	int ClearTimer = 0;
 };
 

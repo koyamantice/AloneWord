@@ -848,6 +848,30 @@ void Player::End(int Timer) {
 	no_move_object1->Update();
 }
 
+//ゲームクリア時
+void Player::Clear(int Timer) {
+	XMFLOAT3 scale = { 0.007f,0.007f,0.007f };
+	if (Timer == 1) {
+		position = { 0.0f,0.0f,0.0f };
+		rot = { 0.0f,270.0f,0.0f };
+	}
+
+	if (Timer >= 2) {
+		move_count = 0;
+		stop_count++;
+	}
+
+	move_object1->SetScale(plasca);
+	//move_object1->SetPosition(pos);
+	move_object1->SetRotation(rot);
+	no_move_object1->SetScale(plasca);
+	no_move_object1->SetRotation(rot);
+
+	move_object1->Update();
+	no_move_object1->Update();
+
+}
+
 //チャージ時のエフェクトの動き(吸収)
 void Player::ChargeEffectMove() {
 	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {

@@ -536,7 +536,7 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 				save->FifthSave();
 			}
 			//Audio::GetInstance()->LoopWave(4, 0.2f);
-			SceneManager::GetInstance()->ChangeScene("StageSelect");
+			SceneManager::GetInstance()->ChangeScene("CLEAR");
 		}
 		camera->SetTarget(cameratargetPos);
 		camera->SetEye(cameraPos);

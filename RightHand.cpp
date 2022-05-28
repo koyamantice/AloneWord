@@ -1096,8 +1096,8 @@ void RightHand::End(int Timer) {
 		}
 
 	case 2:
-		if (rot.x >= -90) {
-			rot.x -= 2.0f;
+		if (rot.x <= 90) {
+			rot.x += 2.0f;
 		}
 
 		//case 2:
@@ -1130,7 +1130,9 @@ void RightHand::End(int Timer) {
 
 	enemyobj->SetScale(scale);
 	enemyobj->SetPosition(pos);
+	//hand_closeobj->SetPosition(pos);
 	enemyobj->SetRotation(rot);
+	//hand_closeobj->SetRotation(rot);
 }
 //“Á•Ê‚È•`‰æ(¡‰ñ‚Ìê‡‚Ò‚æ‚Ò‚æ)
 void RightHand::specialDraw() {

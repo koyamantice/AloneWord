@@ -70,23 +70,23 @@ void InterBoss::Update() {
 //描画
 void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
-	//ImGui::Begin("test");
-	//ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
-	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
-	//ImGui::SliderFloat("rot.z", &rot.z, 360, -360);
-	////ImGui::Text("pat::%d", pat);
-	////ImGui::Text("AttackC:: %d", AttackC);
-	//ImGui::SliderFloat("HP", &BossHP, 40, 0);
-	//ImGui::SliderFloat("Defense", &Defense, 2, 0);
-	///*ImGui::Text("AttackCount::%d", AttackCount);
-	//ImGui::Text("action::%d", action);
-	//ImGui::Text("active::%d", active);
-	//
-	//*/
-	///*ImGui::Text("shadow::%d", shadow);
-	//ImGui::SliderFloat("hit", &hitradius, 1, 0);*/
+	ImGui::Begin("test");
+	ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
+	ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	ImGui::SliderFloat("rot.z", &rot.z, 360, -360);
+	//ImGui::Text("pat::%d", pat);
+	//ImGui::Text("AttackC:: %d", AttackC);
+	ImGui::SliderFloat("HP", &BossHP, 40, 0);
+	ImGui::SliderFloat("Defense", &Defense, 2, 0);
+	/*ImGui::Text("AttackCount::%d", AttackCount);
+	ImGui::Text("action::%d", action);
+	ImGui::Text("active::%d", active);
+	
+	*/
+	/*ImGui::Text("shadow::%d", shadow);
+	ImGui::SliderFloat("hit", &hitradius, 1, 0);*/
 
-	//ImGui::End();
+	ImGui::End();
 	//if (BossHP >= 1) {
 		Object3d::PreDraw();
 		enemyobj->Draw();

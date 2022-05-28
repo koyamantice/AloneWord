@@ -28,6 +28,7 @@ public:
 	void Pause(const int& Timer);
 	void Begin();
 	void End(int Timer);
+	void Clear(int Timer);
 	void gameover(int Timer);
 	void gameoverMovie(int Timer);
 private:
