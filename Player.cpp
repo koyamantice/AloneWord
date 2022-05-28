@@ -767,7 +767,7 @@ void Player::End(int Timer) {
 		}
 	}
 
-	if (Timer == 260) {
+	if (Timer == 150) {
 		position = { 0.0f,0.0f,-10.0f };
 		rot = { 0.0f,90.0f,0.0f };
 	}
