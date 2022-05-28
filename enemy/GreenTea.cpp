@@ -41,6 +41,8 @@ void GreenTea::Initialize(bool shadow) {
 	InitCommon();
 	//当たり判定の大きさ
 	hitradius = 0.6f;
+	//防御力
+	Defense = 1.1f;
 }
 //開放
 void GreenTea::Finalize() {
@@ -97,7 +99,7 @@ void GreenTea::Spec() {
 			}
 		}
 		else{
-			if (count % 50 == 0) {
+			if (count % 80 == 0) {
 				for (int i = 0; i < 50; i++) {
 					if (!hotWater[i]->GetIsAlive()) {
 						hotWater[i]->Follow(pos);

@@ -47,6 +47,8 @@ void RightHand::Initialize(bool shadow) {
 	InitCommon();
 	//“–‚½‚è”»’è‚Ì‘å‚«‚³
 	hitradius = 0.6f;
+	//–hŒä—Í
+	Defense = 1.5f;
 }
 
 //ŠJ•ú

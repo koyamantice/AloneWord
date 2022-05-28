@@ -28,7 +28,7 @@ private:
 		Open,
 		Close,
 	};
-	int stateNumber = 1;
+	int stateNumber = 0;
 	Model* hand_closemodel = nullptr;
 	double speedX = 0.0f;
 	double speedZ = 0.0f;

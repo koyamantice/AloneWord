@@ -14,7 +14,7 @@ public:
 
 public:
 	int AttackCount = 0;
-	int action = 3;
+	int action = 2;
 	bool active = false;
 	bool act = false;
 	LeftHand* lefthand = nullptr;

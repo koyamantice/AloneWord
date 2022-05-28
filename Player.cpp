@@ -117,9 +117,8 @@ void Player::Update() {
 
 	if (bubble) {
 		bubbleC++;
-		if (bubbleC > 100) {
-			bubble = false;
-			bubbleC = 0;
+		if (bubbleC == 1) {
+			Interval = 100;
 		}
 	}
 
@@ -303,6 +302,8 @@ void Player::Update() {
 	if (FlashCount == 4) {
 		FlashCount = 0;
 		Interval = 0;
+		bubble = false;
+		bubbleC = 0;
 	}
 
 	// 落下処理

@@ -60,6 +60,8 @@ void RightShose::Initialize(bool shadow) {
 	InitCommon();
 	//当たり判定の大きさ
 	hitradius = 0.6f;
+	//防御力
+	Defense = 1.2f;
 }
 
 //開放
