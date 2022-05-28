@@ -27,7 +27,7 @@ public:
 	void Draw(DirectXCommon* dxCommon);
 	void Pause(const int& Timer);
 	void Begin();
-	void End();
+	void End(int Timer);
 	void gameover(int Timer);
 	void gameoverMovie(int Timer);
 private:

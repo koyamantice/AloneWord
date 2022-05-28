@@ -384,7 +384,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 		if (end) {
 			EndTimer++;
 			bossenemy->EndMovie(EndTimer);
-			player->End();
+			player->End(EndTimer);
 			if (EndNumber == 0) {
 				cameraPos.x = player->GetPosition().x;
 				cameraPos.y = player->GetPosition().y + distanceY;
