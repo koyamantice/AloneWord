@@ -73,6 +73,16 @@ public:
 		hit,
 		SPD,
 		StageClear,
+		endtext1,
+		endtext2,
+		endtext3,
+		endtext4,
+		endtext5,
+		endtext6,
+		endtext7,
+		endtext8,
+		endtext9,
+		endtext10,
 	};
 	enum tex2dName {
 	enemy,//Texture::LoadTexture(0, L"Resources/2d/enemy.png");

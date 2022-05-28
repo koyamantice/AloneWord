@@ -66,6 +66,17 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(hit, L"Resources/2d/particleD.png");
 	Sprite::LoadTexture(SPD, L"Resources/2d/SPD.png");
 	Sprite::LoadTexture(StageClear, L"Resources/2d/ClearMark.png");
+
+	Sprite::LoadTexture(endtext1, L"Resources/2d/endText/endText1.png");
+	Sprite::LoadTexture(endtext2, L"Resources/2d/endText/endText2.png");
+	Sprite::LoadTexture(endtext3, L"Resources/2d/endText/endText3.png");
+	Sprite::LoadTexture(endtext4, L"Resources/2d/endText/endText4.png");
+	Sprite::LoadTexture(endtext5, L"Resources/2d/endText/endText5.png");
+	Sprite::LoadTexture(endtext6, L"Resources/2d/endText/endText6.png");
+	Sprite::LoadTexture(endtext7, L"Resources/2d/endText/endText7.png");
+	Sprite::LoadTexture(endtext8, L"Resources/2d/endText/endText8.png");
+	Sprite::LoadTexture(endtext9, L"Resources/2d/endText/endText9.png");
+	Sprite::LoadTexture(endtext10, L"Resources/2d/endText/endText10.png");
 }
 
 void ImageManager::LoadTex2D() {
