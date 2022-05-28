@@ -31,6 +31,7 @@ void ModelManager::Initialize() {
 	LoadModel(RightHand_Close, "RightHandClose");
 	LoadModel(Motti_Bullet, "Nagemoti");
 	LoadFBXModel(MottiMove, "Motti_moveF");
+	LoadFBXModel(Motti_No_Move, "Motti_idolF");
 }
 
 void ModelManager::LoadModel(const ModelName modelName, std::string fileName) {

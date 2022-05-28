@@ -147,7 +147,9 @@ private:
 	unique_ptr<Texture> Charge;
 	//動いてるときのFBX
 	FBXModel* move_model1 = nullptr;
+	FBXModel* no_move_model1 = nullptr;
 	unique_ptr<FBXObject3d> move_object1 = nullptr;
+	unique_ptr<FBXObject3d> no_move_object1 = nullptr;
 
 	XMFLOAT3 plasca = { 0.007f,0.007f,0.007f };
 	XMFLOAT3 Aftersca = { 0,0,0 };
@@ -222,6 +224,7 @@ private:
 	bool pause = false;
 	int count = 0;
 	int move_count = 0;
+	int stop_count = 0;
 	//チャージ攻撃のための変数
 	float RotPower = 10.0f;
 	int chargeTimer = 0;
