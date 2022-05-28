@@ -224,6 +224,9 @@ protected:
 	//倒したあとのシーン
 	int EndMove = 0;
 	float endframe = 0.0f;
+	//倒したあとのシーン
+	int rollMove = 0;
+	float rollframe = 0.0f;
 	//靴専用のテクスチャ用変数
 	array<Texture*,4> Stuntexture;
 	array<float, 4> Stunradius;

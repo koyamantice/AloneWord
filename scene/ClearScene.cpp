@@ -108,7 +108,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 	player->Clear(ClearTimer);
 	if (!endroll) {
 		if (ClearTimer >= 200) {
-			nowTimer += 100;
+			nowTimer += 10;
 			switch (nowText) {
 			case endText1:
 				if (nowTimer < 61) {
@@ -316,13 +316,13 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 	//エンドロール突入
 	else {
 		rollTimer++;
-		fork->Roll(rollTimer);
-		tea->Roll(rollTimer);
-		leftshose->Roll(rollTimer);
-		rightshose->Roll(rollTimer);
-		pastel->Roll(rollTimer);
-		lefthand->Roll(rollTimer);
-		lefthand->Roll(rollTimer);
+		fork->RollMovie(rollTimer);
+		tea->RollMovie(rollTimer);
+		leftshose->RollMovie(rollTimer);
+		rightshose->RollMovie(rollTimer);
+		pastel->RollMovie(rollTimer);
+		lefthand->RollMovie(rollTimer);
+		righthand->RollMovie(rollTimer);
 		if (rollTimer >= 500) {
 			endTimer++;
 			switch (nowendText) {
@@ -580,11 +580,11 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 }
 
 void ClearScene::Draw(DirectXCommon* dxCommon) {
-	//ImGui::Begin("test");
-	//ImGui::Text("rollTimer:%d", rollTimer);
-	//ImGui::Text("endCount:%d", endTimer);
-	//ImGui::SliderFloat("color.w", &endColor.w, 1, 0);
-	//ImGui::End();
+	ImGui::Begin("test");
+	ImGui::Text("rollTimer:%d", rollTimer);
+	ImGui::Text("endCount:%d", endTimer);
+	ImGui::SliderFloat("color.w", &endColor.w, 1, 0);
+	ImGui::End();
 	Sprite::PreDraw();
 	sprite->Draw();
 	comment[nowText]->Draw();
@@ -598,7 +598,7 @@ void ClearScene::Draw(DirectXCommon* dxCommon) {
 	rightshose->Draw();
 	pastel->Draw();
 	lefthand->Draw();
-	lefthand->Draw();
+	righthand->Draw();
 }
 void ClearScene::Finalize() {
 	//３ｄのモデルのデリート

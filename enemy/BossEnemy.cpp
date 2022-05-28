@@ -315,7 +315,28 @@ void BossEnemy::App(int Timer) {
 }
 
 void BossEnemy::Roll(int Timer) {
+	XMFLOAT3 AfterPos{};
+	if (Timer == 1) {
+		pos = { 50.0f,-5.0f,10.0f };
+		frame = 0.0f;
+	}
 
+	if (Timer == 10) {
+		rollMove++;
+	}
+	
+	//導入シーンにおいてフレーム数によって行動を決める
+	switch (rollMove) {
+	case 1:
+		pos.x -= 0.1f;
+	}
+
+	//pos = {
+	//Ease(In,Cubic,frame,pos.x,AfterPos.x),
+	//Ease(In,Cubic,frame,pos.y,AfterPos.y),
+	//Ease(In,Cubic,frame,pos.z,AfterPos.z)
+	//};
+	enemyobj->SetPosition(pos);
 }
 
 void BossEnemy::specialDraw() {

@@ -71,7 +71,6 @@ private://ƒƒ“ƒo•Ï”
 	InterBoss* fork = nullptr;
 	InterBoss* leftshose = nullptr;
 	InterBoss* rightshose = nullptr;
-	InterBoss* leftshose = nullptr;
 	InterBoss* pastel = nullptr;
 	InterBoss* tea = nullptr;
 	InterBoss* lefthand = nullptr;
