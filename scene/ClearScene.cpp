@@ -101,6 +101,7 @@ void ClearScene::Initialize(DirectXCommon* dxCommon) {
 	righthand = new RightHand();
 	righthand->SetPlayer(player);
 	righthand->Initialize();
+	Audio::GetInstance()->PlayWave("Resources/Sound/endBGM.wav", 0.4f);
 }
 
 void ClearScene::Update(DirectXCommon* dxCommon) {

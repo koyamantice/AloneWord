@@ -48,7 +48,7 @@ void BossEnemy::Spec() {
 	//行動を決める
 	if (AttackCount > 180 && pos.y <= 0.1f) {
 		if (!active) {
-			action = (rand() % 2);
+			action = 1;
 			frame = 0;
 			pat = 1;
 			active = true;
@@ -176,6 +176,9 @@ void BossEnemy::Spec() {
 						Afterrot.z = 0;
 						frame = 1.0f;
 						if (coolT < 90) {
+							if (coolT == 1) {
+								Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/noDamage.wav", 0.4f);
+							}
 							coolT++;
 							break;
 						}

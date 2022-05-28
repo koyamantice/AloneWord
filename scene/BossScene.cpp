@@ -238,6 +238,9 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 				Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
 				};
 
+				if (appearanceTimer == 240) {
+					Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/noDamage.wav", 0.4f);
+				}
 				if (appearanceTimer == 300) {
 					frame = 0.0f;
 					appearanceNumber++;
@@ -501,6 +504,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 				};
 
 				if (EndTimer == 750) {
+					Audio::GetInstance()->PlayWave("Resources/Sound/gameClear.wav", 0.4f);
 					frame = 0.0f;
 					EndNumber++;
 				}
@@ -587,7 +591,11 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 			Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 				};
 
+				if (overTimer == 150) {
+					Audio::GetInstance()->PlayWave("Resources/Sound/gameOver.wav", 0.4f);
+				}
 				if (overTimer == 420) {
+					
 					overNumber++;
 				}
 			}
@@ -698,18 +706,18 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 
 //描画
 void BossScene::Draw(DirectXCommon* dxCommon) {
-	//ImGui::Begin("test");
+	ImGui::Begin("test");
 	//ImGui::SliderFloat("frame", &frame, 1, 0);
 	//ImGui::SliderFloat("cameratargetPos.y", &cameratargetPos.y, 20, 0);
 	//ImGui::SliderFloat("cameratargetPos.z", &cameratargetPos.z, 20, 0);
 	//ImGui::SliderFloat("cameraPos.y", &cameraPos.y, 20, 0);
 	//ImGui::SliderFloat("cameraPos.z", &cameraPos.z, 20, 0);
-	////ImGui::SliderFloat("cameratarget.y", &cameratargetPos.y, 20, 0);
-	////ImGui::SliderFloat("frame", &frame, 1, 0);
-	////ImGui::SliderFloat("frame", &frame, 1, 0);
-	//ImGui::Text("moveCount:%d", EndTimer);
-	//ImGui::Text("EndNumber:%d", EndNumber);
-	//ImGui::End();
+	//ImGui::SliderFloat("cameratarget.y", &cameratargetPos.y, 20, 0);
+	//ImGui::SliderFloat("frame", &frame, 1, 0);
+	//ImGui::SliderFloat("frame", &frame, 1, 0);
+	ImGui::Text("appearance:%d", appearanceTimer);
+	ImGui::Text("appearance:%d", appearanceNumber);
+	ImGui::End();
 	//各オブジェクトの描画
 	Object3d::PreDraw();
 	if (!gameover) {

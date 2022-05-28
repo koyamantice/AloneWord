@@ -472,6 +472,7 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			};
 
 			if (EndTimer == 750) {
+				Audio::GetInstance()->PlayWave("Resources/Sound/gameClear.wav", 0.4f);
 				frame = 0.0f;
 				EndNumber++;
 			}
@@ -558,6 +559,9 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 				};
 
+				if (overTimer == 150) {
+					Audio::GetInstance()->PlayWave("Resources/Sound/gameOver.wav", 0.4f);
+				}
 				if (overTimer == 420) {
 					overNumber++;
 				}
