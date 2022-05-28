@@ -29,6 +29,8 @@ Pastel::Pastel() {
 	//‰e(¡‰ñ‚Íg‚¤)
 	texture = Texture::Create(ImageManager::shadow, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	texture->TextureCreate();
+	//–hŒä—Í
+	Defense = 1.4f;
 }
 
 //‰Šú‰»
