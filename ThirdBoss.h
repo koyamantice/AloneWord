@@ -1,6 +1,7 @@
 #pragma once
 #include "SceneManager.h"
 #include "GreenTea.h"
+#include "HotWater.h"
 #include "UI.h"
 #include <array>       // ヘッダファイルインクルード
 

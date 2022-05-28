@@ -234,6 +234,7 @@ void HotWater::AppeaSet(const XMFLOAT3& pos) {
 	vel.z = 0;
 	if (!IsAlive) {
 		IsAlive = true;
+		action = 1;
 	}
 }
 

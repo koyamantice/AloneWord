@@ -622,19 +622,8 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	ImGui::Begin("test");
 	//ImGui::Text("RotCount:%d", bubbleC);
 	//ImGui::SliderFloat("pos.x", &position.x, 50, -50);
-	/*ImGui::SliderFloat("HP", &HP, 10, 0);
-	ImGui::SliderFloat("overframe", &overframe, 50, -50);*/
-	/*ImGui::SliderFloat("boundpower.x %d", &boundpower[0].x, 50, -50);
-	
-	ImGui::SliderFloat("chargepos.x %d", &chargepos[0].x, 50, -50);*/
-	/*ImGui::Text("moveCount:%d", move_count);
-	;*/
-	//ImGui::SliderFloat("chargesca.x %d", &chargesca[0].x, 50, -50);
-	/*ImGui::SliderFloat("position.x", &position.x, 50, -50);
-	ImGui::SliderFloat("position.y", &position.y, 50, -50);
-	ImGui::SliderFloat("position.z", &position.z, 50, -50);*/
-	ImGui::Text("moveCount:%d", move_count);
-	ImGui::Text("stopCount:%d", stop_count);
+	ImGui::Text("moveCount2:%d", move_count);
+	ImGui::Text("stopCount2:%d", stop_count);
 	ImGui::End();
 	Texture::PreDraw();
 	if (chargeTimer!=0&&!AttackFlag && HP > 0) {
@@ -796,7 +785,10 @@ void Player::Begin() {
 	object3d->SetRotation(rot);
 	//パーティクル発生
 	BirthParticle();
-	
+	stop_count++;
+	if (stop_count == 1) {
+		no_move_object1->PlayAnimation();
+	}
 	move_object1->SetPosition(position);
 	move_object1->SetRotation(rot);
 	no_move_object1->SetPosition(position);
@@ -829,6 +821,15 @@ void Player::End(int Timer) {
 		position = { 0.0f,0.0f,-10.0f };
 		rot = { 0.0f,90.0f,0.0f };
 	}
+
+	if (Timer >= 150) {
+		move_count = 0;
+		stop_count++;
+	}
+
+	if (Timer == 400) {
+		no_move_object1->PlayAnimation();
+	}
 	// ワールド行列更新
 	UpdateWorldMatrix();
 
@@ -845,7 +846,7 @@ void Player::End(int Timer) {
 	move_object1->Update();
 	no_move_object1->SetPosition(position);
 	no_move_object1->SetRotation(rot);
-	no_move_object1->StopAnimation();
+	//no_move_object1->StopAnimation();
 	no_move_object1->Update();
 }
 
