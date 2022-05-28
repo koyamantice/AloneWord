@@ -123,9 +123,9 @@ void FifthBoss::Initialize(DirectXCommon* dxCommon) {
 		enemy[i]->SetLimit({ 22.0f,-17.0f, 21.0f,-20.5f });
 	}
 
-	cameraPos.x = player->GetPosition().x;
-	cameraPos.y = player->GetPosition().y + distanceY;
-	cameraPos.z = player->GetPosition().z - distanceZ;
+	cameraPos.x = 5;
+	cameraPos.y = 5;
+	cameraPos.z = 15;
 	camera->SetTarget(player->GetPosition());
 	camera->SetEye(cameraPos);
 	ui = new UI(player, lefthand, righthand);
@@ -199,83 +199,88 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 				Skip = true;
 			}
 
-			if (BlackColor.w >= 0.0f && appearanceNumber == 0) {
+			player->Begin();
+			lefthand->Begin();
+			righthand->Begin();
+			righthand->AppeaMovie(appearanceTimer);
+			lefthand->AppeaMovie(appearanceTimer);
+			if (BlackColor.w >= 0.0f) {
 				BlackColor.w -= 0.005f;
 				frame = 0.0f;
 			}
 			else {
 				appearanceTimer++;
 			}
-			player->Begin();
-			lefthand->Begin();
-			righthand->Begin();
-			righthand->AppeaMovie(appearanceTimer);
-			lefthand->AppeaMovie(appearanceTimer);
-			//カメラの位置をそれぞれ変更していく
+
+			//カメラの位置をそれぞれを変える
 			if (appearanceNumber == 0) {
-				cameraPos.x = righthand->GetPosition().x + 5;
-				cameraPos.y = righthand->GetPosition().y + 2;
-				cameraPos.z = righthand->GetPosition().z - 3;
-				cameratargetPos = righthand->GetPosition();
-
-				if (appearanceTimer == 50) {
-					appearanceNumber++;
+				if (appearanceTimer == 1) {
+					cameraPos.x = 5;
+					cameraPos.y = 5;
+					cameraPos.z = 15;
+					camera->SetTarget(player->GetPosition());
 				}
-			}
 
-			else if (appearanceNumber == 1) {
-				cameraPos.x = lefthand->GetPosition().x - 5;
-				cameraPos.y = lefthand->GetPosition().y + 2;
-				cameraPos.z = lefthand->GetPosition().z - 3;
-				cameratargetPos = righthand->GetPosition();
-
-				if (appearanceTimer == 100) {
-					appearanceNumber++;
+				else if (appearanceTimer == 20) {
+					Aftereyepos = {
+						-5,
+						5,
+						15
+					};
 				}
-			}
 
-			else if (appearanceNumber == 2) {
-				cameraPos.x = player->GetPosition().x;
-				cameraPos.y = player->GetPosition().y + 3;
-				cameraPos.z = player->GetPosition().z - 8;
-				cameratargetPos = { 0.0f,2.0f,0.0 };
-
-				if (appearanceTimer == 230) {
-					BlackColor.w = 1.0f;
-					appearanceNumber++;
-					//個々の音変更案件
-					Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
+				if (frame < 1.0f) {
+					frame += 0.002f;
 				}
-			}
+				else {
+					frame = 1.0f;
+				}
 
-			else if (appearanceNumber == 3) {
+				cameraPos = {
+				Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+				Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+				Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+				};
+
 				if (appearanceTimer == 300) {
-					BlackColor.w = 0.0f;
-				}
-
-				if (appearanceTimer == 350) {
+					frame = 0.0f;
 					appearanceNumber++;
 				}
 			}
+			else if (appearanceNumber == 1) {
+				if (appearanceTimer == 301) {
+					cameraPos.x = player->GetPosition().x - 3,
+					cameraPos.y = player->GetPosition().y + 2,
+					cameraPos.z = player->GetPosition().z - 4,
+					camera->SetTarget({0.0f,5.0f,0.0f});
+				}
 
-			else if (appearanceNumber == 4) {
-				Aftereyepos = {
-					0,
-					1,
-					-7,
-				};
+				if (appearanceTimer == 500) {
+					appearanceNumber++;
+				}
+			}
+			else if (appearanceNumber == 2) {
 
-				Aftertargetpos = {
-					0,
-					1,
-					0
-				};
+				if (appearanceTimer == 501) {
+					Aftereyepos = {
+						0,
+						1,
+						-7,
+					};
+
+					Aftertargetpos = {
+						0,
+						2,
+						0,
+					};
+				}
 
 				if (frame < 1.0f) {
 					frame += 0.015f;
 				}
 				else {
 					frame = 1.0f;
+					//bossenemy->AppeaMovie(appearanceTimer);
 				}
 
 				cameraPos = {
@@ -290,13 +295,13 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 	Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 				};
 
-				if (appearanceTimer == 450) {
-					appearanceNumber++;
+				if (appearanceTimer == 550) {
 					frame = 0.0f;
+					appearanceNumber++;
 				}
 			}
 
-			else if (appearanceNumber == 5) {
+			else if (appearanceNumber == 3) {
 				if (nameframe >= 1.0f) {
 					nameframe = 1.0f;
 				}
@@ -309,12 +314,13 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 				};
 
 				bossName->SetPosition(namePos);
-				if (appearanceTimer == 550) {
+				if (appearanceTimer == 750) {
 					nameframe = 0.0f;
 					appearanceNumber++;
 				}
 			}
-			else if (appearanceNumber == 6) {
+
+			else if (appearanceNumber == 4) {
 				Aftereyepos = {
 					player->GetPosition().x,
 					player->GetPosition().y + distanceY,
@@ -336,6 +342,7 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 					appearanceTimer = 0;
 					appearanceNumber = 0;
 					frame = 0;
+					nameframe = 0.0f;
 				}
 
 				if (nameframe >= 1.0f) {
@@ -352,18 +359,17 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 				bossName->SetPosition(namePos);
 
 				cameraPos = {
-	Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
-	Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
-	Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+			Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+			Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+			Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
 				};
 
 				cameratargetPos = {
-	Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
-	Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
-	Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+				Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+				Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+				Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 				};
 			}
-
 			camera->SetTarget(cameratargetPos);
 			camera->SetEye(cameraPos);
 		}
@@ -677,7 +683,18 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 
 //描画
 void FifthBoss::Draw(DirectXCommon* dxCommon) {
-
+	//ImGui::Begin("test");
+	////ImGui::SliderFloat("frame", &frame, 1, 0);
+	////ImGui::SliderFloat("cameratargetPos.y", &cameratargetPos.y, 20, 0);
+	////ImGui::SliderFloat("cameratargetPos.z", &cameratargetPos.z, 20, 0);
+	////ImGui::SliderFloat("cameraPos.y", &cameraPos.y, 20, 0);
+	////ImGui::SliderFloat("cameraPos.z", &cameraPos.z, 20, 0);
+	////ImGui::SliderFloat("cameratarget.y", &cameratargetPos.y, 20, 0);
+	////ImGui::SliderFloat("frame", &frame, 1, 0);
+	////ImGui::SliderFloat("frame", &frame, 1, 0);
+	//ImGui::Text("appeT:%d", appearanceTimer);
+	//ImGui::Text("appNumber:%d", appearanceNumber);
+	//ImGui::End();
 	//各オブジェクトの描画
 	Object3d::PreDraw();
 	if (!gameover) {
