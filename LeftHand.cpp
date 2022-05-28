@@ -127,7 +127,7 @@ void LeftHand::Spec() {
 				case 3:
 					AfterPos = {
 					pos.x,
-					3.0f,
+					5.0f,
 					pos.z
 					};
 
@@ -923,7 +923,7 @@ void LeftHand::App(int Timer) {
 	XMFLOAT3 AfterRot{};
 	if (Timer == 0) {
 		pos = { -13.0f,0.0f,18.0f };
-		rot = { 0.0f,225.0f,0.0f };
+		rot = { 0.0f,45.0f,0.0f };
 	}
 
 	if (Timer == 150 || Timer == 280 || Timer == 300) {
