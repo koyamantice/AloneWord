@@ -35,6 +35,7 @@ private:
 	bool onGround=false;
 	bool IsAlive = false;
 	bool hit;
+	bool StopFollow = false;
 	int action = 0;
 	int followTimer = 0;
 	
