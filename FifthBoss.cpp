@@ -525,9 +525,9 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 
 		WhiteFilter->SetColor(WhiteColor);
 		if (expandchange->GetTimer() >= 58) {
-			if (!save->GetFirstClear()) {
+			if (!save->GetFifthClear()) {
 				save->ClearSave();
-				save->FirstSave();
+				save->FifthSave();
 			}
 			//Audio::GetInstance()->LoopWave(4, 0.2f);
 			SceneManager::GetInstance()->ChangeScene("StageSelect");

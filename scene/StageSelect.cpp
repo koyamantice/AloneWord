@@ -512,10 +512,10 @@ void StageSelect::Draw(DirectXCommon* dxCommon) {
 	int ClearCount = save->GetClearCount();
 	XMFLOAT3 pos = player->GetPosition();
 	bool SecondClear = save->GetSecondClear();
-	/*ImGui::Begin("test");
-	ImGui::Text("clearCount::%d", OnStageNumber);
+	ImGui::Begin("test");
+	ImGui::Text("clearCount::%d", ClearCount);
 	ImGui::Unindent();
-	ImGui::End();*/
+	ImGui::End();
 
 	Texture::PreDraw();
 	BackGround[OnStageNumber]->Draw();

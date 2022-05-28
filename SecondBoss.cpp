@@ -536,9 +536,9 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 
 			WhiteFilter->SetColor(WhiteColor);
 			if (expandchange->GetTimer() >= 58) {
-				if (!save->GetFirstClear()) {
+				if (!save->GetThirdClear()) {
 					save->ClearSave();
-					save->FirstSave();
+					save->ThirdSave();
 				}
 				//Audio::GetInstance()->LoopWave(4, 0.2f);
 				SceneManager::GetInstance()->ChangeScene("StageSelect");

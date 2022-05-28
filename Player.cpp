@@ -583,9 +583,9 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	/*ImGui::Text("moveCount:%d", move_count);
 	;*/
 	//ImGui::SliderFloat("chargesca.x %d", &chargesca[0].x, 50, -50);
-	ImGui::SliderFloat("position.x", &position.x, 50, -50);
+	/*ImGui::SliderFloat("position.x", &position.x, 50, -50);
 	ImGui::SliderFloat("position.y", &position.y, 50, -50);
-	ImGui::SliderFloat("position.z", &position.z, 50, -50);
+	ImGui::SliderFloat("position.z", &position.z, 50, -50);*/
 	ImGui::End();
 	Texture::PreDraw();
 	if (chargeTimer!=0&&!AttackFlag && HP > 0) {
