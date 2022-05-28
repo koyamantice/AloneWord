@@ -64,7 +64,7 @@ void GreenTea::Spec() {
 		if (!active) {
 			pos.y = 0.0f;
 			pos.x = 0.0f;
-			action = (rand() % 6);// (rand() % 2);
+			action = 4;//(rand() % 6);// (rand() % 2);
 			frame = 0;
 			pat = 1;
 			StartPos = pos;
