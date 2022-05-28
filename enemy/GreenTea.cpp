@@ -64,7 +64,7 @@ void GreenTea::Spec() {
 		if (!active) {
 			pos.y = 0.0f;
 			pos.x = 0.0f;
-			action = 4;//(rand() % 6);// (rand() % 2);
+			action = (rand() % 6);// (rand() % 2);
 			frame = 0;
 			pat = 1;
 			StartPos = pos;
@@ -587,8 +587,8 @@ Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 //導入
 void GreenTea::App(int Timer) {
 	//後に記入
-	hotWater[0]->Upda();
-	hotWater[0]->SetPlayer(player.get());
+	//hotWater[0]->Upda();
+	//hotWater[0]->SetPlayer(player.get());
 	if (Timer == 0) {
 		pos = { 13.0f,0.0f,18.0f };
 		//rot = { 0.0f,315.0f,0.0f };
@@ -721,9 +721,9 @@ void GreenTea::App(int Timer) {
 			}
 		}
 
-		if (Timer == 200 || Timer == 220) {
+		/*if (Timer == 200 || Timer == 220) {
 			hotWater[0]->AppeaSet(pos);
-		}
+		}*/
 	}
 	
 	pos = {
@@ -818,6 +818,11 @@ void GreenTea::End(int Timer) {
 }
 
 void GreenTea::specialDraw() {
+	//ImGui::Begin("test");
+	////ImGui::Text("RotCount:%d", bubbleC);
+	////ImGui::SliderFloat("pos.x", &position.x, 50, -50);
+	//ImGui::Text("moveCount2:%d", count);
+	//ImGui::End();
 	if (BossHP > 0) {
 		for (int i = 0; i < 50; i++) {
 			hotWater[i]->Draw();

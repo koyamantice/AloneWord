@@ -235,13 +235,13 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 			}
 			else if (appearanceNumber == 1) {
 				Aftereyepos = {
-				bossenemy->GetPosition().x - 1,
+				bossenemy->GetPosition().x,
 				bossenemy->GetPosition().y + 1,
 				bossenemy->GetPosition().z - 5,
 				};
 
 				Aftertargetpos = {
-					bossenemy->GetPosition().x - 1,
+					bossenemy->GetPosition().x,
 					bossenemy->GetPosition().y + 1,
 					bossenemy->GetPosition().z,
 				};
