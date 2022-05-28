@@ -39,5 +39,6 @@ private://ƒƒ“ƒo•Ï”
 	bool openT = false;
 	bool open = false;
 	bool close = false;
+	bool endroll = false;
 };
 

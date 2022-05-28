@@ -77,6 +77,15 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(endtext8, L"Resources/2d/endText/endText8.png");
 	Sprite::LoadTexture(endtext9, L"Resources/2d/endText/endText9.png");
 	Sprite::LoadTexture(endtext10, L"Resources/2d/endText/endText10.png");
+	Sprite::LoadTexture(endroll1, L"Resources/2d/endText/endrollText1.png");
+	Sprite::LoadTexture(endroll2, L"Resources/2d/endText/endrollText2.png");
+	Sprite::LoadTexture(endroll3, L"Resources/2d/endText/endrollText3.png");
+	Sprite::LoadTexture(endroll4, L"Resources/2d/endText/endrollText4.png");
+	Sprite::LoadTexture(endroll5, L"Resources/2d/endText/endrollText5.png");
+	Sprite::LoadTexture(endroll6, L"Resources/2d/endText/endrollText6.png");
+	Sprite::LoadTexture(endroll7, L"Resources/2d/endText/endrollText7.png");
+	Sprite::LoadTexture(endroll8, L"Resources/2d/endText/endrollText8.png");
+	Sprite::LoadTexture(endroll9, L"Resources/2d/endText/endrollText9.png");
 }
 
 void ImageManager::LoadTex2D() {

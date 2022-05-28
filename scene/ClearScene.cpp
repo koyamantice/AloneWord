@@ -7,6 +7,7 @@
 #include "ClearScene.h"
 #include"ImageManager.h"
 #include <Easing.h>
+#include "imgui.h"
 void ClearScene::Initialize(DirectXCommon* dxCommon) {
 	//背景スプライト生成
 	sprite = Sprite::Create(ImageManager::BlackFilter, { 0.0f,0.0f });
@@ -31,7 +32,7 @@ void ClearScene::Initialize(DirectXCommon* dxCommon) {
 	//カメラポジション
 	cameraPos.x = 0;
 	cameraPos.y = 0;
-	cameraPos.z = -10.0f;
+	cameraPos.z = -5.0f;
 	// カメラ注視点をセット
 	cameratargetPos = { 0.0f,0.0f,0.0f };
 	camera->SetTarget(cameratargetPos);
@@ -58,208 +59,216 @@ void ClearScene::Initialize(DirectXCommon* dxCommon) {
 
 void ClearScene::Update(DirectXCommon* dxCommon) {
 	ClearTimer++;
-	nowTimer++;
 	player->Clear(ClearTimer);
-	switch (nowText) {
-	case endText1:
-		if (nowTimer < 61) {
-			if (!open && !openT) {
-				open = true;
+	if (!endroll) {
+		if (ClearTimer >= 200) {
+			nowTimer++;
+			switch (nowText) {
+			case endText1:
+				if (nowTimer < 61) {
+					if (!open && !openT) {
+						open = true;
+					}
+				}
+				if (nowTimer > 220) {
+					if (!close && !closeT) {
+						close = true;
+					}
+				}
+				if (closeT) {
+					if (nowTimer > 160) {
+						openT = false;
+						closeT = false;
+						nowTimer = 0;
+						nowText = endText2;
+					}
+				}
+				break;
+			case endText2:
+				if (!open) {
+					if (!openT) {
+						open = true;
+					}
+				}
+				if (nowTimer > 120) {
+					if (!close && !closeT) {
+						close = true;
+					}
+				}
+				if (closeT) {
+					if (nowTimer > 60) {
+						openT = false;
+						closeT = false;
+						nowTimer = 0;
+						nowText = endText3;
+					}
+				}
+				break;
+			case endText3:
+				if (!open) {
+					if (!openT) {
+						open = true;
+					}
+				}
+				if (nowTimer > 120) {
+					if (!close && !closeT) {
+						close = true;
+					}
+				}
+				if (closeT) {
+					if (nowTimer > 60) {
+						openT = false;
+						closeT = false;
+						nowTimer = 0;
+						nowText = endText4;
+					}
+				}
+				break;
+			case endText4:
+				if (!open) {
+					if (!openT) {
+						open = true;
+					}
+				}
+				if (nowTimer > 120) {
+					if (!close && !closeT) {
+						close = true;
+					}
+				}
+				if (closeT) {
+					if (nowTimer > 60) {
+						openT = false;
+						closeT = false;
+						nowTimer = 0;
+						nowText = endText5;
+					}
+				}
+				break;
+			case endText5:
+				if (!open) {
+					if (!openT) {
+						open = true;
+					}
+				}
+				if (nowTimer > 120) {
+					if (!close && !closeT) {
+						close = true;
+					}
+				}
+				if (closeT) {
+					if (nowTimer > 60) {
+						openT = false;
+						closeT = false;
+						nowTimer = 0;
+						nowText = endText6;
+					}
+				}
+				break;
+			case endText6:
+				if (!open) {
+					if (!openT) {
+						open = true;
+					}
+				}
+				if (nowTimer > 120) {
+					if (!close && !closeT) {
+						close = true;
+					}
+				}
+				if (closeT) {
+					if (nowTimer > 60) {
+						openT = false;
+						closeT = false;
+						nowTimer = 0;
+						nowText = endText7;
+					}
+				}
+				break;
+			case endText7:
+				if (!open) {
+					if (!openT) {
+						open = true;
+					}
+				}
+				if (nowTimer > 120) {
+					if (!close && !closeT) {
+						close = true;
+					}
+				}
+				if (closeT) {
+					if (nowTimer > 60) {
+						openT = false;
+						closeT = false;
+						nowTimer = 0;
+						nowText = endText8;
+					}
+				}
+				break;
+			case endText8:
+				if (!open) {
+					if (!openT) {
+						open = true;
+					}
+				}
+				if (nowTimer > 120) {
+					if (!close && !closeT) {
+						close = true;
+					}
+				}
+				if (closeT) {
+					if (nowTimer > 60) {
+						openT = false;
+						closeT = false;
+						nowTimer = 0;
+						nowText = endText9;
+					}
+				}
+				break;
+			case endText9:
+				if (!open) {
+					if (!openT) {
+						open = true;
+					}
+				}
+				if (nowTimer > 120) {
+					if (!close && !closeT) {
+						close = true;
+					}
+				}
+				if (closeT) {
+					if (nowTimer > 60) {
+						openT = false;
+						closeT = false;
+						nowTimer = 0;
+						nowText = endText10;
+					}
+				}
+				break;
+			case endText10:
+				if (!open) {
+					if (!openT) {
+						open = true;
+					}
+				}
+				if (nowTimer > 120) {
+					if (!close && !closeT) {
+						close = true;
+						endroll = true;
+					}
+				}
+				if (closeT) {
+					if (nowTimer > 60) {
+						openT = false;
+						closeT = false;
+						nowTimer = 0;
+					}
+				}
+				break;
 			}
 		}
-		if (nowTimer > 180) {
-			if (!close && !closeT) {
-				close = true;
-			}
-		}
-		if (closeT) {
-			if (nowTimer > 120) {
-				openT = false;
-				closeT = false;
-				nowTimer = 0;
-				nowText = endText2;
-			}
-		}
-		break;
-	case endText2:
-		if (!open) {
-			if (!openT) {
-				open = true;
-			}
-		}
-		if (nowTimer > 180) {
-			if (!close && !closeT) {
-				close = true;
-			}
-		}
-		if (closeT) {
-			if (nowTimer > 120) {
-				openT = false;
-				closeT = false;
-				nowTimer = 0;
-				nowText = endText3;
-			}
-		}
-		break;
-	case endText3:
-		if (!open) {
-			if (!openT) {
-				open = true;
-			}
-		}
-		if (nowTimer > 180) {
-			if (!close && !closeT) {
-				close = true;
-			}
-		}
-		if (closeT) {
-			if (nowTimer > 120) {
-				openT = false;
-				closeT = false;
-				nowTimer = 0;
-				nowText = endText4;
-			}
-		}
-		break;
-	case endText4:
-		if (nowTimer < 61) {
-			if (!open && !openT) {
-				open = true;
-			}
-		}
-		if (nowTimer > 180) {
-			if (!close && !closeT) {
-				close = true;
-			}
-		}
-		if (closeT) {
-			if (nowTimer > 120) {
-				openT = false;
-				closeT = false;
-				nowTimer = 0;
-				nowText = endText5;
-			}
-		}
-		break;
-	case endText5:
-		if (!open) {
-			if (!openT) {
-				open = true;
-			}
-		}
-		if (nowTimer > 180) {
-			if (!close && !closeT) {
-				close = true;
-			}
-		}
-		if (closeT) {
-			if (nowTimer > 120) {
-				openT = false;
-				closeT = false;
-				nowTimer = 0;
-				nowText = endText6;
-			}
-		}
-		break;
-	case endText6:
-		if (!open) {
-			if (!openT) {
-				open = true;
-			}
-		}
-		if (nowTimer > 180) {
-			if (!close && !closeT) {
-				close = true;
-			}
-		}
-		if (closeT) {
-			if (nowTimer > 120) {
-				openT = false;
-				closeT = false;
-				nowTimer = 0;
-				nowText = endText7;
-			}
-		}
-		break;
-	case endText7:
-		if (!open) {
-			if (!openT) {
-				open = true;
-			}
-		}
-		if (nowTimer > 180) {
-			if (!close && !closeT) {
-				close = true;
-			}
-		}
-		if (closeT) {
-			if (nowTimer > 120) {
-				openT = false;
-				closeT = false;
-				nowTimer = 0;
-				nowText = endText8;
-			}
-		}
-		break;
-	case endText8:
-		if (!open) {
-			if (!openT) {
-				open = true;
-			}
-		}
-		if (nowTimer > 180) {
-			if (!close && !closeT) {
-				close = true;
-			}
-		}
-		if (closeT) {
-			if (nowTimer > 120) {
-				openT = false;
-				closeT = false;
-				nowTimer = 0;
-				nowText = endText9;
-			}
-		}
-		break;
-	case endText9:
-		if (!open) {
-			if (!openT) {
-				open = true;
-			}
-		}
-		if (nowTimer > 180) {
-			if (!close && !closeT) {
-				close = true;
-			}
-		}
-		if (closeT) {
-			if (nowTimer > 120) {
-				openT = false;
-				closeT = false;
-				nowTimer = 0;
-				nowText = endText10;
-			}
-		}
-		break;
-	case endText10:
-		if (!open) {
-			if (!openT) {
-				open = true;
-			}
-		}
-		if (nowTimer > 180) {
-			if (!close && !closeT) {
-				close = true;
-			}
-		}
-		if (closeT) {
-			if (nowTimer > 120) {
-				openT = false;
-				closeT = false;
-				nowTimer = 0;
-			}
-		}
-		break;
+	}
+	else {
+
 	}
 
 	if (open) {
@@ -282,7 +291,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 		Ease(Out,Quad,frame,816,816),
 		Ease(Out,Quad,frame,160,0),
 		};
-		
+
 		if (frame < 1.0f) {
 			frame += 0.05f;
 		}
@@ -290,8 +299,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 			frame = 0.0f;
 			close = false;
 			closeT = true;
-			//if (checkZ) {
-			//}
+
 			nowTimer = 0;
 		}
 		comment[nowText]->SetSize(sca);
@@ -305,6 +313,10 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 }
 
 void ClearScene::Draw(DirectXCommon* dxCommon) {
+	ImGui::Begin("test");
+	ImGui::Text("nowCount:%d", nowTimer);
+	ImGui::Text("ClearNumber:%d", ClearTimer);
+	ImGui::End();
 	Sprite::PreDraw();
 	sprite->Draw();
 	comment[nowText]->Draw();

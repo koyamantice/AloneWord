@@ -617,12 +617,12 @@ void Player::TitleUp() {
 
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
-	//ImGui::Begin("test");
-	////ImGui::Text("RotCount:%d", bubbleC);
-	////ImGui::SliderFloat("pos.x", &position.x, 50, -50);
-	//ImGui::Text("moveCount2:%d", move_count);
+	ImGui::Begin("test");
+	//ImGui::Text("RotCount:%d", bubbleC);
+	ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	ImGui::Text("clearMove:%d", clearMove);
 	//ImGui::Text("stopCount2:%d", stop_count);
-	//ImGui::End();
+	ImGui::End();
 	Texture::PreDraw();
 	if (chargeTimer!=0&&!AttackFlag && HP > 0) {
 		Charge->Draw();
@@ -850,16 +850,181 @@ void Player::End(int Timer) {
 
 //ゲームクリア時
 void Player::Clear(int Timer) {
-	XMFLOAT3 scale = { 0.007f,0.007f,0.007f };
+	XMFLOAT3 AfterRot = {0.0f,270.0f,0.0f};
+	XMFLOAT3 Aftersca{};
 	if (Timer == 1) {
+		plasca = { 0.000f,0.000f,0.000f };
 		position = { 0.0f,0.0f,0.0f };
 		rot = { 0.0f,270.0f,0.0f };
+		no_move_object1->PlayAnimation();
+	}
+
+	if (Timer == 1 || Timer == 120 || Timer == 200 || Timer == 330 || Timer == 410 || Timer == 520 || Timer == 640
+		|| Timer == 2400) {
+		clearMove++;
+		clearframe = 0.0f;
 	}
 
 	if (Timer >= 2) {
-		move_count = 0;
+		move_count = 1;
 		stop_count++;
 	}
+
+	switch (clearMove) {
+	case 1:
+		Aftersca = { 0.02f,0.02f,0.02 };
+		if (clearframe < 1.0f) {
+			clearframe += 0.005f;
+			break;
+		}
+		else {
+			clearframe = 1.0f;
+			break;
+		}
+	case 2:
+		Aftersca = { 0.02f,0.02f,0.02 };
+		AfterRot = {
+			rot.x,
+			315,
+			rot.z
+		};
+		if (clearframe < 1.0f) {
+			clearframe += 0.01f;
+			break;
+		}
+		else {
+			clearframe = 1.0f;
+			break;
+		}
+
+	case 3:
+		Aftersca = { 0.02f,0.02f,0.02 };
+		AfterRot = {
+			rot.x,
+			225,
+			rot.z
+		};
+		if (clearframe < 1.0f) {
+			clearframe += 0.005f;
+			break;
+		}
+		else {
+			clearframe = 1.0f;
+			break;
+		}
+
+	case 4:
+		Aftersca = { 0.02f,0.02f,0.02 };
+		AfterRot = {
+			rot.x,
+			315,
+			rot.z
+		};
+		if (clearframe < 1.0f) {
+			clearframe += 0.01f;
+			break;
+		}
+		else {
+			clearframe = 1.0f;
+			break;
+		}
+
+	case 5:
+		Aftersca = { 0.02f,0.02f,0.02 };
+		AfterRot = {
+			rot.x,
+			225,
+			rot.z
+		};
+		if (clearframe < 1.0f) {
+			clearframe += 0.005f;
+			break;
+		}
+		else {
+			clearframe = 1.0f;
+			break;
+		}
+
+	case 6:
+		Aftersca = { 0.02f,0.02f,0.02 };
+		AfterRot = {
+			rot.x,
+			315,
+			rot.z
+		};
+		if (clearframe < 1.0f) {
+			clearframe += 0.01f;
+			break;
+		}
+		else {
+			clearframe = 1.0f;
+			break;
+		}
+
+	case 7:
+		Aftersca = { 0.02f,0.02f,0.02 };
+		AfterRot = {
+			rot.x,
+			450,
+			rot.z
+		};
+		if (clearframe < 1.0f) {
+			clearframe += 0.01f;
+			break;
+		}
+		else {
+			clearframe = 1.0f;
+			break;
+		}
+	case 8:
+		Aftersca = { 0.02f,0.02f,0.02 };
+		AfterRot = {
+			rot.x,
+			270,
+			rot.z
+		};
+		if (clearframe < 1.0f) {
+			clearframe += 0.005f;
+			break;
+		}
+		else {
+			clearframe = 0.0f;
+			clearMove++;
+			break;
+		}
+	case 9:
+		AfterRot = {
+			rot.x,
+			270,
+			rot.z
+		};
+		Aftersca = {
+			0,
+			0,
+			0
+		};
+		if (clearframe < 1.0f) {
+			clearframe += 0.005f;
+			break;
+		}
+		else {
+			clearframe = 1.0f;
+			clearMove++;
+			break;
+		}
+	}
+
+	plasca = {
+	Ease(In,Cubic,clearframe,plasca.x,Aftersca.x),
+	Ease(In,Cubic,clearframe,plasca.y,Aftersca.y),
+	Ease(In,Cubic,clearframe,plasca.z,Aftersca.z),
+	};
+
+	rot = {
+	Ease(In,Cubic,clearframe,rot.x,AfterRot.x),
+	Ease(In,Cubic,clearframe,rot.y,AfterRot.y),
+	Ease(In,Cubic,clearframe,rot.z,AfterRot.z)
+	};
 
 	move_object1->SetScale(plasca);
 	//move_object1->SetPosition(pos);

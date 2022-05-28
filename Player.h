@@ -254,4 +254,7 @@ private:
 	//倒したあとのシーン
 	int overMove = 0;
 	float overframe = 0.0f;
+	//完全クリア時のシーン
+	int clearMove = 0;
+	float clearframe = 0.0f;
 };
