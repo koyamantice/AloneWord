@@ -510,6 +510,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 				};
 
 				if (EndTimer == 750) {
+					Audio::GetInstance()->PlayWave("Resources/Sound/gameClear.wav", 0.4f);
 					frame = 0.0f;
 					EndNumber++;
 				}
@@ -596,7 +597,9 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 			Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
 			Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 				};
-
+				if (overTimer == 150) {
+					Audio::GetInstance()->PlayWave("Resources/Sound/gameOver.wav", 0.4f);
+				}
 				if (overTimer == 420) {
 					overNumber++;
 				}

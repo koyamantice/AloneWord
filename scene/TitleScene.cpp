@@ -93,6 +93,10 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 		expandchange->SetStartChange(true);
 	}
 
+	if (input->TriggerButton(input->Button_Y)) {
+		SceneManager::GetInstance()->ChangeScene("CLEAR");
+	}
+
 	if (expandchange->GetTimer() >= 58) {
 		if (SelectNumber == Start) {
 			SceneManager::GetInstance()->ChangeScene("STARTMAP");

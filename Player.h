@@ -28,6 +28,7 @@ public:
 	void Pause(const int& Timer);
 	void Begin();
 	void End(int Timer);
+	void Clear(int Timer);
 	void gameover(int Timer);
 	void gameoverMovie(int Timer);
 private:
@@ -208,7 +209,7 @@ private:
 	bool bubble = false;
 	int bubbleC = 0;
 	//ステータス的なやつ
-	float HP = 10;
+	float HP = 1;
 	float StickrotX = 0;
 	float StickrotY = 0;
 	XMFLOAT3 angle = { 0,0,0 };
@@ -253,4 +254,7 @@ private:
 	//倒したあとのシーン
 	int overMove = 0;
 	float overframe = 0.0f;
+	//完全クリア時のシーン
+	int clearMove = 0;
+	float clearframe = 0.0f;
 };

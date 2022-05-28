@@ -9,6 +9,7 @@ public:
 	void Finalize() override;
 	void Spec() override;
 	void App(int Timer) override{};
+	void Roll(int Timer) override {};
 	void specialDraw() override;
 	void End(int Timer) override {};
 private:

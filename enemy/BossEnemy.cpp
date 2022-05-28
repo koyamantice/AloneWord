@@ -48,7 +48,7 @@ void BossEnemy::Spec() {
 	//行動を決める
 	if (AttackCount > 180 && pos.y <= 0.1f) {
 		if (!active) {
-			action = (rand() % 2);
+			action = 1;
 			frame = 0;
 			pat = 1;
 			active = true;
@@ -176,6 +176,9 @@ void BossEnemy::Spec() {
 						Afterrot.z = 0;
 						frame = 1.0f;
 						if (coolT < 90) {
+							if (coolT == 1) {
+								Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/noDamage.wav", 0.4f);
+							}
 							coolT++;
 							break;
 						}
@@ -311,6 +314,31 @@ void BossEnemy::App(int Timer) {
 	Ease(In,Cubic,frame,pos.y,AfterPos.y),
 	Ease(In,Cubic,frame,pos.z,AfterPos.z)
 	};
+	enemyobj->SetPosition(pos);
+}
+
+void BossEnemy::Roll(int Timer) {
+	XMFLOAT3 AfterPos{};
+	if (Timer == 1) {
+		pos = { 50.0f,-5.0f,10.0f };
+		frame = 0.0f;
+	}
+
+	if (Timer == 10) {
+		rollMove++;
+	}
+	
+	//導入シーンにおいてフレーム数によって行動を決める
+	switch (rollMove) {
+	case 1:
+		pos.x -= 0.1f;
+	}
+
+	//pos = {
+	//Ease(In,Cubic,frame,pos.x,AfterPos.x),
+	//Ease(In,Cubic,frame,pos.y,AfterPos.y),
+	//Ease(In,Cubic,frame,pos.z,AfterPos.z)
+	//};
 	enemyobj->SetPosition(pos);
 }
 

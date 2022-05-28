@@ -66,6 +66,26 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(hit, L"Resources/2d/particleD.png");
 	Sprite::LoadTexture(SPD, L"Resources/2d/SPD.png");
 	Sprite::LoadTexture(StageClear, L"Resources/2d/ClearMark.png");
+
+	Sprite::LoadTexture(endtext1, L"Resources/2d/endText/endText1.png");
+	Sprite::LoadTexture(endtext2, L"Resources/2d/endText/endText2.png");
+	Sprite::LoadTexture(endtext3, L"Resources/2d/endText/endText3.png");
+	Sprite::LoadTexture(endtext4, L"Resources/2d/endText/endText4.png");
+	Sprite::LoadTexture(endtext5, L"Resources/2d/endText/endText5.png");
+	Sprite::LoadTexture(endtext6, L"Resources/2d/endText/endText6.png");
+	Sprite::LoadTexture(endtext7, L"Resources/2d/endText/endText7.png");
+	Sprite::LoadTexture(endtext8, L"Resources/2d/endText/endText8.png");
+	Sprite::LoadTexture(endtext9, L"Resources/2d/endText/endText9.png");
+	Sprite::LoadTexture(endtext10, L"Resources/2d/endText/endText10.png");
+	Sprite::LoadTexture(endroll1, L"Resources/2d/endrollText/endrollText1.png");
+	Sprite::LoadTexture(endroll2, L"Resources/2d/endrollText/endrollText2.png");
+	Sprite::LoadTexture(endroll3, L"Resources/2d/endrollText/endrollText3.png");
+	Sprite::LoadTexture(endroll4, L"Resources/2d/endrollText/endrollText4.png");
+	Sprite::LoadTexture(endroll5, L"Resources/2d/endrollText/endrollText5.png");
+	Sprite::LoadTexture(endroll6, L"Resources/2d/endrollText/endrollText6.png");
+	Sprite::LoadTexture(endroll7, L"Resources/2d/endrollText/endrollText7.png");
+	Sprite::LoadTexture(endroll8, L"Resources/2d/endrollText/endrollText8.png");
+	Sprite::LoadTexture(endroll9, L"Resources/2d/endrollText/endrollText9.png");
 }
 
 void ImageManager::LoadTex2D() {

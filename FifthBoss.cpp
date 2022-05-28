@@ -505,6 +505,7 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			};
 
 			if (EndTimer == 750) {
+				Audio::GetInstance()->PlayWave("Resources/Sound/gameClear.wav", 0.4f);
 				frame = 0.0f;
 				EndNumber++;
 			}
@@ -536,7 +537,7 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 				save->FifthSave();
 			}
 			//Audio::GetInstance()->LoopWave(4, 0.2f);
-			SceneManager::GetInstance()->ChangeScene("StageSelect");
+			SceneManager::GetInstance()->ChangeScene("CLEAR");
 		}
 		camera->SetTarget(cameratargetPos);
 		camera->SetEye(cameraPos);
@@ -591,7 +592,9 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 		Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
 		Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			};
-
+			if (overTimer == 150) {
+				Audio::GetInstance()->PlayWave("Resources/Sound/gameOver.wav", 0.4f);
+			}
 			if (overTimer == 420) {
 				overNumber++;
 			}

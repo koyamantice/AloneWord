@@ -104,9 +104,14 @@ public:
 	//撃破ムービー
 	void EndMovie(int Timer);
 
+	//撃破ムービー
+	void RollMovie(int Timer);
+
 	virtual void App(int Timer)=0;//ボス出現モーション
 
 	virtual void End(int Timer) = 0;//ボス出現モーション
+
+	virtual void Roll(int Timer) = 0;//ボス出現モーション
 
 	virtual void Spec()=0;//ボス特有の処理
 	virtual void specialDraw()=0;//ボス特有の描画
@@ -178,7 +183,7 @@ protected:
 	bool pause = false;
 	bool respawn = false;
 	//
-	float BossHP = 40;
+	float BossHP = 1;
 	bool BossHit = false;
 	bool Effect = false;
 	bool Effect2 = false;
@@ -219,6 +224,9 @@ protected:
 	//倒したあとのシーン
 	int EndMove = 0;
 	float endframe = 0.0f;
+	//倒したあとのシーン
+	int rollMove = 0;
+	float rollframe = 0.0f;
 	//靴専用のテクスチャ用変数
 	array<Texture*,4> Stuntexture;
 	array<float, 4> Stunradius;

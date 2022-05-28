@@ -1058,6 +1058,31 @@ void RightHand::App(int Timer) {
 	enemyobj->SetRotation(rot);
 }
 
+void RightHand::Roll(int Timer) {
+	XMFLOAT3 AfterPos{};
+	if (Timer == 1) {
+		pos = { 50.0f,-5.0f,10.0f };
+		frame = 0.0f;
+	}
+
+	if (Timer == 400) {
+		rollMove++;
+	}
+
+	//導入シーンにおいてフレーム数によって行動を決める
+	switch (rollMove) {
+	case 1:
+		pos.x -= 0.1f;
+	}
+
+	//pos = {
+	//Ease(In,Cubic,frame,pos.x,AfterPos.x),
+	//Ease(In,Cubic,frame,pos.y,AfterPos.y),
+	//Ease(In,Cubic,frame,pos.z,AfterPos.z)
+	//};
+	enemyobj->SetPosition(pos);
+}
+
 //撃破
 void RightHand::End(int Timer) {
 	//ボスを倒したあとの挙動(後で記述)
@@ -1096,8 +1121,8 @@ void RightHand::End(int Timer) {
 		}
 
 	case 2:
-		if (rot.x >= -90) {
-			rot.x -= 2.0f;
+		if (rot.x <= 90) {
+			rot.x += 2.0f;
 		}
 
 		//case 2:
@@ -1130,7 +1155,9 @@ void RightHand::End(int Timer) {
 
 	enemyobj->SetScale(scale);
 	enemyobj->SetPosition(pos);
+	//hand_closeobj->SetPosition(pos);
 	enemyobj->SetRotation(rot);
+	//hand_closeobj->SetRotation(rot);
 }
 //特別な描画(今回の場合ぴよぴよ)
 void RightHand::specialDraw() {

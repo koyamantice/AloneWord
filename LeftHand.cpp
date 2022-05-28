@@ -1033,6 +1033,31 @@ void LeftHand::App(int Timer) {
 	//hand_closeobj->SetRotation(rot);
 }
 
+void LeftHand::Roll(int Timer) {
+	XMFLOAT3 AfterPos{};
+	if (Timer == 1) {
+		pos = { -50.0f,-5.0f,10.0f };
+		frame = 0.0f;
+	}
+
+	if (Timer == 400) {
+		rollMove++;
+	}
+
+	//導入シーンにおいてフレーム数によって行動を決める
+	switch (rollMove) {
+	case 1:
+		pos.x += 0.1f;
+	}
+
+	//pos = {
+	//Ease(In,Cubic,frame,pos.x,AfterPos.x),
+	//Ease(In,Cubic,frame,pos.y,AfterPos.y),
+	//Ease(In,Cubic,frame,pos.z,AfterPos.z)
+	//};
+	enemyobj->SetPosition(pos);
+}
+
 //撃破
 void LeftHand::End(int Timer) {
 	//ボスを倒したあとの挙動(後で記述)
