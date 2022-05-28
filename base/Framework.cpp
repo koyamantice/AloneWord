@@ -73,6 +73,8 @@ void Framework::Initialize(DirectXCommon* dxCommon) {
 
 void Framework::Finalize() {
 	delete sceneFactory_;
+	dxcommon->Finalize();
+	delete dxcommon;
 	winApp->Finalize();
 	delete winApp;
 }
