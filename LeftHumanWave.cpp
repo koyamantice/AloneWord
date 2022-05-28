@@ -72,7 +72,7 @@ void LeftHumanWave::SetWave(LeftHand* lefthand) {
 		if (damegeArea >= 0.5f) {
 			safeArea += 0.12f;
 		}
-		if (scale.x >= 3.0f) {
+		if (scale.x >= 2.5f) {
 			expand = false;
 			scale = { 0.0f,0.0f,0.0f };
 			damegeArea = 0.0f;

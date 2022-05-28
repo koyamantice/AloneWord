@@ -47,6 +47,8 @@ void RightHand::Initialize(bool shadow) {
 	InitCommon();
 	//当たり判定の大きさ
 	hitradius = 0.6f;
+	//防御力
+	Defense = 1.5f;
 }
 
 //開放
@@ -127,7 +129,7 @@ void RightHand::Spec() {
 				case 3:
 					AfterPos = {
 					pos.x,
-					3.0f,
+					5.0f,
 					pos.z
 					};
 				
@@ -411,7 +413,7 @@ void RightHand::Spec() {
 
 		//突進攻撃
 		else if (action == 2) {
-		hitradius = 0.6f;
+		hitradius = 2.4f;
 			if (pat == 1) {
 				AfterPos.y = 15.0f;
 				if (pos.y >= 14) {
@@ -427,7 +429,9 @@ void RightHand::Spec() {
 				pos.y = Ease(In, Cubic, frame, pos.y, AfterPos.y);
 			}
 			else if (pat == 2) {
-				AfterPos.y = 1.0f;
+				AfterPos.y = 2.6f;
+				Afterrot.y = 0;
+				Afterrot.x = 0;
 				if (frame < 0.45f) {
 					frame += 0.002f;
 				}
@@ -435,10 +439,11 @@ void RightHand::Spec() {
 					frame = 0;
 					pat++;
 				}
+				//Afterrot.z = -90.0f;
 				pos.y = Ease(In, Cubic, frame, pos.y, AfterPos.y);
 			}
 			else if (pat == 3) {
-				Afterrot.x = 0.0f;
+				Afterrot.x = -90.0f;
 				if (!stun) {
 					//3回突進する
 					if (AttackC < 5) {
@@ -448,10 +453,11 @@ void RightHand::Spec() {
 					else {
 						AfterPos = {
 						10,
-						0,
+						1,
 						0
 						};
-						Afterrot.y = 270;
+						Afterrot.y = 0;
+						Afterrot.x = 0;
 						if (frame < 1.0f) {
 							frame += 0.01f;
 						}
@@ -473,7 +479,7 @@ void RightHand::Spec() {
 						XMFLOAT3 position{};
 						position.x = (player->GetPosition().x - pos.x);
 						position.z = (player->GetPosition().z - pos.z);
-						Afterrot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 270;// *(XM_PI / 180.0f);
+						Afterrot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 180;// *(XM_PI / 180.0f);
 					}
 					//プレイヤーの位置をロックオンさせる
 					if (MoveCount == 100) {
@@ -519,28 +525,28 @@ void RightHand::Spec() {
 						pos.z += (float)speedZ;
 
 						//敵の位置が壁まで行ったら戻る
-						if (pos.x >= x_max) {
+						if (pos.x >= 20) {
 							hitpoint = HitRight;
 							Deadbound.y = 0.5f;
 							Deadbound.x = 0.2f;
 							speedX = 0.0f;
 							speedZ = 0.0f;
 						}
-						else if (pos.x <= x_min) {
+						else if (pos.x <= -18) {
 							hitpoint = HitLeft;
 							Deadbound.y = 0.5f;
 							Deadbound.x = 0.2f;
 							speedX = 0.0f;
 							speedZ = 0.0f;
 						}
-						else if (pos.z >= z_max) {
+						else if (pos.z >=20) {
 							hitpoint = HitUp;
 							Deadbound.y = 0.5f;
 							Deadbound.z = 0.2f;
 							speedX = 0.0f;
 							speedZ = 0.0f;
 						}
-						else if (pos.z <= z_min) {
+						else if (pos.z <= -15) {
 							hitpoint = HitDown;
 							Deadbound.y = 0.5f;
 							Deadbound.z = 0.2f;
@@ -552,14 +558,14 @@ void RightHand::Spec() {
 						if (hitpoint == HitRight) {
 							Deadbound.y -= 0.02f;
 							pos.y += Deadbound.y;
-							if (pos.y > 1.0f) {
+							if (pos.y > 2.6f) {
 								pos.x -= Deadbound.x;
 							}
 							else {
-								pos.y = 1.0f;
+								pos.y = 2.6f;
 							}
 
-							if (pos.y == 1.0f) {
+							if (pos.y == 2.6f) {
 								MoveCount = 0;
 								Attack = false;
 								hitpoint = HitNot;
@@ -569,14 +575,14 @@ void RightHand::Spec() {
 						else if (hitpoint == HitLeft) {
 							Deadbound.y -= 0.02f;
 							pos.y += Deadbound.y;
-							if (pos.y > 1.0f) {
+							if (pos.y > 2.6f) {
 								pos.x += Deadbound.x;
 							}
 							else {
-								pos.y = 1.0f;
+								pos.y = 2.6f;
 							}
 
-							if (pos.y == 1.0f) {
+							if (pos.y == 2.6f) {
 								MoveCount = 0;
 								Attack = false;
 								hitpoint = HitNot;
@@ -586,14 +592,14 @@ void RightHand::Spec() {
 						else if (hitpoint == HitUp) {
 							Deadbound.y -= 0.02f;
 							pos.y += Deadbound.y;
-							if (pos.y > 1.0f) {
+							if (pos.y > 2.6f) {
 								pos.z -= Deadbound.z;
 							}
 							else {
-								pos.y = 1.0f;
+								pos.y = 2.6f;
 							}
 
-							if (pos.y == 1.0f) {
+							if (pos.y == 2.6f) {
 								MoveCount = 0;
 								Attack = false;
 								hitpoint = HitNot;
@@ -603,14 +609,14 @@ void RightHand::Spec() {
 						else if (hitpoint == HitDown) {
 							Deadbound.y -= 0.02f;
 							pos.y += Deadbound.y;
-							if (pos.y > 1.0f) {
+							if (pos.y > 2.6f) {
 								pos.z += Deadbound.z;
 							}
 							else {
-								pos.y = 1.0f;
+								pos.y = 2.6f;
 							}
 
-							if (pos.y == 1.0f) {
+							if (pos.y == 2.6f) {
 								MoveCount = 0;
 								Attack = false;
 								hitpoint = HitNot;

@@ -47,6 +47,8 @@ void LeftHand::Initialize(bool shadow) {
 	InitCommon();
 	//“–‚½‚è”»’è‚Ì‘å‚«‚³
 	hitradius = 0.6f;
+	//–hŒä—Í
+	Defense = 1.5f;
 }
 
 //ŠJ•ú
@@ -125,7 +127,7 @@ void LeftHand::Spec() {
 				case 3:
 					AfterPos = {
 					pos.x,
-					3.0f,
+					5.0f,
 					pos.z
 					};
 
@@ -448,6 +450,13 @@ void LeftHand::Spec() {
 					3.0f,
 					pos.z
 					};
+
+					Afterrot = {
+						rot.x,
+						90,
+						-90
+					};
+
 					if (frame < 1.0f) {
 						frame += 0.01f;
 						break;
@@ -494,7 +503,7 @@ void LeftHand::Spec() {
 						break;
 					}
 					else {
-						Afterrot.z = 0;
+						//Afterrot.z = 0;
 						frame = 1.0f;
 						if (coolT < 90) {
 							coolT++;
@@ -580,8 +589,12 @@ void LeftHand::Spec() {
 	Ease(In,Cubic,frame,pos.y,AfterPos.y),
 		Ease(In,Cubic,frame,pos.z,AfterPos.z)
 			};
+			rot = {
+					Ease(In,Cubic,frame,rot.x,Afterrot.x),
+					Ease(In,Cubic,frame,rot.y,Afterrot.y),
+					Ease(In,Cubic,frame,rot.z,Afterrot.z),
+			};
 			enemyobj->SetPosition(pos);
-			rot.y = Ease(In, Quint, 0.7f, rot.y, Afterrot.y);
 			enemyobj->SetRotation(rot);
 		}
 		//“Š‚°‚éUŒ‚
@@ -910,7 +923,7 @@ void LeftHand::App(int Timer) {
 	XMFLOAT3 AfterRot{};
 	if (Timer == 0) {
 		pos = { -13.0f,0.0f,18.0f };
-		rot = { 0.0f,225.0f,0.0f };
+		rot = { 0.0f,45.0f,0.0f };
 	}
 
 	if (Timer == 150 || Timer == 280 || Timer == 300) {
@@ -1081,7 +1094,7 @@ bool LeftHand::collideMottiPlayer(Player* player) {
 	float playerhp = player->GetHp();
 	XMFLOAT3 distance = player->GetDistance();
 	float weight = player->GetArmWeight();
-	if (Collision::SphereCollision(Mottipos.x, Mottipos.y, Mottipos.z, 1.0f, playerpos.x, playerpos.y, playerpos.z, 1.0f)
+	if (Collision::SphereCollision(Mottipos.x, Mottipos.y, Mottipos.z, 1.5f, playerpos.x, playerpos.y, playerpos.z, 1.5f)
 		&& FlashCount == 0 && Interval == 0 && BossHP > 0 && action == 3 && hitpoint == HitNot) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 		player->SetHp(playerhp - 1);

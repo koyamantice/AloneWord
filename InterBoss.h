@@ -164,6 +164,7 @@ protected:
 	double Check2;
 	bool color = false;
 	int colorTimer = 0;
+	float Defense = 1.0f;
 
 	//イージングのためのやつ
 	float frame = 0;
