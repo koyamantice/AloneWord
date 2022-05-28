@@ -50,10 +50,26 @@ void ClearScene::Initialize(DirectXCommon* dxCommon) {
 	comment[endText9] = Sprite::Create(ImageManager::endtext9, { 570.0f,450.0f });
 	comment[endText10] = Sprite::Create(ImageManager::endtext10, { 570.0f,450.0f });
 
+	roll[endrollText1] = Sprite::Create(ImageManager::endroll1, { 0.0f,0.0f });
+	roll[endrollText2] = Sprite::Create(ImageManager::endroll2, { 0.0f,0.0f });
+	roll[endrollText3] = Sprite::Create(ImageManager::endroll3, { 0.0f,0.0f });
+	roll[endrollText4] = Sprite::Create(ImageManager::endroll4, { 0.0f,0.0f });
+	roll[endrollText5] = Sprite::Create(ImageManager::endroll5, { 0.0f,0.0f });
+	roll[endrollText6] = Sprite::Create(ImageManager::endroll6, { 0.0f,0.0f });
+	roll[endrollText7] = Sprite::Create(ImageManager::endroll7, { 0.0f,0.0f });
+	roll[endrollText8] = Sprite::Create(ImageManager::endroll8, { 0.0f,0.0f });
+	roll[endrollText9] = Sprite::Create(ImageManager::endroll9, { 0.0f,0.0f });
+
 	for (int i = 0; i < endText10 + 1; i++) {
 		comment[i]->SetAnchorPoint({ 0.5f, 0.5f });
 		comment[i]->SetPosition({ 640.0f,500.0f });
 		comment[i]->SetSize({ 0,0 });
+	}
+
+	for (int i = 0; i < endrollText9 + 1; i++) {
+		//roll[i]->SetAnchorPoint({ 0.5f, 0.5f });
+		roll[i]->SetPosition({ 0.0f,0.0f });
+		roll[i]->SetColor(endColor);
 	}
 }
 
@@ -267,9 +283,196 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 			}
 		}
 	}
+	//ƒGƒ“ƒhƒ[ƒ‹“Ë“ü
 	else {
-
+		rollTimer++;
+		if (rollTimer >= 500) {
+			endTimer++;
+			switch (nowendText) {
+			case endrollText1:
+				if (endTimer < 61) {
+					if (!endopen && !endopenT) {
+						endopen = true;
+					}
+				}
+				if (endTimer > 220) {
+					if (!endclose && !endcloseT) {
+						endclose = true;
+					}
+				}
+				if (endcloseT) {
+					if (endTimer > 160) {
+						endopenT = false;
+						endcloseT = false;
+						endTimer = 0;
+						nowendText = endrollText2;
+					}
+				}
+				break;
+			case endrollText2:
+				if (!endopen) {
+					if (!endopenT) {
+						endopen = true;
+					}
+				}
+				if (endTimer > 160) {
+					if (!endclose && !endcloseT) {
+						endclose = true;
+					}
+				}
+				if (endcloseT) {
+					if (endTimer > 60) {
+						endopenT = false;
+						endcloseT = false;
+						endTimer = 0;
+						nowendText = endrollText3;
+					}
+				}
+				break;
+			case endrollText3:
+				if (!endopen) {
+					if (!endopenT) {
+						endopen = true;
+					}
+				}
+				if (endTimer > 160) {
+					if (!endclose && !endcloseT) {
+						endclose = true;
+					}
+				}
+				if (endcloseT) {
+					if (endTimer > 60) {
+						endopenT = false;
+						endcloseT = false;
+						endTimer = 0;
+						nowendText = endrollText4;
+					}
+				}
+				break;
+			case endrollText4:
+				if (!endopen) {
+					if (!endopenT) {
+						endopen = true;
+					}
+				}
+				if (endTimer > 160) {
+					if (!endclose && !endcloseT) {
+						endclose = true;
+					}
+				}
+				if (endcloseT) {
+					if (endTimer > 60) {
+						endopenT = false;
+						endcloseT = false;
+						endTimer = 0;
+						nowendText = endrollText5;
+					}
+				}
+				break;
+			case endrollText5:
+				if (!endopen) {
+					if (!endopenT) {
+						endopen = true;
+					}
+				}
+				if (endTimer > 160) {
+					if (!endclose && !endcloseT) {
+						endclose = true;
+					}
+				}
+				if (endcloseT) {
+					if (endTimer > 60) {
+						endopenT = false;
+						endcloseT = false;
+						endTimer = 0;
+						nowendText = endrollText6;
+					}
+				}
+				break;
+			case endrollText6:
+				if (!endopen) {
+					if (!endopenT) {
+						endopen = true;
+					}
+				}
+				if (endTimer > 160) {
+					if (!endclose && !endcloseT) {
+						endclose = true;
+					}
+				}
+				if (endcloseT) {
+					if (endTimer > 60) {
+						endopenT = false;
+						endcloseT = false;
+						endTimer = 0;
+						nowendText = endrollText7;
+					}
+				}
+				break;
+			case endrollText7:
+				if (!endopen) {
+					if (!endopenT) {
+						endopen = true;
+					}
+				}
+				if (endTimer > 160) {
+					if (!endclose && !endcloseT) {
+						endclose = true;
+					}
+				}
+				if (endcloseT) {
+					if (endTimer > 60) {
+						endopenT = false;
+						endcloseT = false;
+						endTimer = 0;
+						nowendText = endrollText8;
+					}
+				}
+				break;
+			case endrollText8:
+				if (!endopen) {
+					if (!endopenT) {
+						endopen = true;
+					}
+				}
+				if (endTimer > 160) {
+					if (!endclose && !endcloseT) {
+						endclose = true;
+					}
+				}
+				if (endcloseT) {
+					if (endTimer > 60) {
+						endopenT = false;
+						endcloseT = false;
+						endTimer = 0;
+						nowendText = endrollText9;
+					}
+				}
+				break;
+			case endrollText9:
+				if (!endopen) {
+					if (!endopenT) {
+						endopen = true;
+					}
+				}
+				if (endTimer > 160) {
+					if (!endclose && !endcloseT) {
+						//endclose = true;
+					}
+				}
+				if (endcloseT) {
+					if (endTimer > 60) {
+						/*endopenT = false;
+						endcloseT = false;
+						endTimer = 0;
+						*/
+					}
+				}
+				break;
+			}
+		}
 	}
+
 
 	if (open) {
 		sca = {
@@ -305,6 +508,33 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 		comment[nowText]->SetSize(sca);
 	}
 
+	if (endopen) {
+		endColor.w = Ease(In, Quad, frame, endColor.w, 1.0f);
+		if (frame < 1.0f) {
+			frame += 0.01f;
+		}
+		else {
+			frame = 0.0f;
+			endopen = false;
+			endopenT = true;
+		}
+		roll[nowendText]->SetColor(endColor);
+	}
+	if (endclose) {
+		endColor.w = Ease(In, Quad, frame, endColor.w, 0.0f);
+
+		if (frame < 1.0f) {
+			frame += 0.01f;
+		}
+		else {
+			frame = 0.0f;
+			endclose = false;
+			endcloseT = true;
+			endTimer = 0;
+		}
+		roll[nowendText]->SetColor(endColor);
+	}
+
 	/*if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_B)) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 		SceneManager::GetInstance()->ChangeScene("TITLE");
@@ -313,13 +543,15 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 }
 
 void ClearScene::Draw(DirectXCommon* dxCommon) {
-	ImGui::Begin("test");
-	ImGui::Text("nowCount:%d", nowTimer);
-	ImGui::Text("ClearNumber:%d", ClearTimer);
-	ImGui::End();
+	//ImGui::Begin("test");
+	//ImGui::Text("rollTimer:%d", rollTimer);
+	//ImGui::Text("endCount:%d", endTimer);
+	//ImGui::SliderFloat("color.w", &endColor.w, 1, 0);
+	//ImGui::End();
 	Sprite::PreDraw();
 	sprite->Draw();
 	comment[nowText]->Draw();
+	roll[nowendText]->Draw();
 	Texture::PreDraw();
 	player->Draw(dxCommon);
 }

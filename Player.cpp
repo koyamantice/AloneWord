@@ -617,13 +617,13 @@ void Player::TitleUp() {
 
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
-	ImGui::Begin("test");
-	//ImGui::Text("RotCount:%d", bubbleC);
-	ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
-	ImGui::Text("clearMove:%d", clearMove);
-	//ImGui::Text("stopCount2:%d", stop_count);
-	ImGui::End();
-	Texture::PreDraw();
+	//ImGui::Begin("test");
+	////ImGui::Text("RotCount:%d", bubbleC);
+	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	//ImGui::Text("clearMove:%d", clearMove);
+	////ImGui::Text("stopCount2:%d", stop_count);
+	//ImGui::End();
+	//Texture::PreDraw();
 	if (chargeTimer!=0&&!AttackFlag && HP > 0) {
 		Charge->Draw();
 	}

@@ -83,6 +83,15 @@ public:
 		endtext8,
 		endtext9,
 		endtext10,
+		endroll1,
+		endroll2,
+		endroll3,
+		endroll4,
+		endroll5,
+		endroll6,
+		endroll7,
+		endroll8,
+		endroll9,
 	};
 	enum tex2dName {
 	enemy,//Texture::LoadTexture(0, L"Resources/2d/enemy.png");
