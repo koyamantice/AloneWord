@@ -113,6 +113,10 @@ void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	GameOverSprite = Sprite::Create(ImageManager::GameOver, overPos);
 	GameOverSprite->SetColor(GameOverColor);
 
+	GameClearSprite = Sprite::Create(ImageManager::StageClear, { 640.0f,200.0f });
+	GameClearSprite->SetSize(clearSize);
+	GameClearSprite->SetAnchorPoint({ 0.5f, 0.5f });
+
 	SkipSprite = Sprite::Create(ImageManager::Change, { 0.0f,0.0f });
 	SkipSprite->SetPosition(Skippos);
 	SkipSprite->SetAnchorPoint({ 0.5f, 0.5f });
@@ -398,52 +402,111 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 		}
 	}//ボス撃破ムービー演出
 	else {
-		if (end) {
-			EndTimer++;
-			pastel->EndMovie(EndTimer);
-			player->End(EndTimer);
-			if (EndNumber == 0) {
+	if (end) {
+		//expandchange->SetStartChange(true);
+		EndTimer++;
+		pastel->EndMovie(EndTimer);
+		player->End(EndTimer);
+		//カメラの位置をそれぞれを変える
+		if (EndNumber == 0) {
+			if (EndTimer == 1) {
 				cameraPos.x = player->GetPosition().x;
 				cameraPos.y = player->GetPosition().y + distanceY;
 				cameraPos.z = player->GetPosition().z - distanceZ;
-				camera->SetTarget(player->GetPosition());
-				if (EndTimer == 50) {
-					EndNumber = 1;
-				}
+				cameratargetPos = player->GetPosition();
 			}
-			else if (EndNumber == 1) {
-				if (WhiteColor.w <= 1.0f) {
-					WhiteColor.w += 0.005f;
-				}
-
-				if (EndTimer == 300) {
-					EndNumber++;
-				}
+			if (WhiteColor.w <= 1.0f) {
+				WhiteColor.w += 0.008f;
 			}
-			else if (EndNumber == 2) {
-				if (WhiteColor.w >= 0.0f) {
-					WhiteColor.w -= 0.005f;
-				}
+			if (EndTimer == 250) {
+				frame = 0.0f;
+				EndNumber++;
 				cameraPos.x = pastel->GetPosition().x;
 				cameraPos.y = pastel->GetPosition().y + 7;
 				cameraPos.z = pastel->GetPosition().z - 10;
-				camera->SetTarget(pastel->GetPosition());
-			}
-			WhiteFilter->SetColor(WhiteColor);
-			camera->SetEye(cameraPos);
+				cameratargetPos = pastel->GetPosition();
 
-			if (EndTimer == 700) {
+			}
+		}
+		else if (EndNumber == 1) {
+			if (WhiteColor.w >= 0.0f) {
+				WhiteColor.w -= 0.008f;
+			}
+
+			if (EndTimer == 650) {
+				frame = 0.0f;
+				EndNumber++;
+			}
+		}
+
+		else if (EndNumber == 2) {
+			Aftereyepos = {
+			player->GetPosition().x,
+			player->GetPosition().y + 2,
+			player->GetPosition().z - 5,
+			};
+
+			Aftertargetpos = {
+				0,
+				2,
+				0
+			};
+
+			if (frame < 1.0f) {
+				frame += 0.015f;
+			}
+			else {
+				frame = 1.0f;
+			}
+
+			cameraPos = {
+		Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+		Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+		Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+			};
+
+			cameratargetPos = {
+Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+			};
+
+			if (EndTimer == 750) {
+				frame = 0.0f;
+				EndNumber++;
+			}
+		}
+		else if (EndNumber == 3) {
+			clearSize = {
+		Ease(In,Quad,clearframe,clearSize.x,600.0f),
+		Ease(In,Quad,clearframe,clearSize.y,400.0f)
+			};
+
+			if (clearframe >= 1.0f) {
+				clearframe = 1.0f;
+			}
+			else {
+				clearframe += 0.01f;
+			}
+
+			GameClearSprite->SetSize(clearSize);
+
+			if (EndTimer == 900) {
 				expandchange->SetStartChange(true);
 			}
+		}
 
-			if (expandchange->GetTimer() >= 58) {
-				//Audio::GetInstance()->LoopWave(4, 0.2f);
-				if (!save->GetFouthClear()) {
-					save->ClearSave();
-					save->FouthSave();
-				}
-				SceneManager::GetInstance()->ChangeScene("StageSelect");
+		WhiteFilter->SetColor(WhiteColor);
+		if (expandchange->GetTimer() >= 58) {
+			if (!save->GetFirstClear()) {
+				save->ClearSave();
+				save->FirstSave();
 			}
+			//Audio::GetInstance()->LoopWave(4, 0.2f);
+			SceneManager::GetInstance()->ChangeScene("StageSelect");
+		}
+		camera->SetTarget(cameratargetPos);
+		camera->SetEye(cameraPos);
 		}
 
 		if (gameover == true) {
@@ -625,10 +688,8 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 
 	if (!gameover) {
 		Texture::PreDraw();
-		if (EndNumber <= 1) {
-			player->Draw(dxCommon);
-		}
-
+		player->Draw(dxCommon);
+	
 		Sprite::PreDraw();
 
 		if (!bossstart) {
@@ -660,6 +721,7 @@ void FourthBoss::Draw(DirectXCommon* dxCommon) {
 	//}
 	if (end) {
 		WhiteFilter->Draw();
+		GameClearSprite->Draw();
 	}
 	if (!end) {
 		if (!gameover) {

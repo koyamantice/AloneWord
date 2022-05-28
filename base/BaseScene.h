@@ -77,6 +77,7 @@ protected:
 	int overTimer = 0;
 	float overframe = 0.0f;
 	float nameframe = 0.0f;
+	float clearframe = 0.0f;
 	//スキップのための演出
 	bool Skip = false;
 	int SkipTimer = 0;
@@ -92,6 +93,9 @@ protected:
 	XMFLOAT2 Skippos = { 640.0f,360.0f, };
 	XMFLOAT2 namePos = { 0.0f,0.0f };
 	XMFLOAT2 overPos = { 240.0f,140.0f };
+	Sprite* GameClearSprite = nullptr;
+	XMFLOAT2 clearSize = { 0.0f, 0.0f };
+
 	//値保存用変数
 	Save* save = nullptr;
 public:
