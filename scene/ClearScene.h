@@ -2,6 +2,13 @@
 #include "Sprite.h"
 #include "Object3d.h"
 #include "BaseScene.h"
+#include "BossEnemy.h"
+#include "GreenTea.h"
+#include "LeftShose.h"
+#include "Rightshose.h"
+#include "pastel.h"
+#include "LeftHand.h"
+#include "RightHand.h"
 /// タイトルシーン
 class ClearScene : public BaseScene {
 public:
@@ -60,5 +67,14 @@ private://メンバ変数
 	bool endclose = false;
 	bool endroll = false;
 	int rollTimer = 0;
+	//ボスムービーに登場する敵
+	InterBoss* fork = nullptr;
+	InterBoss* leftshose = nullptr;
+	InterBoss* rightshose = nullptr;
+	InterBoss* leftshose = nullptr;
+	InterBoss* pastel = nullptr;
+	InterBoss* tea = nullptr;
+	InterBoss* lefthand = nullptr;
+	InterBoss* righthand = nullptr;
 };
 

@@ -216,6 +216,12 @@ void InterBoss::AppeaMovie(int Timer) {
 	enemyobj->Update();
 }
 
+//導入ムービーのボスの行動
+void InterBoss::RollMovie(int Timer) {
+	Roll(Timer);
+	enemyobj->Update();
+}
+
 //撃破ムービーのボスの行動
 void InterBoss::EndMovie(int Timer) {
 	End(Timer);

@@ -71,6 +71,36 @@ void ClearScene::Initialize(DirectXCommon* dxCommon) {
 		roll[i]->SetPosition({ 0.0f,0.0f });
 		roll[i]->SetColor(endColor);
 	}
+
+	//初期化ボス
+	//ボス
+	fork = new BossEnemy();
+	fork->SetPlayer(player);
+	fork->Initialize();
+
+	tea = new GreenTea();
+	tea->SetPlayer(player);
+	tea->Initialize();
+
+	leftshose = new LeftShose();
+	leftshose->SetPlayer(player);
+	leftshose->Initialize();
+
+	rightshose = new RightShose();
+	rightshose->SetPlayer(player);
+	rightshose->Initialize();
+
+	pastel = new Pastel();
+	pastel->SetPlayer(player);
+	pastel->Initialize();
+
+	lefthand = new LeftHand();
+	lefthand->SetPlayer(player);
+	lefthand->Initialize();
+
+	righthand = new RightHand();
+	righthand->SetPlayer(player);
+	righthand->Initialize();
 }
 
 void ClearScene::Update(DirectXCommon* dxCommon) {
@@ -78,7 +108,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 	player->Clear(ClearTimer);
 	if (!endroll) {
 		if (ClearTimer >= 200) {
-			nowTimer++;
+			nowTimer += 100;
 			switch (nowText) {
 			case endText1:
 				if (nowTimer < 61) {
@@ -286,6 +316,13 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 	//エンドロール突入
 	else {
 		rollTimer++;
+		fork->Roll(rollTimer);
+		tea->Roll(rollTimer);
+		leftshose->Roll(rollTimer);
+		rightshose->Roll(rollTimer);
+		pastel->Roll(rollTimer);
+		lefthand->Roll(rollTimer);
+		lefthand->Roll(rollTimer);
 		if (rollTimer >= 500) {
 			endTimer++;
 			switch (nowendText) {
@@ -553,7 +590,15 @@ void ClearScene::Draw(DirectXCommon* dxCommon) {
 	comment[nowText]->Draw();
 	roll[nowendText]->Draw();
 	Texture::PreDraw();
-	player->Draw(dxCommon);
+	//player->Draw(dxCommon);
+	Object3d::PreDraw();
+	fork->Draw();
+	tea->Draw();
+	leftshose->Draw();
+	rightshose->Draw();
+	pastel->Draw();
+	lefthand->Draw();
+	lefthand->Draw();
 }
 void ClearScene::Finalize() {
 	//３ｄのモデルのデリート

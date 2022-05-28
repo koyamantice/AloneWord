@@ -472,6 +472,10 @@ void LeftShose::App(int Timer) {
 	enemyobj->SetRotation(rot);
 }
 
+void LeftShose::Roll(int Timer) {
+
+}
+
 //撃破
 void LeftShose::End(int Timer) {
 	//ボスを倒したあとの挙動(後で記述)

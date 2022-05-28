@@ -658,6 +658,10 @@ Ease(In,Cubic,frame,rot.z,AfterRot.z)
 	enemyobj->SetRotation(rot);
 }
 
+void Pastel::Roll(int Timer) {
+
+}
+
 //撃破
 void Pastel::End(int Timer) {
 	//ボスを倒したあとの挙動(後で記述)

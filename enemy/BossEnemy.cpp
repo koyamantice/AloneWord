@@ -314,6 +314,10 @@ void BossEnemy::App(int Timer) {
 	enemyobj->SetPosition(pos);
 }
 
+void BossEnemy::Roll(int Timer) {
+
+}
+
 void BossEnemy::specialDraw() {
 }
 

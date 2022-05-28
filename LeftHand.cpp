@@ -1033,6 +1033,10 @@ void LeftHand::App(int Timer) {
 	//hand_closeobj->SetRotation(rot);
 }
 
+void LeftHand::Roll(int Timer) {
+
+}
+
 //撃破
 void LeftHand::End(int Timer) {
 	//ボスを倒したあとの挙動(後で記述)

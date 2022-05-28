@@ -742,6 +742,10 @@ void GreenTea::App(int Timer) {
 	enemyobj->SetRotation(rot);
 }
 
+void GreenTea::Roll(int Timer) {
+
+}
+
 //撃破
 void GreenTea::End(int Timer) {
 	//ボスを倒したあとの挙動(後で記述)
