@@ -37,6 +37,7 @@ public:
 	};
 	enum FBXName {
 		MottiMove,
+		Motti_No_Move
 	};
 
 public:

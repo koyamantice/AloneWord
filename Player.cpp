@@ -24,6 +24,7 @@ Player::Player() {
 	//モデル読み込み
 	model = ModelManager::GetIns()->GetModel(ModelManager::Player);
 	move_model1 = ModelManager::GetIns()->GetFBXModel(ModelManager::MottiMove);
+	no_move_model1 = ModelManager::GetIns()->GetFBXModel(ModelManager::Motti_No_Move);
 	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
 		ChargeEffect[i] = Texture::Create(ImageManager::ChargeEffect, {0,0,0}, {0.5f,0.5f,0.5f}, {1,1,1,1});
 	}
@@ -48,6 +49,14 @@ bool Player::Initialize() {
 	move_object_->SetPosition(position);
 	move_object_->SetRotation(rot);
 	move_object1.reset(move_object_);
+	//FBX
+	FBXObject3d* no_move_object_ = new FBXObject3d();
+	no_move_object_->Initialize();
+	no_move_object_->SetModel(no_move_model1);
+	no_move_object_->SetScale(plasca);
+	no_move_object_->SetPosition(position);
+	no_move_object_->SetRotation(rot);
+	no_move_object1.reset(no_move_object_);
 	//チャージ時のサークル
 	Texture* Charge_= Texture::Create(ImageManager::Charge, { 0,0,0 }, { 1,1,1 }, { 1,1,1,1 });
 	Charge_ = Texture::Create(ImageManager::Charge, { 0,0,0 }, { 1,1,1 }, { 1,1,1,1 });
@@ -161,6 +170,7 @@ void Player::Update() {
 			//ため時間
 			if (input->PushButton(input->Button_A)) {
 				move_count = 0;
+				stop_count++;
 				ChargeEffectMove();
 				chargeTimer++;
 				PlayerSpeed = 0.2f;
@@ -286,8 +296,10 @@ void Player::Update() {
 	if ((input->LeftTiltStick(input->Right)) || (input->LeftTiltStick(input->Left))
 		|| (input->LeftTiltStick(input->Up)) || (input->LeftTiltStick(input->Down))) {
 		move_count++;
+		stop_count = 0;
 	} else {
 		move_count = 0;
+		stop_count++;
 	}
 
 	//FlashCount == 4までプレイヤーがダメージを食らったあとの判定
@@ -434,17 +446,27 @@ void Player::Update() {
 	move_object1->SetPosition(position);
 	move_object1->SetScale(plasca);
 	move_object1->SetRotation(rot);
-
+	no_move_object1->SetPosition(position);
+	no_move_object1->SetScale(plasca);
+	no_move_object1->SetRotation(rot);
+	//FBXアニメーションの管理(移動)
 	//FBXアニメーションの管理(移動)
 	if (move_count == 1) {
 		move_object1->PlayAnimation();
 	}
-
 	else if (move_count == 0) {
 		move_object1->StopAnimation();
 	}
 
+	if (stop_count == 1) {
+		no_move_object1->PlayAnimation();
+	}
+	else if (stop_count == 0) {
+		no_move_object1->StopAnimation();
+	}
+	
 	move_object1->Update();
+	no_move_object1->Update();
 }
 
 //セレクト画面でのアップデート
@@ -457,14 +479,25 @@ void Player::SelectUp() {
 	move_object1->SetPosition(position);
 	move_object1->SetScale(plasca);
 	move_object1->SetRotation(rot);
+	no_move_object1->SetPosition(position);
+	no_move_object1->SetScale(plasca);
+	no_move_object1->SetRotation(rot);
+	//FBXアニメーションの管理(移動)
 	if (move_count == 1) {
 		move_object1->PlayAnimation();
 	}
-
 	else if (move_count == 0) {
 		move_object1->StopAnimation();
 	}
+
+	if (stop_count == 1) {
+		no_move_object1->PlayAnimation();
+	}
+	else if (stop_count == 0) {
+		no_move_object1->StopAnimation();
+	}
 	move_object1->Update();
+	no_move_object1->Update();
 	StickrotX = input->GetPosX();
 	StickrotY = input->GetPosY();
 	//effecttexture->Update();
@@ -500,8 +533,10 @@ void Player::SelectUp() {
 	if ((input->LeftTiltStick(input->Right)) || (input->LeftTiltStick(input->Left))
 		|| (input->LeftTiltStick(input->Up)) || (input->LeftTiltStick(input->Down))) {
 		move_count++;
+		stop_count = 0;
 	} else {
 		move_count = 0;
+		stop_count++;
 	}
 
 	//ここで音楽を鳴らしている
@@ -543,9 +578,9 @@ void Player::TitleUp() {
 	//アニメーション用のキー入力
 	rot.y = 45.0f;
 	move_count++;
-	if (move_count>100) {
+	/*if (move_count>100) {
 		move_count = 0;
-	}
+	}*/
 	//position = { 2.0f,-4.0f ,0};
 	onGround = true;
 	position = {4.0f,-1.0f,-5.0f};
@@ -559,14 +594,26 @@ void Player::TitleUp() {
 	move_object1->SetPosition(position);
 	move_object1->SetScale(plasca);
 	move_object1->SetRotation(rot);
-	//FBXアニメーションの管理
+	no_move_object1->SetPosition(position);
+	no_move_object1->SetScale(plasca);
+	no_move_object1->SetRotation(rot);
+	//FBXアニメーションの管理(移動)
 	if (move_count == 1) {
 		move_object1->PlayAnimation();
 	}
 	else if (move_count == 0) {
 		move_object1->StopAnimation();
 	}
+
+	if (stop_count == 1) {
+		no_move_object1->PlayAnimation();
+	}
+	else if (stop_count == 0) {
+		no_move_object1->StopAnimation();
+	}
+
 	move_object1->Update();
+	no_move_object1->Update();
 }
 
 //描画
@@ -586,12 +633,14 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	/*ImGui::SliderFloat("position.x", &position.x, 50, -50);
 	ImGui::SliderFloat("position.y", &position.y, 50, -50);
 	ImGui::SliderFloat("position.z", &position.z, 50, -50);*/
+	ImGui::Text("moveCount:%d", move_count);
+	ImGui::Text("stopCount:%d", stop_count);
 	ImGui::End();
 	Texture::PreDraw();
 	if (chargeTimer!=0&&!AttackFlag && HP > 0) {
 		Charge->Draw();
 	}
-
+	
 	for (std::size_t i = 0; i < ChargeEffect.size(); i++) {
 		if (ChargeAlive[i] == true && HP > 0 && Interval <= 80) {
 			ChargeEffect[i]->Draw();
@@ -599,7 +648,13 @@ void Player::Draw(DirectXCommon* dxCommon) {
 	}
 	Object3d::PreDraw();
 	if (FlashCount % 2 == 0) {
-		move_object1->Draw(dxCommon->GetCmdList());
+		if (stop_count != 0) {
+			no_move_object1->Draw(dxCommon->GetCmdList());
+		}
+
+		if (move_count != 0) {
+			move_object1->Draw(dxCommon->GetCmdList());
+		}
 	}
 
 	//arm_no_object1->Draw(dxCommon->GetCmdList());
@@ -744,8 +799,11 @@ void Player::Begin() {
 	
 	move_object1->SetPosition(position);
 	move_object1->SetRotation(rot);
+	no_move_object1->SetPosition(position);
+	no_move_object1->SetRotation(rot);
 	
 	move_object1->Update();
+	no_move_object1->Update();
 }
 
 //撃破
@@ -785,6 +843,10 @@ void Player::End(int Timer) {
 	move_object1->SetRotation(rot);
 	move_object1->StopAnimation();
 	move_object1->Update();
+	no_move_object1->SetPosition(position);
+	no_move_object1->SetRotation(rot);
+	no_move_object1->StopAnimation();
+	no_move_object1->Update();
 }
 
 //チャージ時のエフェクトの動き(吸収)
@@ -931,6 +993,8 @@ void Player::gameoverMovie(int Timer) {
 	move_object1->SetScale(plasca);
 	//move_object1->SetPosition(pos);
 	move_object1->SetRotation(rot);
+	no_move_object1->SetScale(plasca);
+	no_move_object1->SetRotation(rot);
 }
 
 void Player::gameover(int Timer) {
