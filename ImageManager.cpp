@@ -65,6 +65,7 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(noBoss_Sname, L"Resources/2d/noBoss_Sname.png");
 	Sprite::LoadTexture(hit, L"Resources/2d/particleD.png");
 	Sprite::LoadTexture(SPD, L"Resources/2d/SPD.png");
+	Sprite::LoadTexture(StageClear, L"Resources/2d/ClearMark.png");
 }
 
 void ImageManager::LoadTex2D() {

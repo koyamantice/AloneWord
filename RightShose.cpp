@@ -600,12 +600,12 @@ void RightShose::End(int Timer) {
 	XMFLOAT3 AfterScale{};
 	//float endframe = 0.0f;
 	//ボスを倒したあとの挙動(後で記述)
-	if (Timer == 300) {
+	if (Timer == 250) {
 		pos = { 5.0f,0.0f,0.0f };
 		rot = { 0,270,0 };
 	}
 
-	if (Timer == 450) {
+	if (Timer == 350) {
 		EndMove++;
 		endframe = 0.0f;
 	}
