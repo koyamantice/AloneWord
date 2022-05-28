@@ -84,7 +84,7 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	Arrow2->SetAnchorPoint({ 0.5f,0.5f });
 	Arrow2->SetIsFlipY(true);
 	Arrow2->SetPosition({ 0,0 });
-	bairitu = Sprite::Create(ImageManager::bairitu, { 1240.0f,10.0f });
+	bairitu = Sprite::Create(ImageManager::bairitu, { 1240.0f,100.0f });
 	bairitu->SetAnchorPoint({ 1.0f,0.0f });
 	bairitu->SetScale(0.7f);
 	SpinGauge = Sprite::Create(ImageManager::SpinGauge, { 0.0f,0.0f });
