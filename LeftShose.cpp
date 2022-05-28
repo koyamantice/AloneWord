@@ -140,7 +140,9 @@ void LeftShose::Spec() {
 					Afterrot.y = 270;
 					pat = 0;
 					AttackCount = 0;
-					Effect = true;
+					if (BossHP > 0) {
+						Effect = true;
+					}
 					active = false;
 					frame = 0;
 				}
@@ -278,7 +280,9 @@ void LeftShose::Spec() {
 						pat = 0;
 						AttackC = 0;
 						AttackCount = 0;
-						Effect = true;
+						if (BossHP > 0) {
+							Effect = true;
+						}
 						active = false;
 						break;
 					}
@@ -372,7 +376,9 @@ void LeftShose::Spec() {
 				AttackC = 0;
 				AttackCount = 0;
 				active = false;
-				Effect = true;
+				if (BossHP > 0) {
+					Effect = true;
+				}
 			}
 		}
 		pos = {
@@ -561,7 +567,7 @@ void LeftShose::SetAct(Foot* foot) {
 
 //パーティクルが出てくる
 void LeftShose::BirthParticle() {
-	if (action == 2 && active) {
+	if (action == 2 && active && BossHP > 0) {
 		for (int i = 0; i < 3; ++i) {
 			const float rnd_vel = 0.1f;
 			XMFLOAT3 vel{};

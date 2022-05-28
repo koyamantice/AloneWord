@@ -316,8 +316,8 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		plane[3]->SetPosition(selectP[1]);
 		select[3]->SetPosition(selectP[0]);
 		no_select[3]->SetPosition(selectP[0]);
-		OnStageNumber = OnTea;
 		no_plane[3]->SetPosition(selectP[1]);
+		OnStageNumber = OnTea;
 		SinMove(3, 3);
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount >= 1)*/) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
@@ -354,8 +354,8 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		};
 		plane[2]->SetPosition(selectP[1]);
 		select[2]->SetPosition(selectP[0]);
-		no_select[3]->SetPosition(selectP[0]);
-		no_plane[3]->SetPosition(selectP[1]);
+		no_select[2]->SetPosition(selectP[0]);
+		no_plane[2]->SetPosition(selectP[1]);
 		OnStageNumber = OnPastel;
 		SinMove(2, 2);
 		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount >= 3)*/) {

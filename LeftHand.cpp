@@ -251,7 +251,9 @@ void LeftHand::Spec() {
 						pat = 0;
 						AttackC = 0;
 						AttackCount = 0;
-						Effect = true;
+						if (BossHP > 0) {
+							Effect = true;
+						}
 						active = false;
 						break;
 					}
@@ -394,7 +396,9 @@ void LeftHand::Spec() {
 						pat = 0;
 						AttackC = 0;
 						AttackCount = 0;
-						Effect = true;
+						if (BossHP > 0) {
+							Effect = true;
+						}
 						active = false;
 						break;
 					}
@@ -576,7 +580,9 @@ void LeftHand::Spec() {
 						pat = 0;
 						AttackC = 0;
 						AttackCount = 0;
-						Effect = true;
+						if (BossHP > 0) {
+							Effect = true;
+						}
 						active = false;
 						break;
 					}
@@ -869,7 +875,9 @@ void LeftHand::Spec() {
 					pat = 0;
 					AttackC = 0;
 					AttackCount = 0;
-					Effect = true;
+					if (BossHP > 0) {
+						Effect = true;
+					}
 					active = false;
 				}
 
