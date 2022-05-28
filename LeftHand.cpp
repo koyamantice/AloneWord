@@ -1108,7 +1108,7 @@ bool LeftHand::collideMottiPlayer(Player* player) {
 		player->SetHp(playerhp - 1);
 		player->SetCharge(0);
 		player->SetRotCount(0);
-		Interval = 100;
+		player->SetInterval(100);
 		distance.x = playerpos.x - Mottipos.x;
 		distance.z = playerpos.z - Mottipos.z;
 		player->SetDistance(distance);
