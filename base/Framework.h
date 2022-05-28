@@ -60,4 +60,3 @@ protected:
 	ImageManager* imageManager = nullptr;
 	SceneManager* scaneMana = nullptr;
 };
-

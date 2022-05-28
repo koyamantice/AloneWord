@@ -503,7 +503,6 @@ void Player::SelectUp() {
 	//effecttexture->Update();
 	//object3d->SetRotation({ 90,0,0 });
 
-	rot = { 0,0,0 };
 	if ((position.x <= 13 && position.x >= -13)) {
 		if (!(StickrotX<650 && StickrotX>-650)) {
 			rot.y = ((-atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) + 90;

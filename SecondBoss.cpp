@@ -758,9 +758,9 @@ void SecondBoss::Draw(DirectXCommon* dxCommon) {
 				enemy[i]->Draw();
 			}
 			if (bossstart) {
-				ui->Draw();
 				// パーティクルの描画
 				particleMan->Draw(dxCommon->GetCmdList());
+				ui->Draw();
 			}
 			else {
 				ui->SkipDraw();
