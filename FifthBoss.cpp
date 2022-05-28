@@ -427,7 +427,7 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 		EndTimer++;
 		righthand->EndMovie(EndTimer);
 		lefthand->EndMovie(EndTimer);
-		player->End();
+		player->End(EndTimer);
 		if (EndNumber == 0) {
 			cameraPos.x = player->GetPosition().x;
 			cameraPos.y = player->GetPosition().y + distanceY;

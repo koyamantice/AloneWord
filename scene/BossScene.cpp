@@ -428,44 +428,122 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 	//ボス撃破ムービー演出
 	else {
 		if (end) {
+			expandchange->SetStartChange(true);
 			EndTimer++;
 			bossenemy->EndMovie(EndTimer);
-			player->End();
+			player->End(EndTimer);
+			//カメラの位置をそれぞれを変える
 			if (EndNumber == 0) {
-				cameraPos.x = player->GetPosition().x;
-				cameraPos.y = player->GetPosition().y + distanceY;
-				cameraPos.z = player->GetPosition().z - distanceZ;
-				camera->SetTarget(player->GetPosition());
-				if (EndTimer == 50) {
-					EndNumber = 1;
-				}
-			}
-			else if (EndNumber == 1) {
-				if (WhiteColor.w <= 1.0f) {
-					WhiteColor.w += 0.005f;
+				if (EndTimer == 1) {
+					cameraPos.x = bossenemy->GetPosition().x + 5;
+					cameraPos.y = 2;
+					cameraPos.z = bossenemy->GetPosition().z + 8;
+					camera->SetTarget(player->GetPosition());
 				}
 
+				else if (EndTimer == 20) {
+					Aftereyepos = {
+						bossenemy->GetPosition().x + 2,
+						2,
+						bossenemy->GetPosition().z + 5,
+					};
+				}
+
+				if (frame < 1.0f) {
+					frame += 0.005f;
+				}
+				else {
+					frame = 1.0f;
+				}
+
+				cameraPos = {
+				Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+				Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+				Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+				};
+
 				if (EndTimer == 300) {
+					frame = 0.0f;
 					EndNumber++;
 				}
 			}
-			else if (EndNumber == 2) {
-				if (WhiteColor.w >= 0.0f) {
-					WhiteColor.w -= 0.005f;
+			else if (EndNumber == 1) {
+				Aftereyepos = {
+					bossenemy->GetPosition().x,
+					bossenemy->GetPosition().y + distanceY,
+					bossenemy->GetPosition().z - distanceZ,
+				};
+
+				Aftertargetpos = {
+					bossenemy->GetPosition().x,
+					bossenemy->GetPosition().y + 5,
+					bossenemy->GetPosition().z,
+				};
+
+				if (frame < 1.0f) {
+					frame += 0.015f;
 				}
-				cameraPos.x = bossenemy->GetPosition().x;
-				cameraPos.y = bossenemy->GetPosition().y + 7;
-				cameraPos.z = bossenemy->GetPosition().z - 10;
-				camera->SetTarget(bossenemy->GetPosition());
+				else {
+					frame = 1.0f;
+				}
+
+				cameraPos = {
+			Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+			Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+			Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+				};
+
+				cameratargetPos = {
+	Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+	Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+	Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+				};
+
+				if (EndTimer == 400) {
+					frame = 0.0f;
+					EndNumber++;
+				}
 			}
+
+			else if (EndNumber == 2) {
+				Aftereyepos = {
+				bossenemy->GetPosition().x,
+				bossenemy->GetPosition().y + 1,
+				bossenemy->GetPosition().z - 5,
+				};
+
+				Aftertargetpos = {
+					bossenemy->GetPosition().x,
+					bossenemy->GetPosition().y + 1,
+					bossenemy->GetPosition().z,
+				};
+
+				if (frame < 1.0f) {
+					frame += 0.015f;
+				}
+				else {
+					frame = 1.0f;
+				}
+
+				cameraPos = {
+			Ease(In,Cubic,frame,cameraPos.x,Aftereyepos.x),
+			Ease(In,Cubic,frame,cameraPos.y,Aftereyepos.y),
+			Ease(In,Cubic,frame,cameraPos.z,Aftereyepos.z)
+				};
+
+				cameratargetPos = {
+	Ease(In,Cubic,frame,cameratargetPos.x,Aftertargetpos.x),
+	Ease(In,Cubic,frame,cameratargetPos.y,Aftertargetpos.y),
+	Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
+				};
+
+				if (EndTimer == 450) {
+					frame = 0.0f;
+					EndNumber++;
+				}
+			}
+
 			WhiteFilter->SetColor(WhiteColor);
-			
-			camera->SetEye(cameraPos);
-
-			if (EndTimer == 700) {
-				expandchange->SetStartChange(true);
-			}
-
 			if (expandchange->GetTimer() >= 58) {
 				if (!save->GetFirstClear()) {
 					save->ClearSave();
@@ -474,6 +552,8 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 				//Audio::GetInstance()->LoopWave(4, 0.2f);
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
+			camera->SetTarget(cameratargetPos);
+			camera->SetEye(cameraPos);
 		}
 
 		if (gameover == true) {
@@ -636,6 +716,17 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 
 //描画
 void BossScene::Draw(DirectXCommon* dxCommon) {
+	ImGui::Begin("test");
+	ImGui::SliderFloat("frame", &frame, 1, 0);
+	ImGui::SliderFloat("cameratargetPos.y", &cameratargetPos.y, 20, 0);
+	ImGui::SliderFloat("cameratargetPos.z", &cameratargetPos.z, 20, 0);
+	ImGui::SliderFloat("cameraPos.y", &cameraPos.y, 20, 0);
+	ImGui::SliderFloat("cameraPos.z", &cameraPos.z, 20, 0);
+	//ImGui::SliderFloat("cameratarget.y", &cameratargetPos.y, 20, 0);
+	//ImGui::SliderFloat("frame", &frame, 1, 0);
+	//ImGui::SliderFloat("frame", &frame, 1, 0);
+	ImGui::Text("moveCount:%d", EndTimer);
+	ImGui::End();
 	//各オブジェクトの描画
 	Object3d::PreDraw();
 	if (!gameover) {
@@ -654,9 +745,7 @@ void BossScene::Draw(DirectXCommon* dxCommon) {
 
 	if (!gameover) {
 		Texture::PreDraw();
-		if (EndNumber <= 1) {
-			player->Draw(dxCommon);
-		}
+		player->Draw(dxCommon);
 
 		Sprite::PreDraw();
 

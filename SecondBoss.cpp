@@ -438,7 +438,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 			EndTimer++;
 			rightshose->EndMovie(EndTimer);
 			leftshose->EndMovie(EndTimer);
-			player->End();
+			player->End(EndTimer);
 			if (EndNumber == 0) {
 				cameraPos.x = player->GetPosition().x;
 				cameraPos.y = player->GetPosition().y + distanceY;
