@@ -178,7 +178,7 @@ protected:
 	bool pause = false;
 	bool respawn = false;
 	//
-	float BossHP = 1;
+	float BossHP = 40;
 	bool BossHit = false;
 	bool Effect = false;
 	bool Effect2 = false;

@@ -59,6 +59,7 @@ void RightHand::Finalize() {
 
 //ƒ{ƒX‚Ìs“®
 void RightHand::Spec() {
+	shadow = false;
 	XMFLOAT3 AfterPos{};
 	if (stateNumber == Open) {
 		enemyobj->SetModel(model);
@@ -958,11 +959,11 @@ void RightHand::App(int Timer) {
 	XMFLOAT3 AfterRot{};
 
 	if (Timer == 0) {
-		pos = { 13.0f,0.0f,18.0f };
-		rot = { 0.0f,315.0f,0.0f };
+		pos = { 5.0f,1.0f,5.0f };
+		rot = { 0,90,0 };
 	}
 
-	if (Timer == 150 || Timer == 280 || Timer == 300) {
+	if (Timer == 360 || Timer == 600 || Timer == 750) {
 		appearMove++;
 		frame = 0.0f;
 		frame2 = 0.0f;
@@ -972,9 +973,14 @@ void RightHand::App(int Timer) {
 	switch (appearMove) {
 	case 1:
 		AfterPos = {
-			0,
-			0,
-			-8,
+						0.5,
+						1,
+						3,
+		};
+		AfterRot = {
+			45,
+			180,
+			rot.z,
 		};
 		if (frame < 1.0f) {
 			frame += 0.005f;
@@ -986,21 +992,43 @@ void RightHand::App(int Timer) {
 		}
 
 	case 2:
-		pos = { 10.0f,0.0f,0.0f };
-		rot = { 0,90,0 };
-		AfterRot.y = 90.0f;
-	case 3:
-		//‚Ò‚æ‚Ò‚æ‚ª•‚‚©‚Ô
-		stun = true;
-		if (stun) {
-			for (std::size_t i = 0; i < Stuntexture.size(); i++) {
-				StunSpeed[i] += 2.0f;
-			}
-		}
+		AfterPos = {
+					2,
+					1,
+					3,
+		};
 
-		if (Timer == 500) {
-			appearMove = 0;
-			stun = false;
+		AfterRot = {
+			0,
+			90,
+			rot.z,
+		};
+		if (frame < 1.0f) {
+			frame += 0.005f;
+			break;
+		}
+		else {
+			frame = 0.0f;
+			break;
+		}
+	case 3:
+		AfterPos = {
+				10,
+				1,
+				0,
+		};
+		AfterRot = {
+			rot.x,
+			rot.y,
+			rot.z
+		};
+		if (frame < 1.0f) {
+			frame += 0.005f;
+			break;
+		}
+		else {
+			frame = 0.0f;
+			break;
 		}
 	}
 
@@ -1022,9 +1050,9 @@ void RightHand::App(int Timer) {
 	};
 
 	rot = {
-	Ease(In,Cubic,frame2,rot.x,AfterRot.x),
-	Ease(In,Cubic,frame2,rot.y,AfterRot.y),
-	Ease(In,Cubic,frame2,rot.z,AfterRot.z)
+	Ease(In,Cubic,frame,rot.x,AfterRot.x),
+	Ease(In,Cubic,frame,rot.y,AfterRot.y),
+	Ease(In,Cubic,frame,rot.z,AfterRot.z)
 	};
 	enemyobj->SetPosition(pos);
 	enemyobj->SetRotation(rot);
