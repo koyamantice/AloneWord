@@ -1,6 +1,8 @@
 #pragma once
 #include "SceneManager.h"
 #include "ExpandChange.h"
+#include "ShrinkChange.h"
+#include "Save.h"
 /// <summary>
 /// タイトルシーン
 /// </summary>
@@ -38,6 +40,8 @@ private:
 	};
 	//各クラスのもの
 	ExpandChange* expandchange = nullptr;
+	ShrinkChange* shrinkchange = false;
+	Save* save = nullptr;
 	DebugCamera* camera = { nullptr };
 	unique_ptr<Player> player = nullptr;
 	enum Select {

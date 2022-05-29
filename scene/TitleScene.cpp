@@ -41,6 +41,9 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 	sprite[ground] = Sprite::Create(ImageManager::ground, { 0.0f,0.0f });
 	//スプライト生成
 	expandchange = new ExpandChange();
+	shrinkchange = new ShrinkChange();
+	shrinkchange->SetEndChange(true);
+	save = new Save();
 }
 //開放処理
 void TitleScene::Finalize() {
@@ -53,6 +56,7 @@ void TitleScene::Finalize() {
 //更新
 void TitleScene::Update(DirectXCommon* dxCommon) {
 	Input* input = Input::GetInstance();
+	shrinkchange->Update();
 	//どの選択をするかでどのシーンに行くか変わる
 	if (expandchange->GetScale() == 1.0f) {
 		if (input->LeftTriggerStick(input->Down) && (SelectNumber <= 1)) {
@@ -121,11 +125,12 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 }
 //描画
 void TitleScene::Draw(DirectXCommon* dxCommon) {
-	//ImGui::Begin("test");
-	////ImGui::SliderFloat("cameraPos.y", &cameraPos.y, 30, 0);
-	//ImGui::Text("clearCount::%d", SelectNumber);
-	//ImGui::Unindent();
-	//ImGui::End();
+	bool P = save->GetPerfectClear();
+	ImGui::Begin("test");
+	//ImGui::SliderFloat("cameraPos.y", &cameraPos.y, 30, 0);
+	ImGui::Text("P::%d", P);
+	ImGui::Unindent();
+	ImGui::End();
 	Sprite::PreDraw();
 	//背景用
 	sprite[back]->Draw();
@@ -138,5 +143,8 @@ void TitleScene::Draw(DirectXCommon* dxCommon) {
 	Sprite::PreDraw();
 	//前面用
 	expandchange->Draw();
+	if (save->GetPerfectClear() == true) {
+		shrinkchange->Draw();
+	}
 }
 
