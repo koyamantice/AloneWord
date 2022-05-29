@@ -239,7 +239,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 				};
 
 				if (appearanceTimer == 240) {
-					Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/noDamage.wav", 0.4f);
+					Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/forkAttack.wav", 0.4f);
 				}
 				if (appearanceTimer == 300) {
 					frame = 0.0f;

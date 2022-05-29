@@ -41,4 +41,5 @@ private:
 	array<Texture*, 4> Plattexture;
 	int FlashTimer = 0;
 	int FlashCount = 0;
+	int SETimer = 0;
 };

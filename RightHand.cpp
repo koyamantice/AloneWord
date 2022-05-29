@@ -93,7 +93,7 @@ void RightHand::Spec() {
 		//è’åÇîg
 		if (action == 0) {
 			hitradius = 0.6f;
-			if (AttackC < 5) {
+			if (AttackC < 3) {
 				switch (pat) {
 				case 1:
 					AfterPos = {
@@ -149,7 +149,7 @@ void RightHand::Spec() {
 					7.0f,
 						player->GetPosition().z
 					};
-					if (aiming < 20) {
+					if (aiming < 80) {
 						frame = 0.5f;
 						aiming++;
 						break;
@@ -183,6 +183,9 @@ void RightHand::Spec() {
 						//Afterrot.z = 0;
 						frame = 1.0f;
 						if (coolT < 20) {
+							if (coolT == 1 && BossHP > 0) {
+								Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/groundAttack.wav", 0.2f);
+							}
 							coolT++;
 							break;
 						}
@@ -418,7 +421,7 @@ void RightHand::Spec() {
 
 		//ìÀêiçUåÇ
 		else if (action == 2) {
-		hitradius = 2.4f;
+		hitradius = 0.8f;
 			if (pat == 1) {
 				AfterPos.y = 15.0f;
 				if (pos.y >= 14) {
@@ -646,6 +649,8 @@ void RightHand::Spec() {
 					frame += 0.002f;
 				}
 				else {
+					Afterrot.y = 90.0f;
+					rot.y = 90.0f;
 					frame = 0;
 					pat++;
 				}
@@ -742,6 +747,7 @@ void RightHand::Spec() {
 				if (MoveCount == 60) {
 					double sb, sbx, sbz;
 					if (!Attack) {
+						Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/swing.wav", 0.2f);
 						hitpoint = HitNot;
 						sbx = player->GetPosition().x - Mottipos.x;
 						sbz = player->GetPosition().z - Mottipos.z;
@@ -1096,8 +1102,8 @@ void RightHand::Roll(int Timer) {
 	case 2:
 		AfterPos = {
 						0.5,
-						-9.5,
-						3,
+						-10,
+						5,
 		};
 		AfterRot = {
 			45,
@@ -1156,6 +1162,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 
 //åÇîj
 void RightHand::End(int Timer) {
+
 	//É{ÉXÇì|ÇµÇΩÇ†Ç∆ÇÃãììÆ(å„Ç≈ãLèq)
 	XMFLOAT3 scale = { 0.8f,0.8f,0.8f };
 	float RotPower = 0.0f;
@@ -1163,8 +1170,9 @@ void RightHand::End(int Timer) {
 	//float endframe = 0.0f;
 	//É{ÉXÇì|ÇµÇΩÇ†Ç∆ÇÃãììÆ(å„Ç≈ãLèq)
 	if (Timer == 250) {
+		enemyobj->SetModel(model);
 		pos = { 5.0f,0.0f,0.0f };
-		rot = { 0,270,0 };
+		rot = { 0,90,0 };
 	}
 
 	if (Timer == 350) {

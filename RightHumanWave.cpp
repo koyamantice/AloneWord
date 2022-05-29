@@ -13,17 +13,28 @@ void RightHumanWave::Init() {
 }
 
 void RightHumanWave::Upda(RightHand* righthand, Player* player) {
-	Interval = player->GetInterval();
+	XMFLOAT3 playerpos = player->GetPosition();
 	float playerhp = player->GetHp();
-	if (CollideWave(player) && !CollideSafeWave(player) && Interval == 0 && player->GetPosition().y <= 1.0f) {
+	XMFLOAT3 distance = player->GetDistance();
+	float weight = player->GetArmWeight();
+	if (CollideWave(player) && !CollideSafeWave(player) && player->GetInterval() == 0 && player->GetPosition().y <= 1.0f) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
-		player->SetHp(player->GetHp() - 1);
-		Interval = 100;
+		player->SetHp(playerhp - 1.0);
 		player->SetCharge(0);
 		player->SetRotCount(0);
+		player->SetInterval(100);
+		distance.x = playerpos.x - pos.x;
+		distance.z = playerpos.z - pos.z;
+		player->SetDistance(distance);
+		player->SetJumpG(0.5f);
+		player->SetDamageFlag(true);
+		player->SetAttackFlag(false);
+		if (weight != 0.0f) {
+			weight = 0.0f;
+			player->SetArmWeight(weight);
+		}
 	}
 
-	player->SetInterval(Interval);
 	SetWave(righthand);
 	wave->Update();
 }
