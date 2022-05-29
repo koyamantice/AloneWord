@@ -118,7 +118,7 @@ void LeftHand::Spec() {
 					Afterrot.z = 90;
 					AfterPos.y = 1.0f;
 					if (frame < 0.45f) {
-						frame += 0.002f;
+						frame += 0.004f;
 					}
 					else {
 						pat++;
@@ -147,7 +147,7 @@ void LeftHand::Spec() {
 					7.0f,
 						player->GetPosition().z
 					};
-					if (aiming < 20) {
+					if (aiming < 80) {
 						frame = 0.5f;
 						aiming++;
 						break;
@@ -181,6 +181,9 @@ void LeftHand::Spec() {
 						//Afterrot.z = 0;
 						frame = 1.0f;
 						if (coolT < 20) {
+							if (coolT == 1 && BossHP > 0) {
+								Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/groundAttack.wav", 0.2f);
+							}
 							coolT++;
 							break;
 						}
@@ -345,6 +348,9 @@ void LeftHand::Spec() {
 					if (frame >= 1.0f) {
 						frame = 1.0f;
 						if (coolT < 50) {
+							if (coolT == 1) {
+								Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/motipeta.wav", 0.2f);
+							}
 							coolT++;
 							break;
 						}
@@ -617,6 +623,7 @@ void LeftHand::Spec() {
 						frame += 0.002f;
 					}
 					else {
+						Afterrot.y = 90.0f;
 						rot.y = 90.0f;
 						frame = 0;
 						pat++;
@@ -714,6 +721,7 @@ void LeftHand::Spec() {
 					if (MoveCount == 100) {
 						double sb, sbx, sbz;
 						if (!Attack) {
+							Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/swing.wav", 0.2f);
 							hitpoint = HitNot;
 							sbx = player->GetPosition().x - Mottipos.x;
 							sbz = player->GetPosition().z - Mottipos.z;

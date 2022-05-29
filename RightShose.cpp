@@ -773,7 +773,7 @@ void RightShose::SetAct(Foot* foot) {
 bool RightShose::HitShose(LeftShose* leftshose) {
 	XMFLOAT3 leftpos = leftshose->GetPosition();
 	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 1.5f, leftpos.x, leftpos.y, leftpos.z, 1.5f) && (action == 0)
-		&& (leftshose->GetHP() > 0) && this->stun == false) {
+		&& (leftshose->GetHP() > 0) &&(this->BossHP > 0) && this->stun == false) {
 		//個々の音変更案件
 		Audio::GetInstance()->PlayWave("Resources/Sound/accident.wav", 0.4f);
 		this->stun = true;

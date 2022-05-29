@@ -245,7 +245,7 @@ void Pastel::Spec() {
 
 						if (coolT < 150) {
 							if (coolT == 1) {
-								Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/forkAttack.wav", 0.4f);
+								Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/groundAttack.wav", 0.4f);
 							}
 							coolT++;
 							break;
@@ -380,7 +380,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 						SETimer++;
 						hitradius = 4.0f;
 						if (SETimer == 20 || SETimer == 50) {
-							Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/forkAttack.wav", 0.4f);
+							Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/swing.wav", 0.4f);
 						}
 						break;
 					}
@@ -409,7 +409,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 						SETimer++;
 						hitradius = 4.0f;
 						if (SETimer == 20 || SETimer == 50) {
-							Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/forkAttack.wav", 0.4f);
+							Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/swing.wav", 0.4f);
 						}
 						break;
 					}
@@ -438,7 +438,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 						SETimer++;
 						hitradius = 4.0f;
 						if (SETimer == 20 || SETimer == 50) {
-							Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/forkAttack.wav", 0.4f);
+							Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/swing.wav", 0.4f);
 						}
 						break;
 					}
@@ -467,7 +467,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 						SETimer++;
 						hitradius = 4.0f;
 						if (SETimer == 20 || SETimer == 50) {
-							Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/forkAttack.wav", 0.4f);
+							Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/swing.wav", 0.4f);
 						}
 						break;
 					}
@@ -569,6 +569,12 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 			haveEnemy = 0.0f;
 			MottiScale = { 0.0f,0.0f,0.0f };
 		}
+
+
+		if (haveTimer == 220 || haveTimer == 350 || haveTimer == 470 || haveTimer == 580) {
+			Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/motipeta.wav", 0.4f);
+		}
+
 	}
 
 	MillUpdate();
@@ -805,6 +811,7 @@ void Pastel::specialDraw() {
 	////ImGui::Text("AttackC:: %d", AttackC);
 	//ImGui::SliderFloat("HP", &BossHP, 40, 0);
 	//ImGui::SliderFloat("Defense", &Defense, 2, 0);
+	ImGui::SliderFloat("angle", &angle, 360, -360);
 	ImGui::Text("haveTimer::%d", haveTimer);
 	/*ImGui::Text("action::%d", action);
 	ImGui::Text("active::%d", active);
