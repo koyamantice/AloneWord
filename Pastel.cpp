@@ -244,6 +244,9 @@ void Pastel::Spec() {
 						frame = 1.0f;
 
 						if (coolT < 150) {
+							if (coolT == 1) {
+								Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/forkAttack.wav", 0.4f);
+							}
 							coolT++;
 							break;
 						}
@@ -374,11 +377,16 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 
 					if (frame < 1.0f) {
 						frame += 0.01f;
+						SETimer++;
 						hitradius = 4.0f;
+						if (SETimer == 20 || SETimer == 50) {
+							Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/forkAttack.wav", 0.4f);
+						}
 						break;
 					}
 					else {
 						frame = 0;
+						SETimer = 0;
 						hitradius = 1.0f;
 						pat++;
 						rot.z = 45.0f;
@@ -398,12 +406,17 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 
 					if (frame < 1.0f) {
 						frame += 0.01f;
+						SETimer++;
 						hitradius = 4.0f;
+						if (SETimer == 20 || SETimer == 50) {
+							Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/forkAttack.wav", 0.4f);
+						}
 						break;
 					}
 					else {
 						hitradius = 1.0f;
 						frame = 0;
+						SETimer = 0;
 						pat++;
 						rot.z = 45.0f;
 						break;
@@ -422,12 +435,17 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 
 					if (frame < 1.0f) {
 						frame += 0.01f;
+						SETimer++;
 						hitradius = 4.0f;
+						if (SETimer == 20 || SETimer == 50) {
+							Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/forkAttack.wav", 0.4f);
+						}
 						break;
 					}
 					else {
 						hitradius = 1.0f;
 						frame = 0;
+						SETimer = 0;
 						pat++;
 						rot.z = 45.0f;
 						break;
@@ -446,12 +464,17 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 
 					if (frame < 1.0f) {
 						frame += 0.01f;
+						SETimer++;
 						hitradius = 4.0f;
+						if (SETimer == 20 || SETimer == 50) {
+							Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/forkAttack.wav", 0.4f);
+						}
 						break;
 					}
 					else {
 						hitradius = 1.0f;
 						frame = 0;
+						SETimer = 0;
 						pat++;
 						rot.z = 45.0f;
 						break;
@@ -772,6 +795,25 @@ void Pastel::MillUpdate() {
 
 //“Á•Ê‚È•`‰æ(‚¤‚·‚Æ‰ñ”ð‚Ì‚à‚Ì‚Æ‰e)
 void Pastel::specialDraw() {
+	XMFLOAT3 playerpos = player->GetPosition();
+	ImGui::Begin("test");
+	//ImGui::SliderFloat("pos.y", &pos.y, 360, -360);
+	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	//ImGui::SliderFloat("rot.z", &rot.z, 360, -360);
+	////ImGui::Text("pat::%d", pat);
+	////ImGui::Text("AttackC:: %d", AttackC);
+	//ImGui::SliderFloat("HP", &BossHP, 40, 0);
+	//ImGui::SliderFloat("Defense", &Defense, 2, 0);
+	ImGui::Text("haveTimer::%d", haveTimer);
+	/*ImGui::Text("action::%d", action);
+	ImGui::Text("active::%d", active);
+	*/
+	
+	/*ImGui::Text("shadow::%d", shadow);
+	ImGui::SliderFloat("hit", &hitradius, 1, 0);*/
+
+	ImGui::End();
 	if (BossHP > 0) {
 		Millobj->Draw();
 		Mottiobj->Draw();

@@ -177,7 +177,7 @@ void BossEnemy::Spec() {
 						frame = 1.0f;
 						if (coolT < 90) {
 							if (coolT == 1) {
-								Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/noDamage.wav", 0.4f);
+								Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/forkAttack.wav", 0.4f);
 							}
 							coolT++;
 							break;

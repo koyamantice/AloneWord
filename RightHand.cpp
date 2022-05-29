@@ -93,7 +93,7 @@ void RightHand::Spec() {
 		//è’åÇîg
 		if (action == 0) {
 			hitradius = 0.6f;
-			if (AttackC < 5) {
+			if (AttackC < 3) {
 				switch (pat) {
 				case 1:
 					AfterPos = {
