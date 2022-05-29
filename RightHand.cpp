@@ -418,7 +418,7 @@ void RightHand::Spec() {
 
 		//突進攻撃
 		else if (action == 2) {
-		hitradius = 2.4f;
+		hitradius = 0.8f;
 			if (pat == 1) {
 				AfterPos.y = 15.0f;
 				if (pos.y >= 14) {
@@ -646,6 +646,7 @@ void RightHand::Spec() {
 					frame += 0.002f;
 				}
 				else {
+					rot.y = 90.0f;
 					frame = 0;
 					pat++;
 				}
@@ -1096,8 +1097,8 @@ void RightHand::Roll(int Timer) {
 	case 2:
 		AfterPos = {
 						0.5,
-						-9.5,
-						3,
+						-10,
+						5,
 		};
 		AfterRot = {
 			45,
@@ -1156,6 +1157,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 
 //撃破
 void RightHand::End(int Timer) {
+
 	//ボスを倒したあとの挙動(後で記述)
 	XMFLOAT3 scale = { 0.8f,0.8f,0.8f };
 	float RotPower = 0.0f;
@@ -1163,8 +1165,9 @@ void RightHand::End(int Timer) {
 	//float endframe = 0.0f;
 	//ボスを倒したあとの挙動(後で記述)
 	if (Timer == 250) {
+		enemyobj->SetModel(model);
 		pos = { 5.0f,0.0f,0.0f };
-		rot = { 0,270,0 };
+		rot = { 0,90,0 };
 	}
 
 	if (Timer == 350) {

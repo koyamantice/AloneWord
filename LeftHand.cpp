@@ -617,6 +617,7 @@ void LeftHand::Spec() {
 						frame += 0.002f;
 					}
 					else {
+						rot.y = 90.0f;
 						frame = 0;
 						pat++;
 					}
@@ -1131,6 +1132,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 
 //撃破
 void LeftHand::End(int Timer) {
+
 	//ボスを倒したあとの挙動(後で記述)
 	XMFLOAT3 scale = { 0.8f,0.8f,0.8f };
 	float RotPower = 0.0f;
@@ -1138,8 +1140,9 @@ void LeftHand::End(int Timer) {
 	//float endframe = 0.0f;
 	//ボスを倒したあとの挙動(後で記述)
 	if (Timer == 250) {
+		enemyobj->SetModel(model);
 		pos = { -5.0f,0.0f,0.0f };
-		rot = { 0,270,0 };
+		rot = { 0,90,0 };
 	}
 
 	if (Timer == 350) {
