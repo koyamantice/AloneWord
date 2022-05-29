@@ -661,18 +661,23 @@ Ease(In,Cubic,frame,rot.z,AfterRot.z)
 void Pastel::Roll(int Timer) {
 	XMFLOAT3 AfterPos{};
 	if (Timer == 1) {
-		pos = { 50.0f,-5.0f,10.0f };
+		pos = { 50.0f,-14.0f,10.0f };
+		rot.y = 0.0f;
 		frame = 0.0f;
+		enescale = { 1.0f,1.0f,1.0f };
 	}
 
-	if (Timer == 300) {
+	if (Timer == 2200) {
 		rollMove++;
 	}
 
 	//導入シーンにおいてフレーム数によって行動を決める
 	switch (rollMove) {
 	case 1:
-		pos.x -= 0.1f;
+		pos.x -= 0.125f;
+		angle += 3.0f;
+		angle2 = angle * (3.14f / 180.0f);
+		rot.z = sin(angle2) * 45;
 	}
 
 	//pos = {
@@ -681,6 +686,8 @@ void Pastel::Roll(int Timer) {
 	//Ease(In,Cubic,frame,pos.z,AfterPos.z)
 	//};
 	enemyobj->SetPosition(pos);
+	enemyobj->SetRotation(rot);
+	enemyobj->SetScale(enescale);
 }
 
 //撃破

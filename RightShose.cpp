@@ -594,19 +594,77 @@ void RightShose::App(int Timer) {
 
 void RightShose::Roll(int Timer) {
 	XMFLOAT3 AfterPos{};
+	bool Rollbound;
 	if (Timer == 1) {
-		pos = { 50.0f,-5.0f,10.0f };
+		pos = { 50.0f,-14.0f,10.0f };
+		rot.y = 0.0f;
 		frame = 0.0f;
+		Rollbound = false;
 	}
 
-	if (Timer == 200) {
+	if (Timer == 1600 || Timer == 1990) {
 		rollMove++;
 	}
 
+	if (Timer == 1990) {
+		Rollbound = true;
+		stun = true;
+		Deadbound.y = 0.5f;
+		Deadbound.x = 0.2f;
+	}
+
+	if (Timer == 2100) {
+		stun = false;
+		rollMove++;
+	}
 	//導入シーンにおいてフレーム数によって行動を決める
 	switch (rollMove) {
 	case 1:
-		pos.x -= 0.1f;
+		pos.x -= 0.125f;
+		break;
+	case 2:
+		Deadbound.y -= 0.02f;
+		pos.y += Deadbound.y;
+		if (pos.y > -14.0f) {
+			pos.x += Deadbound.x;
+		}
+		else {
+			pos.y = -14.0f;
+		}
+		if (pos.y == -14.0f) {
+			Rollbound = false;
+			Deadbound.y = 0.0f;
+			Deadbound.x = 0.0f;
+		}
+		if (stun) {
+			for (std::size_t i = 0; i < Stuntexture.size(); i++) {
+				StunSpeed[i] += 2.0f;
+			}
+		}
+
+		for (std::size_t i = 0; i < Stuntexture.size(); i++) {
+			Stunradius[i] = StunSpeed[i] * PI / 180.0f;
+			StunCircleX[i] = cosf(Stunradius[i]) * Stunscale[i];
+			StunCircleZ[i] = sinf(Stunradius[i]) * Stunscale[i];
+			StunPos[i].x = StunCircleX[i] + pos.x;
+			StunPos[i].z = StunCircleZ[i] + pos.z;
+			StunPos[i].y = pos.y + 2;
+			Stuntexture[i]->SetPosition(StunPos[i]);
+			Stuntexture[i]->Update();
+		}
+		break;
+	case 3:
+		if (rot.y <= 180) {
+			rot.y += 4.0f;
+		}
+		else {
+			rollMove++;
+		}
+		break;
+
+	case 4:
+		pos.x += 0.5f;
+		break;
 	}
 
 	//pos = {
@@ -615,6 +673,7 @@ void RightShose::Roll(int Timer) {
 	//Ease(In,Cubic,frame,pos.z,AfterPos.z)
 	//};
 	enemyobj->SetPosition(pos);
+	enemyobj->SetRotation(rot);
 }
 
 //撃破

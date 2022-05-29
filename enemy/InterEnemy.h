@@ -138,6 +138,8 @@ protected:
 	float z_min = -20;
 	float z_max = 20;
 	XMFLOAT2 vel{};
+	float afterrot = 90.0f;
+	float rollframe = 0.0f;
 
 public:
 	virtual ~InterEnemy() = default;

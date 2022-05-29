@@ -1035,27 +1035,98 @@ void LeftHand::App(int Timer) {
 
 void LeftHand::Roll(int Timer) {
 	XMFLOAT3 AfterPos{};
+	XMFLOAT3 AfterRot{};
 	if (Timer == 1) {
-		pos = { -50.0f,-5.0f,10.0f };
+		pos = { -50.0f,-14.0f,10.0f };
+		rot.y = 90;
 		frame = 0.0f;
 	}
 
-	if (Timer == 400) {
+	if (Timer == 2900 || Timer == 3100 || Timer == 3300) {
+		frame = 0.0f;
 		rollMove++;
 	}
 
 	//導入シーンにおいてフレーム数によって行動を決める
 	switch (rollMove) {
 	case 1:
-		pos.x += 0.1f;
-	}
+		AfterPos = {
+						-10,
+						pos.y,
+						pos.z,
+		};
+		AfterRot = {
+			rot.x,
+			rot.y,
+			rot.z
+		};
+		if (frame < 1.0f) {
+			frame += 0.005f;
+			break;
+		}
+		else {
+			frame = 0.0f;
+			break;
+		}
+	case 2:
+		AfterPos = {
+						-0.5,
+						-10,
+						5,
+		};
+		AfterRot = {
+			-45,
+			0,
+			rot.z,
+		};
+		if (frame < 1.0f) {
+			frame += 0.005f;
+			break;
+		}
+		else {
+			frame = 0.0f;
+			break;
+		}
+	case 3:
+		AfterPos = {
+				-50,
+				pos.y,
+				10,
+		};
 
+		AfterRot = {
+			0,
+			90,
+			rot.z,
+		};
+		if (frame < 1.0f) {
+			frame += 0.005f;
+			break;
+		}
+		else {
+			frame = 0.0f;
+			break;
+		}
+	}
+	pos = {
+Ease(In,Cubic,frame,pos.x,AfterPos.x),
+Ease(In,Cubic,frame,pos.y,AfterPos.y),
+Ease(In,Cubic,frame,pos.z,AfterPos.z)
+	};
+
+
+	rot = {
+	Ease(In,Cubic,frame,rot.x,AfterRot.x),
+	Ease(In,Cubic,frame,rot.y,AfterRot.y),
+	Ease(In,Cubic,frame,rot.z,AfterRot.z)
+	};
 	//pos = {
 	//Ease(In,Cubic,frame,pos.x,AfterPos.x),
 	//Ease(In,Cubic,frame,pos.y,AfterPos.y),
 	//Ease(In,Cubic,frame,pos.z,AfterPos.z)
 	//};
 	enemyobj->SetPosition(pos);
+	enemyobj->SetRotation(rot);
 }
 
 //撃破

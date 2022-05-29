@@ -75,5 +75,6 @@ private://ƒƒ“ƒo•Ï”
 	InterBoss* tea = nullptr;
 	InterBoss* lefthand = nullptr;
 	InterBoss* righthand = nullptr;
+	array<Rice*, 4> enemy;
 };
 

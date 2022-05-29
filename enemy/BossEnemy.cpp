@@ -320,26 +320,59 @@ void BossEnemy::App(int Timer) {
 void BossEnemy::Roll(int Timer) {
 	XMFLOAT3 AfterPos{};
 	if (Timer == 1) {
-		pos = { 50.0f,-5.0f,10.0f };
+		pos = { 50.0f, 10.0f,10.0f };
+		rot.y = 180.0f;
 		frame = 0.0f;
 	}
 
-	if (Timer == 10) {
+	if (Timer == 200) {
 		rollMove++;
 	}
 	
+	if (rollMove >= 1) {
+		pos.x -= 0.125f;
+	}
 	//導入シーンにおいてフレーム数によって行動を決める
 	switch (rollMove) {
 	case 1:
-		pos.x -= 0.1f;
+		AfterPos = {
+					pos.x,
+					-13.0f,
+					pos.z
+		};
+		if (frame < 1.0f) {
+			frame += 0.01f;
+			break;
+		}
+		else {
+			frame = 0;
+			rollMove++;
+			break;
+		}
+	case 2:
+		AfterPos = {
+					pos.x,
+					-16.0f,
+					pos.z
+		};
+		if (frame < 1.0f) {
+			frame += 0.08f;
+			break;
+		}
+		else {
+			frame = 0;
+			rollMove--;
+			break;
+		}
 	}
 
-	//pos = {
-	//Ease(In,Cubic,frame,pos.x,AfterPos.x),
-	//Ease(In,Cubic,frame,pos.y,AfterPos.y),
-	//Ease(In,Cubic,frame,pos.z,AfterPos.z)
-	//};
+	pos = {
+	Ease(In,Cubic,frame,pos.x,AfterPos.x),
+	Ease(In,Cubic,frame,pos.y,AfterPos.y),
+	Ease(In,Cubic,frame,pos.z,AfterPos.z)
+	};
 	enemyobj->SetPosition(pos);
+	enemyobj->SetRotation(rot);
 }
 
 void BossEnemy::specialDraw() {

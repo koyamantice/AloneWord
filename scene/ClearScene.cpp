@@ -101,6 +101,14 @@ void ClearScene::Initialize(DirectXCommon* dxCommon) {
 	righthand = new RightHand();
 	righthand->SetPlayer(player);
 	righthand->Initialize();
+
+	//“G
+	for (std::size_t i = 0; i < enemy.size(); i++) {
+		enemy[i] = new Rice();
+		enemy[i]->SetPlayer(player);
+		enemy[i]->Initialize();
+	}
+
 	Audio::GetInstance()->PlayWave("Resources/Sound/endBGM.wav", 0.4f);
 }
 
@@ -109,7 +117,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 	player->Clear(ClearTimer);
 	if (!endroll) {
 		if (ClearTimer >= 200) {
-			nowTimer += 10;
+			nowTimer++;
 			switch (nowText) {
 			case endText1:
 				if (nowTimer < 61) {
@@ -324,6 +332,10 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 		pastel->RollMovie(rollTimer);
 		lefthand->RollMovie(rollTimer);
 		righthand->RollMovie(rollTimer);
+		enemy[0]->FirstRoll(rollTimer);
+		enemy[1]->SecondRoll(rollTimer);
+		enemy[2]->ThirdRoll(rollTimer);
+		enemy[3]->FouthRoll(rollTimer);
 		if (rollTimer >= 500) {
 			endTimer++;
 			switch (nowendText) {
@@ -333,13 +345,13 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 						endopen = true;
 					}
 				}
-				if (endTimer > 220) {
+				if (endTimer > 360) {
 					if (!endclose && !endcloseT) {
 						endclose = true;
 					}
 				}
 				if (endcloseT) {
-					if (endTimer > 160) {
+					if (endTimer > 200) {
 						endopenT = false;
 						endcloseT = false;
 						endTimer = 0;
@@ -353,13 +365,13 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 						endopen = true;
 					}
 				}
-				if (endTimer > 160) {
+				if (endTimer > 360) {
 					if (!endclose && !endcloseT) {
 						endclose = true;
 					}
 				}
 				if (endcloseT) {
-					if (endTimer > 60) {
+					if (endTimer > 200) {
 						endopenT = false;
 						endcloseT = false;
 						endTimer = 0;
@@ -373,13 +385,13 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 						endopen = true;
 					}
 				}
-				if (endTimer > 160) {
+				if (endTimer > 360) {
 					if (!endclose && !endcloseT) {
 						endclose = true;
 					}
 				}
 				if (endcloseT) {
-					if (endTimer > 60) {
+					if (endTimer > 200) {
 						endopenT = false;
 						endcloseT = false;
 						endTimer = 0;
@@ -393,13 +405,13 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 						endopen = true;
 					}
 				}
-				if (endTimer > 160) {
+				if (endTimer > 360) {
 					if (!endclose && !endcloseT) {
 						endclose = true;
 					}
 				}
 				if (endcloseT) {
-					if (endTimer > 60) {
+					if (endTimer > 200) {
 						endopenT = false;
 						endcloseT = false;
 						endTimer = 0;
@@ -413,13 +425,13 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 						endopen = true;
 					}
 				}
-				if (endTimer > 160) {
+				if (endTimer > 360) {
 					if (!endclose && !endcloseT) {
 						endclose = true;
 					}
 				}
 				if (endcloseT) {
-					if (endTimer > 60) {
+					if (endTimer > 200) {
 						endopenT = false;
 						endcloseT = false;
 						endTimer = 0;
@@ -433,13 +445,13 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 						endopen = true;
 					}
 				}
-				if (endTimer > 160) {
+				if (endTimer > 360) {
 					if (!endclose && !endcloseT) {
 						endclose = true;
 					}
 				}
 				if (endcloseT) {
-					if (endTimer > 60) {
+					if (endTimer > 200) {
 						endopenT = false;
 						endcloseT = false;
 						endTimer = 0;
@@ -453,13 +465,13 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 						endopen = true;
 					}
 				}
-				if (endTimer > 160) {
+				if (endTimer > 360) {
 					if (!endclose && !endcloseT) {
 						endclose = true;
 					}
 				}
 				if (endcloseT) {
-					if (endTimer > 60) {
+					if (endTimer > 200) {
 						endopenT = false;
 						endcloseT = false;
 						endTimer = 0;
@@ -473,13 +485,13 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 						endopen = true;
 					}
 				}
-				if (endTimer > 160) {
+				if (endTimer > 360) {
 					if (!endclose && !endcloseT) {
 						endclose = true;
 					}
 				}
 				if (endcloseT) {
-					if (endTimer > 60) {
+					if (endTimer > 200) {
 						endopenT = false;
 						endcloseT = false;
 						endTimer = 0;
@@ -493,13 +505,13 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 						endopen = true;
 					}
 				}
-				if (endTimer > 160) {
+				if (endTimer > 360) {
 					if (!endclose && !endcloseT) {
 						//endclose = true;
 					}
 				}
 				if (endcloseT) {
-					if (endTimer > 60) {
+					if (endTimer > 200) {
 						/*endopenT = false;
 						endcloseT = false;
 						endTimer = 0;
@@ -581,17 +593,17 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 }
 
 void ClearScene::Draw(DirectXCommon* dxCommon) {
-	ImGui::Begin("test");
+	/*ImGui::Begin("test");
 	ImGui::Text("rollTimer:%d", rollTimer);
 	ImGui::Text("endCount:%d", endTimer);
 	ImGui::SliderFloat("color.w", &endColor.w, 1, 0);
-	ImGui::End();
+	ImGui::End();*/
 	Sprite::PreDraw();
 	sprite->Draw();
 	comment[nowText]->Draw();
 	roll[nowendText]->Draw();
 	Texture::PreDraw();
-	//player->Draw(dxCommon);
+	player->Draw(dxCommon);
 	Object3d::PreDraw();
 	fork->Draw();
 	tea->Draw();
@@ -600,9 +612,24 @@ void ClearScene::Draw(DirectXCommon* dxCommon) {
 	pastel->Draw();
 	lefthand->Draw();
 	righthand->Draw();
+	for (std::size_t i = 0; i < enemy.size(); i++) {
+		enemy[i]->Draw();
+	}
 }
 void ClearScene::Finalize() {
 	//‚R‚„‚Ìƒ‚ƒfƒ‹‚ÌƒfƒŠ[ƒg
 	delete sprite;
+	fork->Finalize();
+	tea->Finalize();
+	leftshose->Finalize();
+	rightshose->Finalize();
+	pastel->Finalize();
+	lefthand->Finalize();
+	righthand->Finalize();
+	player->Finalize();
+	//“G
+	for (std::size_t i = 0; i < enemy.size(); i++) {
+		enemy[i]->Finalize();
+	}
 }
 
