@@ -11,6 +11,7 @@
 #include "RightHand.h"
 #include "ExpandChange.h"
 #include "ShrinkChange.h"
+#include "Save.h"
 /// タイトルシーン
 class ClearScene : public BaseScene {
 public:
@@ -33,6 +34,8 @@ private://メンバ変数
 	//演出のためのもの
 	ExpandChange* expandchange = false;
 	ShrinkChange* shrinkchange = false;
+	//保存用
+	Save* save = nullptr;
 	enum {
 		endText1,
 		endText2,

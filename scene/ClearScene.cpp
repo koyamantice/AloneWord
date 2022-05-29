@@ -113,6 +113,7 @@ void ClearScene::Initialize(DirectXCommon* dxCommon) {
 	Audio::GetInstance()->LoadSound(10, "Resources/Sound/endBGM.wav");
 	Audio::GetInstance()->LoopWave(10, 0.2f);
 	expandchange = new ExpandChange();
+	save = new Save();
 }
 
 void ClearScene::Update(DirectXCommon* dxCommon) {
@@ -589,7 +590,14 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 	}
 
 
-	if (rollTimer == 6000) {
+	if (rollTimer == 6200) {
+		save->ResetClearSave();
+		save->ResetFirstSave();
+		save->ResetSecondSave();
+		save->ResetThirdSave();
+		save->ResetFouthSave();
+		save->ResetFifthSave();
+		save->PerfectSave();
 		expandchange->SetStartChange(true);
 	}
 
@@ -649,5 +657,6 @@ void ClearScene::Finalize() {
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i]->Finalize();
 	}
+	expandchange->Finalize();
 }
 
