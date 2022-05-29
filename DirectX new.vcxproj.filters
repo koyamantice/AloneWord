@@ -539,6 +539,7 @@
     <ClInclude Include="Foot.h">
       <Filter>stage\プレイマップ\シューズ</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="imgui\imgui.vcxproj">
@@ -648,5 +649,11 @@
     <Filter Include="stage\プレイマップ\人間">
       <UniqueIdentifier>{ca4880a4-8cda-4ecd-ae06-24e1c26470bd}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DirectX new.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
   </ItemGroup>
 </Project>

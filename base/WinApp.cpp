@@ -1,7 +1,7 @@
 #include "WinApp.h"
 extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam);
 const bool WinApp::FULL_SCREEN = false;
-
+#include "resource.h"
 LRESULT WinApp::WindowProc(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam)
 {
 
@@ -25,8 +25,7 @@ void WinApp::Initialize() {
 	w.lpszClassName = L"DirectXGame";//ウィンドウクラス名
 	w.hInstance = GetModuleHandle(nullptr);//ウィンドウハンドル
 	w.hCursor = LoadCursor(NULL, IDC_ARROW);//カーソル指定
-
-	//ウィンドウクラスをOSに登録
+	w.hIcon = LoadIcon(w.hInstance, MAKEINTRESOURCE(IDI_ICON1));	//ウィンドウクラスをOSに登録
 	RegisterClassEx(&w);
 	if (fullScreen) {
 		// Get the settings of the primary display

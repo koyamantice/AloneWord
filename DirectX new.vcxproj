@@ -337,6 +337,7 @@
     <ClInclude Include="Human.h" />
     <ClInclude Include="LeftHumanWave.h" />
     <ClInclude Include="LeftHand.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="RightHand.h" />
     <ClInclude Include="RightHumanWave.h" />
     <ClInclude Include="Save.h" />
@@ -519,6 +520,12 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DirectX new.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="icon1.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
