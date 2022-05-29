@@ -10,6 +10,10 @@ public:
 	void Finalize() override;//開放
 	void Update()override;//更新
 	void Demo(int num=0);//チュートリアル更新
+	void FirstRoll(int Timer);//ここから4つはクリア用(別々に動くのでそれぞれ宣言)
+	void SecondRoll(int Timer);//ここから4つはクリア用(別々に動くのでそれぞれ宣言)
+	void ThirdRoll(int Timer);//ここから4つはクリア用(別々に動くのでそれぞれ宣言)
+	void FouthRoll(int Timer);//ここから4つはクリア用(別々に動くのでそれぞれ宣言)
 	void Draw() override;//描画
 	//ゲッターセッター
 	void SetHit(const bool& hit) { this->hit = hit; }
@@ -39,6 +43,7 @@ private:
 	bool stun = false;
 	bool hit=false;
 	bool start = false;
+	int RollMove = 0;
 	XMFLOAT3 exP{};
 };
 

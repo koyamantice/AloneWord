@@ -65,7 +65,7 @@ private://メンバ変数
 	bool endopenT = false;
 	bool endopen = false;
 	bool endclose = false;
-	bool endroll = true;
+	bool endroll = false;
 	int rollTimer = 0;
 	//ボスムービーに登場する敵
 	InterBoss* fork = nullptr;
@@ -75,5 +75,6 @@ private://メンバ変数
 	InterBoss* tea = nullptr;
 	InterBoss* lefthand = nullptr;
 	InterBoss* righthand = nullptr;
+	array<Rice*, 4> enemy;
 };
 

@@ -343,6 +343,26 @@ void Rice::Demo(int num) {
 
 //描画
 void Rice::Draw() {
+	XMFLOAT3 playerpos = player->GetPosition();
+	//ImGui::Begin("test");
+	//ImGui::SliderFloat("pos.y", &pos.y, 360, -360);
+	//ImGui::SliderFloat("pos.y", &boundpower.y, 360, -360);
+	////ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	////ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	////ImGui::SliderFloat("rot.z", &rot.z, 360, -360);
+	//////ImGui::Text("pat::%d", pat);
+	//////ImGui::Text("AttackC:: %d", AttackC);
+	////ImGui::SliderFloat("HP", &BossHP, 40, 0);
+	////ImGui::SliderFloat("Defense", &Defense, 2, 0);
+	//ImGui::Text("rollMove::%d", IsAlive);
+	///*ImGui::Text("action::%d", action);
+	//ImGui::Text("active::%d", active);
+	//*/
+	//
+	///*ImGui::Text("shadow::%d", shadow);
+	//ImGui::SliderFloat("hit", &hitradius, 1, 0);*/
+
+	//ImGui::End();
 	if (IsAlive) {
 		Object3d::PreDraw();
 		enemyobj->Draw();
@@ -581,6 +601,439 @@ void Rice::Move() {
 		enemyobj->SetPosition(pos);
 	}
 }
+//クリア用
+void Rice::FirstRoll(int Timer) {
+	
+	if (Timer == 3450) {
+		appearance = true;
+		IsAlive = true;
+		RollMove++;
+	}
+
+	if (Timer == 3950 || Timer == 4650 || Timer == 5000) {
+		RollMove++;
+		rollframe = 0.0f;
+	}
+
+	if (Timer == 5000) {
+		appearance = true;
+		IsAlive = true;
+	}
+	switch (RollMove) {
+	case 1:
+		//出現する瞬間
+		if (appearance == true) {
+			boundpower.y = 0.5;
+			enescale = { 0.0f,0.0f,0.0f };
+			pos.y = -9.0f;
+			pos.x = -15.0f;
+			add = true;
+			appearance = false;
+		}
+
+		//更に加算
+		if (add == true) {
+			boundpower.y -= 0.02f;
+			pos.x += boundpower.x;
+			pos.y += boundpower.y;
+			pos.z += boundpower.z;
+			if (enescale.x <= 1.5) {
+				enescale.x += 0.04f;
+				enescale.y += 0.04f;
+				enescale.z += 0.04f;
+			}
+		}
+
+		//敵出現完了
+		if (add == true && pos.y <= -9.0f) {
+			boundpower = { 0.0f,0.0f,0.0f };
+			add = false;
+			pos.y = -9.0f;
+		}
+		break;
+	case 2:
+		afterrot = 450.0f;
+		if (rollframe < 1.0f) {
+			rollframe += 0.005f;
+			break;
+		}
+		else {
+			rollframe = 1.0f;
+			break;
+		}
+	case 3:
+		afterrot = 90.0f;
+		if (rollframe < 1.0f) {
+			rollframe += 0.005f;
+			break;
+		}
+		else {
+			rollframe = 1.0f;
+			break;
+		}
+	case 4:
+		//出現する瞬間
+		if (appearance == true) {
+			boundpower.y = 0.5;
+			pos.y = -9.0f;
+			pos.x = -15.0f;
+			add = true;
+			appearance = false;
+		}
+
+		//更に加算
+		if (add == true) {
+			boundpower.y -= 0.02f;
+			pos.x += boundpower.x;
+			pos.y += boundpower.y;
+			pos.z += boundpower.z;
+			/*	if (enescale.x <= 1.5) {
+					enescale.x += 0.04f;
+					enescale.y += 0.04f;
+					enescale.z += 0.04f;
+				}*/
+		}
+
+		//敵出現完了
+		if (add == true && pos.y <= -9.0f) {
+			boundpower = { 0.0f,0.0f,0.0f };
+			add = false;
+			appearance = true;
+			pos.y = -9.0f;
+		}
+		break;
+	}
+	rot.y = Ease(In, Quad, rollframe, rot.y, afterrot);
+	enemyobj->SetPosition(pos);
+	enemyobj->SetRotation(rot);
+	enemyobj->SetScale(enescale);
+	enemyobj->Update();
+}
+
+void Rice::SecondRoll(int Timer) {
+
+	if (Timer == 3550) {
+		appearance = true;
+		IsAlive = true;
+		RollMove++;
+	}
+
+	if (Timer == 4050 || Timer == 4550 || Timer == 5020) {
+		RollMove++;
+		rollframe = 0.0f;
+	}
+
+	if (Timer == 5020) {
+		appearance = true;
+		IsAlive = true;
+	}
+
+	switch (RollMove) {
+	case 1:
+		//出現する瞬間
+		if (appearance == true) {
+			boundpower.y = 0.5;
+			enescale = { 0.0f,0.0f,0.0f };
+			pos.y = -9.0f;
+			pos.x = -5.0f;
+			add = true;
+			appearance = false;
+		}
+
+		//更に加算
+		if (add == true) {
+			boundpower.y -= 0.02f;
+			pos.x += boundpower.x;
+			pos.y += boundpower.y;
+			pos.z += boundpower.z;
+			if (enescale.x <= 1.5) {
+				enescale.x += 0.04f;
+				enescale.y += 0.04f;
+				enescale.z += 0.04f;
+			}
+		}
+
+		//敵出現完了
+		if (add == true && pos.y <= -9.0f) {
+			boundpower = { 0.0f,0.0f,0.0f };
+			add = false;
+			pos.y = -9.0f;
+		}
+		break;
+	case 2:
+		afterrot = 450.0f;
+		if (rollframe < 1.0f) {
+			rollframe += 0.005f;
+			break;
+		}
+		else {
+			rollframe = 1.0f;
+			break;
+		}
+	case 3:
+		afterrot = 90.0f;
+		if (rollframe < 1.0f) {
+			rollframe += 0.005f;
+			break;
+		}
+		else {
+			rollframe = 1.0f;
+			break;
+		}
+	case 4:
+		//出現する瞬間
+		if (appearance == true) {
+			boundpower.y = 0.5;
+			pos.y = -9.0f;
+			pos.x = -5.0f;
+			add = true;
+			appearance = false;
+		}
+
+		//更に加算
+		if (add == true) {
+			boundpower.y -= 0.02f;
+			pos.x += boundpower.x;
+			pos.y += boundpower.y;
+			pos.z += boundpower.z;
+			/*	if (enescale.x <= 1.5) {
+					enescale.x += 0.04f;
+					enescale.y += 0.04f;
+					enescale.z += 0.04f;
+				}*/
+		}
+
+		//敵出現完了
+		if (add == true && pos.y <= -9.0f) {
+			boundpower = { 0.0f,0.0f,0.0f };
+			add = false;
+			appearance = true;
+			pos.y = -9.0f;
+		}
+		break;
+	}
+	rot.y = Ease(In, Quad, rollframe, rot.y, afterrot);
+	enemyobj->SetPosition(pos);
+	enemyobj->SetRotation(rot);
+	enemyobj->SetScale(enescale);
+	enemyobj->Update();
+}
+
+void Rice::ThirdRoll(int Timer) {
+
+	if (Timer == 3650) {
+		RollMove++;
+		IsAlive = true;
+		appearance = true;
+	}
+
+	if (Timer == 4150 || Timer == 4450 || Timer == 5040) {
+		RollMove++;
+		rollframe = 0.0f;
+	}
+
+	if (Timer == 5040) {
+		appearance = true;
+		IsAlive = true;
+	}
 
 
 
+	switch (RollMove) {
+	case 1:
+		//出現する瞬間
+		if (appearance == true) {
+			boundpower.y = 0.5;
+			enescale = { 0.0f,0.0f,0.0f };
+			pos.y = -9.0f;
+			pos.x = 5.0f;
+			add = true;
+			appearance = false;
+		}
+
+		//更に加算
+		if (add == true) {
+			boundpower.y -= 0.02f;
+			pos.x += boundpower.x;
+			pos.y += boundpower.y;
+			pos.z += boundpower.z;
+			if (enescale.x <= 1.5) {
+				enescale.x += 0.04f;
+				enescale.y += 0.04f;
+				enescale.z += 0.04f;
+			}
+		}
+
+		//敵出現完了
+		if (add == true && pos.y <= -9.0f) {
+			boundpower = { 0.0f,0.0f,0.0f };
+			add = false;
+			pos.y = -9.0f;
+		}
+		break;
+	case 2:
+		afterrot = 450.0f;
+		if (rollframe < 1.0f) {
+			rollframe += 0.005f;
+			break;
+		}
+		else {
+			rollframe = 1.0f;
+			break;
+		}
+	case 3:
+		afterrot = 90.0f;
+		if (rollframe < 1.0f) {
+			rollframe += 0.005f;
+			break;
+		}
+		else {
+			rollframe = 1.0f;
+			break;
+		}
+	case 4:
+		//出現する瞬間
+		if (appearance == true) {
+			boundpower.y = 0.5;
+			pos.y = -9.0f;
+			pos.x = 5.0f;
+			add = true;
+			appearance = false;
+		}
+
+		//更に加算
+		if (add == true) {
+			boundpower.y -= 0.02f;
+			pos.x += boundpower.x;
+			pos.y += boundpower.y;
+			pos.z += boundpower.z;
+			/*	if (enescale.x <= 1.5) {
+					enescale.x += 0.04f;
+					enescale.y += 0.04f;
+					enescale.z += 0.04f;
+				}*/
+		}
+
+		//敵出現完了
+		if (add == true && pos.y <= -9.0f) {
+			boundpower = { 0.0f,0.0f,0.0f };
+			add = false;
+			appearance = true;
+			pos.y = -9.0f;
+		}
+		break;
+	}
+	rot.y = Ease(In, Quad, rollframe, rot.y, afterrot);
+	enemyobj->SetPosition(pos);
+	enemyobj->SetRotation(rot);
+	enemyobj->SetScale(enescale);
+	enemyobj->Update();
+}
+
+void Rice::FouthRoll(int Timer) {
+
+	if (Timer == 3750) {
+		appearance = true;
+		IsAlive = true;
+		RollMove++;
+	}
+
+	if (Timer == 4250 || Timer == 4350 || Timer == 5060) {
+		RollMove++;
+		rollframe = 0.0f;
+	}
+
+	if (Timer == 5060) {
+		appearance = true;
+		IsAlive = true;
+	}
+	switch (RollMove) {
+	case 1:
+		//出現する瞬間
+		if (appearance == true) {
+			boundpower.y = 0.5;
+			enescale = { 0.0f,0.0f,0.0f };
+			pos.y = -9.0f;
+			pos.x = 15.0f;
+			add = true;
+			appearance = false;
+		}
+
+		//更に加算
+		if (add == true) {
+			boundpower.y -= 0.02f;
+			pos.x += boundpower.x;
+			pos.y += boundpower.y;
+			pos.z += boundpower.z;
+			if (enescale.x <= 1.5) {
+				enescale.x += 0.04f;
+				enescale.y += 0.04f;
+				enescale.z += 0.04f;
+			}
+		}
+
+		//敵出現完了
+		if (add == true && pos.y <= -9.0f) {
+			boundpower = { 0.0f,0.0f,0.0f };
+			add = false;
+			pos.y = -9.0f;
+		}
+		break;
+	case 2:
+		afterrot = 450.0f;
+		if (rollframe < 1.0f) {
+			rollframe += 0.005f;
+			break;
+		}
+		else {
+			rollframe = 1.0f;
+			break;
+		}
+	case 3:
+		afterrot = 90.0f;
+		if (rollframe < 1.0f) {
+			rollframe += 0.005f;
+			break;
+		}
+		else {
+			rollframe = 1.0f;
+			break;
+		}
+	case 4:
+		//出現する瞬間
+		if (appearance == true) {
+			boundpower.y = 0.5;
+			pos.y = -9.0f;
+			pos.x = 15.0f;
+			add = true;
+			appearance = false;
+		}
+
+		//更に加算
+		if (add == true) {
+			boundpower.y -= 0.02f;
+			pos.x += boundpower.x;
+			pos.y += boundpower.y;
+			pos.z += boundpower.z;
+		/*	if (enescale.x <= 1.5) {
+				enescale.x += 0.04f;
+				enescale.y += 0.04f;
+				enescale.z += 0.04f;
+			}*/
+		}
+
+		//敵出現完了
+		if (add == true && pos.y <= -9.0f) {
+			boundpower = { 0.0f,0.0f,0.0f };
+			add = false;
+			appearance = true;
+			pos.y = -9.0f;
+		}
+		break;
+	}
+	rot.y = Ease(In, Quad, rollframe, rot.y, afterrot);
+	enemyobj->SetPosition(pos);
+	enemyobj->SetRotation(rot);
+	enemyobj->SetScale(enescale);
+	enemyobj->Update();
+}
