@@ -9,6 +9,8 @@
 #include "pastel.h"
 #include "LeftHand.h"
 #include "RightHand.h"
+#include "ExpandChange.h"
+#include "ShrinkChange.h"
 /// タイトルシーン
 class ClearScene : public BaseScene {
 public:
@@ -28,6 +30,9 @@ private://メンバ変数
 	Sprite* roll[9];
 	DebugCamera* camera = { nullptr };
 	XMFLOAT2 sca{};
+	//演出のためのもの
+	ExpandChange* expandchange = false;
+	ShrinkChange* shrinkchange = false;
 	enum {
 		endText1,
 		endText2,

@@ -109,7 +109,10 @@ void ClearScene::Initialize(DirectXCommon* dxCommon) {
 		enemy[i]->Initialize();
 	}
 
-	Audio::GetInstance()->PlayWave("Resources/Sound/endBGM.wav", 0.4f);
+	//サウンド宣言&プレイ
+	Audio::GetInstance()->LoadSound(10, "Resources/Sound/endBGM.wav");
+	Audio::GetInstance()->LoopWave(10, 0.2f);
+	expandchange = new ExpandChange();
 }
 
 void ClearScene::Update(DirectXCommon* dxCommon) {
@@ -585,6 +588,16 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 		roll[nowendText]->SetColor(endColor);
 	}
 
+
+	if (rollTimer == 6000) {
+		expandchange->SetStartChange(true);
+	}
+
+	if (expandchange->GetTimer() >= 58) {
+		Audio::GetInstance()->StopWave(10);
+		SceneManager::GetInstance()->ChangeScene("TITLE");
+	}
+	expandchange->Update();
 	/*if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_B)) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 		SceneManager::GetInstance()->ChangeScene("TITLE");
@@ -593,13 +606,18 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 }
 
 void ClearScene::Draw(DirectXCommon* dxCommon) {
-	/*ImGui::Begin("test");
+	ImGui::Begin("test");
 	ImGui::Text("rollTimer:%d", rollTimer);
-	ImGui::Text("endCount:%d", endTimer);
-	ImGui::SliderFloat("color.w", &endColor.w, 1, 0);
-	ImGui::End();*/
+	/*ImGui::Text("endCount:%d", endTimer);
+	ImGui::SliderFloat("color.w", &endColor.w, 1, 0);*/
+	ImGui::End();
 	Sprite::PreDraw();
 	sprite->Draw();
+	Object3d::PreDraw();
+	for (std::size_t i = 0; i < enemy.size(); i++) {
+		enemy[i]->Draw();
+	}
+	Sprite::PreDraw();
 	comment[nowText]->Draw();
 	roll[nowendText]->Draw();
 	Texture::PreDraw();
@@ -612,9 +630,9 @@ void ClearScene::Draw(DirectXCommon* dxCommon) {
 	pastel->Draw();
 	lefthand->Draw();
 	righthand->Draw();
-	for (std::size_t i = 0; i < enemy.size(); i++) {
-		enemy[i]->Draw();
-	}
+	Sprite::PreDraw();
+	expandchange->Draw();
+	
 }
 void ClearScene::Finalize() {
 	//３ｄのモデルのデリート
