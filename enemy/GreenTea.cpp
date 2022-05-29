@@ -19,7 +19,7 @@ void GreenTea::Initialize(bool shadow) {
 	assert(player);
 	this->shadow = shadow;
 	pos = { 0.0f,0.0f,0.0f };
-	rot = { 0,0,0 };
+	rot = { 0,180,0 };
 	IsAlive = true;
 	//敵
 	Object3d*enemyobj_ = new Object3d();
@@ -591,7 +591,7 @@ void GreenTea::App(int Timer) {
 	//hotWater[0]->SetPlayer(player.get());
 	if (Timer == 0) {
 		pos = { 13.0f,0.0f,18.0f };
-		//rot = { 0.0f,315.0f,0.0f };
+		rot = { 0.0f,180.0f,0.0f };
 	}
 	else if (Timer == 1) {
 		appearMove++;
