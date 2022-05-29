@@ -65,7 +65,7 @@ private://メンバ変数
 	bool endopenT = false;
 	bool endopen = false;
 	bool endclose = false;
-	bool endroll = false;
+	bool endroll = true;
 	int rollTimer = 0;
 	//ボスムービーに登場する敵
 	InterBoss* fork = nullptr;

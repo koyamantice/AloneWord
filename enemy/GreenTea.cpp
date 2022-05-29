@@ -745,18 +745,20 @@ void GreenTea::App(int Timer) {
 void GreenTea::Roll(int Timer) {
 	XMFLOAT3 AfterPos{};
 	if (Timer == 1) {
-		pos = { 50.0f,-5.0f,10.0f };
+		pos = { 50.0f, -14.0f,10.0f };
+		rot.y = 180.0f;
 		frame = 0.0f;
 	}
 
-	if (Timer == 100) {
+	if (Timer == 900) {
 		rollMove++;
 	}
 
 	//導入シーンにおいてフレーム数によって行動を決める
 	switch (rollMove) {
 	case 1:
-		pos.x -= 0.1f;
+		rot.y += (rand() % 10) + 1;
+		pos.x -= 0.125f;
 	}
 
 	//pos = {
@@ -765,6 +767,7 @@ void GreenTea::Roll(int Timer) {
 	//Ease(In,Cubic,frame,pos.z,AfterPos.z)
 	//};
 	enemyobj->SetPosition(pos);
+	enemyobj->SetRotation(rot);
 }
 
 //撃破
