@@ -499,13 +499,16 @@ void Rice::Rebound() {
 //プレイヤーがダメージを食らう
 bool Rice::collidePlayer() {
 	bool AttackFlag = player->GetAttackFlag();
-	if (IsAlive && !EnemyCatch && FlashCount == 0 && add == false && !Exp && Interval == 0 && !AttackFlag && !nocatch) {
+	FlashCount = player->GetFlashCount();
+	if (IsAlive && !EnemyCatch && add == false && !Exp && !AttackFlag && !nocatch) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true) {
 			IsAlive = 0;
-			player->SetHp(player->GetHp() - 1);
-			player->SetCharge(0);
-			player->SetRotCount(0);
-			Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
+			if (Interval == 0 && FlashCount == 0) {
+				player->SetHp(player->GetHp() - 1);
+				player->SetCharge(0);
+				player->SetRotCount(0);
+				Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
+			}
 			if (player->GetAttackFlag() == false) {
 				
 			}

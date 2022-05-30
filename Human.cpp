@@ -19,7 +19,12 @@ void Human::SetAttack(LeftHand* lefthand, RightHand* righthand) {
 			AttackCount++;
 		}
 		else {
-			AttackCount = 0;
+			if ((lefthand->GetHP() <= 0) || (righthand->GetHP() <= 0)) {
+				AttackCount = 30;
+			}
+			else {
+				AttackCount = 30;
+			}
 			action = (rand() % 4);
 			if ((lefthand->GetHP() <= 0) || (righthand->GetHP() <= 0) && action == 1) {
 				action = 0;

@@ -105,7 +105,12 @@ void BossEnemy::Spec() {
 			else {
 				Afterrot.y = 90;
 				pat = 0;
-				AttackCount = 0;
+				if (BossHP >= 20) {
+					AttackCount = 0;
+				}
+				else {
+					AttackCount = 30;
+				}
 				Effect = true;
 				active = false;
 				frame = 0;
@@ -243,7 +248,12 @@ void BossEnemy::Spec() {
 						frame = 0;
 						pat = 0;
 						AttackC = 0;
-						AttackCount = 0;
+						if (BossHP >= 20) {
+							AttackCount = 0;
+						}
+						else {
+							AttackCount = 30;
+						}
 						Effect = true;
 						active = false;
 						break;

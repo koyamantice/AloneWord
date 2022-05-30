@@ -114,7 +114,7 @@ void RightHand::Spec() {
 				case 2:
 					Afterrot.z = 270.0f;
 					rot.z = 270.0f;
-					AfterPos.y = 1.0f;
+					AfterPos.y = 5.0f;
 					if (frame < 0.45f) {
 						frame += 0.002f;
 					}
