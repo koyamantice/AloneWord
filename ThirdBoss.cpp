@@ -188,12 +188,12 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 	objFloor->Update();
 	lightGroup->Update();
 	objJstyle->Update();
-	if (Input::GetInstance()->AllNoPush()) {
+	/*if (Input::GetInstance()->AllNoPush()) {
 		Audio::GetInstance()->StopWave(3);
 		player->SetFlash(0);
 		end = true;
 
-	}
+	}*/
 	//Å‰‚Ì‰‰o(“±“ü)
 	if (!end && !gameover) {
 		if (Skip == true) {

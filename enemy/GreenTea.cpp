@@ -64,7 +64,7 @@ void GreenTea::Spec() {
 		if (!active) {
 			pos.y = 0.0f;
 			pos.x = 0.0f;
-			action = (rand() % 4);// (rand() % 2);
+			action = (rand() % 3);// (rand() % 2);
 			frame = 0;
 			pat = 1;
 			StartPos = pos;
@@ -331,119 +331,28 @@ Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 				break;
 			case 2:
 				AfterPos = {
-					17.0f,
+					-17.0f,
 					0.0f,
-					0.0f
+					17.0f
 				};
 				break;
 			case 3:
 				AfterPos = {
-				-17.0f,
+				17.0f,
 				0.0f,
-				0.0f
+				17.0f
 				};
 				break;
 			case 4:
 				AfterPos = {
-				0.0f,
+				17.0f,
 				0.0f,
 				0.0f
 				};
 				break;
 			case 5:
 				AfterPos = {
-				0.0f,
-				0.0f,
-				-17.0f
-				};
-				break;
-			case 6:
-				AfterPos = {
-				0.0f,
-				0.0f,
-				20.0f
-				};
-				break;
-			case 7:
-				AfterPos = {
-				0.0f,
-				0.0f,
-				-17.0f
-				};
-				break;
-			case 8:
-				AfterPos = {
-				0.0f,
-				0.0f,
-				0.0f
-				};
-				break;
-			default:
-				pat = 0;
-				AttackCount = 0;
-				Effect = true;
-				active = false;
-				frame = 0;
-				break;
-			}
-			pos = {
-Ease(In,Cubic,frame,StartPos.x,AfterPos.x),
-Ease(In,Cubic,frame,StartPos.y,AfterPos.y),
-Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
-			};
-		}
-		else if (action == 3) {
-			rot.z += vel;
-			if (rot.z > Zma) {
-				rot.z = Zma;
-				vel = -vel;
-			}
-			if (rot.z < Zmi) {
-				rot.z = Zmi;
-				vel = -vel;
-			}
-			rot.y += (rand() % 10) + 1;
-			enemyobj->SetRotation(rot);
-			if (frame < 1.0f) {
-				frame += 0.01f;
-			}
-			else {
-				frame = 0;
-				StartPos = AfterPos;
-				pat++;
-			}
-			switch (pat) {
-			case 1:
-				AfterPos = {
-					17.0f,
-					0.0f,
-					0.0f
-				};
-				break;
-			case 2:
-				AfterPos = {
-					17.0f,
-					0.0f,
-					-17.0f
-				};
-				break;
-			case 3:
-				AfterPos = {
-				0.0f,
-				0.0f,
-				-17.0f
-				};
-				break;
-			case 4:
-				AfterPos = {
-				0.0f,
-				0.0f,
-				0.0f
-				};
-				break;
-			case 5:
-				AfterPos = {
-				0.0f,
+				17.0f,
 				0.0f,
 				17.0f
 				};
@@ -483,7 +392,6 @@ Ease(In,Cubic,frame,StartPos.y,AfterPos.y),
 Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 			};
 		}
-
 		enemyobj->SetPosition(pos);
 	}
 }

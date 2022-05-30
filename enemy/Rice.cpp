@@ -387,33 +387,48 @@ bool Rice::collideArm() {
 	bool AttackFlag = player->GetAttackFlag();
 	if (IsAlive && AttackFlag && !EnemyCatch && add == false && !Exp) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.8f, Armpos.x, Armpos.y, Armpos.z, 0.8f) == true) {
-			Audio::GetInstance()->PlayWave("Resources/Sound/catchEnemy.wav", 0.08f);
-			EnemyCatch = true;
-			armweight += 1.0f;
 			pos.y = 0.0f;
 			player->SetAddSpeed(1.0f);
-			if (armweight == 1) {
-				savespeed = 35.0;
-				savesacale = 1.0f;
-			} else if (armweight == 2.0f) {
-				savespeed = 90.0;
-				savesacale = 1.0f;
-			} else if (armweight == 3.0f) {
-				savespeed = 145.0;
-				savesacale = 1.0f;
-			} else if (armweight == 4.0f) {
-				savespeed = 200.0;
-				savesacale = 1.0f;
-			} else if (armweight == 5.0f) {
-				savespeed = 250.0;
-				savesacale = 1.0f;
-			} else if (armweight == 6.0f) {
-				savespeed = 300.0;
-				savesacale = 1.0f;
-			} else if (armweight == 7.0f) {
-				savespeed = 350.0;
-				savesacale = 1.0f;
+			if (armweight <= 6) {
+				Audio::GetInstance()->PlayWave("Resources/Sound/catchEnemy.wav", 0.08f);
+				armweight += 1.0f;
+				EnemyCatch = true;
+				if (armweight == 1) {
+					savespeed = 35.0;
+					savesacale = 1.0f;
+				}
+				else if (armweight == 2.0f) {
+					savespeed = 90.0;
+					savesacale = 1.0f;
+				}
+				else if (armweight == 3.0f) {
+					savespeed = 145.0;
+					savesacale = 1.0f;
+				}
+				else if (armweight == 4.0f) {
+					savespeed = 200.0;
+					savesacale = 1.0f;
+				}
+				else if (armweight == 5.0f) {
+					savespeed = 250.0;
+					savesacale = 1.0f;
+				}
+				else if (armweight == 6.0f) {
+					savespeed = 300.0;
+					savesacale = 1.0f;
+				}
+				else if (armweight == 7.0f) {
+					savespeed = 350.0;
+					savesacale = 1.0f;
+				}
 			}
+			else {
+				//IsAlive = false;
+				Exp = true;
+				RandDeadPower();
+				nocatch = true;
+			}
+
 			player->SetOldArm(player->GetArmWeight());
 			player->SetArmWeight(armweight);
 			
@@ -484,7 +499,7 @@ void Rice::Rebound() {
 //プレイヤーがダメージを食らう
 bool Rice::collidePlayer() {
 	bool AttackFlag = player->GetAttackFlag();
-	if (IsAlive && !EnemyCatch && FlashCount == 0 && add == false && !Exp && Interval == 0 && !AttackFlag) {
+	if (IsAlive && !EnemyCatch && FlashCount == 0 && add == false && !Exp && Interval == 0 && !AttackFlag && !nocatch) {
 		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 0.5f, playerpos.x, playerpos.y, playerpos.z, 0.5f) == true) {
 			IsAlive = 0;
 			player->SetHp(player->GetHp() - 1);
