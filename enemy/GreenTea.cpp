@@ -562,7 +562,7 @@ void GreenTea::Roll(int Timer) {
 		frame = 0.0f;
 	}
 
-	if (Timer == 800) {
+	if (Timer == 600) {
 		rollMove++;
 	}
 

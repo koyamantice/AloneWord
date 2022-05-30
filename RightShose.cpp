@@ -171,6 +171,7 @@ void RightShose::Spec() {
 				else {
 					stunTimer = 0;
 					stun = false;
+					StunHeal = true;
 				}
 				//スタン時のぴよぴよ
 				for (std::size_t i = 0; i < Stuntexture.size(); i++) {
@@ -186,6 +187,13 @@ void RightShose::Spec() {
 
 			}
 
+			if (StunHeal == true) {
+				StunHealTimer++;
+				if (StunHealTimer == 200) {
+					StunHeal = false;
+					StunHealTimer = 0;
+				}
+			}
 			if (Attack) {
 				//プレイヤーにスピード加算
 				pos.x += (float)speedX;
@@ -602,18 +610,18 @@ void RightShose::Roll(int Timer) {
 		Rollbound = false;
 	}
 
-	if (Timer == 1500 || Timer == 1890) {
+	if (Timer == 1300 || Timer == 1690) {
 		rollMove++;
 	}
 
-	if (Timer == 1890) {
+	if (Timer == 1690) {
 		Rollbound = true;
 		stun = true;
 		Deadbound.y = 0.5f;
 		Deadbound.x = 0.2f;
 	}
 
-	if (Timer == 2000) {
+	if (Timer == 1800) {
 		stun = false;
 		rollMove++;
 	}
@@ -752,6 +760,12 @@ void RightShose::End(int Timer) {
 }
 //特別な描画(今回の場合ぴよぴよ)
 void RightShose::specialDraw() {
+	ImGui::Begin("test");
+	ImGui::Text("RotCount:%d", StunHealTimer);
+	ImGui::Text("Rot:%d", StunHeal);
+	//ImGui::Text("clearMove:%d", clearMove);
+	//ImGui::Text("stopCount2:%d", stop_count);
+	ImGui::End();
 	if (stun) {
 		for (std::size_t i = 0; i < Stuntexture.size(); i++) {
 			Stuntexture[i]->Draw();
@@ -773,7 +787,7 @@ void RightShose::SetAct(Foot* foot) {
 bool RightShose::HitShose(LeftShose* leftshose) {
 	XMFLOAT3 leftpos = leftshose->GetPosition();
 	if (Collision::SphereCollision(pos.x, pos.y, pos.z, 1.5f, leftpos.x, leftpos.y, leftpos.z, 1.5f) && (action == 0)
-		&& (leftshose->GetHP() > 0) &&(this->BossHP > 0) && this->stun == false) {
+		&& (leftshose->GetHP() > 0) &&(this->BossHP > 0) && this->stun == false && !StunHeal) {
 		//個々の音変更案件
 		Audio::GetInstance()->PlayWave("Resources/Sound/accident.wav", 0.4f);
 		this->stun = true;
@@ -781,12 +795,12 @@ bool RightShose::HitShose(LeftShose* leftshose) {
 		if (pos.z >= leftpos.z) {
 			hitpoint = HitUp;
 			Deadbound.y = 0.3f;
-			Deadbound.z = -0.2f;
+			Deadbound.z = -0.8f;
 		}
 		else {
 			hitpoint = HitDown;
 			Deadbound.y = 0.3f;
-			Deadbound.z = 0.2f;
+			Deadbound.z = 0.8f;
 		}
 		return true;
 	}
