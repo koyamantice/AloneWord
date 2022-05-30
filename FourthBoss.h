@@ -42,7 +42,6 @@ private:
 	Object3d* objGarden;
 	FBXModel* model1 = nullptr;
 	FBXObject3d* object1 = nullptr;
-	Texture* limit = nullptr;
 	//ƒJƒƒ‰ŠÖŒW
 	DebugCamera* camera = { nullptr };
 	//‚»‚ê‚¼‚ê‚ÌƒNƒ‰ƒX‚Ì‚à‚Ì
