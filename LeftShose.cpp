@@ -674,8 +674,8 @@ void LeftShose::Follow() {
 	rot.y = (atan2f(position.x, position.z) * (180.0f / XM_PI));// *(XM_PI / 180.0f);
 	//NextP.x -= sin(-atan2f(position.x, position.z)) * 0.2251f;
 	//NextP.z += cos(-atan2f(position.x, position.z)) * 0.2251f;
-	vel.x = sin(-atan2f(position.x, position.z)) * 0.2f;
-	vel.y = cos(-atan2f(position.x, position.z)) * 0.2f;
+	vel.x = sin(-atan2f(position.x, position.z)) * 0.15f;
+	vel.y = cos(-atan2f(position.x, position.z)) * 0.15f;
 	pos.x -= vel.x;
 	pos.z += vel.y;
 }

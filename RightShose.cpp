@@ -760,12 +760,12 @@ void RightShose::End(int Timer) {
 }
 //特別な描画(今回の場合ぴよぴよ)
 void RightShose::specialDraw() {
-	ImGui::Begin("test");
-	ImGui::Text("RotCount:%d", StunHealTimer);
-	ImGui::Text("Rot:%d", StunHeal);
-	//ImGui::Text("clearMove:%d", clearMove);
-	//ImGui::Text("stopCount2:%d", stop_count);
-	ImGui::End();
+	//ImGui::Begin("test");
+	//ImGui::Text("RotCount:%d", StunHealTimer);
+	//ImGui::Text("Rot:%d", StunHeal);
+	////ImGui::Text("clearMove:%d", clearMove);
+	////ImGui::Text("stopCount2:%d", stop_count);
+	//ImGui::End();
 	if (stun) {
 		for (std::size_t i = 0; i < Stuntexture.size(); i++) {
 			Stuntexture[i]->Draw();
@@ -835,8 +835,8 @@ void RightShose::Follow() {
 	rot.y = (atan2f(position.x, position.z) * (180.0f / XM_PI));// *(XM_PI / 180.0f);
 	//NextP.x -= sin(-atan2f(position.x, position.z)) * 0.2251f;
 	//NextP.z += cos(-atan2f(position.x, position.z)) * 0.2251f;
-	vel.x = sin(-atan2f(position.x, position.z)) * 0.2f;
-	vel.y = cos(-atan2f(position.x, position.z)) * 0.2f;
+	vel.x = sin(-atan2f(position.x, position.z)) * 0.15f;
+	vel.y = cos(-atan2f(position.x, position.z)) * 0.15f;
 	pos.x -= vel.x;
 	pos.z += vel.y;
 }
