@@ -760,12 +760,12 @@ void RightShose::End(int Timer) {
 }
 //特別な描画(今回の場合ぴよぴよ)
 void RightShose::specialDraw() {
-	ImGui::Begin("test");
-	ImGui::Text("RotCount:%d", StunHealTimer);
-	ImGui::Text("Rot:%d", StunHeal);
-	//ImGui::Text("clearMove:%d", clearMove);
-	//ImGui::Text("stopCount2:%d", stop_count);
-	ImGui::End();
+	//ImGui::Begin("test");
+	//ImGui::Text("RotCount:%d", StunHealTimer);
+	//ImGui::Text("Rot:%d", StunHeal);
+	////ImGui::Text("clearMove:%d", clearMove);
+	////ImGui::Text("stopCount2:%d", stop_count);
+	//ImGui::End();
 	if (stun) {
 		for (std::size_t i = 0; i < Stuntexture.size(); i++) {
 			Stuntexture[i]->Draw();
