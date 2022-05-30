@@ -34,7 +34,7 @@ void Spawning::Initialize(bool shadow) {
 	net_->SetRotation({ 90,0,0 });
 	net_->SetScale({ 0.4f,0.4f,0.0f });
 	net[0].reset(net_);
-	Texture* Smoke = Texture::Create(ImageManager::effect3, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Texture* Smoke = Texture::Create(ImageManager::smoke, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	Smoke->TextureCreate();
 	Smoke->SetPosition({ pos.x,pos.y,pos.z });
 	Smoke->SetRotation({ 90,0,0 });

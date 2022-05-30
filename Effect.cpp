@@ -23,7 +23,7 @@ Effect::Effect() {
 }
 
 void Effect::Initialize() {
-	effecttexture = Texture::Create(ImageManager::effect2, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	effecttexture = Texture::Create(ImageManager::effect, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	effecttexture->TextureCreate();
 	//effecttexture->SetRotation({ 90,0,0 });
 	effecttexture->SetScale(effectscale);

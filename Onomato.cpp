@@ -2,7 +2,7 @@
 #include "ImageManager.h"
 
 void Onomato::Init() {
-	onomato = Texture::Create(ImageManager::effect3, { 0,0,0 }, { 1,1,1 }, { 1,1,1,1 });
+	onomato = Texture::Create(ImageManager::smoke, { 0,0,0 }, { 1,1,1 }, { 1,1,1,1 });
 	onomato->TextureCreate();
 }
 

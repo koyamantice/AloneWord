@@ -38,7 +38,7 @@ void Rice::Initialize() {
 	net_->SetScale({ 0.2f,0.2f,0.2f });
 	net[0].reset(net_);
 
-	Texture* Smoke = Texture::Create(ImageManager::effect3, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
+	Texture* Smoke = Texture::Create(ImageManager::smoke, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 	Smoke->TextureCreate();
 	Smoke->SetPosition(pos);
 	Smoke->SetRotation({ 90,0,0 });

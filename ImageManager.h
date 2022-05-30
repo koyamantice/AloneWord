@@ -91,8 +91,8 @@ public:
 	enum tex2dName {
 	enemy,//Texture::LoadTexture(0, L"Resources/2d/enemy.png");
 	shadow,//Texture::LoadTexture(1, L"Resources/2d/shadow.png");
-	effect2,//Texture::LoadTexture(3, L"Resources/2d/effect2.png");
-	effect3,
+	effect,//Texture::LoadTexture(3, L"Resources/2d/effect2.png");
+	smoke,
 	net,//Texture::LoadTexture(6, L"Resources/2d/Resporn.png");
 	water,
 	Charge,
