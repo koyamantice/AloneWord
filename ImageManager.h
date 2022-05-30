@@ -18,8 +18,6 @@ public:
 		arrow,//Sprite::LoadTexture(4, L"Resources/2d/Arrow.png");
 		arrow2,
 		life,//Sprite::LoadTexture(5, L"Resources/2d/Life.png");
-		CLEAR,
-		OVER,
 		TITLE,
 		SELECT1,
 		hpGauge,
@@ -36,8 +34,6 @@ public:
 		niwa,
 		washitu,
 		shinshitu,
-		meter,
-		meterbar,
 		button,
 		num,
 		bairitu,
@@ -48,8 +44,6 @@ public:
 		BlackFilter,
 		WhiteFilter,
 		Tselect,
-		sky,
-		ground,
 		ok,
 		text1,
 		text2,

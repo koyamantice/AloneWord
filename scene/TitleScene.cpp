@@ -38,7 +38,6 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 	sprite[button]->SetAnchorPoint({ 0.5f,0.5f });
 	//sprite[button]->SetScale(0.4f);
 	sprite[select] = Sprite::Create(ImageManager::Tselect, { 76.0f,418.0f });
-	sprite[ground] = Sprite::Create(ImageManager::ground, { 0.0f,0.0f });
 	//スプライト生成
 	expandchange = new ExpandChange();
 	shrinkchange = new ShrinkChange();

@@ -201,9 +201,6 @@
     <ClCompile Include="scene\ClearScene.cpp">
       <Filter>stage\クリア</Filter>
     </ClCompile>
-    <ClCompile Include="scene\GameoverScene.cpp">
-      <Filter>stage\ゲームオーバー</Filter>
-    </ClCompile>
     <ClCompile Include="scene\StageSelect.cpp">
       <Filter>stage\セレクト</Filter>
     </ClCompile>
@@ -458,9 +455,6 @@
     <ClInclude Include="scene\ClearScene.h">
       <Filter>stage\クリア</Filter>
     </ClInclude>
-    <ClInclude Include="scene\GameoverScene.h">
-      <Filter>stage\ゲームオーバー</Filter>
-    </ClInclude>
     <ClInclude Include="scene\StageSelect.h">
       <Filter>stage\セレクト</Filter>
     </ClInclude>
@@ -609,9 +603,6 @@
     </Filter>
     <Filter Include="stage\タイトル">
       <UniqueIdentifier>{76303557-d2b1-4671-a130-77e66e2eace3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="stage\ゲームオーバー">
-      <UniqueIdentifier>{1ad52c6f-b35c-4e59-9fe1-5befb6beb8ee}</UniqueIdentifier>
     </Filter>
     <Filter Include="stage\セレクト">
       <UniqueIdentifier>{1b138f4d-a8fd-4399-b652-f5786cabeead}</UniqueIdentifier>

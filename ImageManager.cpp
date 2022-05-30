@@ -11,8 +11,6 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(arrow, L"Resources/2d/Arrow.png");
 	Sprite::LoadTexture(arrow2, L"Resources/2d/Arrow2.png");
 	Sprite::LoadTexture(life, L"Resources/2d/Life.png");
-	Sprite::LoadTexture(CLEAR, L"Resources/2d/GAMECLEAR.png");
-	Sprite::LoadTexture(OVER, L"Resources/2d/GAMEOVER.png");
 	Sprite::LoadTexture(TITLE, L"Resources/2d/TitleParts/layoutImage.png");
 	Sprite::LoadTexture(SELECT1, L"Resources/2d/noSelect.png");
 	Sprite::LoadTexture(hpGauge, L"Resources/2d/HPGauge.png");
@@ -29,8 +27,6 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(niwa, L"Resources/2d/kine_Sname.png");
 	Sprite::LoadTexture(washitu, L"Resources/2d/washitu.png");
 	Sprite::LoadTexture(shinshitu, L"Resources/2d/hand_Sname.png");
-	Sprite::LoadTexture(meter, L"Resources/2d/hotWaterGauge.png");
-	Sprite::LoadTexture(meterbar, L"Resources/2d/hotWaterBar.png");
 	Sprite::LoadTexture(button, L"Resources/2d/TitleParts/cursor2.png");
 	Sprite::LoadTexture(num, L"Resources/2d/Num.png");
 	Sprite::LoadTexture(bairitu, L"Resources/2d/Bairitu.png");
@@ -41,8 +37,6 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(BlackFilter, L"Resources/2d/Blackfilter.png");
 	Sprite::LoadTexture(WhiteFilter, L"Resources/2d/Whitefilter.png");
 	Sprite::LoadTexture(Tselect, L"Resources/2d/TitleParts/menu.png");
-	Sprite::LoadTexture(sky, L"Resources/2d/sky.png");
-	Sprite::LoadTexture(ground, L"Resources/2d/ground.png");
 	Sprite::LoadTexture(ok, L"Resources/2d/text/Ok.png");
 	Sprite::LoadTexture(text1, L"Resources/2d/text/text1.png");
 	Sprite::LoadTexture(text2, L"Resources/2d/text/text2.png");
@@ -65,10 +59,8 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(GameOver, L"Resources/2d/GameOverLogo.png");
 	Sprite::LoadTexture(noBoss_Select, L"Resources/2d/noBoss_Select.png");
 	Sprite::LoadTexture(noBoss_Sname, L"Resources/2d/noBoss_Sname.png");
-	Sprite::LoadTexture(hit, L"Resources/2d/particleD.png");
 	Sprite::LoadTexture(SPD, L"Resources/2d/SPD.png");
 	Sprite::LoadTexture(StageClear, L"Resources/2d/ClearMark.png");
-
 	Sprite::LoadTexture(endtext1, L"Resources/2d/endText/endText1.png");
 	Sprite::LoadTexture(endtext2, L"Resources/2d/endText/endText2.png");
 	Sprite::LoadTexture(endtext3, L"Resources/2d/endText/endText3.png");
