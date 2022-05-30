@@ -161,7 +161,6 @@ void Player::Update() {
 		//	Speedframe = 0.0f;
 		//}
 		PlayerSpeed = 0.3f;
-
 		//攻撃関係
 		if (AttackFlag == false) {
 			//if (input->TriggerButton(input->Button_RB)) {
