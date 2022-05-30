@@ -12,7 +12,6 @@
 #include <Easing.h>
 void FourthBoss::Initialize(DirectXCommon* dxCommon) {
 	//インスタンス取得
-	collisionManager = CollisionManager::GetInstance();
 	// カメラ生成
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
@@ -156,7 +155,6 @@ void FourthBoss::Finalize() {
 	}
 	player->Finalize();
 	pastel->Finalize();
-	//mill->Finalize();
 	shockwave->Final();
 	delete objBossMap;
 	delete objFloor;
@@ -167,13 +165,16 @@ void FourthBoss::Finalize() {
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Finalize();
 	}
-	/*for (std::size_t i = 0; i < exp.size(); i++) {
-		for (std::size_t j = 0; j < exp[i].size(); j++) {
-			exp[i][j]->Finalize();
-		}
-	}*/
 	delete camera;
 	ui->Finalize();
+	delete WhiteFilter;
+	delete BlackFilter;
+	delete bossName;
+	delete SkipSprite;
+	delete GameOverSprite;
+	delete GameClearSprite;
+	delete save;
+	expandchange->Finalize();
 }
 
 void FourthBoss::Update(DirectXCommon* dxCommon) {

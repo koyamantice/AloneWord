@@ -87,7 +87,6 @@ void GreenTea::Spec() {
 	//行動開始
 	if (active) {
 		count++;
-
 		if (action <= 1) {
 			if (count % 15 == 0) {
 				for (int i = 0; i < 50; i++) {
@@ -99,7 +98,7 @@ void GreenTea::Spec() {
 			}
 		}
 		else{
-			if (count % 100 == 0) {
+			if (count % 150 == 0) {
 				for (int i = 0; i < 50; i++) {
 					if (!hotWater[i]->GetIsAlive()) {
 						hotWater[i]->Follow(pos);
@@ -332,16 +331,16 @@ Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 				break;
 			case 2:
 				AfterPos = {
-					-17.0f,
+					17.0f,
 					0.0f,
-					20.0f
+					0.0f
 				};
 				break;
 			case 3:
 				AfterPos = {
+				-17.0f,
 				0.0f,
-				0.0f,
-				20.0f
+				0.0f
 				};
 				break;
 			case 4:
@@ -360,16 +359,16 @@ Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 				break;
 			case 6:
 				AfterPos = {
-				17.0f,
 				0.0f,
-				-17.0f
+				0.0f,
+				20.0f
 				};
 				break;
 			case 7:
 				AfterPos = {
-				17.0f,
 				0.0f,
-				0.0f
+				0.0f,
+				-17.0f
 				};
 				break;
 			case 8:

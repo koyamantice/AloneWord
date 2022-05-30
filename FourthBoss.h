@@ -54,7 +54,6 @@ private:
 	//std::array<std::array<Exp*, 10>, 5> exp;
 	float weight = 0;
 	UI* ui = nullptr;
-	CollisionManager* collisionManager = nullptr;
 	ParticleManager* particleMan = nullptr;
 	ExpandChange* expandchange = nullptr;
 };
