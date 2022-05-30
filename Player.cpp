@@ -152,15 +152,7 @@ void Player::Update() {
 			}
 		}
 		
-		//的とあたったときに加速する
-		if (AddSpeed != 0.0f) {
-			Speedframe += 0.02f;
-			AddSpeed = Ease(Out, Cubic, Speedframe, AddSpeed, 0.0f);
-		}
-		else {
-			Speedframe = 0.0f;
-		}
-		PlayerSpeed = 0.3f + AddSpeed;
+		PlayerSpeed = 0.3f;
 
 		//攻撃関係
 		if (AttackFlag == false) {
