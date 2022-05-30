@@ -151,7 +151,7 @@ void Player::Update() {
 				ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
 			}
 		}
-		
+
 		PlayerSpeed = 0.3f;
 
 		//攻撃関係
