@@ -13,7 +13,6 @@ private:
 public:
 
 	enum texName {
-		debugText,
 		playerHp,//Sprite::LoadTexture(3, L"Resources/2d/PlayerHP.png");
 		arrow,//Sprite::LoadTexture(4, L"Resources/2d/Arrow.png");
 		arrow2,

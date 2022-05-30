@@ -43,10 +43,7 @@ void Framework::Initialize(DirectXCommon* dxCommon) {
 
 	//const int debugTextTexNumber = 0;
 	// デバッグテキスト用テクスチャ読み込み
-	if (!Sprite::LoadTexture(ImageManager::debugText, L"Resources/2d/debugfont.png")) {
-		assert(0);
-		return;
-	}
+
 	ImageManager::GetIns()->Load2D();
 	// デバッグテキスト初期化
 	//debugText = DebugText::GetInstance();
