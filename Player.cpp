@@ -298,22 +298,22 @@ void Player::Update() {
 	}
 	else {
 		if (ArmWeight == 1.0f) {
-			power = 1.5f;
+			power = 1.0f;
 		}
 		else if (ArmWeight == 2.0f) {
-			power = 2.5f;
+			power = 2.25f;
 		}
 		else if (ArmWeight == 3.0f) {
-			power = 3.5f;
+			power = 4.0f;
 		}
 		else if (ArmWeight == 4.0f) {
-			power = 5.0f;
-		}
-		else if (ArmWeight == 5.0f) {
 			power = 7.0f;
 		}
-		else if (ArmWeight >= 6.0f) {
+		else if (ArmWeight == 5.0f) {
 			power = 10.0f;
+		}
+		else if (ArmWeight >= 6.0f) {
+			power = 15.0f;
 		}
 	}
 	//アニメーション用のキー入力

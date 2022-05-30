@@ -36,7 +36,7 @@ void LeftShose::Initialize(bool shadow) {
 	texture->SetRotation({ 90,0,0 });
 	texture->SetScale({ 0.3f,0.3f,0.3f });
 	//スタン時のぴよぴよ
-
+	stun = false;
 	for (std::size_t i = 0; i < Stuntexture.size(); i++) {
 		Stuntexture[i] = Texture::Create(ImageManager::Stun, { 0,0,0 }, { 0.5f,0.5f,0.5f }, { 1,1,1,1 });
 		Stuntexture[i]->TextureCreate();
