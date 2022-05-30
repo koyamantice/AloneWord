@@ -160,6 +160,13 @@ void StartMap::Finalize() {
 	}
 	delete camera;
 	ui->Finalize();
+	delete WhiteFilter;
+	delete BlackFilter;
+	delete bossName;
+	delete SkipSprite;
+	delete GameOverSprite;
+	delete GameClearSprite;
+	delete save;
 	expandchange->Finalize();
 	shrinkchange->Finalize();
 }
@@ -253,11 +260,11 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 		}
 		if (check) {
 			scaOk = {
-			Ease(Out, Quad, frame, 128,64),
-			Ease(Out, Quad, frame, 128,64),
+			Ease(Out, Quad, frame, 256,64),
+			Ease(Out, Quad, frame, 256,64),
 			};
 			if (frame < 1.0f) {
-				frame += 0.05f;
+				frame += 0.04f;
 			} else {
 				frame = 0.0f;
 				check = false;
@@ -302,7 +309,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 			Ease(Out, Quad, frame, 128,64),
 			};
 			if (frame < 1.0f) {
-				frame += 0.05f;
+				frame += 0.04f;
 			} else {
 				frame = 0.0f;
 				check = false;
@@ -347,7 +354,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 			Ease(Out, Quad, frame, 128,64),
 			};
 			if (frame < 1.0f) {
-				frame += 0.05f;
+				frame += 0.04f;
 			} else {
 				frame = 0.0f;
 				check = false;
@@ -391,7 +398,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 			Ease(Out, Quad, frame, 128,64),
 			};
 			if (frame < 1.0f) {
-				frame += 0.05f;
+				frame += 0.04f;
 			} else {
 				frame = 0.0f;
 				check = false;
@@ -435,7 +442,7 @@ void StartMap::Update(DirectXCommon* dxCommon) {
 			Ease(Out, Quad, frame, 128,64),
 			};
 			if (frame < 1.0f) {
-				frame += 0.05f;
+				frame += 0.04f;
 			} else {
 				frame = 0.0f;
 				check = false;

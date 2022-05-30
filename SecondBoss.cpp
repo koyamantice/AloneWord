@@ -12,7 +12,6 @@
 #include <Easing.h>
 void SecondBoss::Initialize(DirectXCommon* dxCommon) {
 	//インスタンス取得
-	collisionManager = CollisionManager::GetInstance();
 	// カメラ生成
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
@@ -164,6 +163,7 @@ void SecondBoss::Finalize() {
 	player->Finalize();
 	leftshose->Finalize();
 	rightshose->Finalize();
+	delete foot;
 	delete objBossMap;
 	delete objFloor;
 	delete modelBossMap;
@@ -179,9 +179,15 @@ void SecondBoss::Finalize() {
 		}
 	}*/
 	delete camera;
-	delete object1;
-	delete model1;
 	ui->Finalize();
+	delete WhiteFilter;
+	delete BlackFilter;
+	delete bossName;
+	delete SkipSprite;
+	delete GameOverSprite;
+	delete GameClearSprite;
+	delete save;
+	expandchange->Finalize();
 }
 
 void SecondBoss::Update(DirectXCommon* dxCommon) {

@@ -42,9 +42,6 @@ private:
 	Object3d* objSphere;
 	Model* modelEntrance = nullptr;
 	Object3d* objEntrance;
-	FBXModel* model1 = nullptr;
-	FBXObject3d* object1 = nullptr;
-	Texture* limit = nullptr;
 	//カメラ
 	DebugCamera* camera = { nullptr };
 	//各クラスのためのもの
@@ -57,7 +54,6 @@ private:
 	//std::array<std::array<Exp*, 6>, 5> exp;
 	
 	UI* ui = nullptr;
-	CollisionManager* collisionManager = nullptr;
 	ParticleManager* particleMan = nullptr;
 	ExpandChange* expandchange = nullptr;
 	int DethRight = 0;
