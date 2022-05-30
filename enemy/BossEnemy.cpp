@@ -46,7 +46,7 @@ void BossEnemy::Finalize() {
 void BossEnemy::Spec() {
 	XMFLOAT3 AfterPos{};
 	//行動を決める
-	if (AttackCount > 180 && pos.y <= 0.1f) {
+	if (AttackCount > 120 && pos.y <= 0.1f) {
 		if (!active) {
 			action = 1;
 			frame = 0;
@@ -105,7 +105,7 @@ void BossEnemy::Spec() {
 			else {
 				Afterrot.y = 90;
 				pat = 0;
-				AttackCount = 30;
+				AttackCount = 0;
 				Effect = true;
 				active = false;
 				frame = 0;
@@ -243,7 +243,7 @@ void BossEnemy::Spec() {
 						frame = 0;
 						pat = 0;
 						AttackC = 0;
-						AttackCount = 30;
+						AttackCount = 0;
 						Effect = true;
 						active = false;
 						break;
