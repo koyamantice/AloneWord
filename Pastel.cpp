@@ -804,9 +804,9 @@ void Pastel::MillUpdate() {
 //“Á•Ê‚È•`‰æ(‚¤‚·‚Æ‰ñ”ð‚Ì‚à‚Ì‚Æ‰e)
 void Pastel::specialDraw() {
 	XMFLOAT3 playerpos = player->GetPosition();
-	ImGui::Begin("test");
-	ImGui::SliderFloat("angle", &angle, 3, 0);
-	ImGui::End();
+	//ImGui::Begin("test");
+	//ImGui::SliderFloat("angle", &angle, 3, 0);
+	//ImGui::End();
 	if (BossHP > 0) {
 		Millobj->Draw();
 		Mottiobj->Draw();

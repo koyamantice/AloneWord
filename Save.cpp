@@ -1,12 +1,12 @@
 #include"Save.h"
 
 //Ã“Iƒƒ“ƒo•Ï”‚ÌÀ‘Ô
-int Save::ClearCount = 0;
+int Save::ClearCount = 3;
 bool Save::FirstClear = false;
-bool Save::SecondClear = false;
-bool Save::ThirdClear = false;
-bool Save::FouthClear = false;
-bool Save::FifthClear = false;
+bool Save::SecondClear = true;
+bool Save::ThirdClear = true;
+bool Save::FouthClear = true;
+bool Save::FifthClear = true;
 bool Save::PerfectClear = false;
 
 //ƒƒ“ƒoŠÖ”
