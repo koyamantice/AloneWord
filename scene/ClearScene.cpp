@@ -355,7 +355,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 					}
 				}
 				if (endcloseT) {
-					if (endTimer > 200) {
+					if (endTimer > 150) {
 						endopenT = false;
 						endcloseT = false;
 						endTimer = 0;
@@ -375,7 +375,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 					}
 				}
 				if (endcloseT) {
-					if (endTimer > 200) {
+					if (endTimer > 150) {
 						endopenT = false;
 						endcloseT = false;
 						endTimer = 0;
@@ -395,7 +395,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 					}
 				}
 				if (endcloseT) {
-					if (endTimer > 200) {
+					if (endTimer > 150) {
 						endopenT = false;
 						endcloseT = false;
 						endTimer = 0;
@@ -415,7 +415,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 					}
 				}
 				if (endcloseT) {
-					if (endTimer > 200) {
+					if (endTimer > 150) {
 						endopenT = false;
 						endcloseT = false;
 						endTimer = 0;
@@ -435,7 +435,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 					}
 				}
 				if (endcloseT) {
-					if (endTimer > 200) {
+					if (endTimer > 150) {
 						endopenT = false;
 						endcloseT = false;
 						endTimer = 0;
@@ -455,7 +455,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 					}
 				}
 				if (endcloseT) {
-					if (endTimer > 200) {
+					if (endTimer > 150) {
 						endopenT = false;
 						endcloseT = false;
 						endTimer = 0;
@@ -475,7 +475,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 					}
 				}
 				if (endcloseT) {
-					if (endTimer > 200) {
+					if (endTimer > 150) {
 						endopenT = false;
 						endcloseT = false;
 						endTimer = 0;
@@ -495,7 +495,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 					}
 				}
 				if (endcloseT) {
-					if (endTimer > 200) {
+					if (endTimer > 150) {
 						endopenT = false;
 						endcloseT = false;
 						endTimer = 0;
@@ -515,7 +515,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 					}
 				}
 				if (endcloseT) {
-					if (endTimer > 200) {
+					if (endTimer > 150) {
 						/*endopenT = false;
 						endcloseT = false;
 						endTimer = 0;
@@ -610,15 +610,15 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 		SceneManager::GetInstance()->ChangeScene("TITLE");
 	}*/
-	//DebugText::GetInstance()->Print("Buttun_B or ENTER to TITLE!!", 200, 100, 1.0f);
+	//DebugText::GetInstance()->Print("Buttun_B or ENTER to TITLE!!", 200, 150, 1.0f);
 }
 
 void ClearScene::Draw(DirectXCommon* dxCommon) {
-	//ImGui::Begin("test");
-	//ImGui::Text("rollTimer:%d", rollTimer);
-	///*ImGui::Text("endCount:%d", endTimer);
-	//ImGui::SliderFloat("color.w", &endColor.w, 1, 0);*/
-	//ImGui::End();
+	ImGui::Begin("test");
+	ImGui::Text("rollTimer:%d", rollTimer);
+	/*ImGui::Text("endCount:%d", endTimer);
+	ImGui::SliderFloat("color.w", &endColor.w, 1, 0);*/
+	ImGui::End();
 	Sprite::PreDraw();
 	sprite->Draw();
 	Object3d::PreDraw();

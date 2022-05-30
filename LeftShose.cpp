@@ -482,17 +482,17 @@ void LeftShose::Roll(int Timer) {
 		Rollbound = false;
 	}
 
-	if (Timer == 1500 || Timer == 1890) {
+	if (Timer == 1300 || Timer == 1690) {
 		rollMove++;
 	}
 	
-	if (Timer == 1890) {
+	if (Timer == 1690) {
 		Rollbound = true;
 		stun = true;
 		Deadbound.y = 0.5f;
 		Deadbound.x = 0.2f;
 	}
-	if (Timer == 2000) {
+	if (Timer == 1800) {
 		stun = false;
 		rollMove++;
 	}

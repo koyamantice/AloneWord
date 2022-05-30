@@ -291,7 +291,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		no_plane[1]->SetPosition(selectP[1]);
 		OnStageNumber = Onboots;
 		SinMove(1, 1);
-		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A) && StageSelectNumber == No && (ClearCount >= 2)) {
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A) && StageSelectNumber == No/* && (ClearCount >= 2)*/) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			//SceneManager::GetInstance()->ChangeScene("SECONDBOSS");
 			StageSelectNumber = boots;

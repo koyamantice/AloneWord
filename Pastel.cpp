@@ -697,7 +697,7 @@ void Pastel::Roll(int Timer) {
 		enescale = { 1.0f,1.0f,1.0f };
 	}
 
-	if (Timer == 2100) {
+	if (Timer == 1900) {
 		rollMove++;
 	}
 

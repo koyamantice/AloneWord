@@ -38,6 +38,8 @@ private:
 	double speedZ = 0.0f;
 	int MoveCount = 0;
 	bool LeftAct = false;
+	int StunHealTimer = 0;
+	bool StunHeal = false;
 	//í«è]ÇÃÇΩÇﬂÇÃÇ‚Ç¬
 	int FollowTimer = 0;
 	XMFLOAT2 vel{};
