@@ -30,11 +30,11 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 	StageP[4] = { 1.3f,0.0f,-3.2f };
 
 	//各スプライトの宣言
-	select[0] = Sprite::Create(ImageManager::select2, selectP[0]);
+	select[0] = Sprite::Create(ImageManager::select1, selectP[0]);
 	select[0]->SetAnchorPoint({ 1.0f,0.0f });
-	select[1] = Sprite::Create(ImageManager::select1, selectP[0]);
+	select[1] = Sprite::Create(ImageManager::select3, selectP[0]);
 	select[1]->SetAnchorPoint({ 1.0f,0.0f });
-	select[2] = Sprite::Create(ImageManager::select3, selectP[0]);
+	select[2] = Sprite::Create(ImageManager::select2, selectP[0]);
 	select[2]->SetAnchorPoint({ 1.0f,0.0f });
 	select[3] = Sprite::Create(ImageManager::select4, selectP[0]);
 	select[3]->SetAnchorPoint({ 1.0f,0.0f });
