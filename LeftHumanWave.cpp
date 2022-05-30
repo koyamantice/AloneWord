@@ -68,7 +68,7 @@ void LeftHumanWave::SetWave(LeftHand* lefthand) {
 	if (action == 0 && pos.y == 1.5f && pat == 5 && !expand && HP > 0) {
 		this->pos.x = pos.x;
 		this->pos.y = pos.y + 1.0f;
-		this->pos.z = pos.z;
+		this->pos.z = pos.z - 5.0f;
 		expand = true;
 	}
 

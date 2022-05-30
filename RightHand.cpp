@@ -112,7 +112,8 @@ void RightHand::Spec() {
 						break;
 					}
 				case 2:
-					Afterrot.z = 90;
+					Afterrot.z = 270.0f;
+					rot.z = 270.0f;
 					AfterPos.y = 1.0f;
 					if (frame < 0.45f) {
 						frame += 0.002f;
@@ -127,6 +128,7 @@ void RightHand::Spec() {
 						}
 					}
 					pos.y = Ease(In, Cubic, frame, pos.y, AfterPos.y);
+				
 				case 3:
 					AfterPos = {
 					pos.x,
@@ -168,14 +170,14 @@ void RightHand::Spec() {
 					};
 					if (frame < 1.0f) {
 						frame += 0.08f;
-						if (rot.z > 45) {
-							rot.z = 45;
-							//vel = -vel;
-						}
-						if (rot.z < -45) {
-							rot.z = -45;
-							//vel = -vel;
-						}
+						//if (rot.z > 45) {
+						//	rot.z = 45;
+						//	//vel = -vel;
+						//}
+						//if (rot.z < -45) {
+						//	rot.z = -45;
+						//	//vel = -vel;
+						//}
 						break;
 
 					}
@@ -239,8 +241,8 @@ void RightHand::Spec() {
 				case 3:
 					Afterrot = {
 						0,
-						0,
-						0
+						90,
+						360
 					};
 					AfterPos = {
 					10,
@@ -263,6 +265,7 @@ void RightHand::Spec() {
 						active = false;
 						break;
 					}
+					
 				default:
 					break;
 				}
@@ -279,7 +282,6 @@ void RightHand::Spec() {
 				Ease(In,Cubic,frame,rot.z,Afterrot.z)
 			};
 			enemyobj->SetRotation(rot);
-
 		}
 		//プレイヤーを挟むような攻撃
 		else if (action == 1) {
@@ -436,8 +438,9 @@ void RightHand::Spec() {
 				pos.y = Ease(In, Cubic, frame, pos.y, AfterPos.y);
 			}
 			else if (pat == 2) {
-				AfterPos.y = 2.6f;
-				Afterrot.y = 0;
+				AfterPos.y = 2.0f;
+				Afterrot.y = 90;
+				//Afterrot.z = -90;
 				Afterrot.x = 0;
 				if (frame < 0.45f) {
 					frame += 0.002f;
@@ -450,7 +453,7 @@ void RightHand::Spec() {
 				pos.y = Ease(In, Cubic, frame, pos.y, AfterPos.y);
 			}
 			else if (pat == 3) {
-				Afterrot.x = -90.0f;
+				Afterrot.x = 0.0f;
 				if (!stun) {
 					//3回突進する
 					if (AttackC < 5) {
@@ -464,8 +467,9 @@ void RightHand::Spec() {
 						1,
 						0
 						};
-						Afterrot.y = 0;
-						Afterrot.x = 0;
+						Afterrot.y = 90;
+						//Afterrot.x = -90;
+						//Afterrot.z = 90;
 						if (frame < 1.0f) {
 							frame += 0.01f;
 						}
@@ -487,7 +491,7 @@ void RightHand::Spec() {
 						XMFLOAT3 position{};
 						position.x = (player->GetPosition().x - pos.x);
 						position.z = (player->GetPosition().z - pos.z);
-						Afterrot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 180;// *(XM_PI / 180.0f);
+						Afterrot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 90;// *(XM_PI / 180.0f);
 					}
 					//プレイヤーの位置をロックオンさせる
 					if (MoveCount == 100) {
@@ -568,14 +572,14 @@ void RightHand::Spec() {
 							hitradius = 1.4f;
 							Deadbound.y -= 0.02f;
 							pos.y += Deadbound.y;
-							if (pos.y > 2.6f) {
+							if (pos.y > 2.0f) {
 								pos.x -= Deadbound.x;
 							}
 							else {
-								pos.y = 2.6f;
+								pos.y = 2.0f;
 							}
 
-							if (pos.y == 2.6f) {
+							if (pos.y == 2.0f) {
 								MoveCount = 0;
 								Attack = false;
 								hitpoint = HitNot;
@@ -586,14 +590,14 @@ void RightHand::Spec() {
 							hitradius = 1.4f;
 							Deadbound.y -= 0.02f;
 							pos.y += Deadbound.y;
-							if (pos.y > 2.6f) {
+							if (pos.y > 2.0f) {
 								pos.x += Deadbound.x;
 							}
 							else {
-								pos.y = 2.6f;
+								pos.y = 2.0f;
 							}
 
-							if (pos.y == 2.6f) {
+							if (pos.y == 2.0f) {
 								MoveCount = 0;
 								Attack = false;
 								hitpoint = HitNot;
@@ -604,14 +608,14 @@ void RightHand::Spec() {
 							hitradius = 1.4f;
 							Deadbound.y -= 0.02f;
 							pos.y += Deadbound.y;
-							if (pos.y > 2.6f) {
+							if (pos.y > 2.0f) {
 								pos.z -= Deadbound.z;
 							}
 							else {
-								pos.y = 2.6f;
+								pos.y = 2.0f;
 							}
 
-							if (pos.y == 2.6f) {
+							if (pos.y == 2.0f) {
 								MoveCount = 0;
 								Attack = false;
 								hitpoint = HitNot;
@@ -622,14 +626,14 @@ void RightHand::Spec() {
 							hitradius = 1.4f;
 							Deadbound.y -= 0.02f;
 							pos.y += Deadbound.y;
-							if (pos.y > 2.6f) {
+							if (pos.y > 2.0f) {
 								pos.z += Deadbound.z;
 							}
 							else {
-								pos.y = 2.6f;
+								pos.y = 2.0f;
 							}
 
-							if (pos.y == 2.6f) {
+							if (pos.y == 2.0f) {
 								MoveCount = 0;
 								Attack = false;
 								hitpoint = HitNot;
@@ -639,6 +643,13 @@ void RightHand::Spec() {
 					}
 				}
 			}
+			rot = {
+						Ease(In,Cubic,frame,rot.x,Afterrot.x),
+						Ease(In,Cubic,frame,rot.y,Afterrot.y),
+						Ease(In,Cubic,frame,rot.z,Afterrot.z)
+			};
+			enemyobj->SetRotation(rot);
+
 			enemyobj->SetPosition(pos);
 		}//投げる攻撃
 		//投げる攻撃
@@ -960,6 +971,7 @@ void RightHand::Spec() {
 	}
 	BirthParticle();
 	Mottiobj->Update();
+
 	rot.y = Ease(In, Quint, 0.7f, rot.y, Afterrot.y);
 	rot.x = Ease(In, Quint, 0.7f, rot.x, Afterrot.x);
 	enemyobj->SetRotation(rot);

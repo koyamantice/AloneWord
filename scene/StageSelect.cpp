@@ -242,7 +242,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		no_plane[0]->SetPosition(selectP[1]);
 		OnStageNumber = Onfork;
 		SinMove(0, 0);
-		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)) {
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A) && StageSelectNumber == No) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 
 			StageSelectNumber = fork;
@@ -281,7 +281,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		no_plane[1]->SetPosition(selectP[1]);
 		OnStageNumber = Onboots;
 		SinMove(1, 1);
-		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount >= 2)*/) {
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A) && StageSelectNumber == No/* && (ClearCount >= 2)*/) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			//SceneManager::GetInstance()->ChangeScene("SECONDBOSS");
 			StageSelectNumber = boots;
@@ -319,7 +319,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		no_plane[3]->SetPosition(selectP[1]);
 		OnStageNumber = OnTea;
 		SinMove(3, 3);
-		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount >= 1)*/) {
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A) && StageSelectNumber == No/* && (ClearCount >= 1)*/) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			//SceneManager::GetInstance()->ChangeScene("THIRDBOSS");
 			StageSelectNumber = Tea;
@@ -358,7 +358,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		no_plane[2]->SetPosition(selectP[1]);
 		OnStageNumber = OnPastel;
 		SinMove(2, 2);
-		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount >= 3)*/) {
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A) && StageSelectNumber == No/* && (ClearCount >= 3)*/) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			//SceneManager::GetInstance()->ChangeScene("FOURTHBOSS");
 			StageSelectNumber = Pastel;
@@ -397,7 +397,7 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 		no_plane[4]->SetPosition(selectP[1]);
 		OnStageNumber = Onhuman;
 		SinMove(4, 4);
-		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A)/* && (ClearCount >= 4)*/) {
+		if (input->PushKey(DIK_RETURN) || input->TriggerButton(input->Button_A) && StageSelectNumber == No/* && (ClearCount >= 4)*/) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
 			//SceneManager::GetInstance()->ChangeScene("FOURTHBOSS");
 			StageSelectNumber = human;

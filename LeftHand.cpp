@@ -115,7 +115,8 @@ void LeftHand::Spec() {
 						break;
 					}
 				case 2:
-					Afterrot.z = 90;
+					Afterrot.z = 270.0f;
+					rot.z = 270.0f;
 					AfterPos.y = 1.0f;
 					if (frame < 0.45f) {
 						frame += 0.004f;
@@ -166,14 +167,14 @@ void LeftHand::Spec() {
 					};
 					if (frame < 1.0f) {
 						frame += 0.08f;
-						if (rot.z > 45) {
-							rot.z = 45;
-							//vel = -vel;
-						}
-						if (rot.z < -45) {
-							rot.z = -45;
-							//vel = -vel;
-						}
+						//if (rot.z > 45) {
+						//	rot.z = 45;
+						//	//vel = -vel;
+						//}
+						//if (rot.z < -45) {
+						//	rot.z = -45;
+						//	//vel = -vel;
+						//}
 						break;
 
 					}
@@ -236,9 +237,9 @@ void LeftHand::Spec() {
 					}
 				case 3:
 					Afterrot = {
-						0,
-						0,
-						0
+					0,
+					90,
+					360
 					};
 					AfterPos = {
 					-10,

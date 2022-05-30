@@ -8,6 +8,7 @@ ExpandChange::ExpandChange() {
 	change = Sprite::Create(ImageManager::Change, { 0.0f,0.0f });
 	change->SetPosition(pos);
 	change->SetAnchorPoint({ 0.5f, 0.5f });
+	change->SetColor({ 1.0f,0.0f,0.0f,1.0f });
 	//change->SetSize({ 2.5f,2.5f });
 }
 
