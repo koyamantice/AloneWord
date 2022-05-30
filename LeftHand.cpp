@@ -9,7 +9,7 @@ using namespace DirectX;
 //コンストラクタ
 LeftHand::LeftHand() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::LeftHand_Open);
-	hand_closemodel = ModelManager::GetIns()->GetModel(ModelManager::LeftHand_Close);
+	hand_closemodel = ModelManager::GetIns()->GetModel(ModelManager::RightHand_Close);
 	Mottimodel = ModelManager::GetIns()->GetModel(ModelManager::Motti_Bullet);
 	Mottiobj = new Object3d();
 	Mottiobj = Object3d::Create();
@@ -115,8 +115,10 @@ void LeftHand::Spec() {
 						break;
 					}
 				case 2:
-					Afterrot.z = 270.0f;
-					rot.z = 270.0f;
+					Afterrot.z = 90.0f;
+					rot.z = 90.0f;
+					Afterrot.y = 270.0f;
+					rot.y = 270.0f;
 					AfterPos.y = 5.0f;
 					if (frame < 0.45f) {
 						frame += 0.004f;
@@ -237,9 +239,9 @@ void LeftHand::Spec() {
 					}
 				case 3:
 					Afterrot = {
-					0,
-					90,
-					360
+							0,
+							270,
+							0
 					};
 					AfterPos = {
 					-10,

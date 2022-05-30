@@ -151,16 +151,16 @@ void Player::Update() {
 				ArmSpeed = ((atan2(StickrotX, StickrotY) * (180.0f / XM_PI))) - 90;
 			}
 		}
-		
-		//的とあたったときに加速する
-		if (AddSpeed != 0.0f) {
-			Speedframe += 0.02f;
-			AddSpeed = Ease(Out, Cubic, Speedframe, AddSpeed, 0.0f);
-		}
-		else {
-			Speedframe = 0.0f;
-		}
-		PlayerSpeed = 0.3f + AddSpeed;
+		//
+		////的とあたったときに加速する
+		//if (AddSpeed != 0.0f) {
+		//	Speedframe += 0.02f;
+		//	AddSpeed = Ease(Out, Cubic, Speedframe, AddSpeed, 0.0f);
+		//}
+		//else {
+		//	Speedframe = 0.0f;
+		//}
+		PlayerSpeed = 0.3f;
 
 		//攻撃関係
 		if (AttackFlag == false) {

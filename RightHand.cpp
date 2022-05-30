@@ -9,7 +9,7 @@ using namespace DirectX;
 //こんすとらくた
 RightHand::RightHand() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::RightHand_Open);
-	hand_closemodel = ModelManager::GetIns()->GetModel(ModelManager::LeftHand_Close);
+	hand_closemodel = ModelManager::GetIns()->GetModel(ModelManager::RightHand_Close);
 	Mottimodel = ModelManager::GetIns()->GetModel(ModelManager::Motti_Bullet);
 	Mottiobj = new Object3d();
 	Mottiobj = Object3d::Create();
@@ -112,8 +112,10 @@ void RightHand::Spec() {
 						break;
 					}
 				case 2:
-					Afterrot.z = 270.0f;
-					rot.z = 270.0f;
+					Afterrot.z = 90.0f;
+					rot.z = 90.0f;
+					Afterrot.y = 270.0f;
+					rot.y = 270.0f;
 					AfterPos.y = 5.0f;
 					if (frame < 0.45f) {
 						frame += 0.002f;
@@ -241,8 +243,8 @@ void RightHand::Spec() {
 				case 3:
 					Afterrot = {
 						0,
-						90,
-						360
+						270,
+						0
 					};
 					AfterPos = {
 					10,
@@ -491,7 +493,7 @@ void RightHand::Spec() {
 						XMFLOAT3 position{};
 						position.x = (player->GetPosition().x - pos.x);
 						position.z = (player->GetPosition().z - pos.z);
-						Afterrot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 90;// *(XM_PI / 180.0f);
+						Afterrot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 270;// *(XM_PI / 180.0f);
 					}
 					//プレイヤーの位置をロックオンさせる
 					if (MoveCount == 100) {

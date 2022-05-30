@@ -70,12 +70,12 @@ void InterBoss::Update() {
 //描画
 void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
-	/*ImGui::Begin("test");
-	ImGui::SliderFloat("Defense", &Defense, 3, 0);
-	ImGui::SliderFloat("BossHp", &BossHP, 40, 0);
-	ImGui::SliderFloat("hit", &hitradius, 3, 0);
-	ImGui::Text("AttackCount::%d", AttackCount);
-	ImGui::End();*/
+	//ImGui::Begin("test");
+	//ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
+	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	//ImGui::SliderFloat("rot.z", &rot.z, 360, -360);
+	////ImGui::Text("AttackCount::%d", AttackCount);
+	//ImGui::End();
 	//if (BossHP >= 1) {
 		Object3d::PreDraw();
 		enemyobj->Draw();
