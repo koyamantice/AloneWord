@@ -30,6 +30,7 @@ private:
 	float frame = 0;
 	bool shrink = false;
 	XMFLOAT3 sca{};
+	XMFLOAT3 watersca{};
 	XMFLOAT3 vel{};
 	XMFLOAT3 pos{};
 	bool onGround=false;

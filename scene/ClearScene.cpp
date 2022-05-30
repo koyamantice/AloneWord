@@ -590,7 +590,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 	}
 
 
-	if (rollTimer == 6200) {
+	if (rollTimer == 6100) {
 		save->ResetClearSave();
 		save->ResetFirstSave();
 		save->ResetSecondSave();
@@ -614,11 +614,11 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 }
 
 void ClearScene::Draw(DirectXCommon* dxCommon) {
-	ImGui::Begin("test");
-	ImGui::Text("rollTimer:%d", rollTimer);
-	/*ImGui::Text("endCount:%d", endTimer);
-	ImGui::SliderFloat("color.w", &endColor.w, 1, 0);*/
-	ImGui::End();
+	//ImGui::Begin("test");
+	//ImGui::Text("rollTimer:%d", rollTimer);
+	///*ImGui::Text("endCount:%d", endTimer);
+	//ImGui::SliderFloat("color.w", &endColor.w, 1, 0);*/
+	//ImGui::End();
 	Sprite::PreDraw();
 	sprite->Draw();
 	Object3d::PreDraw();
