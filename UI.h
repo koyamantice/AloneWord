@@ -25,9 +25,9 @@ private:
 	using XMVECTOR = DirectX::XMVECTOR;
 	using XMMATRIX = DirectX::XMMATRIX;
 private:
-	Player* player = nullptr;
-	InterBoss* boss = nullptr;
-	InterBoss* boss2 = nullptr;
+	unique_ptr<Player> player = nullptr;
+	unique_ptr<InterBoss> boss = nullptr;
+	unique_ptr<InterBoss> boss2 = nullptr;
 	Sprite* Skip=nullptr;//“G‚ÌHP
 	Sprite* BossHp[3]{};//“G‚ÌHP
 	Sprite* BossHp2[3]{};//“G‚ÌHP

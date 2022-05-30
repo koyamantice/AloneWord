@@ -5,9 +5,9 @@
 #include <Input.h>
 //コンストラクタ
 UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
-	this->player = player;
-	this->boss = boss;
-	this->boss2 = boss2;
+	this->player.reset(player);
+	this->boss.reset(boss);
+	this->boss2.reset(boss2);
 	BossHp[max] = Sprite::Create(ImageManager::Enemyhp3, { 0.0f,0.0f });
 	BossHp[max]->SetPosition({ 260.0f,20.0f });
 
@@ -305,22 +305,25 @@ void UI::Update() {
 
 //開放
 void UI::Finalize() {
+	delete Skip;
 	for (int i = 0; i < 3; i++) {
 		delete BossHp[i];
 		delete BossHp2[i];
 		delete PlaHp[i];
 		delete Mark[i];
+		delete SpinBar[i];
 	}
 	for (int i = 0; i < 2;i++) {
 		for (int j = 0; j < 10;j++) {
 			delete number[i][j];
 		}
 	}
-	delete  Life;
-	delete Skip;
+	delete Life;
 	delete HpGauge;
 	delete Arrow;
 	delete Arrow2;
+	delete bairitu;
+	delete SpinGauge;
 }
 
 //描画
