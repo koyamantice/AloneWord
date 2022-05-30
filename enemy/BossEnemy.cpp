@@ -124,7 +124,7 @@ void BossEnemy::Spec() {
 				case 1:
 					AfterPos = {
 					pos.x,
-					3.0f,
+					5.0f,
 					pos.z
 					};
 					if (frame < 1.0f) {
@@ -139,7 +139,7 @@ void BossEnemy::Spec() {
 				case 2:
 					AfterPos = {
 						player->GetPosition().x,
-					3.0f,
+					5.0f,
 						player->GetPosition().z
 					};
 					if (aiming < 180) {
@@ -201,7 +201,7 @@ void BossEnemy::Spec() {
 				case 1:
 					AfterPos = {
 					pos.x,
-					3.0f,
+					5.0f,
 					pos.z
 					};
 					if (frame < 1.0f) {
@@ -216,7 +216,7 @@ void BossEnemy::Spec() {
 				case 2:
 					AfterPos = {
 					0,
-					3.0f,
+					5.0f,
 					0
 					};
 					if (frame < 1.0f) {
@@ -325,7 +325,7 @@ void BossEnemy::Roll(int Timer) {
 		frame = 0.0f;
 	}
 
-	if (Timer == 200) {
+	if (Timer == 100) {
 		rollMove++;
 	}
 	

@@ -604,18 +604,18 @@ void Rice::Move() {
 //クリア用
 void Rice::FirstRoll(int Timer) {
 	
-	if (Timer == 3450) {
+	if (Timer == 3350) {
 		appearance = true;
 		IsAlive = true;
 		RollMove++;
 	}
 
-	if (Timer == 3950 || Timer == 4650 || Timer == 5000) {
+	if (Timer == 3850 || Timer == 4550 || Timer == 4900) {
 		RollMove++;
 		rollframe = 0.0f;
 	}
 
-	if (Timer == 5000) {
+	if (Timer == 4900) {
 		appearance = true;
 		IsAlive = true;
 	}
@@ -712,18 +712,18 @@ void Rice::FirstRoll(int Timer) {
 
 void Rice::SecondRoll(int Timer) {
 
-	if (Timer == 3550) {
+	if (Timer == 3450) {
 		appearance = true;
 		IsAlive = true;
 		RollMove++;
 	}
 
-	if (Timer == 4050 || Timer == 4550 || Timer == 5020) {
+	if (Timer == 3950 || Timer == 4450 || Timer == 4920) {
 		RollMove++;
 		rollframe = 0.0f;
 	}
 
-	if (Timer == 5020) {
+	if (Timer == 4920) {
 		appearance = true;
 		IsAlive = true;
 	}
@@ -821,18 +821,18 @@ void Rice::SecondRoll(int Timer) {
 
 void Rice::ThirdRoll(int Timer) {
 
-	if (Timer == 3650) {
+	if (Timer == 3550) {
 		RollMove++;
 		IsAlive = true;
 		appearance = true;
 	}
 
-	if (Timer == 4150 || Timer == 4450 || Timer == 5040) {
+	if (Timer == 4050 || Timer == 4350 || Timer == 4940) {
 		RollMove++;
 		rollframe = 0.0f;
 	}
 
-	if (Timer == 5040) {
+	if (Timer == 4940) {
 		appearance = true;
 		IsAlive = true;
 	}
@@ -932,18 +932,18 @@ void Rice::ThirdRoll(int Timer) {
 
 void Rice::FouthRoll(int Timer) {
 
-	if (Timer == 3750) {
+	if (Timer == 3650) {
 		appearance = true;
 		IsAlive = true;
 		RollMove++;
 	}
 
-	if (Timer == 4250 || Timer == 4350 || Timer == 5060) {
+	if (Timer == 4150 || Timer == 4250 || Timer == 4960) {
 		RollMove++;
 		rollframe = 0.0f;
 	}
 
-	if (Timer == 5060) {
+	if (Timer == 4960) {
 		appearance = true;
 		IsAlive = true;
 	}

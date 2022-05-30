@@ -696,7 +696,7 @@ void Pastel::Roll(int Timer) {
 		enescale = { 1.0f,1.0f,1.0f };
 	}
 
-	if (Timer == 2200) {
+	if (Timer == 2100) {
 		rollMove++;
 	}
 
@@ -802,25 +802,25 @@ void Pastel::MillUpdate() {
 //“Á•Ê‚È•`‰æ(‚¤‚·‚Æ‰ñ”ð‚Ì‚à‚Ì‚Æ‰e)
 void Pastel::specialDraw() {
 	XMFLOAT3 playerpos = player->GetPosition();
-	ImGui::Begin("test");
-	//ImGui::SliderFloat("pos.y", &pos.y, 360, -360);
-	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
-	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
-	//ImGui::SliderFloat("rot.z", &rot.z, 360, -360);
-	////ImGui::Text("pat::%d", pat);
-	////ImGui::Text("AttackC:: %d", AttackC);
-	//ImGui::SliderFloat("HP", &BossHP, 40, 0);
-	//ImGui::SliderFloat("Defense", &Defense, 2, 0);
-	ImGui::SliderFloat("angle", &angle, 360, -360);
-	ImGui::Text("haveTimer::%d", haveTimer);
-	/*ImGui::Text("action::%d", action);
-	ImGui::Text("active::%d", active);
-	*/
-	
-	/*ImGui::Text("shadow::%d", shadow);
-	ImGui::SliderFloat("hit", &hitradius, 1, 0);*/
+	//ImGui::Begin("test");
+	////ImGui::SliderFloat("pos.y", &pos.y, 360, -360);
+	////ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	////ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	////ImGui::SliderFloat("rot.z", &rot.z, 360, -360);
+	//////ImGui::Text("pat::%d", pat);
+	//////ImGui::Text("AttackC:: %d", AttackC);
+	////ImGui::SliderFloat("HP", &BossHP, 40, 0);
+	////ImGui::SliderFloat("Defense", &Defense, 2, 0);
+	//ImGui::SliderFloat("angle", &angle, 360, -360);
+	//ImGui::Text("haveTimer::%d", haveTimer);
+	///*ImGui::Text("action::%d", action);
+	//ImGui::Text("active::%d", active);
+	//*/
+	//
+	///*ImGui::Text("shadow::%d", shadow);
+	//ImGui::SliderFloat("hit", &hitradius, 1, 0);*/
 
-	ImGui::End();
+	//ImGui::End();
 	if (BossHP > 0) {
 		Millobj->Draw();
 		Mottiobj->Draw();

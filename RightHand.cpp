@@ -1091,7 +1091,7 @@ void RightHand::Roll(int Timer) {
 		frame = 0.0f;
 	}
 
-	if (Timer == 2900 || Timer == 3100 || Timer == 3300) {
+	if (Timer == 2800 || Timer == 3000 || Timer == 3200) {
 		frame = 0.0f;
 		rollMove++;
 	}

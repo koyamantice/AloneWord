@@ -71,22 +71,9 @@ void InterBoss::Update() {
 void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
 	ImGui::Begin("test");
-	//ImGui::SliderFloat("pos.y", &pos.y, 360, -360);
-	ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
-	ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
-	ImGui::SliderFloat("rot.z", &rot.z, 360, -360);
-	////ImGui::Text("pat::%d", pat);
-	////ImGui::Text("AttackC:: %d", AttackC);
-	//ImGui::SliderFloat("HP", &BossHP, 40, 0);
-	//ImGui::SliderFloat("Defense", &Defense, 2, 0);
-	ImGui::Text("rollMove::%d", rollMove);
-	/*ImGui::Text("action::%d", action);
-	ImGui::Text("active::%d", active);
-	*/
-	
-	//ImGui::Text("shadow::%d", shadow);
+	ImGui::SliderFloat("Defense", &Defense, 3, 0);
+	ImGui::SliderFloat("BossHp", &BossHP, 40, 0);
 	ImGui::SliderFloat("hit", &hitradius, 3, 0);
-
 	ImGui::End();
 	//if (BossHP >= 1) {
 		Object3d::PreDraw();
@@ -187,7 +174,7 @@ bool InterBoss::collideAttackArm() {
 				Effect = true;
 				Effect2 = true;
 				//enemyobj->SetCollider();
-				BossHP -= ((weight * 1.2f) * 2.0f) / Defense;
+				BossHP -= (power) / Defense;
 				color = true;
 				weight = 0.0f;
 				//boundpower.x = (float)(rand() % 4 - 2);
