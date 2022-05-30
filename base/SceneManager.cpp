@@ -1,10 +1,10 @@
 #include "SceneManager.h"
 #include<cassert>
-//SceneManager::~SceneManager() {
-//	//最後のシーンの終了と開放
-//	scene_->Finalize();
-//	delete scene_;
-//}
+void SceneManager::Finalize() {
+	//最後のシーンの終了と開放
+	scene_->Finalize();
+	delete scene_;
+}
 
 SceneManager* SceneManager::GetInstance() {
 	static SceneManager instance;

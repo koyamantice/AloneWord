@@ -60,9 +60,6 @@
     <ClCompile Include="base\Audio.cpp">
       <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="2d\DebugText.cpp">
-      <Filter>base</Filter>
-    </ClCompile>
     <ClCompile Include="base\Easing.cpp">
       <Filter>base</Filter>
     </ClCompile>
@@ -306,9 +303,6 @@
       <Filter>3d</Filter>
     </ClInclude>
     <ClInclude Include="base\Audio.h">
-      <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="2d\DebugText.h">
       <Filter>base</Filter>
     </ClInclude>
     <ClInclude Include="base\Easing.h">
