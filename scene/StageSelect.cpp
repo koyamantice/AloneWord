@@ -137,21 +137,33 @@ void StageSelect::Initialize(DirectXCommon* dxCommon) {
 }
 //開放
 void StageSelect::Finalize() {
+	delete camera;
+	player->Finalize();
 	for (int i = 0; i < 6; i++) {
 		delete BackGround[i];
 	}
-	delete camera;
-	player->Finalize();
 	for (int i = 0; i < 3; i++) {
-		delete  select[i];
+		delete Stage1[i];
+		delete Stage2[i];
+		delete Stage3[i];
+		delete Stage4[i];
+		delete Stage5[i];
 	}
 	for (int i = 0; i < 4; i++) {
+		delete  select[i];
 		delete  plane[i];
 	}
 	for (int i = 0; i < 5; i++) {
 		delete no_plane[i];
 		delete no_select[i];
 	}
+	delete WhiteFilter;
+	delete BlackFilter;
+	delete bossName;
+	delete SkipSprite;
+	delete GameOverSprite;
+	delete GameClearSprite;
+	delete save;
 	expandchange->Finalize();
 	shrinkchange->Finalize();
 }
