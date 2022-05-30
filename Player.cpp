@@ -292,6 +292,30 @@ void Player::Update() {
 		}
 	}
 
+	//プレイヤーの攻撃力
+	if (ArmWeight == 0.0f) {
+		power = 0.0f;
+	}
+	else {
+		if (ArmWeight == 1.0f) {
+			power = 1.5f;
+		}
+		else if (ArmWeight == 2.0f) {
+			power = 2.5f;
+		}
+		else if (ArmWeight == 3.0f) {
+			power = 3.5f;
+		}
+		else if (ArmWeight == 4.0f) {
+			power = 5.0f;
+		}
+		else if (ArmWeight == 5.0f) {
+			power = 7.0f;
+		}
+		else if (ArmWeight >= 6.0f) {
+			power = 10.0f;
+		}
+	}
 	//アニメーション用のキー入力
 	if ((input->LeftTiltStick(input->Right)) || (input->LeftTiltStick(input->Left))
 		|| (input->LeftTiltStick(input->Up)) || (input->LeftTiltStick(input->Down))) {
@@ -617,12 +641,12 @@ void Player::TitleUp() {
 
 //描画
 void Player::Draw(DirectXCommon* dxCommon) {
-	//ImGui::Begin("test");
-	////ImGui::Text("RotCount:%d", bubbleC);
-	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
+	ImGui::Begin("test");
+	//ImGui::Text("RotCount:%d", bubbleC);
+	ImGui::SliderFloat("power", &power, 360, -360);
 	//ImGui::Text("clearMove:%d", clearMove);
-	////ImGui::Text("stopCount2:%d", stop_count);
-	//ImGui::End();
+	//ImGui::Text("stopCount2:%d", stop_count);
+	ImGui::End();
 	//Texture::PreDraw();
 	if (chargeTimer!=0&&!AttackFlag && HP > 0) {
 		Charge->Draw();

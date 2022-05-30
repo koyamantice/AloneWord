@@ -133,11 +133,11 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 //•`‰æ
 void TitleScene::Draw(DirectXCommon* dxCommon) {
 	bool P = save->GetPerfectClear();
-	ImGui::Begin("test");
-	//ImGui::SliderFloat("cameraPos.y", &cameraPos.y, 30, 0);
-	ImGui::Text("P::%d", P);
-	ImGui::Unindent();
-	ImGui::End();
+	//ImGui::Begin("test");
+	////ImGui::SliderFloat("cameraPos.y", &cameraPos.y, 30, 0);
+	//ImGui::Text("P::%d", P);
+	//ImGui::Unindent();
+	//ImGui::End();
 	Sprite::PreDraw();
 	//”wŒi—p
 	sprite[back]->Draw();

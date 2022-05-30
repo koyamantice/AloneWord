@@ -25,6 +25,11 @@ void HotWater::Upda() {
 	water->Update();
 	hot->Update();
 	if (IsAlive) {
+		if (watersca.x <= 4.0f) {
+			watersca.x += 0.1f;
+			watersca.y += 0.1f;
+			watersca.z += 0.1f;
+		}
 		if (action == 1) {
 			if (onGround) {
 				if (shrink) {
@@ -142,18 +147,22 @@ void HotWater::Upda() {
 				onGround = false;
 				frame = 0;
 				sca = { 0.1f,0.1f,0.1f };
-				water->SetPosition({ 0.0f,-50.0f,0.0f });
-				hot->SetPosition({ 0.0f,-50.0f,0.0f });
+				water->SetPosition({ 1000.0f,-50.0f,0.0f });
+				hot->SetPosition({ 1000.0f,-50.0f,0.0f });
 			}
 			hot->SetScale(sca);
 
 			FollowCollide();
 		}
+		water->SetScale(watersca);
 	}
 }
 
 //•`‰æ
 void HotWater::Draw() {
+	//ImGui::Begin("test");
+	//ImGui::SliderFloat("Defense", &watersca.x, 4, 0);
+	//ImGui::End();
 	if (IsAlive) {
 		Object3d::PreDraw();
 		if (!onGround) {
@@ -182,12 +191,14 @@ void HotWater::FollowCollide() {
 	float weight = player->GetArmWeight();
 	if (!player->GetBubble()) {
 		if (Collision::CircleCollision(pos.x, pos.z, radius, player->GetPosition().x, player->GetPosition().z, 1.0f)
-			&& player->GetInterval() == 0 && !onGround) {
+			&& player->GetInterval() == 0 && !onGround && IsAlive) {
 			Audio::GetInstance()->PlayWave("Resources/Sound/wet.wav", 0.2f);
 			IsAlive = false;
+			water->SetPosition({ 0.0f,-50.0f,0.0f });
 			player->SetHp(player->GetHp() - 1);
 			player->SetCharge(0);
 			player->SetRotCount(0);
+			player->SetInterval(100);
 			player->SetAttackFlag(false);
 			player->SetBubble(true);
 			if (weight != 0.0f) {
@@ -201,7 +212,8 @@ void HotWater::FollowCollide() {
 //‚¨“’‚ð”ò‚Î‚·
 void HotWater::Set(const XMFLOAT3& pos) {
 	this->pos = pos;
-	water->SetScale({ 3.0f,3.0f,3.0f });
+	watersca = { 0.0f,0.0f,0.0f };
+	water->SetScale(watersca);
 	water->SetPosition(this->pos);
 	const float rnd_vel = 0.2f;
 	vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
@@ -215,7 +227,8 @@ void HotWater::Set(const XMFLOAT3& pos) {
 
 void HotWater::Follow(const XMFLOAT3& pos) {
 	this->pos = pos;
-	water->SetScale({ 5.0f,5.0f,5.0f });
+	watersca = { 0.0f,0.0f,0.0f };
+	water->SetScale(watersca);
 	water->SetPosition(this->pos);
 	if (!IsAlive) {
 		IsAlive = true;
