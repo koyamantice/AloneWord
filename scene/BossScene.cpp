@@ -143,7 +143,6 @@ void BossScene::Finalize() {
 	player->Finalize();
 	bossenemy->Finalize();
 	ui->Finalize();
-	delete ui;
 	delete objBossMap;
 	delete objFloor;
 	delete modelBossMap;

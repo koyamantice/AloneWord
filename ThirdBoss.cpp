@@ -7,14 +7,12 @@
 #include "TouchableObject.h"
 #include "MeshCollider.h"
 #include "SphereCollider.h"
-#include "CollisionManager.h"
 #include "ImageManager.h"
 #include <Easing.h>
 //int BaseScene::ClearCount;
 //初期化
 void ThirdBoss::Initialize(DirectXCommon* dxCommon) {
 	//インスタンス取得
-	collisionManager = CollisionManager::GetInstance();
 	// カメラ生成
 	camera = new DebugCamera(WinApp::window_width, WinApp::window_height);
 	Texture::SetCamera(camera);
@@ -170,13 +168,17 @@ void ThirdBoss::Finalize() {
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Finalize();
 	}
-	/*for (std::size_t i = 0; i < exp.size(); i++) {
-		for (std::size_t j = 0; j < exp[i].size(); j++) {
-			exp[i][j]->Finalize();
-		}
-	}*/
+
 	delete camera;
 	ui->Finalize();
+	delete WhiteFilter;
+	delete BlackFilter;
+	delete bossName;
+	delete SkipSprite;
+	delete GameOverSprite;
+	delete GameClearSprite;
+	delete save;
+	expandchange->Finalize();
 }
 //更新
 void ThirdBoss::Update(DirectXCommon* dxCommon) {
@@ -186,7 +188,12 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 	objFloor->Update();
 	lightGroup->Update();
 	objJstyle->Update();
-	
+	if (Input::GetInstance()->AllNoPush()) {
+		Audio::GetInstance()->StopWave(3);
+		player->SetFlash(0);
+		end = true;
+
+	}
 	//最初の演出(導入)
 	if (!end && !gameover) {
 		if (Skip == true) {
