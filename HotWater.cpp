@@ -98,7 +98,7 @@ void HotWater::Upda() {
 				pos.x -= vel.x;
 				pos.z += vel.y;
 				water->SetPosition(pos);
-				if (followTimer == 200) {
+				if (followTimer == 150) {
 					onGround = true;
 					hot->SetPosition(pos);
 				}

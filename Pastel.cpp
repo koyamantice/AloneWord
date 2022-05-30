@@ -565,6 +565,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 		}
 		if (haveTimer == 600) {
 			Off = false;
+			angle = 0.0f;
 			haveTimer = 0;
 			haveEnemy = 0.0f;
 			MottiScale = { 0.0f,0.0f,0.0f };
@@ -721,6 +722,7 @@ void Pastel::Roll(int Timer) {
 
 //Œ‚”j
 void Pastel::End(int Timer) {
+	angle = 0.0f;
 	//ƒ{ƒX‚ð“|‚µ‚½‚ ‚Æ‚Ì‹““®(Œã‚Å‹Lq)
 	XMFLOAT3 scale = { 2.0f,2.0f,2.0f };
 	float RotPower = 0.0f;
@@ -803,23 +805,7 @@ void Pastel::MillUpdate() {
 void Pastel::specialDraw() {
 	XMFLOAT3 playerpos = player->GetPosition();
 	//ImGui::Begin("test");
-	////ImGui::SliderFloat("pos.y", &pos.y, 360, -360);
-	////ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
-	////ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
-	////ImGui::SliderFloat("rot.z", &rot.z, 360, -360);
-	//////ImGui::Text("pat::%d", pat);
-	//////ImGui::Text("AttackC:: %d", AttackC);
-	////ImGui::SliderFloat("HP", &BossHP, 40, 0);
-	////ImGui::SliderFloat("Defense", &Defense, 2, 0);
-	//ImGui::SliderFloat("angle", &angle, 360, -360);
-	//ImGui::Text("haveTimer::%d", haveTimer);
-	///*ImGui::Text("action::%d", action);
-	//ImGui::Text("active::%d", active);
-	//*/
-	//
-	///*ImGui::Text("shadow::%d", shadow);
-	//ImGui::SliderFloat("hit", &hitradius, 1, 0);*/
-
+	//ImGui::SliderFloat("angle", &angle, 3, 0);
 	//ImGui::End();
 	if (BossHP > 0) {
 		Millobj->Draw();

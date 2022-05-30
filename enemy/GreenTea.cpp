@@ -60,11 +60,11 @@ void GreenTea::Spec() {
 		hotWater[i]->SetPlayer(player.get());
 	}
 	//ここで行動を決める
-	if (AttackCount > 180) {
+	if (AttackCount > 120) {
 		if (!active) {
 			pos.y = 0.0f;
 			pos.x = 0.0f;
-			action = (rand() % 6);// (rand() % 2);
+			action = (rand() % 4);// (rand() % 2);
 			frame = 0;
 			pat = 1;
 			StartPos = pos;
@@ -88,7 +88,7 @@ void GreenTea::Spec() {
 	if (active) {
 		count++;
 
-		if (action <= 2) {
+		if (action <= 1) {
 			if (count % 15 == 0) {
 				for (int i = 0; i < 50; i++) {
 					if (!hotWater[i]->GetIsAlive()) {
@@ -99,7 +99,7 @@ void GreenTea::Spec() {
 			}
 		}
 		else{
-			if (count % 80 == 0) {
+			if (count % 100 == 0) {
 				for (int i = 0; i < 50; i++) {
 					if (!hotWater[i]->GetIsAlive()) {
 						hotWater[i]->Follow(pos);
@@ -122,51 +122,6 @@ void GreenTea::Spec() {
 			}
 		}*/
 		if (action == 0) {
-			if (pat == 1) {
-				radius++;
-				scale += 0.02f;
-				radius = (float)((int)radius % 360);
-				if (radius == 0) {
-					if (check >= 2) {
-						pat++;
-						StartPos = pos;
-						frame = 0;
-						check = 0;
-					} else {
-						check++;
-					}
-				}
-				//Afterrot = radius;
-				degree = radius * PI / 180.0f;
-				pos.x = cosf(degree) * scale;
-				pos.z = sinf(degree) * scale;
-			} else if (pat == 2) {
-				rot.y+= (rand() % 10)+1;
-				enemyobj->SetRotation(rot);
-				if (frame < 1.0f) {
-					frame += 0.002f;
-				} else {
-					//frame = 0;
-					pat++;
-					radius = 0;
-					scale = 0;
-				}
-				pos = {
-			Ease(InOut,Cubic,frame,StartPos.x,0),
-			Ease(InOut,Cubic,frame,StartPos.y,0),
-			Ease(InOut,Cubic,frame,StartPos.z,0)
-				};
-				enemyobj->SetPosition(pos);
-			} else {
-				pat = 0;
-				AttackCount = 30;
-				Effect = true;
-				active = false;
-				frame = 0;
-			}
-			enemyobj->SetPosition(pos);
-			enemyobj->SetRotation({ 0,radius,0 });
-		} else if (action == 1) {
 			rot.z += vel;
 			if (rot.z>Zma) {
 				rot.z = Zma;
@@ -198,14 +153,14 @@ void GreenTea::Spec() {
 				AfterPos = {
 					-17.0f,
 					0.0f,
-					20.0f
+					17.0f
 				};
 				break;
 			case 3:
 				AfterPos = {
 				0.0f,
 				0.0f,
-				20.0f
+				17.0f
 				};
 				break;
 			case 4:
@@ -219,14 +174,14 @@ void GreenTea::Spec() {
 				AfterPos = {
 				0.0f,
 				0.0f,
-				-17.0f
+				-16.0f
 				};
 				break;
 			case 6:
 				AfterPos = {
 				17.0f,
 				0.0f,
-				-17.0f
+				-16.0f
 				};
 				break;
 			case 7:
@@ -245,7 +200,7 @@ void GreenTea::Spec() {
 				break;
 			default:
 				pat = 0;
-				AttackCount = 30;
+				AttackCount = 0;
 				Effect = true;
 				active = false;
 				frame = 0;
@@ -256,7 +211,7 @@ Ease(In,Cubic,frame,StartPos.x,AfterPos.x),
 Ease(In,Cubic,frame,StartPos.y,AfterPos.y),
 Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 			};
-		} else if (action == 2) {
+		} else if (action == 1) {
 			rot.z += vel;
 			if (rot.z > Zma) {
 				rot.z = Zma;
@@ -287,14 +242,14 @@ Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 				AfterPos = {
 					17.0f,
 					0.0f,
-					-17.0f
+					-16.0f
 				};
 				break;
 			case 3:
 				AfterPos = {
 				0.0f,
 				0.0f,
-				-17.0f
+				-16.0f
 				};
 				break;
 			case 4:
@@ -334,7 +289,7 @@ Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 				break;
 			default:
 				pat = 0;
-				AttackCount = 30;
+				AttackCount = 0;
 				Effect = true;
 				active = false;
 				frame = 0;
@@ -346,57 +301,7 @@ Ease(In,Cubic,frame,StartPos.y,AfterPos.y),
 Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 			};
 		}
-		else if (action == 3) {
-			if (pat == 1) {
-				radius++;
-				scale += 0.02f;
-				radius = (float)((int)radius % 360);
-				if (radius == 0) {
-					if (check >= 2) {
-						pat++;
-						StartPos = pos;
-						frame = 0;
-						check = 0;
-					}
-					else {
-						check++;
-					}
-				}
-				//Afterrot = radius;
-				degree = radius * PI / 180.0f;
-				pos.x = cosf(degree) * scale;
-				pos.z = sinf(degree) * scale;
-			}
-			else if (pat == 2) {
-				rot.y += (rand() % 10) + 1;
-				enemyobj->SetRotation(rot);
-				if (frame < 1.0f) {
-					frame += 0.002f;
-				}
-				else {
-					//frame = 0;
-					pat++;
-					radius = 0;
-					scale = 0;
-				}
-				pos = {
-			Ease(InOut,Cubic,frame,StartPos.x,0),
-			Ease(InOut,Cubic,frame,StartPos.y,0),
-			Ease(InOut,Cubic,frame,StartPos.z,0)
-				};
-				enemyobj->SetPosition(pos);
-			}
-			else {
-				pat = 0;
-				AttackCount = 30;
-				Effect = true;
-				active = false;
-				frame = 0;
-			}
-			enemyobj->SetPosition(pos);
-			enemyobj->SetRotation({ 0,radius,0 });
-		}
-		else if (action == 4) {
+		else if (action == 2) {
 			rot.z += vel;
 			if (rot.z > Zma) {
 				rot.z = Zma;
@@ -476,7 +381,7 @@ Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 				break;
 			default:
 				pat = 0;
-				AttackCount = 30;
+				AttackCount = 0;
 				Effect = true;
 				active = false;
 				frame = 0;
@@ -488,7 +393,7 @@ Ease(In,Cubic,frame,StartPos.y,AfterPos.y),
 Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 			};
 		}
-		else if (action == 5) {
+		else if (action == 3) {
 			rot.z += vel;
 			if (rot.z > Zma) {
 				rot.z = Zma;
@@ -567,7 +472,7 @@ Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 				break;
 			default:
 				pat = 0;
-				AttackCount = 30;
+				AttackCount = 0;
 				Effect = true;
 				active = false;
 				frame = 0;
