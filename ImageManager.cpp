@@ -34,6 +34,8 @@ void ImageManager::Load2D() {
 	Sprite::LoadTexture(button, L"Resources/2d/TitleParts/cursor2.png");
 	Sprite::LoadTexture(num, L"Resources/2d/Num.png");
 	Sprite::LoadTexture(bairitu, L"Resources/2d/Bairitu.png");
+	Sprite::LoadTexture(NumX, L"Resources/2d/NumX.png");
+	Sprite::LoadTexture(NumF, L"Resources/2d/NumF.png");
 	Sprite::LoadTexture(Change, L"Resources/2d/Change.png");
 	Sprite::LoadTexture(Change2, L"Resources/2d/Change2.png");
 	Sprite::LoadTexture(BlackFilter, L"Resources/2d/Blackfilter.png");

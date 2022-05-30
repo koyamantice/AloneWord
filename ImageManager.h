@@ -41,6 +41,8 @@ public:
 		button,
 		num,
 		bairitu,
+		NumX,
+		NumF,
 		Change,
 		Change2,
 		BlackFilter,

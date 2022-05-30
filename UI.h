@@ -52,6 +52,8 @@ private:
 	//数
 	Sprite* number[2][10]{};
 	Sprite* bairitu = nullptr;
+	unique_ptr<Sprite> NumX = nullptr;
+	unique_ptr<Sprite> NumF = nullptr;
 	Sprite* SpinGauge = nullptr;
 	Sprite* SpinBar[3]{};
 	//スプライトの位置
@@ -71,8 +73,8 @@ private:
 	const float PI = 3.145265f;
 	std::vector<int> power;
 	float strong = 20.0f;
-	XMFLOAT2 pos{ (float)WinApp::window_width - 140 ,21 + 176 };
-	XMFLOAT2 pos2{ (float)WinApp::window_width - 225 ,7 + 160 };
+	XMFLOAT2 pos{ (float)WinApp::window_width - 120 ,197 };
+	XMFLOAT2 pos2{ (float)WinApp::window_width - 225 ,167 };
 	float speed = 0;
 	bool Up = false;
 	float vel = 2.0f;

@@ -899,7 +899,7 @@ void Player::Clear(int Timer) {
 
 	switch (clearMove) {
 	case 1:
-		Aftersca = { 0.02f,0.02f,0.02 };
+		Aftersca = { 0.02f,0.02f,0.02f };
 		if (clearframe < 1.0f) {
 			clearframe += 0.005f;
 			break;
@@ -909,7 +909,7 @@ void Player::Clear(int Timer) {
 			break;
 		}
 	case 2:
-		Aftersca = { 0.02f,0.02f,0.02 };
+		Aftersca = { 0.02f,0.02f,0.02f };
 		AfterRot = {
 			rot.x,
 			315,
@@ -925,7 +925,7 @@ void Player::Clear(int Timer) {
 		}
 
 	case 3:
-		Aftersca = { 0.02f,0.02f,0.02 };
+		Aftersca = { 0.02f,0.02f,0.02f };
 		AfterRot = {
 			rot.x,
 			225,
@@ -941,7 +941,7 @@ void Player::Clear(int Timer) {
 		}
 
 	case 4:
-		Aftersca = { 0.02f,0.02f,0.02 };
+		Aftersca = { 0.02f,0.02f,0.02f };
 		AfterRot = {
 			rot.x,
 			315,
@@ -957,7 +957,7 @@ void Player::Clear(int Timer) {
 		}
 
 	case 5:
-		Aftersca = { 0.02f,0.02f,0.02 };
+		Aftersca = { 0.02f,0.02f,0.02f };
 		AfterRot = {
 			rot.x,
 			225,
@@ -973,7 +973,7 @@ void Player::Clear(int Timer) {
 		}
 
 	case 6:
-		Aftersca = { 0.02f,0.02f,0.02 };
+		Aftersca = { 0.02f,0.02f,0.02f };
 		AfterRot = {
 			rot.x,
 			315,
@@ -989,7 +989,7 @@ void Player::Clear(int Timer) {
 		}
 
 	case 7:
-		Aftersca = { 0.02f,0.02f,0.02 };
+		Aftersca = { 0.02f,0.02f,0.02f };
 		AfterRot = {
 			rot.x,
 			450,
@@ -1004,7 +1004,7 @@ void Player::Clear(int Timer) {
 			break;
 		}
 	case 8:
-		Aftersca = { 0.02f,0.02f,0.02 };
+		Aftersca = { 0.02f,0.02f,0.02f };
 		AfterRot = {
 			rot.x,
 			270,

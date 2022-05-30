@@ -87,6 +87,15 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	bairitu = Sprite::Create(ImageManager::bairitu, { 1240.0f,100.0f });
 	bairitu->SetAnchorPoint({ 1.0f,0.0f });
 	bairitu->SetScale(0.7f);
+
+	Sprite* NumX_= Sprite::Create(ImageManager::NumX, { 1060.0f,200.0f });
+	NumX_->SetAnchorPoint({ 1.0f,0.0f });
+	NumX_->SetScale(1.2f);
+	NumX.reset(NumX_);
+	Sprite* NumF_ = Sprite::Create(ImageManager::NumF, { 1190.0f,200.0f });
+	NumF_->SetAnchorPoint({ 1.0f,0.0f });
+	NumF_->SetScale(1.4f);
+	NumF.reset(NumF_);
 	SpinGauge = Sprite::Create(ImageManager::SpinGauge, { 0.0f,0.0f });
 	const int w = 54;
 	const int h = 60;
@@ -94,7 +103,7 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	const float onePos = WinApp::window_width - 208.0f;
 	for (int i = 0; i < 2; i++) {
 		for (int j = 0; j < 10; j++) {
-			number[i][j] = Sprite::Create(ImageManager::GetIns()->num, { 0,0 });
+			number[i][j] = Sprite::Create(ImageManager::num, { 0,0 });
 			int number_index_y = j / l;
 			int number_index_x = j % l;
 			number[i][j]->SetTextureRect(
@@ -302,6 +311,12 @@ void UI::Finalize() {
 		delete PlaHp[i];
 		delete Mark[i];
 	}
+	for (int i = 0; i < 2;i++) {
+		for (int j = 0; j < 10;j++) {
+			delete number[i][j];
+		}
+	}
+	delete  Life;
 	delete Skip;
 	delete HpGauge;
 	delete Arrow;
@@ -348,6 +363,8 @@ const void UI::Draw() {
 	}
 	if (player->GetAttackFlag()) {
 		if (power.size() != 0) {
+			NumX->Draw();
+			NumF->Draw();
 			bairitu->Draw();
 			for (int i = 0; i < power.size() && i < 2; i++) {
 				number[i][power[i]]->Draw();
@@ -412,16 +429,24 @@ void UI::EaseScale() {
 	power.clear();
 	for (int tmp = (int)strong; tmp > 0;) {
 		power.push_back(tmp % 10);
+		if (tmp < 10) {
+			power.push_back(0);
+		}
 		tmp /= 10;
 	}
 	strong = player->GetArmWeight();
 	//pos.x = Ease(In,Quad,frame, (float)WinApp::window_width - 70, (float)WinApp::window_width - 90);
 	//pos.y = Ease(In, Quad, frame, 21 + 80, 40 + 80);
 	vel = Ease(In, Quad, frame, 1.3f, 1.1f);
-
+	NumX->SetScale(vel);
+	NumF->SetScale(vel);
 	if (frame > 1.2f) {
 		frame = 0.0f;
 		Up = false;
+		NumX->SetSize({ 48,48 });
+		NumX->SetScale(1.2f);
+		NumF->SetSize({ 48,48 });
+		NumF->SetScale(1.4f);
 		for (int i = 0; i < 2; i++) {
 			for (int j = 0; j < 10; j++) {
 				number[i][j]->SetSize({ 48,48 });
@@ -435,7 +460,6 @@ void UI::EaseScale() {
 	} else {
 		frame += 0.3f;
 	}
-
 	for (int i = 0; i < power.size() && i < 2; i++) {
 		number[i][power[i]]->SetScale(vel);
 	}
