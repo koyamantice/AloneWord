@@ -46,8 +46,8 @@ private:
 	DebugCamera* camera = { nullptr };
 	//‚»‚ê‚¼‚ê‚ÌƒNƒ‰ƒX‚Ì‚à‚Ì
 	Player* player = nullptr;
-	array<Effect*, 40> effect;
-	array<Rice*, 6> enemy;
+	array<Effect*, 60> effect;
+	array<Rice*, 10> enemy;
 	Pastel* pastel = nullptr;
 	ShockWave* shockwave = nullptr;
 	//std::array<std::array<Exp*, 10>, 5> exp;

@@ -51,8 +51,8 @@ private:
 	DebugCamera* camera = { nullptr };
 	//ŠeƒNƒ‰ƒX‚Ì‚½‚ß‚Ì‚à‚Ì
 	Player* player = nullptr;
-	array<Effect*, 40> effect;
-	array<Rice*, 6> enemy;
+	array<Effect*, 60> effect;
+	array<Rice*, 10> enemy;
 	LeftHand* lefthand = nullptr;
 	RightHand* righthand = nullptr;
 	RightHumanWave* rightwave = nullptr;
