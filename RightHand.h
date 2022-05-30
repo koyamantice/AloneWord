@@ -1,7 +1,8 @@
 #pragma once
 #include "InterBoss.h"
 #include "Human.h"
-#include <array>   
+#include <array>  
+
 using namespace std;         //  名前空間指定
 class RightHand :public InterBoss {
 public:
@@ -16,6 +17,8 @@ public:
 	void specialDraw() override;//このシーンのみの描画
 	void SetAct(Human* human);
 	bool collideMottiPlayer(Player* player);
+	//足元にパーティクル
+	void BirthParticle();
 private:
 	bool Attack = false;
 

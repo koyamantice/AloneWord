@@ -5,7 +5,7 @@
 #include <Easing.h>
 #include"ImageManager.h"
 using namespace DirectX;
-
+#include "ParticleManager.h"
 //こんすとらくた
 RightHand::RightHand() {
 	model = ModelManager::GetIns()->GetModel(ModelManager::RightHand_Open);
@@ -46,7 +46,7 @@ void RightHand::Initialize(bool shadow) {
 	Mottiobj->SetScale({ 1.0f,1.0f,1.0f });
 	InitCommon();
 	//当たり判定の大きさ
-	hitradius = 0.6f;
+	hitradius = 1.0f;
 	//防御力
 	Defense = 1.5f;
 }
@@ -92,7 +92,7 @@ void RightHand::Spec() {
 	if (active) {
 		//衝撃波
 		if (action == 0) {
-			hitradius = 0.6f;
+			hitradius = 1.0f;
 			if (AttackC < 3) {
 				switch (pat) {
 				case 1:
@@ -421,7 +421,6 @@ void RightHand::Spec() {
 
 		//突進攻撃
 		else if (action == 2) {
-		hitradius = 0.8f;
 			if (pat == 1) {
 				AfterPos.y = 15.0f;
 				if (pos.y >= 14) {
@@ -459,6 +458,7 @@ void RightHand::Spec() {
 					}
 					//左足が戻ったら元の位置に戻る
 					else {
+						hitradius = 1.0f;
 						AfterPos = {
 						10,
 						1,
@@ -528,6 +528,7 @@ void RightHand::Spec() {
 					}
 
 					if (Attack) {
+						hitradius = 2.2f;
 						//プレイヤーにスピード加算
 						pos.x += (float)speedX;
 						pos.z += (float)speedZ;
@@ -564,6 +565,7 @@ void RightHand::Spec() {
 
 						//跳ねるような感じで戻る(戻りきったら攻撃回数が加算される)
 						if (hitpoint == HitRight) {
+							hitradius = 1.4f;
 							Deadbound.y -= 0.02f;
 							pos.y += Deadbound.y;
 							if (pos.y > 2.6f) {
@@ -581,6 +583,7 @@ void RightHand::Spec() {
 							}
 						}
 						else if (hitpoint == HitLeft) {
+							hitradius = 1.4f;
 							Deadbound.y -= 0.02f;
 							pos.y += Deadbound.y;
 							if (pos.y > 2.6f) {
@@ -598,6 +601,7 @@ void RightHand::Spec() {
 							}
 						}
 						else if (hitpoint == HitUp) {
+							hitradius = 1.4f;
 							Deadbound.y -= 0.02f;
 							pos.y += Deadbound.y;
 							if (pos.y > 2.6f) {
@@ -615,6 +619,7 @@ void RightHand::Spec() {
 							}
 						}
 						else if (hitpoint == HitDown) {
+							hitradius = 1.4f;
 							Deadbound.y -= 0.02f;
 							pos.y += Deadbound.y;
 							if (pos.y > 2.6f) {
@@ -638,7 +643,7 @@ void RightHand::Spec() {
 		}//投げる攻撃
 		//投げる攻撃
 		else if (action == 3) {
-		hitradius = 0.6f;
+		hitradius = 1.0f;
 		if (AttackC != 4) {
 			if (pat == 1) {
 				AfterPos.y = 15.0f;
@@ -953,6 +958,7 @@ void RightHand::Spec() {
 		enemyobj->SetPosition(pos);
 		}
 	}
+	BirthParticle();
 	Mottiobj->Update();
 	rot.y = Ease(In, Quint, 0.7f, rot.y, Afterrot.y);
 	rot.x = Ease(In, Quint, 0.7f, rot.x, Afterrot.x);
@@ -1279,6 +1285,23 @@ bool RightHand::collideMottiPlayer(Player* player) {
 	}
 	else {
 		return false;
+	}
+}
+
+//パーティクルが出てくる
+void RightHand::BirthParticle() {
+	if (action == 2 && active && Attack && BossHP > 0) {
+		for (int i = 0; i < 3; ++i) {
+			const float rnd_vel = 0.1f;
+			XMFLOAT3 vel{};
+			vel.x = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			vel.y = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			vel.z = (float)rand() / RAND_MAX * rnd_vel - rnd_vel / 2.0f;
+			//const float rnd_sca = 0.1f;
+			//float sca{};
+			//sca = (float)rand() / RAND_MAX*rnd_sca;
+			ParticleManager::GetInstance()->Add(30, { pos.x + vel.x,pos.y,pos.z + vel.z }, vel, XMFLOAT3(), 1.2f, 0.6f);
+		}
 	}
 }
 

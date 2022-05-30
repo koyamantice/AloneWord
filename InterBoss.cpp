@@ -72,9 +72,9 @@ void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
 	ImGui::Begin("test");
 	//ImGui::SliderFloat("pos.y", &pos.y, 360, -360);
-	ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
-	ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
-	ImGui::SliderFloat("rot.z", &rot.z, 360, -360);
+	ImGui::SliderFloat("rot.x", &pos.x, 360, -360);
+	ImGui::SliderFloat("rot.y", &pos.y, 360, -360);
+	ImGui::SliderFloat("rot.z", &pos.z, 360, -360);
 	////ImGui::Text("pat::%d", pat);
 	////ImGui::Text("AttackC:: %d", AttackC);
 	//ImGui::SliderFloat("HP", &BossHP, 40, 0);
@@ -84,8 +84,8 @@ void InterBoss::Draw() {
 	ImGui::Text("active::%d", active);
 	*/
 	
-	/*ImGui::Text("shadow::%d", shadow);
-	ImGui::SliderFloat("hit", &hitradius, 1, 0);*/
+	//ImGui::Text("shadow::%d", shadow);
+	ImGui::SliderFloat("hit", &hitradius, 3, 0);
 
 	ImGui::End();
 	//if (BossHP >= 1) {
@@ -141,7 +141,7 @@ bool InterBoss::collideAttackArm() {
 	float playerhp = player->GetHp();
 	XMFLOAT3 distance = player->GetDistance();
 	if (attackflag && !BossHit) {
-		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 1.5f, plapos.x, plapos.y,plapos.z, 1.5f) == true && BossHP > 0) {
+		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 1.6f, plapos.x, plapos.y,plapos.z, 1.6f) == true && BossHP > 0) {
 			player->SetAttackFlag(false);
 			player->SetCharge(0);
 			player->SetRotCount(0);
