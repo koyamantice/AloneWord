@@ -1,7 +1,6 @@
 #include "RightHumanWave.h"
 #include "ImageManager.h"
 #include"Collision.h"
-#include "DebugText.h"
 #include "imgui.h"
 void RightHumanWave::Init() {
 	wave = Texture::Create(ImageManager::enemy, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
@@ -100,7 +99,6 @@ bool RightHumanWave::CollideWave(Player* player) {
 	XMFLOAT3 playerpos = player->GetPosition();
 
 	if (Collision::SphereCollision(pos.x, pos.y, pos.z, damegeArea, playerpos.x, playerpos.y, playerpos.z, damegeArea)) {
-		DebugText::GetInstance()->Print("damegeHit", 0, 0, 2.0f);
 		return true;
 	}
 	else {
@@ -111,7 +109,6 @@ bool RightHumanWave::CollideWave(Player* player) {
 bool RightHumanWave::CollideSafeWave(Player* player) {
 	XMFLOAT3 playerpos = player->GetPosition();
 	if (Collision::SphereCollision(pos.x, pos.y, pos.z, safeArea, playerpos.x, playerpos.y, playerpos.z, safeArea)) {
-		DebugText::GetInstance()->Print("safeHit", 0, 10, 2.0f);
 		return true;
 	}
 	else {

@@ -17,6 +17,7 @@ public:
 	/// •`‰æ
 	/// </summary>
 	void Draw(DirectXCommon* dxCommon);
+	void Finalize();
 
 	bool IsEndRequst() { return endResquest_; }
 

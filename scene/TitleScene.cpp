@@ -52,6 +52,13 @@ void TitleScene::Finalize() {
 		delete sprite[i];
 	}
 	expandchange->Finalize();
+	delete WhiteFilter;
+	delete BlackFilter;
+	delete GameOverSprite;
+	delete bossName;
+	delete SkipSprite;
+	delete GameClearSprite;
+	delete save;
 }
 //çXêV
 void TitleScene::Update(DirectXCommon* dxCommon) {

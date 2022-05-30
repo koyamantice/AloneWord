@@ -3,7 +3,6 @@
 #include "DirectXCommon.h"
 #include "WinApp.h"
 #include "Input.h"
-#include "DebugText.h"
 #include "Audio.h"
 #include "Object3d.h"
 #include "Sprite.h"
@@ -55,7 +54,7 @@ protected:
 	Audio* audio = nullptr;
 	FPSManager* fps = nullptr;
 	XorShift* xorShift=nullptr;
-	DebugText* debugText = nullptr;
+	//DebugText* debugText = nullptr;
 	AbstractSceneFactory* sceneFactory_ = nullptr;
 	ImageManager* imageManager = nullptr;
 	SceneManager* scaneMana = nullptr;

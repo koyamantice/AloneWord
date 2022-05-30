@@ -49,8 +49,8 @@ void Framework::Initialize(DirectXCommon* dxCommon) {
 	}
 	ImageManager::GetIns()->Load2D();
 	// デバッグテキスト初期化
-	debugText = DebugText::GetInstance();
-	debugText->Initialize(ImageManager::debugText);
+	//debugText = DebugText::GetInstance();
+	//debugText->Initialize(ImageManager::debugText);
 
 	// ライト静的初期化
 	LightGroup::StaticInitialize(dxcommon->GetDev());
@@ -72,6 +72,7 @@ void Framework::Initialize(DirectXCommon* dxCommon) {
 }
 
 void Framework::Finalize() {
+	SceneManager::GetInstance()->Finalize();
 	delete sceneFactory_;
 	dxcommon->Finalize();
 	delete dxcommon;
@@ -95,6 +96,6 @@ void Framework::Draw(DirectXCommon* dxCommon) {
 
 	SceneManager::GetInstance()->Draw(dxCommon);
 
-	debugText->DrawAll();
+	//debugText->DrawAll();
 	dxCommon->PostDraw();
 }
