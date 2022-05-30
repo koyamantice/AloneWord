@@ -62,13 +62,14 @@ void InterEnemy::DeadEnemy() {
 		pos.y = 0.0f;
 	}
 	if (pos.y == 0.0f) {
-		enescale.x -= 0.01f;
-		enescale.y -= 0.01f;
-		enescale.z -= 0.01f;
+		enescale.x -= 0.02f;
+		enescale.y -= 0.02f;
+		enescale.z -= 0.02f;
 		if (enescale.x <= 0.0f && enescale.y <= 0.0f && enescale.z <= 0.0f) {
 			DrawExp = true;
 			Exp = false;
 			IsAlive = false;
+			nocatch = false;
 		}
 	}
 }

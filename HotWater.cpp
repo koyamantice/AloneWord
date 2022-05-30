@@ -93,8 +93,8 @@ void HotWater::Upda() {
 				position.z = (plapos.z - pos.z);
 				//NextP.x -= sin(-atan2f(position.x, position.z)) * 0.2251f;
 				//NextP.z += cos(-atan2f(position.x, position.z)) * 0.2251f;
-				vel.x = sin(-atan2f(position.x, position.z)) * 0.2f;
-				vel.y = cos(-atan2f(position.x, position.z)) * 0.2f;
+				vel.x = sin(-atan2f(position.x, position.z)) * 0.17f;
+				vel.y = cos(-atan2f(position.x, position.z)) * 0.17f;
 				pos.x -= vel.x;
 				pos.z += vel.y;
 				water->SetPosition(pos);
@@ -188,6 +188,8 @@ void HotWater::Collide() {
 
 //ƒvƒŒƒCƒ„[‚Æ‚Ì“–‚½‚è”»’è
 void HotWater::FollowCollide() {
+	XMFLOAT3 distance = player->GetDistance();
+	XMFLOAT3 playerpos = player->GetPosition();
 	float weight = player->GetArmWeight();
 	if (!player->GetBubble()) {
 		if (Collision::CircleCollision(pos.x, pos.z, radius, player->GetPosition().x, player->GetPosition().z, 1.0f)
@@ -199,6 +201,11 @@ void HotWater::FollowCollide() {
 			player->SetCharge(0);
 			player->SetRotCount(0);
 			player->SetInterval(100);
+			distance.x = playerpos.x - pos.x;
+			distance.z = playerpos.z - pos.z;
+			player->SetDistance(distance);
+			player->SetJumpG(0.5f);
+			player->SetDamageFlag(true);
 			player->SetAttackFlag(false);
 			player->SetBubble(true);
 			if (weight != 0.0f) {
