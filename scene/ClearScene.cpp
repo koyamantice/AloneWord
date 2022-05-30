@@ -340,7 +340,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 		enemy[1]->SecondRoll(rollTimer);
 		enemy[2]->ThirdRoll(rollTimer);
 		enemy[3]->FouthRoll(rollTimer);
-		if (rollTimer >= 500) {
+		if (rollTimer >= 300) {
 			endTimer++;
 			switch (nowendText) {
 			case endrollText1:
@@ -349,7 +349,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 						endopen = true;
 					}
 				}
-				if (endTimer > 360) {
+				if (endTimer > 260) {
 					if (!endclose && !endcloseT) {
 						endclose = true;
 					}
@@ -369,7 +369,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 						endopen = true;
 					}
 				}
-				if (endTimer > 360) {
+				if (endTimer > 260) {
 					if (!endclose && !endcloseT) {
 						endclose = true;
 					}
@@ -389,7 +389,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 						endopen = true;
 					}
 				}
-				if (endTimer > 360) {
+				if (endTimer > 260) {
 					if (!endclose && !endcloseT) {
 						endclose = true;
 					}
@@ -409,7 +409,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 						endopen = true;
 					}
 				}
-				if (endTimer > 360) {
+				if (endTimer > 260) {
 					if (!endclose && !endcloseT) {
 						endclose = true;
 					}
@@ -429,7 +429,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 						endopen = true;
 					}
 				}
-				if (endTimer > 360) {
+				if (endTimer > 260) {
 					if (!endclose && !endcloseT) {
 						endclose = true;
 					}
@@ -449,7 +449,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 						endopen = true;
 					}
 				}
-				if (endTimer > 360) {
+				if (endTimer > 260) {
 					if (!endclose && !endcloseT) {
 						endclose = true;
 					}
@@ -469,7 +469,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 						endopen = true;
 					}
 				}
-				if (endTimer > 360) {
+				if (endTimer > 260) {
 					if (!endclose && !endcloseT) {
 						endclose = true;
 					}
@@ -489,7 +489,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 						endopen = true;
 					}
 				}
-				if (endTimer > 360) {
+				if (endTimer > 260) {
 					if (!endclose && !endcloseT) {
 						endclose = true;
 					}
@@ -509,7 +509,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 						endopen = true;
 					}
 				}
-				if (endTimer > 360) {
+				if (endTimer > 260) {
 					if (!endclose && !endcloseT) {
 						//endclose = true;
 					}
@@ -590,7 +590,7 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 	}
 
 
-	if (rollTimer == 6100) {
+	if (rollTimer == 5200) {
 		save->ResetClearSave();
 		save->ResetFirstSave();
 		save->ResetSecondSave();
@@ -614,11 +614,11 @@ void ClearScene::Update(DirectXCommon* dxCommon) {
 }
 
 void ClearScene::Draw(DirectXCommon* dxCommon) {
-	//ImGui::Begin("test");
-	//ImGui::Text("rollTimer:%d", rollTimer);
-	///*ImGui::Text("endCount:%d", endTimer);
-	//ImGui::SliderFloat("color.w", &endColor.w, 1, 0);*/
-	//ImGui::End();
+	ImGui::Begin("test");
+	ImGui::Text("rollTimer:%d", rollTimer);
+	/*ImGui::Text("endCount:%d", endTimer);
+	ImGui::SliderFloat("color.w", &endColor.w, 1, 0);*/
+	ImGui::End();
 	Sprite::PreDraw();
 	sprite->Draw();
 	Object3d::PreDraw();

@@ -602,18 +602,18 @@ void RightShose::Roll(int Timer) {
 		Rollbound = false;
 	}
 
-	if (Timer == 1600 || Timer == 1990) {
+	if (Timer == 1500 || Timer == 1890) {
 		rollMove++;
 	}
 
-	if (Timer == 1990) {
+	if (Timer == 1890) {
 		Rollbound = true;
 		stun = true;
 		Deadbound.y = 0.5f;
 		Deadbound.x = 0.2f;
 	}
 
-	if (Timer == 2100) {
+	if (Timer == 2000) {
 		stun = false;
 		rollMove++;
 	}

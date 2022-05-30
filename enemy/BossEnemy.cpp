@@ -325,7 +325,7 @@ void BossEnemy::Roll(int Timer) {
 		frame = 0.0f;
 	}
 
-	if (Timer == 200) {
+	if (Timer == 100) {
 		rollMove++;
 	}
 	
