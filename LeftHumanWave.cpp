@@ -1,7 +1,6 @@
 #include "LeftHumanWave.h"
 #include "ImageManager.h"
 #include"Collision.h"
-#include "DebugText.h"
 #include "imgui.h"
 void LeftHumanWave::Init() {
 	wave = Texture::Create(ImageManager::enemy, { 0,0,0 }, { 12,12,12 }, { 1,1,1,0.6f });
