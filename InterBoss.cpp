@@ -37,6 +37,7 @@ void InterBoss::Update() {
 		}
 		Hit->SetScale(Hitsca);
 	}
+
 	//各当たり判定
 	collideAttackArm();
 	collidePlayer();
@@ -71,10 +72,6 @@ void InterBoss::Update() {
 void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
 	//ImGui::Begin("test");
-	//ImGui::SliderFloat("rot.x", &rot.x, 360, -360);
-	//ImGui::SliderFloat("rot.y", &rot.y, 360, -360);
-	//ImGui::SliderFloat("rot.z", &rot.z, 360, -360);
-	////ImGui::Text("AttackCount::%d", AttackCount);
 	//ImGui::End();
 	//if (BossHP >= 1) {
 		Object3d::PreDraw();
@@ -98,6 +95,8 @@ bool InterBoss::collidePlayer() {
 	float playerhp = player->GetHp();
 	XMFLOAT3 distance = player->GetDistance();
 	float weight = player->GetArmWeight();
+	Interval = player->GetInterval();
+	FlashCount = player->GetFlashCount();
 	if (Collision::SphereCollision(pos.x, pos.y, pos.z, hitradius, playerpos.x, playerpos.y, playerpos.z, hitradius) && FlashCount == 0 && Interval == 0 && BossHP > 0) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 		player->SetHp(playerhp - 1);
