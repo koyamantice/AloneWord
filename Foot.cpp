@@ -20,7 +20,12 @@ void Foot::SetAttack(LeftShose* leftshose, RightShose* rightshose) {
 			AttackCount++;
 		}
 		else {
-			AttackCount = 0;
+			if ((leftshose->GetHP() <= 0) || (rightshose->GetHP() <= 0)) {
+				AttackCount = 30;
+			}
+			else {
+				AttackCount = 30;
+			}
 			action = (rand() % 3);
 			if ((leftshose->GetHP() <= 0) || (rightshose->GetHP() <= 0) && action == 1) {
 				action = 0;

@@ -301,13 +301,13 @@ void Player::Update() {
 			power = 1.0f;
 		}
 		else if (ArmWeight == 2.0f) {
-			power = 2.25f;
+			power = 1.5f;
 		}
 		else if (ArmWeight == 3.0f) {
-			power = 4.0f;
+			power = 2.25f;
 		}
 		else if (ArmWeight == 4.0f) {
-			power = 7.0f;
+			power = 4.0f;
 		}
 		else if (ArmWeight == 5.0f) {
 			power = 10.0f;

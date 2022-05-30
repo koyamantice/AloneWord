@@ -199,7 +199,12 @@ void GreenTea::Spec() {
 				break;
 			default:
 				pat = 0;
-				AttackCount = 0;
+				if (BossHP >= 20) {
+					AttackCount = 0;
+				}
+				else {
+					AttackCount = 30;
+				}
 				Effect = true;
 				active = false;
 				frame = 0;
@@ -288,7 +293,12 @@ Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 				break;
 			default:
 				pat = 0;
-				AttackCount = 0;
+				if (BossHP >= 20) {
+					AttackCount = 0;
+				}
+				else {
+					AttackCount = 30;
+				}
 				Effect = true;
 				active = false;
 				frame = 0;
@@ -380,7 +390,12 @@ Ease(In,Cubic,frame,StartPos.z,AfterPos.z)
 				break;
 			default:
 				pat = 0;
-				AttackCount = 0;
+				if (BossHP >= 20) {
+					AttackCount = 0;
+				}
+				else {
+					AttackCount = 30;
+				}
 				Effect = true;
 				active = false;
 				frame = 0;

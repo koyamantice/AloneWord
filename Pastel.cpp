@@ -99,7 +99,7 @@ void Pastel::Finalize() {
 void Pastel::Spec() {
 	XMFLOAT3 AfterPos{};
 	//s“®‚ðŒˆ‚ß‚é
-	if (AttackCount > 180) {
+	if (AttackCount > 120) {
 		if (!active) {
 			hitradius = 0.6f;
 			AttackPoint = (rand() % 3);
@@ -319,7 +319,7 @@ void Pastel::Spec() {
 							AttackCount = 0;
 						}
 						else {
-							AttackCount = 150;
+							AttackCount = 30;
 						}
 						break;
 					}
@@ -500,7 +500,12 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 						hitradius = 0.6f;
 						frame = 0;
 						pat = 0;
-						AttackCount = 0;
+						if (BossHP >= 20) {
+							AttackCount = 0;
+						}
+						else {
+							AttackCount = 30;
+						}
 						active = false;
 					}
 				}
