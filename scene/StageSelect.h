@@ -30,8 +30,8 @@ private:
 	/*Texture* DarkBackGround = nullptr;
 	Texture* LightBackGround = nullptr;*/
 	Texture* BackGround[6]{};
-	Sprite* select[4]{};
-	Sprite* plane[4]{};
+	Sprite* select[5]{};
+	Sprite* plane[5]{};
 	Sprite* no_select[5]{};
 	Sprite* no_plane[5]{};
 	Texture* Stage1[3]{};

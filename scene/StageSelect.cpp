@@ -149,11 +149,9 @@ void StageSelect::Finalize() {
 		delete Stage4[i];
 		delete Stage5[i];
 	}
-	for (int i = 0; i < 4; i++) {
+	for (int i = 0; i < 5; i++) {
 		delete  select[i];
 		delete  plane[i];
-	}
-	for (int i = 0; i < 5; i++) {
 		delete no_plane[i];
 		delete no_select[i];
 	}

@@ -138,13 +138,12 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 }
 
 void BossScene::Finalize() {
-
 	//3dのモデルのデリート
-	for (std::size_t i = 0; i < enemy.size(); i++) {
-		enemy[i]->Finalize();
-	}
+	delete camera;
 	player->Finalize();
 	bossenemy->Finalize();
+	ui->Finalize();
+	delete ui;
 	delete objBossMap;
 	delete objFloor;
 	delete modelBossMap;
@@ -154,15 +153,17 @@ void BossScene::Finalize() {
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Finalize();
 	}
-	//for (std::size_t i = 0; i < exp.size(); i++) {
-	//	for (std::size_t j = 0; j < exp[i].size(); j++) {
-	//		exp[i][j]->Finalize();
-	//	}
-	//}
-	delete camera;
-	ui->Finalize();
-	//delete object1;
-	//delete model1;
+	for (std::size_t i = 0; i < enemy.size(); i++) {
+		enemy[i]->Finalize();
+	}
+	delete WhiteFilter;
+	delete BlackFilter;
+	delete bossName;
+	delete SkipSprite;
+	delete GameOverSprite;
+	delete GameClearSprite;
+	delete save;
+	expandchange->Finalize();
 }
 
 void BossScene::Update(DirectXCommon* dxCommon) {

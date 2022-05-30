@@ -45,7 +45,6 @@ private:
 	//カメラ関係
 	DebugCamera* camera = { nullptr };
 	//それぞれのクラスのもの
-	Texture* limit = nullptr;
 	Player* player = nullptr;
 	array<Effect*,60> effect;
 	array<Rice*,6> enemy;
