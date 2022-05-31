@@ -1,7 +1,7 @@
 #include"Save.h"
 
 //Ã“Iƒƒ“ƒo•Ï”‚ÌÀ‘Ô
-int Save::ClearCount = 4;
+int Save::ClearCount = 0;
 bool Save::FirstClear = false;
 bool Save::SecondClear = false;
 bool Save::ThirdClear = false;

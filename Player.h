@@ -59,6 +59,8 @@ public:
 
 	const int& GetFlashCount() { return FlashCount; }
 
+	const int& GetNoDamage() { return NoDamage; }
+
 	const bool& GetAttackFlag() { return AttackFlag; }
 
 	const bool& GetDamageFlag() { return DamageFlag; }
@@ -91,6 +93,8 @@ public:
 	void SetInterval(int Interval) { this->Interval = Interval; }
 
 	void SetFlash(int Flash) { this->FlashCount = FlashCount; }
+
+	void SetNoDamage(int NoDamage) { this->NoDamage = NoDamage; }
 
 	void SetCharge(int chargeTimer) { this->chargeTimer = chargeTimer; }
 
@@ -199,6 +203,7 @@ private:
 	int AttackMoveNumber = 0;
 	int Interval = 0;
 	int FlashCount = 0;
+	int NoDamage = 0;
 	//イージングのためのやつ
 	float frame = 0.0f;
 	float frame2 = 0.0f;

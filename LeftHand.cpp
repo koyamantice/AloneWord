@@ -50,7 +50,7 @@ void LeftHand::Initialize(bool shadow) {
 	//防御力
 	Defense = 1.5f;
 	//ダメージを与えられる範囲
-	attackradius = 2.0f;
+	attackradius = 2.4f;
 }
 
 //開放
@@ -84,6 +84,7 @@ void LeftHand::Spec() {
 	//攻撃をするまでのインターバル
 	else {
 		if (!active) {
+			attackradius = 2.0f;
 			//AttackCount++;
 			/*angle += 2.0f;
 			angle2 = angle * (3.14f / 180.0f);
@@ -164,6 +165,7 @@ void LeftHand::Spec() {
 						break;
 					}
 				case 5:
+					attackradius = 2.4f;
 					AfterPos = {
 						pos.x,
 						1.5,
@@ -183,6 +185,7 @@ void LeftHand::Spec() {
 
 					}
 					else {
+						attackradius = 2.4f;
 						//Afterrot.z = 0;
 						frame = 1.0f;
 						if (coolT < 100) {
@@ -210,6 +213,7 @@ void LeftHand::Spec() {
 			else {
 				switch (pat) {
 				case 1:
+					attackradius = 1.8f;
 					AfterPos = {
 					pos.x,
 					3.0f,
@@ -225,6 +229,7 @@ void LeftHand::Spec() {
 						break;
 					}
 				case 2:
+					attackradius = 1.8f;
 					AfterPos = {
 					0,
 					3.0f,
@@ -240,6 +245,7 @@ void LeftHand::Spec() {
 						break;
 					}
 				case 3:
+					attackradius = 1.8f;
 					Afterrot = {
 							0,
 							270,
@@ -286,6 +292,7 @@ void LeftHand::Spec() {
 		}
 		//プレイヤーを挟む処理
 		else if (action == 1) {
+		attackradius = 2.0f;
 			hitradius = 1.5f;
 			if (AttackC < 3) {
 				switch (pat) {
@@ -430,6 +437,7 @@ void LeftHand::Spec() {
 		//突き刺し攻撃
 		else if (action == 2) {
 			hitradius = 1.5f;
+			attackradius = 2.0f;
 			if (AttackC < 3) {
 				switch (pat) {
 				case 1:
@@ -619,6 +627,7 @@ void LeftHand::Spec() {
 		else if (action == 3) {
 			hitradius = 0.6f;
 			if (AttackC != 4) {
+				attackradius = 2.0f;
 				if (pat == 1) {
 					AfterPos.y = 15.0f;
 					if (pos.y >= 14) {
@@ -874,6 +883,7 @@ void LeftHand::Spec() {
 				}
 			}
 			else {
+			attackradius = 1.6f;
 				Afterrot.x = 0.0f;
 				Afterrot.z = 0.0f;
 				Afterrot.y = 90.0f;
