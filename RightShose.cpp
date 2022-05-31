@@ -426,7 +426,7 @@ void RightShose::Spec() {
 		//歩いて攻撃してきます
 		else if (action == 2) {
 		if (pat == 2) {
-			hitradius = 1.6f;
+			hitradius = 2.4f;
 		}
 		else {
 			hitradius = 0.6f;
