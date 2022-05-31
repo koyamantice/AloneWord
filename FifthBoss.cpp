@@ -194,7 +194,7 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 		}
 		if (!bossstart) {
 			if (input->TriggerButton(input->Select)) {
-				Audio::GetInstance()->LoopWave(9, 0.3f);
+				Audio::GetInstance()->LoopWave(9, 0.2f);
 				Audio::GetInstance()->StopWave(5);
 				Skip = true;
 			}
@@ -337,7 +337,7 @@ void FifthBoss::Update(DirectXCommon* dxCommon) {
 					frame += 0.01f;
 				}
 				else {
-					Audio::GetInstance()->LoopWave(9, 0.3f);
+					Audio::GetInstance()->LoopWave(9, 0.2f);
 					bossstart = true;
 					appearanceTimer = 0;
 					appearanceNumber = 0;
@@ -642,17 +642,6 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 		effect[i]->Update(lefthand);
 		effect[i]->Update(righthand);
 	}
-
-	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
-		Audio::GetInstance()->StopWave(0);
-		Audio::GetInstance()->StopWave(1);
-		Audio::GetInstance()->LoopWave(1, 0.7f);
-	}
-	if (input->TriggerKey(DIK_SPACE)) {
-		int a = 0;
-		a += 1;
-	}
-
 	//敵同士の当たり判定
 	if (sizeof(enemy) > 2) {//配列のサイズ確認
 		for (int colA = 0; colA < enemy.size(); colA++) {

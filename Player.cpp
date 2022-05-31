@@ -206,9 +206,9 @@ void Player::Update() {
 					ChangeScale = true;
 					//Audio::GetInstance()->PlayWave("Resources/Sound/staminaUp.wav", 0.4f);
 					if (RotCount <= 2) {
-						Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/staminaUp.wav", 0.1f);
+						Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/staminaUp.wav", 0.17f);
 					} else {
-						Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/staminaUp4.wav", 0.1f);
+						Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/staminaUp4.wav", 0.17f);
 					}
 				}
 				//チャージ時のエフェクト
@@ -419,7 +419,7 @@ void Player::Update() {
 	}*/
 
 	if (chargeTimer % 40 == 0 && chargeTimer != 0 && !AttackFlag) {
-		Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/charge.wav", 0.05f);
+		Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/charge.wav", 0.1f);
 	}
 
 	// 接地状態

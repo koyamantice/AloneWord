@@ -390,7 +390,7 @@ bool Rice::collideArm() {
 			pos.y = 0.0f;
 			player->SetAddSpeed(1.0f);
 			if (armweight <= 6) {
-				Audio::GetInstance()->PlayWave("Resources/Sound/catchEnemy.wav", 0.08f);
+				Audio::GetInstance()->PlayWave("Resources/Sound/catchEnemy.wav", 0.1f);
 				armweight += 1.0f;
 				EnemyCatch = true;
 				if (armweight == 1) {

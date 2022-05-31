@@ -426,7 +426,7 @@ void GreenTea::App(int Timer) {
 	}
 
 	if (Timer == 40 || Timer == 120) {
-		Audio::GetInstance()->PlayWave("Resources/Sound/strongL3.wav", 0.4f);
+		Audio::GetInstance()->PlayWave("Resources/Sound/strongL2.wav", 0.2f);
 	}
 
 	if (appearMove == 1) {

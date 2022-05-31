@@ -82,7 +82,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	//サウンド宣言&プレイ
 	Audio::GetInstance()->LoadSound(5, "Resources/Sound/inBoss.wav");
 	Audio::GetInstance()->LoadSound(6, "Resources/Sound/forkBGM.wav");
-	Audio::GetInstance()->LoopWave(5, 0.15f);
+	Audio::GetInstance()->LoopWave(5, 0.8f);
 	//srand(NULL);
 	// ライト生成
 	lightGroup = LightGroup::Create();
@@ -191,7 +191,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 		}
 		if (!bossstart) {
 			if (input->TriggerButton(input->Select)) {
-				Audio::GetInstance()->LoopWave(6, 0.3f);
+				Audio::GetInstance()->LoopWave(6, 0.2f);
 				Audio::GetInstance()->StopWave(5);
 				Skip = true;
 			}
@@ -361,7 +361,7 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 					frame += 0.01f;
 				}
 				else {
-					Audio::GetInstance()->LoopWave(6, 0.3f);
+					Audio::GetInstance()->LoopWave(6, 0.2f);
 					bossstart = true;
 					appearanceTimer = 0;
 					appearanceNumber = 0;

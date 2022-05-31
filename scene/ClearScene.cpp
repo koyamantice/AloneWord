@@ -657,6 +657,19 @@ void ClearScene::Finalize() {
 	for (std::size_t i = 0; i < enemy.size(); i++) {
 		enemy[i]->Finalize();
 	}
+	for (int i = 0; i < 10;i++) {
+		delete comment[i];
+	}
+	for (int i = 0; i < 9; i++) {
+		delete roll[i];
+	}
+	delete WhiteFilter;
+	delete BlackFilter;
+	delete bossName;
+	delete SkipSprite;
+	delete GameOverSprite;
+	delete GameClearSprite;
+	delete save;
 	expandchange->Finalize();
 }
 

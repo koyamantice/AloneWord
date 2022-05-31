@@ -219,7 +219,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 		}
 		if (!bossstart) {
 			if (input->TriggerButton(input->Select)) {
-				Audio::GetInstance()->LoopWave(8, 0.3f);
+				Audio::GetInstance()->LoopWave(8, 0.2f);
 				Audio::GetInstance()->StopWave(5);
 				Skip = true;
 			}
@@ -356,7 +356,7 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 					frame += 0.01f;
 				}
 				else {
-					Audio::GetInstance()->LoopWave(8, 0.3f);
+					Audio::GetInstance()->LoopWave(8, 0.2f);
 					bossstart = true;
 					appearanceTimer = 0;
 					appearanceNumber = 0;
@@ -547,7 +547,6 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 					save->ClearSave();
 					save->ThirdSave();
 				}
-				//Audio::GetInstance()->LoopWave(4, 0.2f);
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 			camera->SetTarget(cameratargetPos);
@@ -636,7 +635,6 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 			}
 
 			if (expandchange->GetTimer() >= 58) {
-				//Audio::GetInstance()->LoopWave(4, 0.2f);
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 
@@ -653,17 +651,6 @@ void SecondBoss::Update(DirectXCommon* dxCommon) {
 		effect[i]->Update(leftshose);
 		effect[i]->Update(rightshose);
 	}
-
-	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
-		Audio::GetInstance()->StopWave(0);
-		Audio::GetInstance()->StopWave(1);
-		Audio::GetInstance()->LoopWave(1, 0.7f);
-	}
-	if (input->TriggerKey(DIK_SPACE)) {
-		int a = 0;
-		a += 1;
-	}
-
 	//敵同士の当たり判定
 	if (sizeof(enemy) > 2) {//配列のサイズ確認
 		for (int colA = 0; colA < enemy.size(); colA++) {

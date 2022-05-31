@@ -205,7 +205,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 		}
 		if (!bossstart) {
 			if (input->TriggerButton(input->Select)) {
-				Audio::GetInstance()->LoopWave(7, 0.3f);
+				Audio::GetInstance()->LoopWave(7, 0.2f);
 				Audio::GetInstance()->StopWave(5);
 				Skip = true;
 			}
@@ -328,7 +328,7 @@ void FourthBoss::Update(DirectXCommon* dxCommon) {
 					frame += 0.01f;
 				}
 				else {
-					Audio::GetInstance()->LoopWave(7, 0.3f);
+					Audio::GetInstance()->LoopWave(7, 0.2f);
 					bossstart = true;
 					appearanceTimer = 0;
 					appearanceNumber = 0;
@@ -504,7 +504,6 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 				save->ClearSave();
 				save->FouthSave();
 			}
-			//Audio::GetInstance()->LoopWave(4, 0.2f);
 			SceneManager::GetInstance()->ChangeScene("StageSelect");
 		}
 		camera->SetTarget(cameratargetPos);
@@ -593,7 +592,6 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 			}
 
 			if (expandchange->GetTimer() >= 58) {
-				//Audio::GetInstance()->LoopWave(4, 0.2f);
 				SceneManager::GetInstance()->ChangeScene("StageSelect");
 			}
 
@@ -615,15 +613,6 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Update(pastel);
-	}
-
-	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
-		Audio::GetInstance()->StopWave(0);
-		Audio::GetInstance()->StopWave(1);
-		Audio::GetInstance()->LoopWave(1, 0.7f);
-	}
-	if (input->TriggerKey(DIK_SPACE)) {
-		bossstart = true;
 	}
 
 	//“G“¯Žm‚Ì“–‚½‚è”»’è

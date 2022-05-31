@@ -214,7 +214,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 		}
 		if (!bossstart) {
 			if (input->TriggerButton(input->Select)) {
-				Audio::GetInstance()->LoopWave(3, 0.3f);
+				Audio::GetInstance()->LoopWave(3, 0.2f);
 				Audio::GetInstance()->StopWave(5);
 				Skip = true;
 			}
@@ -316,7 +316,7 @@ void ThirdBoss::Update(DirectXCommon* dxCommon) {
 				}
 				else {
 					bossstart = true;
-					Audio::GetInstance()->LoopWave(3, 0.3f);
+					Audio::GetInstance()->LoopWave(3, 0.2f);
 					appearanceTimer = 0;
 					appearanceNumber = 0;
 					frame = 0;
@@ -598,16 +598,6 @@ Ease(In,Cubic,frame,cameratargetPos.z,Aftertargetpos.z)
 
 	for (std::size_t i = 0; i < effect.size(); i++) {
 		effect[i]->Update(bossenemy);
-	}
-
-	if (input->TriggerKey(DIK_C || input->TriggerButton(input->Button_X))) {
-		Audio::GetInstance()->StopWave(0);
-		Audio::GetInstance()->StopWave(1);
-		Audio::GetInstance()->LoopWave(1, 0.7f);
-	}
-	if (input->TriggerKey(DIK_SPACE)) {
-		int a = 0;
-		a += 1;
 	}
 
 	//“G“¯Žm‚Ì“–‚½‚è”»’è
