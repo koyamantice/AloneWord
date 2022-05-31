@@ -828,6 +828,8 @@ void Player::End(int Timer) {
 	if (pause) {
 		return;
 	}
+	FlashCount = 0;
+	Interval = 0;
 	oldPos = position;
 	rot = this->object3d->GetRotation();
 	object3d->Update();
