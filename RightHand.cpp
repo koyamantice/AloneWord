@@ -186,7 +186,7 @@ void RightHand::Spec() {
 					else {
 						//Afterrot.z = 0;
 						frame = 1.0f;
-						if (coolT < 20) {
+						if (coolT < 100) {
 							if (coolT == 1 && BossHP > 0) {
 								Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/groundAttack.wav", 0.2f);
 							}
@@ -496,7 +496,7 @@ void RightHand::Spec() {
 						Afterrot.y = (atan2(position.x, position.z) * (180.0f / XM_PI)) - 270;// *(XM_PI / 180.0f);
 					}
 					//プレイヤーの位置をロックオンさせる
-					if (MoveCount == 100) {
+					if (MoveCount == 180) {
 						double sb, sbx, sbz;
 						if (!Attack) {
 							hitpoint = HitNot;

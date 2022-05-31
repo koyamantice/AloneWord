@@ -98,7 +98,7 @@ void GreenTea::Spec() {
 			}
 		}
 		else{
-			if (count % 150 == 0) {
+			if (count % 200 == 0) {
 				for (int i = 0; i < 50; i++) {
 					if (!hotWater[i]->GetIsAlive()) {
 						hotWater[i]->Follow(pos);
