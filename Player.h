@@ -209,7 +209,7 @@ private:
 	bool bubble = false;
 	int bubbleC = 0;
 	//ステータス的なやつ
-	float HP = 3;
+	float HP = 10;
 	float StickrotX = 0;
 	float StickrotY = 0;
 	XMFLOAT3 angle = { 0,0,0 };
