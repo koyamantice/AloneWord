@@ -44,7 +44,7 @@ void StartMap::Initialize(DirectXCommon* dxCommon) {
 
 	//sound宣言
 	Audio::GetInstance()->LoadSound(2, "Resources/Sound/tutorialBGM.wav");
-	Audio::GetInstance()->LoopWave(2, 0.08f);
+	Audio::GetInstance()->LoopWave(2, 0.14f);
 	
 	//srand(NULL);
 	// ライト生成

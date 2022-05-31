@@ -124,12 +124,12 @@ void BossEnemy::Spec() {
 		}
 		else if ((action % 2) == 1) {
 			//プレイヤーを突き刺してくる
-			if (AttackC < 3) {
+			if (AttackC < 4) {
 				switch (pat) {
 				case 1:
 					AfterPos = {
 					pos.x,
-					5.0f,
+					3.3f,
 					pos.z
 					};
 					if (frame < 1.0f) {
@@ -144,10 +144,10 @@ void BossEnemy::Spec() {
 				case 2:
 					AfterPos = {
 						player->GetPosition().x,
-					5.0f,
+					3.3f,
 						player->GetPosition().z
 					};
-					if (aiming < 180) {
+					if (aiming < 100) {
 						frame = 0.5f;
 						aiming++;
 						break;
@@ -165,7 +165,7 @@ void BossEnemy::Spec() {
 						pos.z,
 					};
 					if (frame < 1.0f) {
-						frame += 0.08f;
+						frame += 0.1f;
 						Afterrot.z += vel;
 						if (rot.z > 45) {
 							rot.z = 45;

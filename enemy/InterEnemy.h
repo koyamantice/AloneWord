@@ -105,7 +105,7 @@ protected:
 	
 	//リスポーン関係
 	bool IsAlive = 0;
-	int IsTimer = 200;
+	int IsTimer = 150;
 	//フラグ関係
 	bool EnemyCatch = false;
 	bool isMove = false;

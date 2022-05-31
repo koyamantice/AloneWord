@@ -13,7 +13,7 @@ void TitleScene::Initialize(DirectXCommon* dxCommon) {
 	Object3d::SetCamera(camera);
 	// ƒ‚ƒfƒ‹“Ç‚İ‚İ
 	Audio::GetInstance()->LoadSound(1, "Resources/Sound/titleBGM.wav");
-	Audio::GetInstance()->LoopWave(1, 0.1f);
+	Audio::GetInstance()->LoopWave(1, 0.12f);
 	//srand(NULL);
 	// ƒ‰ƒCƒg¶¬
 	lightGroup = LightGroup::Create();
