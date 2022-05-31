@@ -1,6 +1,6 @@
 #include"Save.h"
 
-//Ã“Iƒƒ“ƒo•Ï”‚ÌÀ‘Ô
+//é™çš„ãƒ¡ãƒ³ãƒå¤‰æ•°ã®å®Ÿæ…‹
 int Save::ClearCount = 0;
 bool Save::FirstClear = false;
 bool Save::SecondClear = false;
@@ -9,7 +9,7 @@ bool Save::FouthClear = false;
 bool Save::FifthClear = false;
 bool Save::PerfectClear = false;
 
-//ƒƒ“ƒoŠÖ”
+//ãƒ¡ãƒ³ãƒé–¢æ•°
 void Save::ClearSave() {
 	ClearCount++;
 }
@@ -39,7 +39,7 @@ void Save::PerfectSave() {
 	PerfectClear = true;
 }
 
-//ƒƒ“ƒoŠÖ”
+//ãƒ¡ãƒ³ãƒé–¢æ•°
 void Save::ResetClearSave() {
 	ClearCount = 0;
 }
