@@ -153,7 +153,6 @@ void Player::Update() {
 		}
 
 		PlayerSpeed = 0.3f;
-
 		//攻撃関係
 		if (AttackFlag == false) {
 			//if (input->TriggerButton(input->Button_RB)) {
@@ -1208,4 +1207,6 @@ void Player::gameover(int Timer) {
 	gameoverMovie(Timer);
 	move_object1->StopAnimation();
 	move_object1->Update();
+	no_move_object1->StopAnimation();
+	no_move_object1->Update();
 }

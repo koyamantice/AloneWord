@@ -72,6 +72,12 @@ void InterBoss::Update() {
 void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
 	//ImGui::Begin("test");
+	////ImGui::Text("RotCount:%d", bubbleC);
+	//ImGui::SliderFloat("pos.x", &rot.x, 360, -360);
+	//ImGui::SliderFloat("pos.y", &rot.y, 360, -360);
+	//ImGui::SliderFloat("pos.z", &rot.z, 360, -360);
+	////ImGui::Text("clearMove:%d", clearMove);
+	////ImGui::Text("stopCount2:%d", stop_count);
 	//ImGui::End();
 	//if (BossHP >= 1) {
 		Object3d::PreDraw();
@@ -97,17 +103,19 @@ bool InterBoss::collidePlayer() {
 	float weight = player->GetArmWeight();
 	Interval = player->GetInterval();
 	FlashCount = player->GetFlashCount();
-	if (Collision::SphereCollision(pos.x, pos.y, pos.z, hitradius, playerpos.x, playerpos.y, playerpos.z, hitradius) && FlashCount == 0 && Interval == 0 && BossHP > 0) {
+	if (Collision::SphereCollision(pos.x, pos.y, pos.z, hitradius, playerpos.x, playerpos.y, playerpos.z, hitradius) && FlashCount == 0 && Interval == 0 && BossHP > 0 && playerhp > 0) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 		player->SetHp(playerhp - 1);
 		player->SetCharge(0);
 		player->SetRotCount(0);
 		Interval = 100;
-		distance.x = playerpos.x - pos.x;
-		distance.z = playerpos.z - pos.z;
-		player->SetDistance(distance);
-		player->SetJumpG(0.5f);
-		player->SetDamageFlag(true);
+		if (playerhp > 1) {
+			distance.x = playerpos.x - pos.x;
+			distance.z = playerpos.z - pos.z;
+			player->SetDistance(distance);
+			player->SetJumpG(0.5f);
+			player->SetDamageFlag(true);
+		}
 		player->SetAttackFlag(false);
 		if (weight != 0.0f) {
 			weight = 0.0f;

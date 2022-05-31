@@ -441,7 +441,7 @@ void RightHand::Spec() {
 			}
 			else if (pat == 2) {
 				AfterPos.y = 2.0f;
-				Afterrot.y = 90;
+				Afterrot.y = 270;
 				//Afterrot.z = -90;
 				Afterrot.x = 0;
 				if (frame < 0.45f) {
@@ -469,7 +469,7 @@ void RightHand::Spec() {
 						1,
 						0
 						};
-						Afterrot.y = 90;
+						Afterrot.y = 270;
 						//Afterrot.x = -90;
 						//Afterrot.z = 90;
 						if (frame < 1.0f) {

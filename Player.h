@@ -235,6 +235,7 @@ private:
 	float JumpG = 0.0f;
 	bool ChangeScale = false;
 	bool ReleaseStart = false;
+	float EndRotPower = 0.0f;
 	//チャージ時エフェクトのパーティクル(配列可濃厚なのでこっちに書く)
   array<Texture*,40> ChargeEffect{};
 	array<XMFLOAT3, 40> chargepos{};
