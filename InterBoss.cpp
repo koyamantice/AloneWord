@@ -105,7 +105,8 @@ bool InterBoss::collidePlayer() {
 	Interval = player->GetInterval();
 	FlashCount = player->GetFlashCount();
 
-	if (Collision::SphereCollision(pos.x, pos.y, pos.z, hitradius, playerpos.x, playerpos.y, playerpos.z, hitradius) && FlashCount == 0 && Interval == 0 && BossHP > 0 && playerhp > 0) {
+	if (Collision::SphereCollision(pos.x, pos.y, pos.z, hitradius, playerpos.x, playerpos.y, playerpos.z, hitradius)
+		&& FlashCount == 0 && Interval == 0 && BossHP > 0 && playerhp > 0 && NoDamage == 0) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.2f);
 		player->SetHp(playerhp - 1);
 		player->SetCharge(0);

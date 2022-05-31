@@ -605,7 +605,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 				Plapos[i].z = -7.0f;
 			}
 
-			if (Plapos[i].y <= 0.0f) {
+			if (Plapos[i].y <= -5.0f) {
 				Plapos[i].y += 0.20f;
 			}
 		}
@@ -809,9 +809,14 @@ void Pastel::MillUpdate() {
 //“Á•Ê‚È•`‰æ(‚¤‚·‚Æ‰ñ”ð‚Ì‚à‚Ì‚Æ‰e)
 void Pastel::specialDraw() {
 	XMFLOAT3 playerpos = player->GetPosition();
-	//ImGui::Begin("test");
-	//ImGui::SliderFloat("angle", &angle, 3, 0);
-	//ImGui::End();
+//	ImGui::Begin("test");
+////ImGui::Text("RotCount:%d", bubbleC);
+//ImGui::SliderFloat("attackradius", &Plapos[0].y, 360, -360);
+////ImGui::SliderFloat("pos.y", &rot.y, 360, -360);
+////ImGui::SliderFloat("pos.z", &rot.z, 360, -360);
+///*ImGui::Text("Count:%d", AttackCount);
+//ImGui::Text("action:%d", action);*/
+//ImGui::End();
 	if (BossHP > 0) {
 		Millobj->Draw();
 		Mottiobj->Draw();
