@@ -73,11 +73,11 @@ void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
 	//ImGui::Begin("test");
 	////ImGui::Text("RotCount:%d", bubbleC);
-	//ImGui::SliderFloat("pos.x", &rot.x, 360, -360);
-	//ImGui::SliderFloat("pos.y", &rot.y, 360, -360);
-	//ImGui::SliderFloat("pos.z", &rot.z, 360, -360);
-	////ImGui::Text("clearMove:%d", clearMove);
-	////ImGui::Text("stopCount2:%d", stop_count);
+	////ImGui::SliderFloat("pos.x", &rot.x, 360, -360);
+	////ImGui::SliderFloat("pos.y", &rot.y, 360, -360);
+	////ImGui::SliderFloat("pos.z", &rot.z, 360, -360);
+	//ImGui::Text("Count:%d", AttackCount);
+	//ImGui::Text("action:%d", action);
 	//ImGui::End();
 	//if (BossHP >= 1) {
 		Object3d::PreDraw();

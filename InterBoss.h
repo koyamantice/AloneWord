@@ -43,6 +43,7 @@ public:
 	const int& GetAction() { return action; }
 	const int& GetAttackCount() { return AttackCount; }
 	const int& GetPat() { return pat; }
+	const int& GetCoolT() { return coolT; }
 	const int& GetAttackPoint() { return AttackPoint; }
 	const bool& GetActive() { return active; }
 	const bool& GetStun() { return stun; }
