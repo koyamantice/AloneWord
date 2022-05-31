@@ -10,7 +10,6 @@ UI::UI(Player* player, InterBoss* boss, InterBoss* boss2) {
 	this->boss2.reset(boss2);
 	BossHp[max] = Sprite::Create(ImageManager::Enemyhp3, { 0.0f,0.0f });
 	BossHp[max]->SetPosition({ 260.0f,20.0f });
-
 	//BossHp[max]->SetColor({ 1.0f,0.0f,0.0f,1.0f });
 	BossHp[damage] = Sprite::Create(ImageManager::Enemyhp2, { 0.0f,0.0f });
 	BossHp[damage]->SetPosition({ 260.0f,20.0f });
@@ -330,9 +329,9 @@ void UI::Finalize() {
 const void UI::Draw() {
 	Sprite::PreDraw();
 	if (boss) {
-		BossHp[max]->Draw();
 		BossHp[damage]->Draw();
 		BossHp[now]->Draw();
+		BossHp[max]->Draw();
 	}
 
 	if (boss2) {
