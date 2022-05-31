@@ -82,7 +82,7 @@ void BossScene::Initialize(DirectXCommon* dxCommon) {
 	//サウンド宣言&プレイ
 	Audio::GetInstance()->LoadSound(5, "Resources/Sound/inBoss.wav");
 	Audio::GetInstance()->LoadSound(6, "Resources/Sound/forkBGM.wav");
-	Audio::GetInstance()->LoopWave(5, 0.3f);
+	Audio::GetInstance()->LoopWave(5, 0.15f);
 	//srand(NULL);
 	// ライト生成
 	lightGroup = LightGroup::Create();

@@ -131,15 +131,12 @@ void Player::Update() {
 			Interval = 100;
 		}
 	}
-
-	//お湯の上に乗ってると色が変わる
-	if (poizun) {
-		move_object1->SetColor({ 1.0f,1.0f,0.0f,0.0f });
-		no_move_object1->SetColor({ 1.0f,1.0f,0.0f,0.0f });
+	 //ダメージを与えたあとの無敵
+	if (NoDamage >= 0) {
+		NoDamage--;
 	}
 	else {
-		move_object1->SetColor({ 1.0f,1.0f,1.0f,1.0f });
-		no_move_object1->SetColor({ 1.0f,1.0f,1.0f,1.0f });
+		NoDamage = 0;
 	}
 
 	//プレイヤーの動き系
@@ -209,9 +206,9 @@ void Player::Update() {
 					ChangeScale = true;
 					//Audio::GetInstance()->PlayWave("Resources/Sound/staminaUp.wav", 0.4f);
 					if (RotCount <= 2) {
-						Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/staminaUp.wav", 0.2f);
+						Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/staminaUp.wav", 0.1f);
 					} else {
-						Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/staminaUp4.wav", 0.2f);
+						Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/staminaUp4.wav", 0.1f);
 					}
 				}
 				//チャージ時のエフェクト
@@ -321,6 +318,7 @@ void Player::Update() {
 			power = 11.0f;
 		}
 	}
+
 	//アニメーション用のキー入力
 	if ((input->LeftTiltStick(input->Right)) || (input->LeftTiltStick(input->Left))
 		|| (input->LeftTiltStick(input->Up)) || (input->LeftTiltStick(input->Down))) {
@@ -421,7 +419,7 @@ void Player::Update() {
 	}*/
 
 	if (chargeTimer % 40 == 0 && chargeTimer != 0 && !AttackFlag) {
-		Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/charge.wav", 0.2f);
+		Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/charge.wav", 0.05f);
 	}
 
 	// 接地状態
@@ -568,9 +566,6 @@ void Player::SelectUp() {
 	}
 
 	//ここで音楽を鳴らしている
-	//if (move_count % 40 == 0 && move_count != 0) {
-	//	Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/walk.wav", 0.4f);
-	//}
 
 	// 落下処理
 	if (!onGround) {
@@ -648,11 +643,11 @@ void Player::TitleUp() {
 void Player::Draw(DirectXCommon* dxCommon) {
 	//ImGui::Begin("test");
 	////ImGui::Text("RotCount:%d", bubbleC);
-	//ImGui::SliderFloat("power", &power, 360, -360);
-	//ImGui::SliderFloat("pos.x", &position.x, 360, -360);
-	//ImGui::SliderFloat("pos.y", &position.y, 360, -360);
-	//ImGui::SliderFloat("pos.z", &position.z, 360, -360);
-	////ImGui::Text("clearMove:%d", clearMove);
+	////ImGui::SliderFloat("power", &power, 360, -360);
+	////ImGui::SliderFloat("pos.x", &position.x, 360, -360);
+	////ImGui::SliderFloat("pos.y", &position.y, 360, -360);
+	////ImGui::SliderFloat("pos.z", &position.z, 360, -360);
+	//ImGui::Text("clearMove:%d", NoDamage);
 	////ImGui::Text("stopCount2:%d", stop_count);
 	//ImGui::End();
 	//Texture::PreDraw();

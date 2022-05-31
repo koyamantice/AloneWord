@@ -73,11 +73,11 @@ void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
 	//ImGui::Begin("test");
 	////ImGui::Text("RotCount:%d", bubbleC);
-	////ImGui::SliderFloat("pos.x", &rot.x, 360, -360);
+	//ImGui::SliderFloat("attackradius", &attackradius, 360, -360);
 	////ImGui::SliderFloat("pos.y", &rot.y, 360, -360);
 	////ImGui::SliderFloat("pos.z", &rot.z, 360, -360);
-	//ImGui::Text("Count:%d", AttackCount);
-	//ImGui::Text("action:%d", action);
+	///*ImGui::Text("Count:%d", AttackCount);
+	//ImGui::Text("action:%d", action);*/
 	//ImGui::End();
 	//if (BossHP >= 1) {
 		Object3d::PreDraw();
@@ -101,10 +101,12 @@ bool InterBoss::collidePlayer() {
 	float playerhp = player->GetHp();
 	XMFLOAT3 distance = player->GetDistance();
 	float weight = player->GetArmWeight();
+	int NoDamage = player->GetNoDamage();
 	Interval = player->GetInterval();
 	FlashCount = player->GetFlashCount();
+
 	if (Collision::SphereCollision(pos.x, pos.y, pos.z, hitradius, playerpos.x, playerpos.y, playerpos.z, hitradius) && FlashCount == 0 && Interval == 0 && BossHP > 0 && playerhp > 0) {
-		Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
+		Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.2f);
 		player->SetHp(playerhp - 1);
 		player->SetCharge(0);
 		player->SetRotCount(0);
@@ -155,11 +157,11 @@ bool InterBoss::collideAttackArm() {
 				Hit->SetPosition(player->GetPosition());
 				//ついてる敵の数で音が変わる
 				if (weight <= 2) {
-					Audio::GetInstance()->PlayWave("Resources/Sound/strongL1.wav", 0.4f);
+					Audio::GetInstance()->PlayWave("Resources/Sound/strongL1.wav", 0.2f);
 					Maxsca = { 1.5f,1.5f,1.5f };
 				}
 				else if (weight > 2 && weight <= 5) {
-					Audio::GetInstance()->PlayWave("Resources/Sound/strongL2.wav", 0.4f);
+					Audio::GetInstance()->PlayWave("Resources/Sound/strongL2.wav", 0.3f);
 					Maxsca = { 2.0f,2.0f,2.0f };
 				}
 				else if (weight >= 6) {
@@ -167,13 +169,14 @@ bool InterBoss::collideAttackArm() {
 					Audio::GetInstance()->PlayWave("Resources/Sound/strongL3.wav", 0.2f);
 					Maxsca = {2.5f,2.5f,2.5f};
 				}
+				player->SetNoDamage(20);
 			}
 			else {
 				distance.x = plapos.x - pos.x;
 				distance.z = plapos.z - pos.z;
 				player->SetDistance(distance);
 				player->SetJumpG(0.5f);
-				Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/noDamage.wav", 0.4f);
+				Audio::GetInstance()->PlayWave("Resources/Sound/playerSE/noDamage.wav", 0.2f);
 				player->SetDamageFlag(true);
 				player->SetHp(playerhp - 1);
 			}
