@@ -144,6 +144,7 @@ protected:
 	XMFLOAT3 Maxsca{};
 	//敵関係変数
 	float hitradius = 0.0f;
+	float attackradius = 1.6f;
 	float radius = 0.0f;
 	float speed = 0.0f;
 	float savespeed = 0.0f;

@@ -98,6 +98,8 @@ public:
 
 	void SetDamageFlag(bool DamageFlag) { this->DamageFlag = DamageFlag; }
 
+	void SetPoizun(bool poizun) { this->poizun = poizun; }
+
 	void SetArmWeight(float ArmWeight) { this->ArmWeight = ArmWeight; }
 	void SetOldArm(float OldArm) { this->OldArm = OldArm; }
 	const float& GetOldArm() { return OldArm; }
@@ -258,4 +260,5 @@ private:
 	//完全クリア時のシーン
 	int clearMove = 0;
 	float clearframe = 0.0f;
+	bool poizun = false;
 };

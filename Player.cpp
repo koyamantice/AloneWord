@@ -85,6 +85,7 @@ bool Player::Initialize() {
 	float radius = 0.6f;
 	SetCollider(new SphereCollider(XMVECTOR({ 0,radius,0,0 }), radius));
 	collider->SetAttribute(COLLISION_ATTR_ALLIES);
+	//move_object1->SetColor({ 1.0f,1.0f,0.0f,0.0f });
 
 	//カメラのためのポジション(初期化)
 	//targetpos = position;
@@ -129,6 +130,16 @@ void Player::Update() {
 		if (bubbleC == 1) {
 			Interval = 100;
 		}
+	}
+
+	//お湯の上に乗ってると色が変わる
+	if (poizun) {
+		move_object1->SetColor({ 1.0f,1.0f,0.0f,0.0f });
+		no_move_object1->SetColor({ 1.0f,1.0f,0.0f,0.0f });
+	}
+	else {
+		move_object1->SetColor({ 1.0f,1.0f,1.0f,1.0f });
+		no_move_object1->SetColor({ 1.0f,1.0f,1.0f,1.0f });
 	}
 
 	//プレイヤーの動き系
@@ -289,22 +300,25 @@ void Player::Update() {
 	}
 	else {
 		if (ArmWeight == 1.0f) {
-			power = 1.0f;
+			power = 0.5f;
 		}
 		else if (ArmWeight == 2.0f) {
-			power = 1.5f;
+			power = 1.0f;
 		}
 		else if (ArmWeight == 3.0f) {
-			power = 2.25f;
+			power = 1.4f;
 		}
 		else if (ArmWeight == 4.0f) {
-			power = 4.0f;
+			power = 2.3f;
 		}
 		else if (ArmWeight == 5.0f) {
-			power = 10.0f;
+			power = 5.5f;
 		}
-		else if (ArmWeight >= 6.0f) {
-			power = 15.0f;
+		else if (ArmWeight == 6.0f) {
+			power = 8.0f;
+		}
+		else if (ArmWeight >= 7.0f) {
+			power = 11.0f;
 		}
 	}
 	//アニメーション用のキー入力

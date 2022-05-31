@@ -180,8 +180,12 @@ void HotWater::Collide() {
 			Audio::GetInstance()->PlayWave("Resources/Sound/wet.wav", 0.2f);
 			player->SetHp(player->GetHp() - 0.5f);
 			player->SetWet(true);
+			player->SetPoizun(true);
 			player->SetCharge(0);
 			player->SetRotCount(0);
+		}
+		else {
+			player->SetPoizun(false);
 		}
 	}
 }

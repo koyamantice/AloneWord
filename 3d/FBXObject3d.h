@@ -36,6 +36,7 @@ public: // サブクラス
 		XMMATRIX viewproj;    // ビュープロジェクション行列
 		XMMATRIX world; // ワールド行列
 		XMFLOAT3 cameraPos; // カメラ座標（ワールド座標）
+		XMFLOAT4 color;	// 色 (RGBA)
 	};
 
 public: // 静的メンバ関数
@@ -91,7 +92,7 @@ public: // メンバ関数
 	void SetPosition(XMFLOAT3 position) { this->position = position; }
 
 	void SetRotation(XMFLOAT3 rotation) { this->rotation = rotation; }
-
+	void SetColor(XMFLOAT4 color) { this->color = color; }
 	/// <summary>
 	/// スケールの設定
 	/// </summary>
@@ -115,6 +116,8 @@ protected: // メンバ変数
 	XMFLOAT3 rotation = { 0,0,0 };
 	// ローカル座標
 	XMFLOAT3 position = { 0,0,0 };
+	//色
+	XMFLOAT4 color = { 1,1,1,1 };
 	// ローカルワールド変換行列
 	XMMATRIX matWorld;
 	// モデル
