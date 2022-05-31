@@ -321,6 +321,7 @@ void Player::Update() {
 			power = 11.0f;
 		}
 	}
+
 	//アニメーション用のキー入力
 	if ((input->LeftTiltStick(input->Right)) || (input->LeftTiltStick(input->Left))
 		|| (input->LeftTiltStick(input->Up)) || (input->LeftTiltStick(input->Down))) {
