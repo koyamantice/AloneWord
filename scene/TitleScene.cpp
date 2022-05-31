@@ -97,12 +97,13 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 		}
 		break;
 	}
+	if(!expandchange->GetStartChange()){
 	if (input->TriggerButton(input->Button_A)) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.2f);
 		Audio::GetInstance()->StopWave(1);
 		expandchange->SetStartChange(true);
 	}
-
+	}
 
 	if (expandchange->GetTimer() >= 58) {
 		if (SelectNumber == Start) {

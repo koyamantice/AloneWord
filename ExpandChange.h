@@ -49,7 +49,8 @@ public:
 	const float& GetScale() { return scale; }
 
 	const int& GetTimer() { return timer; }
-	
+	const bool& GetStartChange() { return startchange; }
+
 	void SetStartChange(const bool& startchange) { this->startchange = startchange; }
 private:
 	// DirectX::‚ğÈ—ª
