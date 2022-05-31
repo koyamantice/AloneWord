@@ -1,7 +1,7 @@
 #include"Save.h"
 
 //静的メンバ変数の実態
-int Save::ClearCount = 4;
+int Save::ClearCount = 0;
 bool Save::FirstClear = false;
 bool Save::SecondClear = false;
 bool Save::ThirdClear = false;

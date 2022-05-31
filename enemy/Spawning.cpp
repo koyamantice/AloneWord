@@ -52,7 +52,7 @@ void Spawning::specialDraw() {
 	}
 }
 void Spawning::Finalize() {
-	delete model;
+	//delete model;
 }
 
 void Spawning::Spec() {

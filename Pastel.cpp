@@ -605,7 +605,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 				Plapos[i].z = -7.0f;
 			}
 
-			if (Plapos[i].y <= -5.0f) {
+			if (Plapos[i].y <= -3.0f) {
 				Plapos[i].y += 0.20f;
 			}
 		}
@@ -823,7 +823,7 @@ void Pastel::specialDraw() {
 		for (std::size_t i = 0; i < Platformobj.size(); i++) {
 			Platformobj[i]->Draw();
 			Texture::PreDraw();
-			if (SetPlatform[i] && Plapos[i].y <= -1.0f) {
+			if (SetPlatform[i] && Plapos[i].y <= -4.0f) {
 				Plattexture[i]->Draw();
 				if (FlashCount % 2 == 0) {
 					attensiontexture[i]->Draw();
@@ -849,12 +849,12 @@ bool Pastel::collideAttackArm(Player* player) {
 				Audio::GetInstance()->PlayWave("Resources/Sound/strongL2.wav", 0.4f);
 				haveEnemy += weight;
 				if (haveEnemy < 11.0f) {
-					MottiScale.x += (weight / 10);
-					MottiScale.y += (weight / 10);
-					MottiScale.z += (weight / 10);
+					MottiScale.x += (weight / 9);
+					MottiScale.y += (weight / 9);
+					MottiScale.z += (weight / 9);
 				}
 				else {
-					MottiScale = {1.0f,1.0f,1.0f};
+					MottiScale = {1.5f,1.5f,1.5f};
 				}
 				weight = 0.0f;
 				player->SetOldArm(player->GetArmWeight());

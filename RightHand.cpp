@@ -468,7 +468,7 @@ void RightHand::Spec() {
 				Afterrot.x = 0.0f;
 				if (!stun) {
 					//3âÒìÀêiÇ∑ÇÈ
-					if (AttackC < 5) {
+					if (AttackC < 4) {
 						MoveCount++;
 					}
 					//ç∂ë´Ç™ñﬂÇ¡ÇΩÇÁå≥ÇÃà íuÇ…ñﬂÇÈ
@@ -514,8 +514,8 @@ void RightHand::Spec() {
 							sbz = player->GetPosition().z - pos.z;
 
 							sb = sqrt(sbx * sbx + sbz * sbz);
-							speedX = sbx / sb * 0.5;
-							speedZ = sbz / sb * 0.5;
+							speedX = sbx / sb * 0.4;
+							speedZ = sbz / sb * 0.4;
 							Attack = true;
 						}
 					}
