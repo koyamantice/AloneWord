@@ -163,7 +163,8 @@ bool InterBoss::collideAttackArm() {
 					Maxsca = { 2.0f,2.0f,2.0f };
 				}
 				else if (weight >= 6) {
-					Audio::GetInstance()->PlayWave("Resources/Sound/strongL3.wav", 0.4f);
+					Audio::GetInstance()->PlayWave("Resources/Sound/strongL2.wav", 0.6f);
+					Audio::GetInstance()->PlayWave("Resources/Sound/strongL3.wav", 0.2f);
 					Maxsca = {2.5f,2.5f,2.5f};
 				}
 			}
