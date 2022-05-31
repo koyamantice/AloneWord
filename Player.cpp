@@ -131,15 +131,12 @@ void Player::Update() {
 			Interval = 100;
 		}
 	}
-
-	//お湯の上に乗ってると色が変わる
-	if (poizun) {
-		move_object1->SetColor({ 1.0f,1.0f,0.0f,0.0f });
-		no_move_object1->SetColor({ 1.0f,1.0f,0.0f,0.0f });
+	 //ダメージを与えたあとの無敵
+	if (NoDamage >= 0) {
+		NoDamage--;
 	}
 	else {
-		move_object1->SetColor({ 1.0f,1.0f,1.0f,1.0f });
-		no_move_object1->SetColor({ 1.0f,1.0f,1.0f,1.0f });
+		NoDamage = 0;
 	}
 
 	//プレイヤーの動き系
@@ -646,11 +643,11 @@ void Player::TitleUp() {
 void Player::Draw(DirectXCommon* dxCommon) {
 	//ImGui::Begin("test");
 	////ImGui::Text("RotCount:%d", bubbleC);
-	//ImGui::SliderFloat("power", &power, 360, -360);
-	//ImGui::SliderFloat("pos.x", &position.x, 360, -360);
-	//ImGui::SliderFloat("pos.y", &position.y, 360, -360);
-	//ImGui::SliderFloat("pos.z", &position.z, 360, -360);
-	////ImGui::Text("clearMove:%d", clearMove);
+	////ImGui::SliderFloat("power", &power, 360, -360);
+	////ImGui::SliderFloat("pos.x", &position.x, 360, -360);
+	////ImGui::SliderFloat("pos.y", &position.y, 360, -360);
+	////ImGui::SliderFloat("pos.z", &position.z, 360, -360);
+	//ImGui::Text("clearMove:%d", NoDamage);
 	////ImGui::Text("stopCount2:%d", stop_count);
 	//ImGui::End();
 	//Texture::PreDraw();
