@@ -57,7 +57,7 @@ void InterBoss::Update() {
 		}
 	}
 	else {
-		enemyobj->SetColor({ 1.5f,1.0f,1.0f,1.0f });
+		enemyobj->SetColor({ 1.0f,1.0f,1.0f,1.0f });
 	}
 	player->SetInterval(Interval);
 	enemyobj->Update();
@@ -136,7 +136,7 @@ bool InterBoss::collideAttackArm() {
 	float playerhp = player->GetHp();
 	XMFLOAT3 distance = player->GetDistance();
 	if (attackflag && !BossHit) {
-		if (Collision::SphereCollision(pos.x, pos.y, pos.z, 1.6f, plapos.x, plapos.y,plapos.z, 1.6f) == true && BossHP > 0) {
+		if (Collision::SphereCollision(pos.x, pos.y, pos.z, attackradius, plapos.x, plapos.y,plapos.z, attackradius) == true && BossHP > 0) {
 			player->SetAttackFlag(false);
 			player->SetCharge(0);
 			player->SetRotCount(0);

@@ -49,6 +49,8 @@ void LeftHand::Initialize(bool shadow) {
 	hitradius = 0.6f;
 	//防御力
 	Defense = 1.5f;
+	//ダメージを与えられる範囲
+	attackradius = 2.0f;
 }
 
 //開放
