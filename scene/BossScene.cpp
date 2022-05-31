@@ -707,16 +707,16 @@ void BossScene::Update(DirectXCommon* dxCommon) {
 //描画
 void BossScene::Draw(DirectXCommon* dxCommon) {
 	//ImGui::Begin("test");
-	////ImGui::SliderFloat("frame", &frame, 1, 0);
-	////ImGui::SliderFloat("cameratargetPos.y", &cameratargetPos.y, 20, 0);
+	//ImGui::SliderFloat("Aftereye", &cameraPos.y, 50, -50);
+	//ImGui::SliderFloat("rame", &frame, 1, 0);
 	////ImGui::SliderFloat("cameratargetPos.z", &cameratargetPos.z, 20, 0);
 	////ImGui::SliderFloat("cameraPos.y", &cameraPos.y, 20, 0);
 	////ImGui::SliderFloat("cameraPos.z", &cameraPos.z, 20, 0);
 	////ImGui::SliderFloat("cameratarget.y", &cameratargetPos.y, 20, 0);
 	////ImGui::SliderFloat("frame", &frame, 1, 0);
 	////ImGui::SliderFloat("frame", &frame, 1, 0);
-	//ImGui::Text("appearance:%d", appearanceTimer);
-	//ImGui::Text("appearance:%d", appearanceNumber);
+	//ImGui::Text("appearance:%d", overTimer);
+	//ImGui::Text("appearance:%d", overNumber);
 	//ImGui::End();
 	//各オブジェクトの描画
 	Object3d::PreDraw();

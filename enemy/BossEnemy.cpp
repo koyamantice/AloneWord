@@ -48,7 +48,7 @@ void BossEnemy::Spec() {
 	//行動を決める
 	if (AttackCount > 120 && pos.y <= 0.1f) {
 		if (!active) {
-			action = (rand() % 1);
+			action = (rand() % 2);
 			frame = 0;
 			pat = 1;
 			active = true;

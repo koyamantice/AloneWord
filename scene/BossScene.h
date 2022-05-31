@@ -47,7 +47,7 @@ private:
 	//それぞれのクラスのもの
 	Player* player = nullptr;
 	array<Effect*,60> effect;
-	array<Rice*,10> enemy;
+	array<Rice*,6> enemy;
 	InterBoss* bossenemy = nullptr;
 	float weight = 0;
 	UI* ui=nullptr;

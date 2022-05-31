@@ -1207,4 +1207,6 @@ void Player::gameover(int Timer) {
 	gameoverMovie(Timer);
 	move_object1->StopAnimation();
 	move_object1->Update();
+	no_move_object1->StopAnimation();
+	no_move_object1->Update();
 }

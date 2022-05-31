@@ -209,7 +209,7 @@ private:
 	bool bubble = false;
 	int bubbleC = 0;
 	//ステータス的なやつ
-	float HP = 10;
+	float HP = 3;
 	float StickrotX = 0;
 	float StickrotY = 0;
 	XMFLOAT3 angle = { 0,0,0 };
@@ -235,6 +235,7 @@ private:
 	float JumpG = 0.0f;
 	bool ChangeScale = false;
 	bool ReleaseStart = false;
+	float EndRotPower = 0.0f;
 	//チャージ時エフェクトのパーティクル(配列可濃厚なのでこっちに書く)
   array<Texture*,40> ChargeEffect{};
 	array<XMFLOAT3, 40> chargepos{};

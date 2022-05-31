@@ -97,17 +97,19 @@ bool InterBoss::collidePlayer() {
 	float weight = player->GetArmWeight();
 	Interval = player->GetInterval();
 	FlashCount = player->GetFlashCount();
-	if (Collision::SphereCollision(pos.x, pos.y, pos.z, hitradius, playerpos.x, playerpos.y, playerpos.z, hitradius) && FlashCount == 0 && Interval == 0 && BossHP > 0) {
+	if (Collision::SphereCollision(pos.x, pos.y, pos.z, hitradius, playerpos.x, playerpos.y, playerpos.z, hitradius) && FlashCount == 0 && Interval == 0 && BossHP > 0 && playerhp > 0) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
 		player->SetHp(playerhp - 1);
 		player->SetCharge(0);
 		player->SetRotCount(0);
 		Interval = 100;
-		distance.x = playerpos.x - pos.x;
-		distance.z = playerpos.z - pos.z;
-		player->SetDistance(distance);
-		player->SetJumpG(0.5f);
-		player->SetDamageFlag(true);
+		if (playerhp > 1) {
+			distance.x = playerpos.x - pos.x;
+			distance.z = playerpos.z - pos.z;
+			player->SetDistance(distance);
+			player->SetJumpG(0.5f);
+			player->SetDamageFlag(true);
+		}
 		player->SetAttackFlag(false);
 		if (weight != 0.0f) {
 			weight = 0.0f;
