@@ -66,11 +66,11 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 	//どの選択をするかでどのシーンに行くか変わる
 	if (expandchange->GetScale() == 1.0f) {
 		if (input->LeftTriggerStick(input->Down) && (SelectNumber <= 1)) {
-			Audio::GetInstance()->PlayWave("Resources/Sound/cursorMove.wav", 0.2f);
+			Audio::GetInstance()->PlayWave("Resources/Sound/cursorMove.wav", 0.05f);
 			SelectNumber++;
 		}
 		if (input->LeftTriggerStick(input->Up) && (SelectNumber >= 1)) {
-			Audio::GetInstance()->PlayWave("Resources/Sound/cursorMove.wav", 0.2f);
+			Audio::GetInstance()->PlayWave("Resources/Sound/cursorMove.wav", 0.05f);
 			SelectNumber--;
 		}
 	}
@@ -98,14 +98,11 @@ void TitleScene::Update(DirectXCommon* dxCommon) {
 		break;
 	}
 	if (input->TriggerButton(input->Button_A)) {
-		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.4f);
+		Audio::GetInstance()->PlayWave("Resources/Sound/Button.wav", 0.2f);
 		Audio::GetInstance()->StopWave(1);
 		expandchange->SetStartChange(true);
 	}
 
-	/*if (input->TriggerButton(input->Button_Y)) {
-		SceneManager::GetInstance()->ChangeScene("CLEAR");
-	}*/
 
 	if (expandchange->GetTimer() >= 58) {
 		if (SelectNumber == Start) {
