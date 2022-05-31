@@ -18,7 +18,7 @@ void LeftHumanWave::Upda(LeftHand* lefthand, Player* player) {
 	float weight = player->GetArmWeight();
 	if (CollideWave(player) && !CollideSafeWave(player) && player->GetInterval() == 0 && player->GetPosition().y <= 1.0f) {
 		Audio::GetInstance()->PlayWave("Resources/Sound/Damage.wav", 0.4f);
-		player->SetHp(playerhp - 1.0);
+		player->SetHp(playerhp - 1.0f);
 		player->SetCharge(0);
 		player->SetRotCount(0);
 		player->SetInterval(100);

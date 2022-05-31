@@ -15,7 +15,7 @@ Rice::Rice() {
 void Rice::Initialize() {
 	//敵
 	IsAlive = false;
-	IsTimer = 150;
+	IsTimer = 100;
 	rot = { 0,90,0 };
 	Object3d* object3d_ = new Object3d();
 	object3d_ = Object3d::Create();
@@ -224,7 +224,7 @@ void Rice::Demo(int num) {
 	}
 	if (!IsAlive) {
 		IsTimer--;
-		if (IsTimer == 100) {
+		if (IsTimer == 70) {
 			speed = (float)num* 60;
 			scale = 14;
 			StartPos = pos;
@@ -247,7 +247,7 @@ void Rice::Demo(int num) {
 			appearance = true;
 			isMove = false;
 			followed = false;
-			IsTimer = 150;
+			IsTimer = 100;
 		}
 	}	//倒したときの演出
 	if (bound == true) {
@@ -371,7 +371,7 @@ void Rice::Draw() {
 	Texture::PreDraw();
 	if (IsAlive && !EnemyCatch && !add) {
 		texture->Draw();
-	} else if (!IsAlive && IsTimer < 90 && IsTimer != 0) {
+	} else if (!IsAlive && IsTimer < 70 && IsTimer != 0) {
 		Texture::PreDraw();
 		net[0]->Draw();
 		net[1]->Draw();

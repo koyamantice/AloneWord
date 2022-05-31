@@ -335,9 +335,9 @@ const void UI::Draw() {
 	}
 
 	if (boss2) {
-		BossHp2[max]->Draw();
 		BossHp2[damage]->Draw();
 		BossHp2[now]->Draw();
+		BossHp2[max]->Draw();
 	}
 
 	if (!isInvisible) {

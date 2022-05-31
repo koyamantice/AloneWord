@@ -109,7 +109,7 @@ void InterEnemy::Follow() {
 void InterEnemy::Reborn() {
 	if (!IsAlive) {
 		IsTimer--;
-		if (IsTimer == 100) {
+		if (IsTimer == 90) {
 			if (!respawn) {
 				speed = (float)((int)rand()% 360);
 				scale = (float)((int)rand()% 20 + 10);
@@ -134,7 +134,7 @@ void InterEnemy::Reborn() {
 			appearance = true;
 			isMove = false;
 			followed = false;
-			IsTimer = 150;
+			IsTimer = 100;
 		}
 	}
 
