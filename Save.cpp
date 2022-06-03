@@ -39,6 +39,15 @@ void Save::PerfectSave() {
 	PerfectClear = true;
 }
 
+void Save::AllReset() {
+	ResetClearSave();
+	ResetFirstSave();
+	ResetSecondSave();
+	ResetThirdSave();
+	ResetFouthSave();
+	ResetFifthSave();
+}
+
 //メンバ関数
 void Save::ResetClearSave() {
 	ClearCount = 0;

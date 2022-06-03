@@ -9,6 +9,7 @@ public:
 	void FouthSave();
 	void FifthSave();
 	void PerfectSave();
+	void AllReset();
 	void ResetClearSave();
 	void ResetFirstSave();
 	void ResetSecondSave();

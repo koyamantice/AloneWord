@@ -206,6 +206,9 @@ void StageSelect::Update(DirectXCommon* dxCommon) {
 	input = Input::GetInstance();
 	lightGroup->Update();
 	player->SelectUp();
+	if (input->PushButton(input->Select)) {
+		SceneManager::GetInstance()->ChangeScene("TITLE");
+	}
 	for (int i = 0; i < 6; i++) {
 		BackGround[i]->Update();
 	}
