@@ -193,26 +193,27 @@ void Pastel::Spec() {
 						-45.0f,
 						};
 					}
-
+					PlatTimer++;
+					for (std::size_t i = 0; i < Platformobj.size(); i++) {
+						if (PlatTimer == 1) {
+							BirthNumber[i] = rand() % 3;
+						}
+					}
 					if (frame < 1.0f) {
 						frame += 0.01f;
 						break;
 					}
+					
 					else {
-						//‰ñ”ðƒ|ƒCƒ“ƒg‚ÌêŠ‚ðƒ‰ƒ“ƒ_ƒ€‚ÅŒˆ‚ß‚é
-						for (std::size_t i = 0; i < Platformobj.size(); i++) {
-							//for (std::size_t j = 1; j < Platformobj.size(); j++) {
-								//if ((BirthNumber[i] == BirthNumber[j]) && i != j) {
-							SetPlatform[i] = true;
-							BirthNumber[i] = rand() % 3;
-							//}
-						//}
-						}
 						frame = 0;
 						pat++;
 						break;
 					}
 				case 2:
+					//‰ñ”ðƒ|ƒCƒ“ƒg‚ÌêŠ‚ðƒ‰ƒ“ƒ_ƒ€‚ÅŒˆ‚ß‚é
+					for (std::size_t i = 0; i < Platformobj.size(); i++) {
+						SetPlatform[i] = true;
+					}
 					//UŒ‚‚Ü‚Å‚ÌŠÔ
 					if (aiming < 200) {
 						aiming++;
@@ -276,6 +277,7 @@ void Pastel::Spec() {
 						}
 					}
 				case 4:
+					PlatTimer = 0;
 					for (std::size_t i = 0; i < Platformobj.size(); i++) {
 						SetPlatform[i] = false;
 					}
@@ -378,7 +380,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 					if (frame < 1.0f) {
 						frame += 0.01f;
 						SETimer++;
-						hitradius = 4.0f;
+						hitradius = 4.5f;
 						if (SETimer == 20 || SETimer == 50) {
 							Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/swing.wav", 0.4f);
 						}
@@ -407,7 +409,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 					if (frame < 1.0f) {
 						frame += 0.01f;
 						SETimer++;
-						hitradius = 4.0f;
+						hitradius = 4.5f;
 						if (SETimer == 20 || SETimer == 50) {
 							Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/swing.wav", 0.4f);
 						}
@@ -436,7 +438,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 					if (frame < 1.0f) {
 						frame += 0.01f;
 						SETimer++;
-						hitradius = 4.0f;
+						hitradius = 4.5f;
 						if (SETimer == 20 || SETimer == 50) {
 							Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/swing.wav", 0.4f);
 						}
@@ -465,7 +467,7 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 					if (frame < 1.0f) {
 						frame += 0.01f;
 						SETimer++;
-						hitradius = 4.0f;
+						hitradius = 4.5f;
 						if (SETimer == 20 || SETimer == 50) {
 							Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/swing.wav", 0.4f);
 						}
@@ -564,9 +566,9 @@ Ease(In,Cubic,frame,pos.z,AfterPos.z)
 		haveTimer++;
 		Off = true;
 		if (rot.z >= 29.900) {
-			MottiScale.x -= 0.06f;
-			MottiScale.y -= 0.06f;
-			MottiScale.z -= 0.06f;
+			MottiScale.x -= 0.12f;
+			MottiScale.y -= 0.12f;
+			MottiScale.z -= 0.12f;
 		}
 		if (haveTimer == 600) {
 			Off = false;
@@ -808,9 +810,16 @@ void Pastel::MillUpdate() {
 
 //“Á•Ê‚È•`‰æ(‚¤‚·‚Æ‰ñ”ð‚Ì‚à‚Ì‚Æ‰e)
 void Pastel::specialDraw() {
-	XMFLOAT3 playerpos = player->GetPosition();
 	//ImGui::Begin("test");
-	//ImGui::SliderFloat("angle", &angle, 3, 0);
+	////ImGui::Text("RotCount:%d", bubbleC);
+	//ImGui::SliderFloat("Plapos[0].x", &Plapos[0].x, 360, -360);
+	//ImGui::SliderFloat("frame", &frame, 360, -360);
+	//ImGui::Text("BirthNumber:%d", BirthNumber[0]);
+	//ImGui::Text("PlatTimer:%d", PlatTimer);
+	//ImGui::SliderFloat("scale.x", &MottiScale.x, 360, -360);
+	//ImGui::SliderFloat("pos.z", &rot.z, 360, -360);
+	/*ImGui::Text("Count:%d", AttackCount);
+	ImGui::Text("action:%d", action);*/
 	//ImGui::End();
 	if (BossHP > 0) {
 		Millobj->Draw();
@@ -842,19 +851,24 @@ bool Pastel::collideAttackArm(Player* player) {
 			//–Ý‚ð‰P‚É“ü‚ê‚Ä‚¢‚é
 			if (BossHit == true) {
 				Audio::GetInstance()->PlayWave("Resources/Sound/strongL2.wav", 0.4f);
-				haveEnemy += weight;
-				if (haveEnemy < 11.0f) {
-					MottiScale.x += (weight / 10);
-					MottiScale.y += (weight / 10);
-					MottiScale.z += (weight / 10);
-				}
-				else {
-					MottiScale = {1.0f,1.0f,1.0f};
+				if (!Off) {
+					haveEnemy += weight;
+					if (haveEnemy < 11.0f) {
+						MottiScale.x += (weight / 5);
+						MottiScale.y += (weight / 5);
+						MottiScale.z += (weight / 5);
+					}
+					else {
+						MottiScale = { 2.4f,2.4f,2.4f };
+					}
 				}
 				weight = 0.0f;
 				player->SetOldArm(player->GetArmWeight());
 				player->SetArmWeight(weight);
 				BossHit = false;
+				if (!Off && haveEnemy >= 10) {
+					frame = 0.0f;
+				}
 			}
 			return true;
 		}

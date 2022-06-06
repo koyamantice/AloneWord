@@ -73,8 +73,8 @@ void InterBoss::Draw() {
 	XMFLOAT3 playerpos = player->GetPosition();
 	//ImGui::Begin("test");
 	////ImGui::Text("RotCount:%d", bubbleC);
-	//ImGui::SliderFloat("attackradius", &attackradius, 360, -360);
-	////ImGui::SliderFloat("pos.y", &rot.y, 360, -360);
+	//ImGui::SliderFloat("attackradius", &haveEnemy, 360, -360);
+	//ImGui::SliderFloat("frame", &frame, 360, -360);
 	////ImGui::SliderFloat("pos.z", &rot.z, 360, -360);
 	///*ImGui::Text("Count:%d", AttackCount);
 	//ImGui::Text("action:%d", action);*/

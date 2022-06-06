@@ -543,12 +543,7 @@ void StageSelect::Draw(DirectXCommon* dxCommon) {
 		Stage2[0]->Draw();
 	}
 	else {
-		if (save->GetClearCount() == 1) {
-			Stage2[1]->Draw();
-		}
-		else {
-			Stage2[2]->Draw();
-		}
+		Stage2[1]->Draw();
 	}
 
 	//3ステージ目
@@ -556,12 +551,7 @@ void StageSelect::Draw(DirectXCommon* dxCommon) {
 		Stage3[0]->Draw();
 	}
 	else {
-		if (save->GetClearCount() == 2) {
-			Stage3[1]->Draw();
-		}
-		else {
-			Stage3[2]->Draw();
-		}
+		Stage3[1]->Draw();
 	}
 
 	//4ステージ目
@@ -569,12 +559,7 @@ void StageSelect::Draw(DirectXCommon* dxCommon) {
 		Stage4[0]->Draw();
 	}
 	else {
-		if (save->GetClearCount() == 3) {
-			Stage4[1]->Draw();
-		}
-		else {
-			Stage4[2]->Draw();
-		}
+		Stage4[1]->Draw();
 	}
 
 	//5ステージ目
@@ -582,12 +567,7 @@ void StageSelect::Draw(DirectXCommon* dxCommon) {
 		Stage5[0]->Draw();
 	}
 	else {
-		if (save->GetClearCount() == 4) {
-			Stage5[1]->Draw();
-		}
-		else {
-			Stage5[2]->Draw();
-		}
+		Stage5[1]->Draw();
 	}
 	
 	
@@ -597,11 +577,11 @@ void StageSelect::Draw(DirectXCommon* dxCommon) {
 	select[0]->Draw();
 	plane[0]->Draw();
 	//2ステージ目
-	if (save->GetSecondClear()) {
+	//if (save->GetSecondClear()) {
 		plane[3]->Draw();
 		select[3]->Draw();
-	}
-	else {
+	//}
+	/*else {
 		if (save->GetClearCount() == 1) {
 			plane[3]->Draw();
 			select[3]->Draw();
@@ -610,14 +590,14 @@ void StageSelect::Draw(DirectXCommon* dxCommon) {
 			no_plane[3]->Draw();
 			no_select[3]->Draw();
 		}
-	}
+	}*/
 
 	//3ステージ目
-	if (save->GetThirdClear()) {
+	//if (save->GetThirdClear()) {
 		plane[1]->Draw();
 		select[1]->Draw();
-	}
-	else {
+	//}
+	/*else {
 		if (save->GetClearCount() == 2) {
 			plane[1]->Draw();
 			select[1]->Draw();
@@ -626,39 +606,39 @@ void StageSelect::Draw(DirectXCommon* dxCommon) {
 			no_plane[1]->Draw();
 			no_select[1]->Draw();
 		}
-	}
+	}*/
 
 	//4ステージ目
-	if (save->GetFouthClear()) {
+	//if (save->GetFouthClear()) {
 		plane[2]->Draw();
 		select[2]->Draw();
-	}
-	else {
-		if (save->GetClearCount() == 3) {
-			plane[2]->Draw();
-			select[2]->Draw();
-		}
-		else {
-			no_plane[2]->Draw();
-			no_select[2]->Draw();
-		}
-	}
+	//}
+	//else {
+	//	if (save->GetClearCount() == 3) {
+	//		plane[2]->Draw();
+	//		select[2]->Draw();
+	//	}
+	//	else {
+	//		no_plane[2]->Draw();
+	//		no_select[2]->Draw();
+	//	}
+	//}
 
 	//5ステージ目
-	if (save->GetFifthClear()) {
+	//if (save->GetFifthClear()) {
 		plane[4]->Draw();
 		select[4]->Draw();
-	}
-	else {
-		if (save->GetClearCount() == 4) {
-			plane[4]->Draw();
-			select[4]->Draw();
-		}
-		else {
-			no_plane[4]->Draw();
-			no_select[4]->Draw();
-		}
-	}
+	//}
+	//else {
+	//	if (save->GetClearCount() == 4) {
+	//		plane[4]->Draw();
+	//		select[4]->Draw();
+	//	}
+	//	else {
+	//		no_plane[4]->Draw();
+	//		no_select[4]->Draw();
+	//	}
+	//}
 
 	expandchange->Draw();
 	shrinkchange->Draw();

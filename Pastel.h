@@ -42,4 +42,5 @@ private:
 	int FlashTimer = 0;
 	int FlashCount = 0;
 	int SETimer = 0;
+	int PlatTimer = 0;
 };

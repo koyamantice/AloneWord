@@ -734,7 +734,7 @@ void LeftHand::Spec() {
 					//プレイヤーの位置をロックオンさせる
 					if (MoveCount == 100) {
 						double sb, sbx, sbz;
-						if (!Attack) {
+						if (!Attack && BossHP > 0) {
 							Audio::GetInstance()->PlayWave("Resources/Sound/BossSE/swing.wav", 0.2f);
 							hitpoint = HitNot;
 							sbx = player->GetPosition().x - Mottipos.x;
